@@ -123,6 +123,7 @@ func update_structure():
 	# Clear previous structure preview in selector
 	for n in selector_container.get_children():
 		selector_container.remove_child(n)
+		n.queue_free()
 		
 	# Create new structure preview in selector
 	var _model = structures[index].model.instantiate()
