@@ -1,24 +1,25 @@
 extends Node3D
 class_name CarProxy
 
-## A simple sphere that travels between road tile centres.
-## Call travel_to() with a new world position; is_arrived() returns true when it gets there.
-
-const SPEED := 3.0  # units per second
+const SPEED := 3.0
 
 var current_tile: Vector3i
+var travel_dir: Vector2i = Vector2i.ZERO  # last direction moved, in XZ tile space
+
 var _from: Vector3
 var _to: Vector3
 var _t: float = 1.0
 
 func place_at(tile: Vector3i, world_pos: Vector3) -> void:
 	current_tile = tile
+	travel_dir = Vector2i.ZERO
 	_from = world_pos
 	_to = world_pos
 	_t = 1.0
 	position = world_pos
 
 func travel_to(tile: Vector3i, world_pos: Vector3) -> void:
+	travel_dir = Vector2i(tile.x - current_tile.x, tile.z - current_tile.z)
 	current_tile = tile
 	_from = position
 	_to = world_pos

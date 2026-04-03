@@ -69,8 +69,7 @@ func _redraw() -> void:
 		var orientation := GameState.gridmap.get_cell_item_orientation(cell)
 		var world_conns := road_meta.get_world_connections(orientation, GameState.gridmap)
 		var color: Color = COLORS.get(road_meta.road_type, Color.WHITE)
-		# Tile centre — cell origin is at corner when cell_center = false
-		var centre := Vector3(cell.x + 0.5, DRAW_HEIGHT, cell.z + 0.5)
+		var centre := Vector3(cell.x, DRAW_HEIGHT, cell.z)
 
 		for conn in world_conns:
 			var dir := Vector3(conn.x, 0.0, conn.y)

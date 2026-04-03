@@ -1,11 +1,8 @@
 extends PluginBase
-## Traffic plugin — builds a road graph and drives car proxies along it.
-## Registered as an autoload; no scene editing required.
 
 const CAR_COUNT := 5
 
-## Road graph: tile position → array of connected neighbour tile positions
-var _graph: Dictionary = {}
+var _graph: Dictionary = {}  # Vector3i → Array[Vector3i]
 var _cars: Array[CarProxy] = []
 
 func _plugin_ready() -> void:
@@ -80,22 +77,46 @@ func _process(_delta: float) -> void:
 	for car in _cars:
 		if not car.is_arrived():
 			continue
+
 		var neighbors: Array = _graph.get(car.current_tile, [])
 		if neighbors.is_empty():
-			# Dead end or tile removed — teleport to a random road tile
 			var tiles := _graph.keys()
 			if tiles.is_empty():
 				return
 			var tile: Vector3i = tiles[randi() % tiles.size()]
 			car.place_at(tile, _tile_centre(tile))
-		else:
-			var next: Vector3i = neighbors[randi() % neighbors.size()]
-			car.travel_to(next, _tile_centre(next))
+			return
+
+		var next := _choose_next(car, neighbors)
+		car.travel_to(next, _tile_centre(next))
+
+func _choose_next(car: CarProxy, neighbors: Array) -> Vector3i:
+	# 1. Prefer continuing straight
+	if car.travel_dir != Vector2i.ZERO:
+		var straight := Vector3i(
+			car.current_tile.x + car.travel_dir.x,
+			0,
+			car.current_tile.z + car.travel_dir.y)
+		if straight in neighbors:
+			return straight
+
+	# 2. Avoid U-turn if other options exist
+	var back := Vector3i(
+		car.current_tile.x - car.travel_dir.x,
+		0,
+		car.current_tile.z - car.travel_dir.y)
+	var forward: Array = []
+	for n in neighbors:
+		if n != back:
+			forward.append(n)
+
+	var pool := forward if not forward.is_empty() else neighbors
+	return pool[randi() % pool.size()]
 
 # ── Helpers ──────────────────────────────────────────────────────────────────
 
 func _tile_centre(tile: Vector3i) -> Vector3:
-	return Vector3(tile.x + 0.5, 0.65, tile.z + 0.5)
+	return Vector3(tile.x, 0.65, tile.z)
 
 func _road_meta_for(structure_index: int) -> RoadMetadata:
 	if structure_index < 0 or structure_index >= GameState.structures.size():
