@@ -25,6 +25,9 @@ config/icon="res://icon.png"
 [autoload]
 
 Audio="*res://scripts/audio.gd"
+GameEvents="*res://scripts/game_events.gd"
+GameState="*res://scripts/game_state.gd"
+GameClock="*res://scripts/game_clock.gd"
 
 [editor]
 

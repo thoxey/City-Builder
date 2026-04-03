@@ -37,6 +37,11 @@ func _ready():
 	update_structure()
 	update_cash()
 
+	GameState.gridmap = gridmap
+	GameState.structures = structures
+	GameState.map = map
+	GameState._notify_ready()
+
 func _process(delta):
 	
 	# Controls
@@ -81,10 +86,14 @@ func action_build(gridmap_position):
 		var previous_tile = gridmap.get_cell_item(gridmap_position)
 		gridmap.set_cell_item(gridmap_position, index, gridmap.get_orthogonal_index_from_basis(selector.basis))
 		
+		var placed_pos := Vector3i(int(gridmap_position.x), 0, int(gridmap_position.z))
+		GameEvents.structure_placed.emit(placed_pos, index, gridmap.get_cell_item_orientation(placed_pos))
+
 		if previous_tile != index:
 			map.cash -= structures[index].price
 			update_cash()
-			
+			GameEvents.cash_changed.emit(map.cash)
+
 			Audio.play("sounds/placement-a.ogg, sounds/placement-b.ogg, sounds/placement-c.ogg, sounds/placement-d.ogg", -20)
 
 # Demolish (remove) a structure
@@ -93,7 +102,8 @@ func action_demolish(gridmap_position):
 	if Input.is_action_just_pressed("demolish"):
 		if gridmap.get_cell_item(gridmap_position) != -1:
 			gridmap.set_cell_item(gridmap_position, -1)
-			
+			GameEvents.structure_demolished.emit(Vector3i(int(gridmap_position.x), 0, int(gridmap_position.z)))
+
 			Audio.play("sounds/removal-a.ogg, sounds/removal-b.ogg, sounds/removal-c.ogg, sounds/removal-d.ogg", -20)
 
 # Rotates the 'cursor' 90 degrees
@@ -163,7 +173,9 @@ func action_load():
 			map = DataMap.new()
 		for cell in map.structures:
 			gridmap.set_cell_item(Vector3i(cell.position.x, 0, cell.position.y), cell.structure, cell.orientation)
-			
+
+		GameState.map = map
+		GameEvents.map_loaded.emit(map)
 		update_cash()
 
 func action_load_resources():
@@ -177,5 +189,7 @@ func action_load_resources():
 			map = DataMap.new()
 		for cell in map.structures:
 			gridmap.set_cell_item(Vector3i(cell.position.x, 0, cell.position.y), cell.structure, cell.orientation)
-			
+
+		GameState.map = map
+		GameEvents.map_loaded.emit(map)
 		update_cash()
