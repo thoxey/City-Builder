@@ -11,6 +11,7 @@ var index:int = 0 # Index of structure being built
 @export var view_camera:Camera3D # Used for raycasting mouse
 @export var gridmap:GridMap
 @export var cash_display:Label
+@export var toast_label:Label
 
 var plane:Plane # Used for raycasting mouse
 
@@ -152,6 +153,13 @@ func update_structure():
 func update_cash():
 	cash_display.text = "$" + str(map.cash)
 
+func show_toast(message: String) -> void:
+	toast_label.text = message
+	toast_label.modulate.a = 1.0
+	var tween = create_tween()
+	tween.tween_interval(1.5)
+	tween.tween_property(toast_label, "modulate:a", 0.0, 0.5)
+
 # Saving/load
 
 func action_save():
@@ -170,6 +178,7 @@ func action_save():
 			map.structures.append(data_structure)
 			
 		ResourceSaver.save(map, "user://map.res")
+		show_toast("Map saved")
 	
 func action_load():
 	if Input.is_action_just_pressed("load"):
@@ -186,6 +195,7 @@ func action_load():
 		GameState.map = map
 		GameEvents.map_loaded.emit(map)
 		update_cash()
+		show_toast("Map loaded")
 
 func action_load_resources():
 	if Input.is_action_just_pressed("load_resources"):
@@ -202,3 +212,4 @@ func action_load_resources():
 		GameState.map = map
 		GameEvents.map_loaded.emit(map)
 		update_cash()
+		show_toast("Map loaded")
