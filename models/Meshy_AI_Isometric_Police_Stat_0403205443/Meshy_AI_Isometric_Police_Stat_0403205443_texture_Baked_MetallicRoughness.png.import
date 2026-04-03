@@ -1,0 +1,44 @@
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://dp4jd3odus0po"
+path.s3tc="res://.godot/imported/Meshy_AI_Isometric_Police_Stat_0403205443_texture_Baked_MetallicRoughness.png-b1313a3440541b7e587bc0142b88ddf3.s3tc.ctex"
+metadata={
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
+}
+generator_parameters={
+"md5": "17cd2fc147b3c761c706a9c4534887b5"
+}
+
+[deps]
+
+source_file="res://models/Meshy_AI_Isometric_Police_Stat_0403205443/Meshy_AI_Isometric_Police_Stat_0403205443_texture_Baked_MetallicRoughness.png"
+dest_files=["res://.godot/imported/Meshy_AI_Isometric_Police_Stat_0403205443_texture_Baked_MetallicRoughness.png-b1313a3440541b7e587bc0142b88ddf3.s3tc.ctex"]
+
+[params]
+
+compress/mode=2
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/uastc_level=0
+compress/rdo_quality_loss=0.0
+compress/hdr_compression=1
+compress/normal_map=0
+compress/channel_pack=0
+mipmaps/generate=true
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
+process/channel_remap/red=0
+process/channel_remap/green=1
+process/channel_remap/blue=2
+process/channel_remap/alpha=3
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=0

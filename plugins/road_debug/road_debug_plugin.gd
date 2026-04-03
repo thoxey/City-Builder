@@ -16,9 +16,16 @@ const DRAW_HEIGHT    := 0.35
 const BUILDING_COLOR := Color(0.2, 1.0, 0.4)  # green for building facing arrows
 const BUILDING_FRONT := Vector3(0.0, 0.0, 1.0) # south = default front
 
+var _traffic: PluginBase  # injected
+
 var _mesh_instance: MeshInstance3D
 var _mesh: ImmediateMesh
 var _overlay_visible := false
+
+func get_plugin_name() -> String: return "RoadDebug"
+func get_dependencies() -> Array[String]: return ["Traffic"]
+func inject(deps: Dictionary) -> void:
+	_traffic = deps.get("Traffic")
 
 func _plugin_ready() -> void:
 	_mesh = ImmediateMesh.new()
@@ -61,10 +68,7 @@ func _redraw() -> void:
 
 	for cell in GameState.gridmap.get_used_cells():
 		var sid := GameState.gridmap.get_cell_item(cell)
-		if sid < 0 or sid >= GameState.structures.size():
-			continue
-
-		var road_meta := _get_road_meta(GameState.structures[sid])
+		var road_meta: RoadMetadata = _traffic.road_meta_for(sid)
 		if not road_meta:
 			continue
 
@@ -76,21 +80,15 @@ func _redraw() -> void:
 		for conn in world_conns:
 			var dir := Vector3(conn.x, 0.0, conn.y)
 			var tip := centre + dir * LINE_LENGTH
-
-			# Shaft
 			_line(centre, tip, color)
-
-			# Arrowhead
-			var perp := Vector3(-dir.z, 0.0, dir.x)  # 90° rotation in XZ
+			var perp := Vector3(-dir.z, 0.0, dir.x)
 			_line(tip, tip - dir * ARROW_SIZE + perp * ARROW_SIZE, color)
 			_line(tip, tip - dir * ARROW_SIZE - perp * ARROW_SIZE, color)
 
 	# Building facing arrows
 	for cell in GameState.gridmap.get_used_cells():
 		var sid := GameState.gridmap.get_cell_item(cell)
-		if sid < 0 or sid >= GameState.structures.size():
-			continue
-		if not _is_building(GameState.structures[sid]):
+		if not _traffic.is_building_sid(sid):
 			continue
 
 		var orientation := GameState.gridmap.get_cell_item_orientation(cell)
@@ -107,20 +105,8 @@ func _redraw() -> void:
 
 	_mesh.surface_end()
 
-func _is_building(structure: Structure) -> bool:
-	for m in structure.metadata:
-		if m is BuildingMetadata:
-			return true
-	return false
-
 func _line(a: Vector3, b: Vector3, color: Color) -> void:
 	_mesh.surface_set_color(color)
 	_mesh.surface_add_vertex(a)
 	_mesh.surface_set_color(color)
 	_mesh.surface_add_vertex(b)
-
-func _get_road_meta(structure: Structure) -> RoadMetadata:
-	for m in structure.metadata:
-		if m is RoadMetadata:
-			return m
-	return null

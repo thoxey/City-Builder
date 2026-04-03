@@ -30,8 +30,14 @@ func _ready():
 		var id = mesh_library.get_last_unused_item_id()
 		
 		mesh_library.create_item(id)
-		mesh_library.set_item_mesh(id, get_mesh(structure.model))
-		mesh_library.set_item_mesh_transform(id, Transform3D())
+		var mesh: Mesh = get_mesh(structure.model)
+		var s := structure.model_scale
+		# Ground-align: shift up so the bottom of the mesh's bounding box sits at y=0
+		var ground_offset := -mesh.get_aabb().position.y * s
+		mesh_library.set_item_mesh(id, mesh)
+		mesh_library.set_item_mesh_transform(id, Transform3D(
+				Basis(Vector3(s,0,0), Vector3(0,s,0), Vector3(0,0,s)),
+				Vector3(0, ground_offset, 0) + structure.model_offset))
 		
 	gridmap.mesh_library = mesh_library
 	
@@ -148,7 +154,11 @@ func update_structure():
 	# Create new structure preview in selector
 	var _model = structures[index].model.instantiate()
 	selector_container.add_child(_model)
-	_model.position.y += 0.25
+	var s := structures[index].model_scale
+	_model.scale = Vector3.ONE * s
+	var mesh: Mesh = get_mesh(structures[index].model)
+	var ground_offset := -mesh.get_aabb().position.y * s if mesh else 0.0
+	_model.position = structures[index].model_offset + Vector3(0, ground_offset + 0.25, 0)
 	
 func update_cash():
 	cash_display.text = "$" + str(map.cash)

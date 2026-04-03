@@ -2,6 +2,9 @@ extends PluginBase
 ## Example plugin — delete or disable when no longer needed.
 ## Demonstrates the full plugin pattern: events + clock ticks + state access.
 
+func get_plugin_name() -> String: return "Example"
+func get_dependencies() -> Array[String]: return []
+
 func _plugin_ready() -> void:
 	# GameState.gridmap, .structures, .map are safe to access from here on
 	GameEvents.structure_placed.connect(_on_structure_placed)
