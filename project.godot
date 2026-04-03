@@ -28,6 +28,7 @@ Audio="*res://scripts/audio.gd"
 GameEvents="*res://scripts/game_events.gd"
 GameState="*res://scripts/game_state.gd"
 GameClock="*res://scripts/game_clock.gd"
+RoadDebug="*res://plugins/road_debug/road_debug_plugin.gd"
 
 [editor]
 

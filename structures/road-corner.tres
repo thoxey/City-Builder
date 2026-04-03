@@ -7,7 +7,7 @@
 [sub_resource type="Resource" id="RoadMeta_corner"]
 script = ExtResource("4_roadmeta")
 road_type = 1
-connections = [Vector2i(0, -1), Vector2i(1, 0)]
+connections = [Vector2i(0, 1), Vector2i(-1, 0)]
 speed_limit = 30
 lanes = 1
 
