@@ -1,47 +1,57 @@
 extends PluginBase
 
-## Population system: fills buildings with people, gives them journeys.
-## Short distances (≤ WALK_THRESHOLD tiles) → walk directly.
-## Long distances → walk to road → invisible car → walk from road to destination.
-## Depends on Traffic for road graph, building data, and edge costs.
+## Population system.
+## Spawns 2 people per residential building.
+## Journey logic:
+##   • Hour  8 → rush: all idle residents immediately head to a workplace
+##   • Hours 17–22 → trickle: each hour ~35 % of idle people head to commercial
+##   • Hour 23 → last orders: idle people outside their origin building go home
+##   • Otherwise → random destination (any building) after idle timer
+##
+## Short distances (≤ WALK_THRESHOLD tiles) → walk.
+## Long distances → walk to road → invisible car → walk to destination.
 
 const PEOPLE_PER_BUILDING := 2
-const WALK_THRESHOLD      := 6      # Manhattan tiles; above this → drive
+const WALK_THRESHOLD      := 6
 const DEST_WAIT_MIN       := 4.0
 const DEST_WAIT_MAX       := 10.0
 const BASE_DRIVE_SPEED    := 3.0
 const SPAWN_STAGGER       := 1.2
 const WALK_HEIGHT         := 0.1
+const COMMERCIAL_TRICKLE  := 0.35   # fraction of idle people sent to commercial per hour
 
-const PERSON_MODEL_PATH   := "res://models/Meshy_AI_Bluecoat_Guard_0403170555_texture.glb"
-const PERSON_SCALE        := 0.12   # adjust once model dimensions are confirmed
-const PERSON_MODEL_Y      := 0.0    # local Y offset inside model node — tune to taste
-const PERSON_MODEL_ROT_Y  := 0.0    # rotate model if it faces the wrong way at rest
+const PERSON_MODEL_PATH   := "res://models/Meshy_AI_Bluecoat_Guard_0403170555/Meshy_AI_Bluecoat_Guard_0403170555_texture.glb"
+const PERSON_SCALE        := 0.12
+const PERSON_MODEL_Y      := 0.0
+const PERSON_MODEL_ROT_Y  := 0.0
 
 enum PersonState {
-	IDLE,             # waiting at current building (home or destination)
-	WALKING_TO_ROAD,  # heading to adjacent road tile before car journey
-	IN_CAR,           # hidden inside car; car is navigating to dest road tile
-	WALKING_TO_DEST,  # on foot to destination building (short trip or post-car)
+	IDLE,
+	WALKING_TO_ROAD,
+	IN_CAR,
+	WALKING_TO_DEST,
 }
 
 # ── DI ────────────────────────────────────────────────────────────────────────
 
-var _traffic: PluginBase  # injected — call via duck typing
+var _traffic:   PluginBase
+var _day_night: PluginBase
 
 func get_plugin_name() -> String: return "People"
-func get_dependencies() -> Array[String]: return ["Traffic"]
+func get_dependencies() -> Array[String]: return ["Traffic", "DayNight"]
 func inject(deps: Dictionary) -> void:
-	_traffic = deps.get("Traffic")
+	_traffic   = deps.get("Traffic")
+	_day_night = deps.get("DayNight")
 
 # ── State ─────────────────────────────────────────────────────────────────────
 
 var _people: Array[PersonProxy] = []
-var _home: Dictionary = {}    # PersonProxy → Vector3i
-var _dest: Dictionary = {}    # PersonProxy → Vector3i
-var _state: Dictionary = {}   # PersonProxy → PersonState
-var _timer: Dictionary = {}   # PersonProxy → float
-var _car: Dictionary = {}     # PersonProxy → CarProxy
+var _home:   Dictionary = {}   # PersonProxy → Vector3i  (swaps each journey)
+var _origin: Dictionary = {}   # PersonProxy → Vector3i  (fixed spawn tile)
+var _dest:   Dictionary = {}
+var _state:  Dictionary = {}
+var _timer:  Dictionary = {}
+var _car:    Dictionary = {}
 
 var _person_packed: PackedScene = null
 
@@ -51,6 +61,7 @@ func _plugin_ready() -> void:
 	GameEvents.structure_placed.connect(func(_a, _b, _c): _rebuild())
 	GameEvents.structure_demolished.connect(func(_a): _rebuild())
 	GameEvents.map_loaded.connect(func(_a): _rebuild())
+	_day_night.hour_changed.connect(_on_hour)
 	_rebuild()
 
 # ── Build ─────────────────────────────────────────────────────────────────────
@@ -61,8 +72,8 @@ func _rebuild() -> void:
 	if not _person_packed:
 		push_warning("[People] model not found: %s — using capsule fallback" % PERSON_MODEL_PATH)
 	_spawn_people()
-	print("[People] %d people across %d buildings" % [
-			_people.size(), _traffic.get_building_tiles().size()])
+	print("[People] %d people across %d residential buildings" % [
+			_people.size(), _get_tiles_by_category("residential").size()])
 
 func _clear_people() -> void:
 	for p in _people:
@@ -72,27 +83,29 @@ func _clear_people() -> void:
 		p.queue_free()
 	_people.clear()
 	_home.clear()
+	_origin.clear()
 	_dest.clear()
 	_state.clear()
 	_timer.clear()
 	_car.clear()
 
 func _spawn_people() -> void:
-	var building_tiles: Array[Vector3i] = _traffic.get_building_tiles()
-	if building_tiles.is_empty():
+	var residential_tiles: Array[Vector3i] = _get_tiles_by_category("residential")
+	if residential_tiles.is_empty():
 		return
 	var stagger_index := 0
-	for building_tile in building_tiles:
+	for tile in residential_tiles:
 		for i in PEOPLE_PER_BUILDING:
 			var person := PersonProxy.new()
 			person._model = _make_model(person)
 			add_child(person)
 			var jitter := Vector3(randf_range(-0.25, 0.25), 0.0, randf_range(-0.25, 0.25))
-			person.place_at(building_tile, Vector3(building_tile.x, WALK_HEIGHT, building_tile.z) + jitter)
+			person.place_at(tile, Vector3(tile.x, WALK_HEIGHT, tile.z) + jitter)
 			_people.append(person)
-			_home[person] = building_tile
-			_state[person] = PersonState.IDLE
-			_timer[person] = stagger_index * SPAWN_STAGGER + randf_range(0.0, SPAWN_STAGGER)
+			_home[person]   = tile
+			_origin[person] = tile
+			_state[person]  = PersonState.IDLE
+			_timer[person]  = stagger_index * SPAWN_STAGGER + randf_range(0.0, SPAWN_STAGGER)
 			stagger_index += 1
 
 func _make_model(parent: PersonProxy) -> Node3D:
@@ -137,12 +150,44 @@ func _process(delta: float) -> void:
 				if not person.is_walking():
 					_arrive_at_dest(person)
 
+# ── Hour events ───────────────────────────────────────────────────────────────
+
+func _on_hour(hour: float) -> void:
+	var h := int(hour)
+
+	if h == 8:
+		# Morning rush — all idle people head to a workplace
+		var workplaces: Array[Vector3i] = _get_tiles_by_category("workplace")
+		if not workplaces.is_empty():
+			for person in _people:
+				if _state[person] == PersonState.IDLE:
+					var dest: Vector3i = workplaces[randi() % workplaces.size()]
+					if dest != _home[person]:
+						_begin_journey(person, dest)
+
+	elif h >= 17 and h <= 22:
+		# Evening trickle — fraction of idle people drift to commercial
+		var commercial: Array[Vector3i] = _get_tiles_by_category("commercial")
+		if not commercial.is_empty():
+			for person in _people:
+				if _state[person] == PersonState.IDLE and randf() < COMMERCIAL_TRICKLE:
+					var dest: Vector3i = commercial[randi() % commercial.size()]
+					if dest != _home[person]:
+						_begin_journey(person, dest)
+
+	elif h == 23:
+		# Last orders — idle people who aren't home head back to origin
+		for person in _people:
+			if _state[person] == PersonState.IDLE:
+				var origin: Vector3i = _origin[person]
+				if origin != _home[person]:
+					_begin_journey(person, origin)
+
 # ── Journey logic ─────────────────────────────────────────────────────────────
 
 func _assign_journey(person: PersonProxy) -> void:
 	var home_tile: Vector3i = _home[person]
 	var building_tiles: Array[Vector3i] = _traffic.get_building_tiles()
-
 	var candidates: Array[Vector3i] = []
 	for t in building_tiles:
 		if t != home_tile:
@@ -150,8 +195,10 @@ func _assign_journey(person: PersonProxy) -> void:
 	if candidates.is_empty():
 		_timer[person] = randf_range(DEST_WAIT_MIN, DEST_WAIT_MAX)
 		return
+	_begin_journey(person, candidates[randi() % candidates.size()])
 
-	var dest_tile: Vector3i = candidates[randi() % candidates.size()]
+func _begin_journey(person: PersonProxy, dest_tile: Vector3i) -> void:
+	var home_tile: Vector3i = _home[person]
 	_dest[person] = dest_tile
 
 	var dist: int = abs(dest_tile.x - home_tile.x) + abs(dest_tile.z - home_tile.z)
@@ -191,7 +238,7 @@ func _begin_car_journey(person: PersonProxy) -> void:
 		positions.append(Vector3(tile.x, WALK_HEIGHT, tile.z))
 
 	var car := CarProxy.new()
-	var mi := MeshInstance3D.new()  # no visible mesh — person is the actor while driving
+	var mi := MeshInstance3D.new()
 	car.add_child(mi)
 	add_child(car)
 	car.place_at(start_road, Vector3(start_road.x, WALK_HEIGHT, start_road.z))
@@ -221,7 +268,6 @@ func _end_car_journey(person: PersonProxy) -> void:
 	_state[person] = PersonState.WALKING_TO_DEST
 
 func _arrive_at_dest(person: PersonProxy) -> void:
-	# Swap home/dest so the next journey goes the other way
 	var old_home: Vector3i = _home[person]
 	_home[person] = _dest[person]
 	_dest[person] = old_home
@@ -233,6 +279,19 @@ func _abort_to_idle(person: PersonProxy) -> void:
 	person.set_model_visible(true)
 	_state[person] = PersonState.IDLE
 	_timer[person] = randf_range(DEST_WAIT_MIN, DEST_WAIT_MAX)
+
+# ── Helpers ───────────────────────────────────────────────────────────────────
+
+func _get_tiles_by_category(category: String) -> Array[Vector3i]:
+	var result: Array[Vector3i] = []
+	for cell in GameState.gridmap.get_used_cells():
+		var sid: int = GameState.gridmap.get_cell_item(cell)
+		if sid < 0 or sid >= GameState.structures.size():
+			continue
+		var profile: BuildingProfile = GameState.structures[sid].find_metadata(BuildingProfile) as BuildingProfile
+		if profile and profile.category == category:
+			result.append(cell)
+	return result
 
 func _mesh_from_scene(packed: PackedScene) -> Mesh:
 	var state := packed.get_state()

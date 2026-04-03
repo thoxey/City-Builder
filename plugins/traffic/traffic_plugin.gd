@@ -119,7 +119,7 @@ func _respawn_cars() -> void:
 		_cars.append(car)
 		_car_timers[car] = i * SPAWN_STAGGER + randf() * SPAWN_STAGGER
 
-const CAR_MODEL_PATH := "res://models/Meshy_AI_Car_0403170715_texture.glb"
+const CAR_MODEL_PATH := "res://models/Meshy_AI_Car_0403170715/Meshy_AI_Car_0403170715_texture.glb"
 const CAR_SCALE      := 0.15
 
 func _make_car() -> CarProxy:

@@ -1,14 +1,13 @@
 extends PluginBase
 
-## Workplace building plugin.
-## Scans for structures with BuildingProfile.category == "workplace" and
+## Commercial building plugin.
+## Scans for structures with BuildingProfile.category == "commercial" and
 ## registers one CityStatSink per building with CityStats.
 ##
-## Workplace buildings demand "population" during their active window
-## (default 08:00–18:00).  The satisfaction score (fulfilled / demanded)
-## is available via CityStats.get_satisfaction("population").
+## Commercial buildings demand "population" (visitors/customers) during
+## their active window — daytime for shops, evening for pubs.
 
-func get_plugin_name() -> String: return "Workplace"
+func get_plugin_name() -> String: return "Commercial"
 func get_dependencies() -> Array[String]: return ["CityStats"]
 
 var _city_stats: PluginBase
@@ -18,7 +17,7 @@ func inject(deps: Dictionary) -> void:
 
 # ── State ─────────────────────────────────────────────────────────────────────
 
-var _sinks: Array = []  # _WorkplaceSink
+var _sinks: Array = []  # _CommercialSink
 
 # ── Lifecycle ─────────────────────────────────────────────────────────────────
 
@@ -40,20 +39,20 @@ func _rebuild() -> void:
 		if sid < 0 or sid >= GameState.structures.size():
 			continue
 		var profile: BuildingProfile = GameState.structures[sid].find_metadata(BuildingProfile) as BuildingProfile
-		if not profile or profile.category != "workplace":
+		if not profile or profile.category != "commercial":
 			continue
 
-		var sink := _WorkplaceSink.new(profile.capacity, profile.active_start, profile.active_end)
+		var sink := _CommercialSink.new(profile.capacity, profile.active_start, profile.active_end)
 		_sinks.append(sink)
 
 	for s in _sinks:
 		_city_stats.register_sink(s)
 
-	print("[Workplace] %d buildings registered as worker sinks" % _sinks.size())
+	print("[Commercial] %d buildings registered as population sinks" % _sinks.size())
 
 # ── Inner sink ────────────────────────────────────────────────────────────────
 
-class _WorkplaceSink extends CityStatSink:
+class _CommercialSink extends CityStatSink:
 	var capacity: int
 	var active_start: float
 	var active_end: float
@@ -76,5 +75,5 @@ class _WorkplaceSink extends CityStatSink:
 	func _in_window(hour: float) -> bool:
 		if active_end >= active_start:
 			return hour >= active_start and hour < active_end
-		# Wraps midnight
+		# Wraps midnight (e.g. 22–2)
 		return hour >= active_start or hour < active_end

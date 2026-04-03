@@ -4,8 +4,10 @@ extends PluginBase
 ## Scans for structures with BuildingProfile.category == "residential" and
 ## registers one CityStatSource per building with CityStats.
 ##
-## Residential buildings supply "workers" (residents heading out) during their
-## active window (default 06:00–09:00 morning rush).
+## Residential buildings supply "population" (available residents) all day.
+## The active window in BuildingProfile is ignored for sources — residents are
+## always potentially available; sinks (workplaces, commercial) control when
+## they draw on that pool.
 
 func get_plugin_name() -> String: return "Residential"
 func get_dependencies() -> Array[String]: return ["CityStats"]
@@ -42,34 +44,24 @@ func _rebuild() -> void:
 		if not profile or profile.category != "residential":
 			continue
 
-		var source := _ResidentialSource.new(profile.capacity, profile.active_start, profile.active_end)
+		var source := _ResidentialSource.new(profile.capacity)
 		_sources.append(source)
 
 	for s in _sources:
 		_city_stats.register_source(s)
 
-	print("[Residential] %d buildings registered as worker sources" % _sources.size())
+	print("[Residential] %d buildings registered as population sources" % _sources.size())
 
 # ── Inner source ──────────────────────────────────────────────────────────────
 
 class _ResidentialSource extends CityStatSource:
 	var capacity: int
-	var active_start: float
-	var active_end: float
 
-	func _init(cap: int, start: float, end: float) -> void:
+	func _init(cap: int) -> void:
 		capacity = cap
-		active_start = start
-		active_end = end
 
 	func get_type_id() -> String:
-		return "workers"
+		return "population"
 
-	func tick(hour: float) -> int:
-		return capacity if _in_window(hour) else 0
-
-	func _in_window(hour: float) -> bool:
-		if active_end >= active_start:
-			return hour >= active_start and hour < active_end
-		# Wraps midnight (e.g. active_start=22, active_end=6)
-		return hour >= active_start or hour < active_end
+	func tick(_hour: float) -> int:
+		return capacity  # residents always available as a pool
