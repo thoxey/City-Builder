@@ -39,6 +39,15 @@ func _ready():
 
 	GameState.gridmap = gridmap
 	GameState.structures = structures
+
+	# Auto-load the sample map on startup
+	var sample = ResourceLoader.load("res://sample map/map.res")
+	if sample:
+		map = sample
+		for cell in map.structures:
+			gridmap.set_cell_item(Vector3i(cell.position.x, 0, cell.position.y), cell.structure, cell.orientation)
+		update_cash()
+
 	GameState.map = map
 	GameState._notify_ready()
 
