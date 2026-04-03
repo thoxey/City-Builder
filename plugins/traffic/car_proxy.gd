@@ -1,9 +1,9 @@
 extends Node3D
 class_name CarProxy
 
-const ROTATION_SPEED := 10.0
+const ROTATION_SPEED := 30.0
 const TILT_ANGLE     := 22.0
-const TILT_SPEED     := 18.0
+const TILT_SPEED     := 80.0
 const TILT_RESET_DIST := 0.4  # world units before tilt resets after a turn
 
 var current_tile: Vector3i

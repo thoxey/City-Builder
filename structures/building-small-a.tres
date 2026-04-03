@@ -1,8 +1,9 @@
-[gd_resource type="Resource" script_class="Structure" load_steps=4 format=3 uid="uid://cntgl86ianngh"]
+[gd_resource type="Resource" script_class="Structure" format=3 uid="uid://cntgl86ianngh"]
 
+[ext_resource type="Script" uid="uid://cprji705vifbv" path="res://scripts/structure_metadata.gd" id="1_jttpb"]
 [ext_resource type="PackedScene" uid="uid://cnycdi6t5tj01" path="res://models/building-small-a.glb" id="1_v5apy"]
 [ext_resource type="Script" uid="uid://b4i7dfy6u3e8w" path="res://scripts/structure.gd" id="2_q3i1h"]
-[ext_resource type="Script" path="res://scripts/building_metadata.gd" id="3_bldmeta"]
+[ext_resource type="Script" uid="uid://u0hu8vt24b6o" path="res://scripts/building_metadata.gd" id="3_bldmeta"]
 
 [sub_resource type="Resource" id="BuildingMeta_1"]
 script = ExtResource("3_bldmeta")
@@ -11,4 +12,4 @@ script = ExtResource("3_bldmeta")
 script = ExtResource("2_q3i1h")
 model = ExtResource("1_v5apy")
 price = 50
-metadata = [SubResource("BuildingMeta_1")]
+metadata = Array[ExtResource("1_jttpb")]([SubResource("BuildingMeta_1")])

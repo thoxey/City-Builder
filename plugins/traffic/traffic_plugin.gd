@@ -116,7 +116,8 @@ func _assign_journey(car: CarProxy) -> void:
 		return
 
 	var goal: Vector3i = candidates[randi() % candidates.size()]
-	var path := Pathfinder.find_path(_graph, car.current_tile, goal, _edge_cost, Pathfinder.manhattan)
+	var path := Pathfinder.find_path(_graph, car.current_tile, goal, _edge_cost,
+			func(a: Vector3i, b: Vector3i) -> float: return Pathfinder.manhattan(a, b))
 
 	if path.size() <= 1:
 		_car_timers[car] = 1.0

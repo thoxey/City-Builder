@@ -10,9 +10,11 @@ const COLORS := {
 	RoadMetadata.RoadType.INTERSECTION: Color(1.0, 0.3, 0.3),
 }
 
-const LINE_LENGTH  := 0.38  # how far the connection line extends from tile centre
-const ARROW_SIZE   := 0.10  # length of arrowhead branches
-const DRAW_HEIGHT  := 0.35  # y offset above the tile surface
+const LINE_LENGTH    := 0.38
+const ARROW_SIZE     := 0.10
+const DRAW_HEIGHT    := 0.35
+const BUILDING_COLOR := Color(0.2, 1.0, 0.4)  # green for building facing arrows
+const BUILDING_FRONT := Vector3(0.0, 0.0, 1.0) # south = default front
 
 var _mesh_instance: MeshInstance3D
 var _mesh: ImmediateMesh
@@ -83,7 +85,33 @@ func _redraw() -> void:
 			_line(tip, tip - dir * ARROW_SIZE + perp * ARROW_SIZE, color)
 			_line(tip, tip - dir * ARROW_SIZE - perp * ARROW_SIZE, color)
 
+	# Building facing arrows
+	for cell in GameState.gridmap.get_used_cells():
+		var sid := GameState.gridmap.get_cell_item(cell)
+		if sid < 0 or sid >= GameState.structures.size():
+			continue
+		if not _is_building(GameState.structures[sid]):
+			continue
+
+		var orientation := GameState.gridmap.get_cell_item_orientation(cell)
+		var basis := GameState.gridmap.get_basis_with_orthogonal_index(orientation)
+		var facing := basis * BUILDING_FRONT
+		var dir := Vector3(facing.x, 0.0, facing.z).normalized()
+		var centre := Vector3(cell.x, DRAW_HEIGHT, cell.z)
+		var tip := centre + dir * LINE_LENGTH
+
+		_line(centre, tip, BUILDING_COLOR)
+		var perp := Vector3(-dir.z, 0.0, dir.x)
+		_line(tip, tip - dir * ARROW_SIZE + perp * ARROW_SIZE, BUILDING_COLOR)
+		_line(tip, tip - dir * ARROW_SIZE - perp * ARROW_SIZE, BUILDING_COLOR)
+
 	_mesh.surface_end()
+
+func _is_building(structure: Structure) -> bool:
+	for m in structure.metadata:
+		if m is BuildingMetadata:
+			return true
+	return false
 
 func _line(a: Vector3, b: Vector3, color: Color) -> void:
 	_mesh.surface_set_color(color)
