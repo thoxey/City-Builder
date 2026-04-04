@@ -24,11 +24,13 @@
 [ext_resource type="Texture2D" uid="uid://bng0d1sou7c8a" path="res://sprites/coin.png" id="17_cjamx"]
 [ext_resource type="Texture2D" uid="uid://ciwbdik3tmxtp" path="res://sprites/instructions.png" id="22_pm3ni"]
 [ext_resource type="AudioStream" uid="uid://wvfsgkl8qob6" path="res://sounds/ambience.ogg" id="24_y6deb"]
-[ext_resource type="Resource" path="res://structures/building-city-hall.tres" id="30_cityhall"]
-[ext_resource type="Resource" path="res://structures/building-police.tres" id="31_police"]
-[ext_resource type="Resource" path="res://structures/building-pub.tres" id="32_pub"]
+[ext_resource type="Resource" uid="uid://dkd36na16gg00" path="res://structures/building-city-hall.tres" id="30_cityhall"]
+[ext_resource type="Resource" uid="uid://b13sps385yylh" path="res://structures/building-police.tres" id="31_police"]
+[ext_resource type="Resource" uid="uid://bu8s8cuyje78e" path="res://structures/building-pub.tres" id="32_pub"]
 [ext_resource type="Resource" path="res://structures/building-duck-pond.tres" id="33_pond"]
-[ext_resource type="Resource" path="res://structures/building-nature-patch.tres" id="34_nature"]
+[ext_resource type="Resource" uid="uid://bk2677k863x7x" path="res://structures/building-nature-patch.tres" id="34_nature"]
+[ext_resource type="Resource" uid="uid://bj3t3y8w3lgoh" path="res://structures/building-supermarket.tres" id="35_supermarket"]
+[ext_resource type="Resource" uid="uid://dg47eokg2k4wy" path="res://structures/building-medical.tres" id="36_medical"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_q176i"]
 font = ExtResource("16_vlub6")
@@ -37,15 +39,19 @@ shadow_color = Color(0, 0, 0, 0.392157)
 
 [node name="Main" type="Node3D" unique_id=1590601303]
 
-[node name="Builder" type="Node3D" parent="." unique_id=1441891365 node_paths=PackedStringArray("selector", "selector_container", "view_camera", "gridmap", "cash_display", "toast_label")]
+[node name="Builder" type="Node3D" parent="." unique_id=1441891365 node_paths=PackedStringArray("selector", "selector_container", "view_camera", "gridmap", "ground_gridmap", "cash_display", "toast_label", "residential_label", "commercial_label", "workplace_label")]
 script = ExtResource("1_jybm7")
-structures = Array[ExtResource("2_54v6r")]([ExtResource("2_bwyku"), ExtResource("3_o6o81"), ExtResource("3_6fpyf"), ExtResource("7_kqu4g"), ExtResource("8_1swhv"), ExtResource("4_b632v"), ExtResource("8_4il2q"), ExtResource("5_v5o2m"), ExtResource("6_f4603"), ExtResource("10_84or2"), ExtResource("12_8obn7"), ExtResource("13_ut2cy"), ExtResource("30_cityhall"), ExtResource("31_police"), ExtResource("32_pub"), ExtResource("9_ifw7y"), ExtResource("10_vaeah"), ExtResource("13_t5d2v"), ExtResource("33_pond"), ExtResource("34_nature")])
+structures = Array[ExtResource("2_54v6r")]([ExtResource("2_bwyku"), ExtResource("3_o6o81"), ExtResource("3_6fpyf"), ExtResource("7_kqu4g"), ExtResource("8_1swhv"), ExtResource("4_b632v"), ExtResource("8_4il2q"), ExtResource("5_v5o2m"), ExtResource("6_f4603"), ExtResource("10_84or2"), ExtResource("12_8obn7"), ExtResource("13_ut2cy"), ExtResource("30_cityhall"), ExtResource("31_police"), ExtResource("32_pub"), ExtResource("9_ifw7y"), ExtResource("10_vaeah"), ExtResource("13_t5d2v"), ExtResource("33_pond"), ExtResource("34_nature"), ExtResource("35_supermarket"), ExtResource("36_medical")])
 selector = NodePath("Selector")
 selector_container = NodePath("Selector/Container")
 view_camera = NodePath("../View/Camera")
 gridmap = NodePath("../GridMap")
+ground_gridmap = NodePath("../GroundMap")
 cash_display = NodePath("../CanvasLayer/Top/Cash")
 toast_label = NodePath("../CanvasLayer/Toast")
+residential_label = NodePath("../CanvasLayer/Top/ResLabel")
+commercial_label = NodePath("../CanvasLayer/Top/ComLabel")
+workplace_label = NodePath("../CanvasLayer/Top/WorkLabel")
 
 [node name="Selector" type="Node3D" parent="Builder" unique_id=1065944078]
 
@@ -65,6 +71,13 @@ environment = ExtResource("1_yndf3")
 fov = 20.0
 
 [node name="GridMap" type="GridMap" parent="." unique_id=585756592]
+cell_size = Vector3(1, 1, 1)
+cell_center_x = false
+cell_center_y = false
+cell_center_z = false
+
+[node name="GroundMap" type="GridMap" parent="." unique_id=112233445]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.005, 0)
 cell_size = Vector3(1, 1, 1)
 cell_center_x = false
 cell_center_y = false
@@ -101,6 +114,36 @@ offset_bottom = 101.0
 text = "$10,000"
 label_settings = SubResource("LabelSettings_q176i")
 
+[node name="ResLabel" type="Label" parent="CanvasLayer/Top" unique_id=701000001]
+layout_mode = 0
+offset_left = 310.0
+offset_top = 27.0
+offset_right = 480.0
+offset_bottom = 61.0
+text = "Res: 0"
+label_settings = SubResource("LabelSettings_q176i")
+theme_override_colors/font_color = Color(0.4, 1.0, 0.4, 1.0)
+
+[node name="ComLabel" type="Label" parent="CanvasLayer/Top" unique_id=701000002]
+layout_mode = 0
+offset_left = 490.0
+offset_top = 27.0
+offset_right = 660.0
+offset_bottom = 61.0
+text = "Com: 0"
+label_settings = SubResource("LabelSettings_q176i")
+theme_override_colors/font_color = Color(0.4, 0.7, 1.0, 1.0)
+
+[node name="WorkLabel" type="Label" parent="CanvasLayer/Top" unique_id=701000003]
+layout_mode = 0
+offset_left = 670.0
+offset_top = 27.0
+offset_right = 860.0
+offset_bottom = 61.0
+text = "Work: 0"
+label_settings = SubResource("LabelSettings_q176i")
+theme_override_colors/font_color = Color(1.0, 0.85, 0.2, 1.0)
+
 [node name="Bottom" type="Control" parent="CanvasLayer" unique_id=227080816]
 layout_mode = 3
 anchors_preset = 2
@@ -118,6 +161,28 @@ offset_right = 344.0
 offset_bottom = 887.0
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("22_pm3ni")
+
+[node name="DevCommands" type="Label" parent="CanvasLayer" unique_id=111222333]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -220.0
+offset_top = -210.0
+offset_right = -16.0
+offset_bottom = -16.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "1  Save Slot 1
+2  Load Temp
+3  Save Slot 2
+4  Load Slot 2
+C  Clear Map
+Q / E  Cycle Building
+RMB  Rotate
+Del  Demolish"
+label_settings = SubResource("LabelSettings_q176i")
 
 [node name="Toast" type="Label" parent="CanvasLayer" unique_id=305670871]
 modulate = Color(1, 1, 1, 0)

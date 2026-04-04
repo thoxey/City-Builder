@@ -8,3 +8,4 @@ signal structure_placed(position: Vector3i, structure_index: int, orientation: i
 signal structure_demolished(position: Vector3i)
 signal cash_changed(new_amount: int)
 signal map_loaded(map: DataMap)
+signal population_updated(residential: int, commercial: int, workplace: int)

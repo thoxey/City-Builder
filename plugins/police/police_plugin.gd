@@ -29,15 +29,19 @@ var _car_packed: PackedScene = null
 # ── Lifecycle ─────────────────────────────────────────────────────────────────
 
 func _plugin_ready() -> void:
+	print("[Police] _plugin_ready called")
 	_car_packed = load(PATROL_MODEL_PATH) as PackedScene
 	if not _car_packed:
 		push_warning("[Police] patrol car model not found: %s" % PATROL_MODEL_PATH)
+	else:
+		print("[Police] patrol car model loaded OK")
 
 	GameEvents.structure_placed.connect(func(_a, _b, _c): _rebuild())
 	GameEvents.structure_demolished.connect(func(_a): _rebuild())
 	GameEvents.map_loaded.connect(func(_a): _rebuild())
 	_day_night.hour_changed.connect(_on_hour)
 	_rebuild()
+	print("[Police] _plugin_ready done, %d station(s) found" % _station_tiles.size())
 
 # ── Build ─────────────────────────────────────────────────────────────────────
 
@@ -54,6 +58,7 @@ func _rebuild() -> void:
 # ── Hour tick ─────────────────────────────────────────────────────────────────
 
 func _on_hour(_hour: float) -> void:
+	print("[Police] _on_hour: h=%.0f, %d station(s)" % [_hour, _station_tiles.size()])
 	for station in _station_tiles:
 		_spawn_patrol(station)
 
@@ -63,13 +68,16 @@ func _spawn_patrol(station_tile: Vector3i) -> void:
 	var graph: Dictionary = _traffic.get_road_graph()
 	var building_tiles: Array[Vector3i] = _traffic.get_building_tiles()
 	if building_tiles.size() < 2:
+		push_warning("[Police] station %s: only %d building tile(s) on map — need at least 2 to patrol" % [station_tile, building_tiles.size()])
 		return
 
 	# Station's nearest road tile
 	var station_stops: Array[Vector3i] = _traffic.get_stops_for_building(station_tile)
 	if station_stops.is_empty():
+		push_warning("[Police] station %s: no adjacent road tile found — place a road next to the station" % station_tile)
 		return
 	var home_road: Vector3i = station_stops[0]
+	print("[Police] station %s → home road %s, %d total building tile(s)" % [station_tile, home_road, building_tiles.size()])
 
 	# Pick PATROL_STOPS distinct random buildings (excluding the station itself)
 	var candidates: Array[Vector3i] = []
@@ -78,10 +86,14 @@ func _spawn_patrol(station_tile: Vector3i) -> void:
 			var stops: Array[Vector3i] = _traffic.get_stops_for_building(t)
 			if not stops.is_empty():
 				candidates.append(t)
+			else:
+				print("[Police]   skipping building %s — no adjacent road" % t)
 	if candidates.is_empty():
+		push_warning("[Police] station %s: no reachable destinations (all other buildings lack adjacent roads)" % station_tile)
 		return
 	candidates.shuffle()
 	var targets: Array[Vector3i] = candidates.slice(0, mini(PATROL_STOPS, candidates.size()))
+	print("[Police] station %s: %d candidate(s), targeting %s" % [station_tile, candidates.size(), targets])
 
 	# Build waypoint list: home → t1_road → t2_road → … → home
 	var waypoints: Array[Vector3i] = [home_road]
@@ -99,7 +111,8 @@ func _spawn_patrol(station_tile: Vector3i) -> void:
 			func(f: Vector3i, t: Vector3i) -> float: return _traffic.get_edge_cost(f, t),
 			func(a: Vector3i, b: Vector3i) -> float: return Pathfinder.manhattan(a, b))
 		if seg.size() <= 1:
-			return  # can't complete this patrol, skip
+			push_warning("[Police] station %s: no path between %s and %s — road network may be disconnected" % [station_tile, waypoints[i], waypoints[i + 1]])
+			return
 		if full_path.is_empty():
 			for tile: Vector3i in seg:
 				full_path.append(tile)
@@ -112,7 +125,9 @@ func _spawn_patrol(station_tile: Vector3i) -> void:
 				full_pos.append(Vector3(tile.x, 0.1, tile.z))
 
 	if full_path.size() <= 1:
+		push_warning("[Police] station %s: assembled path is too short (%d tile(s))" % [station_tile, full_path.size()])
 		return
+	print("[Police] station %s: spawning patrol, path = %d tiles" % [station_tile, full_path.size()])
 
 	# Remove start tile so CarProxy begins moving immediately
 	full_path.remove_at(0)

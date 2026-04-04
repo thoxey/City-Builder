@@ -1,10 +1,10 @@
 [gd_resource type="Resource" script_class="Structure" format=3 uid="uid://dtal0tl2ee336"]
 
-[ext_resource type="PackedScene" uid="uid://dln6aceqyidnh" path="res://models/Meshy_AI_Wisteria_Cottage_0403171247_texture.glb" id="1_164xq"]
+[ext_resource type="PackedScene" uid="uid://dln6aceqyidnh" path="res://models/Meshy_AI_Wisteria_Cottage_0403171247/Meshy_AI_Wisteria_Cottage_0403171247_texture.glb" id="1_164xq"]
 [ext_resource type="Script" uid="uid://cprji705vifbv" path="res://scripts/structure_metadata.gd" id="1_sbkf7"]
 [ext_resource type="Script" uid="uid://b4i7dfy6u3e8w" path="res://scripts/structure.gd" id="2_8ewai"]
 [ext_resource type="Script" uid="uid://u0hu8vt24b6o" path="res://scripts/building_metadata.gd" id="3_bldmeta"]
-[ext_resource type="Script" path="res://scripts/building_profile.gd" id="4_profile"]
+[ext_resource type="Script" uid="uid://53i8gir02r57" path="res://scripts/building_profile.gd" id="4_profile"]
 
 [sub_resource type="Resource" id="BuildingMeta_4"]
 script = ExtResource("3_bldmeta")
@@ -20,6 +20,5 @@ active_end = 9.0
 script = ExtResource("2_8ewai")
 model = ExtResource("1_164xq")
 price = 70
-model_scale = 0.6
-model_offset = Vector3(0, 0, 0)
 metadata = Array[ExtResource("1_sbkf7")]([SubResource("BuildingMeta_4"), SubResource("BuildingProfile_4")])
+model_scale = 0.45

@@ -7,7 +7,8 @@ const WAIT_MAX       := 3.0
 const BASE_SPEED     := 3.0   # tiles/sec at speed_limit 30
 const SPAWN_STAGGER  := 0.6
 
-var _graph: Dictionary = {}              # Vector3i → Array[Vector3i]
+var _graph: Dictionary = {}              # Vector3i → Array[Vector3i]  (road tiles only)
+var _walk_graph: Dictionary = {}         # Vector3i → Array[Vector3i]  (all placed tiles)
 var _building_tiles: Array[Vector3i] = []
 var _building_stops: Array[Vector3i] = [] # flat list: road tiles adjacent to any building
 var _building_road_stops: Dictionary = {} # building_tile → Array[Vector3i]
@@ -22,6 +23,9 @@ func get_dependencies() -> Array[String]: return []
 
 func get_road_graph() -> Dictionary:
 	return _graph
+
+func get_walk_graph() -> Dictionary:
+	return _walk_graph
 
 func get_building_tiles() -> Array[Vector3i]:
 	return _building_tiles
@@ -54,6 +58,7 @@ func _plugin_ready() -> void:
 
 func _rebuild() -> void:
 	_build_graph()
+	_build_walk_graph()
 	_find_building_stops()
 	_respawn_cars()
 	print("[Traffic] graph tiles: %d | building stops: %d | cars: %d" % [
@@ -81,21 +86,52 @@ func _connects_back(tile: Vector3i, from_dir: Vector2i) -> bool:
 	var orientation := GameState.gridmap.get_cell_item_orientation(tile)
 	return from_dir in road_meta.get_world_connections(orientation, GameState.gridmap)
 
+func _build_walk_graph() -> void:
+	_walk_graph.clear()
+	var occupied: Dictionary = {}
+	for cell in GameState.gridmap.get_used_cells():
+		occupied[cell] = true
+	for cell in GameState.gridmap.get_used_cells():
+		var neighbors: Array[Vector3i] = []
+		for offset: Vector3i in [Vector3i(1,0,0), Vector3i(-1,0,0), Vector3i(0,0,1), Vector3i(0,0,-1)]:
+			var nb: Vector3i = cell + offset
+			if occupied.has(nb):
+				neighbors.append(nb)
+		_walk_graph[cell] = neighbors
+
 func _find_building_stops() -> void:
 	_building_tiles.clear()
 	_building_stops.clear()
 	_building_road_stops.clear()
+
+	var visited_bids: Array[int] = []
+
 	for cell in GameState.gridmap.get_used_cells():
 		if not _is_building(GameState.gridmap.get_cell_item(cell)):
 			continue
+
+		# Deduplicate by building_id so multi-tile buildings are processed once
+		var cell_2d := Vector2i(cell.x, cell.z)
+		var bid: int = GameState.cell_to_building.get(cell_2d, -1)
+		if bid in visited_bids:
+			continue
+		visited_bids.append(bid)
+
 		_building_tiles.append(cell)
+
+		# Check road adjacency for every cell of the building's footprint,
+		# not just the anchor, so roads beside satellite tiles are also found
+		var all_cells: Array = GameState.building_registry.get(bid, {}).get("cells", [cell_2d])
+
 		var stops: Array[Vector3i] = []
-		for offset: Vector3i in [Vector3i(1,0,0), Vector3i(-1,0,0), Vector3i(0,0,1), Vector3i(0,0,-1)]:
-			var nb: Vector3i = cell + offset
-			if _graph.has(nb):
-				stops.append(nb)
-				if not nb in _building_stops:
-					_building_stops.append(nb)
+		for c2d in all_cells:
+			var c3d := Vector3i(c2d.x, 0, c2d.y)
+			for offset: Vector3i in [Vector3i(1,0,0), Vector3i(-1,0,0), Vector3i(0,0,1), Vector3i(0,0,-1)]:
+				var nb: Vector3i = c3d + offset
+				if _graph.has(nb) and not nb in stops:
+					stops.append(nb)
+					if not nb in _building_stops:
+						_building_stops.append(nb)
 		_building_road_stops[cell] = stops
 
 # ── Cars ──────────────────────────────────────────────────────────────────────

@@ -7,6 +7,16 @@ var gridmap: GridMap
 var structures: Array[Structure]
 var map: DataMap
 
+## Maps every occupied grid cell (Vector2i) to the building_id (int) that owns it.
+## Includes all footprint cells — anchor and satellites.
+var cell_to_building: Dictionary = {}
+
+## Maps building_id (int) to its placement data.
+## Shape: { anchor: Vector2i, structure: int, orientation: int, cells: Array }
+var building_registry: Dictionary = {}
+
+var _next_building_id: int = 0
+
 var _is_ready: bool = false
 var _ready_callbacks: Array[Callable] = []
 

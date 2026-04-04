@@ -1,9 +1,9 @@
-[gd_resource type="Resource" script_class="Structure" format=3]
+[gd_resource type="Resource" script_class="Structure" format=3 uid="uid://b13sps385yylh"]
 
-[ext_resource type="PackedScene" path="res://models/Meshy_AI_Isometric_Police_Stat_0403205443/Meshy_AI_Isometric_Police_Stat_0403205443_texture.glb" id="1_police"]
 [ext_resource type="Script" uid="uid://cprji705vifbv" path="res://scripts/structure_metadata.gd" id="1_meta"]
+[ext_resource type="PackedScene" uid="uid://bpfjn3wp2v4ct" path="res://models/Meshy_AI_Isometric_Police_Stat_0403205443/Meshy_AI_Isometric_Police_Stat_0403205443_texture.glb" id="1_police"]
 [ext_resource type="Script" uid="uid://b4i7dfy6u3e8w" path="res://scripts/structure.gd" id="2_struct"]
-[ext_resource type="Script" path="res://scripts/police_metadata.gd" id="3_policemeta"]
+[ext_resource type="Script" uid="uid://crrmhe713d46o" path="res://scripts/police_metadata.gd" id="3_policemeta"]
 
 [sub_resource type="Resource" id="PoliceMeta_1"]
 script = ExtResource("3_policemeta")
@@ -12,6 +12,5 @@ script = ExtResource("3_policemeta")
 script = ExtResource("2_struct")
 model = ExtResource("1_police")
 price = 150
-model_scale = 0.7
-model_offset = Vector3(0, 0, 0)
 metadata = Array[ExtResource("1_meta")]([SubResource("PoliceMeta_1")])
+model_scale = 0.7

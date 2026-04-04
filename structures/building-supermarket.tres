@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="Structure" format=3 uid="uid://bj3t3y8w3lgoh"]
+
+[ext_resource type="Script" uid="uid://cprji705vifbv" path="res://scripts/structure_metadata.gd" id="1_meta"]
+[ext_resource type="PackedScene" uid="uid://bramt4djwxqav" path="res://models/Meshy_AI_Streeter_s_Supermarke_0404154643/Meshy_AI_Streeter_s_Supermarke_0404154643_texture.glb" id="1_supermarket"]
+[ext_resource type="Script" uid="uid://b4i7dfy6u3e8w" path="res://scripts/structure.gd" id="2_struct"]
+[ext_resource type="Script" uid="uid://u0hu8vt24b6o" path="res://scripts/building_metadata.gd" id="3_bldmeta"]
+[ext_resource type="Script" uid="uid://53i8gir02r57" path="res://scripts/building_profile.gd" id="4_profile"]
+
+[sub_resource type="Resource" id="BuildingMeta_supermarket"]
+script = ExtResource("3_bldmeta")
+
+[sub_resource type="Resource" id="BuildingProfile_supermarket"]
+script = ExtResource("4_profile")
+category = "commercial"
+capacity = 40
+active_end = 21.0
+
+[resource]
+script = ExtResource("2_struct")
+model = ExtResource("1_supermarket")
+price = 120
+metadata = Array[ExtResource("1_meta")]([SubResource("BuildingMeta_supermarket"), SubResource("BuildingProfile_supermarket")])
+footprint = Array[Vector2i]([Vector2i(0, 0), Vector2i(1, 0), Vector2i(0, 1), Vector2i(1, 1)])
+model_offset = Vector3(0.5, 0, 0.5)

@@ -1,10 +1,10 @@
 [gd_resource type="Resource" script_class="Structure" format=3 uid="uid://c5fveedgvunju"]
 
 [ext_resource type="Script" uid="uid://cprji705vifbv" path="res://scripts/structure_metadata.gd" id="1_eekgk"]
-[ext_resource type="PackedScene" uid="uid://bb23xvtr8rqs6" path="res://models/Meshy_AI_Sunnyvale_News_Conf_0403170655_texture.glb" id="1_klt7o"]
+[ext_resource type="PackedScene" uid="uid://bb23xvtr8rqs6" path="res://models/Meshy_AI_Sunnyvale_News_Conf_0403170655/Meshy_AI_Sunnyvale_News_Conf_0403170655_texture.glb" id="1_klt7o"]
 [ext_resource type="Script" uid="uid://b4i7dfy6u3e8w" path="res://scripts/structure.gd" id="2_a2t3e"]
 [ext_resource type="Script" uid="uid://u0hu8vt24b6o" path="res://scripts/building_metadata.gd" id="3_bldmeta"]
-[ext_resource type="Script" path="res://scripts/building_profile.gd" id="4_profile"]
+[ext_resource type="Script" uid="uid://53i8gir02r57" path="res://scripts/building_profile.gd" id="4_profile"]
 
 [sub_resource type="Resource" id="BuildingMeta_2"]
 script = ExtResource("3_bldmeta")
@@ -12,14 +12,10 @@ script = ExtResource("3_bldmeta")
 [sub_resource type="Resource" id="BuildingProfile_2"]
 script = ExtResource("4_profile")
 category = "commercial"
-capacity = 10
-active_start = 8.0
-active_end = 18.0
 
 [resource]
 script = ExtResource("2_a2t3e")
 model = ExtResource("1_klt7o")
 price = 60
-model_scale = 0.6
-model_offset = Vector3(0, 0, 0)
 metadata = Array[ExtResource("1_eekgk")]([SubResource("BuildingMeta_2"), SubResource("BuildingProfile_2")])
+model_scale = 0.45

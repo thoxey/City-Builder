@@ -54,6 +54,7 @@ var _timer:  Dictionary = {}
 var _car:    Dictionary = {}
 
 var _person_packed: PackedScene = null
+var _current_hour: float = 0.0
 
 # ── Lifecycle ─────────────────────────────────────────────────────────────────
 
@@ -153,6 +154,7 @@ func _process(delta: float) -> void:
 # ── Hour events ───────────────────────────────────────────────────────────────
 
 func _on_hour(hour: float) -> void:
+	_current_hour = hour
 	var h := int(hour)
 
 	if h == 8:
@@ -187,11 +189,29 @@ func _on_hour(hour: float) -> void:
 
 func _assign_journey(person: PersonProxy) -> void:
 	var home_tile: Vector3i = _home[person]
-	var building_tiles: Array[Vector3i] = _traffic.get_building_tiles()
+	var h := int(_current_hour)
+
+	# Time-aware destination: workplaces during work hours, commercial in evening,
+	# residential at night. Never send to commercial during work hours (8-17).
+	var preferred: Array[Vector3i]
+	if h >= 8 and h < 17:
+		preferred = _get_tiles_by_category("workplace")
+	elif h >= 17 and h <= 22:
+		preferred = _get_tiles_by_category("commercial")
+	else:
+		preferred = _get_tiles_by_category("residential")
+
 	var candidates: Array[Vector3i] = []
-	for t in building_tiles:
+	for t in preferred:
 		if t != home_tile:
 			candidates.append(t)
+
+	# Fallback: any non-home building if preferred category is empty
+	if candidates.is_empty():
+		for t in _traffic.get_building_tiles():
+			if t != home_tile:
+				candidates.append(t)
+
 	if candidates.is_empty():
 		_timer[person] = randf_range(DEST_WAIT_MIN, DEST_WAIT_MAX)
 		return
@@ -211,7 +231,11 @@ func _begin_journey(person: PersonProxy, dest_tile: Vector3i) -> void:
 		person.walk_to([road_tile], [Vector3(road_tile.x, WALK_HEIGHT, road_tile.z)])
 		_state[person] = PersonState.WALKING_TO_ROAD
 	else:
-		person.walk_to([dest_tile], [Vector3(dest_tile.x, WALK_HEIGHT, dest_tile.z)])
+		var path := _walk_path(home_tile, dest_tile)
+		var positions: Array[Vector3] = []
+		for t: Vector3i in path:
+			positions.append(Vector3(t.x, WALK_HEIGHT, t.z))
+		person.walk_to(path, positions)
 		_state[person] = PersonState.WALKING_TO_DEST
 
 func _begin_car_journey(person: PersonProxy) -> void:
@@ -264,7 +288,11 @@ func _end_car_journey(person: PersonProxy) -> void:
 	var dest_tile: Vector3i = _dest[person]
 	person.place_at(road_tile, Vector3(road_tile.x, WALK_HEIGHT, road_tile.z))
 	person.set_model_visible(true)
-	person.walk_to([dest_tile], [Vector3(dest_tile.x, WALK_HEIGHT, dest_tile.z)])
+	var path := _walk_path(road_tile, dest_tile)
+	var positions: Array[Vector3] = []
+	for t: Vector3i in path:
+		positions.append(Vector3(t.x, WALK_HEIGHT, t.z))
+	person.walk_to(path, positions)
 	_state[person] = PersonState.WALKING_TO_DEST
 
 func _arrive_at_dest(person: PersonProxy) -> void:
@@ -273,6 +301,20 @@ func _arrive_at_dest(person: PersonProxy) -> void:
 	_dest[person] = old_home
 	_state[person] = PersonState.IDLE
 	_timer[person] = randf_range(DEST_WAIT_MIN, DEST_WAIT_MAX)
+
+## Returns a tile path from `from` to `to` along placed tiles, with `from` removed.
+## Falls back to [to] (direct single waypoint) if no connected path exists.
+func _walk_path(from: Vector3i, to: Vector3i) -> Array[Vector3i]:
+	if from == to:
+		return []
+	var path := Pathfinder.find_path(
+		_traffic.get_walk_graph(), from, to,
+		func(_f: Vector3i, _t: Vector3i) -> float: return 1.0,
+		func(a: Vector3i, b: Vector3i) -> float: return Pathfinder.manhattan(a, b))
+	if path.size() > 1:
+		path.remove_at(0)
+		return path
+	return [to]  # no connected path — fall back to direct
 
 func _abort_to_idle(person: PersonProxy) -> void:
 	_car.erase(person)
