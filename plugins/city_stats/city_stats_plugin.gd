@@ -65,10 +65,18 @@ func _on_hour(hour: float) -> void:
 	for sink in _sinks:
 		var t: String = (sink as CityStatSink).get_type_id()
 		var requested: int = (sink as CityStatSink).tick(hour)
-		sink_entries.append({ "sink": sink, "type_id": t, "requested": requested })
+		sink_entries.append({
+			"sink":     sink,
+			"type_id":  t,
+			"requested": requested,
+			"priority": (sink as CityStatSink).priority,
+		})
 		demand[t] = demand.get(t, 0) + requested
 
-	# --- Distribute supply (first-come first-served) ---
+	# --- Sort by priority so lower-priority-value sinks are served first ---
+	sink_entries.sort_custom(func(a, b): return a["priority"] < b["priority"])
+
+	# --- Distribute supply ---
 	var remaining: Dictionary = {}  # type_id -> int remaining to give out
 	for t in demand:
 		remaining[t] = supply.get(t, 0)

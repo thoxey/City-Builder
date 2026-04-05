@@ -1,12 +1,12 @@
 extends PluginBase
 
-## Workplace building plugin.
-## Scans for structures with BuildingProfile.category == "workplace" and
-## registers one CityStatSink per building with CityStats.
+## Workplace building plugin — incremental registration.
 ##
-## Workplace buildings demand "population" during their active window
-## (default 08:00–18:00).  The satisfaction score (fulfilled / demanded)
-## is available via CityStats.get_satisfaction("population").
+## Per building, registers with CityStats:
+##   • _WorkerSink    ("population", priority 10) — workers during open hours
+##   • _BudgetSource  ("budget")                 — income from employed workers
+
+const BUDGET_PER_WORKER := 2  # budget units earned per filled worker slot per hour
 
 func get_plugin_name() -> String: return "Workplace"
 func get_dependencies() -> Array[String]: return ["CityStats"]
@@ -16,65 +16,93 @@ var _city_stats: PluginBase
 func inject(deps: Dictionary) -> void:
 	_city_stats = deps.get("CityStats")
 
-# ── State ─────────────────────────────────────────────────────────────────────
+# ── State — keyed by anchor Vector2i ─────────────────────────────────────────
 
-var _sinks: Array = []  # _WorkplaceSink
+var _worker_sinks:   Dictionary = {}
+var _budget_sources: Dictionary = {}
 
 # ── Lifecycle ─────────────────────────────────────────────────────────────────
 
 func _plugin_ready() -> void:
-	GameEvents.structure_placed.connect(func(_a, _b, _c): _rebuild())
-	GameEvents.structure_demolished.connect(func(_a): _rebuild())
-	GameEvents.map_loaded.connect(func(_a): _rebuild())
-	_rebuild()
+	GameEvents.structure_placed.connect(_on_placed)
+	GameEvents.structure_demolished.connect(_on_demolished)
+	GameEvents.map_loaded.connect(_on_map_loaded)
+	_on_map_loaded(null)
 
-# ── Build ─────────────────────────────────────────────────────────────────────
+# ── Incremental handlers ──────────────────────────────────────────────────────
 
-func _rebuild() -> void:
-	for s in _sinks:
-		_city_stats.unregister_sink(s)
-	_sinks.clear()
+func _on_placed(pos: Vector3i, idx: int, _orient: int) -> void:
+	var profile := GameState.structures[idx].find_metadata(BuildingProfile) as BuildingProfile
+	if not profile or profile.category != "workplace": return
+	_register(Vector2i(pos.x, pos.z), profile.capacity, profile.active_start, profile.active_end)
 
-	for cell in GameState.gridmap.get_used_cells():
-		var sid: int = GameState.gridmap.get_cell_item(cell)
-		if sid < 0 or sid >= GameState.structures.size():
-			continue
-		var profile: BuildingProfile = GameState.structures[sid].find_metadata(BuildingProfile) as BuildingProfile
-		if not profile or profile.category != "workplace":
-			continue
+func _on_demolished(pos: Vector3i) -> void:
+	_unregister(Vector2i(pos.x, pos.z))
 
-		var sink := _WorkplaceSink.new(profile.capacity, profile.active_start, profile.active_end)
-		_sinks.append(sink)
+func _on_map_loaded(_map) -> void:
+	for a in _worker_sinks:   _city_stats.unregister_sink(_worker_sinks[a])
+	for a in _budget_sources: _city_stats.unregister_source(_budget_sources[a])
+	_worker_sinks.clear()
+	_budget_sources.clear()
 
-	for s in _sinks:
-		_city_stats.register_sink(s)
+	for bid in GameState.building_registry:
+		var entry: Dictionary = GameState.building_registry[bid]
+		var sid: int = entry.get("structure", -1)
+		if sid < 0 or sid >= GameState.structures.size(): continue
+		var profile := GameState.structures[sid].find_metadata(BuildingProfile) as BuildingProfile
+		if not profile or profile.category != "workplace": continue
+		_register(entry["anchor"], profile.capacity, profile.active_start, profile.active_end)
 
-	print("[Workplace] %d buildings registered as worker sinks" % _sinks.size())
+func _register(anchor: Vector2i, capacity: int, start: float, end: float) -> void:
+	var sink   := _WorkerSink.new(capacity, start, end)
+	var source := _BudgetSource.new(sink, BUDGET_PER_WORKER)
+	_worker_sinks[anchor]   = sink
+	_budget_sources[anchor] = source
+	_city_stats.register_sink(sink)
+	_city_stats.register_source(source)
 
-# ── Inner sink ────────────────────────────────────────────────────────────────
+func _unregister(anchor: Vector2i) -> void:
+	if _worker_sinks.has(anchor):
+		_city_stats.unregister_sink(_worker_sinks[anchor])
+		_worker_sinks.erase(anchor)
+	if _budget_sources.has(anchor):
+		_city_stats.unregister_source(_budget_sources[anchor])
+		_budget_sources.erase(anchor)
 
-class _WorkplaceSink extends CityStatSink:
-	var capacity: int
-	var active_start: float
-	var active_end: float
-	var satisfaction: float = 1.0
+# ── Inner classes ─────────────────────────────────────────────────────────────
+
+## Worker demand — draws from population pool during open hours.
+## Priority 10 ensures workers are served before commercial visitors (priority 100).
+class _WorkerSink extends CityStatSink:
+	var capacity:       int
+	var active_start:   float
+	var active_end:     float
+	var last_fulfilled: int = 0
 
 	func _init(cap: int, start: float, end: float) -> void:
-		capacity = cap
+		capacity     = cap
 		active_start = start
-		active_end = end
+		active_end   = end
+		priority = 10
 
-	func get_type_id() -> String:
-		return "population"
+	func get_type_id() -> String: return "population"
 
 	func tick(hour: float) -> int:
-		return capacity if _in_window(hour) else 0
+		return capacity if _in_window(hour, active_start, active_end) else 0
 
-	func on_fulfilled(fulfilled: int, requested: int) -> void:
-		satisfaction = float(fulfilled) / float(requested) if requested > 0 else 1.0
+	func on_fulfilled(fulfilled: int, _requested: int) -> void:
+		last_fulfilled = fulfilled
 
-	func _in_window(hour: float) -> bool:
-		if active_end >= active_start:
-			return hour >= active_start and hour < active_end
-		# Wraps midnight
-		return hour >= active_start or hour < active_end
+## Budget source — income generated by filled worker slots (one-tick lag from on_fulfilled).
+class _BudgetSource extends CityStatSource:
+	var _sink: _WorkerSink
+	var _rate: int
+
+	func _init(sink: _WorkerSink, rate: int) -> void:
+		_sink = sink
+		_rate = rate
+
+	func get_type_id() -> String: return "budget"
+
+	func tick(_hour: float) -> int:
+		return _sink.last_fulfilled * _rate

@@ -1,11 +1,12 @@
 extends PluginBase
 
-## Commercial building plugin.
-## Scans for structures with BuildingProfile.category == "commercial" and
-## registers one CityStatSink per building with CityStats.
+## Commercial building plugin — incremental registration.
 ##
-## Commercial buildings demand "population" (visitors/customers) during
-## their active window — daytime for shops, evening for pubs.
+## Per building, registers with CityStats:
+##   • _VisitorSink ("population", priority 100) — customers during open hours
+##
+## Priority 100 means commercial is served after workplaces (priority 10),
+## so residents fill jobs before filling leisure activities.
 
 func get_plugin_name() -> String: return "Commercial"
 func get_dependencies() -> Array[String]: return ["CityStats"]
@@ -15,65 +16,70 @@ var _city_stats: PluginBase
 func inject(deps: Dictionary) -> void:
 	_city_stats = deps.get("CityStats")
 
-# ── State ─────────────────────────────────────────────────────────────────────
+# ── State — keyed by anchor Vector2i ─────────────────────────────────────────
 
-var _sinks: Array = []  # _CommercialSink
+var _visitor_sinks: Dictionary = {}
 
 # ── Lifecycle ─────────────────────────────────────────────────────────────────
 
 func _plugin_ready() -> void:
-	GameEvents.structure_placed.connect(func(_a, _b, _c): _rebuild())
-	GameEvents.structure_demolished.connect(func(_a): _rebuild())
-	GameEvents.map_loaded.connect(func(_a): _rebuild())
-	_rebuild()
+	GameEvents.structure_placed.connect(_on_placed)
+	GameEvents.structure_demolished.connect(_on_demolished)
+	GameEvents.map_loaded.connect(_on_map_loaded)
+	_on_map_loaded(null)
 
-# ── Build ─────────────────────────────────────────────────────────────────────
+# ── Incremental handlers ──────────────────────────────────────────────────────
 
-func _rebuild() -> void:
-	for s in _sinks:
-		_city_stats.unregister_sink(s)
-	_sinks.clear()
+func _on_placed(pos: Vector3i, idx: int, _orient: int) -> void:
+	var profile := GameState.structures[idx].find_metadata(BuildingProfile) as BuildingProfile
+	if not profile or profile.category != "commercial": return
+	_register(Vector2i(pos.x, pos.z), profile.capacity, profile.active_start, profile.active_end)
 
-	for cell in GameState.gridmap.get_used_cells():
-		var sid: int = GameState.gridmap.get_cell_item(cell)
-		if sid < 0 or sid >= GameState.structures.size():
-			continue
-		var profile: BuildingProfile = GameState.structures[sid].find_metadata(BuildingProfile) as BuildingProfile
-		if not profile or profile.category != "commercial":
-			continue
+func _on_demolished(pos: Vector3i) -> void:
+	_unregister(Vector2i(pos.x, pos.z))
 
-		var sink := _CommercialSink.new(profile.capacity, profile.active_start, profile.active_end)
-		_sinks.append(sink)
+func _on_map_loaded(_map) -> void:
+	for a in _visitor_sinks: _city_stats.unregister_sink(_visitor_sinks[a])
+	_visitor_sinks.clear()
 
-	for s in _sinks:
-		_city_stats.register_sink(s)
+	for bid in GameState.building_registry:
+		var entry: Dictionary = GameState.building_registry[bid]
+		var sid: int = entry.get("structure", -1)
+		if sid < 0 or sid >= GameState.structures.size(): continue
+		var profile := GameState.structures[sid].find_metadata(BuildingProfile) as BuildingProfile
+		if not profile or profile.category != "commercial": continue
+		_register(entry["anchor"], profile.capacity, profile.active_start, profile.active_end)
 
-	print("[Commercial] %d buildings registered as population sinks" % _sinks.size())
+func _register(anchor: Vector2i, capacity: int, start: float, end: float) -> void:
+	var sink := _VisitorSink.new(capacity, start, end)
+	_visitor_sinks[anchor] = sink
+	_city_stats.register_sink(sink)
 
-# ── Inner sink ────────────────────────────────────────────────────────────────
+func _unregister(anchor: Vector2i) -> void:
+	if _visitor_sinks.has(anchor):
+		_city_stats.unregister_sink(_visitor_sinks[anchor])
+		_visitor_sinks.erase(anchor)
 
-class _CommercialSink extends CityStatSink:
-	var capacity: int
+# ── Inner class ───────────────────────────────────────────────────────────────
+
+## Visitor demand — draws from population pool during commercial hours.
+## Served after workers (priority 100 > 10).
+class _VisitorSink extends CityStatSink:
+	var capacity:     int
 	var active_start: float
-	var active_end: float
-	var satisfaction: float = 1.0
+	var active_end:   float
+	var last_fulfilled: int = 0
 
 	func _init(cap: int, start: float, end: float) -> void:
-		capacity = cap
+		capacity     = cap
 		active_start = start
-		active_end = end
+		active_end   = end
+		priority = 100
 
-	func get_type_id() -> String:
-		return "population"
+	func get_type_id() -> String: return "population"
 
 	func tick(hour: float) -> int:
-		return capacity if _in_window(hour) else 0
+		return capacity if _in_window(hour, active_start, active_end) else 0
 
-	func on_fulfilled(fulfilled: int, requested: int) -> void:
-		satisfaction = float(fulfilled) / float(requested) if requested > 0 else 1.0
-
-	func _in_window(hour: float) -> bool:
-		if active_end >= active_start:
-			return hour >= active_start and hour < active_end
-		# Wraps midnight (e.g. 22–2)
-		return hour >= active_start or hour < active_end
+	func on_fulfilled(fulfilled: int, _requested: int) -> void:
+		last_fulfilled = fulfilled

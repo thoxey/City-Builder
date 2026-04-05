@@ -13,11 +13,13 @@ const PLUGINS: Array[GDScript] = [
 	preload("res://plugins/people/people_plugin.gd"),
 	preload("res://plugins/day_night/day_night_plugin.gd"),
 	preload("res://plugins/city_stats/city_stats_plugin.gd"),
+	preload("res://plugins/satisfaction/satisfaction_plugin.gd"),
 	preload("res://plugins/residential/residential_plugin.gd"),
 	preload("res://plugins/workplace/workplace_plugin.gd"),
 	preload("res://plugins/commercial/commercial_plugin.gd"),
 	preload("res://plugins/police/police_plugin.gd"),
 	preload("res://plugins/medical/medical_plugin.gd"),
+	preload("res://plugins/hud/hud_plugin.gd"),
 	preload("res://plugins/example/example_plugin.gd"),
 ]
 

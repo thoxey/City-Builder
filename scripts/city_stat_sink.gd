@@ -4,12 +4,11 @@ class_name CityStatSink
 ## Base class for city simulation demand consumers.
 ## Extend this in a building-type plugin to request resources each in-game hour.
 ##
-## Example:
-##   class _WorkplaceSink extends CityStatSink:
-##       func get_type_id() -> String: return "workers"
-##       func tick(hour: float) -> int: return capacity if _open(hour) else 0
-##       func on_fulfilled(fulfilled: int, requested: int) -> void:
-##           satisfaction = float(fulfilled) / float(requested)
+## priority: lower value = fulfilled first within a tick.
+##   Recommended bands: critical=0, workers=10, leisure=100.
+
+## Fulfilment priority — lower = served before higher values in the same tick.
+var priority: int = 0
 
 ## The resource category this sink consumes (must match a CityStatSource type_id).
 func get_type_id() -> String:
@@ -20,6 +19,13 @@ func tick(_hour: float) -> int:
 	return 0
 
 ## Called after matching. fulfilled ≤ requested.
-## Override to react to under/over supply (update visuals, log, etc).
+## Override to react to under/over supply.
 func on_fulfilled(_fulfilled: int, _requested: int) -> void:
 	pass
+
+## Returns true when hour falls in [start, end).
+## Wraps midnight when end < start (e.g. 22:00–02:00).
+func _in_window(hour: float, start: float, end: float) -> bool:
+	if end >= start:
+		return hour >= start and hour < end
+	return hour >= start or hour < end

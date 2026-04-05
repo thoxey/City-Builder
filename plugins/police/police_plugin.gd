@@ -2,26 +2,34 @@ extends PluginBase
 
 ## Police plugin.
 ## Each hour, spawns a looping patrol car per police station.
-## Patrol route: PATROL_STOPS random reachable buildings → returns to station → loops.
+## Also registers with CityStats:
+##   • _SafetySource ("safety")  — coverage provided by this station
+##   • _BudgetSink   ("budget")  — running cost per station per hour
 
-const PATROL_STOPS := 4
+const PATROL_STOPS       := 4
+const SAFETY_PER_STATION := 100  # safety units provided per station
+const BUDGET_COST        := 30   # budget units consumed per station per hour
 
 func get_plugin_name() -> String: return "Police"
-func get_dependencies() -> Array[String]: return ["RoadNetwork", "CarManager", "DayNight"]
+func get_dependencies() -> Array[String]: return ["RoadNetwork", "CarManager", "DayNight", "CityStats"]
 
 var _road_network: PluginBase
 var _car_manager:  PluginBase
 var _day_night:    PluginBase
+var _city_stats:   PluginBase
 
 func inject(deps: Dictionary) -> void:
 	_road_network = deps.get("RoadNetwork")
 	_car_manager  = deps.get("CarManager")
 	_day_night    = deps.get("DayNight")
+	_city_stats   = deps.get("CityStats")
 
 # ── State ─────────────────────────────────────────────────────────────────────
 
-var _station_tiles:    Array[Vector3i] = []
-var _patrol_journey_ids: Array[int]    = []
+var _station_tiles:      Array[Vector3i] = []
+var _patrol_journey_ids: Array[int]      = []
+var _safety_sources:     Dictionary      = {}  # Vector3i → _SafetySource
+var _budget_sinks:       Dictionary      = {}  # Vector3i → _BudgetSink
 
 # ── Lifecycle ─────────────────────────────────────────────────────────────────
 
@@ -32,11 +40,16 @@ func _plugin_ready() -> void:
 	_day_night.hour_changed.connect(_on_hour)
 	_rebuild()
 
-# ── Build ─────────────────────────────────────────────────────────────────────
+# ── Rebuild — traffic routes require a full rescan; CityStats is rebuilt alongside ──
 
 func _rebuild() -> void:
-	# Cancel existing patrols (CarManager already cancelled them on map change,
-	# but cancel here too for any non-map-change rebuilds)
+	# Unregister old CityStats entries
+	for src in _safety_sources.values(): _city_stats.unregister_source(src)
+	for snk in _budget_sinks.values():   _city_stats.unregister_sink(snk)
+	_safety_sources.clear()
+	_budget_sinks.clear()
+
+	# Cancel existing patrols
 	for jid: int in _patrol_journey_ids:
 		_car_manager.cancel_journey(jid)
 	_patrol_journey_ids.clear()
@@ -44,14 +57,20 @@ func _rebuild() -> void:
 
 	for cell: Vector3i in GameState.gridmap.get_used_cells():
 		var sid: int = GameState.gridmap.get_cell_item(cell)
-		if sid < 0 or sid >= GameState.structures.size():
-			continue
-		if GameState.structures[sid].find_metadata(PoliceMetadata) != null:
-			_station_tiles.append(cell)
+		if sid < 0 or sid >= GameState.structures.size(): continue
+		if GameState.structures[sid].find_metadata(PoliceMetadata) == null: continue
+
+		_station_tiles.append(cell)
+
+		var src := _SafetySource.new(SAFETY_PER_STATION)
+		var snk := _BudgetSink.new(BUDGET_COST)
+		_safety_sources[cell] = src
+		_budget_sinks[cell]   = snk
+		_city_stats.register_source(src)
+		_city_stats.register_sink(snk)
 
 	print("[Police] %d station(s)" % _station_tiles.size())
 
-	# Spawn a patrol immediately so cars are visible without waiting for an hour tick
 	for station: Vector3i in _station_tiles:
 		_spawn_patrol(station)
 
@@ -66,7 +85,6 @@ func _on_hour(_hour: float) -> void:
 func _spawn_patrol(station_tile: Vector3i) -> void:
 	var building_tiles: Array[Vector3i] = _road_network.get_building_tiles()
 
-	# Pick PATROL_STOPS distinct reachable buildings (excluding the station)
 	var candidates: Array[Vector3i] = []
 	for t: Vector3i in building_tiles:
 		if t != station_tile and not _road_network.get_stops_for_building(t).is_empty():
@@ -80,11 +98,25 @@ func _spawn_patrol(station_tile: Vector3i) -> void:
 	var route: Array[Vector3i] = []
 	for t: Vector3i in candidates.slice(0, mini(PATROL_STOPS, candidates.size())):
 		route.append(t)
-	route.append(station_tile)   # return home at end of each loop iteration
+	route.append(station_tile)
 
 	var jid: int = _car_manager.request_journey(
 			station_tile, route, CarSlot.CarType.POLICE, true)
 	if jid >= 0:
 		_patrol_journey_ids.append(jid)
 	else:
-		push_warning("[Police] station %s: failed to spawn patrol (pool full or no road)" % str(station_tile))
+		push_warning("[Police] station %s: failed to spawn patrol" % str(station_tile))
+
+# ── Inner classes ─────────────────────────────────────────────────────────────
+
+class _SafetySource extends CityStatSource:
+	var capacity: int
+	func _init(cap: int) -> void: capacity = cap
+	func get_type_id() -> String: return "safety"
+	func tick(_hour: float) -> int: return capacity
+
+class _BudgetSink extends CityStatSink:
+	var cost: int
+	func _init(c: int) -> void: cost = c
+	func get_type_id() -> String: return "budget"
+	func tick(_hour: float) -> int: return cost
