@@ -1,18 +1,21 @@
 extends PluginBase
 
-const LANE_OFFSET    := 0.2
-const BASE_SPEED     := 3.0   # tiles/sec at speed_limit 30
+## Road Network — builds and exposes the road graph, walk graph, and building stops.
+## Pure infrastructure: no cars, no simulation. All vehicle plugins depend on this.
 
-var _graph: Dictionary = {}              # Vector3i → Array[Vector3i]  (road tiles only)
-var _walk_graph: Dictionary = {}         # Vector3i → Array[Vector3i]  (all placed tiles)
-var _building_tiles: Array[Vector3i] = []
-var _building_stops: Array[Vector3i] = [] # flat list: road tiles adjacent to any building
-var _building_road_stops: Dictionary = {} # building_tile → Array[Vector3i]
+const LANE_OFFSET := 0.2
+const BASE_SPEED  := 3.0   # tiles/sec at speed_limit 30
 
-func get_plugin_name() -> String: return "Traffic"
+var _graph:      Dictionary = {}   # Vector3i → Array[Vector3i]  (road tiles only)
+var _walk_graph: Dictionary = {}   # Vector3i → Array[Vector3i]  (all placed tiles)
+var _building_tiles:      Array[Vector3i] = []
+var _building_stops:      Array[Vector3i] = []   # flat: road tiles adjacent to any building
+var _building_road_stops: Dictionary = {}         # building_tile → Array[Vector3i]
+
+func get_plugin_name() -> String: return "RoadNetwork"
 func get_dependencies() -> Array[String]: return []
 
-# ── Public API (consumed by dependent plugins) ────────────────────────────────
+# ── Public API ────────────────────────────────────────────────────────────────
 
 func get_road_graph() -> Dictionary:
 	return _graph
@@ -56,8 +59,8 @@ func _rebuild() -> void:
 	_build_graph()
 	_build_walk_graph()
 	_find_building_stops()
-	print("[Traffic] graph tiles: %d | building stops: %d" % [
-			_graph.size(), _building_stops.size()])
+	print("[RoadNetwork] road tiles: %d | walk tiles: %d | building stops: %d" % [
+			_graph.size(), _walk_graph.size(), _building_stops.size()])
 
 func _build_graph() -> void:
 	_graph.clear()
@@ -105,7 +108,6 @@ func _find_building_stops() -> void:
 		if not _is_building(GameState.gridmap.get_cell_item(cell)):
 			continue
 
-		# Deduplicate by building_id so multi-tile buildings are processed once
 		var cell_2d := Vector2i(cell.x, cell.z)
 		var bid: int = GameState.cell_to_building.get(cell_2d, -1)
 		if bid in visited_bids:
@@ -114,10 +116,7 @@ func _find_building_stops() -> void:
 
 		_building_tiles.append(cell)
 
-		# Check road adjacency for every cell of the building's footprint,
-		# not just the anchor, so roads beside satellite tiles are also found
 		var all_cells: Array = GameState.building_registry.get(bid, {}).get("cells", [cell_2d])
-
 		var stops: Array[Vector3i] = []
 		for c2d in all_cells:
 			var c3d := Vector3i(c2d.x, 0, c2d.y)
@@ -131,8 +130,6 @@ func _find_building_stops() -> void:
 
 # ── Edge cost ─────────────────────────────────────────────────────────────────
 
-## Cost to traverse one road tile. Faster roads = cheaper.
-## Used by People plugin cars via get_edge_cost().
 func _edge_cost(_from: Vector3i, to: Vector3i) -> float:
 	var road_meta := _road_meta_for(GameState.gridmap.get_cell_item(to))
 	if not road_meta:

@@ -23,9 +23,9 @@ var _mesh: ImmediateMesh
 var _overlay_visible := false
 
 func get_plugin_name() -> String: return "RoadDebug"
-func get_dependencies() -> Array[String]: return ["Traffic"]
+func get_dependencies() -> Array[String]: return ["RoadNetwork"]
 func inject(deps: Dictionary) -> void:
-	_traffic = deps.get("Traffic")
+	_traffic = deps.get("RoadNetwork")
 
 func _plugin_ready() -> void:
 	_mesh = ImmediateMesh.new()

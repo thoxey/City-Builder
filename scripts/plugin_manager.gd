@@ -8,7 +8,8 @@ extends Node
 
 const PLUGINS: Array[GDScript] = [
 	preload("res://plugins/road_debug/road_debug_plugin.gd"),
-	preload("res://plugins/traffic/traffic_plugin.gd"),
+	preload("res://plugins/traffic/road_network_plugin.gd"),
+	preload("res://plugins/traffic/car_manager_plugin.gd"),
 	preload("res://plugins/people/people_plugin.gd"),
 	preload("res://plugins/day_night/day_night_plugin.gd"),
 	preload("res://plugins/city_stats/city_stats_plugin.gd"),
