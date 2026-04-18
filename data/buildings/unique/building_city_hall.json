@@ -1,0 +1,23 @@
+{
+  "building_id": "building_city_hall",
+  "display_name": "City Hall",
+  "description": "",
+  "model_path": "res://models/Meshy_AI_Clocktower_City_Hall_0403210028/Meshy_AI_Clocktower_City_Hall_0403210028_texture.glb",
+  "model_scale": 0.92,
+  "model_offset": [0, 0, 0],
+  "model_rotation_y": 90.0,
+  "price": 200,
+  "footprint": [[0, -1], [0, 0], [0, 1]],
+  "category": "unique",
+  "profiles": [
+    {"type": "BuildingMetadata"},
+    {
+      "type": "BuildingProfile",
+      "category": "workplace",
+      "capacity": 20,
+      "active_start": 8.0,
+      "active_end": 18.0
+    }
+  ],
+  "tags": []
+}

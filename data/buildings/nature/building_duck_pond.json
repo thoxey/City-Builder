@@ -1,0 +1,14 @@
+{
+  "building_id": "building_duck_pond",
+  "display_name": "Duck Pond",
+  "description": "",
+  "model_path": "res://models/Meshy_AI_Duck_Pond_in_the_Hedg_0403173405/Meshy_AI_Duck_Pond_in_the_Hedg_0403173405_texture.glb",
+  "model_scale": 0.5,
+  "model_offset": [0, -0.1, 0],
+  "model_rotation_y": 0.0,
+  "price": 30,
+  "footprint": [[0, 0]],
+  "category": "nature",
+  "profiles": [],
+  "tags": []
+}

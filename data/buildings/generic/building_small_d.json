@@ -1,0 +1,23 @@
+{
+  "building_id": "building_small_d",
+  "display_name": "Cottage Residence D",
+  "description": "",
+  "model_path": "res://models/Meshy_AI_Wisteria_Cottage_0403171247/Meshy_AI_Wisteria_Cottage_0403171247_texture.glb",
+  "model_scale": 0.45,
+  "model_offset": [0, 0, 0],
+  "model_rotation_y": 0.0,
+  "price": 70,
+  "footprint": [[0, 0]],
+  "category": "generic",
+  "profiles": [
+    {"type": "BuildingMetadata"},
+    {
+      "type": "BuildingProfile",
+      "category": "residential",
+      "capacity": 4,
+      "active_start": 6.0,
+      "active_end": 9.0
+    }
+  ],
+  "tags": []
+}

@@ -1,0 +1,23 @@
+{
+  "building_id": "building_small_a",
+  "display_name": "Small Residence A",
+  "description": "",
+  "model_path": "res://models/Meshy_AI_Sunlit_Redbrick_Cotta_0403171628/Meshy_AI_Sunlit_Redbrick_Cotta_0403171628_texture.glb",
+  "model_scale": 0.5,
+  "model_offset": [0, -0.1, 0],
+  "model_rotation_y": 0.0,
+  "price": 50,
+  "footprint": [[0, 0]],
+  "category": "generic",
+  "profiles": [
+    {"type": "BuildingMetadata"},
+    {
+      "type": "BuildingProfile",
+      "category": "residential",
+      "capacity": 5,
+      "active_start": 6.0,
+      "active_end": 9.0
+    }
+  ],
+  "tags": []
+}

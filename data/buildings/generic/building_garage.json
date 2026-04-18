@@ -1,0 +1,23 @@
+{
+  "building_id": "building_garage",
+  "display_name": "Business Park (Garage)",
+  "description": "",
+  "model_path": "res://models/Meshy_AI_Acme_Business_Park__0403170610/Meshy_AI_Acme_Business_Park__0403170610_texture.glb",
+  "model_scale": 0.4,
+  "model_offset": [0, 0, 0],
+  "model_rotation_y": 0.0,
+  "price": 70,
+  "footprint": [[0, 0]],
+  "category": "generic",
+  "profiles": [
+    {"type": "BuildingMetadata"},
+    {
+      "type": "BuildingProfile",
+      "category": "workplace",
+      "capacity": 20,
+      "active_start": 8.0,
+      "active_end": 18.0
+    }
+  ],
+  "tags": []
+}
