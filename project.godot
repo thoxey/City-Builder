@@ -30,6 +30,15 @@ GameState="*res://scripts/game_state.gd"
 GameClock="*res://scripts/game_clock.gd"
 PluginManager="*res://scripts/plugin_manager.gd"
 
+[debug]
+
+gdscript/warnings/shadowed_global_identifier=1
+gdscript/warnings/native_method_override=1
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/gut/plugin.cfg")
+
 [editor]
 
 movie_writer/movie_file="D:/Godot/recording.avi"
