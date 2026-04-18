@@ -28,7 +28,6 @@ var _erase_last_cell: Vector2i = Vector2i(-99999, -99999)
 @export var view_camera: Camera3D      # Used for raycasting mouse
 @export var gridmap: GridMap
 @export var ground_gridmap: GridMap    # Grass/pavement base layer
-@export var cash_display: Label
 @export var toast_label: Label
 
 var plane: Plane # Used for raycasting mouse
@@ -97,7 +96,6 @@ func _ready():
 	_find_road_indices()
 
 	update_structure()
-	update_cash()
 
 	GameState.gridmap = gridmap
 	GameState.structures = structures
@@ -306,10 +304,6 @@ func _do_build(anchor: Vector2i, struct_idx: int, orient: int, fp_cells: Array[V
 				var nb_sid: int = GameState.building_registry.get(nb_bid, {}).get("structure", -1)
 				if nb_sid >= 0 and _is_road_structure(nb_sid):
 					_retile_road_at(nb)
-
-	map.cash -= structures[struct_idx].price
-	update_cash()
-	GameEvents.cash_changed.emit(map.cash)
 
 	var placed_pos := Vector3i(anchor.x, 0, anchor.y)
 	GameEvents.structure_placed.emit(placed_pos, struct_idx, orient)
@@ -531,9 +525,6 @@ func _retile_road_at(anchor: Vector2i) -> void:
 	entry["orientation"] = new_orient
 	GameState.building_registry[bid] = entry
 
-func update_cash():
-	cash_display.text = "$" + str(map.cash)
-
 func show_toast(message: String) -> void:
 	toast_label.text = message
 	toast_label.modulate.a = 1.0
@@ -638,5 +629,3 @@ func _apply_map(loaded_map: DataMap) -> void:
 			"orientation": ds.orientation,
 			"cells":       cells
 		}
-
-	update_cash()

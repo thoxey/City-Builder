@@ -4,13 +4,23 @@
   "description": "",
   "model_path": "res://models/Meshy_AI_The_Meadows_Medical_C_0404154706/Meshy_AI_The_Meadows_Medical_C_0404154706_texture.glb",
   "model_scale": 0.65,
-  "model_offset": [0, 0, 0],
+  "model_offset": [
+    0,
+    0,
+    0
+  ],
   "model_rotation_y": 0.0,
-  "price": 180,
-  "footprint": [[0, 0]],
+  "footprint": [
+    [
+      0,
+      0
+    ]
+  ],
   "category": "unique",
   "profiles": [
-    {"type": "MedicalMetadata"}
+    {
+      "type": "MedicalMetadata"
+    }
   ],
   "tags": []
 }

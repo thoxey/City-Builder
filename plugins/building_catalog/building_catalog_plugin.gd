@@ -148,7 +148,6 @@ func _load_one(path: String) -> Dictionary:
 
 	var structure := Structure.new()
 	structure.model = load(model_path) as PackedScene
-	structure.price = int(data.get("price", 0))
 	structure.model_scale = float(data.get("model_scale", 1.0))
 	structure.model_offset = _to_vec3(data.get("model_offset", [0, 0, 0]))
 	structure.model_rotation_y = float(data.get("model_rotation_y", 0.0))
@@ -168,7 +167,6 @@ func _load_one(path: String) -> Dictionary:
 		"building_id": bid,
 		"display_name": data.get("display_name", bid),
 		"category": data.get("category", ""),
-		"price": structure.price,
 		"tags": data.get("tags", []),
 		"model_path": model_path,
 	}

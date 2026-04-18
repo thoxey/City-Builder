@@ -5,7 +5,6 @@ class_name Structure
 @export var model: PackedScene
 
 @export_subgroup("Gameplay")
-@export var price: int
 @export var metadata: Array[StructureMetadata] = []
 
 @export_subgroup("Footprint")

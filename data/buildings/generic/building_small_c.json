@@ -4,13 +4,35 @@
   "description": "",
   "model_path": "res://models/Meshy_AI_The_Tower_of_Tomorrow_0403170625/Meshy_AI_The_Tower_of_Tomorrow_0403170625_texture.glb",
   "model_scale": 2.04,
-  "model_offset": [0.5, 0, 0.5],
+  "model_offset": [
+    0.5,
+    0,
+    0.5
+  ],
   "model_rotation_y": 0.0,
-  "price": 120,
-  "footprint": [[0, 0], [1, 0], [0, 1], [1, 1]],
+  "footprint": [
+    [
+      0,
+      0
+    ],
+    [
+      1,
+      0
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      1,
+      1
+    ]
+  ],
   "category": "generic",
   "profiles": [
-    {"type": "BuildingMetadata"},
+    {
+      "type": "BuildingMetadata"
+    },
     {
       "type": "BuildingProfile",
       "category": "residential",

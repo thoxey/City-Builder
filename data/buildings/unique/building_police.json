@@ -4,13 +4,23 @@
   "description": "",
   "model_path": "res://models/Meshy_AI_Isometric_Police_Stat_0403205443/Meshy_AI_Isometric_Police_Stat_0403205443_texture.glb",
   "model_scale": 0.7,
-  "model_offset": [0, 0, 0],
+  "model_offset": [
+    0,
+    0,
+    0
+  ],
   "model_rotation_y": 0.0,
-  "price": 150,
-  "footprint": [[0, 0]],
+  "footprint": [
+    [
+      0,
+      0
+    ]
+  ],
   "category": "unique",
   "profiles": [
-    {"type": "PoliceMetadata"}
+    {
+      "type": "PoliceMetadata"
+    }
   ],
   "tags": []
 }
