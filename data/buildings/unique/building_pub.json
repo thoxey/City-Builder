@@ -4,13 +4,23 @@
   "description": "",
   "model_path": "res://models/Meshy_AI_Pub_0403211907/Meshy_AI_Pub_0403211907_texture.glb",
   "model_scale": 0.65,
-  "model_offset": [0, 0, 0],
+  "model_offset": [
+    0,
+    0,
+    0
+  ],
   "model_rotation_y": 0.0,
-  "price": 80,
-  "footprint": [[0, 0]],
+  "footprint": [
+    [
+      0,
+      0
+    ]
+  ],
   "category": "unique",
   "profiles": [
-    {"type": "BuildingMetadata"},
+    {
+      "type": "BuildingMetadata"
+    },
     {
       "type": "BuildingProfile",
       "category": "commercial",

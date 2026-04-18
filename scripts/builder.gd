@@ -5,6 +5,7 @@ extends Node3D
 ## by dropping a JSON file, no scene edits required.
 var structures: Array[Structure] = []
 var _catalog: PluginBase  # BuildingCatalog plugin reference (dynamic typing avoids circular preload)
+var _demand:  PluginBase  # Demand plugin reference — may be null if plugin disabled
 
 var map: DataMap
 
@@ -28,7 +29,6 @@ var _erase_last_cell: Vector2i = Vector2i(-99999, -99999)
 @export var view_camera: Camera3D      # Used for raycasting mouse
 @export var gridmap: GridMap
 @export var ground_gridmap: GridMap    # Grass/pavement base layer
-@export var cash_display: Label
 @export var toast_label: Label
 
 var plane: Plane # Used for raycasting mouse
@@ -62,6 +62,8 @@ func _ready():
 		structures = _catalog.get_all()
 	else:
 		push_error("[Builder] BuildingCatalog plugin missing — no structures will load")
+
+	_demand = PluginManager.get_plugin("Demand")
 
 	var mesh_library = MeshLibrary.new()
 
@@ -97,7 +99,6 @@ func _ready():
 	_find_road_indices()
 
 	update_structure()
-	update_cash()
 
 	GameState.gridmap = gridmap
 	GameState.structures = structures
@@ -281,6 +282,19 @@ func _on_overbuild_confirmed() -> void:
 	_do_build(_overbuild_anchor, _overbuild_index, _overbuild_orient, _overbuild_fp_cells)
 
 func _do_build(anchor: Vector2i, struct_idx: int, orient: int, fp_cells: Array[Vector2i]) -> void:
+	# Demand gate — growth buildings must be paid for out of the matching bucket.
+	# Non-profile structures (roads, nature, pavement) are free. Blocked placements
+	# exit here before any grid mutation or sound, so the player just sees a toast.
+	if _demand:
+		var spend_info: Dictionary = _demand.try_spend(structures[struct_idx])
+		if not spend_info["ok"]:
+			var short_name: String = _demand.bucket_display_name(spend_info["bucket_id"])
+			var shortfall: int = int(ceil(spend_info["cost"] - spend_info["have"]))
+			show_toast("Need %d more %s demand (have %d / %d)" % [
+				shortfall, short_name, int(spend_info["have"]), int(spend_info["cost"])
+			])
+			return
+
 	var bid := GameState._next_building_id
 	GameState._next_building_id += 1
 
@@ -306,10 +320,6 @@ func _do_build(anchor: Vector2i, struct_idx: int, orient: int, fp_cells: Array[V
 				var nb_sid: int = GameState.building_registry.get(nb_bid, {}).get("structure", -1)
 				if nb_sid >= 0 and _is_road_structure(nb_sid):
 					_retile_road_at(nb)
-
-	map.cash -= structures[struct_idx].price
-	update_cash()
-	GameEvents.cash_changed.emit(map.cash)
 
 	var placed_pos := Vector3i(anchor.x, 0, anchor.y)
 	GameEvents.structure_placed.emit(placed_pos, struct_idx, orient)
@@ -531,9 +541,6 @@ func _retile_road_at(anchor: Vector2i) -> void:
 	entry["orientation"] = new_orient
 	GameState.building_registry[bid] = entry
 
-func update_cash():
-	cash_display.text = "$" + str(map.cash)
-
 func show_toast(message: String) -> void:
 	toast_label.text = message
 	toast_label.modulate.a = 1.0
@@ -638,5 +645,3 @@ func _apply_map(loaded_map: DataMap) -> void:
 			"orientation": ds.orientation,
 			"cells":       cells
 		}
-
-	update_cash()

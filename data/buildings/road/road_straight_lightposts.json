@@ -4,16 +4,33 @@
   "description": "",
   "model_path": "res://models/road-straight-lightposts.glb",
   "model_scale": 1.0,
-  "model_offset": [0, 0, 0],
+  "model_offset": [
+    0,
+    0,
+    0
+  ],
   "model_rotation_y": 0.0,
-  "price": 25,
-  "footprint": [[0, 0]],
+  "footprint": [
+    [
+      0,
+      0
+    ]
+  ],
   "category": "road",
   "profiles": [
     {
       "type": "RoadMetadata",
       "road_type": 0,
-      "connections": [[0, -1], [0, 1]]
+      "connections": [
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          1
+        ]
+      ]
     }
   ],
   "tags": []

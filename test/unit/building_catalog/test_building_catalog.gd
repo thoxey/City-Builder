@@ -142,7 +142,6 @@ func test_save_schema_defaults() -> void:
 	assert_true(ds.footprint_cells.is_empty(), "new DataStructure has no footprint cells")
 
 	var fresh := DataMap.new()
-	assert_eq(fresh.cash, 10000, "fresh DataMap starts at default cash")
 	assert_true(fresh.structures.is_empty(), "fresh DataMap has no structures")
 
 func test_get_pool_returns_matching_buildings() -> void:
@@ -163,7 +162,6 @@ func _minimal_building(bid: String, model_path: String) -> Dictionary:
 		"model_scale": 1.0,
 		"model_offset": [0, 0, 0],
 		"model_rotation_y": 0.0,
-		"price": 10,
 		"footprint": [[0, 0]],
 		"category": "generic",
 		"profiles": [],

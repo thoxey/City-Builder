@@ -4,13 +4,35 @@
   "description": "",
   "model_path": "res://models/Meshy_AI_Streeter_s_Supermarke_0404154643/Meshy_AI_Streeter_s_Supermarke_0404154643_texture.glb",
   "model_scale": 1.0,
-  "model_offset": [0.5, 0, 0.5],
+  "model_offset": [
+    0.5,
+    0,
+    0.5
+  ],
   "model_rotation_y": 0.0,
-  "price": 120,
-  "footprint": [[0, 0], [1, 0], [0, 1], [1, 1]],
+  "footprint": [
+    [
+      0,
+      0
+    ],
+    [
+      1,
+      0
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      1,
+      1
+    ]
+  ],
   "category": "unique",
   "profiles": [
-    {"type": "BuildingMetadata"},
+    {
+      "type": "BuildingMetadata"
+    },
     {
       "type": "BuildingProfile",
       "category": "commercial",
