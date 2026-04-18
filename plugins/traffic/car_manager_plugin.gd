@@ -403,7 +403,8 @@ func _dir_to_basis(dir: Vector2i) -> Basis:
 func _write_transform(slot: CarSlot) -> void:
 	var def:   Dictionary = _TYPE_DEFS[slot.car_type]
 	var pool:  TypePool   = _pools[slot.car_type]
-	var display_basis := slot._seg_start_basis.slerp(slot._seg_end_basis, slot._seg_progress)
+	var display_basis := slot._seg_start_basis.slerp(slot._seg_end_basis,
+			minf(slot._seg_progress * 2.0, 1.0))
 	var rot    := Basis(Vector3.UP, deg_to_rad(def.get("rot_y", 0.0)))
 	var scale: float = def.get("scale", 1.0)
 	var final_basis := display_basis * rot * Basis().scaled(Vector3.ONE * scale)
