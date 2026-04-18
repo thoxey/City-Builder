@@ -5,6 +5,7 @@ extends Node3D
 ## by dropping a JSON file, no scene edits required.
 var structures: Array[Structure] = []
 var _catalog: PluginBase  # BuildingCatalog plugin reference (dynamic typing avoids circular preload)
+var _demand:  PluginBase  # Demand plugin reference — may be null if plugin disabled
 
 var map: DataMap
 
@@ -61,6 +62,8 @@ func _ready():
 		structures = _catalog.get_all()
 	else:
 		push_error("[Builder] BuildingCatalog plugin missing — no structures will load")
+
+	_demand = PluginManager.get_plugin("Demand")
 
 	var mesh_library = MeshLibrary.new()
 
@@ -279,6 +282,19 @@ func _on_overbuild_confirmed() -> void:
 	_do_build(_overbuild_anchor, _overbuild_index, _overbuild_orient, _overbuild_fp_cells)
 
 func _do_build(anchor: Vector2i, struct_idx: int, orient: int, fp_cells: Array[Vector2i]) -> void:
+	# Demand gate — growth buildings must be paid for out of the matching bucket.
+	# Non-profile structures (roads, nature, pavement) are free. Blocked placements
+	# exit here before any grid mutation or sound, so the player just sees a toast.
+	if _demand:
+		var spend_info: Dictionary = _demand.try_spend(structures[struct_idx])
+		if not spend_info["ok"]:
+			var short_name: String = _demand.bucket_display_name(spend_info["bucket_id"])
+			var shortfall: int = int(ceil(spend_info["cost"] - spend_info["have"]))
+			show_toast("Need %d more %s demand (have %d / %d)" % [
+				shortfall, short_name, int(spend_info["have"]), int(spend_info["cost"])
+			])
+			return
+
 	var bid := GameState._next_building_id
 	GameState._next_building_id += 1
 

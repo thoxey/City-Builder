@@ -72,6 +72,19 @@ func _register(anchor: Vector2i, capacity: int) -> void:
 	_city_stats.register_sink(saf_sink)
 	_city_stats.register_sink(hlt_sink)
 
+## Total residential capacity summed across every placed residential building.
+func get_total_capacity() -> int:
+	var total := 0
+	for src in _pop_sources.values():
+		total += (src as _PopSource).capacity
+	return total
+
+## Current effective population: capacity scaled by last tick's satisfaction.
+## Matches the supply figure _PopSource publishes to CityStats each tick.
+func get_current_population() -> int:
+	var score: float = _satisfaction.get_score() if _satisfaction else 1.0
+	return int(get_total_capacity() * score)
+
 func _unregister(anchor: Vector2i) -> void:
 	if _pop_sources.has(anchor):
 		_city_stats.unregister_source(_pop_sources[anchor])
