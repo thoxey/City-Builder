@@ -1,6 +1,10 @@
 extends Node3D
 
-@export var structures: Array[Structure] = []
+## Populated from BuildingCatalog at _ready(). Was @export before M0; now sourced
+## from res://data/buildings/**/*.json via the plugin so new buildings are added
+## by dropping a JSON file, no scene edits required.
+var structures: Array[Structure] = []
+var _catalog: PluginBase  # BuildingCatalog plugin reference (dynamic typing avoids circular preload)
 
 var map: DataMap
 
@@ -50,6 +54,15 @@ func _ready():
 	map = DataMap.new()
 	plane = Plane(Vector3.UP, Vector3.ZERO)
 
+	# Pull the building catalogue from JSON before anything else — the MeshLibrary
+	# is built from `structures` below, so this has to happen first.
+	_catalog = PluginManager.get_plugin("BuildingCatalog")
+	if _catalog:
+		_catalog.ensure_loaded()
+		structures = _catalog.get_all()
+	else:
+		push_error("[Builder] BuildingCatalog plugin missing — no structures will load")
+
 	var mesh_library = MeshLibrary.new()
 
 	for structure in structures:
@@ -98,13 +111,15 @@ func _ready():
 	_overbuild_dialog.confirmed.connect(_on_overbuild_confirmed)
 	_overbuild_dialog.canceled.connect(func(): _overbuild_pending = false)
 
-	var slot1 = ResourceLoader.load(SAVE_SLOT_1)
-	if slot1:
-		_apply_map(slot1)
+	if ResourceLoader.exists(SAVE_SLOT_1):
+		var slot1 = ResourceLoader.load(SAVE_SLOT_1)
+		if slot1:
+			_apply_map(slot1)
 
 	_fill_grass_background()
 
 	GameState.map = map
+	print("[Builder] ready: structures=%d" % structures.size())
 	GameState._notify_ready()
 
 func _process(delta):
@@ -535,7 +550,7 @@ func _save_to(path: String, label: String) -> void:
 		var ds := DataStructure.new()
 		ds.position    = entry["anchor"]
 		ds.orientation = entry["orientation"]
-		ds.structure   = entry["structure"]
+		ds.building_id = _catalog.get_id_by_index(entry["structure"]) if _catalog else ""
 		for cell in entry.get("cells", []):
 			ds.footprint_cells.append(cell)
 		map.structures.append(ds)
@@ -591,18 +606,27 @@ func _apply_map(loaded_map: DataMap) -> void:
 	GameState.building_registry.clear()
 	GameState._next_building_id = 0
 
+	print("[DataMap] load: structures=%d" % loaded_map.structures.size())
+
 	for ds in loaded_map.structures:
+		if _catalog == null or ds.building_id.is_empty():
+			continue
+		var struct_idx: int = _catalog.get_item_index(ds.building_id)
+		if struct_idx < 0:
+			push_warning("[Builder] skip_unknown_building: building_id=%s" % ds.building_id)
+			continue
+
 		var bid := GameState._next_building_id
 		GameState._next_building_id += 1
 
 		var cells: Array[Vector2i] = []
 		if ds.footprint_cells.is_empty():
-			cells = _get_footprint_cells(ds.position, ds.structure, _orientation_to_steps(ds.orientation))
+			cells = _get_footprint_cells(ds.position, struct_idx, _orientation_to_steps(ds.orientation))
 		else:
 			for c in ds.footprint_cells:
 				cells.append(c)
 
-		gridmap.set_cell_item(Vector3i(ds.position.x, 0, ds.position.y), ds.structure, ds.orientation)
+		gridmap.set_cell_item(Vector3i(ds.position.x, 0, ds.position.y), struct_idx, ds.orientation)
 
 		for cell in cells:
 			GameState.cell_to_building[cell] = bid
@@ -610,7 +634,7 @@ func _apply_map(loaded_map: DataMap) -> void:
 
 		GameState.building_registry[bid] = {
 			"anchor":      ds.position,
-			"structure":   ds.structure,
+			"structure":   struct_idx,
 			"orientation": ds.orientation,
 			"cells":       cells
 		}
