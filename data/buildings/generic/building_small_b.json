@@ -1,0 +1,23 @@
+{
+  "building_id": "building_small_b",
+  "display_name": "Small Commercial B",
+  "description": "",
+  "model_path": "res://models/Meshy_AI_Sunnyvale_News_Conf_0403170655/Meshy_AI_Sunnyvale_News_Conf_0403170655_texture.glb",
+  "model_scale": 0.45,
+  "model_offset": [0, 0, 0],
+  "model_rotation_y": 0.0,
+  "price": 60,
+  "footprint": [[0, 0]],
+  "category": "generic",
+  "profiles": [
+    {"type": "BuildingMetadata"},
+    {
+      "type": "BuildingProfile",
+      "category": "commercial",
+      "capacity": 10,
+      "active_start": 8.0,
+      "active_end": 18.0
+    }
+  ],
+  "tags": []
+}

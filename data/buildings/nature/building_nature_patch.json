@@ -1,0 +1,14 @@
+{
+  "building_id": "building_nature_patch",
+  "display_name": "Nature Patch",
+  "description": "",
+  "model_path": "res://models/Meshy_AI_nature_patch_0403203125/Meshy_AI_nature_patch_0403203125_texture.glb",
+  "model_scale": 0.57,
+  "model_offset": [0, -0.15, 0],
+  "model_rotation_y": 0.0,
+  "price": 20,
+  "footprint": [[0, 0]],
+  "category": "nature",
+  "profiles": [],
+  "tags": []
+}

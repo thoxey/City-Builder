@@ -1,0 +1,14 @@
+{
+  "building_id": "grass_trees",
+  "display_name": "Grass with Trees",
+  "description": "",
+  "model_path": "res://models/grass-trees.glb",
+  "model_scale": 1.0,
+  "model_offset": [0, 0, 0],
+  "model_rotation_y": 0.0,
+  "price": 25,
+  "footprint": [[0, 0]],
+  "category": "nature",
+  "profiles": [],
+  "tags": []
+}

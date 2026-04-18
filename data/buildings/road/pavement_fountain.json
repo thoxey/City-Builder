@@ -1,0 +1,14 @@
+{
+  "building_id": "pavement_fountain",
+  "display_name": "Pavement with Fountain",
+  "description": "",
+  "model_path": "res://models/pavement-fountain.glb",
+  "model_scale": 1.0,
+  "model_offset": [0, 0, 0],
+  "model_rotation_y": 0.0,
+  "price": 10,
+  "footprint": [[0, 0]],
+  "category": "road",
+  "profiles": [],
+  "tags": []
+}
