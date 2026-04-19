@@ -1,0 +1,11 @@
+{
+  "character_id": "aristocrat_commercial",
+  "display_name": "Lord Ashworth",
+  "bio": "Old money, still pretends he isn't bored. Treats the town like a country house.",
+  "patron_id": "aristocrat",
+  "associated_bucket": "commercial",
+  "arrival_threshold": 10,
+  "arrival_requires_tier": 1,
+  "want_building_id": "building_members_club",
+  "portrait": "res://data/characters/aristocrat_commercial/portrait.png"
+}

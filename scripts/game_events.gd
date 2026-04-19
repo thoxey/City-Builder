@@ -22,3 +22,11 @@ signal unique_placed(building_id: String)
 signal unique_removed(building_id: String)
 ## A unique crossed the threshold+prereq checks and is now available to build.
 signal unique_unlocked(building_id: String)
+
+## Character questline signals. The event system (Phase 8) listens to these
+## and decides whether each emits a dialogue modal, a newspaper item, a toast,
+## or nothing. The UI layer never listens to these directly.
+signal character_arrived(character_id: String)
+signal character_want_revealed(character_id: String)
+signal character_satisfied(character_id: String)
+signal character_state_changed(character_id: String, new_state: int)
