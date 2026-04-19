@@ -9,3 +9,5 @@ signal structure_demolished(position: Vector3i)
 signal map_loaded(map: DataMap)
 signal satisfaction_changed(score: float)
 signal demand_changed(bucket_type_id: String, value: float)
+## Cash surplus changed — `amount` is the new total, `delta` is the signed change.
+signal cash_changed(amount: int, delta: int)

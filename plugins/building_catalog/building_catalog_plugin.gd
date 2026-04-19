@@ -167,6 +167,7 @@ func _load_one(path: String) -> Dictionary:
 		"building_id": bid,
 		"display_name": data.get("display_name", bid),
 		"category": data.get("category", ""),
+		"cash_cost": int(data.get("cash_cost", 0)),
 		"tags": data.get("tags", []),
 		"model_path": model_path,
 	}
