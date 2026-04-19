@@ -15,6 +15,7 @@ var _structures: Array[Structure] = []
 var _by_id: Dictionary = {}       # building_id -> Structure
 var _index_by_id: Dictionary = {} # building_id -> int (MeshLibrary item ID)
 var _summaries: Array = []        # Array[Dictionary] — editor/telemetry payload
+var _pool_configs: Dictionary = {} # pool_id -> Dictionary (bucket/tier/threshold/per_unit)
 
 func get_plugin_name() -> String:
 	return "BuildingCatalog"
@@ -80,10 +81,17 @@ func get_pool_indices(pool_id: String) -> Array[int]:
 			out.append(i)
 	return out
 
+## Pool tuning (bucket / tier / demand_threshold / demand_per_unit).
+## Returns an empty Dictionary for pools with no sidecar config — decoratives
+## like grass / pavement / road live here and are cash-gated, not demand-gated.
+func get_pool_config(pool_id: String) -> Dictionary:
+	return _pool_configs.get(pool_id, {})
+
 # ── Loading ───────────────────────────────────────────────────────────────────
 
 func _load_dir(dir_root: String) -> void:
 	print("[BuildingCatalog] loading: dir=%s" % dir_root)
+	_load_pool_configs(dir_root)
 	var files: Array[String] = []
 	_walk(dir_root, files)
 
@@ -125,6 +133,8 @@ func _load_dir(dir_root: String) -> void:
 	print("[BuildingCatalog] loaded: count=%d errors=%d" % [_structures.size(), errors])
 
 ## Recursively collect all *.json files under `root` into `out`.
+## Directories whose name starts with `_` are skipped — reserved for sidecar
+## data like pool configs (see `_load_pool_configs`).
 func _walk(root: String, out: Array[String]) -> void:
 	var dir := DirAccess.open(root)
 	if dir == null:
@@ -138,7 +148,78 @@ func _walk(root: String, out: Array[String]) -> void:
 			continue
 		var full := root.path_join(name)
 		if dir.current_is_dir():
-			_walk(full, out)
+			if not name.begins_with("_"):
+				_walk(full, out)
+		elif name.ends_with(".json"):
+			out.append(full)
+		name = dir.get_next()
+	dir.list_dir_end()
+
+## Load any `_pools/*.json` files under `dir_root` into `_pool_configs`.
+## Pool configs are sidecar tuning: they drive placement thresholds + costs
+## without belonging to any one building, and live in directories whose name
+## starts with `_` so the main _walk skips them.
+func _load_pool_configs(dir_root: String) -> void:
+	_pool_configs.clear()
+	var pool_files: Array[String] = []
+	_collect_pool_files(dir_root, pool_files)
+	for path: String in pool_files:
+		var text := FileAccess.get_file_as_string(path)
+		if text.is_empty():
+			push_error("[BuildingCatalog] pool_unreadable: path=%s" % path)
+			continue
+		var parsed: Variant = JSON.parse_string(text)
+		if parsed == null or typeof(parsed) != TYPE_DICTIONARY:
+			push_error("[BuildingCatalog] pool_invalid_json: path=%s" % path)
+			continue
+		var data: Dictionary = parsed
+		var pid: String = data.get("pool_id", "")
+		if pid.is_empty():
+			push_error("[BuildingCatalog] pool_missing_id: path=%s" % path)
+			continue
+		_pool_configs[pid] = data
+		print("[BuildingCatalog] pool_loaded: id=%s tier=%d threshold=%d per_unit=%d" % [
+			pid,
+			int(data.get("tier", 0)),
+			int(data.get("demand_threshold", 0)),
+			int(data.get("demand_per_unit", 0))
+		])
+
+## Recursively collect *.json files under every directory whose name starts
+## with `_` (typically `_pools`). These are sidecar data, not buildings.
+func _collect_pool_files(root: String, out: Array[String]) -> void:
+	var dir := DirAccess.open(root)
+	if dir == null:
+		return
+	dir.list_dir_begin()
+	var name := dir.get_next()
+	while name != "":
+		if name == "." or name == "..":
+			name = dir.get_next()
+			continue
+		var full := root.path_join(name)
+		if dir.current_is_dir():
+			if name.begins_with("_"):
+				# Collect every json inside a reserved dir, recursively.
+				_collect_pool_files_recursive(full, out)
+			else:
+				_collect_pool_files(full, out)
+		name = dir.get_next()
+	dir.list_dir_end()
+
+func _collect_pool_files_recursive(root: String, out: Array[String]) -> void:
+	var dir := DirAccess.open(root)
+	if dir == null:
+		return
+	dir.list_dir_begin()
+	var name := dir.get_next()
+	while name != "":
+		if name == "." or name == "..":
+			name = dir.get_next()
+			continue
+		var full := root.path_join(name)
+		if dir.current_is_dir():
+			_collect_pool_files_recursive(full, out)
 		elif name.ends_with(".json"):
 			out.append(full)
 		name = dir.get_next()

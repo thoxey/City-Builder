@@ -307,3 +307,72 @@ func test_source_sink_integration() -> void:
 	assert_eq(supply["industrial_demand"], 30, "supply should equal bucket.value × source_scale")
 
 	stats.queue_free()
+
+# ── Pool-driven threshold & per-unit cost ─────────────────────────────────────
+
+class StubCatalog:
+	extends PluginBase
+	var configs: Dictionary = {}
+	func get_plugin_name() -> String: return "BuildingCatalog"
+	func get_pool_config(pool_id: String) -> Dictionary:
+		return configs.get(pool_id, {})
+
+func _make_generic_residence(pool_id: String, capacity: int) -> Structure:
+	var s := _make_structure_with_profile("residential", capacity)
+	s.pool_id = pool_id
+	return s
+
+func test_pool_cost_overrides_profile_capacity() -> void:
+	var plugin := _minimal_demand_plugin()
+	var catalog := StubCatalog.new()
+	catalog.configs["residential_t1"] = {"demand_per_unit": 5, "demand_threshold": 0}
+	plugin._catalog = catalog
+
+	plugin.buckets["housing_demand"].value = 20.0
+	# Profile.capacity=99 should be ignored because the pool config supplies a cost.
+	var house := _make_generic_residence("residential_t1", 99)
+
+	var info: Dictionary = plugin.try_spend(house)
+	assert_true(info["ok"], "pool-configured cost of 5 is well under bucket value of 20")
+	assert_almost_eq(info["cost"], 5.0, 0.0001, "cost should come from pool config, not profile.capacity")
+	assert_almost_eq(plugin.buckets["housing_demand"].value, 15.0, 0.0001, "only pool cost debited")
+	catalog.free()
+	plugin.queue_free()
+
+func test_threshold_gates_tier() -> void:
+	var plugin := _minimal_demand_plugin()
+	var catalog := StubCatalog.new()
+	catalog.configs["residential_t2"] = {"demand_per_unit": 15, "demand_threshold": 30}
+	plugin._catalog = catalog
+
+	# Value above cost but below threshold — blocked with reason=below_threshold.
+	plugin.buckets["housing_demand"].value = 20.0
+	var tower := _make_generic_residence("residential_t2", 12)
+
+	assert_false(plugin.can_afford(tower), "tier locked until threshold clears")
+	var blocked: Dictionary = plugin.try_spend(tower)
+	assert_false(blocked["ok"], "try_spend blocked below threshold")
+	assert_eq(blocked.get("reason", ""), "below_threshold")
+	assert_almost_eq(plugin.buckets["housing_demand"].value, 20.0, 0.0001, "bucket untouched when locked")
+
+	# Once threshold clears, it unlocks.
+	plugin.buckets["housing_demand"].value = 35.0
+	assert_true(plugin.can_afford(tower), "threshold met — tower is affordable")
+	var ok: Dictionary = plugin.try_spend(tower)
+	assert_true(ok["ok"])
+	assert_almost_eq(plugin.buckets["housing_demand"].value, 20.0, 0.0001, "35 - 15 = 20 after spend")
+
+	catalog.free()
+	plugin.queue_free()
+
+func test_can_afford_preview_is_nonmutating() -> void:
+	var plugin := _minimal_demand_plugin()
+	plugin.buckets["housing_demand"].value = 10.0
+	var house := _make_structure_with_profile("residential", 5)
+
+	watch_signals(GameEvents)
+	var before: float = plugin.buckets["housing_demand"].value
+	assert_true(plugin.can_afford(house))
+	assert_almost_eq(plugin.buckets["housing_demand"].value, before, 0.0001, "preview must not mutate")
+	assert_signal_not_emitted(GameEvents, "demand_changed", "preview must not emit")
+	plugin.queue_free()

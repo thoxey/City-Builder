@@ -1,0 +1,7 @@
+{
+  "pool_id": "commercial_t2",
+  "bucket": "commercial",
+  "tier": 2,
+  "demand_threshold": 30,
+  "demand_per_unit": 15
+}

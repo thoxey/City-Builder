@@ -315,10 +315,15 @@ func _do_build(anchor: Vector2i, struct_idx: int, orient: int, fp_cells: Array[V
 		var spend_info: Dictionary = _demand.try_spend(structures[struct_idx])
 		if not spend_info["ok"]:
 			var short_name: String = _demand.bucket_display_name(spend_info["bucket_id"])
-			var shortfall: int = int(ceil(spend_info["cost"] - spend_info["have"]))
-			show_toast("Need %d more %s demand (have %d / %d)" % [
-				shortfall, short_name, int(spend_info["have"]), int(spend_info["cost"])
-			])
+			if spend_info.get("reason", "") == "below_threshold":
+				show_toast("%s tier locked \u2014 need %d %s demand" % [
+					short_name.capitalize(), int(spend_info["threshold"]), short_name
+				])
+			else:
+				var shortfall: int = int(ceil(spend_info["cost"] - spend_info["have"]))
+				show_toast("Need %d more %s demand (have %d / %d)" % [
+					shortfall, short_name, int(spend_info["have"]), int(spend_info["cost"])
+				])
 			return
 
 	var bid := GameState._next_building_id

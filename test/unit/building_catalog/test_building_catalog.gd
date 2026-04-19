@@ -145,11 +145,67 @@ func test_save_schema_defaults() -> void:
 	assert_true(fresh.structures.is_empty(), "fresh DataMap has no structures")
 
 func test_get_pool_returns_matching_buildings() -> void:
-	# Deferred to M2 / Phase 2 — GenericTierProfile does not exist yet.
-	# When introduced, this test should build a fixture dir of generic
-	# buildings with varying pool_id tags and assert that a pool query
-	# returns exactly the matching subset.
-	pending("GenericTierProfile lands in Phase 2 (M2 — Tiered placement bank)")
+	var a := _minimal_building("house_a", GOOD_MODEL_A); a["pool_id"] = "residential_t1"
+	var b := _minimal_building("house_b", GOOD_MODEL_B); b["pool_id"] = "residential_t1"
+	var c := _minimal_building("tower",   GOOD_MODEL_C); c["pool_id"] = "residential_t2"
+	var d := _minimal_building("shop",    GOOD_MODEL_A); d["pool_id"] = ""
+	_write_json("a.json", a); _write_json("b.json", b)
+	_write_json("c.json", c); _write_json("d.json", d)
+
+	_plugin.ensure_loaded(FIXTURE_ROOT)
+
+	var t1 := _plugin.get_pool("residential_t1")
+	assert_eq(t1.size(), 2, "t1 pool should contain both houses")
+	var t1_ids: Array = []
+	for s in t1:
+		for bid in ["house_a", "house_b"]:
+			if _plugin.get_by_id(bid) == s:
+				t1_ids.append(bid)
+	assert_eq(t1_ids.size(), 2, "t1 pool members should be house_a and house_b")
+
+	var t2 := _plugin.get_pool("residential_t2")
+	assert_eq(t2.size(), 1, "t2 pool should contain only the tower")
+
+	var empty := _plugin.get_pool("nonexistent")
+	assert_eq(empty.size(), 0, "unknown pool returns empty array")
+
+	# Indices round-trip too.
+	var t1_idx := _plugin.get_pool_indices("residential_t1")
+	assert_eq(t1_idx.size(), 2, "pool_indices matches pool membership")
+
+func test_pool_config_loads_from_sidecar_dir() -> void:
+	_write_json("house.json", _minimal_building("house", GOOD_MODEL_A))
+
+	# Sidecar directory prefixed with _ — catalog walks it separately.
+	var pools_dir := FIXTURE_ROOT.path_join("_pools")
+	DirAccess.make_dir_recursive_absolute(pools_dir)
+	var pool_data := {
+		"pool_id": "residential_t1",
+		"bucket": "residential",
+		"tier": 1,
+		"demand_threshold": 12,
+		"demand_per_unit": 4,
+	}
+	var path := pools_dir.path_join("residential_t1.json")
+	var f := FileAccess.open(path, FileAccess.WRITE)
+	f.store_string(JSON.stringify(pool_data))
+	f.close()
+
+	_plugin.ensure_loaded(FIXTURE_ROOT)
+
+	var cfg: Dictionary = _plugin.get_pool_config("residential_t1")
+	assert_false(cfg.is_empty(), "pool config should have loaded")
+	assert_eq(int(cfg.get("demand_threshold", -1)), 12, "threshold round-trips")
+	assert_eq(int(cfg.get("demand_per_unit", -1)),  4,  "per_unit round-trips")
+	assert_eq(int(cfg.get("tier", -1)),             1,  "tier round-trips")
+
+	# Missing pool returns empty dict, not null.
+	var missing: Dictionary = _plugin.get_pool_config("nope")
+	assert_true(missing.is_empty(), "unknown pool_id returns empty dict")
+
+	# The sidecar JSON must NOT appear as a structure.
+	assert_null(_plugin.get_by_id("residential_t1"), "pool config must not register as a building")
+	assert_eq(_plugin.get_all().size(), 1, "only the real building loads")
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
