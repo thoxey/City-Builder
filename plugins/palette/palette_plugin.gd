@@ -19,16 +19,18 @@ extends PluginBase
 ##   select_next() / select_previous() — Q/E cycling among affordable entries
 
 func get_plugin_name() -> String: return "Palette"
-func get_dependencies() -> Array[String]: return ["BuildingCatalog", "Demand", "Economy"]
+func get_dependencies() -> Array[String]: return ["BuildingCatalog", "Demand", "Economy", "UniqueRegistry"]
 
 var _catalog: PluginBase
 var _demand:  PluginBase
 var _economy: PluginBase
+var _uniques: PluginBase
 
 func inject(deps: Dictionary) -> void:
 	_catalog = deps.get("BuildingCatalog")
 	_demand  = deps.get("Demand")
 	_economy = deps.get("Economy")
+	_uniques = deps.get("UniqueRegistry")
 
 # ── State ─────────────────────────────────────────────────────────────────────
 
@@ -73,6 +75,9 @@ func _plugin_ready() -> void:
 	GameEvents.structure_placed.connect(func(_p, _i, _o): _refresh())
 	GameEvents.structure_demolished.connect(func(_p): _refresh())
 	GameEvents.map_loaded.connect(func(_m): _refresh())
+	GameEvents.unique_unlocked.connect(func(_bid): _refresh())
+	GameEvents.unique_placed.connect(func(_bid): _refresh())
+	GameEvents.unique_removed.connect(func(_bid): _refresh())
 
 # ── Entry construction ────────────────────────────────────────────────────────
 
@@ -127,15 +132,22 @@ func _is_affordable(entry: PaletteEntry) -> bool:
 	# An entry is affordable if ANY of its members is affordable — pools should
 	# still show up even if one variant is temporarily unbuyable (they share
 	# cost by construction today, but keep this permissive for the future).
+	var summaries: Array = _catalog.get_summary()
 	for idx: int in entry.structure_indices:
 		var s: Structure = _catalog.get_all()[idx]
+		var bid: String = summaries[idx].get("building_id", "")
 		var cash_ok: bool = true
 		var demand_ok: bool = true
+		var unique_ok: bool = true
 		if _economy and _economy.has_method("can_afford_cash"):
 			cash_ok = _economy.can_afford_cash(s)
 		if _demand and _demand.has_method("can_afford"):
 			demand_ok = _demand.can_afford(s)
-		if cash_ok and demand_ok:
+		# Uniques must be unlocked (threshold + prereqs met) AND not already
+		# placed. Non-uniques fall through untouched.
+		if _uniques and _uniques.has_method("is_unique") and _uniques.is_unique(bid):
+			unique_ok = _uniques.is_unlocked(bid)
+		if cash_ok and demand_ok and unique_ok:
 			return true
 	return false
 

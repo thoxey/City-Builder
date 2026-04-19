@@ -1,0 +1,11 @@
+{
+  "character_id": "aristocrat_residential",
+  "display_name": "Lady Marlowe",
+  "bio": "Property magnate with Modernist tastes and a quiet radio habit.",
+  "patron_id": "aristocrat",
+  "associated_bucket": "residential",
+  "arrival_threshold": 10,
+  "arrival_requires_tier": 1,
+  "want_building_id": "building_pirate_radio",
+  "portrait": "res://data/characters/aristocrat_residential/portrait.png"
+}

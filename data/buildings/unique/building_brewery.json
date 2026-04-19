@@ -1,0 +1,46 @@
+{
+  "building_id": "building_brewery",
+  "display_name": "Brewery",
+  "description": "",
+  "model_path": "res://models/Meshy_AI_Acme_Business_Park__0403170610/Meshy_AI_Acme_Business_Park__0403170610_texture.glb",
+  "model_scale": 0.85,
+  "model_offset": [
+    0,
+    0,
+    0
+  ],
+  "model_rotation_y": 0.0,
+  "footprint": [
+    [
+      0,
+      0
+    ]
+  ],
+  "category": "unique",
+  "profiles": [
+    {
+      "type": "BuildingMetadata"
+    },
+    {
+      "type": "BuildingProfile",
+      "category": "workplace",
+      "capacity": 20,
+      "active_start": 8.0,
+      "active_end": 18.0
+    },
+    {
+      "type": "UniqueProfile",
+      "bucket": "industrial",
+      "tier": 0,
+      "patron_id": "farmer",
+      "character_id": "farmer_industrial",
+      "chain_role": "want",
+      "prerequisite_threshold": 60,
+      "prerequisite_ids": [
+        "building_wholesale_market"
+      ],
+      "desirability_boost": 0.0
+    }
+  ],
+  "tags": []
+}

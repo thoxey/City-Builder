@@ -1,0 +1,11 @@
+{
+  "character_id": "farmer_commercial",
+  "display_name": "Gus Whitaker",
+  "bio": "Retailer-in-chief. Can sell anything if the margin's right.",
+  "patron_id": "farmer",
+  "associated_bucket": "commercial",
+  "arrival_threshold": 10,
+  "arrival_requires_tier": 1,
+  "want_building_id": "building_buskers_square",
+  "portrait": "res://data/characters/farmer_commercial/portrait.png"
+}

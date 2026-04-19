@@ -1,9 +1,9 @@
 {
-  "building_id": "building_pub",
-  "display_name": "Pub",
+  "building_id": "building_faketrose",
+  "display_name": "Posh Supermarket",
   "description": "",
-  "model_path": "res://models/Meshy_AI_Pub_0403211907/Meshy_AI_Pub_0403211907_texture.glb",
-  "model_scale": 0.65,
+  "model_path": "res://models/Meshy_AI_Streeter_s_Supermarke_0404154643/Meshy_AI_Streeter_s_Supermarke_0404154643_texture.glb",
+  "model_scale": 0.7,
   "model_offset": [
     0,
     0,
@@ -25,18 +25,20 @@
       "type": "BuildingProfile",
       "category": "commercial",
       "capacity": 30,
-      "active_start": 17.0,
-      "active_end": 23.0
+      "active_start": 8.0,
+      "active_end": 20.0
     },
     {
       "type": "UniqueProfile",
       "bucket": "commercial",
-      "tier": 1,
-      "patron_id": "aristocrat",
-      "character_id": "aristocrat_commercial",
+      "tier": 2,
+      "patron_id": "farmer",
+      "character_id": "farmer_commercial",
       "chain_role": "chain",
-      "prerequisite_threshold": 10,
-      "prerequisite_ids": [],
+      "prerequisite_threshold": 30,
+      "prerequisite_ids": [
+        "building_corner_shop"
+      ],
       "desirability_boost": 0.0
     }
   ],

@@ -15,3 +15,27 @@ signal cash_changed(amount: int, delta: int)
 ## `entry_ids` is the ordered list of currently affordable entry ids;
 ## `selected_id` is the currently active entry (or "" if none affordable).
 signal palette_changed(entry_ids: Array, selected_id: String)
+
+## A unique building has just been placed on the map.
+signal unique_placed(building_id: String)
+## A unique building has just been demolished; its slot is open again.
+signal unique_removed(building_id: String)
+## A unique crossed the threshold+prereq checks and is now available to build.
+signal unique_unlocked(building_id: String)
+
+## Character questline signals. The event system (Phase 8) listens to these
+## and decides whether each emits a dialogue modal, a newspaper item, a toast,
+## or nothing. The UI layer never listens to these directly.
+signal character_arrived(character_id: String)
+signal character_want_revealed(character_id: String)
+signal character_satisfied(character_id: String)
+signal character_state_changed(character_id: String, new_state: int)
+
+## Patron questline signals — emitted by PatronSystem.
+signal patron_landmark_ready(patron_id: String)
+signal patron_landmark_completed(patron_id: String)
+signal patron_state_changed(patron_id: String, new_state: int)
+
+## BuildableArea expansion — carries the newly added cells so the UI / overlay
+## can tween them into the allowed set without diffing.
+signal buildable_area_expanded(new_cells: Array)

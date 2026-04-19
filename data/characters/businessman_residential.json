@@ -1,0 +1,11 @@
+{
+  "character_id": "businessman_residential",
+  "display_name": "Councillor Platt",
+  "bio": "Civic-minded pragmatist. Wants your town safe, healthy, and insured.",
+  "patron_id": "businessman",
+  "associated_bucket": "residential",
+  "arrival_threshold": 10,
+  "arrival_requires_tier": 1,
+  "want_building_id": "building_gym",
+  "portrait": "res://data/characters/businessman_residential/portrait.png"
+}

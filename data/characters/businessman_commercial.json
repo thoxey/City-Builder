@@ -1,0 +1,11 @@
+{
+  "character_id": "businessman_commercial",
+  "display_name": "Priscilla Vance",
+  "bio": "High-street retail operator with a nose for fashion cycles.",
+  "patron_id": "businessman",
+  "associated_bucket": "commercial",
+  "arrival_threshold": 10,
+  "arrival_requires_tier": 1,
+  "want_building_id": "building_gentlemans_outfitters",
+  "portrait": "res://data/characters/businessman_commercial/portrait.png"
+}

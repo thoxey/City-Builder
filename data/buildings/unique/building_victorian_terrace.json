@@ -1,9 +1,9 @@
 {
-  "building_id": "building_pub",
-  "display_name": "Pub",
+  "building_id": "building_victorian_terrace",
+  "display_name": "Victorian Terrace",
   "description": "",
-  "model_path": "res://models/Meshy_AI_Pub_0403211907/Meshy_AI_Pub_0403211907_texture.glb",
-  "model_scale": 0.65,
+  "model_path": "res://models/Meshy_AI_Wisteria_Cottage_0403171247/Meshy_AI_Wisteria_Cottage_0403171247_texture.glb",
+  "model_scale": 0.8,
   "model_offset": [
     0,
     0,
@@ -23,17 +23,17 @@
     },
     {
       "type": "BuildingProfile",
-      "category": "commercial",
-      "capacity": 30,
-      "active_start": 17.0,
-      "active_end": 23.0
+      "category": "residential",
+      "capacity": 10,
+      "active_start": 0.0,
+      "active_end": 24.0
     },
     {
       "type": "UniqueProfile",
-      "bucket": "commercial",
+      "bucket": "residential",
       "tier": 1,
-      "patron_id": "aristocrat",
-      "character_id": "aristocrat_commercial",
+      "patron_id": "farmer",
+      "character_id": "farmer_residential",
       "chain_role": "chain",
       "prerequisite_threshold": 10,
       "prerequisite_ids": [],

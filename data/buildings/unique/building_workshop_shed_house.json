@@ -1,0 +1,46 @@
+{
+  "building_id": "building_workshop_shed_house",
+  "display_name": "Workshop Shed House",
+  "description": "",
+  "model_path": "res://models/building-small-d.glb",
+  "model_scale": 1.0,
+  "model_offset": [
+    0,
+    0,
+    0
+  ],
+  "model_rotation_y": 0.0,
+  "footprint": [
+    [
+      0,
+      0
+    ]
+  ],
+  "category": "unique",
+  "profiles": [
+    {
+      "type": "BuildingMetadata"
+    },
+    {
+      "type": "BuildingProfile",
+      "category": "residential",
+      "capacity": 12,
+      "active_start": 0.0,
+      "active_end": 24.0
+    },
+    {
+      "type": "UniqueProfile",
+      "bucket": "residential",
+      "tier": 0,
+      "patron_id": "farmer",
+      "character_id": "farmer_residential",
+      "chain_role": "want",
+      "prerequisite_threshold": 60,
+      "prerequisite_ids": [
+        "building_mansion_block"
+      ],
+      "desirability_boost": 0.05
+    }
+  ],
+  "tags": []
+}

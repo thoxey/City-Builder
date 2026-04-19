@@ -1,0 +1,39 @@
+{
+  "building_id": "building_buskers_square",
+  "display_name": "Buskers' Square",
+  "description": "",
+  "model_path": "res://models/Meshy_AI_Sunnyvale_News_Conf_0403170655/Meshy_AI_Sunnyvale_News_Conf_0403170655_texture.glb",
+  "model_scale": 0.75,
+  "model_offset": [
+    0,
+    0,
+    0
+  ],
+  "model_rotation_y": 0.0,
+  "footprint": [
+    [
+      0,
+      0
+    ]
+  ],
+  "category": "unique",
+  "profiles": [
+    {
+      "type": "BuildingMetadata"
+    },
+    {
+      "type": "UniqueProfile",
+      "bucket": "commercial",
+      "tier": 0,
+      "patron_id": "farmer",
+      "character_id": "farmer_commercial",
+      "chain_role": "want",
+      "prerequisite_threshold": 60,
+      "prerequisite_ids": [
+        "building_big_tesco"
+      ],
+      "desirability_boost": 0.1
+    }
+  ],
+  "tags": []
+}

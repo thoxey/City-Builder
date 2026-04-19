@@ -1,9 +1,9 @@
 {
-  "building_id": "building_medical",
-  "display_name": "Hospital",
+  "building_id": "building_fire_station",
+  "display_name": "Fire Station",
   "description": "",
-  "model_path": "res://models/Meshy_AI_The_Meadows_Medical_C_0404154706/Meshy_AI_The_Meadows_Medical_C_0404154706_texture.glb",
-  "model_scale": 0.65,
+  "model_path": "res://models/Meshy_AI_Bluecoat_Guard_0403153240/Meshy_AI_Bluecoat_Guard_0403153240_texture.glb",
+  "model_scale": 0.8,
   "model_offset": [
     0,
     0,
@@ -19,18 +19,20 @@
   "category": "unique",
   "profiles": [
     {
-      "type": "MedicalMetadata"
+      "type": "BuildingMetadata"
     },
     {
       "type": "UniqueProfile",
       "bucket": "residential",
-      "tier": 3,
+      "tier": 2,
       "patron_id": "businessman",
       "character_id": "businessman_residential",
       "chain_role": "chain",
-      "prerequisite_threshold": 60,
-      "prerequisite_ids": ["building_fire_station"],
-      "desirability_boost": 0.15
+      "prerequisite_threshold": 30,
+      "prerequisite_ids": [
+        "building_police"
+      ],
+      "desirability_boost": 0.1
     }
   ],
   "tags": []

@@ -1,0 +1,16 @@
+{
+  "patron_id": "aristocrat",
+  "display_name": "Lord Ashworth's Circle",
+  "bio": "A loose league of aristocrats who see the town as their weekend playground. Promises you the Theatre they've always wanted to fund.",
+  "character_ids": [
+    "aristocrat_commercial",
+    "aristocrat_industrial",
+    "aristocrat_residential"
+  ],
+  "landmark_building_id": "building_theatre",
+  "portrait": "res://data/patrons/aristocrat/portrait.png",
+  "donation_area": {
+    "shape": "rect",
+    "rect": [8, -8, 12, 16]
+  }
+}
