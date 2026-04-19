@@ -1,0 +1,15 @@
+{
+  "event_id": "farmer_landmark_news",
+  "event_type": "newspaper",
+  "trigger": {
+    "event": "manual"
+  },
+  "enabled_if": "",
+  "payload": {
+    "headline": "[PLACEHOLDER] farmer_landmark_news headline",
+    "kicker": "[PLACEHOLDER] farmer_landmark_news kicker",
+    "body": "[PLACEHOLDER] farmer_landmark_news body.",
+    "image": "",
+    "dateline": ""
+  }
+}

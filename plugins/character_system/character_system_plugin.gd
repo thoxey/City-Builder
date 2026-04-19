@@ -23,9 +23,10 @@ enum CharState {
 
 const DATA_DIR := "res://data/characters"
 
-## Phase 3 stubbed-narrative default. Flip to false once the dialogue UI
-## (Phase 5) is in place — the modal will call mark_want_revealed() itself.
-const AUTO_REVEAL_WANT: bool = true
+## With the Phase-5 modal in place, the dialogue close path calls
+## mark_want_revealed() itself. Auto-advance is disabled; a character stays
+## in ARRIVED until the player closes their arrival modal.
+const AUTO_REVEAL_WANT: bool = false
 
 var _demand:  PluginBase
 var _uniques: PluginBase

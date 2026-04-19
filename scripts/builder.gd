@@ -5,10 +5,11 @@ extends Node3D
 ## by dropping a JSON file, no scene edits required.
 var structures: Array[Structure] = []
 var _catalog: PluginBase  # BuildingCatalog plugin reference (dynamic typing avoids circular preload)
-var _demand:  PluginBase  # Demand plugin reference — may be null if plugin disabled
-var _economy: PluginBase  # Economy plugin reference — gates decorative placement on cash
-var _palette: PluginBase  # Palette plugin — owns the cyclable build menu
-var _land:    PluginBase  # BuildableArea — gates placement to allowed cells
+var _demand:   PluginBase  # Demand plugin reference — may be null if plugin disabled
+var _economy:  PluginBase  # Economy plugin reference — gates decorative placement on cash
+var _palette:  PluginBase  # Palette plugin — owns the cyclable build menu
+var _land:     PluginBase  # BuildableArea — gates placement to allowed cells
+var _dialogue: PluginBase  # Dialogue plugin — suppresses input while a modal is open
 
 var map: DataMap
 
@@ -66,10 +67,11 @@ func _ready():
 	else:
 		push_error("[Builder] BuildingCatalog plugin missing — no structures will load")
 
-	_demand  = PluginManager.get_plugin("Demand")
-	_economy = PluginManager.get_plugin("Economy")
-	_palette = PluginManager.get_plugin("Palette")
-	_land    = PluginManager.get_plugin("BuildableArea")
+	_demand   = PluginManager.get_plugin("Demand")
+	_economy  = PluginManager.get_plugin("Economy")
+	_palette  = PluginManager.get_plugin("Palette")
+	_land     = PluginManager.get_plugin("BuildableArea")
+	_dialogue = PluginManager.get_plugin("Dialogue")
 
 	var mesh_library = MeshLibrary.new()
 
@@ -132,6 +134,11 @@ func _ready():
 func _process(delta):
 
 	if _overbuild_pending:
+		return
+
+	# While a narrative modal owns the screen, freeze all Builder input so the
+	# player can't place / demolish / save-load underneath the dialogue.
+	if _dialogue and _dialogue.is_input_suppressed():
 		return
 
 	action_rotate()

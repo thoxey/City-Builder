@@ -65,14 +65,14 @@ func after_each() -> void:
 # ── Arrival ───────────────────────────────────────────────────────────────────
 
 func test_arrival_on_threshold_cross() -> void:
-	# AUTO_REVEAL_WANT is true in M3, so ARRIVED immediately advances to
-	# WANT_REVEALED. That's the stubbed-narrative behaviour we want to verify.
+	# AUTO_REVEAL_WANT is false from M4 onward: crossing threshold stops at
+	# ARRIVED. The modal close path is what advances to WANT_REVEALED.
 	watch_signals(GameEvents)
 	_plugin._on_demand_changed("commercial_demand", 12.0)
 
 	assert_signal_emitted_with_parameters(GameEvents, "character_arrived", ["aristocrat_commercial"])
-	assert_eq(_plugin.get_state("aristocrat_commercial"), CharSysCls.CharState.WANT_REVEALED,
-		"auto-reveal in M3 advances past ARRIVED")
+	assert_eq(_plugin.get_state("aristocrat_commercial"), CharSysCls.CharState.ARRIVED,
+		"arrival no longer auto-advances past ARRIVED")
 
 func test_arrival_ignored_below_threshold() -> void:
 	watch_signals(GameEvents)
@@ -86,7 +86,7 @@ func test_arrival_wrong_bucket_ignored() -> void:
 
 	assert_eq(_plugin.get_state("aristocrat_commercial"), CharSysCls.CharState.NOT_ARRIVED,
 		"commercial character ignores housing bucket")
-	assert_eq(_plugin.get_state("farmer_residential"), CharSysCls.CharState.WANT_REVEALED,
+	assert_eq(_plugin.get_state("farmer_residential"), CharSysCls.CharState.ARRIVED,
 		"residential character triggers on housing_demand")
 
 func test_simultaneous_arrivals() -> void:
@@ -97,7 +97,7 @@ func test_simultaneous_arrivals() -> void:
 
 	assert_signal_emit_count(GameEvents, "character_arrived", 3)
 	for cid in ["aristocrat_commercial", "aristocrat_industrial", "farmer_residential"]:
-		assert_eq(_plugin.get_state(cid), CharSysCls.CharState.WANT_REVEALED)
+		assert_eq(_plugin.get_state(cid), CharSysCls.CharState.ARRIVED)
 
 func test_arrival_fires_once() -> void:
 	_plugin._on_demand_changed("commercial_demand", 20.0)
@@ -144,7 +144,7 @@ func test_satisfaction_ignores_wrong_building() -> void:
 	_plugin._on_unique_placed("building_pub")  # not the want
 
 	assert_signal_not_emitted(GameEvents, "character_satisfied")
-	assert_eq(_plugin.get_state("aristocrat_commercial"), CharSysCls.CharState.WANT_REVEALED)
+	assert_eq(_plugin.get_state("aristocrat_commercial"), CharSysCls.CharState.ARRIVED)
 
 func test_satisfaction_requires_arrival_first() -> void:
 	# Character hasn't arrived — placing their want shouldn't satisfy them.
@@ -185,7 +185,7 @@ func test_state_survives_map_swap() -> void:
 	new_map.character_states = GameState.map.character_states.duplicate()
 	GameState.map = new_map
 
-	assert_eq(_plugin.get_state("aristocrat_commercial"), CharSysCls.CharState.WANT_REVEALED,
+	assert_eq(_plugin.get_state("aristocrat_commercial"), CharSysCls.CharState.ARRIVED,
 		"state reads from current GameState.map — survives reassign")
 
 # ── Stubs ─────────────────────────────────────────────────────────────────────

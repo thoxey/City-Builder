@@ -1,0 +1,15 @@
+{
+  "event_id": "aristocrat_landmark_news",
+  "event_type": "newspaper",
+  "trigger": {
+    "event": "manual"
+  },
+  "enabled_if": "",
+  "payload": {
+    "headline": "[PLACEHOLDER] aristocrat_landmark_news headline",
+    "kicker": "[PLACEHOLDER] aristocrat_landmark_news kicker",
+    "body": "[PLACEHOLDER] aristocrat_landmark_news body.",
+    "image": "",
+    "dateline": ""
+  }
+}

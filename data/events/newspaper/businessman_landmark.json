@@ -1,0 +1,15 @@
+{
+  "event_id": "businessman_landmark_news",
+  "event_type": "newspaper",
+  "trigger": {
+    "event": "manual"
+  },
+  "enabled_if": "",
+  "payload": {
+    "headline": "[PLACEHOLDER] businessman_landmark_news headline",
+    "kicker": "[PLACEHOLDER] businessman_landmark_news kicker",
+    "body": "[PLACEHOLDER] businessman_landmark_news body.",
+    "image": "",
+    "dateline": ""
+  }
+}

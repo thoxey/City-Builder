@@ -1,0 +1,46 @@
+{
+  "event_id": "businessman_commercial_arrival",
+  "event_type": "dialogue",
+  "trigger": {
+    "event": "character_arrived",
+    "character_id": "businessman_commercial"
+  },
+  "enabled_if": "",
+  "payload": {
+    "tree_id": "businessman_commercial_arrival_tree",
+    "entry_node_id": "n_start",
+    "nodes": [
+      {
+        "node_id": "n_start",
+        "speaker": "",
+        "body": "[PLACEHOLDER] businessman_commercial_arrival \u2014 n_start body.",
+        "on_enter": [],
+        "options": [
+          {
+            "label": "Continue",
+            "next": "n_end",
+            "effects": []
+          }
+        ]
+      },
+      {
+        "node_id": "n_end",
+        "speaker": "",
+        "body": "[PLACEHOLDER] businessman_commercial_arrival \u2014 n_end body.",
+        "on_enter": [],
+        "options": [
+          {
+            "label": "Close",
+            "next": "",
+            "effects": [
+              {
+                "kind": "set_flag",
+                "target": "met_businessman_commercial"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -21,3 +21,12 @@ class_name DataMap
 ## landmark-expansion carries across save/load. Empty array = use starter
 ## plot (BuildableArea seeds it lazily).
 @export var allowed_cells: Array[Vector2i] = []
+
+## Event-system narrative flags. Key = flag name (String), value = bool.
+## Set by dialogue-option `set_flag` effects and read by the `flag.<name>`
+## DSL token. Persists with the save so narrative state survives reload.
+@export var flags: Dictionary = {}
+
+## How many times each event_id has fired (life-of-save). Read by the
+## `count.<event_id> >= N` DSL token. Bumped by EventSystem on dispatch.
+@export var event_counts: Dictionary = {}
