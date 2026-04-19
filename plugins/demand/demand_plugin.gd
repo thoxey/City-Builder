@@ -60,6 +60,13 @@ func inject(deps: Dictionary) -> void:
 @export var ref_cost_industrial: int = 20
 @export var ref_cost_commercial: int = 30
 
+@export_group("Starting balances")
+## Seeded into the three growth buckets at startup so the player can place
+## a few buildings before the simulation has had time to generate any demand.
+@export var starting_housing: float = 100.0
+@export var starting_industrial: float = 100.0
+@export var starting_commercial: float = 100.0
+
 # ── Buckets ───────────────────────────────────────────────────────────────────
 
 var buckets: Dictionary = {}                # type_id -> DemandBucket
@@ -84,16 +91,22 @@ func _build_buckets() -> void:
 	housing.growth_rate    = growth_rate_housing
 	housing.max_cap        = housing_max_cap
 	housing.reference_cost = ref_cost_housing
+	housing.value          = starting_housing
+	# Floor the seed too — housing's "no shrinkage" rule should also protect
+	# the starting grant from being eaten by a low-desirability first tick.
+	housing.floor_value    = starting_housing
 
 	var industrial := IndustrialDemandBucket.new()
 	industrial.ratio          = industrial_ratio
 	industrial.adjust_rate    = industrial_adjust_rate
 	industrial.reference_cost = ref_cost_industrial
+	industrial.value          = starting_industrial
 
 	var commercial := CommercialDemandBucket.new()
 	commercial.ratio          = commercial_ratio
 	commercial.adjust_rate    = commercial_adjust_rate
 	commercial.reference_cost = ref_cost_commercial
+	commercial.value          = starting_commercial
 
 	_bucket_order = [desirability, housing, industrial, commercial]
 	for b in _bucket_order:
