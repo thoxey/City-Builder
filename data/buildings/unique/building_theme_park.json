@@ -1,0 +1,41 @@
+{
+  "building_id": "building_theme_park",
+  "display_name": "Theme Park",
+  "description": "",
+  "model_path": "res://models/Meshy_AI_Duck_Pond_in_the_Hedg_0403173405/Meshy_AI_Duck_Pond_in_the_Hedg_0403173405_texture.glb",
+  "model_scale": 1.0,
+  "model_offset": [
+    0,
+    0,
+    0
+  ],
+  "model_rotation_y": 0.0,
+  "footprint": [
+    [
+      0,
+      0
+    ]
+  ],
+  "category": "unique",
+  "profiles": [
+    {
+      "type": "BuildingMetadata"
+    },
+    {
+      "type": "UniqueProfile",
+      "bucket": "residential",
+      "tier": 0,
+      "patron_id": "farmer",
+      "character_id": "",
+      "chain_role": "landmark",
+      "prerequisite_threshold": 0,
+      "prerequisite_ids": [
+        "building_brewery",
+        "building_buskers_square",
+        "building_workshop_shed_house"
+      ],
+      "desirability_boost": 0.3
+    }
+  ],
+  "tags": []
+}

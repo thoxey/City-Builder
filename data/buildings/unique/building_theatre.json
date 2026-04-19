@@ -1,0 +1,41 @@
+{
+  "building_id": "building_theatre",
+  "display_name": "The Theatre",
+  "description": "",
+  "model_path": "res://models/Meshy_AI_Clocktower_City_Hall_0403210028/Meshy_AI_Clocktower_City_Hall_0403210028_texture.glb",
+  "model_scale": 0.95,
+  "model_offset": [
+    0,
+    0,
+    0
+  ],
+  "model_rotation_y": 0.0,
+  "footprint": [
+    [
+      0,
+      0
+    ]
+  ],
+  "category": "unique",
+  "profiles": [
+    {
+      "type": "BuildingMetadata"
+    },
+    {
+      "type": "UniqueProfile",
+      "bucket": "residential",
+      "tier": 0,
+      "patron_id": "aristocrat",
+      "character_id": "",
+      "chain_role": "landmark",
+      "prerequisite_threshold": 0,
+      "prerequisite_ids": [
+        "building_members_club",
+        "building_crazy_golf",
+        "building_pirate_radio"
+      ],
+      "desirability_boost": 0.25
+    }
+  ],
+  "tags": []
+}

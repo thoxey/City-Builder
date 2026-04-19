@@ -73,17 +73,29 @@ class StubEconomy:
 				return not broke_for_ids.has(bid)
 		return true
 
+class StubUniques:
+	extends PluginBase
+	# Only ids registered here are treated as uniques; by default everything
+	# else falls through as a non-unique (unlock check skipped).
+	var unique_ids: Dictionary = {}    # bid -> true (declared unique)
+	var unlocked_ids: Dictionary = {}  # bid -> true (unlocked)
+	func get_plugin_name() -> String: return "UniqueRegistry"
+	func is_unique(bid: String) -> bool: return unique_ids.has(bid)
+	func is_unlocked(bid: String) -> bool: return unlocked_ids.has(bid)
+
 # ── Setup ─────────────────────────────────────────────────────────────────────
 
 var _plugin: Node
 var _catalog: StubCatalog
 var _demand: StubDemand
 var _economy: StubEconomy
+var _uniques: StubUniques
 
 func before_each() -> void:
 	_catalog = StubCatalog.new()
 	_demand  = StubDemand.new()
 	_economy = StubEconomy.new()
+	_uniques = StubUniques.new()
 	_demand._catalog = _catalog
 	_economy._catalog = _catalog
 	_plugin = PalettePluginCls.new()
@@ -91,6 +103,7 @@ func before_each() -> void:
 	_plugin._catalog = _catalog
 	_plugin._demand  = _demand
 	_plugin._economy = _economy
+	_plugin._uniques = _uniques
 
 func after_each() -> void:
 	if _plugin and is_instance_valid(_plugin):
@@ -102,6 +115,8 @@ func after_each() -> void:
 		_demand.free()
 	if _economy and is_instance_valid(_economy):
 		_economy.free()
+	if _uniques and is_instance_valid(_uniques):
+		_uniques.free()
 
 ## Re-run the palette's builder after fixture setup — mirrors _plugin_ready
 ## minus the UI and signal-connection side-effects.
@@ -211,7 +226,7 @@ func test_cycling_stays_within_affordable() -> void:
 	_catalog.add_structure("road",    "road",   "road", true)
 	_rebuild()
 
-	var start_id := _plugin._selected_id
+	var start_id: String = _plugin._selected_id
 	_plugin.select_next()
 	assert_ne(_plugin._selected_id, start_id, "select_next moves selection")
 
@@ -222,3 +237,22 @@ func test_cycling_stays_within_affordable() -> void:
 	# should equal the entry one step forward from where we started.
 	assert_true(_plugin._selected_id in _plugin._affordable_ids,
 		"selection stays within affordable list through cycling")
+
+func test_locked_unique_is_filtered_from_affordable() -> void:
+	_catalog.add_structure("pub",  "unique", "")
+	_catalog.add_structure("shop", "generic", "")
+	_uniques.unique_ids["pub"] = true
+	# pub is a known unique but not unlocked → must drop from the palette.
+	_rebuild()
+
+	var ids: Array = _plugin._affordable_ids
+	assert_false("pub" in ids, "locked uniques must be filtered out")
+	assert_true("shop" in ids, "non-uniques unaffected")
+
+func test_unlocked_unique_appears_in_affordable() -> void:
+	_catalog.add_structure("pub", "unique", "")
+	_uniques.unique_ids["pub"] = true
+	_uniques.unlocked_ids["pub"] = true
+	_rebuild()
+
+	assert_true("pub" in _plugin._affordable_ids, "unlocked uniques show up")

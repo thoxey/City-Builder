@@ -1,0 +1,41 @@
+{
+  "building_id": "building_sports_centre",
+  "display_name": "Sports Centre",
+  "description": "",
+  "model_path": "res://models/Meshy_AI_Acme_Business_Park__0403170610/Meshy_AI_Acme_Business_Park__0403170610_texture.glb",
+  "model_scale": 0.9,
+  "model_offset": [
+    0,
+    0,
+    0
+  ],
+  "model_rotation_y": 0.0,
+  "footprint": [
+    [
+      0,
+      0
+    ]
+  ],
+  "category": "unique",
+  "profiles": [
+    {
+      "type": "BuildingMetadata"
+    },
+    {
+      "type": "UniqueProfile",
+      "bucket": "residential",
+      "tier": 0,
+      "patron_id": "businessman",
+      "character_id": "",
+      "chain_role": "landmark",
+      "prerequisite_threshold": 0,
+      "prerequisite_ids": [
+        "building_gym",
+        "building_moped_garage",
+        "building_gentlemans_outfitters"
+      ],
+      "desirability_boost": 0.25
+    }
+  ],
+  "tags": []
+}

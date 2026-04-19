@@ -321,6 +321,20 @@ func _instantiate_profile(profile: Dictionary, bid: String) -> StructureMetadata
 			r.speed_limit = int(profile.get("speed_limit", 30))
 			r.lanes = int(profile.get("lanes", 1))
 			return r
+		"UniqueProfile":
+			var u := UniqueProfile.new()
+			u.bucket = profile.get("bucket", "")
+			u.tier = int(profile.get("tier", 0))
+			u.patron_id = profile.get("patron_id", "")
+			u.character_id = profile.get("character_id", "")
+			u.chain_role = profile.get("chain_role", "chain")
+			u.prerequisite_threshold = int(profile.get("prerequisite_threshold", 0))
+			var prereqs := PackedStringArray()
+			for pid in profile.get("prerequisite_ids", []):
+				prereqs.append(String(pid))
+			u.prerequisite_ids = prereqs
+			u.desirability_boost = float(profile.get("desirability_boost", 0.0))
+			return u
 		_:
 			push_warning("[BuildingCatalog] unknown_profile_type: building_id=%s type=%s" % [bid, type_name])
 			return null

@@ -15,3 +15,10 @@ signal cash_changed(amount: int, delta: int)
 ## `entry_ids` is the ordered list of currently affordable entry ids;
 ## `selected_id` is the currently active entry (or "" if none affordable).
 signal palette_changed(entry_ids: Array, selected_id: String)
+
+## A unique building has just been placed on the map.
+signal unique_placed(building_id: String)
+## A unique building has just been demolished; its slot is open again.
+signal unique_removed(building_id: String)
+## A unique crossed the threshold+prereq checks and is now available to build.
+signal unique_unlocked(building_id: String)

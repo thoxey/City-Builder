@@ -1,0 +1,46 @@
+{
+  "building_id": "building_postwar_midblock",
+  "display_name": "Postwar Mid-Block",
+  "description": "",
+  "model_path": "res://models/building-small-d.glb",
+  "model_scale": 1.0,
+  "model_offset": [
+    0,
+    0,
+    0
+  ],
+  "model_rotation_y": 0.0,
+  "footprint": [
+    [
+      0,
+      0
+    ]
+  ],
+  "category": "unique",
+  "profiles": [
+    {
+      "type": "BuildingMetadata"
+    },
+    {
+      "type": "BuildingProfile",
+      "category": "residential",
+      "capacity": 16,
+      "active_start": 0.0,
+      "active_end": 24.0
+    },
+    {
+      "type": "UniqueProfile",
+      "bucket": "residential",
+      "tier": 2,
+      "patron_id": "aristocrat",
+      "character_id": "aristocrat_residential",
+      "chain_role": "chain",
+      "prerequisite_threshold": 30,
+      "prerequisite_ids": [
+        "building_postwar_terrace"
+      ],
+      "desirability_boost": 0.0
+    }
+  ],
+  "tags": []
+}

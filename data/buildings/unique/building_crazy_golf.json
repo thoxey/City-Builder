@@ -1,0 +1,39 @@
+{
+  "building_id": "building_crazy_golf",
+  "display_name": "Crazy Golf",
+  "description": "",
+  "model_path": "res://models/Meshy_AI_Duck_Pond_in_the_Hedg_0403173405/Meshy_AI_Duck_Pond_in_the_Hedg_0403173405_texture.glb",
+  "model_scale": 1.0,
+  "model_offset": [
+    0,
+    0,
+    0
+  ],
+  "model_rotation_y": 0.0,
+  "footprint": [
+    [
+      0,
+      0
+    ]
+  ],
+  "category": "unique",
+  "profiles": [
+    {
+      "type": "BuildingMetadata"
+    },
+    {
+      "type": "UniqueProfile",
+      "bucket": "industrial",
+      "tier": 0,
+      "patron_id": "aristocrat",
+      "character_id": "aristocrat_industrial",
+      "chain_role": "want",
+      "prerequisite_threshold": 60,
+      "prerequisite_ids": [
+        "building_pipe_factory"
+      ],
+      "desirability_boost": 0.05
+    }
+  ],
+  "tags": []
+}

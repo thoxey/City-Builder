@@ -1,0 +1,46 @@
+{
+  "building_id": "building_full_service_garage",
+  "display_name": "Full-Service Garage",
+  "description": "",
+  "model_path": "res://models/Meshy_AI_Acme_Business_Park__0403170610/Meshy_AI_Acme_Business_Park__0403170610_texture.glb",
+  "model_scale": 0.8,
+  "model_offset": [
+    0,
+    0,
+    0
+  ],
+  "model_rotation_y": 0.0,
+  "footprint": [
+    [
+      0,
+      0
+    ]
+  ],
+  "category": "unique",
+  "profiles": [
+    {
+      "type": "BuildingMetadata"
+    },
+    {
+      "type": "BuildingProfile",
+      "category": "workplace",
+      "capacity": 25,
+      "active_start": 8.0,
+      "active_end": 18.0
+    },
+    {
+      "type": "UniqueProfile",
+      "bucket": "industrial",
+      "tier": 3,
+      "patron_id": "businessman",
+      "character_id": "businessman_industrial",
+      "chain_role": "chain",
+      "prerequisite_threshold": 60,
+      "prerequisite_ids": [
+        "building_car_wash"
+      ],
+      "desirability_boost": 0.0
+    }
+  ],
+  "tags": []
+}

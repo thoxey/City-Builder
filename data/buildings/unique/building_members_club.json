@@ -1,0 +1,46 @@
+{
+  "building_id": "building_members_club",
+  "display_name": "Private Members' Club",
+  "description": "",
+  "model_path": "res://models/Meshy_AI_Clocktower_City_Hall_0403210028/Meshy_AI_Clocktower_City_Hall_0403210028_texture.glb",
+  "model_scale": 0.8,
+  "model_offset": [
+    0,
+    0,
+    0
+  ],
+  "model_rotation_y": 0.0,
+  "footprint": [
+    [
+      0,
+      0
+    ]
+  ],
+  "category": "unique",
+  "profiles": [
+    {
+      "type": "BuildingMetadata"
+    },
+    {
+      "type": "BuildingProfile",
+      "category": "commercial",
+      "capacity": 25,
+      "active_start": 18.0,
+      "active_end": 2.0
+    },
+    {
+      "type": "UniqueProfile",
+      "bucket": "commercial",
+      "tier": 0,
+      "patron_id": "aristocrat",
+      "character_id": "aristocrat_commercial",
+      "chain_role": "want",
+      "prerequisite_threshold": 60,
+      "prerequisite_ids": [
+        "building_nightclub"
+      ],
+      "desirability_boost": 0.1
+    }
+  ],
+  "tags": []
+}

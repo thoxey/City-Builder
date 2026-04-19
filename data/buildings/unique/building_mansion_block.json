@@ -1,0 +1,46 @@
+{
+  "building_id": "building_mansion_block",
+  "display_name": "Mansion Block",
+  "description": "",
+  "model_path": "res://models/building-small-c.glb",
+  "model_scale": 1.0,
+  "model_offset": [
+    0,
+    0,
+    0
+  ],
+  "model_rotation_y": 0.0,
+  "footprint": [
+    [
+      0,
+      0
+    ]
+  ],
+  "category": "unique",
+  "profiles": [
+    {
+      "type": "BuildingMetadata"
+    },
+    {
+      "type": "BuildingProfile",
+      "category": "residential",
+      "capacity": 35,
+      "active_start": 0.0,
+      "active_end": 24.0
+    },
+    {
+      "type": "UniqueProfile",
+      "bucket": "residential",
+      "tier": 3,
+      "patron_id": "farmer",
+      "character_id": "farmer_residential",
+      "chain_role": "chain",
+      "prerequisite_threshold": 60,
+      "prerequisite_ids": [
+        "building_edwardian_terrace"
+      ],
+      "desirability_boost": 0.0
+    }
+  ],
+  "tags": []
+}

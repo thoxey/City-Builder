@@ -1,0 +1,39 @@
+{
+  "building_id": "building_pirate_radio",
+  "display_name": "Pirate Radio Station",
+  "description": "",
+  "model_path": "res://models/Meshy_AI_The_Tower_of_Tomorrow_0403170625/Meshy_AI_The_Tower_of_Tomorrow_0403170625_texture.glb",
+  "model_scale": 0.85,
+  "model_offset": [
+    0,
+    0,
+    0
+  ],
+  "model_rotation_y": 0.0,
+  "footprint": [
+    [
+      0,
+      0
+    ]
+  ],
+  "category": "unique",
+  "profiles": [
+    {
+      "type": "BuildingMetadata"
+    },
+    {
+      "type": "UniqueProfile",
+      "bucket": "residential",
+      "tier": 0,
+      "patron_id": "aristocrat",
+      "character_id": "aristocrat_residential",
+      "chain_role": "want",
+      "prerequisite_threshold": 60,
+      "prerequisite_ids": [
+        "building_postwar_tower_block"
+      ],
+      "desirability_boost": 0.05
+    }
+  ],
+  "tags": []
+}

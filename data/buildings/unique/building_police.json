@@ -20,6 +20,17 @@
   "profiles": [
     {
       "type": "PoliceMetadata"
+    },
+    {
+      "type": "UniqueProfile",
+      "bucket": "residential",
+      "tier": 1,
+      "patron_id": "businessman",
+      "character_id": "businessman_residential",
+      "chain_role": "chain",
+      "prerequisite_threshold": 10,
+      "prerequisite_ids": [],
+      "desirability_boost": 0.05
     }
   ],
   "tags": []
