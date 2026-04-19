@@ -30,3 +30,8 @@ signal character_arrived(character_id: String)
 signal character_want_revealed(character_id: String)
 signal character_satisfied(character_id: String)
 signal character_state_changed(character_id: String, new_state: int)
+
+## Patron questline signals — emitted by PatronSystem.
+signal patron_landmark_ready(patron_id: String)
+signal patron_landmark_completed(patron_id: String)
+signal patron_state_changed(patron_id: String, new_state: int)
