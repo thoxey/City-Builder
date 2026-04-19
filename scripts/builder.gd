@@ -7,10 +7,11 @@ var structures: Array[Structure] = []
 var _catalog: PluginBase  # BuildingCatalog plugin reference (dynamic typing avoids circular preload)
 var _demand:  PluginBase  # Demand plugin reference — may be null if plugin disabled
 var _economy: PluginBase  # Economy plugin reference — gates decorative placement on cash
+var _palette: PluginBase  # Palette plugin — owns the cyclable build menu
 
 var map: DataMap
 
-var index: int = 0               # Index of structure being built
+var _preview_idx: int = -1       # Structure index the cursor currently previews
 var _rotation_steps: int = 0     # 0–3, incremented by action_rotate()
 var _preview_indicators: Array[MeshInstance3D] = []
 
@@ -66,6 +67,7 @@ func _ready():
 
 	_demand  = PluginManager.get_plugin("Demand")
 	_economy = PluginManager.get_plugin("Economy")
+	_palette = PluginManager.get_plugin("Palette")
 
 	var mesh_library = MeshLibrary.new()
 
@@ -100,10 +102,10 @@ func _ready():
 	_setup_ground_gridmap()
 	_find_road_indices()
 
-	update_structure()
-
 	GameState.gridmap = gridmap
 	GameState.structures = structures
+
+	GameEvents.palette_changed.connect(_on_palette_changed)
 
 	# Set up overbuild confirmation dialog
 	_overbuild_dialog = ConfirmationDialog.new()
@@ -226,8 +228,10 @@ static func _orientation_to_steps(orientation: int) -> int:
 # ── Build (place) a structure ──────────────────────────────────────────────────
 
 func action_build(gridmap_position):
+	if _preview_idx < 0:
+		return
 	var anchor := Vector2i(int(gridmap_position.x), int(gridmap_position.z))
-	var is_road := _is_road_structure(index)
+	var is_road := _is_road_structure(_preview_idx)
 
 	var trigger := false
 	if Input.is_action_just_pressed("build"):
@@ -240,7 +244,15 @@ func action_build(gridmap_position):
 		return
 	_paint_last_cell = anchor
 
-	var fp_cells := _get_footprint_cells(anchor, index, _rotation_steps)
+	# Palette pool-pick: the preview shows a stable representative, but each
+	# LMB rolls a fresh random from the pool so repeat placements vary.
+	var build_idx := _preview_idx
+	if _palette and _palette.has_method("pick_structure_index_for_build"):
+		var picked: int = _palette.pick_structure_index_for_build()
+		if picked >= 0:
+			build_idx = picked
+
+	var fp_cells := _get_footprint_cells(anchor, build_idx, _rotation_steps)
 	var orient   := gridmap.get_orthogonal_index_from_basis(selector.basis)
 
 	# Collect any buildings that need to be cleared
@@ -260,7 +272,7 @@ func action_build(gridmap_position):
 			_overbuild_pending  = true
 			_overbuild_anchor   = anchor
 			_overbuild_orient   = orient
-			_overbuild_index    = index
+			_overbuild_index    = build_idx
 			_overbuild_fp_cells = fp_cells
 			_overbuild_dialog.popup_centered()
 			return
@@ -269,7 +281,7 @@ func action_build(gridmap_position):
 		for bid: int in occupied_bids:
 			_demolish_by_bid(bid)
 
-	_do_build(anchor, index, orient, fp_cells)
+	_do_build(anchor, build_idx, orient, fp_cells)
 
 func _on_overbuild_confirmed() -> void:
 	_overbuild_pending = false
@@ -399,20 +411,26 @@ func action_rotate():
 # ── Toggle between structures ─────────────────────────────────────────────────
 
 func action_structure_toggle():
-	var prev_index := index
-
+	if _palette == null:
+		return
+	# Preview refresh happens via _on_palette_changed() — no direct call here.
 	if Input.is_action_just_pressed("structure_next"):
-		index = wrap(index + 1, 0, structures.size())
+		_palette.select_next()
 		Audio.play("sounds/toggle.ogg", -30)
-
 	if Input.is_action_just_pressed("structure_previous"):
-		index = wrap(index - 1, 0, structures.size())
+		_palette.select_previous()
 		Audio.play("sounds/toggle.ogg", -30)
-
-	if index != prev_index:
-		update_structure()
 
 # ── Update the structure visual in the 'cursor' ───────────────────────────────
+
+func _on_palette_changed(_ids: Array, selected_id: String) -> void:
+	if _palette == null:
+		return
+	var new_idx: int = _palette.current_structure_index()
+	if new_idx == _preview_idx:
+		return
+	_preview_idx = new_idx
+	update_structure()
 
 func update_structure():
 	for n in selector_container.get_children():
@@ -420,16 +438,20 @@ func update_structure():
 		n.queue_free()
 	_preview_indicators.clear()
 
-	var _model = structures[index].model.instantiate()
+	if _preview_idx < 0 or _preview_idx >= structures.size():
+		return
+
+	var struct: Structure = structures[_preview_idx]
+	var _model = struct.model.instantiate()
 	selector_container.add_child(_model)
-	var s := structures[index].model_scale
+	var s := struct.model_scale
 	_model.scale = Vector3.ONE * s
-	_model.rotation_degrees.y = structures[index].model_rotation_y
-	var mesh: Mesh = get_mesh(structures[index].model)
+	_model.rotation_degrees.y = struct.model_rotation_y
+	var mesh: Mesh = get_mesh(struct.model)
 	var ground_offset := -mesh.get_aabb().position.y * s if mesh else 0.0
 
 	# Same auto-centring as the MeshLibrary so the preview matches what gets placed.
-	var fp: Array[Vector2i] = structures[index].footprint
+	var fp: Array[Vector2i] = struct.footprint
 	if fp.is_empty():
 		fp = [Vector2i(0, 0)]
 	var fp_cx := 0.0
@@ -440,7 +462,7 @@ func update_structure():
 	fp_cx /= fp.size()
 	fp_cz /= fp.size()
 
-	_model.position = structures[index].model_offset + Vector3(fp_cx, ground_offset + 0.25, fp_cz)
+	_model.position = struct.model_offset + Vector3(fp_cx, ground_offset + 0.25, fp_cz)
 
 	for offset: Vector2i in fp:
 		var indicator := _make_cell_indicator()
@@ -462,9 +484,9 @@ func _make_cell_indicator() -> MeshInstance3D:
 	return mi
 
 func _update_preview_color(anchor: Vector2i) -> void:
-	if _preview_indicators.is_empty():
+	if _preview_indicators.is_empty() or _preview_idx < 0:
 		return
-	var fp_cells := _get_footprint_cells(anchor, index, _rotation_steps)
+	var fp_cells := _get_footprint_cells(anchor, _preview_idx, _rotation_steps)
 	var is_valid := true
 	for cell in fp_cells:
 		if GameState.cell_to_building.has(cell):

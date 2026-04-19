@@ -171,6 +171,23 @@ static func bucket_display_name(bucket_id: String) -> String:
 
 # ── Spending ──────────────────────────────────────────────────────────────────
 
+## Non-mutating preview — would `try_spend(structure)` succeed right now?
+## Returns true for free placements (roads, nature, anything without a profile
+## or with an unknown category) — they skip the demand gate entirely.
+func can_afford(structure: Structure) -> bool:
+	if structure == null:
+		return true
+	var profile := structure.find_metadata(BuildingProfile) as BuildingProfile
+	if profile == null:
+		return true
+	var bucket_id := bucket_for_category(profile.category)
+	if bucket_id == "":
+		return true
+	var bucket: DemandBucket = buckets.get(bucket_id)
+	if bucket == null:
+		return true
+	return bucket.value >= float(profile.capacity)
+
 ## Attempts to spend the demand required to place `structure`.
 ## Returns a Dictionary describing the outcome:
 ##   ok:        bool   — whether placement may proceed

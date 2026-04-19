@@ -110,6 +110,14 @@ func get_cash_cost(structure: Structure) -> int:
 		return 0
 	return int((summaries[sid] as Dictionary).get("cash_cost", 0))
 
+## Non-mutating preview — would `try_spend_cash(structure)` succeed right now?
+## Cash-free structures (cost==0) always pass.
+func can_afford_cash(structure: Structure) -> bool:
+	var cost: int = get_cash_cost(structure)
+	if cost <= 0:
+		return true
+	return GameState.map.cash >= cost
+
 ## Attempts to spend the cash required to place `structure`.
 ## Returns a Dictionary describing the outcome:
 ##   ok:    bool — whether placement may proceed

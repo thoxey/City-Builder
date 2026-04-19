@@ -58,6 +58,28 @@ func get_id_by_index(idx: int) -> String:
 func get_summary() -> Array:
 	return _summaries
 
+## Returns every structure whose pool_id matches `pool_id` (in catalog order).
+## Empty array if no structure shares that pool.
+func get_pool(pool_id: String) -> Array[Structure]:
+	var out: Array[Structure] = []
+	if pool_id.is_empty():
+		return out
+	for i in _structures.size():
+		if _structures[i].pool_id == pool_id:
+			out.append(_structures[i])
+	return out
+
+## Returns structure indices (into the catalog / MeshLibrary) for all members
+## of the given pool, in catalog order.
+func get_pool_indices(pool_id: String) -> Array[int]:
+	var out: Array[int] = []
+	if pool_id.is_empty():
+		return out
+	for i in _structures.size():
+		if _structures[i].pool_id == pool_id:
+			out.append(i)
+	return out
+
 # ── Loading ───────────────────────────────────────────────────────────────────
 
 func _load_dir(dir_root: String) -> void:
@@ -152,6 +174,7 @@ func _load_one(path: String) -> Dictionary:
 	structure.model_offset = _to_vec3(data.get("model_offset", [0, 0, 0]))
 	structure.model_rotation_y = float(data.get("model_rotation_y", 0.0))
 	structure.footprint = _to_cell_offsets(data.get("footprint", [[0, 0]]))
+	structure.pool_id = String(data.get("pool_id", ""))
 
 	var profiles_meta: Array[StructureMetadata] = []
 	for profile_any in data.get("profiles", []):
@@ -168,6 +191,7 @@ func _load_one(path: String) -> Dictionary:
 		"display_name": data.get("display_name", bid),
 		"category": data.get("category", ""),
 		"cash_cost": int(data.get("cash_cost", 0)),
+		"pool_id": structure.pool_id,
 		"tags": data.get("tags", []),
 		"model_path": model_path,
 	}

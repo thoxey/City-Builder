@@ -17,6 +17,7 @@
     ]
   ],
   "category": "nature",
+  "pool_id": "grass",
   "cash_cost": 10,
   "profiles": [],
   "tags": []
