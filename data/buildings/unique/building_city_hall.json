@@ -25,6 +25,7 @@
     ]
   ],
   "category": "unique",
+  "pool_id": "industrial_t2",
   "profiles": [
     {
       "type": "BuildingMetadata"

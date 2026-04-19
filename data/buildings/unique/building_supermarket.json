@@ -29,6 +29,7 @@
     ]
   ],
   "category": "unique",
+  "pool_id": "commercial_t2",
   "profiles": [
     {
       "type": "BuildingMetadata"

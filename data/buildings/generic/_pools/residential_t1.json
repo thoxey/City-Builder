@@ -1,0 +1,7 @@
+{
+  "pool_id": "residential_t1",
+  "bucket": "residential",
+  "tier": 1,
+  "demand_threshold": 0,
+  "demand_per_unit": 5
+}

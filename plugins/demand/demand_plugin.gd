@@ -171,34 +171,92 @@ static func bucket_display_name(bucket_id: String) -> String:
 
 # ── Spending ──────────────────────────────────────────────────────────────────
 
+## Pull pool config from the catalog if the structure belongs to one. Empty
+## Dictionary for decoratives or any generic without a sidecar config.
+func _pool_config_for(structure: Structure) -> Dictionary:
+	if structure == null or structure.pool_id.is_empty() or _catalog == null:
+		return {}
+	return _catalog.get_pool_config(structure.pool_id)
+
+## Resolve placement cost + bucket + tier threshold for a structure.
+## Pool config (if present) wins over per-building capacity: tier pricing
+## should be the same for every model in a pool.
+## Returns { bucket_id, cost, threshold } — cost/threshold default to the
+## building's own profile.capacity / 0 when no pool config exists.
+func _placement_params(structure: Structure) -> Dictionary:
+	var params := {"bucket_id": "", "cost": 0.0, "threshold": 0.0}
+	var profile := structure.find_metadata(BuildingProfile) as BuildingProfile
+	if profile == null:
+		return params  # roads / nature / anything without a profile → free
+	var bucket_id := bucket_for_category(profile.category)
+	if bucket_id == "":
+		return params  # unknown category → free
+	params["bucket_id"] = bucket_id
+	params["cost"] = float(profile.capacity)
+	var pool_cfg := _pool_config_for(structure)
+	if not pool_cfg.is_empty():
+		params["cost"] = float(pool_cfg.get("demand_per_unit", params["cost"]))
+		params["threshold"] = float(pool_cfg.get("demand_threshold", 0))
+	return params
+
+## Non-mutating preview — would `try_spend(structure)` succeed right now?
+## Returns true for free placements (roads, nature, anything without a profile
+## or with an unknown category) — they skip the demand gate entirely.
+## Pool-gated structures must also clear their tier threshold.
+func can_afford(structure: Structure) -> bool:
+	if structure == null:
+		return true
+	var params := _placement_params(structure)
+	var bucket_id: String = params["bucket_id"]
+	if bucket_id.is_empty():
+		return true
+	var bucket: DemandBucket = buckets.get(bucket_id)
+	if bucket == null:
+		return true
+	if bucket.value < float(params["threshold"]):
+		return false
+	return bucket.value >= float(params["cost"])
+
 ## Attempts to spend the demand required to place `structure`.
 ## Returns a Dictionary describing the outcome:
 ##   ok:        bool   — whether placement may proceed
 ##   bucket_id: String — matched bucket ("" for free placements)
 ##   cost:      float  — required demand for this placement
 ##   have:      float  — bucket value pre-spend (useful for shortfall messages)
+##   threshold: float  — tier unlock threshold (0 for non-tiered)
+##   reason:    String — "below_threshold" | "insufficient" | "" (only when !ok)
 ## Free placements (no profile / non-growth category) yield ok=true with empty
 ## bucket_id and zero cost. Blocked placements leave the bucket untouched.
 func try_spend(structure: Structure) -> Dictionary:
-	var result := {"ok": true, "bucket_id": "", "cost": 0.0, "have": 0.0}
+	var result := {"ok": true, "bucket_id": "", "cost": 0.0, "have": 0.0,
+				   "threshold": 0.0, "reason": ""}
 
-	var profile := structure.find_metadata(BuildingProfile) as BuildingProfile
-	if profile == null:
+	var params := _placement_params(structure)
+	var bucket_id: String = params["bucket_id"]
+	if bucket_id.is_empty():
 		return result  # roads, nature, anything without a profile → free
-	var bucket_id := bucket_for_category(profile.category)
-	if bucket_id == "":
-		return result  # unknown category → free (forward-compat)
 	var bucket: DemandBucket = buckets.get(bucket_id)
 	if bucket == null:
 		return result
 
-	var cost := float(profile.capacity)
+	var cost: float = params["cost"]
+	var threshold: float = params["threshold"]
 	result["bucket_id"] = bucket_id
-	result["cost"] = cost
-	result["have"] = bucket.value
+	result["cost"]      = cost
+	result["have"]      = bucket.value
+	result["threshold"] = threshold
+
+	if bucket.value < threshold:
+		result["ok"] = false
+		result["reason"] = "below_threshold"
+		print("[Demand] place_blocked: bucket=%s reason=below_threshold threshold=%.1f value=%.1f" % [
+			bucket_id, threshold, bucket.value
+		])
+		return result
 
 	if bucket.value < cost:
 		result["ok"] = false
+		result["reason"] = "insufficient"
 		print("[Demand] place_blocked: bucket=%s cost=%.1f value=%.1f" % [bucket_id, cost, bucket.value])
 		return result
 

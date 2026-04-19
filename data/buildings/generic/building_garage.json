@@ -17,6 +17,7 @@
     ]
   ],
   "category": "generic",
+  "pool_id": "industrial_t1",
   "profiles": [
     {
       "type": "BuildingMetadata"

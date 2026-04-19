@@ -17,6 +17,7 @@
     ]
   ],
   "category": "generic",
+  "pool_id": "residential_t1",
   "profiles": [
     {
       "type": "BuildingMetadata"

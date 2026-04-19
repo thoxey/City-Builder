@@ -6,6 +6,10 @@ class_name Structure
 
 @export_subgroup("Gameplay")
 @export var metadata: Array[StructureMetadata] = []
+## Palette grouping. Structures sharing a pool_id appear as a single cyclable
+## palette entry; placement picks one at random from the pool. Empty string =
+## standalone entry (or hidden, for auto-tile-only road variants).
+@export var pool_id: String = ""
 
 @export_subgroup("Footprint")
 ## Grid cells this building occupies, as offsets from the anchor (0,0).

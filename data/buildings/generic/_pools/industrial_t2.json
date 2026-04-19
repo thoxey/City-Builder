@@ -1,0 +1,7 @@
+{
+  "pool_id": "industrial_t2",
+  "bucket": "industrial",
+  "tier": 2,
+  "demand_threshold": 30,
+  "demand_per_unit": 15
+}

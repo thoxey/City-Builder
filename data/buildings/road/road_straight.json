@@ -17,6 +17,7 @@
     ]
   ],
   "category": "road",
+  "pool_id": "road",
   "profiles": [
     {
       "type": "RoadMetadata",
