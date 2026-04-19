@@ -24,6 +24,7 @@ const PLUGINS: Array[GDScript] = [
 	preload("res://plugins/economy/economy_plugin.gd"),
 	preload("res://plugins/palette/palette_plugin.gd"),
 	preload("res://plugins/hud/hud_plugin.gd"),
+	preload("res://plugins/nameplate/nameplate_plugin.gd"),
 	preload("res://plugins/example/example_plugin.gd"),
 ]
 

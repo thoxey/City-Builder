@@ -59,6 +59,20 @@ func get_id_by_index(idx: int) -> String:
 func get_summary() -> Array:
 	return _summaries
 
+## Single-building summary (display_name, category, pool_id, cash_cost, tags, model_path).
+## Returns an empty Dictionary when `building_id` is unknown.
+func get_summary_by_id(building_id: String) -> Dictionary:
+	var idx: int = _index_by_id.get(building_id, -1)
+	if idx < 0:
+		return {}
+	return _summaries[idx]
+
+## Same summary, addressed by MeshLibrary item index.
+func get_summary_by_index(idx: int) -> Dictionary:
+	if idx < 0 or idx >= _summaries.size():
+		return {}
+	return _summaries[idx]
+
 ## Returns every structure whose pool_id matches `pool_id` (in catalog order).
 ## Empty array if no structure shares that pool.
 func get_pool(pool_id: String) -> Array[Structure]:
