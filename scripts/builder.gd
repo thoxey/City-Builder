@@ -8,6 +8,7 @@ var _catalog: PluginBase  # BuildingCatalog plugin reference (dynamic typing avo
 var _demand:  PluginBase  # Demand plugin reference — may be null if plugin disabled
 var _economy: PluginBase  # Economy plugin reference — gates decorative placement on cash
 var _palette: PluginBase  # Palette plugin — owns the cyclable build menu
+var _land:    PluginBase  # BuildableArea — gates placement to allowed cells
 
 var map: DataMap
 
@@ -68,6 +69,7 @@ func _ready():
 	_demand  = PluginManager.get_plugin("Demand")
 	_economy = PluginManager.get_plugin("Economy")
 	_palette = PluginManager.get_plugin("Palette")
+	_land    = PluginManager.get_plugin("BuildableArea")
 
 	var mesh_library = MeshLibrary.new()
 
@@ -296,6 +298,15 @@ func _on_overbuild_confirmed() -> void:
 	_do_build(_overbuild_anchor, _overbuild_index, _overbuild_orient, _overbuild_fp_cells)
 
 func _do_build(anchor: Vector2i, struct_idx: int, orient: int, fp_cells: Array[Vector2i]) -> void:
+	# Buildable-area gate — every footprint cell must be inside the allowed
+	# mask. Runs first so the toast is the earliest feedback the player sees.
+	if _land:
+		for cell: Vector2i in fp_cells:
+			if not _land.is_allowed(cell):
+				show_toast("Outside buildable area")
+				print("[BuildableArea] place_blocked: pos=(%d,%d) reason=outside_mask" % [cell.x, cell.y])
+				return
+
 	# Cash gate — decoratives (nature) cost cash. Runs first so the player gets
 	# the cash-shortage toast before any (irrelevant) demand check on a free
 	# decorative. Non-cash structures (cost==0) pass through unchanged.
@@ -374,6 +385,9 @@ func action_demolish(gridmap_position):
 	_erase_last_cell = clicked_cell
 
 	if not GameState.cell_to_building.has(clicked_cell):
+		return
+	if _land and not _land.is_allowed(clicked_cell):
+		show_toast("Outside buildable area")
 		return
 	var bid: int = GameState.cell_to_building[clicked_cell]
 	_demolish_by_bid(bid)
@@ -495,6 +509,11 @@ func _update_preview_color(anchor: Vector2i) -> void:
 	var is_valid := true
 	for cell in fp_cells:
 		if GameState.cell_to_building.has(cell):
+			is_valid = false
+			break
+		# Outside the buildable-area mask → preview turns red so the player
+		# sees they can't place there before clicking.
+		if _land and not _land.is_allowed(cell):
 			is_valid = false
 			break
 	var color := Color(0.0, 1.0, 0.0, 0.4) if is_valid else Color(1.0, 0.2, 0.2, 0.4)

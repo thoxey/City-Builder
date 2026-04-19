@@ -35,3 +35,7 @@ signal character_state_changed(character_id: String, new_state: int)
 signal patron_landmark_ready(patron_id: String)
 signal patron_landmark_completed(patron_id: String)
 signal patron_state_changed(patron_id: String, new_state: int)
+
+## BuildableArea expansion — carries the newly added cells so the UI / overlay
+## can tween them into the allowed set without diffing.
+signal buildable_area_expanded(new_cells: Array)

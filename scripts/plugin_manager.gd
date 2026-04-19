@@ -25,6 +25,7 @@ const PLUGINS: Array[GDScript] = [
 	preload("res://plugins/unique_registry/unique_registry_plugin.gd"),
 	preload("res://plugins/character_system/character_system_plugin.gd"),
 	preload("res://plugins/patron_system/patron_system_plugin.gd"),
+	preload("res://plugins/buildable_area/buildable_area_plugin.gd"),
 	preload("res://plugins/palette/palette_plugin.gd"),
 	preload("res://plugins/hud/hud_plugin.gd"),
 	preload("res://plugins/nameplate/nameplate_plugin.gd"),
