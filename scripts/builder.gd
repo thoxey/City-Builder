@@ -6,6 +6,7 @@ extends Node3D
 var structures: Array[Structure] = []
 var _catalog: PluginBase  # BuildingCatalog plugin reference (dynamic typing avoids circular preload)
 var _demand:  PluginBase  # Demand plugin reference — may be null if plugin disabled
+var _economy: PluginBase  # Economy plugin reference — gates decorative placement on cash
 
 var map: DataMap
 
@@ -63,7 +64,8 @@ func _ready():
 	else:
 		push_error("[Builder] BuildingCatalog plugin missing — no structures will load")
 
-	_demand = PluginManager.get_plugin("Demand")
+	_demand  = PluginManager.get_plugin("Demand")
+	_economy = PluginManager.get_plugin("Economy")
 
 	var mesh_library = MeshLibrary.new()
 
@@ -282,6 +284,18 @@ func _on_overbuild_confirmed() -> void:
 	_do_build(_overbuild_anchor, _overbuild_index, _overbuild_orient, _overbuild_fp_cells)
 
 func _do_build(anchor: Vector2i, struct_idx: int, orient: int, fp_cells: Array[Vector2i]) -> void:
+	# Cash gate — decoratives (nature) cost cash. Runs first so the player gets
+	# the cash-shortage toast before any (irrelevant) demand check on a free
+	# decorative. Non-cash structures (cost==0) pass through unchanged.
+	if _economy:
+		var cash_info: Dictionary = _economy.try_spend_cash(structures[struct_idx])
+		if not cash_info["ok"]:
+			var shortfall: int = cash_info["cost"] - cash_info["have"]
+			show_toast("Need $%d more (have $%d / $%d)" % [
+				shortfall, int(cash_info["have"]), int(cash_info["cost"])
+			])
+			return
+
 	# Demand gate — growth buildings must be paid for out of the matching bucket.
 	# Non-profile structures (roads, nature, pavement) are free. Blocked placements
 	# exit here before any grid mutation or sound, so the player just sees a toast.

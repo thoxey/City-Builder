@@ -27,6 +27,7 @@ var _safety_label:       Label
 var _health_label:       Label
 var _budget_label:       Label
 var _output_label:       Label
+var _cash_label:         Label
 var _demand_labels: Dictionary = {}  # bucket_type_id -> Label
 
 # ── Lifecycle ─────────────────────────────────────────────────────────────────
@@ -35,7 +36,14 @@ func _plugin_ready() -> void:
 	_build_ui()
 	GameEvents.satisfaction_changed.connect(_on_satisfaction)
 	GameEvents.demand_changed.connect(_on_demand_changed)
+	GameEvents.cash_changed.connect(_on_cash_changed)
 	_city_stats.stats_ticked.connect(_on_stats_ticked)
+	# Seed the cash label with whatever is on the map right now — the Economy
+	# plugin emits cash_changed in its own _plugin_ready, but topo order may put
+	# Economy *after* HUD (HUD only deps CityStats + Demand), so we'd miss that
+	# first emit. Pull straight from GameState.map for the initial value.
+	if GameState.map:
+		_on_cash_changed(GameState.map.cash, 0)
 
 # ── UI construction ───────────────────────────────────────────────────────────
 
@@ -61,8 +69,11 @@ func _build_ui() -> void:
 	_health_label       = _make_label("Health: ---%")
 	_budget_label       = _make_label("Budget: ---/hr")
 	_output_label       = _make_label("Output: 0/hr")
+	_cash_label         = _make_label("$0")
 
 	hbox.add_child(_satisfaction_label)
+	hbox.add_child(_make_sep())
+	hbox.add_child(_cash_label)
 	hbox.add_child(_make_sep())
 	hbox.add_child(_safety_label)
 	hbox.add_child(_health_label)
@@ -100,6 +111,9 @@ func _on_satisfaction(score: float) -> void:
 		_satisfaction_label.modulate = Color(1.0, 0.85, 0.1)
 	else:
 		_satisfaction_label.modulate = Color(1.0, 0.25, 0.2)
+
+func _on_cash_changed(amount: int, _delta: int) -> void:
+	_cash_label.text = "$%d" % amount
 
 func _on_demand_changed(bucket_type_id: String, value: float) -> void:
 	var lbl: Label = _demand_labels.get(bucket_type_id)
