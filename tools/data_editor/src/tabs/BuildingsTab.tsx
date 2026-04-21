@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { lazy, Suspense, useEffect, useMemo, useState } from "react";
 import { useApp } from "../store";
 import { Sidebar } from "../components/Sidebar";
 import type { BuildingDoc, BuildingCategory } from "../types";
@@ -7,6 +7,12 @@ import { validateBuilding } from "../buildings/validation";
 import { ProfilesEditor } from "../buildings/ProfileEditors";
 import { FootprintEditor } from "../buildings/FootprintEditor";
 import { pathFromRes } from "../events/paths";
+
+// Lazy — model-viewer pulls in Three.js (~1MB). Only bundled when the user
+// actually opens the Buildings tab.
+const ModelPreview = lazy(() =>
+  import("../buildings/ModelPreview").then((m) => ({ default: m.ModelPreview }))
+);
 
 export function BuildingsTab() {
   const { manifest, writeJson, reloadManifest } = useApp();
@@ -184,6 +190,9 @@ export function BuildingsTab() {
               Drop the .glb into a <code>models/&lt;id&gt;/</code> folder in Godot,
               re-export the manifest, then paste the path here.
             </div>
+            <Suspense fallback={<div className="model-preview loading">Loading viewer…</div>}>
+              <ModelPreview modelPath={doc.model_path} />
+            </Suspense>
           </div>
 
           <label>model_scale</label>

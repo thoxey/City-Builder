@@ -17,6 +17,9 @@ export interface Repo {
   // to disk in place.
   writeJson(path: string[], contents: string): Promise<void>;
   supportsAutoReload(): boolean;
+  // Reads an arbitrary repo-relative file as a Blob. Used for .glb preview
+  // rendering. Optional: download-mode implementations throw.
+  readBlob?(path: string[]): Promise<Blob>;
 }
 
 export function triggerDownload(filename: string, contents: string): void {
