@@ -37,7 +37,7 @@ gdscript/warnings/native_method_override=1
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/gut/plugin.cfg")
+enabled=PackedStringArray("res://addons/data_editor_tools/plugin.cfg", "res://addons/gut/plugin.cfg")
 
 [editor]
 
