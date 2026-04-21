@@ -891,6 +891,52 @@
 	"events": [
 		{
 			"_path": "res://data/events/characters/aristocrat_commercial/arrival.json",
+			"body": {
+				"enabled_if": "",
+				"event_id": "aristocrat_commercial_arrival",
+				"event_type": "dialogue",
+				"payload": {
+					"entry_node_id": "n_start",
+					"nodes": [
+						{
+							"body": "[PLACEHOLDER] aristocrat_commercial_arrival — n_start body.",
+							"node_id": "n_start",
+							"on_enter": [],
+							"options": [
+								{
+									"effects": [],
+									"label": "Continue",
+									"next": "n_end"
+								}
+							],
+							"speaker": ""
+						},
+						{
+							"body": "[PLACEHOLDER] aristocrat_commercial_arrival — n_end body.",
+							"node_id": "n_end",
+							"on_enter": [],
+							"options": [
+								{
+									"effects": [
+										{
+											"kind": "set_flag",
+											"target": "met_aristocrat_commercial"
+										}
+									],
+									"label": "Close",
+									"next": ""
+								}
+							],
+							"speaker": ""
+						}
+					],
+					"tree_id": "aristocrat_commercial_arrival_tree"
+				},
+				"trigger": {
+					"character_id": "aristocrat_commercial",
+					"event": "character_arrived"
+				}
+			},
 			"category": "characters",
 			"enabled_if": "",
 			"event_id": "aristocrat_commercial_arrival",
@@ -902,6 +948,52 @@
 		},
 		{
 			"_path": "res://data/events/characters/aristocrat_industrial/arrival.json",
+			"body": {
+				"enabled_if": "",
+				"event_id": "aristocrat_industrial_arrival",
+				"event_type": "dialogue",
+				"payload": {
+					"entry_node_id": "n_start",
+					"nodes": [
+						{
+							"body": "[PLACEHOLDER] aristocrat_industrial_arrival — n_start body.",
+							"node_id": "n_start",
+							"on_enter": [],
+							"options": [
+								{
+									"effects": [],
+									"label": "Continue",
+									"next": "n_end"
+								}
+							],
+							"speaker": ""
+						},
+						{
+							"body": "[PLACEHOLDER] aristocrat_industrial_arrival — n_end body.",
+							"node_id": "n_end",
+							"on_enter": [],
+							"options": [
+								{
+									"effects": [
+										{
+											"kind": "set_flag",
+											"target": "met_aristocrat_industrial"
+										}
+									],
+									"label": "Close",
+									"next": ""
+								}
+							],
+							"speaker": ""
+						}
+					],
+					"tree_id": "aristocrat_industrial_arrival_tree"
+				},
+				"trigger": {
+					"character_id": "aristocrat_industrial",
+					"event": "character_arrived"
+				}
+			},
 			"category": "characters",
 			"enabled_if": "",
 			"event_id": "aristocrat_industrial_arrival",
@@ -913,6 +1005,43 @@
 		},
 		{
 			"_path": "res://data/events/patrons/aristocrat/landmark_completed.json",
+			"body": {
+				"enabled_if": "",
+				"event_id": "aristocrat_landmark_completed",
+				"event_type": "dialogue",
+				"payload": {
+					"entry_node_id": "n_start",
+					"nodes": [
+						{
+							"body": "[PLACEHOLDER] aristocrat_landmark_completed — n_start body.",
+							"node_id": "n_start",
+							"on_enter": [],
+							"options": [
+								{
+									"effects": [
+										{
+											"kind": "set_flag",
+											"target": "aristocrat_landmark_completed"
+										},
+										{
+											"kind": "fire_event",
+											"target": "aristocrat_landmark_news"
+										}
+									],
+									"label": "Close",
+									"next": ""
+								}
+							],
+							"speaker": ""
+						}
+					],
+					"tree_id": "aristocrat_landmark_completed_tree"
+				},
+				"trigger": {
+					"event": "patron_landmark_completed",
+					"patron_id": "aristocrat"
+				}
+			},
 			"category": "patrons",
 			"enabled_if": "",
 			"event_id": "aristocrat_landmark_completed",
@@ -924,6 +1053,21 @@
 		},
 		{
 			"_path": "res://data/events/newspaper/aristocrat_landmark.json",
+			"body": {
+				"enabled_if": "",
+				"event_id": "aristocrat_landmark_news",
+				"event_type": "newspaper",
+				"payload": {
+					"body": "[PLACEHOLDER] aristocrat_landmark_news body.",
+					"dateline": "",
+					"headline": "[PLACEHOLDER] aristocrat_landmark_news headline",
+					"image": "",
+					"kicker": "[PLACEHOLDER] aristocrat_landmark_news kicker"
+				},
+				"trigger": {
+					"event": "manual"
+				}
+			},
 			"category": "newspaper",
 			"enabled_if": "",
 			"event_id": "aristocrat_landmark_news",
@@ -935,6 +1079,39 @@
 		},
 		{
 			"_path": "res://data/events/patrons/aristocrat/landmark_ready.json",
+			"body": {
+				"enabled_if": "",
+				"event_id": "aristocrat_landmark_ready",
+				"event_type": "dialogue",
+				"payload": {
+					"entry_node_id": "n_start",
+					"nodes": [
+						{
+							"body": "[PLACEHOLDER] aristocrat_landmark_ready — n_start body.",
+							"node_id": "n_start",
+							"on_enter": [],
+							"options": [
+								{
+									"effects": [
+										{
+											"kind": "set_flag",
+											"target": "aristocrat_landmark_promised"
+										}
+									],
+									"label": "Close",
+									"next": ""
+								}
+							],
+							"speaker": ""
+						}
+					],
+					"tree_id": "aristocrat_landmark_ready_tree"
+				},
+				"trigger": {
+					"event": "patron_landmark_ready",
+					"patron_id": "aristocrat"
+				}
+			},
 			"category": "patrons",
 			"enabled_if": "",
 			"event_id": "aristocrat_landmark_ready",
@@ -946,6 +1123,52 @@
 		},
 		{
 			"_path": "res://data/events/characters/aristocrat_residential/arrival.json",
+			"body": {
+				"enabled_if": "",
+				"event_id": "aristocrat_residential_arrival",
+				"event_type": "dialogue",
+				"payload": {
+					"entry_node_id": "n_start",
+					"nodes": [
+						{
+							"body": "[PLACEHOLDER] aristocrat_residential_arrival — n_start body.",
+							"node_id": "n_start",
+							"on_enter": [],
+							"options": [
+								{
+									"effects": [],
+									"label": "Continue",
+									"next": "n_end"
+								}
+							],
+							"speaker": ""
+						},
+						{
+							"body": "[PLACEHOLDER] aristocrat_residential_arrival — n_end body.",
+							"node_id": "n_end",
+							"on_enter": [],
+							"options": [
+								{
+									"effects": [
+										{
+											"kind": "set_flag",
+											"target": "met_aristocrat_residential"
+										}
+									],
+									"label": "Close",
+									"next": ""
+								}
+							],
+							"speaker": ""
+						}
+					],
+					"tree_id": "aristocrat_residential_arrival_tree"
+				},
+				"trigger": {
+					"character_id": "aristocrat_residential",
+					"event": "character_arrived"
+				}
+			},
 			"category": "characters",
 			"enabled_if": "",
 			"event_id": "aristocrat_residential_arrival",
@@ -957,6 +1180,52 @@
 		},
 		{
 			"_path": "res://data/events/characters/businessman_commercial/arrival.json",
+			"body": {
+				"enabled_if": "",
+				"event_id": "businessman_commercial_arrival",
+				"event_type": "dialogue",
+				"payload": {
+					"entry_node_id": "n_start",
+					"nodes": [
+						{
+							"body": "[PLACEHOLDER] businessman_commercial_arrival — n_start body.",
+							"node_id": "n_start",
+							"on_enter": [],
+							"options": [
+								{
+									"effects": [],
+									"label": "Continue",
+									"next": "n_end"
+								}
+							],
+							"speaker": ""
+						},
+						{
+							"body": "[PLACEHOLDER] businessman_commercial_arrival — n_end body.",
+							"node_id": "n_end",
+							"on_enter": [],
+							"options": [
+								{
+									"effects": [
+										{
+											"kind": "set_flag",
+											"target": "met_businessman_commercial"
+										}
+									],
+									"label": "Close",
+									"next": ""
+								}
+							],
+							"speaker": ""
+						}
+					],
+					"tree_id": "businessman_commercial_arrival_tree"
+				},
+				"trigger": {
+					"character_id": "businessman_commercial",
+					"event": "character_arrived"
+				}
+			},
 			"category": "characters",
 			"enabled_if": "",
 			"event_id": "businessman_commercial_arrival",
@@ -968,6 +1237,52 @@
 		},
 		{
 			"_path": "res://data/events/characters/businessman_industrial/arrival.json",
+			"body": {
+				"enabled_if": "",
+				"event_id": "businessman_industrial_arrival",
+				"event_type": "dialogue",
+				"payload": {
+					"entry_node_id": "n_start",
+					"nodes": [
+						{
+							"body": "[PLACEHOLDER] businessman_industrial_arrival — n_start body.",
+							"node_id": "n_start",
+							"on_enter": [],
+							"options": [
+								{
+									"effects": [],
+									"label": "Continue",
+									"next": "n_end"
+								}
+							],
+							"speaker": ""
+						},
+						{
+							"body": "[PLACEHOLDER] businessman_industrial_arrival — n_end body.",
+							"node_id": "n_end",
+							"on_enter": [],
+							"options": [
+								{
+									"effects": [
+										{
+											"kind": "set_flag",
+											"target": "met_businessman_industrial"
+										}
+									],
+									"label": "Close",
+									"next": ""
+								}
+							],
+							"speaker": ""
+						}
+					],
+					"tree_id": "businessman_industrial_arrival_tree"
+				},
+				"trigger": {
+					"character_id": "businessman_industrial",
+					"event": "character_arrived"
+				}
+			},
 			"category": "characters",
 			"enabled_if": "",
 			"event_id": "businessman_industrial_arrival",
@@ -979,6 +1294,43 @@
 		},
 		{
 			"_path": "res://data/events/patrons/businessman/landmark_completed.json",
+			"body": {
+				"enabled_if": "",
+				"event_id": "businessman_landmark_completed",
+				"event_type": "dialogue",
+				"payload": {
+					"entry_node_id": "n_start",
+					"nodes": [
+						{
+							"body": "[PLACEHOLDER] businessman_landmark_completed — n_start body.",
+							"node_id": "n_start",
+							"on_enter": [],
+							"options": [
+								{
+									"effects": [
+										{
+											"kind": "set_flag",
+											"target": "businessman_landmark_completed"
+										},
+										{
+											"kind": "fire_event",
+											"target": "businessman_landmark_news"
+										}
+									],
+									"label": "Close",
+									"next": ""
+								}
+							],
+							"speaker": ""
+						}
+					],
+					"tree_id": "businessman_landmark_completed_tree"
+				},
+				"trigger": {
+					"event": "patron_landmark_completed",
+					"patron_id": "businessman"
+				}
+			},
 			"category": "patrons",
 			"enabled_if": "",
 			"event_id": "businessman_landmark_completed",
@@ -990,6 +1342,21 @@
 		},
 		{
 			"_path": "res://data/events/newspaper/businessman_landmark.json",
+			"body": {
+				"enabled_if": "",
+				"event_id": "businessman_landmark_news",
+				"event_type": "newspaper",
+				"payload": {
+					"body": "[PLACEHOLDER] businessman_landmark_news body.",
+					"dateline": "",
+					"headline": "[PLACEHOLDER] businessman_landmark_news headline",
+					"image": "",
+					"kicker": "[PLACEHOLDER] businessman_landmark_news kicker"
+				},
+				"trigger": {
+					"event": "manual"
+				}
+			},
 			"category": "newspaper",
 			"enabled_if": "",
 			"event_id": "businessman_landmark_news",
@@ -1001,6 +1368,39 @@
 		},
 		{
 			"_path": "res://data/events/patrons/businessman/landmark_ready.json",
+			"body": {
+				"enabled_if": "",
+				"event_id": "businessman_landmark_ready",
+				"event_type": "dialogue",
+				"payload": {
+					"entry_node_id": "n_start",
+					"nodes": [
+						{
+							"body": "[PLACEHOLDER] businessman_landmark_ready — n_start body.",
+							"node_id": "n_start",
+							"on_enter": [],
+							"options": [
+								{
+									"effects": [
+										{
+											"kind": "set_flag",
+											"target": "businessman_landmark_promised"
+										}
+									],
+									"label": "Close",
+									"next": ""
+								}
+							],
+							"speaker": ""
+						}
+					],
+					"tree_id": "businessman_landmark_ready_tree"
+				},
+				"trigger": {
+					"event": "patron_landmark_ready",
+					"patron_id": "businessman"
+				}
+			},
 			"category": "patrons",
 			"enabled_if": "",
 			"event_id": "businessman_landmark_ready",
@@ -1012,6 +1412,52 @@
 		},
 		{
 			"_path": "res://data/events/characters/businessman_residential/arrival.json",
+			"body": {
+				"enabled_if": "",
+				"event_id": "businessman_residential_arrival",
+				"event_type": "dialogue",
+				"payload": {
+					"entry_node_id": "n_start",
+					"nodes": [
+						{
+							"body": "[PLACEHOLDER] businessman_residential_arrival — n_start body.",
+							"node_id": "n_start",
+							"on_enter": [],
+							"options": [
+								{
+									"effects": [],
+									"label": "Continue",
+									"next": "n_end"
+								}
+							],
+							"speaker": ""
+						},
+						{
+							"body": "[PLACEHOLDER] businessman_residential_arrival — n_end body.",
+							"node_id": "n_end",
+							"on_enter": [],
+							"options": [
+								{
+									"effects": [
+										{
+											"kind": "set_flag",
+											"target": "met_businessman_residential"
+										}
+									],
+									"label": "Close",
+									"next": ""
+								}
+							],
+							"speaker": ""
+						}
+					],
+					"tree_id": "businessman_residential_arrival_tree"
+				},
+				"trigger": {
+					"character_id": "businessman_residential",
+					"event": "character_arrived"
+				}
+			},
 			"category": "characters",
 			"enabled_if": "",
 			"event_id": "businessman_residential_arrival",
@@ -1023,6 +1469,52 @@
 		},
 		{
 			"_path": "res://data/events/characters/farmer_commercial/arrival.json",
+			"body": {
+				"enabled_if": "",
+				"event_id": "farmer_commercial_arrival",
+				"event_type": "dialogue",
+				"payload": {
+					"entry_node_id": "n_start",
+					"nodes": [
+						{
+							"body": "[PLACEHOLDER] farmer_commercial_arrival — n_start body.",
+							"node_id": "n_start",
+							"on_enter": [],
+							"options": [
+								{
+									"effects": [],
+									"label": "Continue",
+									"next": "n_end"
+								}
+							],
+							"speaker": ""
+						},
+						{
+							"body": "[PLACEHOLDER] farmer_commercial_arrival — n_end body.",
+							"node_id": "n_end",
+							"on_enter": [],
+							"options": [
+								{
+									"effects": [
+										{
+											"kind": "set_flag",
+											"target": "met_farmer_commercial"
+										}
+									],
+									"label": "Close",
+									"next": ""
+								}
+							],
+							"speaker": ""
+						}
+					],
+					"tree_id": "farmer_commercial_arrival_tree"
+				},
+				"trigger": {
+					"character_id": "farmer_commercial",
+					"event": "character_arrived"
+				}
+			},
 			"category": "characters",
 			"enabled_if": "",
 			"event_id": "farmer_commercial_arrival",
@@ -1034,6 +1526,52 @@
 		},
 		{
 			"_path": "res://data/events/characters/farmer_industrial/arrival.json",
+			"body": {
+				"enabled_if": "",
+				"event_id": "farmer_industrial_arrival",
+				"event_type": "dialogue",
+				"payload": {
+					"entry_node_id": "n_start",
+					"nodes": [
+						{
+							"body": "[PLACEHOLDER] farmer_industrial_arrival — n_start body.",
+							"node_id": "n_start",
+							"on_enter": [],
+							"options": [
+								{
+									"effects": [],
+									"label": "Continue",
+									"next": "n_end"
+								}
+							],
+							"speaker": ""
+						},
+						{
+							"body": "[PLACEHOLDER] farmer_industrial_arrival — n_end body.",
+							"node_id": "n_end",
+							"on_enter": [],
+							"options": [
+								{
+									"effects": [
+										{
+											"kind": "set_flag",
+											"target": "met_farmer_industrial"
+										}
+									],
+									"label": "Close",
+									"next": ""
+								}
+							],
+							"speaker": ""
+						}
+					],
+					"tree_id": "farmer_industrial_arrival_tree"
+				},
+				"trigger": {
+					"character_id": "farmer_industrial",
+					"event": "character_arrived"
+				}
+			},
 			"category": "characters",
 			"enabled_if": "",
 			"event_id": "farmer_industrial_arrival",
@@ -1045,6 +1583,43 @@
 		},
 		{
 			"_path": "res://data/events/patrons/farmer/landmark_completed.json",
+			"body": {
+				"enabled_if": "",
+				"event_id": "farmer_landmark_completed",
+				"event_type": "dialogue",
+				"payload": {
+					"entry_node_id": "n_start",
+					"nodes": [
+						{
+							"body": "[PLACEHOLDER] farmer_landmark_completed — n_start body.",
+							"node_id": "n_start",
+							"on_enter": [],
+							"options": [
+								{
+									"effects": [
+										{
+											"kind": "set_flag",
+											"target": "farmer_landmark_completed"
+										},
+										{
+											"kind": "fire_event",
+											"target": "farmer_landmark_news"
+										}
+									],
+									"label": "Close",
+									"next": ""
+								}
+							],
+							"speaker": ""
+						}
+					],
+					"tree_id": "farmer_landmark_completed_tree"
+				},
+				"trigger": {
+					"event": "patron_landmark_completed",
+					"patron_id": "farmer"
+				}
+			},
 			"category": "patrons",
 			"enabled_if": "",
 			"event_id": "farmer_landmark_completed",
@@ -1056,6 +1631,21 @@
 		},
 		{
 			"_path": "res://data/events/newspaper/farmer_landmark.json",
+			"body": {
+				"enabled_if": "",
+				"event_id": "farmer_landmark_news",
+				"event_type": "newspaper",
+				"payload": {
+					"body": "[PLACEHOLDER] farmer_landmark_news body.",
+					"dateline": "",
+					"headline": "[PLACEHOLDER] farmer_landmark_news headline",
+					"image": "",
+					"kicker": "[PLACEHOLDER] farmer_landmark_news kicker"
+				},
+				"trigger": {
+					"event": "manual"
+				}
+			},
 			"category": "newspaper",
 			"enabled_if": "",
 			"event_id": "farmer_landmark_news",
@@ -1067,6 +1657,39 @@
 		},
 		{
 			"_path": "res://data/events/patrons/farmer/landmark_ready.json",
+			"body": {
+				"enabled_if": "",
+				"event_id": "farmer_landmark_ready",
+				"event_type": "dialogue",
+				"payload": {
+					"entry_node_id": "n_start",
+					"nodes": [
+						{
+							"body": "[PLACEHOLDER] farmer_landmark_ready — n_start body.",
+							"node_id": "n_start",
+							"on_enter": [],
+							"options": [
+								{
+									"effects": [
+										{
+											"kind": "set_flag",
+											"target": "farmer_landmark_promised"
+										}
+									],
+									"label": "Close",
+									"next": ""
+								}
+							],
+							"speaker": ""
+						}
+					],
+					"tree_id": "farmer_landmark_ready_tree"
+				},
+				"trigger": {
+					"event": "patron_landmark_ready",
+					"patron_id": "farmer"
+				}
+			},
 			"category": "patrons",
 			"enabled_if": "",
 			"event_id": "farmer_landmark_ready",
@@ -1078,6 +1701,52 @@
 		},
 		{
 			"_path": "res://data/events/characters/farmer_residential/arrival.json",
+			"body": {
+				"enabled_if": "",
+				"event_id": "farmer_residential_arrival",
+				"event_type": "dialogue",
+				"payload": {
+					"entry_node_id": "n_start",
+					"nodes": [
+						{
+							"body": "[PLACEHOLDER] farmer_residential_arrival — n_start body.",
+							"node_id": "n_start",
+							"on_enter": [],
+							"options": [
+								{
+									"effects": [],
+									"label": "Continue",
+									"next": "n_end"
+								}
+							],
+							"speaker": ""
+						},
+						{
+							"body": "[PLACEHOLDER] farmer_residential_arrival — n_end body.",
+							"node_id": "n_end",
+							"on_enter": [],
+							"options": [
+								{
+									"effects": [
+										{
+											"kind": "set_flag",
+											"target": "met_farmer_residential"
+										}
+									],
+									"label": "Close",
+									"next": ""
+								}
+							],
+							"speaker": ""
+						}
+					],
+					"tree_id": "farmer_residential_arrival_tree"
+				},
+				"trigger": {
+					"character_id": "farmer_residential",
+					"event": "character_arrived"
+				}
+			},
 			"category": "characters",
 			"enabled_if": "",
 			"event_id": "farmer_residential_arrival",
@@ -1088,7 +1757,7 @@
 			"trigger_patron_id": ""
 		}
 	],
-	"exported_at": "2026-04-19T17:04:50",
+	"exported_at": "2026-04-21T18:32:05",
 	"flags": [
 		"aristocrat_landmark_completed",
 		"aristocrat_landmark_promised",

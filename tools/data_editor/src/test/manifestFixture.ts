@@ -136,6 +136,43 @@ export function makeManifest(overrides: Partial<Manifest> = {}): Manifest {
         enabled_if: "",
         category: "characters",
         _path: "res://data/events/characters/aristocrat_commercial/arrival.json",
+        body: {
+          event_id: "aristocrat_commercial_arrival",
+          event_type: "dialogue",
+          trigger: {
+            event: "character_arrived",
+            character_id: "aristocrat_commercial",
+          },
+          enabled_if: "",
+          payload: {
+            tree_id: "aristocrat_commercial_arrival_tree",
+            entry_node_id: "n_start",
+            nodes: [
+              {
+                node_id: "n_start",
+                speaker: "",
+                body: "Welcome.",
+                on_enter: [],
+                options: [
+                  { label: "Continue", next: "n_end", effects: [] },
+                ],
+              },
+              {
+                node_id: "n_end",
+                speaker: "",
+                body: "Bye.",
+                on_enter: [],
+                options: [
+                  {
+                    label: "Close",
+                    next: "",
+                    effects: [{ kind: "set_flag", target: "met_aristocrat_commercial" }],
+                  },
+                ],
+              },
+            ],
+          },
+        },
       },
     ],
     flags: ["met_aristocrat_commercial"],

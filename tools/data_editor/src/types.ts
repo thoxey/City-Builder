@@ -70,6 +70,75 @@ export interface ManifestEvent {
   enabled_if: string;
   category: string;
   _path: string;
+  // Full event body — payload + metadata — so the SPA can open any event
+  // without a second disk read. Critical for download-mode fallback.
+  body: EventDoc;
+}
+
+// ---- Event on-disk shapes ----
+
+export type EffectKind =
+  | "set_flag"
+  | "delay_want"
+  | "discount_cost"
+  | "emit_signal"
+  | "fire_event";
+
+export interface Effect {
+  kind: EffectKind | string;
+  target?: string;  // flag name / event id / signal name / building id / character id
+  amount?: number;  // hours (delay_want) / cash (discount_cost)
+}
+
+export interface DialogueOption {
+  label: string;
+  next: string;      // node_id of the next node, "" to close
+  effects: Effect[];
+}
+
+export interface DialogueNodeDoc {
+  node_id: string;
+  speaker: string;
+  body: string;
+  on_enter: Effect[];
+  options: DialogueOption[];
+}
+
+export interface DialoguePayload {
+  tree_id: string;
+  entry_node_id: string;
+  nodes: DialogueNodeDoc[];
+}
+
+export interface NewspaperPayload {
+  headline: string;
+  kicker: string;
+  body: string;
+  image: string;
+  dateline: string;
+}
+
+export interface NotificationPayload {
+  text: string;
+  duration: number;
+  icon?: string;
+}
+
+export type EventPayload = DialoguePayload | NewspaperPayload | NotificationPayload;
+
+export interface EventTrigger {
+  event: string;
+  character_id?: string;
+  patron_id?: string;
+  building_id?: string;
+}
+
+export interface EventDoc {
+  event_id: string;
+  event_type: EventType | "";
+  trigger: EventTrigger;
+  enabled_if: string;
+  payload: EventPayload | Record<string, never>;
 }
 
 export interface Manifest {

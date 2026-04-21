@@ -3,11 +3,12 @@ import { useApp, type Tab } from "./store";
 import { supportsFileSystemAccess } from "./fs/fsaRepo";
 import { CharactersTab } from "./tabs/CharactersTab";
 import { PatronsTab } from "./tabs/PatronsTab";
+import { EventsTab } from "./tabs/EventsTab";
 
 const TABS: { id: Tab; label: string; enabled: boolean }[] = [
   { id: "characters", label: "Characters", enabled: true },
   { id: "patrons", label: "Patrons", enabled: true },
-  { id: "events", label: "Events", enabled: false },
+  { id: "events", label: "Events", enabled: true },
   { id: "buildings", label: "Buildings", enabled: false },
 ];
 
@@ -106,6 +107,8 @@ export default function App() {
         <CharactersTab />
       ) : activeTab === "patrons" ? (
         <PatronsTab />
+      ) : activeTab === "events" ? (
+        <EventsTab />
       ) : (
         <div className="empty">Tab not yet implemented.</div>
       )}

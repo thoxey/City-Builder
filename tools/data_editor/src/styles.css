@@ -254,3 +254,198 @@ input:focus, textarea:focus, select:focus { outline: 1px solid var(--accent); }
   text-align: center;
   color: var(--text-dim);
 }
+.empty.small { padding: 20px 14px; font-size: 0.9em; }
+
+/* ---- Events tab ---- */
+
+.events-pane {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px 20px;
+  min-height: 0;
+}
+.events-envelope { flex: 0 0 auto; }
+.events-payload { flex: 1; min-height: 0; display: flex; }
+
+.dialogue-editor {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 10px;
+  min-height: 0;
+  min-height: 420px;
+}
+.dialogue-graph-wrap {
+  display: flex;
+  flex-direction: column;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+  min-height: 420px;
+}
+.graph-toolbar {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel-2);
+  font-size: 0.85em;
+}
+.graph-toolbar .inline-note { margin: 0; }
+.graph-canvas {
+  flex: 1;
+  min-height: 400px;
+  position: relative;
+}
+.dialogue-node-form {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 12px 14px;
+  overflow-y: auto;
+  min-height: 420px;
+}
+
+/* React Flow custom node */
+.dialogue-node {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  min-width: 200px;
+  max-width: 240px;
+  font-family: inherit;
+  color: var(--text);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+.dialogue-node.selected { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(90,176,255,0.25); }
+.dialogue-node.entry { border-left: 3px solid var(--ok); }
+
+.dialogue-node-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.82em;
+  background: rgba(0,0,0,0.2);
+}
+.dialogue-node-header .node-id { font-weight: 600; }
+.dialogue-node-header .badge {
+  background: rgba(91,214,138,0.18);
+  color: var(--ok);
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 0.8em;
+}
+.dialogue-node-speaker {
+  padding: 6px 10px 0;
+  font-size: 0.78em;
+  color: var(--text-dim);
+  font-style: italic;
+}
+.dialogue-node-body {
+  padding: 6px 10px;
+  font-size: 0.85em;
+  line-height: 1.35;
+}
+.dialogue-node-body .placeholder,
+.dialogue-option-row .placeholder {
+  color: var(--text-dim);
+  font-style: italic;
+}
+.dialogue-node-options {
+  border-top: 1px solid var(--border);
+  padding: 4px 0;
+}
+.dialogue-option-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 10px;
+  font-size: 0.82em;
+  gap: 8px;
+  min-height: 24px;
+}
+.dialogue-option-row:hover { background: rgba(255,255,255,0.04); }
+
+/* Node-form layout */
+.node-form .option-list {
+  margin-top: 16px;
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+}
+.node-form .option-list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.node-form .option-list-header h3 { margin: 0; font-size: 0.95em; }
+.node-form .option-card {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+}
+.node-form .option-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 8px;
+  align-items: end;
+  margin-bottom: 8px;
+}
+.node-form .option-row label,
+.node-form .option-effects-label {
+  display: block;
+  font-size: 0.82em;
+  color: var(--text-dim);
+  margin-bottom: 2px;
+}
+
+/* Effect editor rows */
+.effects-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.effects-editor .empty-effects {
+  font-size: 0.82em;
+  color: var(--text-dim);
+  font-style: italic;
+}
+.effects-editor .effect-row {
+  display: grid;
+  grid-template-columns: 130px 1fr auto;
+  gap: 6px;
+  align-items: center;
+}
+.effect-compound {
+  display: grid;
+  grid-template-columns: 1fr 80px;
+  gap: 6px;
+}
+.add-effect {
+  align-self: flex-start;
+  font-size: 0.85em;
+}
+
+/* New-event menu */
+.new-menu {
+  position: absolute;
+  top: 60px;
+  left: 20px;
+  z-index: 100;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+}
+.new-menu button { text-align: left; }
