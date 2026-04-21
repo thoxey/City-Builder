@@ -58,6 +58,86 @@ export interface ManifestBuilding {
   bucket: Bucket | "";
   tier: number;
   _path: string;
+  body: BuildingDoc;
+}
+
+// ---- Building on-disk shape ----
+
+export type ProfileType =
+  | "BuildingMetadata"
+  | "BuildingProfile"
+  | "UniqueProfile"
+  | "GenericTierProfile"
+  | "PoliceMetadata"
+  | "MedicalMetadata"
+  | "RoadMetadata";
+
+export interface BuildingMetadataProfile {
+  type: "BuildingMetadata";
+}
+export interface PoliceMetadataProfile {
+  type: "PoliceMetadata";
+}
+export interface MedicalMetadataProfile {
+  type: "MedicalMetadata";
+}
+
+export interface BuildingProfile {
+  type: "BuildingProfile";
+  category: Bucket | ""; // residential / commercial / industrial
+  capacity: number;
+  active_start: number;
+  active_end: number;
+}
+
+export interface UniqueProfile {
+  type: "UniqueProfile";
+  bucket: Bucket | "";
+  tier: number;
+  patron_id: string;
+  character_id: string;
+  chain_role: "" | "chain" | "want" | "landmark";
+  prerequisite_threshold: number;
+  prerequisite_ids: string[];
+  desirability_boost: number;
+}
+
+export interface GenericTierProfile {
+  type: "GenericTierProfile";
+  bucket: Bucket | "";
+  tier: number;
+  pool_id: string;
+}
+
+export interface RoadMetadataProfile {
+  type: "RoadMetadata";
+  road_type: number;
+  connections: Array<[number, number]>;
+}
+
+export type Profile =
+  | BuildingMetadataProfile
+  | PoliceMetadataProfile
+  | MedicalMetadataProfile
+  | BuildingProfile
+  | UniqueProfile
+  | GenericTierProfile
+  | RoadMetadataProfile;
+
+export interface BuildingDoc {
+  building_id: string;
+  display_name: string;
+  description: string;
+  model_path: string;
+  model_scale: number;
+  model_offset: [number, number, number];
+  model_rotation_y: number;
+  footprint: Array<[number, number]>;
+  category: BuildingCategory | "";
+  pool_id?: string;
+  cash_cost?: number;
+  profiles: Profile[];
+  tags: string[];
 }
 
 export interface ManifestEvent {

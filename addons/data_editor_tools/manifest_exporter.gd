@@ -126,6 +126,9 @@ func _scan_buildings() -> Array:
 			"character_id": "",
 			"bucket":       "",
 			"tier":         0,
+			# Full building body so the SPA can round-trip edits without a
+			# second read — mirrors the events[].body embedding.
+			"body":         d,
 		}
 		for p in d.get("profiles", []):
 			var t := String(p.get("type", ""))

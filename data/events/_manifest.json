@@ -7,6 +7,52 @@
 	"buildings": [
 		{
 			"_path": "res://data/buildings/unique/building_big_tesco.json",
+			"body": {
+				"building_id": "building_big_tesco",
+				"category": "unique",
+				"description": "",
+				"display_name": "Big Tesco",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/Meshy_AI_Streeter_s_Supermarke_0404154643/Meshy_AI_Streeter_s_Supermarke_0404154643_texture.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 0.75,
+				"profiles": [
+					{
+						"type": "BuildingMetadata"
+					},
+					{
+						"active_end": 20.0,
+						"active_start": 8.0,
+						"capacity": 60.0,
+						"category": "commercial",
+						"type": "BuildingProfile"
+					},
+					{
+						"bucket": "commercial",
+						"chain_role": "chain",
+						"character_id": "farmer_commercial",
+						"desirability_boost": 0.0,
+						"patron_id": "farmer",
+						"prerequisite_ids": [
+							"building_faketrose"
+						],
+						"prerequisite_threshold": 60.0,
+						"tier": 3.0,
+						"type": "UniqueProfile"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "commercial",
 			"building_id": "building_big_tesco",
 			"category": "unique",
@@ -20,6 +66,52 @@
 		},
 		{
 			"_path": "res://data/buildings/unique/building_brewery.json",
+			"body": {
+				"building_id": "building_brewery",
+				"category": "unique",
+				"description": "",
+				"display_name": "Brewery",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/Meshy_AI_Acme_Business_Park__0403170610/Meshy_AI_Acme_Business_Park__0403170610_texture.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 0.85,
+				"profiles": [
+					{
+						"type": "BuildingMetadata"
+					},
+					{
+						"active_end": 18.0,
+						"active_start": 8.0,
+						"capacity": 20.0,
+						"category": "workplace",
+						"type": "BuildingProfile"
+					},
+					{
+						"bucket": "industrial",
+						"chain_role": "want",
+						"character_id": "farmer_industrial",
+						"desirability_boost": 0.0,
+						"patron_id": "farmer",
+						"prerequisite_ids": [
+							"building_wholesale_market"
+						],
+						"prerequisite_threshold": 60.0,
+						"tier": 0.0,
+						"type": "UniqueProfile"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "industrial",
 			"building_id": "building_brewery",
 			"category": "unique",
@@ -33,6 +125,45 @@
 		},
 		{
 			"_path": "res://data/buildings/unique/building_buskers_square.json",
+			"body": {
+				"building_id": "building_buskers_square",
+				"category": "unique",
+				"description": "",
+				"display_name": "Buskers' Square",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/Meshy_AI_Sunnyvale_News_Conf_0403170655/Meshy_AI_Sunnyvale_News_Conf_0403170655_texture.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 0.75,
+				"profiles": [
+					{
+						"type": "BuildingMetadata"
+					},
+					{
+						"bucket": "commercial",
+						"chain_role": "want",
+						"character_id": "farmer_commercial",
+						"desirability_boost": 0.1,
+						"patron_id": "farmer",
+						"prerequisite_ids": [
+							"building_big_tesco"
+						],
+						"prerequisite_threshold": 60.0,
+						"tier": 0.0,
+						"type": "UniqueProfile"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "commercial",
 			"building_id": "building_buskers_square",
 			"category": "unique",
@@ -46,6 +177,52 @@
 		},
 		{
 			"_path": "res://data/buildings/unique/building_car_wash.json",
+			"body": {
+				"building_id": "building_car_wash",
+				"category": "unique",
+				"description": "",
+				"display_name": "Car Wash",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/building-garage.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 1.0,
+				"profiles": [
+					{
+						"type": "BuildingMetadata"
+					},
+					{
+						"active_end": 18.0,
+						"active_start": 8.0,
+						"capacity": 10.0,
+						"category": "workplace",
+						"type": "BuildingProfile"
+					},
+					{
+						"bucket": "industrial",
+						"chain_role": "chain",
+						"character_id": "businessman_industrial",
+						"desirability_boost": 0.0,
+						"patron_id": "businessman",
+						"prerequisite_ids": [
+							"building_petrol_station"
+						],
+						"prerequisite_threshold": 30.0,
+						"tier": 2.0,
+						"type": "UniqueProfile"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "industrial",
 			"building_id": "building_car_wash",
 			"category": "unique",
@@ -59,6 +236,50 @@
 		},
 		{
 			"_path": "res://data/buildings/unique/building_charity_shop.json",
+			"body": {
+				"building_id": "building_charity_shop",
+				"category": "unique",
+				"description": "",
+				"display_name": "Charity Shop",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/building-small-b.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 1.0,
+				"profiles": [
+					{
+						"type": "BuildingMetadata"
+					},
+					{
+						"active_end": 20.0,
+						"active_start": 8.0,
+						"capacity": 15.0,
+						"category": "commercial",
+						"type": "BuildingProfile"
+					},
+					{
+						"bucket": "commercial",
+						"chain_role": "chain",
+						"character_id": "businessman_commercial",
+						"desirability_boost": 0.0,
+						"patron_id": "businessman",
+						"prerequisite_ids": [],
+						"prerequisite_threshold": 10.0,
+						"tier": 1.0,
+						"type": "UniqueProfile"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "commercial",
 			"building_id": "building_charity_shop",
 			"category": "unique",
@@ -72,6 +293,48 @@
 		},
 		{
 			"_path": "res://data/buildings/unique/building_city_hall.json",
+			"body": {
+				"building_id": "building_city_hall",
+				"category": "unique",
+				"description": "",
+				"display_name": "City Hall",
+				"footprint": [
+					[
+						0.0,
+						-1.0
+					],
+					[
+						0.0,
+						0.0
+					],
+					[
+						0.0,
+						1.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/Meshy_AI_Clocktower_City_Hall_0403210028/Meshy_AI_Clocktower_City_Hall_0403210028_texture.glb",
+				"model_rotation_y": 90.0,
+				"model_scale": 0.92,
+				"pool_id": "industrial_t2",
+				"profiles": [
+					{
+						"type": "BuildingMetadata"
+					},
+					{
+						"active_end": 18.0,
+						"active_start": 8.0,
+						"capacity": 20.0,
+						"category": "workplace",
+						"type": "BuildingProfile"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "",
 			"building_id": "building_city_hall",
 			"category": "unique",
@@ -85,6 +348,50 @@
 		},
 		{
 			"_path": "res://data/buildings/unique/building_corner_shop.json",
+			"body": {
+				"building_id": "building_corner_shop",
+				"category": "unique",
+				"description": "",
+				"display_name": "Corner Shop",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/building-small-b.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 1.0,
+				"profiles": [
+					{
+						"type": "BuildingMetadata"
+					},
+					{
+						"active_end": 20.0,
+						"active_start": 8.0,
+						"capacity": 10.0,
+						"category": "commercial",
+						"type": "BuildingProfile"
+					},
+					{
+						"bucket": "commercial",
+						"chain_role": "chain",
+						"character_id": "farmer_commercial",
+						"desirability_boost": 0.0,
+						"patron_id": "farmer",
+						"prerequisite_ids": [],
+						"prerequisite_threshold": 10.0,
+						"tier": 1.0,
+						"type": "UniqueProfile"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "commercial",
 			"building_id": "building_corner_shop",
 			"category": "unique",
@@ -98,6 +405,45 @@
 		},
 		{
 			"_path": "res://data/buildings/unique/building_crazy_golf.json",
+			"body": {
+				"building_id": "building_crazy_golf",
+				"category": "unique",
+				"description": "",
+				"display_name": "Crazy Golf",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/Meshy_AI_Duck_Pond_in_the_Hedg_0403173405/Meshy_AI_Duck_Pond_in_the_Hedg_0403173405_texture.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 1.0,
+				"profiles": [
+					{
+						"type": "BuildingMetadata"
+					},
+					{
+						"bucket": "industrial",
+						"chain_role": "want",
+						"character_id": "aristocrat_industrial",
+						"desirability_boost": 0.05,
+						"patron_id": "aristocrat",
+						"prerequisite_ids": [
+							"building_pipe_factory"
+						],
+						"prerequisite_threshold": 60.0,
+						"tier": 0.0,
+						"type": "UniqueProfile"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "industrial",
 			"building_id": "building_crazy_golf",
 			"category": "unique",
@@ -111,6 +457,29 @@
 		},
 		{
 			"_path": "res://data/buildings/nature/building_duck_pond.json",
+			"body": {
+				"building_id": "building_duck_pond",
+				"cash_cost": 50.0,
+				"category": "nature",
+				"description": "",
+				"display_name": "Duck Pond",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					-0.1,
+					0.0
+				],
+				"model_path": "res://models/Meshy_AI_Duck_Pond_in_the_Hedg_0403173405/Meshy_AI_Duck_Pond_in_the_Hedg_0403173405_texture.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 0.5,
+				"profiles": [],
+				"tags": []
+			},
 			"bucket": "",
 			"building_id": "building_duck_pond",
 			"category": "nature",
@@ -124,6 +493,52 @@
 		},
 		{
 			"_path": "res://data/buildings/unique/building_edwardian_terrace.json",
+			"body": {
+				"building_id": "building_edwardian_terrace",
+				"category": "unique",
+				"description": "",
+				"display_name": "Edwardian Terrace",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/Meshy_AI_Sunlit_Redbrick_Cotta_0403171628/Meshy_AI_Sunlit_Redbrick_Cotta_0403171628_texture.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 0.8,
+				"profiles": [
+					{
+						"type": "BuildingMetadata"
+					},
+					{
+						"active_end": 24.0,
+						"active_start": 0.0,
+						"capacity": 20.0,
+						"category": "residential",
+						"type": "BuildingProfile"
+					},
+					{
+						"bucket": "residential",
+						"chain_role": "chain",
+						"character_id": "farmer_residential",
+						"desirability_boost": 0.0,
+						"patron_id": "farmer",
+						"prerequisite_ids": [
+							"building_victorian_terrace"
+						],
+						"prerequisite_threshold": 30.0,
+						"tier": 2.0,
+						"type": "UniqueProfile"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "residential",
 			"building_id": "building_edwardian_terrace",
 			"category": "unique",
@@ -137,6 +552,52 @@
 		},
 		{
 			"_path": "res://data/buildings/unique/building_faketrose.json",
+			"body": {
+				"building_id": "building_faketrose",
+				"category": "unique",
+				"description": "",
+				"display_name": "Posh Supermarket",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/Meshy_AI_Streeter_s_Supermarke_0404154643/Meshy_AI_Streeter_s_Supermarke_0404154643_texture.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 0.7,
+				"profiles": [
+					{
+						"type": "BuildingMetadata"
+					},
+					{
+						"active_end": 20.0,
+						"active_start": 8.0,
+						"capacity": 30.0,
+						"category": "commercial",
+						"type": "BuildingProfile"
+					},
+					{
+						"bucket": "commercial",
+						"chain_role": "chain",
+						"character_id": "farmer_commercial",
+						"desirability_boost": 0.0,
+						"patron_id": "farmer",
+						"prerequisite_ids": [
+							"building_corner_shop"
+						],
+						"prerequisite_threshold": 30.0,
+						"tier": 2.0,
+						"type": "UniqueProfile"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "commercial",
 			"building_id": "building_faketrose",
 			"category": "unique",
@@ -150,6 +611,45 @@
 		},
 		{
 			"_path": "res://data/buildings/unique/building_fire_station.json",
+			"body": {
+				"building_id": "building_fire_station",
+				"category": "unique",
+				"description": "",
+				"display_name": "Fire Station",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/Meshy_AI_Bluecoat_Guard_0403153240/Meshy_AI_Bluecoat_Guard_0403153240_texture.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 0.8,
+				"profiles": [
+					{
+						"type": "BuildingMetadata"
+					},
+					{
+						"bucket": "residential",
+						"chain_role": "chain",
+						"character_id": "businessman_residential",
+						"desirability_boost": 0.1,
+						"patron_id": "businessman",
+						"prerequisite_ids": [
+							"building_police"
+						],
+						"prerequisite_threshold": 30.0,
+						"tier": 2.0,
+						"type": "UniqueProfile"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "residential",
 			"building_id": "building_fire_station",
 			"category": "unique",
@@ -163,6 +663,52 @@
 		},
 		{
 			"_path": "res://data/buildings/unique/building_full_service_garage.json",
+			"body": {
+				"building_id": "building_full_service_garage",
+				"category": "unique",
+				"description": "",
+				"display_name": "Full-Service Garage",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/Meshy_AI_Acme_Business_Park__0403170610/Meshy_AI_Acme_Business_Park__0403170610_texture.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 0.8,
+				"profiles": [
+					{
+						"type": "BuildingMetadata"
+					},
+					{
+						"active_end": 18.0,
+						"active_start": 8.0,
+						"capacity": 25.0,
+						"category": "workplace",
+						"type": "BuildingProfile"
+					},
+					{
+						"bucket": "industrial",
+						"chain_role": "chain",
+						"character_id": "businessman_industrial",
+						"desirability_boost": 0.0,
+						"patron_id": "businessman",
+						"prerequisite_ids": [
+							"building_car_wash"
+						],
+						"prerequisite_threshold": 60.0,
+						"tier": 3.0,
+						"type": "UniqueProfile"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "industrial",
 			"building_id": "building_full_service_garage",
 			"category": "unique",
@@ -176,6 +722,40 @@
 		},
 		{
 			"_path": "res://data/buildings/generic/building_garage.json",
+			"body": {
+				"building_id": "building_garage",
+				"category": "generic",
+				"description": "",
+				"display_name": "Business Park (Garage)",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/Meshy_AI_Acme_Business_Park__0403170610/Meshy_AI_Acme_Business_Park__0403170610_texture.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 0.4,
+				"pool_id": "industrial_t1",
+				"profiles": [
+					{
+						"type": "BuildingMetadata"
+					},
+					{
+						"active_end": 18.0,
+						"active_start": 8.0,
+						"capacity": 20.0,
+						"category": "workplace",
+						"type": "BuildingProfile"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "",
 			"building_id": "building_garage",
 			"category": "generic",
@@ -189,6 +769,52 @@
 		},
 		{
 			"_path": "res://data/buildings/unique/building_garmart.json",
+			"body": {
+				"building_id": "building_garmart",
+				"category": "unique",
+				"description": "",
+				"display_name": "Garmart",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/Meshy_AI_Streeter_s_Supermarke_0404154643/Meshy_AI_Streeter_s_Supermarke_0404154643_texture.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 0.65,
+				"profiles": [
+					{
+						"type": "BuildingMetadata"
+					},
+					{
+						"active_end": 20.0,
+						"active_start": 8.0,
+						"capacity": 50.0,
+						"category": "commercial",
+						"type": "BuildingProfile"
+					},
+					{
+						"bucket": "commercial",
+						"chain_role": "chain",
+						"character_id": "businessman_commercial",
+						"desirability_boost": 0.0,
+						"patron_id": "businessman",
+						"prerequisite_ids": [
+							"building_high_street_clothes"
+						],
+						"prerequisite_threshold": 60.0,
+						"tier": 3.0,
+						"type": "UniqueProfile"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "commercial",
 			"building_id": "building_garmart",
 			"category": "unique",
@@ -202,6 +828,52 @@
 		},
 		{
 			"_path": "res://data/buildings/unique/building_gentlemans_outfitters.json",
+			"body": {
+				"building_id": "building_gentlemans_outfitters",
+				"category": "unique",
+				"description": "",
+				"display_name": "Gentleman's Outfitters",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/Meshy_AI_Pub_0403211907/Meshy_AI_Pub_0403211907_texture.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 0.65,
+				"profiles": [
+					{
+						"type": "BuildingMetadata"
+					},
+					{
+						"active_end": 20.0,
+						"active_start": 8.0,
+						"capacity": 10.0,
+						"category": "commercial",
+						"type": "BuildingProfile"
+					},
+					{
+						"bucket": "commercial",
+						"chain_role": "want",
+						"character_id": "businessman_commercial",
+						"desirability_boost": 0.05,
+						"patron_id": "businessman",
+						"prerequisite_ids": [
+							"building_garmart"
+						],
+						"prerequisite_threshold": 60.0,
+						"tier": 0.0,
+						"type": "UniqueProfile"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "commercial",
 			"building_id": "building_gentlemans_outfitters",
 			"category": "unique",
@@ -215,6 +887,52 @@
 		},
 		{
 			"_path": "res://data/buildings/unique/building_gym.json",
+			"body": {
+				"building_id": "building_gym",
+				"category": "unique",
+				"description": "",
+				"display_name": "Gym",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/Meshy_AI_Acme_Business_Park__0403170610/Meshy_AI_Acme_Business_Park__0403170610_texture.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 0.75,
+				"profiles": [
+					{
+						"type": "BuildingMetadata"
+					},
+					{
+						"active_end": 22.0,
+						"active_start": 6.0,
+						"capacity": 20.0,
+						"category": "commercial",
+						"type": "BuildingProfile"
+					},
+					{
+						"bucket": "residential",
+						"chain_role": "want",
+						"character_id": "businessman_residential",
+						"desirability_boost": 0.1,
+						"patron_id": "businessman",
+						"prerequisite_ids": [
+							"building_medical"
+						],
+						"prerequisite_threshold": 60.0,
+						"tier": 0.0,
+						"type": "UniqueProfile"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "residential",
 			"building_id": "building_gym",
 			"category": "unique",
@@ -228,6 +946,52 @@
 		},
 		{
 			"_path": "res://data/buildings/unique/building_high_street_clothes.json",
+			"body": {
+				"building_id": "building_high_street_clothes",
+				"category": "unique",
+				"description": "",
+				"display_name": "High Street Clothes",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/building-small-b.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 1.0,
+				"profiles": [
+					{
+						"type": "BuildingMetadata"
+					},
+					{
+						"active_end": 20.0,
+						"active_start": 8.0,
+						"capacity": 25.0,
+						"category": "commercial",
+						"type": "BuildingProfile"
+					},
+					{
+						"bucket": "commercial",
+						"chain_role": "chain",
+						"character_id": "businessman_commercial",
+						"desirability_boost": 0.0,
+						"patron_id": "businessman",
+						"prerequisite_ids": [
+							"building_charity_shop"
+						],
+						"prerequisite_threshold": 30.0,
+						"tier": 2.0,
+						"type": "UniqueProfile"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "commercial",
 			"building_id": "building_high_street_clothes",
 			"category": "unique",
@@ -241,6 +1005,50 @@
 		},
 		{
 			"_path": "res://data/buildings/unique/building_ice_cream_depot.json",
+			"body": {
+				"building_id": "building_ice_cream_depot",
+				"category": "unique",
+				"description": "",
+				"display_name": "Ice Cream Depot",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/building-garage.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 1.0,
+				"profiles": [
+					{
+						"type": "BuildingMetadata"
+					},
+					{
+						"active_end": 18.0,
+						"active_start": 8.0,
+						"capacity": 5.0,
+						"category": "workplace",
+						"type": "BuildingProfile"
+					},
+					{
+						"bucket": "industrial",
+						"chain_role": "chain",
+						"character_id": "farmer_industrial",
+						"desirability_boost": 0.0,
+						"patron_id": "farmer",
+						"prerequisite_ids": [],
+						"prerequisite_threshold": 10.0,
+						"tier": 1.0,
+						"type": "UniqueProfile"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "industrial",
 			"building_id": "building_ice_cream_depot",
 			"category": "unique",
@@ -254,6 +1062,52 @@
 		},
 		{
 			"_path": "res://data/buildings/unique/building_lumber_mill.json",
+			"body": {
+				"building_id": "building_lumber_mill",
+				"category": "unique",
+				"description": "",
+				"display_name": "Lumber Mill",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/Meshy_AI_Acme_Business_Park__0403170610/Meshy_AI_Acme_Business_Park__0403170610_texture.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 0.85,
+				"profiles": [
+					{
+						"type": "BuildingMetadata"
+					},
+					{
+						"active_end": 18.0,
+						"active_start": 8.0,
+						"capacity": 20.0,
+						"category": "workplace",
+						"type": "BuildingProfile"
+					},
+					{
+						"bucket": "industrial",
+						"chain_role": "chain",
+						"character_id": "aristocrat_industrial",
+						"desirability_boost": 0.0,
+						"patron_id": "aristocrat",
+						"prerequisite_ids": [
+							"building_windmill"
+						],
+						"prerequisite_threshold": 30.0,
+						"tier": 2.0,
+						"type": "UniqueProfile"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "industrial",
 			"building_id": "building_lumber_mill",
 			"category": "unique",
@@ -267,6 +1121,52 @@
 		},
 		{
 			"_path": "res://data/buildings/unique/building_mansion_block.json",
+			"body": {
+				"building_id": "building_mansion_block",
+				"category": "unique",
+				"description": "",
+				"display_name": "Mansion Block",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/building-small-c.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 1.0,
+				"profiles": [
+					{
+						"type": "BuildingMetadata"
+					},
+					{
+						"active_end": 24.0,
+						"active_start": 0.0,
+						"capacity": 35.0,
+						"category": "residential",
+						"type": "BuildingProfile"
+					},
+					{
+						"bucket": "residential",
+						"chain_role": "chain",
+						"character_id": "farmer_residential",
+						"desirability_boost": 0.0,
+						"patron_id": "farmer",
+						"prerequisite_ids": [
+							"building_edwardian_terrace"
+						],
+						"prerequisite_threshold": 60.0,
+						"tier": 3.0,
+						"type": "UniqueProfile"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "residential",
 			"building_id": "building_mansion_block",
 			"category": "unique",
@@ -280,6 +1180,45 @@
 		},
 		{
 			"_path": "res://data/buildings/unique/building_medical.json",
+			"body": {
+				"building_id": "building_medical",
+				"category": "unique",
+				"description": "",
+				"display_name": "Hospital",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/Meshy_AI_The_Meadows_Medical_C_0404154706/Meshy_AI_The_Meadows_Medical_C_0404154706_texture.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 0.65,
+				"profiles": [
+					{
+						"type": "MedicalMetadata"
+					},
+					{
+						"bucket": "residential",
+						"chain_role": "chain",
+						"character_id": "businessman_residential",
+						"desirability_boost": 0.15,
+						"patron_id": "businessman",
+						"prerequisite_ids": [
+							"building_fire_station"
+						],
+						"prerequisite_threshold": 60.0,
+						"tier": 3.0,
+						"type": "UniqueProfile"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "residential",
 			"building_id": "building_medical",
 			"category": "unique",
@@ -293,6 +1232,52 @@
 		},
 		{
 			"_path": "res://data/buildings/unique/building_members_club.json",
+			"body": {
+				"building_id": "building_members_club",
+				"category": "unique",
+				"description": "",
+				"display_name": "Private Members' Club",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/Meshy_AI_Clocktower_City_Hall_0403210028/Meshy_AI_Clocktower_City_Hall_0403210028_texture.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 0.8,
+				"profiles": [
+					{
+						"type": "BuildingMetadata"
+					},
+					{
+						"active_end": 2.0,
+						"active_start": 18.0,
+						"capacity": 25.0,
+						"category": "commercial",
+						"type": "BuildingProfile"
+					},
+					{
+						"bucket": "commercial",
+						"chain_role": "want",
+						"character_id": "aristocrat_commercial",
+						"desirability_boost": 0.1,
+						"patron_id": "aristocrat",
+						"prerequisite_ids": [
+							"building_nightclub"
+						],
+						"prerequisite_threshold": 60.0,
+						"tier": 0.0,
+						"type": "UniqueProfile"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "commercial",
 			"building_id": "building_members_club",
 			"category": "unique",
@@ -306,6 +1291,52 @@
 		},
 		{
 			"_path": "res://data/buildings/unique/building_moped_garage.json",
+			"body": {
+				"building_id": "building_moped_garage",
+				"category": "unique",
+				"description": "",
+				"display_name": "Moped Garage",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/building-garage.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 1.0,
+				"profiles": [
+					{
+						"type": "BuildingMetadata"
+					},
+					{
+						"active_end": 18.0,
+						"active_start": 8.0,
+						"capacity": 15.0,
+						"category": "workplace",
+						"type": "BuildingProfile"
+					},
+					{
+						"bucket": "industrial",
+						"chain_role": "want",
+						"character_id": "businessman_industrial",
+						"desirability_boost": 0.0,
+						"patron_id": "businessman",
+						"prerequisite_ids": [
+							"building_full_service_garage"
+						],
+						"prerequisite_threshold": 60.0,
+						"tier": 0.0,
+						"type": "UniqueProfile"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "industrial",
 			"building_id": "building_moped_garage",
 			"category": "unique",
@@ -319,6 +1350,29 @@
 		},
 		{
 			"_path": "res://data/buildings/nature/building_nature_patch.json",
+			"body": {
+				"building_id": "building_nature_patch",
+				"cash_cost": 40.0,
+				"category": "nature",
+				"description": "",
+				"display_name": "Nature Patch",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					-0.15,
+					0.0
+				],
+				"model_path": "res://models/Meshy_AI_nature_patch_0403203125/Meshy_AI_nature_patch_0403203125_texture.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 0.57,
+				"profiles": [],
+				"tags": []
+			},
 			"bucket": "",
 			"building_id": "building_nature_patch",
 			"category": "nature",
@@ -332,6 +1386,52 @@
 		},
 		{
 			"_path": "res://data/buildings/unique/building_nightclub.json",
+			"body": {
+				"building_id": "building_nightclub",
+				"category": "unique",
+				"description": "",
+				"display_name": "Nightclub",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/Meshy_AI_Streeter_s_Supermarke_0404154643/Meshy_AI_Streeter_s_Supermarke_0404154643_texture.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 0.65,
+				"profiles": [
+					{
+						"type": "BuildingMetadata"
+					},
+					{
+						"active_end": 4.0,
+						"active_start": 21.0,
+						"capacity": 60.0,
+						"category": "commercial",
+						"type": "BuildingProfile"
+					},
+					{
+						"bucket": "commercial",
+						"chain_role": "chain",
+						"character_id": "aristocrat_commercial",
+						"desirability_boost": 0.0,
+						"patron_id": "aristocrat",
+						"prerequisite_ids": [
+							"building_restaurant"
+						],
+						"prerequisite_threshold": 60.0,
+						"tier": 3.0,
+						"type": "UniqueProfile"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "commercial",
 			"building_id": "building_nightclub",
 			"category": "unique",
@@ -345,6 +1445,50 @@
 		},
 		{
 			"_path": "res://data/buildings/unique/building_petrol_station.json",
+			"body": {
+				"building_id": "building_petrol_station",
+				"category": "unique",
+				"description": "",
+				"display_name": "Petrol Station",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/building-garage.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 1.0,
+				"profiles": [
+					{
+						"type": "BuildingMetadata"
+					},
+					{
+						"active_end": 18.0,
+						"active_start": 8.0,
+						"capacity": 6.0,
+						"category": "workplace",
+						"type": "BuildingProfile"
+					},
+					{
+						"bucket": "industrial",
+						"chain_role": "chain",
+						"character_id": "businessman_industrial",
+						"desirability_boost": 0.0,
+						"patron_id": "businessman",
+						"prerequisite_ids": [],
+						"prerequisite_threshold": 10.0,
+						"tier": 1.0,
+						"type": "UniqueProfile"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "industrial",
 			"building_id": "building_petrol_station",
 			"category": "unique",
@@ -358,6 +1502,52 @@
 		},
 		{
 			"_path": "res://data/buildings/unique/building_pie_factory.json",
+			"body": {
+				"building_id": "building_pie_factory",
+				"category": "unique",
+				"description": "",
+				"display_name": "Pie Factory",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/Meshy_AI_Acme_Business_Park__0403170610/Meshy_AI_Acme_Business_Park__0403170610_texture.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 0.85,
+				"profiles": [
+					{
+						"type": "BuildingMetadata"
+					},
+					{
+						"active_end": 18.0,
+						"active_start": 8.0,
+						"capacity": 15.0,
+						"category": "workplace",
+						"type": "BuildingProfile"
+					},
+					{
+						"bucket": "industrial",
+						"chain_role": "chain",
+						"character_id": "farmer_industrial",
+						"desirability_boost": 0.0,
+						"patron_id": "farmer",
+						"prerequisite_ids": [
+							"building_ice_cream_depot"
+						],
+						"prerequisite_threshold": 30.0,
+						"tier": 2.0,
+						"type": "UniqueProfile"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "industrial",
 			"building_id": "building_pie_factory",
 			"category": "unique",
@@ -371,6 +1561,52 @@
 		},
 		{
 			"_path": "res://data/buildings/unique/building_pipe_factory.json",
+			"body": {
+				"building_id": "building_pipe_factory",
+				"category": "unique",
+				"description": "",
+				"display_name": "Pipe Factory",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/Meshy_AI_Acme_Business_Park__0403170610/Meshy_AI_Acme_Business_Park__0403170610_texture.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 0.85,
+				"profiles": [
+					{
+						"type": "BuildingMetadata"
+					},
+					{
+						"active_end": 18.0,
+						"active_start": 8.0,
+						"capacity": 35.0,
+						"category": "workplace",
+						"type": "BuildingProfile"
+					},
+					{
+						"bucket": "industrial",
+						"chain_role": "chain",
+						"character_id": "aristocrat_industrial",
+						"desirability_boost": 0.0,
+						"patron_id": "aristocrat",
+						"prerequisite_ids": [
+							"building_lumber_mill"
+						],
+						"prerequisite_threshold": 60.0,
+						"tier": 3.0,
+						"type": "UniqueProfile"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "industrial",
 			"building_id": "building_pipe_factory",
 			"category": "unique",
@@ -384,6 +1620,45 @@
 		},
 		{
 			"_path": "res://data/buildings/unique/building_pirate_radio.json",
+			"body": {
+				"building_id": "building_pirate_radio",
+				"category": "unique",
+				"description": "",
+				"display_name": "Pirate Radio Station",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/Meshy_AI_The_Tower_of_Tomorrow_0403170625/Meshy_AI_The_Tower_of_Tomorrow_0403170625_texture.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 0.85,
+				"profiles": [
+					{
+						"type": "BuildingMetadata"
+					},
+					{
+						"bucket": "residential",
+						"chain_role": "want",
+						"character_id": "aristocrat_residential",
+						"desirability_boost": 0.05,
+						"patron_id": "aristocrat",
+						"prerequisite_ids": [
+							"building_postwar_tower_block"
+						],
+						"prerequisite_threshold": 60.0,
+						"tier": 0.0,
+						"type": "UniqueProfile"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "residential",
 			"building_id": "building_pirate_radio",
 			"category": "unique",
@@ -397,6 +1672,43 @@
 		},
 		{
 			"_path": "res://data/buildings/unique/building_police.json",
+			"body": {
+				"building_id": "building_police",
+				"category": "unique",
+				"description": "",
+				"display_name": "Police Station",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/Meshy_AI_Isometric_Police_Stat_0403205443/Meshy_AI_Isometric_Police_Stat_0403205443_texture.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 0.7,
+				"profiles": [
+					{
+						"type": "PoliceMetadata"
+					},
+					{
+						"bucket": "residential",
+						"chain_role": "chain",
+						"character_id": "businessman_residential",
+						"desirability_boost": 0.05,
+						"patron_id": "businessman",
+						"prerequisite_ids": [],
+						"prerequisite_threshold": 10.0,
+						"tier": 1.0,
+						"type": "UniqueProfile"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "residential",
 			"building_id": "building_police",
 			"category": "unique",
@@ -410,6 +1722,52 @@
 		},
 		{
 			"_path": "res://data/buildings/unique/building_postwar_midblock.json",
+			"body": {
+				"building_id": "building_postwar_midblock",
+				"category": "unique",
+				"description": "",
+				"display_name": "Postwar Mid-Block",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/building-small-d.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 1.0,
+				"profiles": [
+					{
+						"type": "BuildingMetadata"
+					},
+					{
+						"active_end": 24.0,
+						"active_start": 0.0,
+						"capacity": 16.0,
+						"category": "residential",
+						"type": "BuildingProfile"
+					},
+					{
+						"bucket": "residential",
+						"chain_role": "chain",
+						"character_id": "aristocrat_residential",
+						"desirability_boost": 0.0,
+						"patron_id": "aristocrat",
+						"prerequisite_ids": [
+							"building_postwar_terrace"
+						],
+						"prerequisite_threshold": 30.0,
+						"tier": 2.0,
+						"type": "UniqueProfile"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "residential",
 			"building_id": "building_postwar_midblock",
 			"category": "unique",
@@ -423,6 +1781,50 @@
 		},
 		{
 			"_path": "res://data/buildings/unique/building_postwar_terrace.json",
+			"body": {
+				"building_id": "building_postwar_terrace",
+				"category": "unique",
+				"description": "",
+				"display_name": "Postwar Terrace",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/building-small-a.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 1.0,
+				"profiles": [
+					{
+						"type": "BuildingMetadata"
+					},
+					{
+						"active_end": 24.0,
+						"active_start": 0.0,
+						"capacity": 8.0,
+						"category": "residential",
+						"type": "BuildingProfile"
+					},
+					{
+						"bucket": "residential",
+						"chain_role": "chain",
+						"character_id": "aristocrat_residential",
+						"desirability_boost": 0.0,
+						"patron_id": "aristocrat",
+						"prerequisite_ids": [],
+						"prerequisite_threshold": 10.0,
+						"tier": 1.0,
+						"type": "UniqueProfile"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "residential",
 			"building_id": "building_postwar_terrace",
 			"category": "unique",
@@ -436,6 +1838,52 @@
 		},
 		{
 			"_path": "res://data/buildings/unique/building_postwar_tower_block.json",
+			"body": {
+				"building_id": "building_postwar_tower_block",
+				"category": "unique",
+				"description": "",
+				"display_name": "Postwar Tower Block",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/building-small-c.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 1.0,
+				"profiles": [
+					{
+						"type": "BuildingMetadata"
+					},
+					{
+						"active_end": 24.0,
+						"active_start": 0.0,
+						"capacity": 40.0,
+						"category": "residential",
+						"type": "BuildingProfile"
+					},
+					{
+						"bucket": "residential",
+						"chain_role": "chain",
+						"character_id": "aristocrat_residential",
+						"desirability_boost": 0.0,
+						"patron_id": "aristocrat",
+						"prerequisite_ids": [
+							"building_postwar_midblock"
+						],
+						"prerequisite_threshold": 60.0,
+						"tier": 3.0,
+						"type": "UniqueProfile"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "residential",
 			"building_id": "building_postwar_tower_block",
 			"category": "unique",
@@ -449,6 +1897,50 @@
 		},
 		{
 			"_path": "res://data/buildings/unique/building_pub.json",
+			"body": {
+				"building_id": "building_pub",
+				"category": "unique",
+				"description": "",
+				"display_name": "Pub",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/Meshy_AI_Pub_0403211907/Meshy_AI_Pub_0403211907_texture.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 0.65,
+				"profiles": [
+					{
+						"type": "BuildingMetadata"
+					},
+					{
+						"active_end": 23.0,
+						"active_start": 17.0,
+						"capacity": 30.0,
+						"category": "commercial",
+						"type": "BuildingProfile"
+					},
+					{
+						"bucket": "commercial",
+						"chain_role": "chain",
+						"character_id": "aristocrat_commercial",
+						"desirability_boost": 0.0,
+						"patron_id": "aristocrat",
+						"prerequisite_ids": [],
+						"prerequisite_threshold": 10.0,
+						"tier": 1.0,
+						"type": "UniqueProfile"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "commercial",
 			"building_id": "building_pub",
 			"category": "unique",
@@ -462,6 +1954,52 @@
 		},
 		{
 			"_path": "res://data/buildings/unique/building_restaurant.json",
+			"body": {
+				"building_id": "building_restaurant",
+				"category": "unique",
+				"description": "",
+				"display_name": "Restaurant",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/Meshy_AI_Pub_0403211907/Meshy_AI_Pub_0403211907_texture.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 0.65,
+				"profiles": [
+					{
+						"type": "BuildingMetadata"
+					},
+					{
+						"active_end": 23.0,
+						"active_start": 12.0,
+						"capacity": 40.0,
+						"category": "commercial",
+						"type": "BuildingProfile"
+					},
+					{
+						"bucket": "commercial",
+						"chain_role": "chain",
+						"character_id": "aristocrat_commercial",
+						"desirability_boost": 0.0,
+						"patron_id": "aristocrat",
+						"prerequisite_ids": [
+							"building_pub"
+						],
+						"prerequisite_threshold": 30.0,
+						"tier": 2.0,
+						"type": "UniqueProfile"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "commercial",
 			"building_id": "building_restaurant",
 			"category": "unique",
@@ -475,6 +2013,40 @@
 		},
 		{
 			"_path": "res://data/buildings/generic/building_small_a.json",
+			"body": {
+				"building_id": "building_small_a",
+				"category": "generic",
+				"description": "",
+				"display_name": "Small Residence A",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					-0.1,
+					0.0
+				],
+				"model_path": "res://models/Meshy_AI_Sunlit_Redbrick_Cotta_0403171628/Meshy_AI_Sunlit_Redbrick_Cotta_0403171628_texture.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 0.5,
+				"pool_id": "residential_t1",
+				"profiles": [
+					{
+						"type": "BuildingMetadata"
+					},
+					{
+						"active_end": 9.0,
+						"active_start": 6.0,
+						"capacity": 5.0,
+						"category": "residential",
+						"type": "BuildingProfile"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "",
 			"building_id": "building_small_a",
 			"category": "generic",
@@ -488,6 +2060,40 @@
 		},
 		{
 			"_path": "res://data/buildings/generic/building_small_b.json",
+			"body": {
+				"building_id": "building_small_b",
+				"category": "generic",
+				"description": "",
+				"display_name": "Small Commercial B",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/Meshy_AI_Sunnyvale_News_Conf_0403170655/Meshy_AI_Sunnyvale_News_Conf_0403170655_texture.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 0.45,
+				"pool_id": "commercial_t1",
+				"profiles": [
+					{
+						"type": "BuildingMetadata"
+					},
+					{
+						"active_end": 18.0,
+						"active_start": 8.0,
+						"capacity": 10.0,
+						"category": "commercial",
+						"type": "BuildingProfile"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "",
 			"building_id": "building_small_b",
 			"category": "generic",
@@ -501,6 +2107,52 @@
 		},
 		{
 			"_path": "res://data/buildings/generic/building_small_c.json",
+			"body": {
+				"building_id": "building_small_c",
+				"category": "generic",
+				"description": "",
+				"display_name": "Tower Residence C",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					],
+					[
+						1.0,
+						0.0
+					],
+					[
+						0.0,
+						1.0
+					],
+					[
+						1.0,
+						1.0
+					]
+				],
+				"model_offset": [
+					0.5,
+					0.0,
+					0.5
+				],
+				"model_path": "res://models/Meshy_AI_The_Tower_of_Tomorrow_0403170625/Meshy_AI_The_Tower_of_Tomorrow_0403170625_texture.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 2.04,
+				"pool_id": "residential_t2",
+				"profiles": [
+					{
+						"type": "BuildingMetadata"
+					},
+					{
+						"active_end": 24.0,
+						"active_start": 0.0,
+						"capacity": 12.0,
+						"category": "residential",
+						"type": "BuildingProfile"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "",
 			"building_id": "building_small_c",
 			"category": "generic",
@@ -514,6 +2166,40 @@
 		},
 		{
 			"_path": "res://data/buildings/generic/building_small_d.json",
+			"body": {
+				"building_id": "building_small_d",
+				"category": "generic",
+				"description": "",
+				"display_name": "Cottage Residence D",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/Meshy_AI_Wisteria_Cottage_0403171247/Meshy_AI_Wisteria_Cottage_0403171247_texture.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 0.45,
+				"pool_id": "residential_t1",
+				"profiles": [
+					{
+						"type": "BuildingMetadata"
+					},
+					{
+						"active_end": 9.0,
+						"active_start": 6.0,
+						"capacity": 4.0,
+						"category": "residential",
+						"type": "BuildingProfile"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "",
 			"building_id": "building_small_d",
 			"category": "generic",
@@ -527,6 +2213,47 @@
 		},
 		{
 			"_path": "res://data/buildings/unique/building_sports_centre.json",
+			"body": {
+				"building_id": "building_sports_centre",
+				"category": "unique",
+				"description": "",
+				"display_name": "Sports Centre",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/Meshy_AI_Acme_Business_Park__0403170610/Meshy_AI_Acme_Business_Park__0403170610_texture.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 0.9,
+				"profiles": [
+					{
+						"type": "BuildingMetadata"
+					},
+					{
+						"bucket": "residential",
+						"chain_role": "landmark",
+						"character_id": "",
+						"desirability_boost": 0.25,
+						"patron_id": "businessman",
+						"prerequisite_ids": [
+							"building_gym",
+							"building_moped_garage",
+							"building_gentlemans_outfitters"
+						],
+						"prerequisite_threshold": 0.0,
+						"tier": 0.0,
+						"type": "UniqueProfile"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "residential",
 			"building_id": "building_sports_centre",
 			"category": "unique",
@@ -540,6 +2267,52 @@
 		},
 		{
 			"_path": "res://data/buildings/unique/building_supermarket.json",
+			"body": {
+				"building_id": "building_supermarket",
+				"category": "unique",
+				"description": "",
+				"display_name": "Supermarket",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					],
+					[
+						1.0,
+						0.0
+					],
+					[
+						0.0,
+						1.0
+					],
+					[
+						1.0,
+						1.0
+					]
+				],
+				"model_offset": [
+					0.5,
+					0.0,
+					0.5
+				],
+				"model_path": "res://models/Meshy_AI_Streeter_s_Supermarke_0404154643/Meshy_AI_Streeter_s_Supermarke_0404154643_texture.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 1.0,
+				"pool_id": "commercial_t2",
+				"profiles": [
+					{
+						"type": "BuildingMetadata"
+					},
+					{
+						"active_end": 21.0,
+						"active_start": 8.0,
+						"capacity": 40.0,
+						"category": "commercial",
+						"type": "BuildingProfile"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "",
 			"building_id": "building_supermarket",
 			"category": "unique",
@@ -553,6 +2326,47 @@
 		},
 		{
 			"_path": "res://data/buildings/unique/building_theatre.json",
+			"body": {
+				"building_id": "building_theatre",
+				"category": "unique",
+				"description": "",
+				"display_name": "The Theatre",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/Meshy_AI_Clocktower_City_Hall_0403210028/Meshy_AI_Clocktower_City_Hall_0403210028_texture.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 0.95,
+				"profiles": [
+					{
+						"type": "BuildingMetadata"
+					},
+					{
+						"bucket": "residential",
+						"chain_role": "landmark",
+						"character_id": "",
+						"desirability_boost": 0.25,
+						"patron_id": "aristocrat",
+						"prerequisite_ids": [
+							"building_members_club",
+							"building_crazy_golf",
+							"building_pirate_radio"
+						],
+						"prerequisite_threshold": 0.0,
+						"tier": 0.0,
+						"type": "UniqueProfile"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "residential",
 			"building_id": "building_theatre",
 			"category": "unique",
@@ -566,6 +2380,47 @@
 		},
 		{
 			"_path": "res://data/buildings/unique/building_theme_park.json",
+			"body": {
+				"building_id": "building_theme_park",
+				"category": "unique",
+				"description": "",
+				"display_name": "Theme Park",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/Meshy_AI_Duck_Pond_in_the_Hedg_0403173405/Meshy_AI_Duck_Pond_in_the_Hedg_0403173405_texture.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 1.0,
+				"profiles": [
+					{
+						"type": "BuildingMetadata"
+					},
+					{
+						"bucket": "residential",
+						"chain_role": "landmark",
+						"character_id": "",
+						"desirability_boost": 0.3,
+						"patron_id": "farmer",
+						"prerequisite_ids": [
+							"building_brewery",
+							"building_buskers_square",
+							"building_workshop_shed_house"
+						],
+						"prerequisite_threshold": 0.0,
+						"tier": 0.0,
+						"type": "UniqueProfile"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "residential",
 			"building_id": "building_theme_park",
 			"category": "unique",
@@ -579,6 +2434,50 @@
 		},
 		{
 			"_path": "res://data/buildings/unique/building_victorian_terrace.json",
+			"body": {
+				"building_id": "building_victorian_terrace",
+				"category": "unique",
+				"description": "",
+				"display_name": "Victorian Terrace",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/Meshy_AI_Wisteria_Cottage_0403171247/Meshy_AI_Wisteria_Cottage_0403171247_texture.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 0.8,
+				"profiles": [
+					{
+						"type": "BuildingMetadata"
+					},
+					{
+						"active_end": 24.0,
+						"active_start": 0.0,
+						"capacity": 10.0,
+						"category": "residential",
+						"type": "BuildingProfile"
+					},
+					{
+						"bucket": "residential",
+						"chain_role": "chain",
+						"character_id": "farmer_residential",
+						"desirability_boost": 0.0,
+						"patron_id": "farmer",
+						"prerequisite_ids": [],
+						"prerequisite_threshold": 10.0,
+						"tier": 1.0,
+						"type": "UniqueProfile"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "residential",
 			"building_id": "building_victorian_terrace",
 			"category": "unique",
@@ -592,6 +2491,52 @@
 		},
 		{
 			"_path": "res://data/buildings/unique/building_wholesale_market.json",
+			"body": {
+				"building_id": "building_wholesale_market",
+				"category": "unique",
+				"description": "",
+				"display_name": "Wholesale Market",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/Meshy_AI_Streeter_s_Supermarke_0404154643/Meshy_AI_Streeter_s_Supermarke_0404154643_texture.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 0.65,
+				"profiles": [
+					{
+						"type": "BuildingMetadata"
+					},
+					{
+						"active_end": 18.0,
+						"active_start": 8.0,
+						"capacity": 30.0,
+						"category": "workplace",
+						"type": "BuildingProfile"
+					},
+					{
+						"bucket": "industrial",
+						"chain_role": "chain",
+						"character_id": "farmer_industrial",
+						"desirability_boost": 0.0,
+						"patron_id": "farmer",
+						"prerequisite_ids": [
+							"building_pie_factory"
+						],
+						"prerequisite_threshold": 60.0,
+						"tier": 3.0,
+						"type": "UniqueProfile"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "industrial",
 			"building_id": "building_wholesale_market",
 			"category": "unique",
@@ -605,6 +2550,50 @@
 		},
 		{
 			"_path": "res://data/buildings/unique/building_windmill.json",
+			"body": {
+				"building_id": "building_windmill",
+				"category": "unique",
+				"description": "",
+				"display_name": "Windmill",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/building-garage.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 1.0,
+				"profiles": [
+					{
+						"type": "BuildingMetadata"
+					},
+					{
+						"active_end": 18.0,
+						"active_start": 8.0,
+						"capacity": 8.0,
+						"category": "workplace",
+						"type": "BuildingProfile"
+					},
+					{
+						"bucket": "industrial",
+						"chain_role": "chain",
+						"character_id": "aristocrat_industrial",
+						"desirability_boost": 0.0,
+						"patron_id": "aristocrat",
+						"prerequisite_ids": [],
+						"prerequisite_threshold": 10.0,
+						"tier": 1.0,
+						"type": "UniqueProfile"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "industrial",
 			"building_id": "building_windmill",
 			"category": "unique",
@@ -618,6 +2607,52 @@
 		},
 		{
 			"_path": "res://data/buildings/unique/building_workshop_shed_house.json",
+			"body": {
+				"building_id": "building_workshop_shed_house",
+				"category": "unique",
+				"description": "",
+				"display_name": "Workshop Shed House",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/building-small-d.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 1.0,
+				"profiles": [
+					{
+						"type": "BuildingMetadata"
+					},
+					{
+						"active_end": 24.0,
+						"active_start": 0.0,
+						"capacity": 12.0,
+						"category": "residential",
+						"type": "BuildingProfile"
+					},
+					{
+						"bucket": "residential",
+						"chain_role": "want",
+						"character_id": "farmer_residential",
+						"desirability_boost": 0.05,
+						"patron_id": "farmer",
+						"prerequisite_ids": [
+							"building_mansion_block"
+						],
+						"prerequisite_threshold": 60.0,
+						"tier": 0.0,
+						"type": "UniqueProfile"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "residential",
 			"building_id": "building_workshop_shed_house",
 			"category": "unique",
@@ -631,6 +2666,30 @@
 		},
 		{
 			"_path": "res://data/buildings/nature/grass.json",
+			"body": {
+				"building_id": "grass",
+				"cash_cost": 10.0,
+				"category": "nature",
+				"description": "",
+				"display_name": "Grass",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/grass.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 1.0,
+				"pool_id": "grass",
+				"profiles": [],
+				"tags": []
+			},
 			"bucket": "",
 			"building_id": "grass",
 			"category": "nature",
@@ -644,6 +2703,30 @@
 		},
 		{
 			"_path": "res://data/buildings/nature/grass_trees.json",
+			"body": {
+				"building_id": "grass_trees",
+				"cash_cost": 15.0,
+				"category": "nature",
+				"description": "",
+				"display_name": "Grass with Trees",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/grass-trees.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 1.0,
+				"pool_id": "grass",
+				"profiles": [],
+				"tags": []
+			},
 			"bucket": "",
 			"building_id": "grass_trees",
 			"category": "nature",
@@ -657,6 +2740,30 @@
 		},
 		{
 			"_path": "res://data/buildings/nature/grass_trees_tall.json",
+			"body": {
+				"building_id": "grass_trees_tall",
+				"cash_cost": 20.0,
+				"category": "nature",
+				"description": "",
+				"display_name": "Grass with Tall Trees",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/grass-trees-tall.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 1.0,
+				"pool_id": "grass",
+				"profiles": [],
+				"tags": []
+			},
 			"bucket": "",
 			"building_id": "grass_trees_tall",
 			"category": "nature",
@@ -670,6 +2777,29 @@
 		},
 		{
 			"_path": "res://data/buildings/road/pavement.json",
+			"body": {
+				"building_id": "pavement",
+				"category": "road",
+				"description": "",
+				"display_name": "Pavement",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/pavement.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 1.0,
+				"pool_id": "pavement",
+				"profiles": [],
+				"tags": []
+			},
 			"bucket": "",
 			"building_id": "pavement",
 			"category": "road",
@@ -683,6 +2813,29 @@
 		},
 		{
 			"_path": "res://data/buildings/road/pavement_fountain.json",
+			"body": {
+				"building_id": "pavement_fountain",
+				"category": "road",
+				"description": "",
+				"display_name": "Pavement with Fountain",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/pavement-fountain.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 1.0,
+				"pool_id": "pavement",
+				"profiles": [],
+				"tags": []
+			},
 			"bucket": "",
 			"building_id": "pavement_fountain",
 			"category": "road",
@@ -696,6 +2849,43 @@
 		},
 		{
 			"_path": "res://data/buildings/road/road_corner.json",
+			"body": {
+				"building_id": "road_corner",
+				"category": "road",
+				"description": "",
+				"display_name": "Road (Corner)",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/road-corner.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 1.0,
+				"profiles": [
+					{
+						"connections": [
+							[
+								0.0,
+								1.0
+							],
+							[
+								-1.0,
+								0.0
+							]
+						],
+						"road_type": 1.0,
+						"type": "RoadMetadata"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "",
 			"building_id": "road_corner",
 			"category": "road",
@@ -709,6 +2899,51 @@
 		},
 		{
 			"_path": "res://data/buildings/road/road_intersection.json",
+			"body": {
+				"building_id": "road_intersection",
+				"category": "road",
+				"description": "",
+				"display_name": "Road (Intersection)",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/road-intersection.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 1.0,
+				"profiles": [
+					{
+						"connections": [
+							[
+								0.0,
+								-1.0
+							],
+							[
+								0.0,
+								1.0
+							],
+							[
+								1.0,
+								0.0
+							],
+							[
+								-1.0,
+								0.0
+							]
+						],
+						"road_type": 3.0,
+						"type": "RoadMetadata"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "",
 			"building_id": "road_intersection",
 			"category": "road",
@@ -722,6 +2957,47 @@
 		},
 		{
 			"_path": "res://data/buildings/road/road_split.json",
+			"body": {
+				"building_id": "road_split",
+				"category": "road",
+				"description": "",
+				"display_name": "Road (T-Split)",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/road-split.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 1.0,
+				"profiles": [
+					{
+						"connections": [
+							[
+								-1.0,
+								0.0
+							],
+							[
+								0.0,
+								1.0
+							],
+							[
+								1.0,
+								0.0
+							]
+						],
+						"road_type": 2.0,
+						"type": "RoadMetadata"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "",
 			"building_id": "road_split",
 			"category": "road",
@@ -735,6 +3011,44 @@
 		},
 		{
 			"_path": "res://data/buildings/road/road_straight.json",
+			"body": {
+				"building_id": "road_straight",
+				"category": "road",
+				"description": "",
+				"display_name": "Road (Straight)",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/road-straight.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 1.0,
+				"pool_id": "road",
+				"profiles": [
+					{
+						"connections": [
+							[
+								0.0,
+								-1.0
+							],
+							[
+								0.0,
+								1.0
+							]
+						],
+						"road_type": 0.0,
+						"type": "RoadMetadata"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "",
 			"building_id": "road_straight",
 			"category": "road",
@@ -748,6 +3062,43 @@
 		},
 		{
 			"_path": "res://data/buildings/road/road_straight_lightposts.json",
+			"body": {
+				"building_id": "road_straight_lightposts",
+				"category": "road",
+				"description": "",
+				"display_name": "Road (Lightposts)",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					]
+				],
+				"model_offset": [
+					0.0,
+					0.0,
+					0.0
+				],
+				"model_path": "res://models/road-straight-lightposts.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 1.0,
+				"profiles": [
+					{
+						"connections": [
+							[
+								0.0,
+								-1.0
+							],
+							[
+								0.0,
+								1.0
+							]
+						],
+						"road_type": 0.0,
+						"type": "RoadMetadata"
+					}
+				],
+				"tags": []
+			},
 			"bucket": "",
 			"building_id": "road_straight_lightposts",
 			"category": "road",
@@ -1757,7 +4108,7 @@
 			"trigger_patron_id": ""
 		}
 	],
-	"exported_at": "2026-04-21T18:32:05",
+	"exported_at": "2026-04-21T18:42:24",
 	"flags": [
 		"aristocrat_landmark_completed",
 		"aristocrat_landmark_promised",
