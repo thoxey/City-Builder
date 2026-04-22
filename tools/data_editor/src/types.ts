@@ -58,6 +58,86 @@ export interface ManifestBuilding {
   bucket: Bucket | "";
   tier: number;
   _path: string;
+  body: BuildingDoc;
+}
+
+// ---- Building on-disk shape ----
+
+export type ProfileType =
+  | "BuildingMetadata"
+  | "BuildingProfile"
+  | "UniqueProfile"
+  | "GenericTierProfile"
+  | "PoliceMetadata"
+  | "MedicalMetadata"
+  | "RoadMetadata";
+
+export interface BuildingMetadataProfile {
+  type: "BuildingMetadata";
+}
+export interface PoliceMetadataProfile {
+  type: "PoliceMetadata";
+}
+export interface MedicalMetadataProfile {
+  type: "MedicalMetadata";
+}
+
+export interface BuildingProfile {
+  type: "BuildingProfile";
+  category: Bucket | ""; // residential / commercial / industrial
+  capacity: number;
+  active_start: number;
+  active_end: number;
+}
+
+export interface UniqueProfile {
+  type: "UniqueProfile";
+  bucket: Bucket | "";
+  tier: number;
+  patron_id: string;
+  character_id: string;
+  chain_role: "" | "chain" | "want" | "landmark";
+  prerequisite_threshold: number;
+  prerequisite_ids: string[];
+  desirability_boost: number;
+}
+
+export interface GenericTierProfile {
+  type: "GenericTierProfile";
+  bucket: Bucket | "";
+  tier: number;
+  pool_id: string;
+}
+
+export interface RoadMetadataProfile {
+  type: "RoadMetadata";
+  road_type: number;
+  connections: Array<[number, number]>;
+}
+
+export type Profile =
+  | BuildingMetadataProfile
+  | PoliceMetadataProfile
+  | MedicalMetadataProfile
+  | BuildingProfile
+  | UniqueProfile
+  | GenericTierProfile
+  | RoadMetadataProfile;
+
+export interface BuildingDoc {
+  building_id: string;
+  display_name: string;
+  description: string;
+  model_path: string;
+  model_scale: number;
+  model_offset: [number, number, number];
+  model_rotation_y: number;
+  footprint: Array<[number, number]>;
+  category: BuildingCategory | "";
+  pool_id?: string;
+  cash_cost?: number;
+  profiles: Profile[];
+  tags: string[];
 }
 
 export interface ManifestEvent {
@@ -70,6 +150,75 @@ export interface ManifestEvent {
   enabled_if: string;
   category: string;
   _path: string;
+  // Full event body — payload + metadata — so the SPA can open any event
+  // without a second disk read. Critical for download-mode fallback.
+  body: EventDoc;
+}
+
+// ---- Event on-disk shapes ----
+
+export type EffectKind =
+  | "set_flag"
+  | "delay_want"
+  | "discount_cost"
+  | "emit_signal"
+  | "fire_event";
+
+export interface Effect {
+  kind: EffectKind | string;
+  target?: string;  // flag name / event id / signal name / building id / character id
+  amount?: number;  // hours (delay_want) / cash (discount_cost)
+}
+
+export interface DialogueOption {
+  label: string;
+  next: string;      // node_id of the next node, "" to close
+  effects: Effect[];
+}
+
+export interface DialogueNodeDoc {
+  node_id: string;
+  speaker: string;
+  body: string;
+  on_enter: Effect[];
+  options: DialogueOption[];
+}
+
+export interface DialoguePayload {
+  tree_id: string;
+  entry_node_id: string;
+  nodes: DialogueNodeDoc[];
+}
+
+export interface NewspaperPayload {
+  headline: string;
+  kicker: string;
+  body: string;
+  image: string;
+  dateline: string;
+}
+
+export interface NotificationPayload {
+  text: string;
+  duration: number;
+  icon?: string;
+}
+
+export type EventPayload = DialoguePayload | NewspaperPayload | NotificationPayload;
+
+export interface EventTrigger {
+  event: string;
+  character_id?: string;
+  patron_id?: string;
+  building_id?: string;
+}
+
+export interface EventDoc {
+  event_id: string;
+  event_type: EventType | "";
+  trigger: EventTrigger;
+  enabled_if: string;
+  payload: EventPayload | Record<string, never>;
 }
 
 export interface Manifest {

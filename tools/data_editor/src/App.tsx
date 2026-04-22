@@ -3,12 +3,15 @@ import { useApp, type Tab } from "./store";
 import { supportsFileSystemAccess } from "./fs/fsaRepo";
 import { CharactersTab } from "./tabs/CharactersTab";
 import { PatronsTab } from "./tabs/PatronsTab";
+import { EventsTab } from "./tabs/EventsTab";
+import { BuildingsTab } from "./tabs/BuildingsTab";
+import { ValidatePanel } from "./components/ValidatePanel";
 
 const TABS: { id: Tab; label: string; enabled: boolean }[] = [
   { id: "characters", label: "Characters", enabled: true },
   { id: "patrons", label: "Patrons", enabled: true },
-  { id: "events", label: "Events", enabled: false },
-  { id: "buildings", label: "Buildings", enabled: false },
+  { id: "events", label: "Events", enabled: true },
+  { id: "buildings", label: "Buildings", enabled: true },
 ];
 
 export default function App() {
@@ -73,6 +76,7 @@ export default function App() {
             ? `${repo.kind === "fsa" ? "Repo" : "Manifest"}: ${repo.description} · ${manifest.exported_at} · ${manifest.characters.length}c / ${manifest.patrons.length}p / ${manifest.buildings.length}b / ${manifest.events.length}e`
             : "No manifest loaded"}
         </div>
+        <ValidatePanel />
         <button onClick={onReloadClick}>
           {repo.supportsAutoReload() ? "Reload Manifest" : "Re-upload Manifest"}
         </button>
@@ -106,6 +110,10 @@ export default function App() {
         <CharactersTab />
       ) : activeTab === "patrons" ? (
         <PatronsTab />
+      ) : activeTab === "events" ? (
+        <EventsTab />
+      ) : activeTab === "buildings" ? (
+        <BuildingsTab />
       ) : (
         <div className="empty">Tab not yet implemented.</div>
       )}

@@ -120,4 +120,11 @@ export class FsaRepo implements Repo {
   async writeJson(path: string[], contents: string): Promise<void> {
     await writeText(this.handle, path, contents);
   }
+
+  async readBlob(path: string[]): Promise<Blob> {
+    const filename = path[path.length - 1];
+    const dir = await getDir(this.handle, path.slice(0, -1));
+    const file = await dir.getFileHandle(filename);
+    return file.getFile();
+  }
 }

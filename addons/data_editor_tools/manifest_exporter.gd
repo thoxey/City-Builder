@@ -126,6 +126,9 @@ func _scan_buildings() -> Array:
 			"character_id": "",
 			"bucket":       "",
 			"tier":         0,
+			# Full building body so the SPA can round-trip edits without a
+			# second read — mirrors the events[].body embedding.
+			"body":         d,
 		}
 		for p in d.get("profiles", []):
 			var t := String(p.get("type", ""))
@@ -158,6 +161,10 @@ func _scan_events() -> Array:
 			"enabled_if":           String(d.get("enabled_if", "")),
 			"category":             _category_from_path(path),
 			"_path":                path,
+			# Full event body so the SPA can open any event without a second
+			# disk round-trip — critical for the download-mode fallback where
+			# the user can't read arbitrary paths after uploading the manifest.
+			"body":                 d,
 		})
 	out.sort_custom(func(a, b): return a["event_id"] < b["event_id"])
 	return out
