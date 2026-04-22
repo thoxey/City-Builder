@@ -33,6 +33,7 @@ const PLUGINS: Array[GDScript] = [
 	preload("res://plugins/dialogue/dialogue_plugin.gd"),
 	preload("res://plugins/newspaper/newspaper_plugin.gd"),
 	preload("res://plugins/notification/notification_plugin.gd"),
+	preload("res://plugins/dashboard/dashboard_plugin.gd"),
 	preload("res://plugins/quest_debug/quest_debug_plugin.gd"),
 	preload("res://plugins/example/example_plugin.gd"),
 ]

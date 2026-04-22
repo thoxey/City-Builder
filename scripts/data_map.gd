@@ -30,3 +30,7 @@ class_name DataMap
 ## How many times each event_id has fired (life-of-save). Read by the
 ## `count.<event_id> >= N` DSL token. Bumped by EventSystem on dispatch.
 @export var event_counts: Dictionary = {}
+
+## Quest-tracker sidebar collapsed state. Persists across saves so the
+## player's preferred layout sticks. Default visible.
+@export var dashboard_collapsed: bool = false
