@@ -37,6 +37,9 @@ const TRIGGER_SIGNALS := {
 	"character_want_revealed":    "character_id",
 	"character_satisfied":        "character_id",
 	"character_state_changed":    "character_id",
+	"demand_fulfilled_changed":   "bucket_type_id",
+	"demand_total_changed":       "bucket_type_id",
+	"demand_unserved_changed":    "bucket_type_id",
 	"patron_landmark_ready":      "patron_id",
 	"patron_landmark_completed":  "patron_id",
 	"unique_placed":              "building_id",
@@ -212,6 +215,12 @@ func _connect_triggers() -> void:
 		GameEvents.unique_placed.connect(_on_unique_placed)
 	if not GameEvents.buildable_area_expanded.is_connected(_on_buildable_area_expanded):
 		GameEvents.buildable_area_expanded.connect(_on_buildable_area_expanded)
+	if not GameEvents.demand_fulfilled_changed.is_connected(_on_demand_fulfilled_changed):
+		GameEvents.demand_fulfilled_changed.connect(_on_demand_fulfilled_changed)
+	if not GameEvents.demand_total_changed.is_connected(_on_demand_total_changed):
+		GameEvents.demand_total_changed.connect(_on_demand_total_changed)
+	if not GameEvents.demand_unserved_changed.is_connected(_on_demand_unserved_changed):
+		GameEvents.demand_unserved_changed.connect(_on_demand_unserved_changed)
 
 func _on_character_arrived(cid: String) -> void:
 	_dispatch("character_arrived", {"character_id": cid})
@@ -236,6 +245,15 @@ func _on_unique_placed(bid: String) -> void:
 
 func _on_buildable_area_expanded(cells: Array) -> void:
 	_dispatch("buildable_area_expanded", {"cells": cells})
+
+func _on_demand_fulfilled_changed(bucket_type_id: String, value: float) -> void:
+	_dispatch("demand_fulfilled_changed", {"bucket_type_id": bucket_type_id, "value": value})
+
+func _on_demand_total_changed(bucket_type_id: String, value: float) -> void:
+	_dispatch("demand_total_changed", {"bucket_type_id": bucket_type_id, "value": value})
+
+func _on_demand_unserved_changed(bucket_type_id: String, value: float) -> void:
+	_dispatch("demand_unserved_changed", {"bucket_type_id": bucket_type_id, "value": value})
 
 # ── Dispatch ──────────────────────────────────────────────────────────────────
 
@@ -282,7 +300,7 @@ func _matches_trigger_filter(rec: Dictionary, payload_ctx: Dictionary) -> bool:
 	var trig: Dictionary = rec.get("trigger", {})
 	# Empty-string filter fields in the JSON mean "match anything". Non-empty
 	# fields must match the payload exactly on the relevant primary key.
-	for key in ["character_id", "patron_id", "building_id"]:
+	for key in ["character_id", "patron_id", "building_id", "bucket_type_id"]:
 		var want := String(trig.get(key, ""))
 		if want.is_empty():
 			continue
@@ -349,7 +367,10 @@ func _build_condition_ctx() -> Dictionary:
 		"cash": 0,
 		"flags": {},
 		"placed_ids": {},
-		"demand": {},
+		"demand": {},      # legacy alias for "unserved" — kept so old gates still parse
+		"total": {},
+		"fulfilled": {},
+		"unserved": {},
 		"character_states": {},
 		"event_counts": {},
 	}
@@ -366,9 +387,13 @@ func _build_condition_ctx() -> Dictionary:
 				var bid := String(summary.get("building_id", ""))
 				if not bid.is_empty():
 					ctx["placed_ids"][bid] = true
-	if _demand and _demand.has_method("get_value"):
+	if _demand and _demand.has_method("get_unserved"):
 		for b in ["desirability", "housing_demand", "industrial_demand", "commercial_demand"]:
-			ctx["demand"][b] = _demand.get_value(b)
+			var unserved: float = _demand.get_unserved(b)
+			ctx["unserved"][b]  = unserved
+			ctx["demand"][b]    = unserved  # back-compat alias
+			ctx["total"][b]     = _demand.get_total(b)
+			ctx["fulfilled"][b] = _demand.get_fulfilled(b)
 	return ctx
 
 # ── Public accessors ──────────────────────────────────────────────────────────

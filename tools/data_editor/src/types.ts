@@ -68,18 +68,10 @@ export type ProfileType =
   | "BuildingProfile"
   | "UniqueProfile"
   | "GenericTierProfile"
-  | "PoliceMetadata"
-  | "MedicalMetadata"
   | "RoadMetadata";
 
 export interface BuildingMetadataProfile {
   type: "BuildingMetadata";
-}
-export interface PoliceMetadataProfile {
-  type: "PoliceMetadata";
-}
-export interface MedicalMetadataProfile {
-  type: "MedicalMetadata";
 }
 
 export interface BuildingProfile {
@@ -117,8 +109,6 @@ export interface RoadMetadataProfile {
 
 export type Profile =
   | BuildingMetadataProfile
-  | PoliceMetadataProfile
-  | MedicalMetadataProfile
   | BuildingProfile
   | UniqueProfile
   | GenericTierProfile
@@ -206,11 +196,18 @@ export interface NotificationPayload {
 
 export type EventPayload = DialoguePayload | NewspaperPayload | NotificationPayload;
 
+export type BucketTypeId =
+  | "housing_demand"
+  | "industrial_demand"
+  | "commercial_demand"
+  | "desirability";
+
 export interface EventTrigger {
   event: string;
   character_id?: string;
   patron_id?: string;
   building_id?: string;
+  bucket_type_id?: string;
 }
 
 export interface EventDoc {
@@ -226,6 +223,7 @@ export interface Manifest {
   event_types: EventType[];
   triggers: string[];
   buckets: Bucket[];
+  bucket_type_ids: BucketTypeId[];
   categories: BuildingCategory[];
   character_states: CharacterState[];
   patron_states: PatronState[];

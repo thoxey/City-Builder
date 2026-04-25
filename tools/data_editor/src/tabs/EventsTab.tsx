@@ -17,6 +17,7 @@ import { NodeForm } from "../events/NodeForm";
 import { NewspaperForm } from "../events/NewspaperForm";
 import { NotificationForm } from "../events/NotificationForm";
 import { FlagSuggestions } from "../events/EffectEditors";
+import { TriggerEditor } from "../events/TriggerEditor";
 
 type NewMenu = null | "dialogue" | "newspaper" | "notification";
 
@@ -210,72 +211,6 @@ export function EventsTab() {
               ))}
             </select>
 
-            <label>trigger.event</label>
-            <select
-              value={doc.trigger.event}
-              onChange={(e) =>
-                setDoc({ ...doc, trigger: { ...doc.trigger, event: e.target.value } })
-              }
-            >
-              {manifest.triggers.map((t) => (
-                <option key={t} value={t}>{t}</option>
-              ))}
-            </select>
-
-            <label>trigger.character_id</label>
-            <select
-              value={doc.trigger.character_id ?? ""}
-              onChange={(e) =>
-                setDoc({
-                  ...doc,
-                  trigger: { ...doc.trigger, character_id: e.target.value || undefined },
-                })
-              }
-            >
-              <option value="">—</option>
-              {manifest.characters.map((c) => (
-                <option key={c.character_id} value={c.character_id}>
-                  {c.display_name || c.character_id}
-                </option>
-              ))}
-            </select>
-
-            <label>trigger.patron_id</label>
-            <select
-              value={doc.trigger.patron_id ?? ""}
-              onChange={(e) =>
-                setDoc({
-                  ...doc,
-                  trigger: { ...doc.trigger, patron_id: e.target.value || undefined },
-                })
-              }
-            >
-              <option value="">—</option>
-              {manifest.patrons.map((p) => (
-                <option key={p.patron_id} value={p.patron_id}>
-                  {p.display_name || p.patron_id}
-                </option>
-              ))}
-            </select>
-
-            <label>trigger.building_id</label>
-            <select
-              value={doc.trigger.building_id ?? ""}
-              onChange={(e) =>
-                setDoc({
-                  ...doc,
-                  trigger: { ...doc.trigger, building_id: e.target.value || undefined },
-                })
-              }
-            >
-              <option value="">—</option>
-              {manifest.buildings.map((b) => (
-                <option key={b.building_id} value={b.building_id}>
-                  {b.display_name || b.building_id}
-                </option>
-              ))}
-            </select>
-
             <label>enabled_if</label>
             <div>
               <input
@@ -285,12 +220,20 @@ export function EventsTab() {
               />
               <div className="inline-note">
                 DSL: <code>cash</code>, <code>flag.&lt;name&gt;</code>,{" "}
-                <code>has_placed:&lt;id&gt;</code>, <code>demand.&lt;bucket&gt;</code>,{" "}
+                <code>has_placed:&lt;id&gt;</code>,{" "}
+                <code>total.&lt;bucket&gt;</code>, <code>fulfilled.&lt;bucket&gt;</code>,{" "}
+                <code>unserved.&lt;bucket&gt;</code> (<code>demand.&lt;bucket&gt;</code> aliases unserved),{" "}
                 <code>state.&lt;cid&gt;</code>, <code>count.&lt;event_id&gt;</code>. Combine with{" "}
                 <code>&amp;&amp;</code> <code>||</code> and parens.
               </div>
             </div>
           </div>
+
+          <TriggerEditor
+            trigger={doc.trigger}
+            manifest={manifest}
+            onChange={(next) => setDoc({ ...doc, trigger: next })}
+          />
         </div>
 
         <div className="events-payload">
