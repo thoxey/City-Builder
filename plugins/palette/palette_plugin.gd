@@ -5,7 +5,7 @@ extends PluginBase
 ## Collapses the raw catalog into cyclable entries:
 ##   - Structures sharing a pool_id (e.g. residential_t1 pool of small_a + small_d)
 ##     merge into one entry whose random pick is rolled at placement time.
-##   - Structures without a pool_id (police, pub, nature_patch, …) stand alone.
+##   - Structures without a pool_id (pub, nature_patch, …) stand alone.
 ##   - Road variants without an explicit pool_id are hidden (the auto-tiler
 ##     sources them internally; only the canonical "road" entry is user-facing).
 ##
@@ -71,7 +71,7 @@ func _plugin_ready() -> void:
 	_refresh()
 
 	GameEvents.cash_changed.connect(func(_a, _d): _refresh())
-	GameEvents.demand_changed.connect(func(_bid, _v): _refresh())
+	GameEvents.demand_unserved_changed.connect(func(_bid, _v): _refresh())
 	GameEvents.structure_placed.connect(func(_p, _i, _o): _refresh())
 	GameEvents.structure_demolished.connect(func(_p): _refresh())
 	GameEvents.map_loaded.connect(func(_m): _refresh())

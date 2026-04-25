@@ -5,19 +5,21 @@ class_name DesirabilityBucket
 ## and amenity coverage. Acts as a rate multiplier on housing growth; it
 ## never subtracts from other buckets.
 ##
+## Non-monotonic: desirability follows live conditions and can drop.
+## Fulfilled stays at 0 (desirability is a rate, not a spendable bucket),
+## so unserved == total_demand.
+##
 ## Inputs read from context:
 ##   satisfaction_score: float  (0..1)
 ##   amenity_count:      int
-##
-## Weights and the amenity-saturation point are set by DemandPlugin so all
-## balance levers live in one place.
 
 var weight_satisfaction: float = 0.6
 var weight_amenity: float = 0.4
-var amenity_saturation: float = 10.0  # amenity count that saturates the amenity term
+var amenity_saturation: float = 10.0
 
 func _init() -> void:
-	super("desirability", 100.0)  # 0..1 scaled × 100 when published via CityStats
+	super("desirability", 100.0)
+	monotonic = false  # desirability tracks live state, not accumulated need
 
 func _compute(context: Dictionary) -> float:
 	var sat: float = context.get("satisfaction_score", 1.0)

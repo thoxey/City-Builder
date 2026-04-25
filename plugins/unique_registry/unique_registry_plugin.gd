@@ -40,7 +40,7 @@ func _plugin_ready() -> void:
 
 	GameEvents.structure_placed.connect(_on_structure_placed)
 	GameEvents.structure_demolished.connect(_on_structure_demolished)
-	GameEvents.demand_changed.connect(_on_demand_changed)
+	GameEvents.demand_unserved_changed.connect(_on_demand_changed)
 	GameEvents.map_loaded.connect(_on_map_loaded)
 
 	var chains := 0

@@ -28,12 +28,12 @@ func before_each() -> void:
 
 func after_each() -> void:
 	if _reg and is_instance_valid(_reg):
-		for signal_name in ["structure_placed", "structure_demolished", "demand_changed", "map_loaded"]:
+		for signal_name in ["structure_placed", "structure_demolished", "demand_unserved_changed", "map_loaded"]:
 			var callable: Callable
 			match signal_name:
 				"structure_placed":     callable = _reg._on_structure_placed
 				"structure_demolished": callable = _reg._on_structure_demolished
-				"demand_changed":       callable = _reg._on_demand_changed
+				"demand_unserved_changed":       callable = _reg._on_demand_changed
 				"map_loaded":           callable = _reg._on_map_loaded
 			if GameEvents[signal_name].is_connected(callable):
 				GameEvents[signal_name].disconnect(callable)
