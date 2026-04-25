@@ -54,7 +54,7 @@ func _build_ui() -> void:
 	header.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	hbox.add_child(header)
 
-	for pid in ["aristocrat", "businessman", "farmer"]:
+	for pid in ["aristocrat"]:
 		hbox.add_child(VSeparator.new())
 		hbox.add_child(_make_label(pid.capitalize()))
 		hbox.add_child(_make_button("Satisfy", _make_satisfy_handler(pid)))

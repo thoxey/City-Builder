@@ -95,8 +95,6 @@ function validateProfile(
       if (p.road_type < 0) errors.push("RoadMetadata road_type must be ≥ 0");
       return;
     case "BuildingMetadata":
-    case "PoliceMetadata":
-    case "MedicalMetadata":
       return;
   }
 }

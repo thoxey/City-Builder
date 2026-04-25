@@ -23,8 +23,6 @@ export function cloneBuilding(doc: BuildingDoc): BuildingDoc {
 export function blankProfile(type: ProfileType): Profile {
   switch (type) {
     case "BuildingMetadata":
-    case "PoliceMetadata":
-    case "MedicalMetadata":
       return { type };
     case "BuildingProfile":
       return {
@@ -63,7 +61,5 @@ export const ALL_PROFILE_TYPES: ProfileType[] = [
   "BuildingProfile",
   "UniqueProfile",
   "GenericTierProfile",
-  "PoliceMetadata",
-  "MedicalMetadata",
   "RoadMetadata",
 ];

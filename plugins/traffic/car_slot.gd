@@ -4,7 +4,7 @@ extends RefCounted
 ## Lightweight data container for one active car journey.
 ## No scene tree presence — CarManager owns the MultiMesh and drives this each frame.
 
-enum CarType { CIVILIAN = 0, POLICE = 1, AMBULANCE = 2 }
+enum CarType { CIVILIAN = 0 }
 
 var journey_id:  int   = -1
 var car_type:    int   = CarType.CIVILIAN

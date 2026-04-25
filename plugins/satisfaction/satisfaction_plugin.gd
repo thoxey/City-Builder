@@ -20,8 +20,6 @@ func inject(deps: Dictionary) -> void:
 
 # ── Weights — adjust these as balance levers ──────────────────────────────────
 
-var weight_safety: float = 1.0
-var weight_health: float = 1.0
 var weight_budget: float = 1.0
 
 # ── State ─────────────────────────────────────────────────────────────────────
@@ -40,8 +38,6 @@ func _plugin_ready() -> void:
 
 func _on_stats_ticked(_supply: Dictionary, _demand: Dictionary, satisfaction: Dictionary) -> void:
 	var weights: Dictionary = {
-		"safety": weight_safety,
-		"health": weight_health,
 		"budget": weight_budget,
 	}
 
@@ -57,9 +53,7 @@ func _on_stats_ticked(_supply: Dictionary, _demand: Dictionary, satisfaction: Di
 	GameEvents.satisfaction_changed.emit(_score)
 
 	if OS.is_debug_build():
-		print("[Satisfaction] score=%.2f  (safety=%.2f health=%.2f budget=%.2f)" % [
+		print("[Satisfaction] score=%.2f  (budget=%.2f)" % [
 			_score,
-			satisfaction.get("safety", 1.0),
-			satisfaction.get("health", 1.0),
 			satisfaction.get("budget", 1.0),
 		])

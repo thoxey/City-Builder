@@ -34,15 +34,6 @@ const _TYPE_DEFS: Dictionary = {
 		"mesh_path": "res://models/Meshy_AI_Car_0403170715/Meshy_AI_Car_0403170715_texture.glb",
 		"scale": 0.15, "rot_y": 270.0, "speed": 3.0, "max": 256
 	},
-	CarSlot.CarType.POLICE: {
-		"mesh_path": "res://models/Meshy_AI_Mini_Police_Cruiser_0403205957/Meshy_AI_Mini_Police_Cruiser_0403205957_texture.glb",
-		"scale": 0.15, "rot_y": 270.0, "speed": 4.0, "max": 32
-	},
-	CarSlot.CarType.AMBULANCE: {
-		# TODO: swap in a dedicated ambulance model
-		"mesh_path": "res://models/Meshy_AI_Mini_Police_Cruiser_0403205957/Meshy_AI_Mini_Police_Cruiser_0403205957_texture.glb",
-		"scale": 0.15, "rot_y": 270.0, "speed": 5.0, "max": 32
-	},
 }
 
 # ── Per-type pool ──────────────────────────────────────────────────────────────

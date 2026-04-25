@@ -4,8 +4,6 @@ extends PluginBase
 ##
 ## Per building, registers with CityStats:
 ##   • _PopSource   ("population") — supply scaled by overall satisfaction score
-##   • _SafetySink  ("safety")     — demands safety coverage proportional to capacity
-##   • _HealthSink  ("health")     — demands health coverage proportional to capacity
 ##
 ## The satisfaction feedback is one-tick delayed (reads last tick's score), which
 ## is intentional — it creates a stable feedback loop rather than oscillation.
@@ -23,8 +21,6 @@ func inject(deps: Dictionary) -> void:
 # ── State — keyed by anchor Vector2i ─────────────────────────────────────────
 
 var _pop_sources:  Dictionary = {}
-var _safety_sinks: Dictionary = {}
-var _health_sinks: Dictionary = {}
 
 # ── Lifecycle ─────────────────────────────────────────────────────────────────
 
@@ -47,11 +43,7 @@ func _on_demolished(pos: Vector3i) -> void:
 
 func _on_map_loaded(_map) -> void:
 	for a in _pop_sources:  _city_stats.unregister_source(_pop_sources[a])
-	for a in _safety_sinks: _city_stats.unregister_sink(_safety_sinks[a])
-	for a in _health_sinks: _city_stats.unregister_sink(_health_sinks[a])
 	_pop_sources.clear()
-	_safety_sinks.clear()
-	_health_sinks.clear()
 
 	for bid in GameState.building_registry:
 		var entry: Dictionary = GameState.building_registry[bid]
@@ -63,14 +55,8 @@ func _on_map_loaded(_map) -> void:
 
 func _register(anchor: Vector2i, capacity: int) -> void:
 	var pop_src  := _PopSource.new(capacity, _satisfaction)
-	var saf_sink := _SafetySink.new(capacity)
-	var hlt_sink := _HealthSink.new(capacity)
 	_pop_sources[anchor]  = pop_src
-	_safety_sinks[anchor] = saf_sink
-	_health_sinks[anchor] = hlt_sink
 	_city_stats.register_source(pop_src)
-	_city_stats.register_sink(saf_sink)
-	_city_stats.register_sink(hlt_sink)
 
 ## Total residential capacity summed across every placed residential building.
 func get_total_capacity() -> int:
@@ -89,12 +75,6 @@ func _unregister(anchor: Vector2i) -> void:
 	if _pop_sources.has(anchor):
 		_city_stats.unregister_source(_pop_sources[anchor])
 		_pop_sources.erase(anchor)
-	if _safety_sinks.has(anchor):
-		_city_stats.unregister_sink(_safety_sinks[anchor])
-		_safety_sinks.erase(anchor)
-	if _health_sinks.has(anchor):
-		_city_stats.unregister_sink(_health_sinks[anchor])
-		_health_sinks.erase(anchor)
 
 # ── Inner classes ─────────────────────────────────────────────────────────────
 
@@ -112,17 +92,3 @@ class _PopSource extends CityStatSource:
 	func tick(_hour: float) -> int:
 		var score: float = _satisfaction.get_score() if _satisfaction else 1.0
 		return int(capacity * score)
-
-## Safety demand — always active, proportional to residential headcount.
-class _SafetySink extends CityStatSink:
-	var capacity: int
-	func _init(cap: int) -> void: capacity = cap
-	func get_type_id() -> String: return "safety"
-	func tick(_hour: float) -> int: return capacity
-
-## Health demand — always active, proportional to residential headcount.
-class _HealthSink extends CityStatSink:
-	var capacity: int
-	func _init(cap: int) -> void: capacity = cap
-	func get_type_id() -> String: return "health"
-	func tick(_hour: float) -> int: return capacity

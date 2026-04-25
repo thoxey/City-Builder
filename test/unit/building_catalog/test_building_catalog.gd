@@ -71,8 +71,6 @@ func test_profile_type_dispatch() -> void:
 			"active_start": 9.0,
 			"active_end": 17.0,
 		},
-		{"type": "PoliceMetadata"},
-		{"type": "MedicalMetadata"},
 		{
 			"type": "RoadMetadata",
 			"road_type": 1,
@@ -89,11 +87,9 @@ func test_profile_type_dispatch() -> void:
 
 	var s: Structure = _plugin.get_by_id("mixed")
 	assert_not_null(s, "structure should have loaded")
-	assert_eq(s.metadata.size(), 5, "expected 5 profile entries")
+	assert_eq(s.metadata.size(), 3, "expected 3 profile entries")
 	assert_true(s.find_metadata(BuildingMetadata) != null, "BuildingMetadata missing")
 	assert_true(s.find_metadata(BuildingProfile) != null, "BuildingProfile missing")
-	assert_true(s.find_metadata(PoliceMetadata)  != null, "PoliceMetadata missing")
-	assert_true(s.find_metadata(MedicalMetadata) != null, "MedicalMetadata missing")
 	var road: RoadMetadata = s.find_metadata(RoadMetadata) as RoadMetadata
 	assert_not_null(road, "RoadMetadata missing")
 	assert_eq(road.road_type,   1,  "road_type not parsed")

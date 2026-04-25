@@ -307,10 +307,6 @@ func _instantiate_profile(profile: Dictionary, bid: String) -> StructureMetadata
 			p.active_start = float(profile.get("active_start", 8.0))
 			p.active_end = float(profile.get("active_end", 18.0))
 			return p
-		"PoliceMetadata":
-			return PoliceMetadata.new()
-		"MedicalMetadata":
-			return MedicalMetadata.new()
 		"RoadMetadata":
 			var r := RoadMetadata.new()
 			r.road_type = int(profile.get("road_type", 0))

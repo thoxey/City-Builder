@@ -4,8 +4,7 @@ extends PluginBase
 ##
 ## Each in-game hour:
 ##   tax_income      = industrial_output × tax_rate
-##   service_overhead = active police + medical stations × per-station rate
-##   cash           += tax_income − service_overhead   (clamped at 0)
+##   cash           += tax_income   (clamped at 0)
 ##
 ## Decoratives (nature category) consume cash on placement via `try_spend_cash`.
 ## Growth buildings (residential / workplace / commercial) stay demand-bank gated;
@@ -29,12 +28,6 @@ func inject(deps: Dictionary) -> void:
 @export_group("Tax")
 ## Cash earned per unit of industrial output per in-game hour.
 @export var tax_rate: int = 5
-
-@export_group("Service overhead")
-## Cash drawn per active police station per hour.
-@export var overhead_per_police: int = 20
-## Cash drawn per active medical facility per hour.
-@export var overhead_per_medical: int = 30
 
 # ── State ─────────────────────────────────────────────────────────────────────
 
@@ -71,29 +64,12 @@ func _on_hour(_hour: float) -> void:
 	# CityStats already ran (topo order) so _last_supply is fresh for this hour.
 	var output: int = int(_last_supply.get("industrial_output", 0))
 	var income: int = output * tax_rate
-	var overhead: int = _compute_overhead()
-	var delta: int = income - overhead
 
-	_apply_delta(delta)
+	_apply_delta(income)
 
-	print("[Economy] tick: income=%d overhead=%d delta=%+d cash=%d" % [
-		income, overhead, delta, GameState.map.cash
+	print("[Economy] tick: income=%d cash=%d" % [
+		income, GameState.map.cash
 	])
-
-func _compute_overhead() -> int:
-	var police_count := 0
-	var medical_count := 0
-	for bid in GameState.building_registry:
-		var entry: Dictionary = GameState.building_registry[bid]
-		var sid: int = entry.get("structure", -1)
-		if sid < 0 or sid >= GameState.structures.size():
-			continue
-		var s: Structure = GameState.structures[sid]
-		if s.find_metadata(PoliceMetadata) != null:
-			police_count += 1
-		elif s.find_metadata(MedicalMetadata) != null:
-			medical_count += 1
-	return police_count * overhead_per_police + medical_count * overhead_per_medical
 
 # ── Spending ──────────────────────────────────────────────────────────────────
 
