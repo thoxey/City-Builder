@@ -100,37 +100,11 @@ func test_tick_credits_tax_income_from_industrial_output() -> void:
 	assert_eq(GameState.map.cash, 60, "12 output × 5 tax_rate = 60")
 	assert_signal_emitted(GameEvents, "cash_changed")
 
-func test_tick_subtracts_service_overhead() -> void:
-	GameState.map.cash = 1000
-	_economy.tax_rate = 0
-	_economy.overhead_per_police = 20
-	_economy.overhead_per_medical = 30
-
-	# Two police stations, one medical facility on the registry.
-	_structures_buf = [_make_police_structure(), _make_medical_structure()]
-	GameState.structures = _structures_buf
-	GameState.building_registry = {
-		1: {"structure": 0},
-		2: {"structure": 0},
-		3: {"structure": 1},
-	}
-
-	_economy._on_stats_ticked({"industrial_output": 0}, {}, {})
-	_economy._on_hour(0.0)
-
-	# overhead = 2×20 + 1×30 = 70
-	assert_eq(GameState.map.cash, 930, "tax 0 - overhead 70 = -70 from 1000")
-
 func test_cash_clamped_at_zero() -> void:
+	# Negative cash is impossible via tax income alone, so emulate a debit by
+	# stuffing a negative-income hour through the public surface.
 	GameState.map.cash = 10
-	_economy.tax_rate = 0
-	_economy.overhead_per_medical = 50
-	_structures_buf = [_make_medical_structure()]
-	GameState.structures = _structures_buf
-	GameState.building_registry = {1: {"structure": 0}}
-
-	_economy._on_stats_ticked({"industrial_output": 0}, {}, {})
-	_economy._on_hour(0.0)
+	_economy._apply_delta(-100)
 
 	assert_eq(GameState.map.cash, 0, "negative deltas can't push cash below zero")
 
@@ -165,18 +139,6 @@ func _make_structure_with_cost(bid: String, cost: int) -> Structure:
 	_structures_buf.append(s)
 	GameState.structures = _structures_buf
 	_stub_catalog.summaries.append({"building_id": bid, "cash_cost": cost})
-	return s
-
-func _make_police_structure() -> Structure:
-	var s := Structure.new()
-	var meta: Array[StructureMetadata] = [PoliceMetadata.new()]
-	s.metadata = meta
-	return s
-
-func _make_medical_structure() -> Structure:
-	var s := Structure.new()
-	var meta: Array[StructureMetadata] = [MedicalMetadata.new()]
-	s.metadata = meta
 	return s
 
 ## Stand-in for the BuildingCatalog plugin — only get_summary() is exercised.

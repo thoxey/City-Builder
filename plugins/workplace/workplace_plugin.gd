@@ -9,8 +9,7 @@ extends PluginBase
 ##
 ## Industrial output is the raw "what factories produced" number that the
 ## Demand plugin's commercial bucket tracks, and the Phase 1b tax system will
-## multiply by a tax rate to yield cash income. Budget stays as a separate
-## CityStats stream so police/medical funding keeps working unchanged.
+## multiply by a tax rate to yield cash income.
 
 const OUTPUT_PER_WORKER := 1  # output units produced per filled worker slot per hour
 const BUDGET_PER_WORKER := 2  # budget units earned per filled worker slot per hour

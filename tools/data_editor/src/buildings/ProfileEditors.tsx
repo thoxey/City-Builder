@@ -75,8 +75,6 @@ interface FormProps {
 function ProfileForm({ profile, manifest, selfId, onChange }: FormProps) {
   switch (profile.type) {
     case "BuildingMetadata":
-    case "PoliceMetadata":
-    case "MedicalMetadata":
       return <div className="inline-note">No fields — marker profile.</div>;
     case "BuildingProfile":
       return <BuildingProfileForm p={profile} onChange={onChange} />;

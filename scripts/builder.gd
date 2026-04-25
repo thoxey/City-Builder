@@ -550,15 +550,13 @@ func _is_road_structure(struct_idx: int) -> bool:
 	return structures[struct_idx].find_metadata(RoadMetadata) != null
 
 ## Returns true for proper buildings — those that warrant a confirmation before
-## being demolished.  Roads and decorative tiles (no BuildingProfile/police/medical
-## metadata) return false and are overwritten silently.
+## being demolished.  Roads and decorative tiles (no BuildingProfile metadata)
+## return false and are overwritten silently.
 func _is_building_structure(struct_idx: int) -> bool:
 	if struct_idx < 0 or struct_idx >= structures.size():
 		return false
 	var s := structures[struct_idx]
-	return s.find_metadata(BuildingProfile) != null \
-		or s.find_metadata(PoliceMetadata) != null \
-		or s.find_metadata(MedicalMetadata) != null
+	return s.find_metadata(BuildingProfile) != null
 
 func _road_neighbor_mask(anchor: Vector2i) -> int:
 	var dirs := [Vector2i(0,-1), Vector2i(1,0), Vector2i(0,1), Vector2i(-1,0)]

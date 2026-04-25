@@ -43,6 +43,10 @@ export function validateEvent(
   if (doc.trigger.building_id &&
       !manifest.buildings.some((b) => b.building_id === doc.trigger.building_id))
     errors.push(`trigger.building_id "${doc.trigger.building_id}" not in manifest`);
+  if (doc.trigger.bucket_type_id &&
+      manifest.bucket_type_ids &&
+      !manifest.bucket_type_ids.includes(doc.trigger.bucket_type_id as never))
+    errors.push(`trigger.bucket_type_id "${doc.trigger.bucket_type_id}" not in manifest`);
 
   if (doc.event_type === "dialogue") {
     validateDialogue(doc.payload as DialoguePayload, manifest, errors, warnings);

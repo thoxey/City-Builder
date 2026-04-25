@@ -48,7 +48,7 @@ func _plugin_ready() -> void:
 	_load_defs(DATA_DIR)
 	_seed_initial_states()
 
-	GameEvents.demand_changed.connect(_on_demand_changed)
+	GameEvents.demand_unserved_changed.connect(_on_demand_changed)
 	GameEvents.unique_placed.connect(_on_unique_placed)
 	GameEvents.map_loaded.connect(_on_map_loaded)
 

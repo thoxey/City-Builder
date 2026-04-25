@@ -18,8 +18,6 @@ const PLUGINS: Array[GDScript] = [
 	preload("res://plugins/residential/residential_plugin.gd"),
 	preload("res://plugins/workplace/workplace_plugin.gd"),
 	preload("res://plugins/commercial/commercial_plugin.gd"),
-	preload("res://plugins/police/police_plugin.gd"),
-	preload("res://plugins/medical/medical_plugin.gd"),
 	preload("res://plugins/demand/demand_plugin.gd"),
 	preload("res://plugins/economy/economy_plugin.gd"),
 	preload("res://plugins/unique_registry/unique_registry_plugin.gd"),

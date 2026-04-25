@@ -14,7 +14,10 @@ class_name EventCondition
 ##   cash <= N                (also > < ==)
 ##   flag.<name>              — true iff flags[name] truthy
 ##   has_placed:<building_id> — true iff a structure_placed of that id in the registry
-##   demand.<bucket> >= N     — also > < <=
+##   total.<bucket> >= N      — accumulated demand (monotonic)
+##   fulfilled.<bucket> >= N  — placed capacity in that bucket
+##   unserved.<bucket> >= N   — total - fulfilled (spendable bank)
+##   demand.<bucket> >= N     — alias for unserved.<bucket> (back-compat)
 ##   state.<character_id> == "ARRIVED" | "WANT_REVEALED" | ...
 ##   count.<event_id> >= N
 ##
@@ -26,7 +29,10 @@ class_name EventCondition
 ##     "cash": int,
 ##     "flags": Dictionary,                 # flag_name -> bool
 ##     "placed_ids": Dictionary,            # building_id -> bool / count (truthy check)
-##     "demand": Dictionary,                # bucket_id -> float
+##     "demand": Dictionary,                # bucket_id -> unserved (alias)
+##     "total": Dictionary,                 # bucket_id -> float
+##     "fulfilled": Dictionary,             # bucket_id -> float
+##     "unserved": Dictionary,              # bucket_id -> float
 ##     "character_states": Dictionary,      # character_id -> int
 ##     "event_counts": Dictionary,          # event_id -> int
 ##   }
@@ -129,15 +135,18 @@ static func _eval_leaf(raw: String, ctx: Dictionary) -> bool:
 		var rhs := tok.substr(5).strip_edges()
 		return _eval_numeric_cmp(int(ctx.get("cash", 0)), rhs)
 
-	# demand.<bucket> <op> N
-	if tok.begins_with("demand."):
-		var rest := tok.substr(7)
+	# demand.<bucket> / total.<bucket> / fulfilled.<bucket> / unserved.<bucket>
+	for prefix: String in ["demand.", "total.", "fulfilled.", "unserved."]:
+		if not tok.begins_with(prefix):
+			continue
+		var rest := tok.substr(prefix.length())
 		var sp := _find_first_op_boundary(rest)
 		if sp < 0:
 			return _warn_and_false(tok)
 		var bucket := rest.substr(0, sp).strip_edges()
 		var cmp := rest.substr(sp).strip_edges()
-		var val: float = float(ctx.get("demand", {}).get(bucket, 0.0))
+		var ctx_key: String = prefix.trim_suffix(".")
+		var val: float = float(ctx.get(ctx_key, {}).get(bucket, 0.0))
 		return _eval_numeric_cmp_f(val, cmp)
 
 	# count.<event_id> <op> N

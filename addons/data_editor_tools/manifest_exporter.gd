@@ -22,6 +22,9 @@ const TRIGGERS := [
 	"character_want_revealed",
 	"character_satisfied",
 	"character_state_changed",
+	"demand_fulfilled_changed",
+	"demand_total_changed",
+	"demand_unserved_changed",
 	"patron_landmark_ready",
 	"patron_landmark_completed",
 	"unique_placed",
@@ -31,6 +34,10 @@ const TRIGGERS := [
 
 const EVENT_TYPES := ["dialogue", "newspaper", "notification"]
 const BUCKETS := ["residential", "commercial", "industrial"]
+## Bucket type IDs as referenced by the demand system + trigger filters.
+## Distinct from BUCKETS (which are building-side categories) — kept as its
+## own list so the SPA's bucket-trigger picker has the canonical names.
+const BUCKET_TYPE_IDS := ["housing_demand", "industrial_demand", "commercial_demand", "desirability"]
 const CATEGORIES := ["road", "nature", "generic", "unique"]
 const CHARACTER_STATES := ["NOT_ARRIVED", "ARRIVED", "WANT_REVEALED", "SATISFIED", "CONTRIBUTES_TO_LANDMARK"]
 const PATRON_STATES := ["LOCKED", "LANDMARK_AVAILABLE", "COMPLETED"]
@@ -48,6 +55,7 @@ func build_manifest() -> Dictionary:
 		"event_types": EVENT_TYPES,
 		"triggers": TRIGGERS,
 		"buckets": BUCKETS,
+		"bucket_type_ids": BUCKET_TYPE_IDS,
 		"categories": CATEGORIES,
 		"character_states": CHARACTER_STATES,
 		"patron_states": PATRON_STATES,

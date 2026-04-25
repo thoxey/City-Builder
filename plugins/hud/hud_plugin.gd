@@ -2,13 +2,16 @@ extends PluginBase
 
 ## City stats HUD — top-centre panel.
 ##
-## Displays: overall satisfaction %, per-resource scores (safety, health),
-## budget balance (surplus or deficit per in-game hour), industrial output
-## (raw production from filled workplaces), and the four demand buckets
-## (desirability, housing, industrial, commercial).
+## Displays: overall satisfaction %, budget balance (surplus or deficit per
+## in-game hour), industrial output (raw production from filled workplaces),
+## and the four demand buckets (desirability, housing, industrial, commercial).
 ##
 ## Reads from CityStats.stats_ticked, GameEvents.satisfaction_changed, and
-## GameEvents.demand_changed. Self-contained: creates all UI nodes at runtime.
+## the three demand_*_changed signals. Self-contained: creates all UI nodes at runtime.
+##
+## Per spendable bucket: "fulfilled / total (banked)" so the player sees both
+## current placed capacity and the ever-asked-for ceiling. Desirability stays
+## as a single percent — non-monotonic, no fulfilled axis.
 
 func get_plugin_name() -> String: return "HUD"
 func get_dependencies() -> Array[String]: return ["CityStats", "Demand"]
@@ -23,8 +26,6 @@ func inject(deps: Dictionary) -> void:
 # ── UI refs ───────────────────────────────────────────────────────────────────
 
 var _satisfaction_label: Label
-var _safety_label:       Label
-var _health_label:       Label
 var _budget_label:       Label
 var _output_label:       Label
 var _cash_label:         Label
@@ -35,7 +36,11 @@ var _demand_labels: Dictionary = {}  # bucket_type_id -> Label
 func _plugin_ready() -> void:
 	_build_ui()
 	GameEvents.satisfaction_changed.connect(_on_satisfaction)
-	GameEvents.demand_changed.connect(_on_demand_changed)
+	# All three bucket signals route into the same refresh — the label shows
+	# fulfilled/total (banked), so any of the three moving requires a redraw.
+	GameEvents.demand_unserved_changed.connect(_on_bucket_changed)
+	GameEvents.demand_total_changed.connect(_on_bucket_changed)
+	GameEvents.demand_fulfilled_changed.connect(_on_bucket_changed)
 	GameEvents.cash_changed.connect(_on_cash_changed)
 	_city_stats.stats_ticked.connect(_on_stats_ticked)
 	# Seed the cash label with whatever is on the map right now — the Economy
@@ -65,8 +70,6 @@ func _build_ui() -> void:
 	panel.add_child(hbox)
 
 	_satisfaction_label = _make_label("★ ---%")
-	_safety_label       = _make_label("Safety: ---%")
-	_health_label       = _make_label("Health: ---%")
 	_budget_label       = _make_label("Budget: ---/hr")
 	_output_label       = _make_label("Output: 0/hr")
 	_cash_label         = _make_label("$0")
@@ -74,9 +77,6 @@ func _build_ui() -> void:
 	hbox.add_child(_satisfaction_label)
 	hbox.add_child(_make_sep())
 	hbox.add_child(_cash_label)
-	hbox.add_child(_make_sep())
-	hbox.add_child(_safety_label)
-	hbox.add_child(_health_label)
 	hbox.add_child(_make_sep())
 	hbox.add_child(_budget_label)
 	hbox.add_child(_output_label)
@@ -115,30 +115,32 @@ func _on_satisfaction(score: float) -> void:
 func _on_cash_changed(amount: int, _delta: int) -> void:
 	_cash_label.text = "$%d" % amount
 
-func _on_demand_changed(bucket_type_id: String, value: float) -> void:
+func _on_bucket_changed(bucket_type_id: String, _value: float) -> void:
 	var lbl: Label = _demand_labels.get(bucket_type_id)
-	if lbl == null:
+	if lbl == null or _demand == null:
+		return
+	var bucket: DemandBucket = _demand.buckets.get(bucket_type_id)
+	if bucket == null:
 		return
 	if bucket_type_id == "desirability":
-		lbl.text = "Des: %d%%" % int(value * 100.0)
+		# Non-monotonic 0..1 rate — single percent, no fulfilled axis.
+		lbl.text = "Des: %d%%" % int(bucket.total_demand * 100.0)
 		return
-	# Growth buckets: show running value + the affordable-unit bank count.
 	var short: String = {
 		"housing_demand":    "Hous",
 		"industrial_demand": "Ind",
 		"commercial_demand": "Com",
 	}.get(bucket_type_id, bucket_type_id)
-	var banked := 0
-	if _demand:
-		var bucket: DemandBucket = _demand.buckets.get(bucket_type_id)
-		if bucket:
-			banked = bucket.get_bank_count()
-	lbl.text = "%s: %d (%d)" % [short, int(value), banked]
+	# fulfilled/total (banked) — tells the player both what's built and what
+	# the town's accumulated need is, plus how many they can place right now.
+	lbl.text = "%s: %d/%d (%d)" % [
+		short,
+		int(bucket.fulfilled),
+		int(bucket.total_demand),
+		bucket.get_bank_count(),
+	]
 
-func _on_stats_ticked(supply: Dictionary, demand: Dictionary, satisfaction: Dictionary) -> void:
-	_safety_label.text = "Safety: %d%%" % int(satisfaction.get("safety", 1.0) * 100.0)
-	_health_label.text = "Health: %d%%" % int(satisfaction.get("health", 1.0) * 100.0)
-
+func _on_stats_ticked(supply: Dictionary, demand: Dictionary, _satisfaction: Dictionary) -> void:
 	var budget_balance: int = supply.get("budget", 0) - demand.get("budget", 0)
 	if budget_balance >= 0:
 		_budget_label.text     = "Budget: +%d/hr" % budget_balance

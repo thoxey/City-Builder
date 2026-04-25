@@ -131,7 +131,7 @@ func _wire_signals() -> void:
 	GameEvents.patron_landmark_ready.connect(func(pid): _refresh("patron_landmark_ready", pid))
 	GameEvents.patron_landmark_completed.connect(func(pid): _refresh("patron_landmark_completed", pid))
 	GameEvents.patron_state_changed.connect(func(pid, _s): _refresh("patron_state_changed", pid))
-	GameEvents.demand_changed.connect(func(_b, _v): _refresh("demand_changed", ""))
+	GameEvents.demand_unserved_changed.connect(func(_b, _v): _refresh("demand_unserved_changed", ""))
 	GameEvents.map_loaded.connect(_on_map_loaded)
 
 func _on_character_state_changed(cid: String, new_state: int) -> void:

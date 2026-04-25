@@ -8,7 +8,11 @@ signal structure_placed(position: Vector3i, structure_index: int, orientation: i
 signal structure_demolished(position: Vector3i)
 signal map_loaded(map: DataMap)
 signal satisfaction_changed(score: float)
-signal demand_changed(bucket_type_id: String, value: float)
+## Bucket signals — alphabetised so file-walk order matches editor display.
+## fulfilled = current placed capacity; total = ever-asked-for; unserved = total - fulfilled.
+signal demand_fulfilled_changed(bucket_type_id: String, value: float)
+signal demand_total_changed(bucket_type_id: String, value: float)
+signal demand_unserved_changed(bucket_type_id: String, value: float)
 ## Cash surplus changed — `amount` is the new total, `delta` is the signed change.
 signal cash_changed(amount: int, delta: int)
 ## Palette's affordable-entry set or selection has changed.

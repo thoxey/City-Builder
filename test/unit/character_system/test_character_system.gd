@@ -50,10 +50,10 @@ func before_each() -> void:
 
 func after_each() -> void:
 	if _plugin and is_instance_valid(_plugin):
-		for sname in ["demand_changed", "unique_placed", "map_loaded"]:
+		for sname in ["demand_unserved_changed", "unique_placed", "map_loaded"]:
 			var cb: Callable
 			match sname:
-				"demand_changed": cb = _plugin._on_demand_changed
+				"demand_unserved_changed": cb = _plugin._on_demand_changed
 				"unique_placed":  cb = _plugin._on_unique_placed
 				"map_loaded":     cb = _plugin._on_map_loaded
 			if GameEvents[sname].is_connected(cb):

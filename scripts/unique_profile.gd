@@ -11,7 +11,7 @@ class_name UniqueProfile
 ## 1..3 for chain buildings; 0 for wants and landmarks.
 @export var tier: int = 0
 
-## Patron that owns this building's chain. "aristocrat" | "businessman" | "farmer"
+## Patron that owns this building's chain.
 @export var patron_id: String = ""
 
 ## Character this building is associated with. "" for landmarks.
@@ -28,5 +28,4 @@ class_name UniqueProfile
 @export var prerequisite_ids: PackedStringArray = PackedStringArray()
 
 ## Desirability bonus applied while this building exists on the map.
-## Most uniques leave this at 0; businessman's civic tier buildings set it nonzero.
 @export var desirability_boost: float = 0.0
