@@ -163,8 +163,8 @@ func _is_unlocked_internal(bid: String) -> bool:
 	return true
 
 ## UniqueProfile.bucket is a category ("residential" / "industrial" /
-## "commercial"). Demand addresses buckets by type_id ("housing_demand" /
-## "industrial_demand" / "commercial_demand"), so translate before lookup.
+## "commercial"). Demand addresses buckets by type_id ("residential" /
+## "industrial" / "commercial"), so translate before lookup.
 func _bucket_value(category: String) -> float:
 	if _demand == null:
 		return 0.0

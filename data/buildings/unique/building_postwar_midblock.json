@@ -40,6 +40,15 @@
         "building_postwar_terrace"
       ],
       "desirability_boost": 0.0
+    },
+    {
+      "type": "AttractivenessProfile",
+      "base": -10,
+      "residential": -20,
+      "commercial": 10,
+      "industrial": 0,
+      "nature": -10,
+      "radius": 1
     }
   ],
   "tags": []

@@ -40,6 +40,15 @@
         "building_nightclub"
       ],
       "desirability_boost": 0.1
+    },
+    {
+      "type": "AttractivenessProfile",
+      "base": 30,
+      "residential": 20,
+      "commercial": 20,
+      "industrial": 10,
+      "nature": 10,
+      "radius": 1
     }
   ],
   "tags": []

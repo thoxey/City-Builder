@@ -44,13 +44,15 @@ const TRIGGER_SIGNALS := {
 	"patron_landmark_completed":  "patron_id",
 	"unique_placed":              "building_id",
 	"buildable_area_expanded":    "",
+	"city_attractiveness_changed":"",
 }
 
-var _catalog:    PluginBase
-var _economy:    PluginBase
-var _demand:     PluginBase
-var _characters: PluginBase
-var _patrons:    PluginBase
+var _catalog:        PluginBase
+var _economy:        PluginBase
+var _demand:         PluginBase
+var _characters:     PluginBase
+var _patrons:        PluginBase
+var _attractiveness: PluginBase
 
 func get_plugin_name() -> String:
 	return "EventSystem"
@@ -67,8 +69,9 @@ func inject(deps: Dictionary) -> void:
 	_patrons    = deps.get("PatronSystem")
 
 func _plugin_ready() -> void:
-	_economy = PluginManager.get_plugin("Economy")
-	_demand  = PluginManager.get_plugin("Demand")
+	_economy        = PluginManager.get_plugin("Economy")
+	_demand         = PluginManager.get_plugin("Demand")
+	_attractiveness = PluginManager.get_plugin("Attractiveness")
 
 	_load_all(DATA_DIR)
 	_connect_triggers()
@@ -221,6 +224,8 @@ func _connect_triggers() -> void:
 		GameEvents.demand_total_changed.connect(_on_demand_total_changed)
 	if not GameEvents.demand_unserved_changed.is_connected(_on_demand_unserved_changed):
 		GameEvents.demand_unserved_changed.connect(_on_demand_unserved_changed)
+	if not GameEvents.city_attractiveness_changed.is_connected(_on_city_attractiveness_changed):
+		GameEvents.city_attractiveness_changed.connect(_on_city_attractiveness_changed)
 
 func _on_character_arrived(cid: String) -> void:
 	_dispatch("character_arrived", {"character_id": cid})
@@ -254,6 +259,9 @@ func _on_demand_total_changed(bucket_type_id: String, value: float) -> void:
 
 func _on_demand_unserved_changed(bucket_type_id: String, value: float) -> void:
 	_dispatch("demand_unserved_changed", {"bucket_type_id": bucket_type_id, "value": value})
+
+func _on_city_attractiveness_changed(value: int) -> void:
+	_dispatch("city_attractiveness_changed", {"value": value})
 
 # ── Dispatch ──────────────────────────────────────────────────────────────────
 
@@ -388,12 +396,16 @@ func _build_condition_ctx() -> Dictionary:
 				if not bid.is_empty():
 					ctx["placed_ids"][bid] = true
 	if _demand and _demand.has_method("get_unserved"):
-		for b in ["desirability", "housing_demand", "industrial_demand", "commercial_demand"]:
+		for b in ["residential", "industrial", "commercial"]:
 			var unserved: float = _demand.get_unserved(b)
 			ctx["unserved"][b]  = unserved
 			ctx["demand"][b]    = unserved  # back-compat alias
 			ctx["total"][b]     = _demand.get_total(b)
 			ctx["fulfilled"][b] = _demand.get_fulfilled(b)
+	if _attractiveness == null:
+		_attractiveness = PluginManager.get_plugin("Attractiveness")
+	if _attractiveness and _attractiveness.has_method("city_score"):
+		ctx["attractiveness"] = int(_attractiveness.city_score())
 	return ctx
 
 # ── Public accessors ──────────────────────────────────────────────────────────

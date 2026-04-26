@@ -176,7 +176,7 @@ func _on_hour(hour: float) -> void:
 	var h := int(hour)
 
 	if h == 8:
-		var workplaces := _get_tiles_by_category("workplace")
+		var workplaces := _get_tiles_by_category("industrial")
 		if not workplaces.is_empty():
 			for person: PersonSlot in _people:
 				if _state[person] == PersonState.IDLE:
@@ -208,7 +208,7 @@ func _assign_journey(person: PersonSlot) -> void:
 
 	var preferred: Array[Vector3i]
 	if h >= 8 and h < 17:
-		preferred = _get_tiles_by_category("workplace")
+		preferred = _get_tiles_by_category("industrial")
 	elif h >= 17 and h <= 22:
 		preferred = _get_tiles_by_category("commercial")
 	else:

@@ -19,6 +19,16 @@
   "category": "nature",
   "pool_id": "grass",
   "cash_cost": 15,
-  "profiles": [],
+  "profiles": [
+    {
+      "type": "AttractivenessProfile",
+      "base": 20,
+      "residential": 20,
+      "commercial": 10,
+      "industrial": 0,
+      "nature": 10,
+      "radius": 1
+    }
+  ],
   "tags": []
 }

@@ -40,6 +40,15 @@
         "building_pub"
       ],
       "desirability_boost": 0.0
+    },
+    {
+      "type": "AttractivenessProfile",
+      "base": 10,
+      "residential": 0,
+      "commercial": 20,
+      "industrial": 0,
+      "nature": 0,
+      "radius": 1
     }
   ],
   "tags": []

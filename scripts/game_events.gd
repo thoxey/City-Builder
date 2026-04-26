@@ -43,3 +43,9 @@ signal patron_state_changed(patron_id: String, new_state: int)
 ## BuildableArea expansion — carries the newly added cells so the UI / overlay
 ## can tween them into the allowed set without diffing.
 signal buildable_area_expanded(new_cells: Array)
+
+## Per-tile attractiveness changed (placement / demolition / area expansion).
+signal tile_attractiveness_changed(pos: Vector2i, score: int)
+## City-wide attractiveness sum changed. Trigger source for quest events that
+## want to fire when total city attractiveness crosses a threshold.
+signal city_attractiveness_changed(value: int)

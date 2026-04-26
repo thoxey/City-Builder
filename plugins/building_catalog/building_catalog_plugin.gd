@@ -307,6 +307,15 @@ func _instantiate_profile(profile: Dictionary, bid: String) -> StructureMetadata
 			p.active_start = float(profile.get("active_start", 8.0))
 			p.active_end = float(profile.get("active_end", 18.0))
 			return p
+		"AttractivenessProfile":
+			var a := AttractivenessProfile.new()
+			a.base        = int(profile.get("base", 0))
+			a.residential = int(profile.get("residential", 0))
+			a.commercial  = int(profile.get("commercial", 0))
+			a.industrial  = int(profile.get("industrial", 0))
+			a.nature      = int(profile.get("nature", 0))
+			a.radius      = int(profile.get("radius", 1))
+			return a
 		"RoadMetadata":
 			var r := RoadMetadata.new()
 			r.road_type = int(profile.get("road_type", 0))

@@ -14,7 +14,7 @@ class_name IndustrialDemandBucket
 var ratio: float = 0.5
 
 func _init() -> void:
-	super("industrial_demand", 1.0)
+	super("industrial", 1.0)
 
 func _compute(context: Dictionary) -> float:
 	var population: int = context.get("population", 0)

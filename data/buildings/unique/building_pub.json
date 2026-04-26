@@ -38,6 +38,15 @@
       "prerequisite_threshold": 10,
       "prerequisite_ids": [],
       "desirability_boost": 0.0
+    },
+    {
+      "type": "AttractivenessProfile",
+      "base": 0,
+      "residential": -10,
+      "commercial": 10,
+      "industrial": 0,
+      "nature": 0,
+      "radius": 1
     }
   ],
   "tags": []

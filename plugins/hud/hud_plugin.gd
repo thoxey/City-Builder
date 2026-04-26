@@ -25,10 +25,11 @@ func inject(deps: Dictionary) -> void:
 
 # ── UI refs ───────────────────────────────────────────────────────────────────
 
-var _satisfaction_label: Label
-var _budget_label:       Label
-var _output_label:       Label
-var _cash_label:         Label
+var _satisfaction_label:    Label
+var _budget_label:          Label
+var _output_label:          Label
+var _cash_label:            Label
+var _attractiveness_label:  Label
 var _demand_labels: Dictionary = {}  # bucket_type_id -> Label
 
 # ── Lifecycle ─────────────────────────────────────────────────────────────────
@@ -42,6 +43,7 @@ func _plugin_ready() -> void:
 	GameEvents.demand_total_changed.connect(_on_bucket_changed)
 	GameEvents.demand_fulfilled_changed.connect(_on_bucket_changed)
 	GameEvents.cash_changed.connect(_on_cash_changed)
+	GameEvents.city_attractiveness_changed.connect(_on_attractiveness_changed)
 	_city_stats.stats_ticked.connect(_on_stats_ticked)
 	# Seed the cash label with whatever is on the map right now — the Economy
 	# plugin emits cash_changed in its own _plugin_ready, but topo order may put
@@ -82,14 +84,14 @@ func _build_ui() -> void:
 	hbox.add_child(_output_label)
 	hbox.add_child(_make_sep())
 
-	_demand_labels["desirability"]      = _make_label("Des: --")
-	_demand_labels["housing_demand"]    = _make_label("Hous: --")
-	_demand_labels["industrial_demand"] = _make_label("Ind: --")
-	_demand_labels["commercial_demand"] = _make_label("Com: --")
-	hbox.add_child(_demand_labels["desirability"])
-	hbox.add_child(_demand_labels["housing_demand"])
-	hbox.add_child(_demand_labels["industrial_demand"])
-	hbox.add_child(_demand_labels["commercial_demand"])
+	_attractiveness_label              = _make_label("Attr: 0")
+	_demand_labels["residential"]     = _make_label("Res: --")
+	_demand_labels["industrial"]      = _make_label("Ind: --")
+	_demand_labels["commercial"]      = _make_label("Com: --")
+	hbox.add_child(_attractiveness_label)
+	hbox.add_child(_demand_labels["residential"])
+	hbox.add_child(_demand_labels["industrial"])
+	hbox.add_child(_demand_labels["commercial"])
 
 func _make_label(text: String) -> Label:
 	var lbl := Label.new()
@@ -115,6 +117,10 @@ func _on_satisfaction(score: float) -> void:
 func _on_cash_changed(amount: int, _delta: int) -> void:
 	_cash_label.text = "$%d" % amount
 
+func _on_attractiveness_changed(value: int) -> void:
+	if _attractiveness_label:
+		_attractiveness_label.text = "Attr: %d" % value
+
 func _on_bucket_changed(bucket_type_id: String, _value: float) -> void:
 	var lbl: Label = _demand_labels.get(bucket_type_id)
 	if lbl == null or _demand == null:
@@ -122,14 +128,10 @@ func _on_bucket_changed(bucket_type_id: String, _value: float) -> void:
 	var bucket: DemandBucket = _demand.buckets.get(bucket_type_id)
 	if bucket == null:
 		return
-	if bucket_type_id == "desirability":
-		# Non-monotonic 0..1 rate — single percent, no fulfilled axis.
-		lbl.text = "Des: %d%%" % int(bucket.total_demand * 100.0)
-		return
 	var short: String = {
-		"housing_demand":    "Hous",
-		"industrial_demand": "Ind",
-		"commercial_demand": "Com",
+		"residential": "Res",
+		"industrial":  "Ind",
+		"commercial":  "Com",
 	}.get(bucket_type_id, bucket_type_id)
 	# fulfilled/total (banked) — tells the player both what's built and what
 	# the town's accumulated need is, plus how many they can place right now.

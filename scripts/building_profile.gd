@@ -5,7 +5,7 @@ class_name BuildingProfile
 ## Consumed by building-type plugins (Residential, Workplace, etc.) to register
 ## the appropriate CityStatSource or CityStatSink with CityStats.
 
-## Semantic category: "residential", "workplace", "commercial", etc.
+## Semantic category: "residential", "industrial", "commercial", etc.
 @export var category: String = ""
 
 ## Peak occupancy / headcount capacity.

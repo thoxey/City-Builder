@@ -18,6 +18,7 @@ class_name EventCondition
 ##   fulfilled.<bucket> >= N  — placed capacity in that bucket
 ##   unserved.<bucket> >= N   — total - fulfilled (spendable bank)
 ##   demand.<bucket> >= N     — alias for unserved.<bucket> (back-compat)
+##   attractiveness >= N      — city-wide attractiveness sum
 ##   state.<character_id> == "ARRIVED" | "WANT_REVEALED" | ...
 ##   count.<event_id> >= N
 ##
@@ -134,6 +135,12 @@ static func _eval_leaf(raw: String, ctx: Dictionary) -> bool:
 	if tok.begins_with("cash "):
 		var rhs := tok.substr(5).strip_edges()
 		return _eval_numeric_cmp(int(ctx.get("cash", 0)), rhs)
+
+	# attractiveness <op> N — city-wide rollup.
+	if tok.begins_with("attractiveness "):
+		var rhs0 := tok.substr("attractiveness".length()).strip_edges()
+		var val0: int = int(ctx.get("attractiveness", 0))
+		return _eval_numeric_cmp(val0, rhs0)
 
 	# demand.<bucket> / total.<bucket> / fulfilled.<bucket> / unserved.<bucket>
 	for prefix: String in ["demand.", "total.", "fulfilled.", "unserved."]:

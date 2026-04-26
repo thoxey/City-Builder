@@ -55,6 +55,8 @@ var _overbuild_fp_cells: Array[Vector2i]  = []
 
 func _ready():
 
+	get_window().content_scale_factor = 2.0
+
 	map = DataMap.new()
 	plane = Plane(Vector3.UP, Vector3.ZERO)
 

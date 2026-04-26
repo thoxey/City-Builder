@@ -33,6 +33,15 @@
         "building_pipe_factory"
       ],
       "desirability_boost": 0.05
+    },
+    {
+      "type": "AttractivenessProfile",
+      "base": 20,
+      "residential": 10,
+      "commercial": 20,
+      "industrial": 0,
+      "nature": 10,
+      "radius": 1
     }
   ],
   "tags": []

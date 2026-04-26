@@ -91,7 +91,90 @@ function ProfileForm({ profile, manifest, selfId, onChange }: FormProps) {
       return <GenericTierProfileForm p={profile} manifest={manifest} onChange={onChange} />;
     case "RoadMetadata":
       return <RoadMetadataForm p={profile} onChange={onChange} />;
+    case "AttractivenessProfile":
+      return <AttractivenessProfileForm p={profile} onChange={onChange} />;
   }
+}
+
+function AttractivenessProfileForm({
+  p,
+  onChange,
+}: {
+  p: import("../types").AttractivenessProfileEntry;
+  onChange: (next: import("../types").AttractivenessProfileEntry) => void;
+}) {
+  type K = "base" | "residential" | "commercial" | "industrial" | "nature" | "radius";
+  const update = (k: K, v: number) => onChange({ ...p, [k]: v });
+  const fillAll = (v: number) =>
+    onChange({ ...p, residential: v, commercial: v, industrial: v, nature: v });
+  const ortho = (k: "residential" | "commercial" | "industrial" | "nature") => p[k];
+  const diag = (k: "residential" | "commercial" | "industrial" | "nature") =>
+    Math.floor(p[k] / Math.SQRT2);
+  return (
+    <div className="form-grid">
+      <label>base (own tile)</label>
+      <input type="number" value={p.base} onChange={(e) => update("base", Number(e.target.value))} />
+
+      <label>residential</label>
+      <input
+        type="number"
+        value={p.residential}
+        onChange={(e) => update("residential", Number(e.target.value))}
+      />
+
+      <label>commercial</label>
+      <input
+        type="number"
+        value={p.commercial}
+        onChange={(e) => update("commercial", Number(e.target.value))}
+      />
+
+      <label>industrial</label>
+      <input
+        type="number"
+        value={p.industrial}
+        onChange={(e) => update("industrial", Number(e.target.value))}
+      />
+
+      <label>nature</label>
+      <input
+        type="number"
+        value={p.nature}
+        onChange={(e) => update("nature", Number(e.target.value))}
+      />
+
+      <label>radius</label>
+      <input
+        type="number"
+        min={0}
+        value={p.radius}
+        onChange={(e) => update("radius", Number(e.target.value))}
+      />
+
+      <label>fill all categories</label>
+      <div>
+        <input
+          type="number"
+          placeholder="value"
+          onBlur={(e) => {
+            const v = Number(e.target.value);
+            if (Number.isFinite(v)) fillAll(v);
+            e.currentTarget.value = "";
+          }}
+        />
+        <div className="inline-note">
+          Set residential / commercial / industrial / nature to the same value (used for landmarks).
+        </div>
+      </div>
+
+      <label>preview</label>
+      <div className="inline-note">
+        Ortho: R={ortho("residential")} C={ortho("commercial")} I={ortho("industrial")} N={ortho("nature")}
+        {" — "}
+        Diag: R={diag("residential")} C={diag("commercial")} I={diag("industrial")} N={diag("nature")}
+      </div>
+    </div>
+  );
 }
 
 // ---- individual profile forms ----

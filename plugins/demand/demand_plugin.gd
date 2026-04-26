@@ -23,31 +23,28 @@ extends PluginBase
 ## `fulfilled` so the slot frees up for re-placement.
 
 func get_plugin_name() -> String: return "Demand"
-func get_dependencies() -> Array[String]: return ["DayNight", "CityStats", "Satisfaction", "BuildingCatalog"]
+func get_dependencies() -> Array[String]: return ["DayNight", "CityStats", "BuildingCatalog"]
 
 var _day_night: PluginBase
 var _city_stats: PluginBase
-var _satisfaction: PluginBase
 var _catalog: PluginBase
+## Resolved at runtime — Attractiveness loads after Demand in topo order
+## (Attractiveness deps include BuildableArea), so we look it up lazily.
+var _attractiveness: PluginBase
 
 func inject(deps: Dictionary) -> void:
 	_day_night   = deps.get("DayNight")
 	_city_stats  = deps.get("CityStats")
-	_satisfaction = deps.get("Satisfaction")
 	_catalog     = deps.get("BuildingCatalog")
 
 # ── Tuning levers — adjust to rebalance the loop ──────────────────────────────
 
-@export_group("Desirability")
-@export var desirability_weight_satisfaction: float = 0.6
-@export var desirability_weight_amenity: float = 0.4
-## Amenity count that saturates the amenity term.
-@export var desirability_amenity_saturation: float = 10.0
-
-@export_group("Housing")
+@export_group("Housing (residential)")
 @export var growth_rate_housing: float = 0.5
-## Desirability × max_cap is the ceiling housing demand can grow to.
 @export var housing_max_cap: float = 1000.0
+## City attractiveness sum that pegs housing growth at full speed and the
+## housing cap at max_cap. Below this, both scale linearly.
+@export var housing_attractiveness_saturation: float = 500.0
 
 @export_group("Industrial")
 @export var industrial_ratio: float = 0.5
@@ -77,6 +74,7 @@ var _sources: Array[CityStatSource] = []    # registered sources (for teardown)
 # ── Lifecycle ─────────────────────────────────────────────────────────────────
 
 func _plugin_ready() -> void:
+	_attractiveness = PluginManager.get_plugin("Attractiveness")
 	_build_buckets()
 	_register_sources()
 	if _day_night:
@@ -87,14 +85,10 @@ func _plugin_ready() -> void:
 	_resync_fulfilled_from_registry()
 
 func _build_buckets() -> void:
-	var desirability := DesirabilityBucket.new()
-	desirability.weight_satisfaction = desirability_weight_satisfaction
-	desirability.weight_amenity      = desirability_weight_amenity
-	desirability.amenity_saturation  = desirability_amenity_saturation
-
 	var housing := HousingDemandBucket.new()
 	housing.growth_rate    = growth_rate_housing
 	housing.max_cap        = housing_max_cap
+	housing.saturation     = housing_attractiveness_saturation
 	housing.reference_cost = ref_cost_housing
 	housing.total_demand   = starting_housing
 
@@ -108,7 +102,7 @@ func _build_buckets() -> void:
 	commercial.reference_cost = ref_cost_commercial
 	commercial.total_demand   = starting_commercial
 
-	_bucket_order = [desirability, housing, industrial, commercial]
+	_bucket_order = [housing, industrial, commercial]
 	for b in _bucket_order:
 		buckets[b.type_id] = b
 
@@ -123,22 +117,26 @@ func _register_sources() -> void:
 # ── Tick ──────────────────────────────────────────────────────────────────────
 
 func _on_hour(hour: float) -> void:
+	var attr: int = 0
+	if _attractiveness == null:
+		_attractiveness = PluginManager.get_plugin("Attractiveness")
+	if _attractiveness and _attractiveness.has_method("city_score"):
+		attr = int(_attractiveness.city_score())
 	var context := {
-		"satisfaction_score": _satisfaction.get_score() if _satisfaction else 1.0,
-		"amenity_count":      _count_amenities(),
-		"population":         _get_population(),
-		"industrial_output":  _get_industrial_output(),
+		"attractiveness":    attr,
+		"population":        _get_population(),
+		"industrial_output": _get_industrial_output(),
 	}
 
 	for b in _bucket_order:
 		b.tick(hour, context)
 		context[b.type_id] = b.total_demand
 
-	print("[Demand] tick: desirability=%.2f housing=t%.1f/f%.1f/u%.1f industrial=t%.1f/f%.1f/u%.1f commercial=t%.1f/f%.1f/u%.1f output=%d" % [
-		buckets["desirability"].total_demand,
-		buckets["housing_demand"].total_demand,    buckets["housing_demand"].fulfilled,    buckets["housing_demand"].get_unserved(),
-		buckets["industrial_demand"].total_demand, buckets["industrial_demand"].fulfilled, buckets["industrial_demand"].get_unserved(),
-		buckets["commercial_demand"].total_demand, buckets["commercial_demand"].fulfilled, buckets["commercial_demand"].get_unserved(),
+	print("[Demand] tick: attr=%d residential=t%.1f/f%.1f/u%.1f industrial=t%.1f/f%.1f/u%.1f commercial=t%.1f/f%.1f/u%.1f output=%d" % [
+		attr,
+		buckets["residential"].total_demand, buckets["residential"].fulfilled, buckets["residential"].get_unserved(),
+		buckets["industrial"].total_demand,  buckets["industrial"].fulfilled,  buckets["industrial"].get_unserved(),
+		buckets["commercial"].total_demand,  buckets["commercial"].fulfilled,  buckets["commercial"].get_unserved(),
 		context["industrial_output"],
 	])
 
@@ -166,17 +164,17 @@ func get_fulfilled(type_id: String) -> float:
 ## else (nature, road, pavement, unique-specific) maps to "" = free placement.
 static func bucket_for_category(category: String) -> String:
 	match category:
-		"residential": return "housing_demand"
-		"workplace":   return "industrial_demand"
-		"commercial":  return "commercial_demand"
+		"residential": return "residential"
+		"industrial":   return "industrial"
+		"commercial":  return "commercial"
 		_:             return ""
 
-## Short human-friendly name for toasts / HUD. "housing_demand" → "housing".
+## Short human-friendly name for toasts / HUD. "residential" → "housing".
 static func bucket_display_name(bucket_id: String) -> String:
 	match bucket_id:
-		"housing_demand":    return "housing"
-		"industrial_demand": return "industrial"
-		"commercial_demand": return "commercial"
+		"residential":    return "housing"
+		"industrial": return "industrial"
+		"commercial": return "commercial"
 		_:                   return bucket_id
 
 # ── Spending ──────────────────────────────────────────────────────────────────
@@ -286,7 +284,7 @@ func _on_map_loaded(_map) -> void:
 func _resync_fulfilled_from_registry() -> void:
 	if buckets.is_empty():
 		return
-	var totals := {"housing_demand": 0.0, "industrial_demand": 0.0, "commercial_demand": 0.0}
+	var totals := {"residential": 0.0, "industrial": 0.0, "commercial": 0.0}
 	if GameState and GameState.building_registry:
 		for bid in GameState.building_registry:
 			var entry: Dictionary = GameState.building_registry[bid]
@@ -326,20 +324,3 @@ func _get_industrial_output() -> int:
 		return workplace.get_total_output()
 	return 0
 
-## Count buildings whose catalog summary flags them as category "nature".
-func _count_amenities() -> int:
-	if _catalog == null:
-		return 0
-	var summaries: Array = _catalog.get_summary()
-	if summaries.is_empty():
-		return 0
-	var count := 0
-	for bid in GameState.building_registry:
-		var entry: Dictionary = GameState.building_registry[bid]
-		var sid: int = entry.get("structure", -1)
-		if sid < 0 or sid >= summaries.size():
-			continue
-		var summary: Dictionary = summaries[sid]
-		if summary.get("category", "") == "nature":
-			count += 1
-	return count

@@ -18,6 +18,16 @@
   ],
   "category": "nature",
   "cash_cost": 40,
-  "profiles": [],
+  "profiles": [
+    {
+      "type": "AttractivenessProfile",
+      "base": 40,
+      "residential": 30,
+      "commercial": 20,
+      "industrial": 0,
+      "nature": 20,
+      "radius": 1
+    }
+  ],
   "tags": []
 }

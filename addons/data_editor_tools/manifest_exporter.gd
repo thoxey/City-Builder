@@ -22,6 +22,7 @@ const TRIGGERS := [
 	"character_want_revealed",
 	"character_satisfied",
 	"character_state_changed",
+	"city_attractiveness_changed",
 	"demand_fulfilled_changed",
 	"demand_total_changed",
 	"demand_unserved_changed",
@@ -34,10 +35,8 @@ const TRIGGERS := [
 
 const EVENT_TYPES := ["dialogue", "newspaper", "notification"]
 const BUCKETS := ["residential", "commercial", "industrial"]
-## Bucket type IDs as referenced by the demand system + trigger filters.
-## Distinct from BUCKETS (which are building-side categories) — kept as its
-## own list so the SPA's bucket-trigger picker has the canonical names.
-const BUCKET_TYPE_IDS := ["housing_demand", "industrial_demand", "commercial_demand", "desirability"]
+## Bucket type IDs — same names as the building-side categories post-rename.
+const BUCKET_TYPE_IDS := ["residential", "industrial", "commercial"]
 const CATEGORIES := ["road", "nature", "generic", "unique"]
 const CHARACTER_STATES := ["NOT_ARRIVED", "ARRIVED", "WANT_REVEALED", "SATISFIED", "CONTRIBUTES_TO_LANDMARK"]
 const PATRON_STATES := ["LOCKED", "LANDMARK_AVAILABLE", "COMPLETED"]

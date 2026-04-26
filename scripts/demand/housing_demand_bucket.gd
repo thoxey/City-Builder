@@ -1,26 +1,33 @@
 extends DemandBucket
 class_name HousingDemandBucket
 
-## Housing demand — total grows monotonically, capped by desirability × max_cap.
-## Each tick adds `desirability × growth_rate` to total_demand, never exceeding
-## the cap. If desirability later drops, total_demand stays at peak (monotonic) —
-## the cap only gates *growth*.
+## Residential demand — total grows monotonically, driven by city attractiveness.
 ##
-## unserved = total_demand - fulfilled. The HUD bank, try_spend, and quest
-## triggers all read whichever of the three numbers fits the question.
+## growth = clamp(attractiveness / saturation, 0, 1) × growth_rate
+## cap    = clamp(attractiveness / saturation, 0, 1) × max_cap
+##
+## The saturation point is a tuning knob. Below saturation, growth scales
+## linearly with city attractiveness; at and above saturation, growth runs
+## at full speed and the cap pegs at max_cap.
+##
+## Once total_demand reaches the cap, growth halts; the base class's monotonic
+## clamp keeps total_demand at peak even if attractiveness later collapses.
 ##
 ## Input read from context:
-##   desirability: float (0..1)
+##   attractiveness: int  (city-wide sum)
 
 var growth_rate: float = 0.5
 var max_cap: float = 1000.0
+## City attractiveness sum that pegs the cap and growth at full speed.
+var saturation: float = 500.0
 
 func _init() -> void:
-	super("housing_demand", 1.0)
+	super("residential", 1.0)
 
 func _compute(context: Dictionary) -> float:
-	var desirability: float = context.get("desirability", 0.0)
-	var cap := desirability * max_cap
+	var attr: int = int(context.get("attractiveness", 0))
+	var factor: float = clampf(float(attr) / max(saturation, 0.001), 0.0, 1.0)
+	var cap: float = factor * max_cap
 	if total_demand >= cap:
 		return total_demand
-	return min(total_demand + desirability * growth_rate, cap)
+	return min(total_demand + factor * growth_rate, cap)

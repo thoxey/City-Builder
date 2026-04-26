@@ -8,6 +8,7 @@ export type TriggerSource =
   | "patron"
   | "building"
   | "bucket"
+  | "attractiveness"
   | "world"
   | "manual";
 
@@ -61,7 +62,15 @@ export const TRIGGER_SOURCES: TriggerSourceMeta[] = [
     ],
     filterField: "bucket_type_id",
     description:
-      "Fires when a bucket's total / fulfilled / unserved value moves. Pair with enabled_if (e.g. fulfilled.housing_demand >= 50) for thresholds.",
+      "Fires when a bucket's total / fulfilled / unserved value moves. Pair with enabled_if (e.g. fulfilled.residential >= 50) for thresholds.",
+  },
+  {
+    id: "attractiveness",
+    label: "Attractiveness",
+    events: ["city_attractiveness_changed"],
+    filterField: null,
+    description:
+      "Fires when city-wide attractiveness changes. Pair with enabled_if (e.g. attractiveness >= 500) for thresholds.",
   },
   {
     id: "world",
@@ -94,7 +103,7 @@ export function sourceForEvent(eventName: string): TriggerSource {
 }
 
 export function metaForSource(source: TriggerSource): TriggerSourceMeta {
-  return TRIGGER_SOURCES.find((s) => s.id === source) ?? TRIGGER_SOURCES[5];
+  return TRIGGER_SOURCES.find((s) => s.id === source) ?? TRIGGER_SOURCES[TRIGGER_SOURCES.length - 1];
 }
 
 /** Strip filter fields that are no longer relevant to the chosen source. */

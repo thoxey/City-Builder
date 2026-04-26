@@ -53,6 +53,16 @@ export function blankProfile(type: ProfileType): Profile {
       };
     case "RoadMetadata":
       return { type: "RoadMetadata", road_type: 0, connections: [] };
+    case "AttractivenessProfile":
+      return {
+        type: "AttractivenessProfile",
+        base: 0,
+        residential: 0,
+        commercial: 0,
+        industrial: 0,
+        nature: 0,
+        radius: 1,
+      };
   }
 }
 
@@ -62,4 +72,5 @@ export const ALL_PROFILE_TYPES: ProfileType[] = [
   "UniqueProfile",
   "GenericTierProfile",
   "RoadMetadata",
+  "AttractivenessProfile",
 ];

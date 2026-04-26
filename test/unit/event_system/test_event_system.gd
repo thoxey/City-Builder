@@ -218,11 +218,11 @@ func test_dsl_state_token() -> void:
 
 func test_dsl_demand_and_count() -> void:
 	var ctx := {
-		"demand": {"housing_demand": 42.5},
+		"demand": {"residential": 42.5},
 		"event_counts": {"evt_a": 3},
 	}
-	assert_true(Condition.evaluate("demand.housing_demand >= 30", ctx))
-	assert_false(Condition.evaluate("demand.housing_demand > 100", ctx))
+	assert_true(Condition.evaluate("demand.residential >= 30", ctx))
+	assert_false(Condition.evaluate("demand.residential > 100", ctx))
 	assert_true(Condition.evaluate("count.evt_a >= 3", ctx))
 	assert_false(Condition.evaluate("count.evt_a > 5", ctx))
 

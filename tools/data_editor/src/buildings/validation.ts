@@ -94,6 +94,17 @@ function validateProfile(
     case "RoadMetadata":
       if (p.road_type < 0) errors.push("RoadMetadata road_type must be ≥ 0");
       return;
+    case "AttractivenessProfile":
+      for (const k of ["base", "residential", "commercial", "industrial", "nature"] as const) {
+        const v = (p as unknown as Record<string, number>)[k];
+        if (!Number.isFinite(v)) errors.push(`AttractivenessProfile.${k} must be a number`);
+        else if (Math.abs(v) > 200) warnings.push(`AttractivenessProfile.${k} outside ±200 (overlay saturation bound)`);
+      }
+      if (!Number.isFinite(p.radius) || p.radius < 0)
+        errors.push("AttractivenessProfile.radius must be ≥ 0");
+      else if (p.radius > 5)
+        warnings.push("AttractivenessProfile.radius > 5 — costs grow fast");
+      return;
     case "BuildingMetadata":
       return;
   }
