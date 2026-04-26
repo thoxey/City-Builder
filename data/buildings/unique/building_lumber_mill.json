@@ -23,7 +23,7 @@
     },
     {
       "type": "BuildingProfile",
-      "category": "workplace",
+      "category": "industrial",
       "capacity": 20,
       "active_start": 8.0,
       "active_end": 18.0
@@ -40,6 +40,15 @@
         "building_windmill"
       ],
       "desirability_boost": 0.0
+    },
+    {
+      "type": "AttractivenessProfile",
+      "base": -10,
+      "residential": -20,
+      "commercial": -10,
+      "industrial": 0,
+      "nature": -10,
+      "radius": 1
     }
   ],
   "tags": []

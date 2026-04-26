@@ -28,6 +28,15 @@
       "capacity": 10,
       "active_start": 8.0,
       "active_end": 18.0
+    },
+    {
+      "type": "AttractivenessProfile",
+      "base": -10,
+      "residential": -10,
+      "commercial": 10,
+      "industrial": 0,
+      "nature": 0,
+      "radius": 1
     }
   ],
   "tags": []

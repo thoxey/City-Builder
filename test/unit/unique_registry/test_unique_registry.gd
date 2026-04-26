@@ -61,7 +61,7 @@ func test_indexing_counts_chains_wants_landmarks() -> void:
 func test_threshold_blocks_when_demand_below() -> void:
 	_stub_catalog.register_unique(0, "building_pub", "commercial", 1, "aristocrat", "aristocrat_commercial", "chain", 10, [])
 	_reg._index_uniques()
-	_stub_demand.set_value("commercial_demand", 5.0)
+	_stub_demand.set_value("commercial", 5.0)
 	_reg._refresh_unlocks()
 
 	assert_false(_reg.is_unlocked("building_pub"))
@@ -69,7 +69,7 @@ func test_threshold_blocks_when_demand_below() -> void:
 func test_threshold_passes_when_demand_at_or_above() -> void:
 	_stub_catalog.register_unique(0, "building_pub", "commercial", 1, "aristocrat", "aristocrat_commercial", "chain", 10, [])
 	_reg._index_uniques()
-	_stub_demand.set_value("commercial_demand", 12.0)
+	_stub_demand.set_value("commercial", 12.0)
 	_reg._refresh_unlocks()
 
 	assert_true(_reg.is_unlocked("building_pub"))
@@ -80,7 +80,7 @@ func test_tier2_locked_until_tier1_placed() -> void:
 	_stub_catalog.register_unique(0, "building_pub", "commercial", 1, "aristocrat", "aristocrat_commercial", "chain", 10, [])
 	_stub_catalog.register_unique(1, "building_restaurant", "commercial", 2, "aristocrat", "aristocrat_commercial", "chain", 30, ["building_pub"])
 	_reg._index_uniques()
-	_stub_demand.set_value("commercial_demand", 50.0)
+	_stub_demand.set_value("commercial", 50.0)
 	_reg._refresh_unlocks()
 
 	assert_true(_reg.is_unlocked("building_pub"), "T1 has no prereqs")
@@ -110,7 +110,7 @@ func test_place_marks_unique_placed_exactly_once() -> void:
 func test_demolish_clears_placement_and_re_unlocks() -> void:
 	_stub_catalog.register_unique(0, "building_pub", "commercial", 1, "aristocrat", "aristocrat_commercial", "chain", 10, [])
 	_reg._index_uniques()
-	_stub_demand.set_value("commercial_demand", 50.0)
+	_stub_demand.set_value("commercial", 50.0)
 	_reg._refresh_unlocks()
 
 	GameEvents.structure_placed.emit(Vector3i(1, 0, 2), 0, 0)
@@ -150,13 +150,13 @@ func test_unique_unlocked_fires_once_per_flip() -> void:
 	_reg._index_uniques()
 
 	# Start below threshold.
-	_stub_demand.set_value("commercial_demand", 5.0)
+	_stub_demand.set_value("commercial", 5.0)
 	_reg._refresh_unlocks()
 	assert_false(_reg.is_unlocked("building_pub"))
 
 	watch_signals(GameEvents)
 	# Cross threshold — expect one emit.
-	_stub_demand.set_value("commercial_demand", 12.0)
+	_stub_demand.set_value("commercial", 12.0)
 	_reg._refresh_unlocks()
 	_reg._refresh_unlocks()  # Idempotent — second refresh must NOT re-emit.
 
@@ -239,8 +239,8 @@ class _StubDemand extends PluginBase:
 	# Mirror the real static mapping.
 	func bucket_for_category(category: String) -> String:
 		match category:
-			"residential": return "housing_demand"
-			"workplace":   return "industrial_demand"
-			"industrial":  return "industrial_demand"
-			"commercial":  return "commercial_demand"
+			"residential": return "residential"
+			"industrial":   return "industrial"
+			"industrial":  return "industrial"
+			"commercial":  return "commercial"
 			_:             return ""

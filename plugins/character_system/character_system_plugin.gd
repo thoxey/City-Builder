@@ -202,9 +202,9 @@ static func _state_name(s: int) -> String:
 ## once, not every check.
 static func _category_to_bucket_id(category: String) -> String:
 	match category:
-		"residential": return "housing_demand"
-		"industrial":  return "industrial_demand"
-		"commercial":  return "commercial_demand"
+		"residential": return "residential"
+		"industrial":  return "industrial"
+		"commercial":  return "commercial"
 		_:             return ""
 
 ## Walk all characters and check whether their associated bucket already meets

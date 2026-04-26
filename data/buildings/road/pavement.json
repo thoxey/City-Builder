@@ -18,6 +18,16 @@
   ],
   "category": "road",
   "pool_id": "pavement",
-  "profiles": [],
+  "profiles": [
+    {
+      "type": "AttractivenessProfile",
+      "base": 0,
+      "residential": 0,
+      "commercial": 10,
+      "industrial": 0,
+      "nature": 0,
+      "radius": 1
+    }
+  ],
   "tags": []
 }

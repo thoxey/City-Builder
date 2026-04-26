@@ -35,6 +35,15 @@
         "building_pirate_radio"
       ],
       "desirability_boost": 0.25
+    },
+    {
+      "type": "AttractivenessProfile",
+      "base": 10,
+      "residential": 10,
+      "commercial": 10,
+      "industrial": 10,
+      "nature": 10,
+      "radius": 3
     }
   ],
   "tags": []

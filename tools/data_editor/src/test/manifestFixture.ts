@@ -8,7 +8,7 @@ export function makeManifest(overrides: Partial<Manifest> = {}): Manifest {
     event_types: ["dialogue", "newspaper", "notification"],
     triggers: ["character_arrived", "unique_placed", "manual"],
     buckets: ["residential", "commercial", "industrial"],
-    bucket_type_ids: ["housing_demand", "industrial_demand", "commercial_demand", "desirability"],
+    bucket_type_ids: ["residential", "industrial", "commercial"],
     categories: ["road", "nature", "generic", "unique"],
     character_states: [
       "NOT_ARRIVED",

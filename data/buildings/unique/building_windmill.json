@@ -23,7 +23,7 @@
     },
     {
       "type": "BuildingProfile",
-      "category": "workplace",
+      "category": "industrial",
       "capacity": 8,
       "active_start": 8.0,
       "active_end": 18.0
@@ -38,6 +38,15 @@
       "prerequisite_threshold": 10,
       "prerequisite_ids": [],
       "desirability_boost": 0.0
+    },
+    {
+      "type": "AttractivenessProfile",
+      "base": 10,
+      "residential": 10,
+      "commercial": 0,
+      "industrial": 0,
+      "nature": 10,
+      "radius": 1
     }
   ],
   "tags": []

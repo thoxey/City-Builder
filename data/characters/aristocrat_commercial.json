@@ -1,7 +1,7 @@
 {
   "character_id": "aristocrat_commercial",
-  "display_name": "Lord Ashworth",
-  "bio": "Old money, still pretends he isn't bored. Treats the town like a country house.",
+  "display_name": "Flick",
+  "bio": "Dame Felicity Timothy Victoria Featherston Johnson Worthington, our leading lady, I think she just finished that second bottle...",
   "patron_id": "aristocrat",
   "associated_bucket": "commercial",
   "arrival_threshold": 10,

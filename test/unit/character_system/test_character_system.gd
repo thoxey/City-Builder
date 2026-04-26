@@ -68,7 +68,7 @@ func test_arrival_on_threshold_cross() -> void:
 	# AUTO_REVEAL_WANT is false from M4 onward: crossing threshold stops at
 	# ARRIVED. The modal close path is what advances to WANT_REVEALED.
 	watch_signals(GameEvents)
-	_plugin._on_demand_changed("commercial_demand", 12.0)
+	_plugin._on_demand_changed("commercial", 12.0)
 
 	assert_signal_emitted_with_parameters(GameEvents, "character_arrived", ["aristocrat_commercial"])
 	assert_eq(_plugin.get_state("aristocrat_commercial"), CharSysCls.CharState.ARRIVED,
@@ -76,36 +76,36 @@ func test_arrival_on_threshold_cross() -> void:
 
 func test_arrival_ignored_below_threshold() -> void:
 	watch_signals(GameEvents)
-	_plugin._on_demand_changed("commercial_demand", 5.0)
+	_plugin._on_demand_changed("commercial", 5.0)
 
 	assert_signal_not_emitted(GameEvents, "character_arrived")
 	assert_eq(_plugin.get_state("aristocrat_commercial"), CharSysCls.CharState.NOT_ARRIVED)
 
 func test_arrival_wrong_bucket_ignored() -> void:
-	_plugin._on_demand_changed("housing_demand", 50.0)
+	_plugin._on_demand_changed("residential", 50.0)
 
 	assert_eq(_plugin.get_state("aristocrat_commercial"), CharSysCls.CharState.NOT_ARRIVED,
 		"commercial character ignores housing bucket")
 	assert_eq(_plugin.get_state("farmer_residential"), CharSysCls.CharState.ARRIVED,
-		"residential character triggers on housing_demand")
+		"residential character triggers on residential bucket")
 
 func test_simultaneous_arrivals() -> void:
 	watch_signals(GameEvents)
-	_plugin._on_demand_changed("commercial_demand", 20.0)
-	_plugin._on_demand_changed("industrial_demand", 20.0)
-	_plugin._on_demand_changed("housing_demand", 20.0)
+	_plugin._on_demand_changed("commercial", 20.0)
+	_plugin._on_demand_changed("industrial", 20.0)
+	_plugin._on_demand_changed("residential", 20.0)
 
 	assert_signal_emit_count(GameEvents, "character_arrived", 3)
 	for cid in ["aristocrat_commercial", "aristocrat_industrial", "farmer_residential"]:
 		assert_eq(_plugin.get_state(cid), CharSysCls.CharState.ARRIVED)
 
 func test_arrival_fires_once() -> void:
-	_plugin._on_demand_changed("commercial_demand", 20.0)
+	_plugin._on_demand_changed("commercial", 20.0)
 
 	watch_signals(GameEvents)
 	# Subsequent demand ticks above threshold must not re-fire arrival.
-	_plugin._on_demand_changed("commercial_demand", 50.0)
-	_plugin._on_demand_changed("commercial_demand", 100.0)
+	_plugin._on_demand_changed("commercial", 50.0)
+	_plugin._on_demand_changed("commercial", 100.0)
 
 	assert_signal_not_emitted(GameEvents, "character_arrived")
 
@@ -129,7 +129,7 @@ func test_mark_want_revealed_noop_if_not_arrived() -> void:
 # ── Satisfaction ──────────────────────────────────────────────────────────────
 
 func test_satisfied_on_want_placement() -> void:
-	_plugin._on_demand_changed("commercial_demand", 20.0)  # reaches WANT_REVEALED
+	_plugin._on_demand_changed("commercial", 20.0)  # reaches WANT_REVEALED
 
 	watch_signals(GameEvents)
 	_plugin._on_unique_placed("building_members_club")
@@ -138,7 +138,7 @@ func test_satisfied_on_want_placement() -> void:
 	assert_eq(_plugin.get_state("aristocrat_commercial"), CharSysCls.CharState.SATISFIED)
 
 func test_satisfaction_ignores_wrong_building() -> void:
-	_plugin._on_demand_changed("commercial_demand", 20.0)
+	_plugin._on_demand_changed("commercial", 20.0)
 
 	watch_signals(GameEvents)
 	_plugin._on_unique_placed("building_pub")  # not the want
@@ -154,7 +154,7 @@ func test_satisfaction_requires_arrival_first() -> void:
 # ── Contribute promotion ──────────────────────────────────────────────────────
 
 func test_promote_to_contributes_from_satisfied() -> void:
-	_plugin._on_demand_changed("commercial_demand", 20.0)
+	_plugin._on_demand_changed("commercial", 20.0)
 	_plugin._on_unique_placed("building_members_club")
 	assert_eq(_plugin.get_state("aristocrat_commercial"), CharSysCls.CharState.SATISFIED)
 
@@ -169,7 +169,7 @@ func test_promote_noop_from_wrong_state() -> void:
 # ── Recheck arrivals at boot (seed-demand-100 case) ───────────────────────────
 
 func test_recheck_fires_arrival_when_demand_above_at_boot() -> void:
-	_stub_demand.set_value("commercial_demand", 50.0)
+	_stub_demand.set_value("commercial", 50.0)
 
 	watch_signals(GameEvents)
 	_plugin._recheck_all_arrivals()
@@ -179,7 +179,7 @@ func test_recheck_fires_arrival_when_demand_above_at_boot() -> void:
 # ── Persistence ───────────────────────────────────────────────────────────────
 
 func test_state_survives_map_swap() -> void:
-	_plugin._on_demand_changed("commercial_demand", 20.0)
+	_plugin._on_demand_changed("commercial", 20.0)
 	# Swap the map in, like after a load — character state dict lives on DataMap.
 	var new_map := DataMap.new()
 	new_map.character_states = GameState.map.character_states.duplicate()

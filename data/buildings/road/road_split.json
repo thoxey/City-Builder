@@ -35,6 +35,15 @@
           0
         ]
       ]
+    },
+    {
+      "type": "AttractivenessProfile",
+      "base": 0,
+      "residential": 0,
+      "commercial": 10,
+      "industrial": 10,
+      "nature": -10,
+      "radius": 1
     }
   ],
   "tags": []

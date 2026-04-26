@@ -33,6 +33,15 @@
         "building_postwar_tower_block"
       ],
       "desirability_boost": 0.05
+    },
+    {
+      "type": "AttractivenessProfile",
+      "base": 20,
+      "residential": 20,
+      "commercial": 10,
+      "industrial": 0,
+      "nature": 0,
+      "radius": 1
     }
   ],
   "tags": []

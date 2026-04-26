@@ -40,7 +40,7 @@ func _plugin_ready() -> void:
 
 func _on_placed(pos: Vector3i, idx: int, _orient: int) -> void:
 	var profile := GameState.structures[idx].find_metadata(BuildingProfile) as BuildingProfile
-	if not profile or profile.category != "workplace": return
+	if not profile or profile.category != "industrial": return
 	_register(Vector2i(pos.x, pos.z), profile.capacity, profile.active_start, profile.active_end)
 
 func _on_demolished(pos: Vector3i) -> void:
@@ -59,7 +59,7 @@ func _on_map_loaded(_map) -> void:
 		var sid: int = entry.get("structure", -1)
 		if sid < 0 or sid >= GameState.structures.size(): continue
 		var profile := GameState.structures[sid].find_metadata(BuildingProfile) as BuildingProfile
-		if not profile or profile.category != "workplace": continue
+		if not profile or profile.category != "industrial": continue
 		_register(entry["anchor"], profile.capacity, profile.active_start, profile.active_end)
 
 func _register(anchor: Vector2i, capacity: int, start: float, end: float) -> void:

@@ -68,10 +68,21 @@ export type ProfileType =
   | "BuildingProfile"
   | "UniqueProfile"
   | "GenericTierProfile"
-  | "RoadMetadata";
+  | "RoadMetadata"
+  | "AttractivenessProfile";
 
 export interface BuildingMetadataProfile {
   type: "BuildingMetadata";
+}
+
+export interface AttractivenessProfileEntry {
+  type: "AttractivenessProfile";
+  base: number;
+  residential: number;
+  commercial: number;
+  industrial: number;
+  nature: number;
+  radius: number;
 }
 
 export interface BuildingProfile {
@@ -112,7 +123,8 @@ export type Profile =
   | BuildingProfile
   | UniqueProfile
   | GenericTierProfile
-  | RoadMetadataProfile;
+  | RoadMetadataProfile
+  | AttractivenessProfileEntry;
 
 export interface BuildingDoc {
   building_id: string;
@@ -197,9 +209,9 @@ export interface NotificationPayload {
 export type EventPayload = DialoguePayload | NewspaperPayload | NotificationPayload;
 
 export type BucketTypeId =
-  | "housing_demand"
-  | "industrial_demand"
-  | "commercial_demand"
+  | "residential"
+  | "industrial"
+  | "commercial"
   | "desirability";
 
 export interface EventTrigger {
