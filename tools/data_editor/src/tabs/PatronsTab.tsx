@@ -100,7 +100,7 @@ export function PatronsTab() {
         character_ids: doc.character_ids.filter((x) => x !== ""),
       };
       await writeJson(["data", "patrons", `${doc.patron_id}.json`], toSave);
-      patchPatron(toSave);
+      await patchPatron(toSave);
       setIsNew(false);
       setSelectedId(doc.patron_id);
     } catch (e) {

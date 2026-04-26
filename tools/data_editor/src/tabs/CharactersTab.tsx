@@ -121,7 +121,7 @@ export function CharactersTab() {
     setSaveError(null);
     try {
       await writeJson(["data", "characters", `${doc.character_id}.json`], doc);
-      patchCharacter(doc);
+      await patchCharacter(doc);
       setIsNew(false);
       setSelectedId(doc.character_id);
     } catch (e) {
