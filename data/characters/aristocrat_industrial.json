@@ -1,5 +1,6 @@
 {
   "character_id": "aristocrat_industrial",
+  "character_type": "character",
   "display_name": "Sir Reginald Cogsworth",
   "bio": "Third-generation industrialist. Loves a working chimney.",
   "patron_id": "aristocrat",
@@ -7,5 +8,6 @@
   "arrival_threshold": 10,
   "arrival_requires_tier": 1,
   "want_building_id": "building_crazy_golf",
-  "portrait": "res://data/characters/aristocrat_industrial/portrait.png"
+  "portrait": "res://data/characters/aristocrat_industrial/portrait.png",
+  "talking_videos": []
 }

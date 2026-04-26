@@ -31,21 +31,36 @@ export function validateCharacter(
   if (!doc.display_name.trim()) warnings.push("display_name is empty");
   if (!doc.bio.trim()) warnings.push("bio is empty");
 
-  if (!doc.patron_id) errors.push("patron_id is required");
-  else if (!manifest.patrons.some((p) => p.patron_id === doc.patron_id))
-    errors.push(`patron_id "${doc.patron_id}" not in manifest — author patron first`);
+  // Quest fields only matter for the standard "character" type. Patron /
+  // narrator / guide can speak through dialogue without participating in the
+  // arrival → want → satisfied state machine.
+  if (doc.character_type === "character") {
+    if (!doc.patron_id) errors.push("patron_id is required");
+    else if (!manifest.patrons.some((p) => p.patron_id === doc.patron_id))
+      errors.push(`patron_id "${doc.patron_id}" not in manifest — author patron first`);
 
-  if (!doc.associated_bucket) errors.push("associated_bucket is required");
+    if (!doc.associated_bucket) errors.push("associated_bucket is required");
 
-  if (doc.arrival_threshold < 0) errors.push("arrival_threshold must be ≥ 0");
-  if (doc.arrival_requires_tier < 1 || doc.arrival_requires_tier > 3)
-    errors.push("arrival_requires_tier must be 1, 2, or 3");
+    if (doc.arrival_threshold < 0) errors.push("arrival_threshold must be ≥ 0");
+    if (doc.arrival_requires_tier < 1 || doc.arrival_requires_tier > 3)
+      errors.push("arrival_requires_tier must be 1, 2, or 3");
 
-  if (doc.want_building_id) {
-    if (!manifest.buildings.some((b) => b.building_id === doc.want_building_id))
-      errors.push(`want_building_id "${doc.want_building_id}" not in manifest`);
-  } else {
-    warnings.push("want_building_id is empty — character will never become satisfied");
+    if (doc.want_building_id) {
+      if (!manifest.buildings.some((b) => b.building_id === doc.want_building_id))
+        errors.push(`want_building_id "${doc.want_building_id}" not in manifest`);
+    } else {
+      warnings.push("want_building_id is empty — character will never become satisfied");
+    }
+  } else if (doc.character_type === "patron") {
+    if (!doc.patron_id)
+      errors.push("patron-type characters must reference the patron via patron_id");
+    else if (!manifest.patrons.some((p) => p.patron_id === doc.patron_id))
+      errors.push(`patron_id "${doc.patron_id}" not in manifest`);
+  }
+
+  for (const path of doc.talking_videos) {
+    if (path && !path.startsWith("res://"))
+      warnings.push(`talking_video path "${path}" should start with res://`);
   }
 
   return { errors, warnings };

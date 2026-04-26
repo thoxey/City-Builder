@@ -83,6 +83,7 @@ func _scan_characters() -> Array:
 		if d.is_empty(): continue
 		out.append({
 			"character_id":         String(d.get("character_id", "")),
+			"character_type":       String(d.get("character_type", "character")),
 			"display_name":         String(d.get("display_name", "")),
 			"bio":                  String(d.get("bio", "")),
 			"patron_id":            String(d.get("patron_id", "")),
@@ -91,6 +92,7 @@ func _scan_characters() -> Array:
 			"arrival_requires_tier": int(d.get("arrival_requires_tier", 1)),
 			"want_building_id":     String(d.get("want_building_id", "")),
 			"portrait":             String(d.get("portrait", "")),
+			"talking_videos":       _to_string_array(d.get("talking_videos", [])),
 			"_path":                path,
 		})
 	out.sort_custom(func(a, b): return a["character_id"] < b["character_id"])
@@ -247,3 +249,9 @@ func _category_from_path(path: String) -> String:
 	var parts := rel.split("/")
 	if parts.size() >= 2: return parts[0]
 	return ""
+
+func _to_string_array(v: Variant) -> Array:
+	if typeof(v) != TYPE_ARRAY: return []
+	var out: Array = []
+	for item in (v as Array): out.append(String(item))
+	return out

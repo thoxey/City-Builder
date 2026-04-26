@@ -12,8 +12,11 @@ export type PatronState = "LOCKED" | "LANDMARK_AVAILABLE" | "COMPLETED";
 export type BuildingCategory = "road" | "nature" | "generic" | "unique";
 export type EventType = "dialogue" | "newspaper" | "notification";
 
+export type CharacterType = "character" | "patron" | "narrator" | "guide";
+
 export interface ManifestCharacter {
   character_id: string;
+  character_type: CharacterType;
   display_name: string;
   bio: string;
   patron_id: string;
@@ -22,6 +25,7 @@ export interface ManifestCharacter {
   arrival_requires_tier: number;
   want_building_id: string;
   portrait: string;
+  talking_videos: string[];
   _path: string;
 }
 
@@ -250,6 +254,7 @@ export interface Manifest {
 
 export interface CharacterDoc {
   character_id: string;
+  character_type: CharacterType;
   display_name: string;
   bio: string;
   patron_id: string;
@@ -258,6 +263,7 @@ export interface CharacterDoc {
   arrival_requires_tier: number;
   want_building_id: string;
   portrait: string;
+  talking_videos: string[];
 }
 
 export interface PatronDoc {

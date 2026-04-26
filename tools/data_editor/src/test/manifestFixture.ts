@@ -21,6 +21,7 @@ export function makeManifest(overrides: Partial<Manifest> = {}): Manifest {
     characters: [
       {
         character_id: "aristocrat_commercial",
+        character_type: "character",
         display_name: "Lord Ashworth",
         bio: "Old money.",
         patron_id: "aristocrat",
@@ -29,10 +30,12 @@ export function makeManifest(overrides: Partial<Manifest> = {}): Manifest {
         arrival_requires_tier: 1,
         want_building_id: "building_members_club",
         portrait: "",
+        talking_videos: [],
         _path: "res://data/characters/aristocrat_commercial.json",
       },
       {
         character_id: "aristocrat_industrial",
+        character_type: "character",
         display_name: "Industrial Lord",
         bio: "",
         patron_id: "aristocrat",
@@ -41,10 +44,12 @@ export function makeManifest(overrides: Partial<Manifest> = {}): Manifest {
         arrival_requires_tier: 1,
         want_building_id: "building_brewery",
         portrait: "",
+        talking_videos: [],
         _path: "res://data/characters/aristocrat_industrial.json",
       },
       {
         character_id: "aristocrat_residential",
+        character_type: "character",
         display_name: "Residential Lord",
         bio: "",
         patron_id: "aristocrat",
@@ -53,6 +58,7 @@ export function makeManifest(overrides: Partial<Manifest> = {}): Manifest {
         arrival_requires_tier: 1,
         want_building_id: "building_mansion",
         portrait: "",
+        talking_videos: [],
         _path: "res://data/characters/aristocrat_residential.json",
       },
     ],

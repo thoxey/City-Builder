@@ -93,12 +93,16 @@ func _parse_one(path: String) -> Dictionary:
 	return data
 
 ## Ensure every loaded character has an entry in the persistence dict so the
-## save format is stable even before any signal fires.
+## save format is stable even before any signal fires. Non-quest types
+## (patron / narrator / guide) are skipped — they never participate in the
+## state machine.
 func _seed_initial_states() -> void:
 	if GameState == null or GameState.map == null:
 		return
 	var states: Dictionary = GameState.map.character_states
 	for cid in _defs:
+		if not is_quest_character(cid):
+			continue
 		if not states.has(cid):
 			states[cid] = CharState.NOT_ARRIVED
 
@@ -106,6 +110,8 @@ func _seed_initial_states() -> void:
 
 func _on_demand_changed(bucket_id: String, value: float) -> void:
 	for cid in _defs:
+		if not is_quest_character(cid):
+			continue
 		var def: Dictionary = _defs[cid]
 		var def_bucket: String = def.get("associated_bucket", "")
 		if _category_to_bucket_id(def_bucket) != bucket_id:
@@ -118,6 +124,8 @@ func _on_demand_changed(bucket_id: String, value: float) -> void:
 
 func _on_unique_placed(building_id: String) -> void:
 	for cid in _defs:
+		if not is_quest_character(cid):
+			continue
 		var def: Dictionary = _defs[cid]
 		if String(def.get("want_building_id", "")) != building_id:
 			continue
@@ -214,6 +222,8 @@ func _recheck_all_arrivals() -> void:
 	if _demand == null:
 		return
 	for cid in _defs:
+		if not is_quest_character(cid):
+			continue
 		if get_state(cid) != CharState.NOT_ARRIVED:
 			continue
 		var def: Dictionary = _defs[cid]
@@ -235,6 +245,31 @@ func all_character_ids() -> Array:
 func count_in_state(s: int) -> int:
 	var n := 0
 	for cid in _defs:
+		if not is_quest_character(cid):
+			continue
 		if get_state(cid) == s:
 			n += 1
 	return n
+
+## "character" is the only type that participates in the arrival/want/satisfied
+## state machine. patron / narrator / guide types are dialogue-only — they're
+## loaded so DialoguePlugin can resolve the speaker but never enter the state
+## map. Missing field defaults to "character" for back-compat with files
+## authored before this field existed.
+func is_quest_character(cid: String) -> bool:
+	var def: Dictionary = _defs.get(cid, {})
+	if def.is_empty():
+		return false
+	return String(def.get("character_type", "character")) == "character"
+
+func get_character_type(cid: String) -> String:
+	return String(_defs.get(cid, {}).get("character_type", "character"))
+
+func get_talking_videos(cid: String) -> Array:
+	var raw: Variant = _defs.get(cid, {}).get("talking_videos", [])
+	if typeof(raw) != TYPE_ARRAY:
+		return []
+	var out: Array = []
+	for v in (raw as Array):
+		out.append(String(v))
+	return out

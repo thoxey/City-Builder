@@ -5,6 +5,7 @@ import type { CharacterDoc, PatronDoc } from "./types";
 
 const baseChar = (): CharacterDoc => ({
   character_id: "farmer_commercial",
+  character_type: "character",
   display_name: "Corn Queen",
   bio: "runs the market",
   patron_id: "aristocrat",       // reuses the existing patron in fixture
@@ -13,6 +14,7 @@ const baseChar = (): CharacterDoc => ({
   arrival_requires_tier: 1,
   want_building_id: "building_members_club",
   portrait: "",
+  talking_videos: [],
 });
 
 describe("validateCharacter", () => {
@@ -102,6 +104,7 @@ describe("validatePatron", () => {
         ...makeManifest().characters,
         {
           character_id: "farmer_commercial_alt",
+          character_type: "character",
           display_name: "Alt",
           bio: "",
           patron_id: "",
@@ -110,6 +113,7 @@ describe("validatePatron", () => {
           arrival_requires_tier: 1,
           want_building_id: "",
           portrait: "",
+          talking_videos: [],
           _path: "",
         },
       ],

@@ -6,6 +6,7 @@ import { validateCharacter } from "../validators";
 
 const EMPTY: CharacterDoc = {
   character_id: "",
+  character_type: "character",
   display_name: "",
   bio: "",
   patron_id: "",
@@ -14,6 +15,7 @@ const EMPTY: CharacterDoc = {
   arrival_requires_tier: 1,
   want_building_id: "",
   portrait: "",
+  talking_videos: [],
 };
 
 function manifestToDoc(m: Manifest, id: string): CharacterDoc | null {
@@ -21,6 +23,7 @@ function manifestToDoc(m: Manifest, id: string): CharacterDoc | null {
   if (!c) return null;
   return {
     character_id: c.character_id,
+    character_type: c.character_type ?? "character",
     display_name: c.display_name,
     bio: c.bio,
     patron_id: c.patron_id,
@@ -29,6 +32,7 @@ function manifestToDoc(m: Manifest, id: string): CharacterDoc | null {
     arrival_requires_tier: c.arrival_requires_tier,
     want_building_id: c.want_building_id,
     portrait: c.portrait,
+    talking_videos: c.talking_videos ?? [],
   };
 }
 

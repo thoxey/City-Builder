@@ -18,6 +18,7 @@ function sweep(manifest: Manifest): Row[] {
   for (const c of manifest.characters) {
     const doc: CharacterDoc = {
       character_id: c.character_id,
+      character_type: c.character_type ?? "character",
       display_name: c.display_name,
       bio: c.bio,
       patron_id: c.patron_id,
@@ -26,6 +27,7 @@ function sweep(manifest: Manifest): Row[] {
       arrival_requires_tier: c.arrival_requires_tier,
       want_building_id: c.want_building_id,
       portrait: c.portrait,
+      talking_videos: c.talking_videos ?? [],
     };
     const r = validateCharacter(doc, manifest, {
       isNew: false,
