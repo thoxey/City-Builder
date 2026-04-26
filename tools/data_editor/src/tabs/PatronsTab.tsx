@@ -40,7 +40,7 @@ function manifestToDoc(m: Manifest, id: string): PatronDoc | null {
 }
 
 export function PatronsTab() {
-  const { manifest, writeJson, reloadManifest } = useApp();
+  const { manifest, writeJson, patchPatron } = useApp();
   if (!manifest) return null;
 
   const [selectedId, setSelectedId] = useState<string | null>(
@@ -100,7 +100,7 @@ export function PatronsTab() {
         character_ids: doc.character_ids.filter((x) => x !== ""),
       };
       await writeJson(["data", "patrons", `${doc.patron_id}.json`], toSave);
-      await reloadManifest();
+      patchPatron(toSave);
       setIsNew(false);
       setSelectedId(doc.patron_id);
     } catch (e) {

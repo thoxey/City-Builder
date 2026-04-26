@@ -33,7 +33,7 @@ function manifestToDoc(m: Manifest, id: string): CharacterDoc | null {
 }
 
 export function CharactersTab() {
-  const { manifest, writeJson, reloadManifest } = useApp();
+  const { manifest, writeJson, patchCharacter } = useApp();
   if (!manifest) return null;
 
   const [selectedId, setSelectedId] = useState<string | null>(
@@ -96,7 +96,7 @@ export function CharactersTab() {
     setSaveError(null);
     try {
       await writeJson(["data", "characters", `${doc.character_id}.json`], doc);
-      await reloadManifest();
+      patchCharacter(doc);
       setIsNew(false);
       setSelectedId(doc.character_id);
     } catch (e) {
