@@ -1,8 +1,15 @@
 import { useEffect, useMemo, useState } from "react";
 import { useApp } from "../store";
 import { Sidebar } from "../components/Sidebar";
-import type { Bucket, CharacterDoc, Manifest } from "../types";
+import type { Bucket, CharacterDoc, CharacterType, Manifest } from "../types";
 import { validateCharacter } from "../validators";
+
+const CHARACTER_TYPES: ReadonlyArray<{ id: CharacterType; label: string; hint: string }> = [
+  { id: "character", label: "character", hint: "Quest-driven — arrives, has a want, becomes satisfied." },
+  { id: "patron",    label: "patron",    hint: "The patron themselves speaking. Needs patron_id; no quest fields." },
+  { id: "narrator",  label: "narrator",  hint: "Off-screen voice. Dialogue-only, no quest fields." },
+  { id: "guide",     label: "guide",     hint: "Tutorial / hint speaker. Dialogue-only, no quest fields." },
+];
 
 const EMPTY: CharacterDoc = {
   character_id: "",
@@ -57,11 +64,20 @@ export function CharactersTab() {
 
   const items = useMemo(
     () =>
-      manifest.characters.map((c) => ({
-        id: c.character_id,
-        primary: c.display_name || c.character_id,
-        secondary: `${c.patron_id || "—"} · ${c.associated_bucket || "—"}`,
-      })),
+      manifest.characters.map((c) => {
+        const type = c.character_type ?? "character";
+        const secondary =
+          type === "character"
+            ? `${c.patron_id || "—"} · ${c.associated_bucket || "—"}`
+            : type === "patron"
+              ? `patron · ${c.patron_id || "—"}`
+              : type;
+        return {
+          id: c.character_id,
+          primary: c.display_name || c.character_id,
+          secondary,
+        };
+      }),
     [manifest.characters]
   );
 
@@ -74,12 +90,14 @@ export function CharactersTab() {
     setDoc((d) => ({ ...d, [k]: v }));
 
   // Auto-suggest character_id as "<patron>_<bucket>" when both set and id is empty.
+  // Only meaningful for the quest-driven character type.
   useEffect(() => {
     if (!isNew) return;
     if (doc.character_id) return;
+    if (doc.character_type !== "character") return;
     if (doc.patron_id && doc.associated_bucket)
       setDoc((d) => ({ ...d, character_id: `${d.patron_id}_${d.associated_bucket}` }));
-  }, [isNew, doc.character_id, doc.patron_id, doc.associated_bucket]);
+  }, [isNew, doc.character_id, doc.character_type, doc.patron_id, doc.associated_bucket]);
 
   const handleNew = () => {
     setIsNew(true);
@@ -140,6 +158,21 @@ export function CharactersTab() {
         </h2>
 
         <div className="form-grid">
+          <label>character_type</label>
+          <div>
+            <select
+              value={doc.character_type}
+              onChange={(e) => update("character_type", e.target.value as CharacterType)}
+            >
+              {CHARACTER_TYPES.map((t) => (
+                <option key={t.id} value={t.id}>{t.label}</option>
+              ))}
+            </select>
+            <div className="inline-note">
+              {CHARACTER_TYPES.find((t) => t.id === doc.character_type)?.hint}
+            </div>
+          </div>
+
           <label>character_id</label>
           <div>
             <input
@@ -167,72 +200,80 @@ export function CharactersTab() {
             onChange={(e) => update("bio", e.target.value)}
           />
 
-          <label>patron_id</label>
-          <select
-            value={doc.patron_id}
-            onChange={(e) => update("patron_id", e.target.value)}
-          >
-            <option value="">—</option>
-            {manifest.patrons.map((p) => (
-              <option key={p.patron_id} value={p.patron_id}>
-                {p.display_name || p.patron_id}
-              </option>
-            ))}
-          </select>
-
-          <label>associated_bucket</label>
-          <select
-            value={doc.associated_bucket}
-            onChange={(e) => update("associated_bucket", e.target.value as Bucket | "")}
-          >
-            <option value="">—</option>
-            {manifest.buckets.map((b) => (
-              <option key={b} value={b}>{b}</option>
-            ))}
-          </select>
-
-          <label>arrival_threshold</label>
-          <input
-            type="number"
-            min={0}
-            value={doc.arrival_threshold}
-            onChange={(e) => update("arrival_threshold", Number(e.target.value))}
-          />
-
-          <label>arrival_requires_tier</label>
-          <input
-            type="number"
-            min={1}
-            max={3}
-            value={doc.arrival_requires_tier}
-            onChange={(e) => update("arrival_requires_tier", Number(e.target.value))}
-          />
-
-          <label>want_building_id</label>
-          <div>
-            <select
-              value={doc.want_building_id}
-              onChange={(e) => update("want_building_id", e.target.value)}
-            >
-              <option value="">—</option>
-              {wantBuildings.map((b) => (
-                <option key={b.building_id} value={b.building_id}>
-                  {b.display_name || b.building_id}
-                </option>
-              ))}
-              {doc.want_building_id &&
-                !wantBuildings.some((b) => b.building_id === doc.want_building_id) && (
-                  <option value={doc.want_building_id}>
-                    {doc.want_building_id} (unfiltered)
+          {(doc.character_type === "character" || doc.character_type === "patron") && (
+            <>
+              <label>patron_id</label>
+              <select
+                value={doc.patron_id}
+                onChange={(e) => update("patron_id", e.target.value)}
+              >
+                <option value="">—</option>
+                {manifest.patrons.map((p) => (
+                  <option key={p.patron_id} value={p.patron_id}>
+                    {p.display_name || p.patron_id}
                   </option>
-                )}
-            </select>
-            <div className="inline-note">
-              Filtered to <code>chain_role=want</code>
-              {doc.patron_id && ` · patron=${doc.patron_id}`}
-              {doc.associated_bucket && ` · bucket=${doc.associated_bucket}`}.
-            </div>
-          </div>
+                ))}
+              </select>
+            </>
+          )}
+
+          {doc.character_type === "character" && (
+            <>
+              <label>associated_bucket</label>
+              <select
+                value={doc.associated_bucket}
+                onChange={(e) => update("associated_bucket", e.target.value as Bucket | "")}
+              >
+                <option value="">—</option>
+                {manifest.buckets.map((b) => (
+                  <option key={b} value={b}>{b}</option>
+                ))}
+              </select>
+
+              <label>arrival_threshold</label>
+              <input
+                type="number"
+                min={0}
+                value={doc.arrival_threshold}
+                onChange={(e) => update("arrival_threshold", Number(e.target.value))}
+              />
+
+              <label>arrival_requires_tier</label>
+              <input
+                type="number"
+                min={1}
+                max={3}
+                value={doc.arrival_requires_tier}
+                onChange={(e) => update("arrival_requires_tier", Number(e.target.value))}
+              />
+
+              <label>want_building_id</label>
+              <div>
+                <select
+                  value={doc.want_building_id}
+                  onChange={(e) => update("want_building_id", e.target.value)}
+                >
+                  <option value="">—</option>
+                  {wantBuildings.map((b) => (
+                    <option key={b.building_id} value={b.building_id}>
+                      {b.display_name || b.building_id}
+                    </option>
+                  ))}
+                  {doc.want_building_id &&
+                    !wantBuildings.some((b) => b.building_id === doc.want_building_id) && (
+                      <option value={doc.want_building_id}>
+                        {doc.want_building_id} (unfiltered)
+                      </option>
+                    )}
+                </select>
+                <div className="inline-note">
+                  Filtered to <code>chain_role=want</code>
+                  {doc.patron_id && ` · patron=${doc.patron_id}`}
+                  {doc.associated_bucket && ` · bucket=${doc.associated_bucket}`}.
+                </div>
+              </div>
+            </>
+          )}
 
           <label>portrait</label>
           <div>
