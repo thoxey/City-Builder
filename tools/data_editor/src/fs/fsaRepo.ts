@@ -127,4 +127,8 @@ export class FsaRepo implements Repo {
     const file = await dir.getFileHandle(filename);
     return file.getFile();
   }
+
+  async readJson(path: string[]): Promise<unknown> {
+    return JSON.parse(await readText(this.handle, path));
+  }
 }
