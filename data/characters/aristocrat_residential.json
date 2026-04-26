@@ -9,5 +9,10 @@
   "arrival_requires_tier": 1,
   "want_building_id": "building_pirate_radio",
   "portrait": "res://data/characters/aristocrat_residential/portrait.png",
-  "talking_videos": []
+  "talking_videos": [
+    "res://data/characters/aristocrat_residential/talking_1.ogv",
+    "res://data/characters/aristocrat_residential/talking_2.ogv",
+    "res://data/characters/aristocrat_residential/talking_3.ogv",
+    "res://data/characters/aristocrat_residential/talking_4.ogv"
+  ]
 }

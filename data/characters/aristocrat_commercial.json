@@ -9,5 +9,10 @@
   "arrival_requires_tier": 1,
   "want_building_id": "building_members_club",
   "portrait": "res://data/characters/aristocrat_commercial/portrait.png",
-  "talking_videos": []
+  "talking_videos": [
+    "res://data/characters/aristocrat_commercial/talking_1.ogv",
+    "res://data/characters/aristocrat_commercial/talking_2.ogv",
+    "res://data/characters/aristocrat_commercial/talking_3.ogv",
+    "res://data/characters/aristocrat_commercial/talking_4.ogv"
+  ]
 }
