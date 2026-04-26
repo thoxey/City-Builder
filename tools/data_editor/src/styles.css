@@ -629,3 +629,45 @@ input:focus, textarea:focus, select:focus { outline: 1px solid var(--accent); }
   height: 80px;
 }
 .model-preview.error { color: var(--danger); }
+
+/* Character portrait + talking-video previews. Compact, sit beside or under
+   the path input. */
+.media-field {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 6px;
+  align-items: start;
+}
+.media-field .media-preview {
+  grid-column: 1 / -1;
+}
+.media-preview {
+  display: block;
+  margin-top: 4px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--panel-2);
+  overflow: hidden;
+}
+.media-preview.image {
+  max-width: 160px;
+  max-height: 160px;
+  object-fit: cover;
+}
+.media-preview.video {
+  width: 100%;
+  max-width: 320px;
+  max-height: 240px;
+}
+.media-preview.empty,
+.media-preview.error,
+.media-preview.loading {
+  display: grid;
+  place-items: center;
+  color: var(--text-dim);
+  font-size: 0.85em;
+  font-style: italic;
+  height: 32px;
+  padding: 0 8px;
+}
+.media-preview.error { color: var(--danger); }

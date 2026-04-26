@@ -1,8 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { useApp } from "../store";
 import { Sidebar } from "../components/Sidebar";
+import { MediaPreview } from "../components/MediaPreview";
 import type { Bucket, CharacterDoc, CharacterType, Manifest } from "../types";
 import { validateCharacter } from "../validators";
+
+const MAX_TALKING_VIDEOS = 8;
 
 const CHARACTER_TYPES: ReadonlyArray<{ id: CharacterType; label: string; hint: string }> = [
   { id: "character", label: "character", hint: "Quest-driven — arrives, has a want, becomes satisfied." },
@@ -276,15 +279,57 @@ export function CharactersTab() {
           )}
 
           <label>portrait</label>
-          <div>
+          <div className="media-field">
             <input
               value={doc.portrait}
               onChange={(e) => update("portrait", e.target.value)}
               placeholder="res://data/characters/<id>/portrait.png"
             />
-            <div className="inline-note">
-              Path only in Pass A — upload UI comes in Pass C.
-            </div>
+            <MediaPreview path={doc.portrait} kind="image" />
+          </div>
+
+          <label>talking_videos</label>
+          <div>
+            {doc.talking_videos.length === 0 && (
+              <div className="inline-note">
+                No talking videos. Add one or more <code>res://</code>-prefixed{" "}
+                <code>.ogv</code> paths.
+              </div>
+            )}
+            {doc.talking_videos.map((p, i) => (
+              <div key={i} className="media-field" style={{ marginBottom: 8 }}>
+                <input
+                  value={p}
+                  onChange={(e) => {
+                    const next = [...doc.talking_videos];
+                    next[i] = e.target.value;
+                    update("talking_videos", next);
+                  }}
+                  placeholder={`res://data/characters/${doc.character_id || "<id>"}/talking_${i + 1}.ogv`}
+                />
+                <button
+                  type="button"
+                  onClick={() => {
+                    const next = doc.talking_videos.filter((_, j) => j !== i);
+                    update("talking_videos", next);
+                  }}
+                  title="Remove this video"
+                >
+                  ✕
+                </button>
+                <MediaPreview path={p} kind="video" />
+              </div>
+            ))}
+            {doc.talking_videos.length < MAX_TALKING_VIDEOS && (
+              <button
+                type="button"
+                onClick={() =>
+                  update("talking_videos", [...doc.talking_videos, ""])
+                }
+              >
+                + Add talking video
+              </button>
+            )}
           </div>
         </div>
 
