@@ -56,6 +56,12 @@ func _plugin_ready() -> void:
 	# character's threshold (e.g. seeded starter demand of 100) triggers arrival.
 	_recheck_all_arrivals()
 
+	# Guides arrive on game start (no demand prerequisite). Deferred because
+	# DialoguePlugin's _plugin_ready (which connects to character_arrived)
+	# hasn't run yet at this point — plugins ready in topo order, but signal
+	# connections only catch emissions after they're hooked up.
+	call_deferred("_trigger_guide_arrivals")
+
 	print("[CharacterSystem] loaded: count=%d" % _defs.size())
 
 # ── Loading ───────────────────────────────────────────────────────────────────
@@ -92,16 +98,16 @@ func _parse_one(path: String) -> Dictionary:
 		return {}
 	return data
 
-## Ensure every loaded character has an entry in the persistence dict so the
-## save format is stable even before any signal fires. Non-quest types
-## (patron / narrator / guide) are skipped — they never participate in the
-## state machine.
+## Ensure every loaded character that tracks arrival state has an entry in
+## the persistence dict so the save format is stable even before any signal
+## fires. Patron / narrator types are dialogue-only and never enter the
+## state map; "character" and "guide" both go through arrival.
 func _seed_initial_states() -> void:
 	if GameState == null or GameState.map == null:
 		return
 	var states: Dictionary = GameState.map.character_states
 	for cid in _defs:
-		if not is_quest_character(cid):
+		if not _tracks_arrival(cid):
 			continue
 		if not states.has(cid):
 			states[cid] = CharState.NOT_ARRIVED
@@ -139,6 +145,10 @@ func _on_map_loaded(_m: DataMap) -> void:
 	# any character still in NOT_ARRIVED against current demand values.
 	_seed_initial_states()
 	_recheck_all_arrivals()
+	# Same deferred-fire reasoning as in _plugin_ready: dialogue is already
+	# connected here, but mapping load events / save restores happen during
+	# signal handling and we don't want to fire-while-handling.
+	call_deferred("_trigger_guide_arrivals")
 
 # ── Transitions ───────────────────────────────────────────────────────────────
 
@@ -252,10 +262,11 @@ func count_in_state(s: int) -> int:
 	return n
 
 ## "character" is the only type that participates in the arrival/want/satisfied
-## state machine. patron / narrator / guide types are dialogue-only — they're
-## loaded so DialoguePlugin can resolve the speaker but never enter the state
-## map. Missing field defaults to "character" for back-compat with files
-## authored before this field existed.
+## state machine. "guide" only goes through arrival (NOT_ARRIVED → ARRIVED on
+## game start). patron / narrator are dialogue-only — loaded so DialoguePlugin
+## can resolve the speaker but never enter the state map. Missing field
+## defaults to "character" for back-compat with files authored before this
+## field existed.
 func is_quest_character(cid: String) -> bool:
 	var def: Dictionary = _defs.get(cid, {})
 	if def.is_empty():
@@ -264,6 +275,27 @@ func is_quest_character(cid: String) -> bool:
 
 func get_character_type(cid: String) -> String:
 	return String(_defs.get(cid, {}).get("character_type", "character"))
+
+## True for types that go through the arrival event — quest characters and
+## guides. Patron / narrator types are dialogue-only and are not seeded into
+## the state map.
+func _tracks_arrival(cid: String) -> bool:
+	var t := get_character_type(cid)
+	return t == "character" or t == "guide"
+
+## Guides arrive on game start (or first map load if added mid-run). One-shot
+## per save: characters already at ARRIVED or beyond aren't re-fired. Deferred
+## from _plugin_ready / _on_map_loaded so DialoguePlugin's signal connection
+## is in place when we emit.
+func _trigger_guide_arrivals() -> void:
+	for cid in _defs:
+		if get_character_type(cid) != "guide":
+			continue
+		if get_state(cid) != CharState.NOT_ARRIVED:
+			continue
+		_set_state(cid, CharState.ARRIVED)
+		print("[CharacterSystem] guide_arrived: id=%s" % cid)
+		GameEvents.character_arrived.emit(cid)
 
 func get_talking_videos(cid: String) -> Array:
 	var raw: Variant = _defs.get(cid, {}).get("talking_videos", [])
