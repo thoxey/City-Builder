@@ -4,10 +4,15 @@ extends PluginBase
 ##
 ## States live in GameState.map.character_states (persisted to save).
 ## Transitions:
-##   NOT_ARRIVED → ARRIVED               on demand_changed(bucket >= threshold)
+##   NOT_ARRIVED → ARRIVED               on fulfilled-demand >= threshold
 ##   ARRIVED     → WANT_REVEALED         on dialogue close (or auto in M3 stub)
 ##   WANT_REVEALED → SATISFIED           on unique_placed(building_id == want)
 ##   SATISFIED   → CONTRIBUTES_TO_LANDMARK   on PatronSystem landmark-placed
+##
+## Arrival is pegged to FULFILLED demand — a character shows up once the city
+## has built enough of their bucket, not when it has unmet need. This keeps
+## narrative beats tied to player progress (city scale) rather than to
+## demand-pressure spikes that vanish the moment housing/shops are placed.
 ##
 ## In M3, dialogue is stubbed — after ARRIVED we auto-advance to WANT_REVEALED
 ## so satisfaction paths remain reachable. When Phase 5's modal lands, remove
@@ -48,12 +53,13 @@ func _plugin_ready() -> void:
 	_load_defs(DATA_DIR)
 	_seed_initial_states()
 
-	GameEvents.demand_unserved_changed.connect(_on_demand_changed)
+	GameEvents.demand_fulfilled_changed.connect(_on_demand_changed)
 	GameEvents.unique_placed.connect(_on_unique_placed)
 	GameEvents.map_loaded.connect(_on_map_loaded)
 
-	# At boot, reconcile against current demand — any bucket already past a
-	# character's threshold (e.g. seeded starter demand of 100) triggers arrival.
+	# At boot, reconcile against current fulfilled demand — any bucket already
+	# past a character's threshold (e.g. carry-over from a save) triggers
+	# arrival immediately rather than waiting for the next signal.
 	_recheck_all_arrivals()
 
 	# Guides arrive on game start (no demand prerequisite). Deferred because
@@ -240,7 +246,7 @@ func _recheck_all_arrivals() -> void:
 		var bucket_id: String = _category_to_bucket_id(def.get("associated_bucket", ""))
 		if bucket_id.is_empty():
 			continue
-		var v: float = _demand.get_value(bucket_id)
+		var v: float = _demand.get_fulfilled(bucket_id)
 		if v >= float(def.get("arrival_threshold", 0)):
 			_trigger_arrival(cid, bucket_id, v)
 

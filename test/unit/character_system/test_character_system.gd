@@ -50,10 +50,10 @@ func before_each() -> void:
 
 func after_each() -> void:
 	if _plugin and is_instance_valid(_plugin):
-		for sname in ["demand_unserved_changed", "unique_placed", "map_loaded"]:
+		for sname in ["demand_fulfilled_changed", "unique_placed", "map_loaded"]:
 			var cb: Callable
 			match sname:
-				"demand_unserved_changed": cb = _plugin._on_demand_changed
+				"demand_fulfilled_changed": cb = _plugin._on_demand_changed
 				"unique_placed":  cb = _plugin._on_unique_placed
 				"map_loaded":     cb = _plugin._on_map_loaded
 			if GameEvents[sname].is_connected(cb):
@@ -194,7 +194,10 @@ class _StubDemand extends PluginBase:
 	var _values: Dictionary = {}
 	func get_plugin_name() -> String: return "_StubDemand"
 	func set_value(type_id: String, v: float) -> void: _values[type_id] = v
+	# Recheck path now reads fulfilled demand. Stub returns the same value
+	# for both getters since tests pin a single number per bucket.
 	func get_value(type_id: String) -> float: return _values.get(type_id, 0.0)
+	func get_fulfilled(type_id: String) -> float: return _values.get(type_id, 0.0)
 
 class _StubUniques extends PluginBase:
 	func get_plugin_name() -> String: return "_StubUniques"
