@@ -16,3 +16,12 @@ mono_crash.*.json
 
 # Kenney ignores
 build/
+
+# macOS
+.DS_Store
+
+# Godot MCP Pro (vendored, per-machine install)
+addons/godot_mcp/
+server/
+.mcp.json
+godot-mcp-pro-*.zip
