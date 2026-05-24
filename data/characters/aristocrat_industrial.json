@@ -5,7 +5,7 @@
   "bio": "Third-generation industrialist. Loves a working chimney.",
   "patron_id": "aristocrat",
   "associated_bucket": "industrial",
-  "arrival_threshold": 10,
+  "arrival_threshold": 10000,
   "arrival_requires_tier": 1,
   "want_building_id": "building_crazy_golf",
   "portrait": "res://data/characters/aristocrat_industrial/portrait.png",

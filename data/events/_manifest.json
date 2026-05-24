@@ -1,1920 +1,1950 @@
 {
-	"bucket_type_ids": [
-		"housing_demand",
-		"industrial_demand",
-		"commercial_demand",
-		"desirability"
-	],
-	"buckets": [
-		"residential",
-		"commercial",
-		"industrial"
-	],
-	"buildings": [
-		{
-			"_path": "res://data/buildings/unique/building_crazy_golf.json",
-			"body": {
-				"building_id": "building_crazy_golf",
-				"category": "unique",
-				"description": "",
-				"display_name": "Crazy Golf",
-				"footprint": [
-					[
-						0.0,
-						0.0
-					]
-				],
-				"model_offset": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"model_path": "res://models/Meshy_AI_Duck_Pond_in_the_Hedg_0403173405/Meshy_AI_Duck_Pond_in_the_Hedg_0403173405_texture.glb",
-				"model_rotation_y": 0.0,
-				"model_scale": 1.0,
-				"profiles": [
-					{
-						"type": "BuildingMetadata"
-					},
-					{
-						"bucket": "industrial",
-						"chain_role": "want",
-						"character_id": "aristocrat_industrial",
-						"desirability_boost": 0.05,
-						"patron_id": "aristocrat",
-						"prerequisite_ids": [
-							"building_pipe_factory"
-						],
-						"prerequisite_threshold": 60.0,
-						"tier": 0.0,
-						"type": "UniqueProfile"
-					}
-				],
-				"tags": []
-			},
-			"bucket": "industrial",
-			"building_id": "building_crazy_golf",
-			"category": "unique",
-			"chain_role": "want",
-			"character_id": "aristocrat_industrial",
-			"display_name": "Crazy Golf",
-			"model_path": "res://models/Meshy_AI_Duck_Pond_in_the_Hedg_0403173405/Meshy_AI_Duck_Pond_in_the_Hedg_0403173405_texture.glb",
-			"patron_id": "aristocrat",
-			"pool_id": "",
-			"tier": 0
-		},
-		{
-			"_path": "res://data/buildings/nature/building_duck_pond.json",
-			"body": {
-				"building_id": "building_duck_pond",
-				"cash_cost": 50.0,
-				"category": "nature",
-				"description": "",
-				"display_name": "Duck Pond",
-				"footprint": [
-					[
-						0.0,
-						0.0
-					]
-				],
-				"model_offset": [
-					0.0,
-					-0.1,
-					0.0
-				],
-				"model_path": "res://models/Meshy_AI_Duck_Pond_in_the_Hedg_0403173405/Meshy_AI_Duck_Pond_in_the_Hedg_0403173405_texture.glb",
-				"model_rotation_y": 0.0,
-				"model_scale": 0.5,
-				"profiles": [],
-				"tags": []
-			},
-			"bucket": "",
-			"building_id": "building_duck_pond",
-			"category": "nature",
-			"chain_role": "",
-			"character_id": "",
-			"display_name": "Duck Pond",
-			"model_path": "res://models/Meshy_AI_Duck_Pond_in_the_Hedg_0403173405/Meshy_AI_Duck_Pond_in_the_Hedg_0403173405_texture.glb",
-			"patron_id": "",
-			"pool_id": "",
-			"tier": 0
-		},
-		{
-			"_path": "res://data/buildings/generic/building_garage.json",
-			"body": {
-				"building_id": "building_garage",
-				"category": "generic",
-				"description": "",
-				"display_name": "Business Park (Garage)",
-				"footprint": [
-					[
-						0.0,
-						0.0
-					]
-				],
-				"model_offset": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"model_path": "res://models/Meshy_AI_Acme_Business_Park__0403170610/Meshy_AI_Acme_Business_Park__0403170610_texture.glb",
-				"model_rotation_y": 0.0,
-				"model_scale": 0.4,
-				"pool_id": "industrial_t1",
-				"profiles": [
-					{
-						"type": "BuildingMetadata"
-					},
-					{
-						"active_end": 18.0,
-						"active_start": 8.0,
-						"capacity": 20.0,
-						"category": "workplace",
-						"type": "BuildingProfile"
-					}
-				],
-				"tags": []
-			},
-			"bucket": "",
-			"building_id": "building_garage",
-			"category": "generic",
-			"chain_role": "",
-			"character_id": "",
-			"display_name": "Business Park (Garage)",
-			"model_path": "res://models/Meshy_AI_Acme_Business_Park__0403170610/Meshy_AI_Acme_Business_Park__0403170610_texture.glb",
-			"patron_id": "",
-			"pool_id": "industrial_t1",
-			"tier": 0
-		},
-		{
-			"_path": "res://data/buildings/unique/building_lumber_mill.json",
-			"body": {
-				"building_id": "building_lumber_mill",
-				"category": "unique",
-				"description": "",
-				"display_name": "Lumber Mill",
-				"footprint": [
-					[
-						0.0,
-						0.0
-					]
-				],
-				"model_offset": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"model_path": "res://models/Meshy_AI_Acme_Business_Park__0403170610/Meshy_AI_Acme_Business_Park__0403170610_texture.glb",
-				"model_rotation_y": 0.0,
-				"model_scale": 0.85,
-				"profiles": [
-					{
-						"type": "BuildingMetadata"
-					},
-					{
-						"active_end": 18.0,
-						"active_start": 8.0,
-						"capacity": 20.0,
-						"category": "workplace",
-						"type": "BuildingProfile"
-					},
-					{
-						"bucket": "industrial",
-						"chain_role": "chain",
-						"character_id": "aristocrat_industrial",
-						"desirability_boost": 0.0,
-						"patron_id": "aristocrat",
-						"prerequisite_ids": [
-							"building_windmill"
-						],
-						"prerequisite_threshold": 30.0,
-						"tier": 2.0,
-						"type": "UniqueProfile"
-					}
-				],
-				"tags": []
-			},
-			"bucket": "industrial",
-			"building_id": "building_lumber_mill",
-			"category": "unique",
-			"chain_role": "chain",
-			"character_id": "aristocrat_industrial",
-			"display_name": "Lumber Mill",
-			"model_path": "res://models/Meshy_AI_Acme_Business_Park__0403170610/Meshy_AI_Acme_Business_Park__0403170610_texture.glb",
-			"patron_id": "aristocrat",
-			"pool_id": "",
-			"tier": 2
-		},
-		{
-			"_path": "res://data/buildings/unique/building_members_club.json",
-			"body": {
-				"building_id": "building_members_club",
-				"category": "unique",
-				"description": "",
-				"display_name": "Private Members' Club",
-				"footprint": [
-					[
-						0.0,
-						0.0
-					]
-				],
-				"model_offset": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"model_path": "res://models/Meshy_AI_Clocktower_City_Hall_0403210028/Meshy_AI_Clocktower_City_Hall_0403210028_texture.glb",
-				"model_rotation_y": 0.0,
-				"model_scale": 0.8,
-				"profiles": [
-					{
-						"type": "BuildingMetadata"
-					},
-					{
-						"active_end": 2.0,
-						"active_start": 18.0,
-						"capacity": 25.0,
-						"category": "commercial",
-						"type": "BuildingProfile"
-					},
-					{
-						"bucket": "commercial",
-						"chain_role": "want",
-						"character_id": "aristocrat_commercial",
-						"desirability_boost": 0.1,
-						"patron_id": "aristocrat",
-						"prerequisite_ids": [
-							"building_nightclub"
-						],
-						"prerequisite_threshold": 60.0,
-						"tier": 0.0,
-						"type": "UniqueProfile"
-					}
-				],
-				"tags": []
-			},
-			"bucket": "commercial",
-			"building_id": "building_members_club",
-			"category": "unique",
-			"chain_role": "want",
-			"character_id": "aristocrat_commercial",
-			"display_name": "Private Members' Club",
-			"model_path": "res://models/Meshy_AI_Clocktower_City_Hall_0403210028/Meshy_AI_Clocktower_City_Hall_0403210028_texture.glb",
-			"patron_id": "aristocrat",
-			"pool_id": "",
-			"tier": 0
-		},
-		{
-			"_path": "res://data/buildings/nature/building_nature_patch.json",
-			"body": {
-				"building_id": "building_nature_patch",
-				"cash_cost": 40.0,
-				"category": "nature",
-				"description": "",
-				"display_name": "Nature Patch",
-				"footprint": [
-					[
-						0.0,
-						0.0
-					]
-				],
-				"model_offset": [
-					0.0,
-					-0.15,
-					0.0
-				],
-				"model_path": "res://models/Meshy_AI_nature_patch_0403203125/Meshy_AI_nature_patch_0403203125_texture.glb",
-				"model_rotation_y": 0.0,
-				"model_scale": 0.57,
-				"profiles": [],
-				"tags": []
-			},
-			"bucket": "",
-			"building_id": "building_nature_patch",
-			"category": "nature",
-			"chain_role": "",
-			"character_id": "",
-			"display_name": "Nature Patch",
-			"model_path": "res://models/Meshy_AI_nature_patch_0403203125/Meshy_AI_nature_patch_0403203125_texture.glb",
-			"patron_id": "",
-			"pool_id": "",
-			"tier": 0
-		},
-		{
-			"_path": "res://data/buildings/unique/building_nightclub.json",
-			"body": {
-				"building_id": "building_nightclub",
-				"category": "unique",
-				"description": "",
-				"display_name": "Nightclub",
-				"footprint": [
-					[
-						0.0,
-						0.0
-					]
-				],
-				"model_offset": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"model_path": "res://models/Meshy_AI_Streeter_s_Supermarke_0404154643/Meshy_AI_Streeter_s_Supermarke_0404154643_texture.glb",
-				"model_rotation_y": 0.0,
-				"model_scale": 0.65,
-				"profiles": [
-					{
-						"type": "BuildingMetadata"
-					},
-					{
-						"active_end": 4.0,
-						"active_start": 21.0,
-						"capacity": 60.0,
-						"category": "commercial",
-						"type": "BuildingProfile"
-					},
-					{
-						"bucket": "commercial",
-						"chain_role": "chain",
-						"character_id": "aristocrat_commercial",
-						"desirability_boost": 0.0,
-						"patron_id": "aristocrat",
-						"prerequisite_ids": [
-							"building_restaurant"
-						],
-						"prerequisite_threshold": 60.0,
-						"tier": 3.0,
-						"type": "UniqueProfile"
-					}
-				],
-				"tags": []
-			},
-			"bucket": "commercial",
-			"building_id": "building_nightclub",
-			"category": "unique",
-			"chain_role": "chain",
-			"character_id": "aristocrat_commercial",
-			"display_name": "Nightclub",
-			"model_path": "res://models/Meshy_AI_Streeter_s_Supermarke_0404154643/Meshy_AI_Streeter_s_Supermarke_0404154643_texture.glb",
-			"patron_id": "aristocrat",
-			"pool_id": "",
-			"tier": 3
-		},
-		{
-			"_path": "res://data/buildings/unique/building_pipe_factory.json",
-			"body": {
-				"building_id": "building_pipe_factory",
-				"category": "unique",
-				"description": "",
-				"display_name": "Pipe Factory",
-				"footprint": [
-					[
-						0.0,
-						0.0
-					]
-				],
-				"model_offset": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"model_path": "res://models/Meshy_AI_Acme_Business_Park__0403170610/Meshy_AI_Acme_Business_Park__0403170610_texture.glb",
-				"model_rotation_y": 0.0,
-				"model_scale": 0.85,
-				"profiles": [
-					{
-						"type": "BuildingMetadata"
-					},
-					{
-						"active_end": 18.0,
-						"active_start": 8.0,
-						"capacity": 35.0,
-						"category": "workplace",
-						"type": "BuildingProfile"
-					},
-					{
-						"bucket": "industrial",
-						"chain_role": "chain",
-						"character_id": "aristocrat_industrial",
-						"desirability_boost": 0.0,
-						"patron_id": "aristocrat",
-						"prerequisite_ids": [
-							"building_lumber_mill"
-						],
-						"prerequisite_threshold": 60.0,
-						"tier": 3.0,
-						"type": "UniqueProfile"
-					}
-				],
-				"tags": []
-			},
-			"bucket": "industrial",
-			"building_id": "building_pipe_factory",
-			"category": "unique",
-			"chain_role": "chain",
-			"character_id": "aristocrat_industrial",
-			"display_name": "Pipe Factory",
-			"model_path": "res://models/Meshy_AI_Acme_Business_Park__0403170610/Meshy_AI_Acme_Business_Park__0403170610_texture.glb",
-			"patron_id": "aristocrat",
-			"pool_id": "",
-			"tier": 3
-		},
-		{
-			"_path": "res://data/buildings/unique/building_pirate_radio.json",
-			"body": {
-				"building_id": "building_pirate_radio",
-				"category": "unique",
-				"description": "",
-				"display_name": "Pirate Radio Station",
-				"footprint": [
-					[
-						0.0,
-						0.0
-					]
-				],
-				"model_offset": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"model_path": "res://models/Meshy_AI_The_Tower_of_Tomorrow_0403170625/Meshy_AI_The_Tower_of_Tomorrow_0403170625_texture.glb",
-				"model_rotation_y": 0.0,
-				"model_scale": 0.85,
-				"profiles": [
-					{
-						"type": "BuildingMetadata"
-					},
-					{
-						"bucket": "residential",
-						"chain_role": "want",
-						"character_id": "aristocrat_residential",
-						"desirability_boost": 0.05,
-						"patron_id": "aristocrat",
-						"prerequisite_ids": [
-							"building_postwar_tower_block"
-						],
-						"prerequisite_threshold": 60.0,
-						"tier": 0.0,
-						"type": "UniqueProfile"
-					}
-				],
-				"tags": []
-			},
-			"bucket": "residential",
-			"building_id": "building_pirate_radio",
-			"category": "unique",
-			"chain_role": "want",
-			"character_id": "aristocrat_residential",
-			"display_name": "Pirate Radio Station",
-			"model_path": "res://models/Meshy_AI_The_Tower_of_Tomorrow_0403170625/Meshy_AI_The_Tower_of_Tomorrow_0403170625_texture.glb",
-			"patron_id": "aristocrat",
-			"pool_id": "",
-			"tier": 0
-		},
-		{
-			"_path": "res://data/buildings/unique/building_postwar_midblock.json",
-			"body": {
-				"building_id": "building_postwar_midblock",
-				"category": "unique",
-				"description": "",
-				"display_name": "Postwar Mid-Block",
-				"footprint": [
-					[
-						0.0,
-						0.0
-					]
-				],
-				"model_offset": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"model_path": "res://models/building-small-d.glb",
-				"model_rotation_y": 0.0,
-				"model_scale": 1.0,
-				"profiles": [
-					{
-						"type": "BuildingMetadata"
-					},
-					{
-						"active_end": 24.0,
-						"active_start": 0.0,
-						"capacity": 16.0,
-						"category": "residential",
-						"type": "BuildingProfile"
-					},
-					{
-						"bucket": "residential",
-						"chain_role": "chain",
-						"character_id": "aristocrat_residential",
-						"desirability_boost": 0.0,
-						"patron_id": "aristocrat",
-						"prerequisite_ids": [
-							"building_postwar_terrace"
-						],
-						"prerequisite_threshold": 30.0,
-						"tier": 2.0,
-						"type": "UniqueProfile"
-					}
-				],
-				"tags": []
-			},
-			"bucket": "residential",
-			"building_id": "building_postwar_midblock",
-			"category": "unique",
-			"chain_role": "chain",
-			"character_id": "aristocrat_residential",
-			"display_name": "Postwar Mid-Block",
-			"model_path": "res://models/building-small-d.glb",
-			"patron_id": "aristocrat",
-			"pool_id": "",
-			"tier": 2
-		},
-		{
-			"_path": "res://data/buildings/unique/building_postwar_terrace.json",
-			"body": {
-				"building_id": "building_postwar_terrace",
-				"category": "unique",
-				"description": "",
-				"display_name": "Postwar Terrace",
-				"footprint": [
-					[
-						0.0,
-						0.0
-					]
-				],
-				"model_offset": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"model_path": "res://models/building-small-a.glb",
-				"model_rotation_y": 0.0,
-				"model_scale": 1.0,
-				"profiles": [
-					{
-						"type": "BuildingMetadata"
-					},
-					{
-						"active_end": 24.0,
-						"active_start": 0.0,
-						"capacity": 8.0,
-						"category": "residential",
-						"type": "BuildingProfile"
-					},
-					{
-						"bucket": "residential",
-						"chain_role": "chain",
-						"character_id": "aristocrat_residential",
-						"desirability_boost": 0.0,
-						"patron_id": "aristocrat",
-						"prerequisite_ids": [],
-						"prerequisite_threshold": 10.0,
-						"tier": 1.0,
-						"type": "UniqueProfile"
-					}
-				],
-				"tags": []
-			},
-			"bucket": "residential",
-			"building_id": "building_postwar_terrace",
-			"category": "unique",
-			"chain_role": "chain",
-			"character_id": "aristocrat_residential",
-			"display_name": "Postwar Terrace",
-			"model_path": "res://models/building-small-a.glb",
-			"patron_id": "aristocrat",
-			"pool_id": "",
-			"tier": 1
-		},
-		{
-			"_path": "res://data/buildings/unique/building_postwar_tower_block.json",
-			"body": {
-				"building_id": "building_postwar_tower_block",
-				"category": "unique",
-				"description": "",
-				"display_name": "Postwar Tower Block",
-				"footprint": [
-					[
-						0.0,
-						0.0
-					]
-				],
-				"model_offset": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"model_path": "res://models/building-small-c.glb",
-				"model_rotation_y": 0.0,
-				"model_scale": 1.0,
-				"profiles": [
-					{
-						"type": "BuildingMetadata"
-					},
-					{
-						"active_end": 24.0,
-						"active_start": 0.0,
-						"capacity": 40.0,
-						"category": "residential",
-						"type": "BuildingProfile"
-					},
-					{
-						"bucket": "residential",
-						"chain_role": "chain",
-						"character_id": "aristocrat_residential",
-						"desirability_boost": 0.0,
-						"patron_id": "aristocrat",
-						"prerequisite_ids": [
-							"building_postwar_midblock"
-						],
-						"prerequisite_threshold": 60.0,
-						"tier": 3.0,
-						"type": "UniqueProfile"
-					}
-				],
-				"tags": []
-			},
-			"bucket": "residential",
-			"building_id": "building_postwar_tower_block",
-			"category": "unique",
-			"chain_role": "chain",
-			"character_id": "aristocrat_residential",
-			"display_name": "Postwar Tower Block",
-			"model_path": "res://models/building-small-c.glb",
-			"patron_id": "aristocrat",
-			"pool_id": "",
-			"tier": 3
-		},
-		{
-			"_path": "res://data/buildings/unique/building_pub.json",
-			"body": {
-				"building_id": "building_pub",
-				"category": "unique",
-				"description": "",
-				"display_name": "Pub",
-				"footprint": [
-					[
-						0.0,
-						0.0
-					]
-				],
-				"model_offset": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"model_path": "res://models/Meshy_AI_Pub_0403211907/Meshy_AI_Pub_0403211907_texture.glb",
-				"model_rotation_y": 0.0,
-				"model_scale": 0.65,
-				"profiles": [
-					{
-						"type": "BuildingMetadata"
-					},
-					{
-						"active_end": 23.0,
-						"active_start": 17.0,
-						"capacity": 30.0,
-						"category": "commercial",
-						"type": "BuildingProfile"
-					},
-					{
-						"bucket": "commercial",
-						"chain_role": "chain",
-						"character_id": "aristocrat_commercial",
-						"desirability_boost": 0.0,
-						"patron_id": "aristocrat",
-						"prerequisite_ids": [],
-						"prerequisite_threshold": 10.0,
-						"tier": 1.0,
-						"type": "UniqueProfile"
-					}
-				],
-				"tags": []
-			},
-			"bucket": "commercial",
-			"building_id": "building_pub",
-			"category": "unique",
-			"chain_role": "chain",
-			"character_id": "aristocrat_commercial",
-			"display_name": "Pub",
-			"model_path": "res://models/Meshy_AI_Pub_0403211907/Meshy_AI_Pub_0403211907_texture.glb",
-			"patron_id": "aristocrat",
-			"pool_id": "",
-			"tier": 1
-		},
-		{
-			"_path": "res://data/buildings/unique/building_restaurant.json",
-			"body": {
-				"building_id": "building_restaurant",
-				"category": "unique",
-				"description": "",
-				"display_name": "Restaurant",
-				"footprint": [
-					[
-						0.0,
-						0.0
-					]
-				],
-				"model_offset": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"model_path": "res://models/Meshy_AI_Pub_0403211907/Meshy_AI_Pub_0403211907_texture.glb",
-				"model_rotation_y": 0.0,
-				"model_scale": 0.65,
-				"profiles": [
-					{
-						"type": "BuildingMetadata"
-					},
-					{
-						"active_end": 23.0,
-						"active_start": 12.0,
-						"capacity": 40.0,
-						"category": "commercial",
-						"type": "BuildingProfile"
-					},
-					{
-						"bucket": "commercial",
-						"chain_role": "chain",
-						"character_id": "aristocrat_commercial",
-						"desirability_boost": 0.0,
-						"patron_id": "aristocrat",
-						"prerequisite_ids": [
-							"building_pub"
-						],
-						"prerequisite_threshold": 30.0,
-						"tier": 2.0,
-						"type": "UniqueProfile"
-					}
-				],
-				"tags": []
-			},
-			"bucket": "commercial",
-			"building_id": "building_restaurant",
-			"category": "unique",
-			"chain_role": "chain",
-			"character_id": "aristocrat_commercial",
-			"display_name": "Restaurant",
-			"model_path": "res://models/Meshy_AI_Pub_0403211907/Meshy_AI_Pub_0403211907_texture.glb",
-			"patron_id": "aristocrat",
-			"pool_id": "",
-			"tier": 2
-		},
-		{
-			"_path": "res://data/buildings/generic/building_small_a.json",
-			"body": {
-				"building_id": "building_small_a",
-				"category": "generic",
-				"description": "",
-				"display_name": "Small Residence A",
-				"footprint": [
-					[
-						0.0,
-						0.0
-					]
-				],
-				"model_offset": [
-					0.0,
-					-0.1,
-					0.0
-				],
-				"model_path": "res://models/Meshy_AI_Sunlit_Redbrick_Cotta_0403171628/Meshy_AI_Sunlit_Redbrick_Cotta_0403171628_texture.glb",
-				"model_rotation_y": 0.0,
-				"model_scale": 0.5,
-				"pool_id": "residential_t1",
-				"profiles": [
-					{
-						"type": "BuildingMetadata"
-					},
-					{
-						"active_end": 9.0,
-						"active_start": 6.0,
-						"capacity": 5.0,
-						"category": "residential",
-						"type": "BuildingProfile"
-					}
-				],
-				"tags": []
-			},
-			"bucket": "",
-			"building_id": "building_small_a",
-			"category": "generic",
-			"chain_role": "",
-			"character_id": "",
-			"display_name": "Small Residence A",
-			"model_path": "res://models/Meshy_AI_Sunlit_Redbrick_Cotta_0403171628/Meshy_AI_Sunlit_Redbrick_Cotta_0403171628_texture.glb",
-			"patron_id": "",
-			"pool_id": "residential_t1",
-			"tier": 0
-		},
-		{
-			"_path": "res://data/buildings/generic/building_small_b.json",
-			"body": {
-				"building_id": "building_small_b",
-				"category": "generic",
-				"description": "",
-				"display_name": "Small Commercial B",
-				"footprint": [
-					[
-						0.0,
-						0.0
-					]
-				],
-				"model_offset": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"model_path": "res://models/Meshy_AI_Sunnyvale_News_Conf_0403170655/Meshy_AI_Sunnyvale_News_Conf_0403170655_texture.glb",
-				"model_rotation_y": 0.0,
-				"model_scale": 0.45,
-				"pool_id": "commercial_t1",
-				"profiles": [
-					{
-						"type": "BuildingMetadata"
-					},
-					{
-						"active_end": 18.0,
-						"active_start": 8.0,
-						"capacity": 10.0,
-						"category": "commercial",
-						"type": "BuildingProfile"
-					}
-				],
-				"tags": []
-			},
-			"bucket": "",
-			"building_id": "building_small_b",
-			"category": "generic",
-			"chain_role": "",
-			"character_id": "",
-			"display_name": "Small Commercial B",
-			"model_path": "res://models/Meshy_AI_Sunnyvale_News_Conf_0403170655/Meshy_AI_Sunnyvale_News_Conf_0403170655_texture.glb",
-			"patron_id": "",
-			"pool_id": "commercial_t1",
-			"tier": 0
-		},
-		{
-			"_path": "res://data/buildings/generic/building_small_c.json",
-			"body": {
-				"building_id": "building_small_c",
-				"category": "generic",
-				"description": "",
-				"display_name": "Tower Residence C",
-				"footprint": [
-					[
-						0.0,
-						0.0
-					],
-					[
-						1.0,
-						0.0
-					],
-					[
-						0.0,
-						1.0
-					],
-					[
-						1.0,
-						1.0
-					]
-				],
-				"model_offset": [
-					0.5,
-					0.0,
-					0.5
-				],
-				"model_path": "res://models/Meshy_AI_The_Tower_of_Tomorrow_0403170625/Meshy_AI_The_Tower_of_Tomorrow_0403170625_texture.glb",
-				"model_rotation_y": 0.0,
-				"model_scale": 2.04,
-				"pool_id": "residential_t2",
-				"profiles": [
-					{
-						"type": "BuildingMetadata"
-					},
-					{
-						"active_end": 24.0,
-						"active_start": 0.0,
-						"capacity": 12.0,
-						"category": "residential",
-						"type": "BuildingProfile"
-					}
-				],
-				"tags": []
-			},
-			"bucket": "",
-			"building_id": "building_small_c",
-			"category": "generic",
-			"chain_role": "",
-			"character_id": "",
-			"display_name": "Tower Residence C",
-			"model_path": "res://models/Meshy_AI_The_Tower_of_Tomorrow_0403170625/Meshy_AI_The_Tower_of_Tomorrow_0403170625_texture.glb",
-			"patron_id": "",
-			"pool_id": "residential_t2",
-			"tier": 0
-		},
-		{
-			"_path": "res://data/buildings/generic/building_small_d.json",
-			"body": {
-				"building_id": "building_small_d",
-				"category": "generic",
-				"description": "",
-				"display_name": "Cottage Residence D",
-				"footprint": [
-					[
-						0.0,
-						0.0
-					]
-				],
-				"model_offset": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"model_path": "res://models/Meshy_AI_Wisteria_Cottage_0403171247/Meshy_AI_Wisteria_Cottage_0403171247_texture.glb",
-				"model_rotation_y": 0.0,
-				"model_scale": 0.45,
-				"pool_id": "residential_t1",
-				"profiles": [
-					{
-						"type": "BuildingMetadata"
-					},
-					{
-						"active_end": 9.0,
-						"active_start": 6.0,
-						"capacity": 4.0,
-						"category": "residential",
-						"type": "BuildingProfile"
-					}
-				],
-				"tags": []
-			},
-			"bucket": "",
-			"building_id": "building_small_d",
-			"category": "generic",
-			"chain_role": "",
-			"character_id": "",
-			"display_name": "Cottage Residence D",
-			"model_path": "res://models/Meshy_AI_Wisteria_Cottage_0403171247/Meshy_AI_Wisteria_Cottage_0403171247_texture.glb",
-			"patron_id": "",
-			"pool_id": "residential_t1",
-			"tier": 0
-		},
-		{
-			"_path": "res://data/buildings/unique/building_theatre.json",
-			"body": {
-				"building_id": "building_theatre",
-				"category": "unique",
-				"description": "",
-				"display_name": "The Theatre",
-				"footprint": [
-					[
-						0.0,
-						0.0
-					]
-				],
-				"model_offset": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"model_path": "res://models/Meshy_AI_Clocktower_City_Hall_0403210028/Meshy_AI_Clocktower_City_Hall_0403210028_texture.glb",
-				"model_rotation_y": 0.0,
-				"model_scale": 0.95,
-				"profiles": [
-					{
-						"type": "BuildingMetadata"
-					},
-					{
-						"bucket": "residential",
-						"chain_role": "landmark",
-						"character_id": "",
-						"desirability_boost": 0.25,
-						"patron_id": "aristocrat",
-						"prerequisite_ids": [
-							"building_members_club",
-							"building_crazy_golf",
-							"building_pirate_radio"
-						],
-						"prerequisite_threshold": 0.0,
-						"tier": 0.0,
-						"type": "UniqueProfile"
-					}
-				],
-				"tags": []
-			},
-			"bucket": "residential",
-			"building_id": "building_theatre",
-			"category": "unique",
-			"chain_role": "landmark",
-			"character_id": "",
-			"display_name": "The Theatre",
-			"model_path": "res://models/Meshy_AI_Clocktower_City_Hall_0403210028/Meshy_AI_Clocktower_City_Hall_0403210028_texture.glb",
-			"patron_id": "aristocrat",
-			"pool_id": "",
-			"tier": 0
-		},
-		{
-			"_path": "res://data/buildings/unique/building_windmill.json",
-			"body": {
-				"building_id": "building_windmill",
-				"category": "unique",
-				"description": "",
-				"display_name": "Windmill",
-				"footprint": [
-					[
-						0.0,
-						0.0
-					]
-				],
-				"model_offset": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"model_path": "res://models/building-garage.glb",
-				"model_rotation_y": 0.0,
-				"model_scale": 1.0,
-				"profiles": [
-					{
-						"type": "BuildingMetadata"
-					},
-					{
-						"active_end": 18.0,
-						"active_start": 8.0,
-						"capacity": 8.0,
-						"category": "workplace",
-						"type": "BuildingProfile"
-					},
-					{
-						"bucket": "industrial",
-						"chain_role": "chain",
-						"character_id": "aristocrat_industrial",
-						"desirability_boost": 0.0,
-						"patron_id": "aristocrat",
-						"prerequisite_ids": [],
-						"prerequisite_threshold": 10.0,
-						"tier": 1.0,
-						"type": "UniqueProfile"
-					}
-				],
-				"tags": []
-			},
-			"bucket": "industrial",
-			"building_id": "building_windmill",
-			"category": "unique",
-			"chain_role": "chain",
-			"character_id": "aristocrat_industrial",
-			"display_name": "Windmill",
-			"model_path": "res://models/building-garage.glb",
-			"patron_id": "aristocrat",
-			"pool_id": "",
-			"tier": 1
-		},
-		{
-			"_path": "res://data/buildings/nature/grass.json",
-			"body": {
-				"building_id": "grass",
-				"cash_cost": 10.0,
-				"category": "nature",
-				"description": "",
-				"display_name": "Grass",
-				"footprint": [
-					[
-						0.0,
-						0.0
-					]
-				],
-				"model_offset": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"model_path": "res://models/grass.glb",
-				"model_rotation_y": 0.0,
-				"model_scale": 1.0,
-				"pool_id": "grass",
-				"profiles": [],
-				"tags": []
-			},
-			"bucket": "",
-			"building_id": "grass",
-			"category": "nature",
-			"chain_role": "",
-			"character_id": "",
-			"display_name": "Grass",
-			"model_path": "res://models/grass.glb",
-			"patron_id": "",
-			"pool_id": "grass",
-			"tier": 0
-		},
-		{
-			"_path": "res://data/buildings/nature/grass_trees.json",
-			"body": {
-				"building_id": "grass_trees",
-				"cash_cost": 15.0,
-				"category": "nature",
-				"description": "",
-				"display_name": "Grass with Trees",
-				"footprint": [
-					[
-						0.0,
-						0.0
-					]
-				],
-				"model_offset": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"model_path": "res://models/grass-trees.glb",
-				"model_rotation_y": 0.0,
-				"model_scale": 1.0,
-				"pool_id": "grass",
-				"profiles": [],
-				"tags": []
-			},
-			"bucket": "",
-			"building_id": "grass_trees",
-			"category": "nature",
-			"chain_role": "",
-			"character_id": "",
-			"display_name": "Grass with Trees",
-			"model_path": "res://models/grass-trees.glb",
-			"patron_id": "",
-			"pool_id": "grass",
-			"tier": 0
-		},
-		{
-			"_path": "res://data/buildings/nature/grass_trees_tall.json",
-			"body": {
-				"building_id": "grass_trees_tall",
-				"cash_cost": 20.0,
-				"category": "nature",
-				"description": "",
-				"display_name": "Grass with Tall Trees",
-				"footprint": [
-					[
-						0.0,
-						0.0
-					]
-				],
-				"model_offset": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"model_path": "res://models/grass-trees-tall.glb",
-				"model_rotation_y": 0.0,
-				"model_scale": 1.0,
-				"pool_id": "grass",
-				"profiles": [],
-				"tags": []
-			},
-			"bucket": "",
-			"building_id": "grass_trees_tall",
-			"category": "nature",
-			"chain_role": "",
-			"character_id": "",
-			"display_name": "Grass with Tall Trees",
-			"model_path": "res://models/grass-trees-tall.glb",
-			"patron_id": "",
-			"pool_id": "grass",
-			"tier": 0
-		},
-		{
-			"_path": "res://data/buildings/road/pavement.json",
-			"body": {
-				"building_id": "pavement",
-				"category": "road",
-				"description": "",
-				"display_name": "Pavement",
-				"footprint": [
-					[
-						0.0,
-						0.0
-					]
-				],
-				"model_offset": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"model_path": "res://models/pavement.glb",
-				"model_rotation_y": 0.0,
-				"model_scale": 1.0,
-				"pool_id": "pavement",
-				"profiles": [],
-				"tags": []
-			},
-			"bucket": "",
-			"building_id": "pavement",
-			"category": "road",
-			"chain_role": "",
-			"character_id": "",
-			"display_name": "Pavement",
-			"model_path": "res://models/pavement.glb",
-			"patron_id": "",
-			"pool_id": "pavement",
-			"tier": 0
-		},
-		{
-			"_path": "res://data/buildings/road/pavement_fountain.json",
-			"body": {
-				"building_id": "pavement_fountain",
-				"category": "road",
-				"description": "",
-				"display_name": "Pavement with Fountain",
-				"footprint": [
-					[
-						0.0,
-						0.0
-					]
-				],
-				"model_offset": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"model_path": "res://models/pavement-fountain.glb",
-				"model_rotation_y": 0.0,
-				"model_scale": 1.0,
-				"pool_id": "pavement",
-				"profiles": [],
-				"tags": []
-			},
-			"bucket": "",
-			"building_id": "pavement_fountain",
-			"category": "road",
-			"chain_role": "",
-			"character_id": "",
-			"display_name": "Pavement with Fountain",
-			"model_path": "res://models/pavement-fountain.glb",
-			"patron_id": "",
-			"pool_id": "pavement",
-			"tier": 0
-		},
-		{
-			"_path": "res://data/buildings/road/road_corner.json",
-			"body": {
-				"building_id": "road_corner",
-				"category": "road",
-				"description": "",
-				"display_name": "Road (Corner)",
-				"footprint": [
-					[
-						0.0,
-						0.0
-					]
-				],
-				"model_offset": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"model_path": "res://models/road-corner.glb",
-				"model_rotation_y": 0.0,
-				"model_scale": 1.0,
-				"profiles": [
-					{
-						"connections": [
-							[
-								0.0,
-								1.0
-							],
-							[
-								-1.0,
-								0.0
-							]
-						],
-						"road_type": 1.0,
-						"type": "RoadMetadata"
-					}
-				],
-				"tags": []
-			},
-			"bucket": "",
-			"building_id": "road_corner",
-			"category": "road",
-			"chain_role": "",
-			"character_id": "",
-			"display_name": "Road (Corner)",
-			"model_path": "res://models/road-corner.glb",
-			"patron_id": "",
-			"pool_id": "",
-			"tier": 0
-		},
-		{
-			"_path": "res://data/buildings/road/road_intersection.json",
-			"body": {
-				"building_id": "road_intersection",
-				"category": "road",
-				"description": "",
-				"display_name": "Road (Intersection)",
-				"footprint": [
-					[
-						0.0,
-						0.0
-					]
-				],
-				"model_offset": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"model_path": "res://models/road-intersection.glb",
-				"model_rotation_y": 0.0,
-				"model_scale": 1.0,
-				"profiles": [
-					{
-						"connections": [
-							[
-								0.0,
-								-1.0
-							],
-							[
-								0.0,
-								1.0
-							],
-							[
-								1.0,
-								0.0
-							],
-							[
-								-1.0,
-								0.0
-							]
-						],
-						"road_type": 3.0,
-						"type": "RoadMetadata"
-					}
-				],
-				"tags": []
-			},
-			"bucket": "",
-			"building_id": "road_intersection",
-			"category": "road",
-			"chain_role": "",
-			"character_id": "",
-			"display_name": "Road (Intersection)",
-			"model_path": "res://models/road-intersection.glb",
-			"patron_id": "",
-			"pool_id": "",
-			"tier": 0
-		},
-		{
-			"_path": "res://data/buildings/road/road_split.json",
-			"body": {
-				"building_id": "road_split",
-				"category": "road",
-				"description": "",
-				"display_name": "Road (T-Split)",
-				"footprint": [
-					[
-						0.0,
-						0.0
-					]
-				],
-				"model_offset": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"model_path": "res://models/road-split.glb",
-				"model_rotation_y": 0.0,
-				"model_scale": 1.0,
-				"profiles": [
-					{
-						"connections": [
-							[
-								-1.0,
-								0.0
-							],
-							[
-								0.0,
-								1.0
-							],
-							[
-								1.0,
-								0.0
-							]
-						],
-						"road_type": 2.0,
-						"type": "RoadMetadata"
-					}
-				],
-				"tags": []
-			},
-			"bucket": "",
-			"building_id": "road_split",
-			"category": "road",
-			"chain_role": "",
-			"character_id": "",
-			"display_name": "Road (T-Split)",
-			"model_path": "res://models/road-split.glb",
-			"patron_id": "",
-			"pool_id": "",
-			"tier": 0
-		},
-		{
-			"_path": "res://data/buildings/road/road_straight.json",
-			"body": {
-				"building_id": "road_straight",
-				"category": "road",
-				"description": "",
-				"display_name": "Road (Straight)",
-				"footprint": [
-					[
-						0.0,
-						0.0
-					]
-				],
-				"model_offset": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"model_path": "res://models/road-straight.glb",
-				"model_rotation_y": 0.0,
-				"model_scale": 1.0,
-				"pool_id": "road",
-				"profiles": [
-					{
-						"connections": [
-							[
-								0.0,
-								-1.0
-							],
-							[
-								0.0,
-								1.0
-							]
-						],
-						"road_type": 0.0,
-						"type": "RoadMetadata"
-					}
-				],
-				"tags": []
-			},
-			"bucket": "",
-			"building_id": "road_straight",
-			"category": "road",
-			"chain_role": "",
-			"character_id": "",
-			"display_name": "Road (Straight)",
-			"model_path": "res://models/road-straight.glb",
-			"patron_id": "",
-			"pool_id": "road",
-			"tier": 0
-		},
-		{
-			"_path": "res://data/buildings/road/road_straight_lightposts.json",
-			"body": {
-				"building_id": "road_straight_lightposts",
-				"category": "road",
-				"description": "",
-				"display_name": "Road (Lightposts)",
-				"footprint": [
-					[
-						0.0,
-						0.0
-					]
-				],
-				"model_offset": [
-					0.0,
-					0.0,
-					0.0
-				],
-				"model_path": "res://models/road-straight-lightposts.glb",
-				"model_rotation_y": 0.0,
-				"model_scale": 1.0,
-				"profiles": [
-					{
-						"connections": [
-							[
-								0.0,
-								-1.0
-							],
-							[
-								0.0,
-								1.0
-							]
-						],
-						"road_type": 0.0,
-						"type": "RoadMetadata"
-					}
-				],
-				"tags": []
-			},
-			"bucket": "",
-			"building_id": "road_straight_lightposts",
-			"category": "road",
-			"chain_role": "",
-			"character_id": "",
-			"display_name": "Road (Lightposts)",
-			"model_path": "res://models/road-straight-lightposts.glb",
-			"patron_id": "",
-			"pool_id": "",
-			"tier": 0
-		}
-	],
-	"categories": [
-		"road",
-		"nature",
-		"generic",
-		"unique"
-	],
-	"character_states": [
-		"NOT_ARRIVED",
-		"ARRIVED",
-		"WANT_REVEALED",
-		"SATISFIED",
-		"CONTRIBUTES_TO_LANDMARK"
-	],
-	"characters": [
-		{
-			"_path": "res://data/characters/aristocrat_commercial.json",
-			"arrival_requires_tier": 1,
-			"arrival_threshold": 10.0,
-			"associated_bucket": "commercial",
-			"bio": "Old money, still pretends he isn't bored. Treats the town like a country house.",
-			"character_id": "aristocrat_commercial",
-			"display_name": "Lord Ashworth",
-			"patron_id": "aristocrat",
-			"portrait": "res://data/characters/aristocrat_commercial/portrait.png",
-			"want_building_id": "building_members_club"
-		},
-		{
-			"_path": "res://data/characters/aristocrat_industrial.json",
-			"arrival_requires_tier": 1,
-			"arrival_threshold": 10.0,
-			"associated_bucket": "industrial",
-			"bio": "Third-generation industrialist. Loves a working chimney.",
-			"character_id": "aristocrat_industrial",
-			"display_name": "Sir Reginald Cogsworth",
-			"patron_id": "aristocrat",
-			"portrait": "res://data/characters/aristocrat_industrial/portrait.png",
-			"want_building_id": "building_crazy_golf"
-		},
-		{
-			"_path": "res://data/characters/aristocrat_residential.json",
-			"arrival_requires_tier": 1,
-			"arrival_threshold": 10.0,
-			"associated_bucket": "residential",
-			"bio": "Property magnate with Modernist tastes and a quiet radio habit.",
-			"character_id": "aristocrat_residential",
-			"display_name": "Lady Marlowe",
-			"patron_id": "aristocrat",
-			"portrait": "res://data/characters/aristocrat_residential/portrait.png",
-			"want_building_id": "building_pirate_radio"
-		}
-	],
-	"event_types": [
-		"dialogue",
-		"newspaper",
-		"notification"
-	],
-	"events": [
-		{
-			"_path": "res://data/events/characters/aristocrat_commercial/arrival.json",
-			"body": {
-				"enabled_if": "",
-				"event_id": "aristocrat_commercial_arrival",
-				"event_type": "dialogue",
-				"payload": {
-					"entry_node_id": "n_start",
-					"nodes": [
-						{
-							"body": "[PLACEHOLDER] aristocrat_commercial_arrival — n_start body.",
-							"node_id": "n_start",
-							"on_enter": [],
-							"options": [
-								{
-									"effects": [],
-									"label": "Continue",
-									"next": "n_end"
-								}
-							],
-							"speaker": ""
-						},
-						{
-							"body": "[PLACEHOLDER] aristocrat_commercial_arrival — n_end body.",
-							"node_id": "n_end",
-							"on_enter": [],
-							"options": [
-								{
-									"effects": [
-										{
-											"kind": "set_flag",
-											"target": "met_aristocrat_commercial"
-										}
-									],
-									"label": "Close",
-									"next": ""
-								}
-							],
-							"speaker": ""
-						}
-					],
-					"tree_id": "aristocrat_commercial_arrival_tree"
-				},
-				"trigger": {
-					"character_id": "aristocrat_commercial",
-					"event": "character_arrived"
-				}
-			},
-			"category": "characters",
-			"enabled_if": "",
-			"event_id": "aristocrat_commercial_arrival",
-			"event_type": "dialogue",
-			"trigger_building_id": "",
-			"trigger_character_id": "aristocrat_commercial",
-			"trigger_event": "character_arrived",
-			"trigger_patron_id": ""
-		},
-		{
-			"_path": "res://data/events/characters/aristocrat_industrial/arrival.json",
-			"body": {
-				"enabled_if": "",
-				"event_id": "aristocrat_industrial_arrival",
-				"event_type": "dialogue",
-				"payload": {
-					"entry_node_id": "n_start",
-					"nodes": [
-						{
-							"body": "[PLACEHOLDER] aristocrat_industrial_arrival — n_start body.",
-							"node_id": "n_start",
-							"on_enter": [],
-							"options": [
-								{
-									"effects": [],
-									"label": "Continue",
-									"next": "n_end"
-								}
-							],
-							"speaker": ""
-						},
-						{
-							"body": "[PLACEHOLDER] aristocrat_industrial_arrival — n_end body.",
-							"node_id": "n_end",
-							"on_enter": [],
-							"options": [
-								{
-									"effects": [
-										{
-											"kind": "set_flag",
-											"target": "met_aristocrat_industrial"
-										}
-									],
-									"label": "Close",
-									"next": ""
-								}
-							],
-							"speaker": ""
-						}
-					],
-					"tree_id": "aristocrat_industrial_arrival_tree"
-				},
-				"trigger": {
-					"character_id": "aristocrat_industrial",
-					"event": "character_arrived"
-				}
-			},
-			"category": "characters",
-			"enabled_if": "",
-			"event_id": "aristocrat_industrial_arrival",
-			"event_type": "dialogue",
-			"trigger_building_id": "",
-			"trigger_character_id": "aristocrat_industrial",
-			"trigger_event": "character_arrived",
-			"trigger_patron_id": ""
-		},
-		{
-			"_path": "res://data/events/patrons/aristocrat/landmark_completed.json",
-			"body": {
-				"enabled_if": "",
-				"event_id": "aristocrat_landmark_completed",
-				"event_type": "dialogue",
-				"payload": {
-					"entry_node_id": "n_start",
-					"nodes": [
-						{
-							"body": "[PLACEHOLDER] aristocrat_landmark_completed — n_start body.",
-							"node_id": "n_start",
-							"on_enter": [],
-							"options": [
-								{
-									"effects": [
-										{
-											"kind": "set_flag",
-											"target": "aristocrat_landmark_completed"
-										},
-										{
-											"kind": "fire_event",
-											"target": "aristocrat_landmark_news"
-										}
-									],
-									"label": "Close",
-									"next": ""
-								}
-							],
-							"speaker": ""
-						}
-					],
-					"tree_id": "aristocrat_landmark_completed_tree"
-				},
-				"trigger": {
-					"event": "patron_landmark_completed",
-					"patron_id": "aristocrat"
-				}
-			},
-			"category": "patrons",
-			"enabled_if": "",
-			"event_id": "aristocrat_landmark_completed",
-			"event_type": "dialogue",
-			"trigger_building_id": "",
-			"trigger_character_id": "",
-			"trigger_event": "patron_landmark_completed",
-			"trigger_patron_id": "aristocrat"
-		},
-		{
-			"_path": "res://data/events/newspaper/aristocrat_landmark.json",
-			"body": {
-				"enabled_if": "",
-				"event_id": "aristocrat_landmark_news",
-				"event_type": "newspaper",
-				"payload": {
-					"body": "[PLACEHOLDER] aristocrat_landmark_news body.",
-					"dateline": "",
-					"headline": "[PLACEHOLDER] aristocrat_landmark_news headline",
-					"image": "",
-					"kicker": "[PLACEHOLDER] aristocrat_landmark_news kicker"
-				},
-				"trigger": {
-					"event": "manual"
-				}
-			},
-			"category": "newspaper",
-			"enabled_if": "",
-			"event_id": "aristocrat_landmark_news",
-			"event_type": "newspaper",
-			"trigger_building_id": "",
-			"trigger_character_id": "",
-			"trigger_event": "manual",
-			"trigger_patron_id": ""
-		},
-		{
-			"_path": "res://data/events/patrons/aristocrat/landmark_ready.json",
-			"body": {
-				"enabled_if": "",
-				"event_id": "aristocrat_landmark_ready",
-				"event_type": "dialogue",
-				"payload": {
-					"entry_node_id": "n_start",
-					"nodes": [
-						{
-							"body": "[PLACEHOLDER] aristocrat_landmark_ready — n_start body.",
-							"node_id": "n_start",
-							"on_enter": [],
-							"options": [
-								{
-									"effects": [
-										{
-											"kind": "set_flag",
-											"target": "aristocrat_landmark_promised"
-										}
-									],
-									"label": "Close",
-									"next": ""
-								}
-							],
-							"speaker": ""
-						}
-					],
-					"tree_id": "aristocrat_landmark_ready_tree"
-				},
-				"trigger": {
-					"event": "patron_landmark_ready",
-					"patron_id": "aristocrat"
-				}
-			},
-			"category": "patrons",
-			"enabled_if": "",
-			"event_id": "aristocrat_landmark_ready",
-			"event_type": "dialogue",
-			"trigger_building_id": "",
-			"trigger_character_id": "",
-			"trigger_event": "patron_landmark_ready",
-			"trigger_patron_id": "aristocrat"
-		},
-		{
-			"_path": "res://data/events/characters/aristocrat_residential/arrival.json",
-			"body": {
-				"enabled_if": "",
-				"event_id": "aristocrat_residential_arrival",
-				"event_type": "dialogue",
-				"payload": {
-					"entry_node_id": "n_start",
-					"nodes": [
-						{
-							"body": "[PLACEHOLDER] aristocrat_residential_arrival — n_start body.",
-							"node_id": "n_start",
-							"on_enter": [],
-							"options": [
-								{
-									"effects": [],
-									"label": "Continue",
-									"next": "n_end"
-								}
-							],
-							"speaker": ""
-						},
-						{
-							"body": "[PLACEHOLDER] aristocrat_residential_arrival — n_end body.",
-							"node_id": "n_end",
-							"on_enter": [],
-							"options": [
-								{
-									"effects": [
-										{
-											"kind": "set_flag",
-											"target": "met_aristocrat_residential"
-										}
-									],
-									"label": "Close",
-									"next": ""
-								}
-							],
-							"speaker": ""
-						}
-					],
-					"tree_id": "aristocrat_residential_arrival_tree"
-				},
-				"trigger": {
-					"character_id": "aristocrat_residential",
-					"event": "character_arrived"
-				}
-			},
-			"category": "characters",
-			"enabled_if": "",
-			"event_id": "aristocrat_residential_arrival",
-			"event_type": "dialogue",
-			"trigger_building_id": "",
-			"trigger_character_id": "aristocrat_residential",
-			"trigger_event": "character_arrived",
-			"trigger_patron_id": ""
-		}
-	],
-	"exported_at": "2026-04-25T18:21:29",
-	"flags": [
-		"aristocrat_landmark_completed",
-		"aristocrat_landmark_promised",
-		"met_aristocrat_commercial",
-		"met_aristocrat_industrial",
-		"met_aristocrat_residential"
-	],
-	"patron_states": [
-		"LOCKED",
-		"LANDMARK_AVAILABLE",
-		"COMPLETED"
-	],
-	"patrons": [
-		{
-			"_path": "res://data/patrons/aristocrat.json",
-			"bio": "A loose league of aristocrats who see the town as their weekend playground. Promises you the Theatre they've always wanted to fund.",
-			"character_ids": [
-				"aristocrat_commercial",
-				"aristocrat_industrial",
-				"aristocrat_residential"
-			],
-			"display_name": "Lord Ashworth's Circle",
-			"donation_area": {
-				"rect": [
-					8.0,
-					-8.0,
-					12.0,
-					16.0
-				],
-				"shape": "rect"
-			},
-			"landmark_building_id": "building_theatre",
-			"patron_id": "aristocrat",
-			"portrait": "res://data/patrons/aristocrat/portrait.png"
-		}
-	],
-	"triggers": [
-		"character_arrived",
-		"character_want_revealed",
-		"character_satisfied",
-		"character_state_changed",
-		"demand_fulfilled_changed",
-		"demand_total_changed",
-		"demand_unserved_changed",
-		"patron_landmark_ready",
-		"patron_landmark_completed",
-		"unique_placed",
-		"buildable_area_expanded",
-		"manual"
-	]
+  "bucket_type_ids": [
+    "housing_demand",
+    "industrial_demand",
+    "commercial_demand",
+    "desirability"
+  ],
+  "buckets": [
+    "residential",
+    "commercial",
+    "industrial"
+  ],
+  "buildings": [
+    {
+      "_path": "res://data/buildings/unique/building_crazy_golf.json",
+      "body": {
+        "building_id": "building_crazy_golf",
+        "category": "unique",
+        "description": "",
+        "display_name": "Crazy Golf",
+        "footprint": [
+          [
+            0,
+            0
+          ]
+        ],
+        "model_offset": [
+          0,
+          0,
+          0
+        ],
+        "model_path": "res://models/Meshy_AI_Duck_Pond_in_the_Hedg_0403173405/Meshy_AI_Duck_Pond_in_the_Hedg_0403173405_texture.glb",
+        "model_rotation_y": 0,
+        "model_scale": 1,
+        "profiles": [
+          {
+            "type": "BuildingMetadata"
+          },
+          {
+            "bucket": "industrial",
+            "chain_role": "want",
+            "character_id": "aristocrat_industrial",
+            "desirability_boost": 0.05,
+            "patron_id": "aristocrat",
+            "prerequisite_ids": [
+              "building_pipe_factory"
+            ],
+            "prerequisite_threshold": 60,
+            "tier": 0,
+            "type": "UniqueProfile"
+          }
+        ],
+        "tags": []
+      },
+      "bucket": "industrial",
+      "building_id": "building_crazy_golf",
+      "category": "unique",
+      "chain_role": "want",
+      "character_id": "aristocrat_industrial",
+      "display_name": "Crazy Golf",
+      "model_path": "res://models/Meshy_AI_Duck_Pond_in_the_Hedg_0403173405/Meshy_AI_Duck_Pond_in_the_Hedg_0403173405_texture.glb",
+      "patron_id": "aristocrat",
+      "pool_id": "",
+      "tier": 0
+    },
+    {
+      "_path": "res://data/buildings/nature/building_duck_pond.json",
+      "body": {
+        "building_id": "building_duck_pond",
+        "cash_cost": 50,
+        "category": "nature",
+        "description": "",
+        "display_name": "Duck Pond",
+        "footprint": [
+          [
+            0,
+            0
+          ]
+        ],
+        "model_offset": [
+          0,
+          -0.1,
+          0
+        ],
+        "model_path": "res://models/Meshy_AI_Duck_Pond_in_the_Hedg_0403173405/Meshy_AI_Duck_Pond_in_the_Hedg_0403173405_texture.glb",
+        "model_rotation_y": 0,
+        "model_scale": 0.5,
+        "profiles": [],
+        "tags": []
+      },
+      "bucket": "",
+      "building_id": "building_duck_pond",
+      "category": "nature",
+      "chain_role": "",
+      "character_id": "",
+      "display_name": "Duck Pond",
+      "model_path": "res://models/Meshy_AI_Duck_Pond_in_the_Hedg_0403173405/Meshy_AI_Duck_Pond_in_the_Hedg_0403173405_texture.glb",
+      "patron_id": "",
+      "pool_id": "",
+      "tier": 0
+    },
+    {
+      "_path": "res://data/buildings/generic/building_garage.json",
+      "body": {
+        "building_id": "building_garage",
+        "category": "generic",
+        "description": "",
+        "display_name": "Business Park (Garage)",
+        "footprint": [
+          [
+            0,
+            0
+          ]
+        ],
+        "model_offset": [
+          0,
+          0,
+          0
+        ],
+        "model_path": "res://models/Meshy_AI_Acme_Business_Park__0403170610/Meshy_AI_Acme_Business_Park__0403170610_texture.glb",
+        "model_rotation_y": 0,
+        "model_scale": 0.4,
+        "pool_id": "industrial_t1",
+        "profiles": [
+          {
+            "type": "BuildingMetadata"
+          },
+          {
+            "active_end": 18,
+            "active_start": 8,
+            "capacity": 20,
+            "category": "workplace",
+            "type": "BuildingProfile"
+          }
+        ],
+        "tags": []
+      },
+      "bucket": "",
+      "building_id": "building_garage",
+      "category": "generic",
+      "chain_role": "",
+      "character_id": "",
+      "display_name": "Business Park (Garage)",
+      "model_path": "res://models/Meshy_AI_Acme_Business_Park__0403170610/Meshy_AI_Acme_Business_Park__0403170610_texture.glb",
+      "patron_id": "",
+      "pool_id": "industrial_t1",
+      "tier": 0
+    },
+    {
+      "_path": "res://data/buildings/unique/building_lumber_mill.json",
+      "body": {
+        "building_id": "building_lumber_mill",
+        "category": "unique",
+        "description": "",
+        "display_name": "Lumber Mill",
+        "footprint": [
+          [
+            0,
+            0
+          ]
+        ],
+        "model_offset": [
+          0,
+          0,
+          0
+        ],
+        "model_path": "res://models/Meshy_AI_Acme_Business_Park__0403170610/Meshy_AI_Acme_Business_Park__0403170610_texture.glb",
+        "model_rotation_y": 0,
+        "model_scale": 0.85,
+        "profiles": [
+          {
+            "type": "BuildingMetadata"
+          },
+          {
+            "active_end": 18,
+            "active_start": 8,
+            "capacity": 20,
+            "category": "workplace",
+            "type": "BuildingProfile"
+          },
+          {
+            "bucket": "industrial",
+            "chain_role": "chain",
+            "character_id": "aristocrat_industrial",
+            "desirability_boost": 0,
+            "patron_id": "aristocrat",
+            "prerequisite_ids": [
+              "building_windmill"
+            ],
+            "prerequisite_threshold": 30,
+            "tier": 2,
+            "type": "UniqueProfile"
+          }
+        ],
+        "tags": []
+      },
+      "bucket": "industrial",
+      "building_id": "building_lumber_mill",
+      "category": "unique",
+      "chain_role": "chain",
+      "character_id": "aristocrat_industrial",
+      "display_name": "Lumber Mill",
+      "model_path": "res://models/Meshy_AI_Acme_Business_Park__0403170610/Meshy_AI_Acme_Business_Park__0403170610_texture.glb",
+      "patron_id": "aristocrat",
+      "pool_id": "",
+      "tier": 2
+    },
+    {
+      "_path": "res://data/buildings/unique/building_members_club.json",
+      "body": {
+        "building_id": "building_members_club",
+        "category": "unique",
+        "description": "",
+        "display_name": "Private Members' Club",
+        "footprint": [
+          [
+            0,
+            0
+          ]
+        ],
+        "model_offset": [
+          0,
+          0,
+          0
+        ],
+        "model_path": "res://models/Meshy_AI_Clocktower_City_Hall_0403210028/Meshy_AI_Clocktower_City_Hall_0403210028_texture.glb",
+        "model_rotation_y": 0,
+        "model_scale": 0.8,
+        "profiles": [
+          {
+            "type": "BuildingMetadata"
+          },
+          {
+            "active_end": 2,
+            "active_start": 18,
+            "capacity": 25,
+            "category": "commercial",
+            "type": "BuildingProfile"
+          },
+          {
+            "bucket": "commercial",
+            "chain_role": "want",
+            "character_id": "aristocrat_commercial",
+            "desirability_boost": 0.1,
+            "patron_id": "aristocrat",
+            "prerequisite_ids": [
+              "building_nightclub"
+            ],
+            "prerequisite_threshold": 60,
+            "tier": 0,
+            "type": "UniqueProfile"
+          }
+        ],
+        "tags": []
+      },
+      "bucket": "commercial",
+      "building_id": "building_members_club",
+      "category": "unique",
+      "chain_role": "want",
+      "character_id": "aristocrat_commercial",
+      "display_name": "Private Members' Club",
+      "model_path": "res://models/Meshy_AI_Clocktower_City_Hall_0403210028/Meshy_AI_Clocktower_City_Hall_0403210028_texture.glb",
+      "patron_id": "aristocrat",
+      "pool_id": "",
+      "tier": 0
+    },
+    {
+      "_path": "res://data/buildings/nature/building_nature_patch.json",
+      "body": {
+        "building_id": "building_nature_patch",
+        "cash_cost": 40,
+        "category": "nature",
+        "description": "",
+        "display_name": "Nature Patch",
+        "footprint": [
+          [
+            0,
+            0
+          ]
+        ],
+        "model_offset": [
+          0,
+          -0.15,
+          0
+        ],
+        "model_path": "res://models/Meshy_AI_nature_patch_0403203125/Meshy_AI_nature_patch_0403203125_texture.glb",
+        "model_rotation_y": 0,
+        "model_scale": 0.57,
+        "profiles": [],
+        "tags": []
+      },
+      "bucket": "",
+      "building_id": "building_nature_patch",
+      "category": "nature",
+      "chain_role": "",
+      "character_id": "",
+      "display_name": "Nature Patch",
+      "model_path": "res://models/Meshy_AI_nature_patch_0403203125/Meshy_AI_nature_patch_0403203125_texture.glb",
+      "patron_id": "",
+      "pool_id": "",
+      "tier": 0
+    },
+    {
+      "_path": "res://data/buildings/unique/building_nightclub.json",
+      "body": {
+        "building_id": "building_nightclub",
+        "category": "unique",
+        "description": "",
+        "display_name": "Nightclub",
+        "footprint": [
+          [
+            0,
+            0
+          ]
+        ],
+        "model_offset": [
+          0,
+          0,
+          0
+        ],
+        "model_path": "res://models/Meshy_AI_Streeter_s_Supermarke_0404154643/Meshy_AI_Streeter_s_Supermarke_0404154643_texture.glb",
+        "model_rotation_y": 0,
+        "model_scale": 0.65,
+        "profiles": [
+          {
+            "type": "BuildingMetadata"
+          },
+          {
+            "active_end": 4,
+            "active_start": 21,
+            "capacity": 60,
+            "category": "commercial",
+            "type": "BuildingProfile"
+          },
+          {
+            "bucket": "commercial",
+            "chain_role": "chain",
+            "character_id": "aristocrat_commercial",
+            "desirability_boost": 0,
+            "patron_id": "aristocrat",
+            "prerequisite_ids": [
+              "building_restaurant"
+            ],
+            "prerequisite_threshold": 60,
+            "tier": 3,
+            "type": "UniqueProfile"
+          }
+        ],
+        "tags": []
+      },
+      "bucket": "commercial",
+      "building_id": "building_nightclub",
+      "category": "unique",
+      "chain_role": "chain",
+      "character_id": "aristocrat_commercial",
+      "display_name": "Nightclub",
+      "model_path": "res://models/Meshy_AI_Streeter_s_Supermarke_0404154643/Meshy_AI_Streeter_s_Supermarke_0404154643_texture.glb",
+      "patron_id": "aristocrat",
+      "pool_id": "",
+      "tier": 3
+    },
+    {
+      "_path": "res://data/buildings/unique/building_pipe_factory.json",
+      "body": {
+        "building_id": "building_pipe_factory",
+        "category": "unique",
+        "description": "",
+        "display_name": "Pipe Factory",
+        "footprint": [
+          [
+            0,
+            0
+          ]
+        ],
+        "model_offset": [
+          0,
+          0,
+          0
+        ],
+        "model_path": "res://models/Meshy_AI_Acme_Business_Park__0403170610/Meshy_AI_Acme_Business_Park__0403170610_texture.glb",
+        "model_rotation_y": 0,
+        "model_scale": 0.85,
+        "profiles": [
+          {
+            "type": "BuildingMetadata"
+          },
+          {
+            "active_end": 18,
+            "active_start": 8,
+            "capacity": 35,
+            "category": "workplace",
+            "type": "BuildingProfile"
+          },
+          {
+            "bucket": "industrial",
+            "chain_role": "chain",
+            "character_id": "aristocrat_industrial",
+            "desirability_boost": 0,
+            "patron_id": "aristocrat",
+            "prerequisite_ids": [
+              "building_lumber_mill"
+            ],
+            "prerequisite_threshold": 60,
+            "tier": 3,
+            "type": "UniqueProfile"
+          }
+        ],
+        "tags": []
+      },
+      "bucket": "industrial",
+      "building_id": "building_pipe_factory",
+      "category": "unique",
+      "chain_role": "chain",
+      "character_id": "aristocrat_industrial",
+      "display_name": "Pipe Factory",
+      "model_path": "res://models/Meshy_AI_Acme_Business_Park__0403170610/Meshy_AI_Acme_Business_Park__0403170610_texture.glb",
+      "patron_id": "aristocrat",
+      "pool_id": "",
+      "tier": 3
+    },
+    {
+      "_path": "res://data/buildings/unique/building_pirate_radio.json",
+      "body": {
+        "building_id": "building_pirate_radio",
+        "category": "unique",
+        "description": "",
+        "display_name": "Pirate Radio Station",
+        "footprint": [
+          [
+            0,
+            0
+          ]
+        ],
+        "model_offset": [
+          0,
+          0,
+          0
+        ],
+        "model_path": "res://models/Meshy_AI_The_Tower_of_Tomorrow_0403170625/Meshy_AI_The_Tower_of_Tomorrow_0403170625_texture.glb",
+        "model_rotation_y": 0,
+        "model_scale": 0.85,
+        "profiles": [
+          {
+            "type": "BuildingMetadata"
+          },
+          {
+            "bucket": "residential",
+            "chain_role": "want",
+            "character_id": "aristocrat_residential",
+            "desirability_boost": 0.05,
+            "patron_id": "aristocrat",
+            "prerequisite_ids": [
+              "building_postwar_tower_block"
+            ],
+            "prerequisite_threshold": 60,
+            "tier": 0,
+            "type": "UniqueProfile"
+          }
+        ],
+        "tags": []
+      },
+      "bucket": "residential",
+      "building_id": "building_pirate_radio",
+      "category": "unique",
+      "chain_role": "want",
+      "character_id": "aristocrat_residential",
+      "display_name": "Pirate Radio Station",
+      "model_path": "res://models/Meshy_AI_The_Tower_of_Tomorrow_0403170625/Meshy_AI_The_Tower_of_Tomorrow_0403170625_texture.glb",
+      "patron_id": "aristocrat",
+      "pool_id": "",
+      "tier": 0
+    },
+    {
+      "_path": "res://data/buildings/unique/building_postwar_midblock.json",
+      "body": {
+        "building_id": "building_postwar_midblock",
+        "category": "unique",
+        "description": "",
+        "display_name": "Postwar Mid-Block",
+        "footprint": [
+          [
+            0,
+            0
+          ]
+        ],
+        "model_offset": [
+          0,
+          0,
+          0
+        ],
+        "model_path": "res://models/building-small-d.glb",
+        "model_rotation_y": 0,
+        "model_scale": 1,
+        "profiles": [
+          {
+            "type": "BuildingMetadata"
+          },
+          {
+            "active_end": 24,
+            "active_start": 0,
+            "capacity": 16,
+            "category": "residential",
+            "type": "BuildingProfile"
+          },
+          {
+            "bucket": "residential",
+            "chain_role": "chain",
+            "character_id": "aristocrat_residential",
+            "desirability_boost": 0,
+            "patron_id": "aristocrat",
+            "prerequisite_ids": [
+              "building_postwar_terrace"
+            ],
+            "prerequisite_threshold": 30,
+            "tier": 2,
+            "type": "UniqueProfile"
+          }
+        ],
+        "tags": []
+      },
+      "bucket": "residential",
+      "building_id": "building_postwar_midblock",
+      "category": "unique",
+      "chain_role": "chain",
+      "character_id": "aristocrat_residential",
+      "display_name": "Postwar Mid-Block",
+      "model_path": "res://models/building-small-d.glb",
+      "patron_id": "aristocrat",
+      "pool_id": "",
+      "tier": 2
+    },
+    {
+      "_path": "res://data/buildings/unique/building_postwar_terrace.json",
+      "body": {
+        "building_id": "building_postwar_terrace",
+        "category": "unique",
+        "description": "",
+        "display_name": "Postwar Terrace",
+        "footprint": [
+          [
+            0,
+            0
+          ]
+        ],
+        "model_offset": [
+          0,
+          0,
+          0
+        ],
+        "model_path": "res://models/building-small-a.glb",
+        "model_rotation_y": 0,
+        "model_scale": 1,
+        "profiles": [
+          {
+            "type": "BuildingMetadata"
+          },
+          {
+            "active_end": 24,
+            "active_start": 0,
+            "capacity": 8,
+            "category": "residential",
+            "type": "BuildingProfile"
+          },
+          {
+            "bucket": "residential",
+            "chain_role": "chain",
+            "character_id": "aristocrat_residential",
+            "desirability_boost": 0,
+            "patron_id": "aristocrat",
+            "prerequisite_ids": [],
+            "prerequisite_threshold": 10,
+            "tier": 1,
+            "type": "UniqueProfile"
+          }
+        ],
+        "tags": []
+      },
+      "bucket": "residential",
+      "building_id": "building_postwar_terrace",
+      "category": "unique",
+      "chain_role": "chain",
+      "character_id": "aristocrat_residential",
+      "display_name": "Postwar Terrace",
+      "model_path": "res://models/building-small-a.glb",
+      "patron_id": "aristocrat",
+      "pool_id": "",
+      "tier": 1
+    },
+    {
+      "_path": "res://data/buildings/unique/building_postwar_tower_block.json",
+      "body": {
+        "building_id": "building_postwar_tower_block",
+        "category": "unique",
+        "description": "",
+        "display_name": "Postwar Tower Block",
+        "footprint": [
+          [
+            0,
+            0
+          ]
+        ],
+        "model_offset": [
+          0,
+          0,
+          0
+        ],
+        "model_path": "res://models/building-small-c.glb",
+        "model_rotation_y": 0,
+        "model_scale": 1,
+        "profiles": [
+          {
+            "type": "BuildingMetadata"
+          },
+          {
+            "active_end": 24,
+            "active_start": 0,
+            "capacity": 40,
+            "category": "residential",
+            "type": "BuildingProfile"
+          },
+          {
+            "bucket": "residential",
+            "chain_role": "chain",
+            "character_id": "aristocrat_residential",
+            "desirability_boost": 0,
+            "patron_id": "aristocrat",
+            "prerequisite_ids": [
+              "building_postwar_midblock"
+            ],
+            "prerequisite_threshold": 60,
+            "tier": 3,
+            "type": "UniqueProfile"
+          }
+        ],
+        "tags": []
+      },
+      "bucket": "residential",
+      "building_id": "building_postwar_tower_block",
+      "category": "unique",
+      "chain_role": "chain",
+      "character_id": "aristocrat_residential",
+      "display_name": "Postwar Tower Block",
+      "model_path": "res://models/building-small-c.glb",
+      "patron_id": "aristocrat",
+      "pool_id": "",
+      "tier": 3
+    },
+    {
+      "_path": "res://data/buildings/unique/building_pub.json",
+      "body": {
+        "building_id": "building_pub",
+        "category": "unique",
+        "description": "",
+        "display_name": "Pub",
+        "footprint": [
+          [
+            0,
+            0
+          ]
+        ],
+        "model_offset": [
+          0,
+          0,
+          0
+        ],
+        "model_path": "res://models/Meshy_AI_Pub_0403211907/Meshy_AI_Pub_0403211907_texture.glb",
+        "model_rotation_y": 0,
+        "model_scale": 0.65,
+        "profiles": [
+          {
+            "type": "BuildingMetadata"
+          },
+          {
+            "active_end": 23,
+            "active_start": 17,
+            "capacity": 30,
+            "category": "commercial",
+            "type": "BuildingProfile"
+          },
+          {
+            "bucket": "commercial",
+            "chain_role": "chain",
+            "character_id": "aristocrat_commercial",
+            "desirability_boost": 0,
+            "patron_id": "aristocrat",
+            "prerequisite_ids": [],
+            "prerequisite_threshold": 10,
+            "tier": 1,
+            "type": "UniqueProfile"
+          }
+        ],
+        "tags": []
+      },
+      "bucket": "commercial",
+      "building_id": "building_pub",
+      "category": "unique",
+      "chain_role": "chain",
+      "character_id": "aristocrat_commercial",
+      "display_name": "Pub",
+      "model_path": "res://models/Meshy_AI_Pub_0403211907/Meshy_AI_Pub_0403211907_texture.glb",
+      "patron_id": "aristocrat",
+      "pool_id": "",
+      "tier": 1
+    },
+    {
+      "_path": "res://data/buildings/unique/building_restaurant.json",
+      "body": {
+        "building_id": "building_restaurant",
+        "category": "unique",
+        "description": "",
+        "display_name": "Restaurant",
+        "footprint": [
+          [
+            0,
+            0
+          ]
+        ],
+        "model_offset": [
+          0,
+          0,
+          0
+        ],
+        "model_path": "res://models/Meshy_AI_Pub_0403211907/Meshy_AI_Pub_0403211907_texture.glb",
+        "model_rotation_y": 0,
+        "model_scale": 0.65,
+        "profiles": [
+          {
+            "type": "BuildingMetadata"
+          },
+          {
+            "active_end": 23,
+            "active_start": 12,
+            "capacity": 40,
+            "category": "commercial",
+            "type": "BuildingProfile"
+          },
+          {
+            "bucket": "commercial",
+            "chain_role": "chain",
+            "character_id": "aristocrat_commercial",
+            "desirability_boost": 0,
+            "patron_id": "aristocrat",
+            "prerequisite_ids": [
+              "building_pub"
+            ],
+            "prerequisite_threshold": 30,
+            "tier": 2,
+            "type": "UniqueProfile"
+          }
+        ],
+        "tags": []
+      },
+      "bucket": "commercial",
+      "building_id": "building_restaurant",
+      "category": "unique",
+      "chain_role": "chain",
+      "character_id": "aristocrat_commercial",
+      "display_name": "Restaurant",
+      "model_path": "res://models/Meshy_AI_Pub_0403211907/Meshy_AI_Pub_0403211907_texture.glb",
+      "patron_id": "aristocrat",
+      "pool_id": "",
+      "tier": 2
+    },
+    {
+      "_path": "res://data/buildings/generic/building_small_a.json",
+      "body": {
+        "building_id": "building_small_a",
+        "category": "generic",
+        "description": "",
+        "display_name": "Small Residence A",
+        "footprint": [
+          [
+            0,
+            0
+          ]
+        ],
+        "model_offset": [
+          0,
+          -0.1,
+          0
+        ],
+        "model_path": "res://models/Meshy_AI_Sunlit_Redbrick_Cotta_0403171628/Meshy_AI_Sunlit_Redbrick_Cotta_0403171628_texture.glb",
+        "model_rotation_y": 0,
+        "model_scale": 0.5,
+        "pool_id": "residential_t1",
+        "profiles": [
+          {
+            "type": "BuildingMetadata"
+          },
+          {
+            "active_end": 9,
+            "active_start": 6,
+            "capacity": 5,
+            "category": "residential",
+            "type": "BuildingProfile"
+          }
+        ],
+        "tags": []
+      },
+      "bucket": "",
+      "building_id": "building_small_a",
+      "category": "generic",
+      "chain_role": "",
+      "character_id": "",
+      "display_name": "Small Residence A",
+      "model_path": "res://models/Meshy_AI_Sunlit_Redbrick_Cotta_0403171628/Meshy_AI_Sunlit_Redbrick_Cotta_0403171628_texture.glb",
+      "patron_id": "",
+      "pool_id": "residential_t1",
+      "tier": 0
+    },
+    {
+      "_path": "res://data/buildings/generic/building_small_b.json",
+      "body": {
+        "building_id": "building_small_b",
+        "category": "generic",
+        "description": "",
+        "display_name": "Small Commercial B",
+        "footprint": [
+          [
+            0,
+            0
+          ]
+        ],
+        "model_offset": [
+          0,
+          0,
+          0
+        ],
+        "model_path": "res://models/Meshy_AI_Sunnyvale_News_Conf_0403170655/Meshy_AI_Sunnyvale_News_Conf_0403170655_texture.glb",
+        "model_rotation_y": 0,
+        "model_scale": 0.45,
+        "pool_id": "commercial_t1",
+        "profiles": [
+          {
+            "type": "BuildingMetadata"
+          },
+          {
+            "active_end": 18,
+            "active_start": 8,
+            "capacity": 10,
+            "category": "commercial",
+            "type": "BuildingProfile"
+          }
+        ],
+        "tags": []
+      },
+      "bucket": "",
+      "building_id": "building_small_b",
+      "category": "generic",
+      "chain_role": "",
+      "character_id": "",
+      "display_name": "Small Commercial B",
+      "model_path": "res://models/Meshy_AI_Sunnyvale_News_Conf_0403170655/Meshy_AI_Sunnyvale_News_Conf_0403170655_texture.glb",
+      "patron_id": "",
+      "pool_id": "commercial_t1",
+      "tier": 0
+    },
+    {
+      "_path": "res://data/buildings/generic/building_small_c.json",
+      "body": {
+        "building_id": "building_small_c",
+        "category": "generic",
+        "description": "",
+        "display_name": "Tower Residence C",
+        "footprint": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        "model_offset": [
+          0.5,
+          0,
+          0.5
+        ],
+        "model_path": "res://models/Meshy_AI_The_Tower_of_Tomorrow_0403170625/Meshy_AI_The_Tower_of_Tomorrow_0403170625_texture.glb",
+        "model_rotation_y": 0,
+        "model_scale": 2.04,
+        "pool_id": "residential_t2",
+        "profiles": [
+          {
+            "type": "BuildingMetadata"
+          },
+          {
+            "active_end": 24,
+            "active_start": 0,
+            "capacity": 12,
+            "category": "residential",
+            "type": "BuildingProfile"
+          }
+        ],
+        "tags": []
+      },
+      "bucket": "",
+      "building_id": "building_small_c",
+      "category": "generic",
+      "chain_role": "",
+      "character_id": "",
+      "display_name": "Tower Residence C",
+      "model_path": "res://models/Meshy_AI_The_Tower_of_Tomorrow_0403170625/Meshy_AI_The_Tower_of_Tomorrow_0403170625_texture.glb",
+      "patron_id": "",
+      "pool_id": "residential_t2",
+      "tier": 0
+    },
+    {
+      "_path": "res://data/buildings/generic/building_small_d.json",
+      "body": {
+        "building_id": "building_small_d",
+        "category": "generic",
+        "description": "",
+        "display_name": "Cottage Residence D",
+        "footprint": [
+          [
+            0,
+            0
+          ]
+        ],
+        "model_offset": [
+          0,
+          0,
+          0
+        ],
+        "model_path": "res://models/Meshy_AI_Wisteria_Cottage_0403171247/Meshy_AI_Wisteria_Cottage_0403171247_texture.glb",
+        "model_rotation_y": 0,
+        "model_scale": 0.45,
+        "pool_id": "residential_t1",
+        "profiles": [
+          {
+            "type": "BuildingMetadata"
+          },
+          {
+            "active_end": 9,
+            "active_start": 6,
+            "capacity": 4,
+            "category": "residential",
+            "type": "BuildingProfile"
+          }
+        ],
+        "tags": []
+      },
+      "bucket": "",
+      "building_id": "building_small_d",
+      "category": "generic",
+      "chain_role": "",
+      "character_id": "",
+      "display_name": "Cottage Residence D",
+      "model_path": "res://models/Meshy_AI_Wisteria_Cottage_0403171247/Meshy_AI_Wisteria_Cottage_0403171247_texture.glb",
+      "patron_id": "",
+      "pool_id": "residential_t1",
+      "tier": 0
+    },
+    {
+      "_path": "res://data/buildings/unique/building_theatre.json",
+      "body": {
+        "building_id": "building_theatre",
+        "category": "unique",
+        "description": "",
+        "display_name": "The Theatre",
+        "footprint": [
+          [
+            0,
+            0
+          ]
+        ],
+        "model_offset": [
+          0,
+          0,
+          0
+        ],
+        "model_path": "res://models/Meshy_AI_Clocktower_City_Hall_0403210028/Meshy_AI_Clocktower_City_Hall_0403210028_texture.glb",
+        "model_rotation_y": 0,
+        "model_scale": 0.95,
+        "profiles": [
+          {
+            "type": "BuildingMetadata"
+          },
+          {
+            "bucket": "residential",
+            "chain_role": "landmark",
+            "character_id": "",
+            "desirability_boost": 0.25,
+            "patron_id": "aristocrat",
+            "prerequisite_ids": [
+              "building_members_club",
+              "building_crazy_golf",
+              "building_pirate_radio"
+            ],
+            "prerequisite_threshold": 0,
+            "tier": 0,
+            "type": "UniqueProfile"
+          }
+        ],
+        "tags": []
+      },
+      "bucket": "residential",
+      "building_id": "building_theatre",
+      "category": "unique",
+      "chain_role": "landmark",
+      "character_id": "",
+      "display_name": "The Theatre",
+      "model_path": "res://models/Meshy_AI_Clocktower_City_Hall_0403210028/Meshy_AI_Clocktower_City_Hall_0403210028_texture.glb",
+      "patron_id": "aristocrat",
+      "pool_id": "",
+      "tier": 0
+    },
+    {
+      "_path": "res://data/buildings/unique/building_windmill.json",
+      "body": {
+        "building_id": "building_windmill",
+        "category": "unique",
+        "description": "",
+        "display_name": "Windmill",
+        "footprint": [
+          [
+            0,
+            0
+          ]
+        ],
+        "model_offset": [
+          0,
+          0,
+          0
+        ],
+        "model_path": "res://models/building-garage.glb",
+        "model_rotation_y": 0,
+        "model_scale": 1,
+        "profiles": [
+          {
+            "type": "BuildingMetadata"
+          },
+          {
+            "active_end": 18,
+            "active_start": 8,
+            "capacity": 8,
+            "category": "workplace",
+            "type": "BuildingProfile"
+          },
+          {
+            "bucket": "industrial",
+            "chain_role": "chain",
+            "character_id": "aristocrat_industrial",
+            "desirability_boost": 0,
+            "patron_id": "aristocrat",
+            "prerequisite_ids": [],
+            "prerequisite_threshold": 10,
+            "tier": 1,
+            "type": "UniqueProfile"
+          }
+        ],
+        "tags": []
+      },
+      "bucket": "industrial",
+      "building_id": "building_windmill",
+      "category": "unique",
+      "chain_role": "chain",
+      "character_id": "aristocrat_industrial",
+      "display_name": "Windmill",
+      "model_path": "res://models/building-garage.glb",
+      "patron_id": "aristocrat",
+      "pool_id": "",
+      "tier": 1
+    },
+    {
+      "_path": "res://data/buildings/nature/grass.json",
+      "body": {
+        "building_id": "grass",
+        "cash_cost": 10,
+        "category": "nature",
+        "description": "",
+        "display_name": "Grass",
+        "footprint": [
+          [
+            0,
+            0
+          ]
+        ],
+        "model_offset": [
+          0,
+          0,
+          0
+        ],
+        "model_path": "res://models/grass.glb",
+        "model_rotation_y": 0,
+        "model_scale": 1,
+        "pool_id": "grass",
+        "profiles": [],
+        "tags": []
+      },
+      "bucket": "",
+      "building_id": "grass",
+      "category": "nature",
+      "chain_role": "",
+      "character_id": "",
+      "display_name": "Grass",
+      "model_path": "res://models/grass.glb",
+      "patron_id": "",
+      "pool_id": "grass",
+      "tier": 0
+    },
+    {
+      "_path": "res://data/buildings/nature/grass_trees.json",
+      "body": {
+        "building_id": "grass_trees",
+        "cash_cost": 15,
+        "category": "nature",
+        "description": "",
+        "display_name": "Grass with Trees",
+        "footprint": [
+          [
+            0,
+            0
+          ]
+        ],
+        "model_offset": [
+          0,
+          0,
+          0
+        ],
+        "model_path": "res://models/grass-trees.glb",
+        "model_rotation_y": 0,
+        "model_scale": 1,
+        "pool_id": "grass",
+        "profiles": [],
+        "tags": []
+      },
+      "bucket": "",
+      "building_id": "grass_trees",
+      "category": "nature",
+      "chain_role": "",
+      "character_id": "",
+      "display_name": "Grass with Trees",
+      "model_path": "res://models/grass-trees.glb",
+      "patron_id": "",
+      "pool_id": "grass",
+      "tier": 0
+    },
+    {
+      "_path": "res://data/buildings/nature/grass_trees_tall.json",
+      "body": {
+        "building_id": "grass_trees_tall",
+        "cash_cost": 20,
+        "category": "nature",
+        "description": "",
+        "display_name": "Grass with Tall Trees",
+        "footprint": [
+          [
+            0,
+            0
+          ]
+        ],
+        "model_offset": [
+          0,
+          0,
+          0
+        ],
+        "model_path": "res://models/grass-trees-tall.glb",
+        "model_rotation_y": 0,
+        "model_scale": 1,
+        "pool_id": "grass",
+        "profiles": [],
+        "tags": []
+      },
+      "bucket": "",
+      "building_id": "grass_trees_tall",
+      "category": "nature",
+      "chain_role": "",
+      "character_id": "",
+      "display_name": "Grass with Tall Trees",
+      "model_path": "res://models/grass-trees-tall.glb",
+      "patron_id": "",
+      "pool_id": "grass",
+      "tier": 0
+    },
+    {
+      "_path": "res://data/buildings/road/pavement.json",
+      "body": {
+        "building_id": "pavement",
+        "category": "road",
+        "description": "",
+        "display_name": "Pavement",
+        "footprint": [
+          [
+            0,
+            0
+          ]
+        ],
+        "model_offset": [
+          0,
+          0,
+          0
+        ],
+        "model_path": "res://models/pavement.glb",
+        "model_rotation_y": 0,
+        "model_scale": 1,
+        "pool_id": "pavement",
+        "profiles": [],
+        "tags": []
+      },
+      "bucket": "",
+      "building_id": "pavement",
+      "category": "road",
+      "chain_role": "",
+      "character_id": "",
+      "display_name": "Pavement",
+      "model_path": "res://models/pavement.glb",
+      "patron_id": "",
+      "pool_id": "pavement",
+      "tier": 0
+    },
+    {
+      "_path": "res://data/buildings/road/pavement_fountain.json",
+      "body": {
+        "building_id": "pavement_fountain",
+        "category": "road",
+        "description": "",
+        "display_name": "Pavement with Fountain",
+        "footprint": [
+          [
+            0,
+            0
+          ]
+        ],
+        "model_offset": [
+          0,
+          0,
+          0
+        ],
+        "model_path": "res://models/pavement-fountain.glb",
+        "model_rotation_y": 0,
+        "model_scale": 1,
+        "pool_id": "pavement",
+        "profiles": [],
+        "tags": []
+      },
+      "bucket": "",
+      "building_id": "pavement_fountain",
+      "category": "road",
+      "chain_role": "",
+      "character_id": "",
+      "display_name": "Pavement with Fountain",
+      "model_path": "res://models/pavement-fountain.glb",
+      "patron_id": "",
+      "pool_id": "pavement",
+      "tier": 0
+    },
+    {
+      "_path": "res://data/buildings/road/road_corner.json",
+      "body": {
+        "building_id": "road_corner",
+        "category": "road",
+        "description": "",
+        "display_name": "Road (Corner)",
+        "footprint": [
+          [
+            0,
+            0
+          ]
+        ],
+        "model_offset": [
+          0,
+          0,
+          0
+        ],
+        "model_path": "res://models/road-corner.glb",
+        "model_rotation_y": 0,
+        "model_scale": 1,
+        "profiles": [
+          {
+            "connections": [
+              [
+                0,
+                1
+              ],
+              [
+                -1,
+                0
+              ]
+            ],
+            "road_type": 1,
+            "type": "RoadMetadata"
+          }
+        ],
+        "tags": []
+      },
+      "bucket": "",
+      "building_id": "road_corner",
+      "category": "road",
+      "chain_role": "",
+      "character_id": "",
+      "display_name": "Road (Corner)",
+      "model_path": "res://models/road-corner.glb",
+      "patron_id": "",
+      "pool_id": "",
+      "tier": 0
+    },
+    {
+      "_path": "res://data/buildings/road/road_intersection.json",
+      "body": {
+        "building_id": "road_intersection",
+        "category": "road",
+        "description": "",
+        "display_name": "Road (Intersection)",
+        "footprint": [
+          [
+            0,
+            0
+          ]
+        ],
+        "model_offset": [
+          0,
+          0,
+          0
+        ],
+        "model_path": "res://models/road-intersection.glb",
+        "model_rotation_y": 0,
+        "model_scale": 1,
+        "profiles": [
+          {
+            "connections": [
+              [
+                0,
+                -1
+              ],
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                0
+              ],
+              [
+                -1,
+                0
+              ]
+            ],
+            "road_type": 3,
+            "type": "RoadMetadata"
+          }
+        ],
+        "tags": []
+      },
+      "bucket": "",
+      "building_id": "road_intersection",
+      "category": "road",
+      "chain_role": "",
+      "character_id": "",
+      "display_name": "Road (Intersection)",
+      "model_path": "res://models/road-intersection.glb",
+      "patron_id": "",
+      "pool_id": "",
+      "tier": 0
+    },
+    {
+      "_path": "res://data/buildings/road/road_split.json",
+      "body": {
+        "building_id": "road_split",
+        "category": "road",
+        "description": "",
+        "display_name": "Road (T-Split)",
+        "footprint": [
+          [
+            0,
+            0
+          ]
+        ],
+        "model_offset": [
+          0,
+          0,
+          0
+        ],
+        "model_path": "res://models/road-split.glb",
+        "model_rotation_y": 0,
+        "model_scale": 1,
+        "profiles": [
+          {
+            "connections": [
+              [
+                -1,
+                0
+              ],
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                0
+              ]
+            ],
+            "road_type": 2,
+            "type": "RoadMetadata"
+          }
+        ],
+        "tags": []
+      },
+      "bucket": "",
+      "building_id": "road_split",
+      "category": "road",
+      "chain_role": "",
+      "character_id": "",
+      "display_name": "Road (T-Split)",
+      "model_path": "res://models/road-split.glb",
+      "patron_id": "",
+      "pool_id": "",
+      "tier": 0
+    },
+    {
+      "_path": "res://data/buildings/road/road_straight.json",
+      "body": {
+        "building_id": "road_straight",
+        "category": "road",
+        "description": "",
+        "display_name": "Road (Straight)",
+        "footprint": [
+          [
+            0,
+            0
+          ]
+        ],
+        "model_offset": [
+          0,
+          0,
+          0
+        ],
+        "model_path": "res://models/road-straight.glb",
+        "model_rotation_y": 0,
+        "model_scale": 1,
+        "pool_id": "road",
+        "profiles": [
+          {
+            "connections": [
+              [
+                0,
+                -1
+              ],
+              [
+                0,
+                1
+              ]
+            ],
+            "road_type": 0,
+            "type": "RoadMetadata"
+          }
+        ],
+        "tags": []
+      },
+      "bucket": "",
+      "building_id": "road_straight",
+      "category": "road",
+      "chain_role": "",
+      "character_id": "",
+      "display_name": "Road (Straight)",
+      "model_path": "res://models/road-straight.glb",
+      "patron_id": "",
+      "pool_id": "road",
+      "tier": 0
+    },
+    {
+      "_path": "res://data/buildings/road/road_straight_lightposts.json",
+      "body": {
+        "building_id": "road_straight_lightposts",
+        "category": "road",
+        "description": "",
+        "display_name": "Road (Lightposts)",
+        "footprint": [
+          [
+            0,
+            0
+          ]
+        ],
+        "model_offset": [
+          0,
+          0,
+          0
+        ],
+        "model_path": "res://models/road-straight-lightposts.glb",
+        "model_rotation_y": 0,
+        "model_scale": 1,
+        "profiles": [
+          {
+            "connections": [
+              [
+                0,
+                -1
+              ],
+              [
+                0,
+                1
+              ]
+            ],
+            "road_type": 0,
+            "type": "RoadMetadata"
+          }
+        ],
+        "tags": []
+      },
+      "bucket": "",
+      "building_id": "road_straight_lightposts",
+      "category": "road",
+      "chain_role": "",
+      "character_id": "",
+      "display_name": "Road (Lightposts)",
+      "model_path": "res://models/road-straight-lightposts.glb",
+      "patron_id": "",
+      "pool_id": "",
+      "tier": 0
+    }
+  ],
+  "categories": [
+    "road",
+    "nature",
+    "generic",
+    "unique"
+  ],
+  "character_states": [
+    "NOT_ARRIVED",
+    "ARRIVED",
+    "WANT_REVEALED",
+    "SATISFIED",
+    "CONTRIBUTES_TO_LANDMARK"
+  ],
+  "characters": [
+    {
+      "character_id": "aristocrat_patron",
+      "character_type": "patron",
+      "display_name": "Sir William",
+      "bio": "",
+      "patron_id": "aristocrat",
+      "associated_bucket": "",
+      "arrival_threshold": 10,
+      "arrival_requires_tier": 1,
+      "want_building_id": "",
+      "portrait": "res://data/characters/william/portrait.png",
+      "talking_videos": [],
+      "_path": "res://data/characters/aristocrat_patron.json"
+    },
+    {
+      "character_id": "aristocrat_commercial",
+      "character_type": "character",
+      "display_name": "Flick",
+      "bio": "",
+      "patron_id": "aristocrat",
+      "associated_bucket": "commercial",
+      "arrival_threshold": 100,
+      "arrival_requires_tier": 1,
+      "want_building_id": "building_members_club",
+      "portrait": "res://data/characters/aristocrat_commercial/portrait.png",
+      "talking_videos": [
+        "res://data/characters/aristocrat_commercial/talking_1.ogv",
+        "res://data/characters/aristocrat_commercial/talking_2.ogv",
+        "res://data/characters/aristocrat_commercial/talking_3.ogv",
+        "res://data/characters/aristocrat_commercial/talking_4.ogv"
+      ],
+      "_path": "res://data/characters/aristocrat_commercial.json"
+    },
+    {
+      "character_id": "aristocrat_residential",
+      "character_type": "character",
+      "display_name": "Baba Soyink",
+      "bio": "",
+      "patron_id": "aristocrat",
+      "associated_bucket": "residential",
+      "arrival_threshold": 100,
+      "arrival_requires_tier": 1,
+      "want_building_id": "building_pirate_radio",
+      "portrait": "res://data/characters/aristocrat_residential/portrait.png",
+      "talking_videos": [
+        "res://data/characters/aristocrat_residential/talking_1.ogv",
+        "res://data/characters/aristocrat_residential/talking_2.ogv",
+        "res://data/characters/aristocrat_residential/talking_3.ogv",
+        "res://data/characters/aristocrat_residential/talking_4.ogv"
+      ],
+      "_path": "res://data/characters/aristocrat_residential.json"
+    },
+    {
+      "character_id": "aristocrat_industrial",
+      "character_type": "character",
+      "display_name": "Sir Reginald Cogsworth",
+      "bio": "Third-generation industrialist. Loves a working chimney.",
+      "patron_id": "aristocrat",
+      "associated_bucket": "industrial",
+      "arrival_threshold": 10000,
+      "arrival_requires_tier": 1,
+      "want_building_id": "building_crazy_golf",
+      "portrait": "res://data/characters/aristocrat_industrial/portrait.png",
+      "talking_videos": [],
+      "_path": "res://data/characters/aristocrat_industrial.json"
+    }
+  ],
+  "event_types": [
+    "dialogue",
+    "newspaper",
+    "notification"
+  ],
+  "events": [
+    {
+      "_path": "res://data/events/characters/aristocrat_commercial/arrival.json",
+      "body": {
+        "enabled_if": "",
+        "event_id": "aristocrat_commercial_arrival",
+        "event_type": "dialogue",
+        "payload": {
+          "entry_node_id": "n_start",
+          "nodes": [
+            {
+              "body": "[PLACEHOLDER] aristocrat_commercial_arrival — n_start body.",
+              "node_id": "n_start",
+              "on_enter": [],
+              "options": [
+                {
+                  "effects": [],
+                  "label": "Continue",
+                  "next": "n_end"
+                }
+              ],
+              "speaker": ""
+            },
+            {
+              "body": "[PLACEHOLDER] aristocrat_commercial_arrival — n_end body.",
+              "node_id": "n_end",
+              "on_enter": [],
+              "options": [
+                {
+                  "effects": [
+                    {
+                      "kind": "set_flag",
+                      "target": "met_aristocrat_commercial"
+                    }
+                  ],
+                  "label": "Close",
+                  "next": ""
+                }
+              ],
+              "speaker": ""
+            }
+          ],
+          "tree_id": "aristocrat_commercial_arrival_tree"
+        },
+        "trigger": {
+          "character_id": "aristocrat_commercial",
+          "event": "character_arrived"
+        }
+      },
+      "category": "characters",
+      "enabled_if": "",
+      "event_id": "aristocrat_commercial_arrival",
+      "event_type": "dialogue",
+      "trigger_building_id": "",
+      "trigger_character_id": "aristocrat_commercial",
+      "trigger_event": "character_arrived",
+      "trigger_patron_id": ""
+    },
+    {
+      "_path": "res://data/events/characters/aristocrat_industrial/arrival.json",
+      "body": {
+        "enabled_if": "",
+        "event_id": "aristocrat_industrial_arrival",
+        "event_type": "dialogue",
+        "payload": {
+          "entry_node_id": "n_start",
+          "nodes": [
+            {
+              "body": "[PLACEHOLDER] aristocrat_industrial_arrival — n_start body.",
+              "node_id": "n_start",
+              "on_enter": [],
+              "options": [
+                {
+                  "effects": [],
+                  "label": "Continue",
+                  "next": "n_end"
+                }
+              ],
+              "speaker": ""
+            },
+            {
+              "body": "[PLACEHOLDER] aristocrat_industrial_arrival — n_end body.",
+              "node_id": "n_end",
+              "on_enter": [],
+              "options": [
+                {
+                  "effects": [
+                    {
+                      "kind": "set_flag",
+                      "target": "met_aristocrat_industrial"
+                    }
+                  ],
+                  "label": "Close",
+                  "next": ""
+                }
+              ],
+              "speaker": ""
+            }
+          ],
+          "tree_id": "aristocrat_industrial_arrival_tree"
+        },
+        "trigger": {
+          "character_id": "aristocrat_industrial",
+          "event": "character_arrived"
+        }
+      },
+      "category": "characters",
+      "enabled_if": "",
+      "event_id": "aristocrat_industrial_arrival",
+      "event_type": "dialogue",
+      "trigger_building_id": "",
+      "trigger_character_id": "aristocrat_industrial",
+      "trigger_event": "character_arrived",
+      "trigger_patron_id": ""
+    },
+    {
+      "_path": "res://data/events/patrons/aristocrat/landmark_completed.json",
+      "body": {
+        "enabled_if": "",
+        "event_id": "aristocrat_landmark_completed",
+        "event_type": "dialogue",
+        "payload": {
+          "entry_node_id": "n_start",
+          "nodes": [
+            {
+              "body": "[PLACEHOLDER] aristocrat_landmark_completed — n_start body.",
+              "node_id": "n_start",
+              "on_enter": [],
+              "options": [
+                {
+                  "effects": [
+                    {
+                      "kind": "set_flag",
+                      "target": "aristocrat_landmark_completed"
+                    },
+                    {
+                      "kind": "fire_event",
+                      "target": "aristocrat_landmark_news"
+                    }
+                  ],
+                  "label": "Close",
+                  "next": ""
+                }
+              ],
+              "speaker": ""
+            }
+          ],
+          "tree_id": "aristocrat_landmark_completed_tree"
+        },
+        "trigger": {
+          "event": "patron_landmark_completed",
+          "patron_id": "aristocrat"
+        }
+      },
+      "category": "patrons",
+      "enabled_if": "",
+      "event_id": "aristocrat_landmark_completed",
+      "event_type": "dialogue",
+      "trigger_building_id": "",
+      "trigger_character_id": "",
+      "trigger_event": "patron_landmark_completed",
+      "trigger_patron_id": "aristocrat"
+    },
+    {
+      "_path": "res://data/events/newspaper/aristocrat_landmark.json",
+      "body": {
+        "enabled_if": "",
+        "event_id": "aristocrat_landmark_news",
+        "event_type": "newspaper",
+        "payload": {
+          "body": "[PLACEHOLDER] aristocrat_landmark_news body.",
+          "dateline": "",
+          "headline": "[PLACEHOLDER] aristocrat_landmark_news headline",
+          "image": "",
+          "kicker": "[PLACEHOLDER] aristocrat_landmark_news kicker"
+        },
+        "trigger": {
+          "event": "manual"
+        }
+      },
+      "category": "newspaper",
+      "enabled_if": "",
+      "event_id": "aristocrat_landmark_news",
+      "event_type": "newspaper",
+      "trigger_building_id": "",
+      "trigger_character_id": "",
+      "trigger_event": "manual",
+      "trigger_patron_id": ""
+    },
+    {
+      "_path": "res://data/events/patrons/aristocrat/landmark_ready.json",
+      "body": {
+        "enabled_if": "",
+        "event_id": "aristocrat_landmark_ready",
+        "event_type": "dialogue",
+        "payload": {
+          "entry_node_id": "n_start",
+          "nodes": [
+            {
+              "body": "[PLACEHOLDER] aristocrat_landmark_ready — n_start body.",
+              "node_id": "n_start",
+              "on_enter": [],
+              "options": [
+                {
+                  "effects": [
+                    {
+                      "kind": "set_flag",
+                      "target": "aristocrat_landmark_promised"
+                    }
+                  ],
+                  "label": "Close",
+                  "next": ""
+                }
+              ],
+              "speaker": ""
+            }
+          ],
+          "tree_id": "aristocrat_landmark_ready_tree"
+        },
+        "trigger": {
+          "event": "patron_landmark_ready",
+          "patron_id": "aristocrat"
+        }
+      },
+      "category": "patrons",
+      "enabled_if": "",
+      "event_id": "aristocrat_landmark_ready",
+      "event_type": "dialogue",
+      "trigger_building_id": "",
+      "trigger_character_id": "",
+      "trigger_event": "patron_landmark_ready",
+      "trigger_patron_id": "aristocrat"
+    },
+    {
+      "_path": "res://data/events/characters/aristocrat_residential/arrival.json",
+      "body": {
+        "enabled_if": "",
+        "event_id": "aristocrat_residential_arrival",
+        "event_type": "dialogue",
+        "payload": {
+          "entry_node_id": "n_start",
+          "nodes": [
+            {
+              "body": "[PLACEHOLDER] aristocrat_residential_arrival — n_start body.",
+              "node_id": "n_start",
+              "on_enter": [],
+              "options": [
+                {
+                  "effects": [],
+                  "label": "Continue",
+                  "next": "n_end"
+                }
+              ],
+              "speaker": ""
+            },
+            {
+              "body": "[PLACEHOLDER] aristocrat_residential_arrival — n_end body.",
+              "node_id": "n_end",
+              "on_enter": [],
+              "options": [
+                {
+                  "effects": [
+                    {
+                      "kind": "set_flag",
+                      "target": "met_aristocrat_residential"
+                    }
+                  ],
+                  "label": "Close",
+                  "next": ""
+                }
+              ],
+              "speaker": ""
+            }
+          ],
+          "tree_id": "aristocrat_residential_arrival_tree"
+        },
+        "trigger": {
+          "character_id": "aristocrat_residential",
+          "event": "character_arrived"
+        }
+      },
+      "category": "characters",
+      "enabled_if": "",
+      "event_id": "aristocrat_residential_arrival",
+      "event_type": "dialogue",
+      "trigger_building_id": "",
+      "trigger_character_id": "aristocrat_residential",
+      "trigger_event": "character_arrived",
+      "trigger_patron_id": ""
+    }
+  ],
+  "exported_at": "2026-04-26T12:22:38.962Z",
+  "flags": [
+    "aristocrat_landmark_completed",
+    "aristocrat_landmark_promised",
+    "met_aristocrat_commercial",
+    "met_aristocrat_industrial",
+    "met_aristocrat_residential"
+  ],
+  "patron_states": [
+    "LOCKED",
+    "LANDMARK_AVAILABLE",
+    "COMPLETED"
+  ],
+  "patrons": [
+    {
+      "_path": "res://data/patrons/aristocrat.json",
+      "bio": "",
+      "character_ids": [
+        "aristocrat_residential",
+        "aristocrat_commercial",
+        "aristocrat_industrial"
+      ],
+      "display_name": "The Howarth Players",
+      "donation_area": {
+        "rect": [
+          8,
+          -8,
+          12,
+          16
+        ],
+        "shape": "rect"
+      },
+      "landmark_building_id": "building_theatre",
+      "patron_id": "aristocrat",
+      "portrait": "res://data/patrons/aristocrat/portrait.png"
+    }
+  ],
+  "triggers": [
+    "character_arrived",
+    "character_want_revealed",
+    "character_satisfied",
+    "character_state_changed",
+    "demand_fulfilled_changed",
+    "demand_total_changed",
+    "demand_unserved_changed",
+    "patron_landmark_ready",
+    "patron_landmark_completed",
+    "unique_placed",
+    "buildable_area_expanded",
+    "manual"
+  ]
 }

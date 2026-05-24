@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cj2xbclhyxn1"
-path="res://.godot/imported/flick_portrait.png-4c68371809ea94b7b95b7b5de69c2f84.ctex"
+path="res://.godot/imported/portrait.png-0044362f2f6c4df19ee0dee6ef70f402.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://character_assets/flick/flick_portrait.png"
-dest_files=["res://.godot/imported/flick_portrait.png-4c68371809ea94b7b95b7b5de69c2f84.ctex"]
+source_file="res://data/characters/aristocrat_commercial/portrait.png"
+dest_files=["res://.godot/imported/portrait.png-0044362f2f6c4df19ee0dee6ef70f402.ctex"]
 
 [params]
 

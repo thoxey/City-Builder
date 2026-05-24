@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ber16g8gkqq6m"
-path="res://.godot/imported/william_portrait.png-87b71d567941c4809aa1424829c74361.ctex"
+path="res://.godot/imported/portrait.png-d79e87535e5d42d6c2c8f8bb040422db.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://character_assets/william/william_portrait.png"
-dest_files=["res://.godot/imported/william_portrait.png-87b71d567941c4809aa1424829c74361.ctex"]
+source_file="res://data/characters/william/portrait.png"
+dest_files=["res://.godot/imported/portrait.png-d79e87535e5d42d6c2c8f8bb040422db.ctex"]
 
 [params]
 

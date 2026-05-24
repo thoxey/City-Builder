@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://j8jeshafljl8"
-path="res://.godot/imported/ambrose_portrait.png-34e891d745525ac0a3be3161c431b932.ctex"
+path="res://.godot/imported/portrait.png-fb3be2de12c907f804f11f454f446d49.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://character_assets/ambrose/ambrose_portrait.png"
-dest_files=["res://.godot/imported/ambrose_portrait.png-34e891d745525ac0a3be3161c431b932.ctex"]
+source_file="res://data/characters/ambrose/portrait.png"
+dest_files=["res://.godot/imported/portrait.png-fb3be2de12c907f804f11f454f446d49.ctex"]
 
 [params]
 

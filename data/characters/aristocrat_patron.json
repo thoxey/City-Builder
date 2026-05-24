@@ -1,0 +1,13 @@
+{
+  "character_id": "aristocrat_patron",
+  "character_type": "patron",
+  "display_name": "Sir William",
+  "bio": "",
+  "patron_id": "aristocrat",
+  "associated_bucket": "",
+  "arrival_threshold": 10,
+  "arrival_requires_tier": 1,
+  "want_building_id": "",
+  "portrait": "res://data/characters/william/portrait.png",
+  "talking_videos": []
+}

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dseyycmpytwbu"
-path="res://.godot/imported/baba_portrait.png-1e65ef4b98169866c5f6c2dc30cc9899.ctex"
+path="res://.godot/imported/portrait.png-c8bbd07e53289cd479a611ea89584313.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://character_assets/baba/baba_portrait.png"
-dest_files=["res://.godot/imported/baba_portrait.png-1e65ef4b98169866c5f6c2dc30cc9899.ctex"]
+source_file="res://data/characters/aristocrat_residential/portrait.png"
+dest_files=["res://.godot/imported/portrait.png-c8bbd07e53289cd479a611ea89584313.ctex"]
 
 [params]
 
