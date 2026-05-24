@@ -29,19 +29,22 @@ GameEvents="*res://scripts/game_events.gd"
 GameState="*res://scripts/game_state.gd"
 GameClock="*res://scripts/game_clock.gd"
 PluginManager="*res://scripts/plugin_manager.gd"
+MCPScreenshot="*res://addons/godot_mcp/mcp_screenshot_service.gd"
+MCPInputService="*res://addons/godot_mcp/mcp_input_service.gd"
+MCPGameInspector="*res://addons/godot_mcp/mcp_game_inspector_service.gd"
 
 [debug]
 
 gdscript/warnings/shadowed_global_identifier=1
 gdscript/warnings/native_method_override=1
 
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/data_editor_tools/plugin.cfg", "res://addons/gut/plugin.cfg")
-
 [editor]
 
 movie_writer/movie_file="D:/Godot/recording.avi"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/data_editor_tools/plugin.cfg", "res://addons/godot_mcp/plugin.cfg", "res://addons/gut/plugin.cfg")
 
 [input]
 

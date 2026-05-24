@@ -2,25 +2,19 @@ extends PluginBase
 
 ## DialoguePlugin — CK3-style modal renderer for `dialogue` events.
 ##
-## Listens to EventSystem.event_resolved; records with `event_type == "dialogue"`
-## get queued and rendered in the central 60% of the viewport with a dimmed
-## backdrop. Other event types are ignored (newspaper / notification stubs
-## render themselves from the same signal).
+## Pure renderer: it no longer subscribes to EventSystem.event_resolved itself.
+## InboxPlugin owns the queue and calls `open_event(record)` here when the
+## player clicks an inbox item. This plugin's only job is "show the modal,
+## render nodes/options, fire effects, close, optionally promote arrival".
 ##
-## Arrival-tree quirk: the modal is what advances a character from ARRIVED to
-## WANT_REVEALED. On tree close, if the originating trigger was
+## Arrival-tree quirk preserved: on close, if the originating trigger was
 ## `character_arrived`, we call CharacterSystem.mark_want_revealed(cid).
-## This lets CharacterSystem.AUTO_REVEAL_WANT stay `false` now that the modal
-## is in place.
 
 const FONT_PATH := "res://fonts/lilita_one_regular.ttf"
 
 var _event_system: PluginBase
 var _characters:   PluginBase
 var _catalog:      PluginBase
-
-# FIFO of pending event records (dicts). Head is the active modal when open.
-var _queue: Array[Dictionary] = []
 
 # Active modal UI state ───────────────────────────────────────────────────────
 var _canvas: CanvasLayer
@@ -31,7 +25,6 @@ var _name_label: Label
 var _sub_label: Label
 var _body: RichTextLabel
 var _options_box: HBoxContainer
-var _chip_label: Label
 
 var _current: Dictionary = {}
 var _current_node_id: String = ""
@@ -52,14 +45,15 @@ func inject(deps: Dictionary) -> void:
 func _plugin_ready() -> void:
 	_catalog = PluginManager.get_plugin("BuildingCatalog")
 	_build_ui()
-	if _event_system:
-		_event_system.event_resolved.connect(_on_event_resolved)
+	# Note: we deliberately do NOT subscribe to event_resolved here. InboxPlugin
+	# intercepts dialogue events and hands them to us via open_event() when the
+	# player clicks. Newspaper/notification renderers still subscribe directly.
 
 # ── UI construction ───────────────────────────────────────────────────────────
 
 func _build_ui() -> void:
 	_canvas = CanvasLayer.new()
-	_canvas.layer = 20   # above HUD (layer 5) and nameplate (layer 1 default)
+	_canvas.layer = 20   # above HUD (layer 5), Inbox (layer 10), nameplate (default 1)
 	_canvas.visible = false
 	add_child(_canvas)
 
@@ -73,7 +67,6 @@ func _build_ui() -> void:
 	_modal.set_anchors_preset(Control.PRESET_CENTER)
 	_modal.custom_minimum_size = Vector2(900, 520)
 	_modal.size = Vector2(900, 520)
-	# Centre: offsets relative to the anchor (anchor = 0.5/0.5 for PRESET_CENTER)
 	_modal.offset_left   = -450
 	_modal.offset_right  =  450
 	_modal.offset_top    = -260
@@ -125,21 +118,6 @@ func _build_ui() -> void:
 	_options_box.alignment = BoxContainer.ALIGNMENT_END
 	right_vbox.add_child(_options_box)
 
-	# Queue chip (top-right)
-	_chip_label = Label.new()
-	_chip_label.text = ""
-	_chip_label.set_anchors_preset(Control.PRESET_TOP_RIGHT)
-	_chip_label.offset_left = -140
-	_chip_label.offset_right = -20
-	_chip_label.offset_top = 20
-	_chip_label.offset_bottom = 56
-	_chip_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	_chip_label.add_theme_font_override("font", load(FONT_PATH))
-	_chip_label.add_theme_font_size_override("font_size", 20)
-	_chip_label.modulate = Color(1, 1, 1, 0.9)
-	_chip_label.visible = false
-	_canvas.add_child(_chip_label)
-
 func _mk_label(text: String, size: int) -> Label:
 	var l := Label.new()
 	l.text = text
@@ -147,41 +125,22 @@ func _mk_label(text: String, size: int) -> Label:
 	l.add_theme_font_size_override("font_size", size)
 	return l
 
-# ── Queue + signal handling ───────────────────────────────────────────────────
+# ── Public entry point (called by InboxPlugin) ────────────────────────────────
 
-func _on_event_resolved(record: Dictionary) -> void:
-	if String(record.get("event_type", "")) != "dialogue":
+## Open a dialogue modal for the given event record. If a modal is already
+## open, the call is ignored — the inbox stays the source of truth for pending
+## items and the player can pick again after closing the current one.
+func open_event(record: Dictionary) -> void:
+	if is_modal_open():
+		push_warning("[Dialogue] open_event called while modal already open; ignoring")
 		return
-	_queue.append(record.duplicate(true))
-	print("[Dialogue] queue_push: event_id=%s queue_size=%d" % [
-		String(record.get("event_id", "")), _queue.size()
-	])
-	if not is_modal_open():
-		_open_next()
-	else:
-		_refresh_chip()
-
-func _refresh_chip() -> void:
-	var pending: int = max(_queue.size() - 1, 0)
-	if pending > 0:
-		_chip_label.text = "×%d" % pending
-		_chip_label.visible = true
-	else:
-		_chip_label.visible = false
-
-# ── Opening / closing ─────────────────────────────────────────────────────────
-
-func _open_next() -> void:
-	if _queue.is_empty():
-		_canvas.visible = false
-		return
-	_current = _queue[0]
+	_current = record.duplicate(true)
 	_visited = 0
 	var payload: Dictionary = _current.get("payload", {})
 	var entry_id := String(payload.get("entry_node_id", ""))
 	if entry_id.is_empty():
 		push_warning("[Dialogue] no_entry_node: event_id=%s" % _current.get("event_id", ""))
-		_close_current()
+		_current = {}
 		return
 	_canvas.visible = true
 	_populate_speaker_header()
@@ -189,7 +148,8 @@ func _open_next() -> void:
 	print("[Dialogue] modal_opened: event_id=%s node=%s" % [
 		String(_current.get("event_id", "")), entry_id
 	])
-	_refresh_chip()
+
+# ── Closing ───────────────────────────────────────────────────────────────────
 
 func _close_current() -> void:
 	var eid := String(_current.get("event_id", ""))
@@ -202,14 +162,7 @@ func _close_current() -> void:
 			_characters.mark_want_revealed(cid)
 	_current = {}
 	_current_node_id = ""
-	if not _queue.is_empty():
-		_queue.pop_front()
-	if _queue.is_empty():
-		_canvas.visible = false
-		_refresh_chip()
-	else:
-		# Give the UI a tick to repaint before the next open.
-		call_deferred("_open_next")
+	_canvas.visible = false
 
 func is_modal_open() -> bool:
 	return _canvas and _canvas.visible
@@ -220,24 +173,24 @@ func _populate_speaker_header() -> void:
 	var trig: Dictionary = _current.get("trigger", {})
 	var cid := String(trig.get("character_id", ""))
 	var pid := String(trig.get("patron_id", ""))
-	var name := ""
+	var display_name := ""
 	var sub := ""
 	var portrait_path := ""
 	if not cid.is_empty() and _characters:
 		var def: Dictionary = _characters.get_def(cid)
-		name = String(def.get("display_name", cid))
+		display_name = String(def.get("display_name", cid))
 		sub = String(def.get("bio", ""))
 		portrait_path = String(def.get("portrait", ""))
 	elif not pid.is_empty():
 		var ps: PluginBase = PluginManager.get_plugin("PatronSystem")
 		if ps:
 			var pdef: Dictionary = ps.get_def(pid)
-			name = String(pdef.get("display_name", pid))
+			display_name = String(pdef.get("display_name", pid))
 			sub = String(pdef.get("bio", ""))
 			portrait_path = String(pdef.get("portrait", ""))
 	else:
-		name = String(_current.get("event_id", ""))
-	_name_label.text = name
+		display_name = String(_current.get("event_id", ""))
+	_name_label.text = display_name
 	_sub_label.text = sub
 	_portrait.texture = _load_portrait_or_placeholder(portrait_path)
 
@@ -326,11 +279,8 @@ func _input(event: InputEvent) -> void:
 
 # ── Test hooks ────────────────────────────────────────────────────────────────
 
-func queue_dialogue_for_test(record: Dictionary) -> void:
-	_on_event_resolved(record)
-
-func queue_size() -> int:
-	return _queue.size()
+func open_event_for_test(record: Dictionary) -> void:
+	open_event(record)
 
 func current_node_id() -> String:
 	return _current_node_id
