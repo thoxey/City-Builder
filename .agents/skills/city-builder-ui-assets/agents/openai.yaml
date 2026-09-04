@@ -1,0 +1,7 @@
+interface:
+  display_name: "City Builder UI Assets"
+  short_description: "Generate consistent vintage comic game UI assets"
+  icon_small: "./assets/shape-library/community.png"
+  icon_large: "./assets/reference-sheets/approved-icon-wall.png"
+  brand_color: "#C9743F"
+  default_prompt: "Use $city-builder-ui-assets to design and export a game-ready UI asset in the established vintage comic style."
