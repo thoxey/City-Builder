@@ -20,6 +20,17 @@ build/
 # macOS
 .DS_Store
 
+# Node / local tooling
+node_modules/
+*.log
+.env*
+
+# Editors / temporary files
+.vscode/
+.idea/
+*.tmp
+*.swp
+
 # Godot MCP Pro (vendored, per-machine install)
 addons/godot_mcp/
 server/
