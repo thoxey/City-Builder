@@ -16,6 +16,7 @@ const PLUGINS: Array[GDScript] = [
 	preload("res://plugins/city_stats/city_stats_plugin.gd"),
 	preload("res://plugins/satisfaction/satisfaction_plugin.gd"),
 	preload("res://plugins/residential/residential_plugin.gd"),
+	preload("res://plugins/community/community_plugin.gd"),
 	preload("res://plugins/workplace/workplace_plugin.gd"),
 	preload("res://plugins/commercial/commercial_plugin.gd"),
 	preload("res://plugins/demand/demand_plugin.gd"),
@@ -36,9 +37,13 @@ const PLUGINS: Array[GDScript] = [
 	preload("res://plugins/dashboard/dashboard_plugin.gd"),
 	preload("res://plugins/quest_debug/quest_debug_plugin.gd"),
 	preload("res://plugins/example/example_plugin.gd"),
+	preload("res://plugins/playtest/playtest_plugin.gd"),
 ]
 
 var _registry: Dictionary = {}  # name → PluginBase
+
+static func should_activate_plugin(plugin_name: String, debug_build: bool = OS.is_debug_build()) -> bool:
+	return plugin_name != "Playtest" or debug_build
 
 func _ready() -> void:
 	# ── Instantiate ───────────────────────────────────────────────────────────
@@ -46,6 +51,9 @@ func _ready() -> void:
 	for script: GDScript in PLUGINS:
 		var plugin := script.new() as PluginBase
 		var plugin_name := plugin.get_plugin_name()
+		if not should_activate_plugin(plugin_name):
+			plugin.free()
+			continue
 		if plugin_name.is_empty():
 			push_error("[PluginManager] Plugin has no name: %s" % script.resource_path)
 			continue

@@ -29,6 +29,12 @@ var _options_box: HBoxContainer
 var _current: Dictionary = {}
 var _current_node_id: String = ""
 var _visited: int = 0
+var _presentation_enabled: bool = true
+
+func set_presentation_enabled(enabled: bool) -> void:
+	_presentation_enabled = enabled
+	if not enabled and _canvas:
+		_canvas.visible = false
 
 # ── Lifecycle ─────────────────────────────────────────────────────────────────
 
@@ -131,6 +137,8 @@ func _mk_label(text: String, size: int) -> Label:
 ## open, the call is ignored — the inbox stays the source of truth for pending
 ## items and the player can pick again after closing the current one.
 func open_event(record: Dictionary) -> void:
+	if not _presentation_enabled:
+		return
 	if is_modal_open():
 		push_warning("[Dialogue] open_event called while modal already open; ignoring")
 		return
@@ -264,7 +272,7 @@ func _on_option_pressed(opt: Dictionary) -> void:
 
 ## Builder reads this to suppress placement while a modal is open.
 func is_input_suppressed() -> bool:
-	return is_modal_open()
+	return _presentation_enabled and is_modal_open()
 
 func _input(event: InputEvent) -> void:
 	if not is_modal_open():

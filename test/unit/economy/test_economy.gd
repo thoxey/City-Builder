@@ -85,6 +85,20 @@ func test_try_spend_free_for_zero_cost() -> void:
 	assert_eq(GameState.map.cash, 50, "balance untouched")
 	assert_signal_not_emitted(GameEvents, "cash_changed")
 
+func test_quote_cash_returns_details_without_mutating() -> void:
+	GameState.map.cash = 20
+	var park := _make_structure_with_cost("park", 30)
+	watch_signals(GameEvents)
+
+	var quote: Dictionary = _economy.quote_cash(park)
+
+	assert_false(quote["ok"])
+	assert_eq(quote["cost"], 30)
+	assert_eq(quote["have"], 20)
+	assert_eq(quote["reason"], "insufficient_cash")
+	assert_eq(GameState.map.cash, 20)
+	assert_signal_not_emitted(GameEvents, "cash_changed")
+
 # ── Tick income / overhead ────────────────────────────────────────────────────
 
 func test_tick_credits_tax_income_from_industrial_output() -> void:

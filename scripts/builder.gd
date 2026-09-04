@@ -10,6 +10,8 @@ var _economy:  PluginBase  # Economy plugin reference — gates decorative place
 var _palette:  PluginBase  # Palette plugin — owns the cyclable build menu
 var _land:     PluginBase  # BuildableArea — gates placement to allowed cells
 var _dialogue: PluginBase  # Dialogue plugin — suppresses input while a modal is open
+var _uniques:  PluginBase  # UniqueRegistry — authoritative one-of-a-kind rules
+var _community_inspect_mode: bool = false
 
 var map: DataMap
 
@@ -55,7 +57,10 @@ var _overbuild_fp_cells: Array[Vector2i]  = []
 
 func _ready():
 
-	get_window().content_scale_factor = 2.0
+	# UI contracts and accessibility are authored against the actual desktop
+	# viewport. A forced 2× scale reduced 1280×720 to a 640×360 logical canvas
+	# and caused the HUD/sidebar to overlap.
+	get_window().content_scale_factor = 1.0
 
 	map = DataMap.new()
 	plane = Plane(Vector3.UP, Vector3.ZERO)
@@ -74,6 +79,7 @@ func _ready():
 	_palette  = PluginManager.get_plugin("Palette")
 	_land     = PluginManager.get_plugin("BuildableArea")
 	_dialogue = PluginManager.get_plugin("Dialogue")
+	_uniques  = PluginManager.get_plugin("UniqueRegistry")
 
 	var mesh_library = MeshLibrary.new()
 
@@ -112,6 +118,7 @@ func _ready():
 	GameState.structures = structures
 
 	GameEvents.palette_changed.connect(_on_palette_changed)
+	GameEvents.community_inspect_mode_changed.connect(func(active): _community_inspect_mode = active)
 
 	# Set up overbuild confirmation dialog
 	_overbuild_dialog = ConfirmationDialog.new()
@@ -161,6 +168,17 @@ func _process(delta):
 
 	var anchor := Vector2i(int(gridmap_position.x), int(gridmap_position.z))
 	_update_preview_color(anchor)
+
+	# Explicit Community inspect mode consumes the click before placement or
+	# demolition, then publishes only the canonical building anchor.
+	if _community_inspect_mode:
+		if Input.is_action_just_pressed("build"):
+			var building_instance_id := int(GameState.cell_to_building.get(anchor, -1))
+			var selected_anchor := anchor
+			if building_instance_id >= 0:
+				selected_anchor = GameState.building_registry.get(building_instance_id, {}).get("anchor", anchor)
+			GameEvents.community_place_selected.emit(selected_anchor)
+		return
 
 	action_build(gridmap_position)
 	action_demolish(gridmap_position)
@@ -236,6 +254,128 @@ static func _orientation_to_steps(orientation: int) -> int:
 		22: return 3
 	return 0
 
+static func _steps_to_orientation(steps: int) -> int:
+	return [0, 16, 10, 22][steps]
+
+func _reject_evaluation(reason: String, details: Dictionary = {}) -> Dictionary:
+	return {"ok": false, "reason": reason, "details": details}
+
+func _resolve_structure(requested_id: String, variant_id: String = "", rng: RandomNumberGenerator = null) -> Dictionary:
+	if _catalog == null:
+		return _reject_evaluation(PlaytestActionResult.UNKNOWN_BUILDING, {"requested_id": requested_id})
+	var exact_idx: int = _catalog.get_item_index(requested_id)
+	if exact_idx >= 0:
+		return {"ok": true, "index": exact_idx, "building_id": requested_id, "choice_id": requested_id}
+	var pool_indices: Array[int] = _catalog.get_pool_indices(requested_id)
+	if pool_indices.is_empty():
+		return _reject_evaluation(PlaytestActionResult.UNKNOWN_BUILDING, {"requested_id": requested_id})
+	var chosen_idx: int = -1
+	if not variant_id.is_empty():
+		chosen_idx = _catalog.get_item_index(variant_id)
+		if chosen_idx not in pool_indices:
+			return _reject_evaluation(PlaytestActionResult.UNKNOWN_BUILDING, {
+				"requested_id": requested_id, "variant_id": variant_id,
+			})
+	else:
+		var pick := rng.randi_range(0, pool_indices.size() - 1) if rng else randi_range(0, pool_indices.size() - 1)
+		chosen_idx = pool_indices[pick]
+	return {
+		"ok": true,
+		"index": chosen_idx,
+		"building_id": _catalog.get_id_by_index(chosen_idx),
+		"choice_id": requested_id,
+	}
+
+## Evaluates every placement gate without changing cash, demand, registries, or
+## GridMaps. Pool selection uses the supplied session RNG when present.
+func evaluate_placement(requested_id: String, anchor: Vector2i, rotation_steps: int = 0,
+		replace: bool = false, variant_id: String = "", rng: RandomNumberGenerator = null) -> Dictionary:
+	if rotation_steps < 0 or rotation_steps > 3:
+		return _reject_evaluation(PlaytestActionResult.INVALID_ROTATION, {"rotation": rotation_steps})
+	var resolved := _resolve_structure(requested_id, variant_id, rng)
+	if not resolved["ok"]:
+		return resolved
+	var struct_idx: int = resolved["index"]
+	var structure: Structure = structures[struct_idx]
+	var fp_cells := _get_footprint_cells(anchor, struct_idx, rotation_steps)
+	var details := {
+		"choice_id": resolved["choice_id"],
+		"building_id": resolved["building_id"],
+		"structure_index": struct_idx,
+		"anchor": anchor,
+		"rotation": rotation_steps,
+		"orientation": _steps_to_orientation(rotation_steps),
+		"footprint": fp_cells,
+		"occupied_building_ids": [],
+	}
+
+	if _land:
+		for cell: Vector2i in fp_cells:
+			if not _land.is_allowed(cell):
+				details["blocked_cell"] = cell
+				return _reject_evaluation(PlaytestActionResult.OUTSIDE_BUILDABLE_AREA, details)
+
+	var occupied_bids: Array[int] = []
+	for cell: Vector2i in fp_cells:
+		var bid: int = GameState.cell_to_building.get(cell, -1)
+		if bid >= 0 and bid not in occupied_bids:
+			occupied_bids.append(bid)
+	details["occupied_building_ids"] = occupied_bids
+	if not occupied_bids.is_empty() and not replace:
+		var has_proper_building := occupied_bids.any(func(bid: int):
+			var sid: int = GameState.building_registry.get(bid, {}).get("structure", -1)
+			return _is_building_structure(sid))
+		var reason := PlaytestActionResult.REPLACEMENT_REQUIRED if has_proper_building else PlaytestActionResult.OCCUPIED_FOOTPRINT
+		return _reject_evaluation(reason, details)
+
+	if _uniques and _uniques.is_unique(resolved["building_id"]):
+		if _uniques.is_placed(resolved["building_id"]):
+			return _reject_evaluation(PlaytestActionResult.UNIQUE_ALREADY_PLACED, details)
+		if not _uniques.is_unlocked(resolved["building_id"]):
+			var profile: UniqueProfile = _uniques.get_profile(resolved["building_id"])
+			if profile:
+				var missing: Array[String] = []
+				for prereq in profile.prerequisite_ids:
+					if not _uniques.is_placed(String(prereq)):
+						missing.append(String(prereq))
+				if not missing.is_empty():
+					details["missing_prerequisites"] = missing
+					return _reject_evaluation(PlaytestActionResult.UNMET_PREREQUISITE, details)
+				details["threshold"] = profile.prerequisite_threshold
+			return _reject_evaluation(PlaytestActionResult.BELOW_DEMAND_THRESHOLD, details)
+
+	var cash_quote: Dictionary = _economy.quote_cash(structure) if _economy else {"ok": true, "cost": 0, "have": 0, "reason": ""}
+	details["cash"] = cash_quote
+	if not cash_quote["ok"]:
+		return _reject_evaluation(PlaytestActionResult.INSUFFICIENT_CASH, details)
+	var demand_quote: Dictionary = _demand.quote_placement(structure) if _demand else {
+		"ok": true, "bucket_id": "", "cost": 0.0, "have": 0.0, "threshold": 0.0, "reason": "",
+	}
+	details["demand"] = demand_quote
+	if not demand_quote["ok"]:
+		var demand_reason := PlaytestActionResult.BELOW_DEMAND_THRESHOLD if demand_quote["reason"] == "below_threshold" else PlaytestActionResult.INSUFFICIENT_DEMAND
+		return _reject_evaluation(demand_reason, details)
+	return {"ok": true, "reason": "", "details": details}
+
+## Authoritative atomic placement command shared by UI and playtest automation.
+func try_place_building(requested_id: String, anchor: Vector2i, rotation_steps: int = 0,
+		replace: bool = false, variant_id: String = "", rng: RandomNumberGenerator = null) -> Dictionary:
+	var evaluation := evaluate_placement(requested_id, anchor, rotation_steps, replace, variant_id, rng)
+	if not evaluation["ok"]:
+		return PlaytestActionResult.rejected(evaluation["reason"], evaluation["details"])
+	var details: Dictionary = evaluation["details"]
+	for bid: int in details["occupied_building_ids"]:
+		_demolish_by_bid(bid)
+	var struct_idx: int = details["structure_index"]
+	# Both quotes were validated synchronously above; no mutation occurs before
+	# this commit section, so neither spend can reject here.
+	if _economy:
+		_economy.try_spend_cash(structures[struct_idx])
+	if _demand:
+		_demand.try_spend(structures[struct_idx])
+	_commit_build(anchor, struct_idx, details["orientation"], details["footprint"])
+	return PlaytestActionResult.applied(details)
+
 # ── Build (place) a structure ──────────────────────────────────────────────────
 
 func action_build(gridmap_position):
@@ -264,7 +404,7 @@ func action_build(gridmap_position):
 			build_idx = picked
 
 	var fp_cells := _get_footprint_cells(anchor, build_idx, _rotation_steps)
-	var orient   := gridmap.get_orthogonal_index_from_basis(selector.basis)
+	var building_id: String = _catalog.get_id_by_index(build_idx) if _catalog else ""
 
 	# Collect any buildings that need to be cleared
 	var occupied_bids: Array[int] = []
@@ -282,70 +422,27 @@ func action_build(gridmap_position):
 		if has_building:
 			_overbuild_pending  = true
 			_overbuild_anchor   = anchor
-			_overbuild_orient   = orient
+			_overbuild_orient   = _steps_to_orientation(_rotation_steps)
 			_overbuild_index    = build_idx
 			_overbuild_fp_cells = fp_cells
 			_overbuild_dialog.popup_centered()
 			return
 
-		# Roads / decorative — demolish silently then place
-		for bid: int in occupied_bids:
-			_demolish_by_bid(bid)
-
-	_do_build(anchor, build_idx, orient, fp_cells)
+	var outcome := try_place_building(building_id, anchor, _rotation_steps, not occupied_bids.is_empty())
+	_show_placement_outcome(outcome)
+	if outcome["status"] == PlaytestActionResult.STATUS_APPLIED:
+		Audio.play("sounds/placement-a.ogg, sounds/placement-b.ogg, sounds/placement-c.ogg, sounds/placement-d.ogg", -20)
 
 func _on_overbuild_confirmed() -> void:
 	_overbuild_pending = false
-	# Demolish all buildings occupying the footprint
-	var occupied_bids: Array[int] = []
-	for cell: Vector2i in _overbuild_fp_cells:
-		var bid: int = GameState.cell_to_building.get(cell, -1)
-		if bid >= 0 and bid not in occupied_bids:
-			occupied_bids.append(bid)
-	for bid: int in occupied_bids:
-		_demolish_by_bid(bid)
-	_do_build(_overbuild_anchor, _overbuild_index, _overbuild_orient, _overbuild_fp_cells)
+	var building_id: String = _catalog.get_id_by_index(_overbuild_index) if _catalog else ""
+	var outcome := try_place_building(building_id, _overbuild_anchor,
+		_orientation_to_steps(_overbuild_orient), true)
+	_show_placement_outcome(outcome)
+	if outcome["status"] == PlaytestActionResult.STATUS_APPLIED:
+		Audio.play("sounds/placement-a.ogg, sounds/placement-b.ogg, sounds/placement-c.ogg, sounds/placement-d.ogg", -20)
 
-func _do_build(anchor: Vector2i, struct_idx: int, orient: int, fp_cells: Array[Vector2i]) -> void:
-	# Buildable-area gate — every footprint cell must be inside the allowed
-	# mask. Runs first so the toast is the earliest feedback the player sees.
-	if _land:
-		for cell: Vector2i in fp_cells:
-			if not _land.is_allowed(cell):
-				show_toast("Outside buildable area")
-				print("[BuildableArea] place_blocked: pos=(%d,%d) reason=outside_mask" % [cell.x, cell.y])
-				return
-
-	# Cash gate — decoratives (nature) cost cash. Runs first so the player gets
-	# the cash-shortage toast before any (irrelevant) demand check on a free
-	# decorative. Non-cash structures (cost==0) pass through unchanged.
-	if _economy:
-		var cash_info: Dictionary = _economy.try_spend_cash(structures[struct_idx])
-		if not cash_info["ok"]:
-			var shortfall: int = cash_info["cost"] - cash_info["have"]
-			show_toast("Need $%d more (have $%d / $%d)" % [
-				shortfall, int(cash_info["have"]), int(cash_info["cost"])
-			])
-			return
-
-	# Demand gate — growth buildings must be paid for out of the matching bucket.
-	# Non-profile structures (roads, nature, pavement) are free. Blocked placements
-	# exit here before any grid mutation or sound, so the player just sees a toast.
-	if _demand:
-		var spend_info: Dictionary = _demand.try_spend(structures[struct_idx])
-		if not spend_info["ok"]:
-			var short_name: String = _demand.bucket_display_name(spend_info["bucket_id"])
-			if spend_info.get("reason", "") == "below_threshold":
-				show_toast("%s tier locked \u2014 need %d %s demand" % [
-					short_name.capitalize(), int(spend_info["threshold"]), short_name
-				])
-			else:
-				var shortfall: int = int(ceil(spend_info["cost"] - spend_info["have"]))
-				show_toast("Need %d more %s demand (have %d / %d)" % [
-					shortfall, short_name, int(spend_info["have"]), int(spend_info["cost"])
-				])
-			return
-
+func _commit_build(anchor: Vector2i, struct_idx: int, orient: int, fp_cells: Array[Vector2i]) -> void:
 	var bid := GameState._next_building_id
 	GameState._next_building_id += 1
 
@@ -375,7 +472,30 @@ func _do_build(anchor: Vector2i, struct_idx: int, orient: int, fp_cells: Array[V
 	var placed_pos := Vector3i(anchor.x, 0, anchor.y)
 	GameEvents.structure_placed.emit(placed_pos, struct_idx, orient)
 
-	Audio.play("sounds/placement-a.ogg, sounds/placement-b.ogg, sounds/placement-c.ogg, sounds/placement-d.ogg", -20)
+func _show_placement_outcome(outcome: Dictionary) -> void:
+	if outcome.get("status", "") != PlaytestActionResult.STATUS_REJECTED:
+		return
+	var details: Dictionary = outcome.get("details", {})
+	match outcome.get("reason", ""):
+		PlaytestActionResult.OUTSIDE_BUILDABLE_AREA:
+			show_toast("Outside buildable area")
+		PlaytestActionResult.INSUFFICIENT_CASH:
+			var q: Dictionary = details.get("cash", {})
+			show_toast("Need $%d more (have $%d / $%d)" % [int(q.get("cost", 0)) - int(q.get("have", 0)), int(q.get("have", 0)), int(q.get("cost", 0))])
+		PlaytestActionResult.BELOW_DEMAND_THRESHOLD:
+			var q: Dictionary = details.get("demand", {})
+			var short_name: String = _demand.bucket_display_name(q.get("bucket_id", "")) if _demand else ""
+			show_toast("%s tier locked — need %d %s demand" % [short_name.capitalize(), int(q.get("threshold", details.get("threshold", 0))), short_name])
+		PlaytestActionResult.INSUFFICIENT_DEMAND:
+			var q: Dictionary = details.get("demand", {})
+			var short_name: String = _demand.bucket_display_name(q.get("bucket_id", "")) if _demand else ""
+			show_toast("Need %d more %s demand (have %d / %d)" % [int(ceil(float(q.get("cost", 0)) - float(q.get("have", 0)))), short_name, int(q.get("have", 0)), int(q.get("cost", 0))])
+		PlaytestActionResult.UNIQUE_ALREADY_PLACED:
+			show_toast("Unique building already placed")
+		PlaytestActionResult.UNMET_PREREQUISITE:
+			show_toast("Building prerequisite not met")
+		_:
+			show_toast("Cannot place here")
 
 # ── Demolish ──────────────────────────────────────────────────────────────────
 
@@ -393,19 +513,28 @@ func action_demolish(gridmap_position):
 		return
 	_erase_last_cell = clicked_cell
 
-	if not GameState.cell_to_building.has(clicked_cell):
-		return
-	if _land and not _land.is_allowed(clicked_cell):
+	var outcome := try_demolish_cell(clicked_cell)
+	if outcome["status"] == PlaytestActionResult.STATUS_APPLIED:
+		Audio.play("sounds/removal-a.ogg, sounds/removal-b.ogg, sounds/removal-c.ogg, sounds/removal-d.ogg", -20)
+	elif outcome["reason"] == PlaytestActionResult.DEMOLITION_NOT_ALLOWED:
 		show_toast("Outside buildable area")
-		return
-	var bid: int = GameState.cell_to_building[clicked_cell]
-	_demolish_by_bid(bid)
-	Audio.play("sounds/removal-a.ogg, sounds/removal-b.ogg, sounds/removal-c.ogg, sounds/removal-d.ogg", -20)
 
-func _demolish_by_bid(bid: int) -> void:
+func try_demolish_cell(cell: Vector2i) -> Dictionary:
+	if not GameState.cell_to_building.has(cell):
+		return PlaytestActionResult.rejected(PlaytestActionResult.NOTHING_TO_DEMOLISH, {"cell": cell})
+	if _land and not _land.is_allowed(cell):
+		return PlaytestActionResult.rejected(PlaytestActionResult.DEMOLITION_NOT_ALLOWED, {"cell": cell})
+	var bid: int = GameState.cell_to_building[cell]
+	return PlaytestActionResult.applied(_demolish_by_bid(bid))
+
+func _demolish_by_bid(bid: int) -> Dictionary:
 	var entry: Dictionary = GameState.building_registry.get(bid, {})
+	if entry.is_empty():
+		return {}
 	var anchor: Vector2i  = entry.get("anchor", Vector2i.ZERO)
 	var cells: Array      = entry.get("cells", [])
+	var struct_idx: int = entry.get("structure", -1)
+	var building_id: String = _catalog.get_id_by_index(struct_idx) if _catalog and struct_idx >= 0 else ""
 
 	for cell in cells:
 		GameState.cell_to_building.erase(cell)
@@ -427,6 +556,7 @@ func _demolish_by_bid(bid: int) -> void:
 			var nb_sid: int = GameState.building_registry.get(nb_bid, {}).get("structure", -1)
 			if nb_sid >= 0 and _is_road_structure(nb_sid):
 				_retile_road_at(nb)
+	return {"building_id": building_id, "anchor": anchor, "footprint": cells}
 
 # ── Rotate the 'cursor' ───────────────────────────────────────────────────────
 
@@ -609,6 +739,8 @@ func _retile_road_at(anchor: Vector2i) -> void:
 	GameState.building_registry[bid] = entry
 
 func show_toast(message: String) -> void:
+	if toast_label == null:
+		return
 	toast_label.text = message
 	toast_label.modulate.a = 1.0
 	var tween = create_tween()
@@ -657,10 +789,21 @@ func action_load_slot2():
 
 func action_clear():
 	if Input.is_action_just_pressed("clear"):
-		_apply_map(DataMap.new())
-		GameState.map = map
-		GameEvents.map_loaded.emit(map)
+		reset_to_fresh_map()
 		show_toast("Map cleared")
+
+## Applies a canonical empty map through the same reconciliation signal used by
+## save loading. DataMap supplies starting cash; BuildableArea seeds starter land.
+func reset_to_fresh_map(fresh_map: DataMap = null) -> Dictionary:
+	var next_map := fresh_map if fresh_map else DataMap.new()
+	_apply_map(next_map)
+	GameState.map = map
+	GameEvents.map_loaded.emit(map)
+	return PlaytestActionResult.applied({
+		"cash": map.cash,
+		"structures": map.structures.size(),
+		"next_building_id": GameState._next_building_id,
+	})
 
 ## Shared helper: clear all building state and rebuild from a DataMap.
 ## Restores grass under old buildings and removes it under new ones.

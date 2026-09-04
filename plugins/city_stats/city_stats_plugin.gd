@@ -49,6 +49,12 @@ func unregister_sink(sink: CityStatSink) -> void:
 func get_satisfaction(type_id: String) -> float:
 	return _satisfaction.get(type_id, 1.0)
 
+func get_satisfaction_snapshot() -> Dictionary:
+	return _satisfaction.duplicate(true)
+
+func reset_runtime_state() -> void:
+	_satisfaction.clear()
+
 # ── Tick ──────────────────────────────────────────────────────────────────────
 
 func _on_hour(hour: float) -> void:

@@ -54,7 +54,7 @@ func _on_map_loaded(_map) -> void:
 		_register(entry["anchor"], profile.capacity)
 
 func _register(anchor: Vector2i, capacity: int) -> void:
-	var pop_src  := _PopSource.new(capacity, _satisfaction)
+	var pop_src  := _PopSource.new(anchor, capacity, _satisfaction)
 	_pop_sources[anchor]  = pop_src
 	_city_stats.register_source(pop_src)
 
@@ -68,8 +68,23 @@ func get_total_capacity() -> int:
 ## Current effective population: capacity scaled by last tick's satisfaction.
 ## Matches the supply figure _PopSource publishes to CityStats each tick.
 func get_current_population() -> int:
+	var community := PluginManager.get_plugin("Community")
+	if community and community.has_method("get_population"):
+		return community.get_population()
 	var score: float = _satisfaction.get_score() if _satisfaction else 1.0
 	return int(get_total_capacity() * score)
+
+## Stable, explicit capacity slots consumed by Community migration. Capacity is
+## not population: an empty slot contributes no CityStats population supply.
+func get_housing_slots() -> Array:
+	var slots: Array = []
+	var anchors := _pop_sources.keys()
+	anchors.sort_custom(func(a: Vector2i, b: Vector2i): return a.x < b.x if a.x != b.x else a.y < b.y)
+	for anchor: Vector2i in anchors:
+		var source := _pop_sources[anchor] as _PopSource
+		for slot in source.capacity:
+			slots.append({"anchor": anchor, "slot": slot})
+	return slots
 
 func _unregister(anchor: Vector2i) -> void:
 	if _pop_sources.has(anchor):
@@ -80,15 +95,20 @@ func _unregister(anchor: Vector2i) -> void:
 
 ## Population supply — available residents, scaled by last tick's satisfaction.
 class _PopSource extends CityStatSource:
+	var anchor: Vector2i
 	var capacity:      int
 	var _satisfaction  # Satisfaction plugin ref
 
-	func _init(cap: int, sat) -> void:
+	func _init(home_anchor: Vector2i, cap: int, sat) -> void:
+		anchor = home_anchor
 		capacity     = cap
 		_satisfaction = sat
 
 	func get_type_id() -> String: return "population"
 
 	func tick(_hour: float) -> int:
+		var community := PluginManager.get_plugin("Community")
+		if community and community.has_method("get_population_at"):
+			return community.get_population_at(anchor)
 		var score: float = _satisfaction.get_score() if _satisfaction else 1.0
 		return int(capacity * score)

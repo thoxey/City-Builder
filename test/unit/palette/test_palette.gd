@@ -256,3 +256,20 @@ func test_unlocked_unique_appears_in_affordable() -> void:
 	_rebuild()
 
 	assert_true("pub" in _plugin._affordable_ids, "unlocked uniques show up")
+
+func test_seeded_pool_pick_is_independent_of_global_random_state() -> void:
+	_catalog.add_structure("house_a", "generic", "residential_t1", false, "residential")
+	_catalog.add_structure("house_b", "generic", "residential_t1", false, "residential")
+	_rebuild()
+	_plugin._selected_id = "residential_t1"
+	var first := RandomNumberGenerator.new()
+	var second := RandomNumberGenerator.new()
+	first.seed = 12345
+	second.seed = 12345
+	seed(999)
+	var picks_a: Array[int] = []
+	for i in 12: picks_a.append(_plugin.pick_structure_index_for_build(first))
+	seed(1)
+	var picks_b: Array[int] = []
+	for i in 12: picks_b.append(_plugin.pick_structure_index_for_build(second))
+	assert_eq(picks_a, picks_b)

@@ -34,3 +34,22 @@ class_name DataMap
 ## Quest-tracker sidebar collapsed state. Persists across saves so the
 ## player's preferred layout sticks. Default visible.
 @export var dashboard_collapsed: bool = false
+
+## Presentation-only Community UI preferences. These values never participate
+## in simulation snapshots, migration, or deterministic hashes. Defaults keep
+## pre-Community-UI saves backward compatible.
+@export var community_selected_tab: String = "community"
+@export var community_section: String = "overview"
+@export var community_overlay_mode: String = "off"
+
+## Community simulation persistence. Records stay JSON-safe so snapshots and
+## save migrations use the same representation.
+@export var community_schema_version: int = 0
+@export var community_generation_version: int = 1
+@export var community_residents: Array = []
+@export var community_next_resident_id: int = 1
+@export var community_rng_seed: int = 1
+@export var community_rng_state: int = 0
+@export var community_migration_day: int = -1
+@export var community_migration_counters: Dictionary = {"arrivals": 0, "departures": 0, "rejections": 0}
+@export var community_programmes: Dictionary = {}

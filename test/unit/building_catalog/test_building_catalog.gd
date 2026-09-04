@@ -104,6 +104,46 @@ func test_profile_type_dispatch() -> void:
 	assert_eq(bp.active_start, 9.0)
 	assert_eq(bp.active_end,   17.0)
 
+func test_community_effect_profile_parses_valid_effects_and_programmes() -> void:
+	var data := _minimal_building("community_place", GOOD_MODEL_A)
+	data["profiles"] = [{
+		"type": "CommunityEffectProfile",
+		"effects": [{
+			"effect_id": "park_beauty", "quality": "beauty", "manifestation": "care",
+			"amount": 5.0, "scope": "local", "radius": 2,
+			"stacking_group": "greenery", "reason": "Shared greenery",
+		}],
+		"default_programme": "plays",
+		"programmes": {"plays": [{
+			"effect_id": "plays_belonging", "quality": "belonging", "manifestation": "identity",
+			"amount": 3.0, "scope": "participant", "capacity": 12,
+			"stacking_group": "culture", "reason": "Local plays",
+		}]},
+	}]
+	_write_json("community.json", data)
+	_plugin.ensure_loaded(FIXTURE_ROOT)
+	var profile := _plugin.get_by_id("community_place").find_metadata(CommunityEffectProfile) as CommunityEffectProfile
+	assert_not_null(profile)
+	assert_eq(profile.effects.size(), 1)
+	assert_eq(profile.effects[0]["radius"], 2)
+	assert_eq(profile.effects_for().size(), 2)
+	assert_eq(profile.effects_for()[1]["effect_id"], "plays_belonging")
+
+func test_community_effect_profile_drops_invalid_and_duplicate_effects() -> void:
+	var data := _minimal_building("invalid_community", GOOD_MODEL_A)
+	data["profiles"] = [{"type": "CommunityEffectProfile", "effects": [
+		{"effect_id": "valid", "quality": "beauty", "manifestation": "neutral", "amount": 1, "scope": "city"},
+		{"effect_id": "valid", "quality": "beauty", "manifestation": "neutral", "amount": 2, "scope": "city"},
+		{"effect_id": "bad_quality", "quality": "fun", "manifestation": "neutral", "amount": 1, "scope": "city"},
+		{"effect_id": "bad_local", "quality": "beauty", "manifestation": "neutral", "amount": 1, "scope": "local"}
+	]}]
+	_write_json("invalid.json", data)
+	_plugin.ensure_loaded(FIXTURE_ROOT)
+	var profile := _plugin.get_by_id("invalid_community").find_metadata(CommunityEffectProfile) as CommunityEffectProfile
+	assert_not_null(profile)
+	assert_eq(profile.effects.size(), 1)
+	assert_eq(profile.effects[0]["amount"], 1.0)
+
 func test_missing_model_path_errors() -> void:
 	_write_json("ok.json",  _minimal_building("good_one", GOOD_MODEL_A))
 	var bad := _minimal_building("bad_one", "res://models/does_not_exist.glb")

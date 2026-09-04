@@ -35,10 +35,63 @@ signal hour_changed(hour: float)
 var _time: float = START_TIME
 var _manual: bool = false
 var _last_hour: int = -1
+var _absolute_hour: int = 0
 
 ## Returns the current normalised time (0.0 = midnight, 0.5 = noon).
 func get_time() -> float:
 	return _time
+
+func current_hour() -> int:
+	return int(_time * 24.0) % 24
+
+func get_absolute_hour() -> int:
+	return _absolute_hour
+
+func is_manual() -> bool:
+	return _manual
+
+func set_manual_mode(enabled: bool) -> void:
+	_manual = enabled
+	if _auto_btn:
+		_auto_btn.button_pressed = not enabled
+
+func reset_manual_clock(start_hour: int = 6) -> void:
+	var hour := clampi(start_hour, 0, 23)
+	_manual = true
+	_last_hour = hour
+	_absolute_hour = 0
+	_time = float(hour) / 24.0
+	_apply(_time)
+	_sync_ui()
+
+## Advances an exact number of simulation hours through the same chronological
+## boundary used by real-time play. Zero hours is an accepted no-op.
+func advance_hours(hours: int) -> Dictionary:
+	if hours < 0 or hours > 1000:
+		return PlaytestActionResult.rejected(PlaytestActionResult.INVALID_HOURS, {
+			"requested_hours": hours, "minimum": 0, "maximum": 1000,
+		})
+	set_manual_mode(true)
+	var from_absolute := _absolute_hour
+	if _last_hour < 0:
+		_last_hour = current_hour()
+	for _i in hours:
+		_last_hour = (_last_hour + 1) % 24
+		_absolute_hour += 1
+		_time = float(_last_hour) / 24.0
+		_emit_hour_transition(_last_hour)
+	_apply(_time)
+	_sync_ui()
+	var result := PlaytestActionResult.applied({
+		"requested_hours": hours,
+		"emitted_hours": hours,
+		"from_absolute_hour": from_absolute,
+		"to_absolute_hour": _absolute_hour,
+		"day": _absolute_hour / 24,
+		"hour": current_hour(),
+	})
+	result["changed"] = hours > 0
+	return result
 
 var _sun: DirectionalLight3D
 var _world_env: WorldEnvironment
@@ -137,17 +190,30 @@ func _process(delta: float) -> void:
 
 	_apply(_time)
 
-	# Fire hour_changed when crossing an in-game hour boundary
-	var current_hour: int = int(_time * 24.0)
-	if current_hour != _last_hour:
-		_last_hour = current_hour
-		hour_changed.emit(float(current_hour))
+	# Fire each crossed hour in order, even after a long frame.
+	var target_hour := current_hour()
+	if _last_hour < 0:
+		_last_hour = target_hour
+		_emit_hour_transition(target_hour)
+	else:
+		while target_hour != _last_hour:
+			_last_hour = (_last_hour + 1) % 24
+			_absolute_hour += 1
+			_emit_hour_transition(_last_hour)
 
-	# Sync slider without triggering _on_slider_changed
-	_updating_slider = true
-	_slider.value = _time
-	_updating_slider = false
-	_time_label.text = _time_to_clock(_time)
+	_sync_ui()
+
+func _emit_hour_transition(hour: int) -> void:
+	hour_changed.emit(float(hour))
+
+func _sync_ui() -> void:
+	# Headless tests intentionally have no UI tree.
+	if _slider:
+		_updating_slider = true
+		_slider.value = _time
+		_updating_slider = false
+	if _time_label:
+		_time_label.text = _time_to_clock(_time)
 
 # ── Lighting ──────────────────────────────────────────────────────────────────
 
@@ -170,19 +236,22 @@ func _apply(t: float) -> void:
 			break
 
 	# Sun rotation — full circle, pointing down at noon
-	_sun.rotation = Vector3((t - 0.25) * TAU, deg_to_rad(-35.0), 0.0)
-	_sun.light_energy = sun_energy
-	_sun.light_color  = sun_color
+	if _sun:
+		_sun.rotation = Vector3((t - 0.25) * TAU, deg_to_rad(-35.0), 0.0)
+		_sun.light_energy = sun_energy
+		_sun.light_color  = sun_color
 
 	# Sky
-	_sky_mat.sky_top_color        = sky_top
-	_sky_mat.sky_horizon_color    = sky_horiz
-	_sky_mat.sky_energy_multiplier = lerpf(0.08, 1.6, clampf(sun_energy / 1.3, 0.0, 1.0))
-	_sky_mat.ground_bottom_color   = sky_top.darkened(0.88)
-	_sky_mat.ground_horizon_color  = sky_horiz.darkened(0.45)
+	if _sky_mat:
+		_sky_mat.sky_top_color        = sky_top
+		_sky_mat.sky_horizon_color    = sky_horiz
+		_sky_mat.sky_energy_multiplier = lerpf(0.08, 1.6, clampf(sun_energy / 1.3, 0.0, 1.0))
+		_sky_mat.ground_bottom_color   = sky_top.darkened(0.88)
+		_sky_mat.ground_horizon_color  = sky_horiz.darkened(0.45)
 
 	# Ambient — dims right down at night
-	_env.ambient_light_sky_contribution = lerpf(0.04, 0.65, clampf(sun_energy / 1.3, 0.0, 1.0))
+	if _env:
+		_env.ambient_light_sky_contribution = lerpf(0.04, 0.65, clampf(sun_energy / 1.3, 0.0, 1.0))
 
 # ── UI callbacks ──────────────────────────────────────────────────────────────
 
@@ -190,7 +259,8 @@ func _on_slider_changed(value: float) -> void:
 	if _updating_slider:
 		return
 	_manual = true
-	_auto_btn.button_pressed = false
+	if _auto_btn:
+		_auto_btn.button_pressed = false
 	_time = value
 
 func _on_auto_toggled(pressed: bool) -> void:

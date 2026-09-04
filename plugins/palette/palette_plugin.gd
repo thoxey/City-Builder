@@ -209,11 +209,25 @@ func current_structure_index() -> int:
 	return e.structure_indices[0]
 
 ## Rolls a random member of the current entry's pool for an actual build.
-func pick_structure_index_for_build() -> int:
+func pick_structure_index_for_build(rng: RandomNumberGenerator = null) -> int:
 	var e := current_entry()
 	if e == null or e.structure_indices.is_empty():
 		return -1
+	if rng:
+		return e.structure_indices[rng.randi_range(0, e.structure_indices.size() - 1)]
 	return e.structure_indices.pick_random()
+
+## Read-only copy used by semantic playtest discovery. PaletteEntry resources
+## remain internal so callers cannot alter normal selection state.
+func get_entry_records() -> Array:
+	var result: Array = []
+	for entry: PaletteEntry in _all_entries:
+		result.append({
+			"id": entry.id,
+			"display_name": entry.display_name,
+			"structure_indices": entry.structure_indices.duplicate(),
+		})
+	return result
 
 func select_next() -> void:
 	_step_selection(1)

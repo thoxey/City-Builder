@@ -35,7 +35,6 @@ MCPGameInspector="*res://addons/godot_mcp/mcp_game_inspector_service.gd"
 
 [debug]
 
-gdscript/warnings/shadowed_global_identifier=1
 gdscript/warnings/native_method_override=1
 
 [editor]

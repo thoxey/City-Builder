@@ -32,6 +32,14 @@ func inject(deps: Dictionary) -> void:
 # ── State ─────────────────────────────────────────────────────────────────────
 
 var _last_supply: Dictionary = {}  # snapshot from CityStats.stats_ticked
+var _last_hourly_income: int = 0
+
+func get_last_hourly_income() -> int:
+	return _last_hourly_income
+
+func reset_runtime_state() -> void:
+	_last_supply.clear()
+	_last_hourly_income = 0
 
 # ── Lifecycle ─────────────────────────────────────────────────────────────────
 
@@ -64,6 +72,7 @@ func _on_hour(_hour: float) -> void:
 	# CityStats already ran (topo order) so _last_supply is fresh for this hour.
 	var output: int = int(_last_supply.get("industrial_output", 0))
 	var income: int = output * tax_rate
+	_last_hourly_income = income
 
 	_apply_delta(income)
 
@@ -89,10 +98,18 @@ func get_cash_cost(structure: Structure) -> int:
 ## Non-mutating preview — would `try_spend_cash(structure)` succeed right now?
 ## Cash-free structures (cost==0) always pass.
 func can_afford_cash(structure: Structure) -> bool:
+	return bool(quote_cash(structure)["ok"])
+
+## Complete non-mutating cash decision used by Builder's atomic validation.
+func quote_cash(structure: Structure) -> Dictionary:
 	var cost: int = get_cash_cost(structure)
-	if cost <= 0:
-		return true
-	return GameState.map.cash >= cost
+	var have: int = GameState.map.cash
+	return {
+		"ok": cost <= 0 or have >= cost,
+		"cost": cost,
+		"have": have,
+		"reason": "insufficient_cash" if cost > 0 and have < cost else "",
+	}
 
 ## Attempts to spend the cash required to place `structure`.
 ## Returns a Dictionary describing the outcome:
@@ -101,13 +118,12 @@ func can_afford_cash(structure: Structure) -> bool:
 ##   have:  int  — cash balance pre-spend
 ## Cash-free structures (cash_cost == 0) yield ok=true with zero cost.
 func try_spend_cash(structure: Structure) -> Dictionary:
-	var cost: int = get_cash_cost(structure)
-	var have: int = GameState.map.cash
-	var result := {"ok": true, "cost": cost, "have": have}
+	var result := quote_cash(structure)
+	var cost: int = result["cost"]
+	var have: int = result["have"]
 	if cost <= 0:
 		return result
-	if have < cost:
-		result["ok"] = false
+	if not result["ok"]:
 		print("[Economy] place_blocked: cost=%d cash=%d" % [cost, have])
 		return result
 	_apply_delta(-cost)

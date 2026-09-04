@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "cohorts": [
+    {
+      "cohort_id": "general",
+      "display_name": "General residents",
+      "quality_importance_centre": {"opportunity": 0.25, "liveability": 0.25, "beauty": 0.25, "belonging": 0.25},
+      "manifestation_centre": {
+        "opportunity": {"identity": 0.333333, "freedom": 0.333334, "care": 0.333333},
+        "liveability": {"identity": 0.333333, "freedom": 0.333334, "care": 0.333333},
+        "beauty": {"identity": 0.333333, "freedom": 0.333334, "care": 0.333333},
+        "belonging": {"identity": 0.333333, "freedom": 0.333334, "care": 0.333333}
+      },
+      "variation": 0.22,
+      "candidate_weight": 5.0
+    },
+    {
+      "cohort_id": "identity_heavy",
+      "display_name": "Rooted residents",
+      "quality_importance_centre": {"opportunity": 0.2, "liveability": 0.25, "beauty": 0.25, "belonging": 0.3},
+      "manifestation_centre": {
+        "opportunity": {"identity": 0.72, "freedom": 0.14, "care": 0.14},
+        "liveability": {"identity": 0.65, "freedom": 0.15, "care": 0.2},
+        "beauty": {"identity": 0.78, "freedom": 0.1, "care": 0.12},
+        "belonging": {"identity": 0.76, "freedom": 0.1, "care": 0.14}
+      },
+      "variation": 0.1,
+      "candidate_weight": 1.0
+    },
+    {
+      "cohort_id": "freedom_heavy",
+      "display_name": "Independent residents",
+      "quality_importance_centre": {"opportunity": 0.3, "liveability": 0.2, "beauty": 0.2, "belonging": 0.3},
+      "manifestation_centre": {
+        "opportunity": {"identity": 0.1, "freedom": 0.8, "care": 0.1},
+        "liveability": {"identity": 0.12, "freedom": 0.68, "care": 0.2},
+        "beauty": {"identity": 0.1, "freedom": 0.78, "care": 0.12},
+        "belonging": {"identity": 0.1, "freedom": 0.8, "care": 0.1}
+      },
+      "variation": 0.1,
+      "candidate_weight": 1.0
+    },
+    {
+      "cohort_id": "care_heavy",
+      "display_name": "Civic residents",
+      "quality_importance_centre": {"opportunity": 0.2, "liveability": 0.3, "beauty": 0.2, "belonging": 0.3},
+      "manifestation_centre": {
+        "opportunity": {"identity": 0.12, "freedom": 0.18, "care": 0.7},
+        "liveability": {"identity": 0.1, "freedom": 0.12, "care": 0.78},
+        "beauty": {"identity": 0.15, "freedom": 0.15, "care": 0.7},
+        "belonging": {"identity": 0.1, "freedom": 0.12, "care": 0.78}
+      },
+      "variation": 0.1,
+      "candidate_weight": 1.0
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "personality_generation_version": 1,
+  "quality_baseline": 50.0,
+  "hourly_response_rate": 0.1,
+  "migration_hour": 6,
+  "migration_threshold": 60.0,
+  "departure_threshold": 30.0,
+  "departure_grace_hours": 24,
+  "relocation_grace_hours": 24,
+  "candidate_batch_size": 4,
+  "candidate_stream_limit": 4096,
+  "resident_snapshot_limit": 500,
+  "effect_snapshot_limit": 12,
+  "sensitivity_min": 0.75,
+  "sensitivity_max": 1.25
+}

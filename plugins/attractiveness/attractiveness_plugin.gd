@@ -178,6 +178,9 @@ func get_score(pos: Vector2i) -> int:
 func city_score() -> int:
 	return _city_total
 
+func score_snapshot() -> Dictionary:
+	return _scores.duplicate(true)
+
 # ── Inner classes ─────────────────────────────────────────────────────────────
 
 class _Emitter extends RefCounted:

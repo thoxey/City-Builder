@@ -37,6 +37,12 @@
       "industrial": 0,
       "nature": 0,
       "radius": 1
+    },
+    {
+      "type": "CommunityEffectProfile",
+      "effects": [
+        {"effect_id": "secure_home", "quality": "liveability", "manifestation": "neutral", "amount": 20.0, "scope": "resident", "stacking_group": "housing", "requires_active_building": false, "reason": "Had a secure home"}
+      ]
     }
   ],
   "tags": []

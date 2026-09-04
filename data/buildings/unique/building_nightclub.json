@@ -49,6 +49,15 @@
       "industrial": 0,
       "nature": -10,
       "radius": 1
+    },
+    {
+      "type": "CommunityEffectProfile",
+      "effects": [
+        {"effect_id": "night_entertainment", "quality": "opportunity", "manifestation": "freedom", "amount": 8.0, "scope": "participant", "capacity": 60, "schedule": {"start": 21, "end": 4}, "stacking_group": "entertainment", "reason": "Evening entertainment and roles"},
+        {"effect_id": "compatible_crowd", "quality": "belonging", "manifestation": "freedom", "amount": 8.0, "scope": "participant", "capacity": 60, "schedule": {"start": 21, "end": 4}, "stacking_group": "social_scene", "reason": "Found people with similar interests"},
+        {"effect_id": "night_vibrancy", "quality": "beauty", "manifestation": "freedom", "amount": 4.0, "scope": "participant", "capacity": 60, "schedule": {"start": 21, "end": 4}, "stacking_group": "vibrancy", "reason": "Enjoyed the town's night-time energy"},
+        {"effect_id": "late_music_noise", "quality": "liveability", "manifestation": "neutral", "amount": -12.0, "scope": "local", "radius": 2, "schedule": {"start": 21, "end": 4}, "sensitivity": "noise", "stacking_group": "night_noise", "reason": "Late music disturbed sleep"}
+      ]
     }
   ],
   "tags": []

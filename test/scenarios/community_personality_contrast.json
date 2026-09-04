@@ -1,0 +1,26 @@
+{
+  "scenario_id": "community_personality_contrast",
+  "description": "Fixed Identity-heavy and Freedom-heavy residents compare theatre plays and rock nights.",
+  "initial_state": {
+    "map": "empty",
+    "cash": 5000,
+    "demand": {"residential": 500, "industrial": 500, "commercial": 500},
+    "clock": {"mode": "manual", "start_hour": 19},
+    "narrative": {"mode": "presentation_disabled"}
+  },
+  "seed": 22001,
+  "fixture": {
+    "residents": [
+      {"resident_id": 1, "cohort_id": "identity_heavy", "home_anchor": {"x": 0, "z": 0}},
+      {"resident_id": 2, "cohort_id": "freedom_heavy", "home_anchor": {"x": 0, "z": 0}}
+    ],
+    "programmes": ["plays", "rock_nights"]
+  },
+  "assertions": [
+    "identity resident ranks plays belonging above rock belonging",
+    "freedom resident ranks rock belonging above plays belonging",
+    "neutral noise is equal before sensitivity",
+    "rock attendee retains both belonging benefit and liveability nuisance"
+  ],
+  "max_hours": 24
+}

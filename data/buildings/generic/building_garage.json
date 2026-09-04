@@ -37,6 +37,14 @@
       "industrial": 0,
       "nature": -20,
       "radius": 1
+    },
+    {
+      "type": "CommunityEffectProfile",
+      "effects": [
+        {"effect_id": "garage_employment", "quality": "opportunity", "manifestation": "neutral", "amount": 15.0, "scope": "participant", "capacity": 20, "schedule": {"start": 8, "end": 18}, "stacking_group": "employment", "reason": "Held suitable skilled work"},
+        {"effect_id": "garage_noise", "quality": "liveability", "manifestation": "neutral", "amount": -7.0, "scope": "local", "radius": 1, "schedule": {"start": 8, "end": 18}, "sensitivity": "noise", "stacking_group": "industrial_noise", "reason": "Workshop noise reached home"},
+        {"effect_id": "garage_visual", "quality": "beauty", "manifestation": "neutral", "amount": -4.0, "scope": "local", "radius": 1, "stacking_group": "industrial_visual", "reason": "Industrial clutter dominated the view"}
+      ]
     }
   ],
   "tags": []

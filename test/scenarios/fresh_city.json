@@ -1,0 +1,25 @@
+{
+  "scenario_id": "fresh_city",
+  "description": "Story-neutral empty starter plot for city-system playtests.",
+  "initial_state": {
+    "map": "empty",
+    "cash": 1000,
+    "demand": {
+      "residential": 100.0,
+      "industrial": 100.0,
+      "commercial": 100.0
+    },
+    "land": {
+      "rule": "starter_rect",
+      "rect": { "x": -4, "z": -4, "width": 8, "height": 8 }
+    },
+    "clock": { "mode": "manual", "start_hour": 6 },
+    "narrative": { "mode": "presentation_disabled" }
+  },
+  "narrative_mode": "presentation_disabled",
+  "max_hours": 1000,
+  "success_conditions": [],
+  "soft_failure_conditions": [],
+  "hard_failure_conditions": [],
+  "milestones": []
+}

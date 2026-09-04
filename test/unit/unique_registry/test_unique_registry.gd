@@ -173,6 +173,21 @@ func test_non_unique_placement_ignored() -> void:
 
 	assert_eq(_reg.placed_count(), 0, "non-uniques don't count toward placed")
 
+func test_unlock_evaluation_explains_threshold_prerequisite_and_placed() -> void:
+	_stub_catalog.register_unique(0, "building_pub", "commercial", 1, "aristocrat", "", "chain", 10, [])
+	_stub_catalog.register_unique(1, "building_restaurant", "commercial", 2, "aristocrat", "", "chain", 30, ["building_pub"])
+	_reg._index_uniques()
+	_stub_demand.set_value("commercial", 5.0)
+	var blocked: Dictionary = _reg.evaluate_unlock("building_restaurant")
+	assert_has(blocked["reasons"], "unmet_prerequisite")
+	assert_has(blocked["reasons"], "below_demand_threshold")
+	assert_eq(blocked["missing_prerequisites"], ["building_pub"])
+	_stub_demand.set_value("commercial", 50.0)
+	GameEvents.structure_placed.emit(Vector3i.ZERO, 0, 0)
+	assert_true(_reg.evaluate_unlock("building_restaurant")["unlocked"])
+	GameEvents.structure_placed.emit(Vector3i(1, 0, 0), 1, 0)
+	assert_has(_reg.evaluate_unlock("building_restaurant")["reasons"], "unique_already_placed")
+
 # ── Stubs ─────────────────────────────────────────────────────────────────────
 
 class _StubCatalog extends PluginBase:

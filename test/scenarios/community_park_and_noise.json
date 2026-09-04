@@ -1,0 +1,25 @@
+{
+  "scenario_id": "community_park_and_noise",
+  "description": "Occupied homes sit inside a park and night-venue radius across day and night.",
+  "initial_state": {
+    "map": "empty",
+    "cash": 5000,
+    "demand": {"residential": 500, "industrial": 500, "commercial": 500},
+    "clock": {"mode": "manual", "start_hour": 18},
+    "narrative": {"mode": "presentation_disabled"}
+  },
+  "seed": 22002,
+  "layout": [
+    {"building_id": "residential_t1", "anchor": {"x": 0, "z": 0}},
+    {"building_id": "building_duck_pond", "anchor": {"x": 1, "z": 0}},
+    {"building_id": "building_nightclub", "anchor": {"x": 2, "z": 0}}
+  ],
+  "advance_hours": 12,
+  "assertions": [
+    "park emits distinct liveability and beauty effects",
+    "nightclub participant receives opportunity and belonging",
+    "nearby resident receives scheduled neutral noise",
+    "noise is inactive at the exclusive end hour",
+    "all effects preserve source, scope, schedule, and signed amount"
+  ]
+}

@@ -316,6 +316,11 @@ func _instantiate_profile(profile: Dictionary, bid: String) -> StructureMetadata
 			a.nature      = int(profile.get("nature", 0))
 			a.radius      = int(profile.get("radius", 1))
 			return a
+		"CommunityEffectProfile":
+			var community := CommunityEffectProfile.from_dict(profile)
+			if community.effects.is_empty() and community.programmes.is_empty():
+				push_warning("[BuildingCatalog] empty_community_profile: building_id=%s" % bid)
+			return community
 		"RoadMetadata":
 			var r := RoadMetadata.new()
 			r.road_type = int(profile.get("road_type", 0))

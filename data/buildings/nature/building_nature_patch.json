@@ -27,6 +27,13 @@
       "industrial": 0,
       "nature": 20,
       "radius": 1
+    },
+    {
+      "type": "CommunityEffectProfile",
+      "effects": [
+        {"effect_id": "nearby_nature", "quality": "liveability", "manifestation": "care", "amount": 4.0, "scope": "local", "radius": 2, "stacking_group": "local_recreation", "reason": "Nearby everyday nature"},
+        {"effect_id": "wild_greenery", "quality": "beauty", "manifestation": "identity", "amount": 6.0, "scope": "local", "radius": 2, "stacking_group": "local_landscape", "reason": "A familiar patch of wild landscape"}
+      ]
     }
   ],
   "tags": []

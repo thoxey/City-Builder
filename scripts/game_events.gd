@@ -49,3 +49,19 @@ signal tile_attractiveness_changed(pos: Vector2i, score: int)
 ## City-wide attractiveness sum changed. Trigger source for quest events that
 ## want to fire when total city attractiveness crosses a threshold.
 signal city_attractiveness_changed(value: int)
+
+## Persistent community simulation signals.
+signal community_population_changed(population: int, capacity: int)
+signal community_qualities_changed(averages: Dictionary)
+signal community_resident_arrived(resident_id: int, home_anchor: Vector2i)
+signal community_resident_departed(resident_id: int, reason: String)
+signal community_resident_rehomed(resident_id: int, home_anchor: Vector2i)
+signal community_programme_changed(anchor: Vector2i, programme_id: String)
+
+## Presentation events. They carry intent/selection only; Community remains the
+## sole authority for simulation and programme state.
+signal community_ui_requested
+signal community_ui_refresh_requested(reason: String)
+signal community_inspect_mode_changed(active: bool)
+signal community_place_selected(anchor: Vector2i)
+signal community_notification(kind: String, resident_id: int, message: String)

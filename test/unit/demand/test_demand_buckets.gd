@@ -320,3 +320,36 @@ func test_can_afford_preview_is_nonmutating() -> void:
 	assert_almost_eq(plugin.buckets["residential"].fulfilled, 0.0, 0.0001, "preview must not mutate")
 	assert_signal_not_emitted(GameEvents, "demand_fulfilled_changed", "preview must not emit")
 	plugin.queue_free()
+
+func test_quote_placement_returns_details_without_mutating() -> void:
+	var plugin := _minimal_demand_plugin()
+	plugin.buckets["residential"].total_demand = 12.0
+	var house := _make_structure_with_profile("residential", 5)
+
+	watch_signals(GameEvents)
+	var quote: Dictionary = plugin.quote_placement(house)
+
+	assert_true(quote["ok"])
+	assert_eq(quote["bucket_id"], "residential")
+	assert_almost_eq(quote["cost"], 5.0, 0.0001)
+	assert_almost_eq(quote["have"], 12.0, 0.0001)
+	assert_eq(quote["reason"], "")
+	assert_almost_eq(plugin.buckets["residential"].fulfilled, 0.0, 0.0001)
+	assert_signal_not_emitted(GameEvents, "demand_fulfilled_changed")
+	plugin.queue_free()
+
+func test_quote_placement_distinguishes_threshold_and_insufficient() -> void:
+	var plugin := _minimal_demand_plugin()
+	var catalog := StubCatalog.new()
+	catalog.configs["residential_t2"] = {"demand_per_unit": 15, "demand_threshold": 30}
+	plugin._catalog = catalog
+	var tower := _make_generic_residence("residential_t2", 99)
+
+	plugin.buckets["residential"].total_demand = 20.0
+	assert_eq(plugin.quote_placement(tower)["reason"], "below_threshold")
+	catalog.configs["residential_t2"] = {"demand_per_unit": 40, "demand_threshold": 10}
+	var quote: Dictionary = plugin.quote_placement(tower)
+	assert_eq(quote["reason"], "insufficient")
+	assert_almost_eq(plugin.buckets["residential"].fulfilled, 0.0, 0.0001)
+	catalog.free()
+	plugin.queue_free()

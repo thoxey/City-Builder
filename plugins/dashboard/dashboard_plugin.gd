@@ -15,9 +15,9 @@ extends PluginBase
 ## Collapse state is saved per DataMap so the player's preferred layout sticks.
 
 func get_plugin_name() -> String: return "Dashboard"
-func get_dependencies() -> Array[String]: return ["CharacterSystem", "PatronSystem", "Demand"]
+func get_dependencies() -> Array[String]: return ["CharacterSystem", "PatronSystem", "Demand", "Community"]
 
-const PANEL_WIDTH := 320
+const PANEL_WIDTH := 380
 const TAB_WIDTH := 28
 
 const STATE_ICON := {
@@ -39,6 +39,7 @@ var _characters: PluginBase
 var _patrons:    PluginBase
 var _demand:     PluginBase
 var _catalog:    PluginBase
+var _community:  PluginBase
 
 # UI refs
 var _canvas: CanvasLayer
@@ -46,12 +47,20 @@ var _panel:  PanelContainer
 var _tab:    Button
 var _cards_box: VBoxContainer
 var _hint_label: Label
+var _community_label: Label
 var _patron_cards: Dictionary = {}  # patron_id -> _PatronCard
+var _community_panel: CommunityPanel
+var _community_overlay: CommunityMapOverlay
+var _patrons_root: VBoxContainer
+var _community_root: Control
+var _top_tabs: Dictionary = {}
+var _selected_top_tab := "community"
 
 func inject(deps: Dictionary) -> void:
 	_characters = deps.get("CharacterSystem")
 	_patrons    = deps.get("PatronSystem")
 	_demand     = deps.get("Demand")
+	_community  = deps.get("Community")
 
 func _plugin_ready() -> void:
 	_catalog = PluginManager.get_plugin("BuildingCatalog")
@@ -71,7 +80,8 @@ func _build_ui() -> void:
 	# Collapse tab flush to the screen edge.
 	_tab = Button.new()
 	_tab.text = "◀"
-	_tab.focus_mode = Control.FOCUS_NONE
+	_tab.focus_mode = Control.FOCUS_ALL
+	_tab.tooltip_text = "Collapse or expand the Community and Patrons sidebar"
 	_tab.set_anchors_preset(Control.PRESET_TOP_RIGHT)
 	_tab.offset_left   = -(PANEL_WIDTH + TAB_WIDTH)
 	_tab.offset_right  = -PANEL_WIDTH
@@ -93,27 +103,59 @@ func _build_ui() -> void:
 	_panel.add_child(outer)
 
 	var title := Label.new()
-	title.text = "Patrons"
+	title.text = "Town insights"
 	title.add_theme_font_size_override("font_size", 18)
 	outer.add_child(title)
+	var tab_row := HBoxContainer.new()
+	for tab_name in ["community", "patrons"]:
+		var button := Button.new()
+		button.text = tab_name.capitalize()
+		button.toggle_mode = true
+		button.focus_mode = Control.FOCUS_ALL
+		button.tooltip_text = "Open the %s tab" % tab_name.capitalize()
+		button.icon = load("res://sprites/community_icons/game/%s-tab.png" % tab_name)
+		button.expand_icon = true
+		button.pressed.connect(func(): select_top_tab(tab_name))
+		tab_row.add_child(button)
+		_top_tabs[tab_name] = button
+	outer.add_child(tab_row)
 
+	_community_root = VBoxContainer.new()
+	_community_root.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	outer.add_child(_community_root)
+	_community_panel = CommunityPanel.new()
+	_community_panel.setup(_community)
+	_community_root.add_child(_community_panel)
+
+	_patrons_root = VBoxContainer.new()
+	_patrons_root.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	outer.add_child(_patrons_root)
+	_community_label = Label.new()
+	_community_label.text = "Community  0/0"
+	_community_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_community_label.add_theme_color_override("font_color", Color(0.72, 0.92, 1.0))
+	_patrons_root.add_child(_community_label)
 	var scroll := ScrollContainer.new()
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	outer.add_child(scroll)
-
+	scroll.follow_focus = true
+	_patrons_root.add_child(scroll)
 	_cards_box = VBoxContainer.new()
 	_cards_box.add_theme_constant_override("separation", 10)
 	_cards_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	scroll.add_child(_cards_box)
-
 	_hint_label = Label.new()
 	_hint_label.text = "Grow your town"
 	_hint_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_hint_label.add_theme_color_override("font_color", Color(1.0, 0.84, 0.35))
-	outer.add_child(_hint_label)
-
+	_patrons_root.add_child(_hint_label)
 	_build_patron_cards()
+
+	_community_overlay = CommunityMapOverlay.new()
+	_canvas.add_child(_community_overlay)
+	_canvas.move_child(_community_overlay, 0)
+	_selected_top_tab = String(GameState.map.community_selected_tab) if GameState.map else "community"
+	select_top_tab(_selected_top_tab)
 
 func _build_patron_cards() -> void:
 	for pid in _patrons.all_patron_ids():
@@ -133,6 +175,10 @@ func _wire_signals() -> void:
 	GameEvents.patron_state_changed.connect(func(pid, _s): _refresh("patron_state_changed", pid))
 	GameEvents.demand_unserved_changed.connect(func(_b, _v): _refresh("demand_unserved_changed", ""))
 	GameEvents.map_loaded.connect(_on_map_loaded)
+	GameEvents.community_population_changed.connect(func(_p, _c): _refresh("community_population", ""))
+	GameEvents.community_qualities_changed.connect(func(_q): _refresh("community_qualities", ""))
+	GameEvents.community_ui_requested.connect(open_community)
+	GameEvents.community_ui_refresh_requested.connect(func(_r): _refresh_overlay())
 
 func _on_character_state_changed(cid: String, new_state: int) -> void:
 	print("[Dashboard] refresh: trigger=character_state_changed id=%s new_state=%s"
@@ -141,16 +187,37 @@ func _on_character_state_changed(cid: String, new_state: int) -> void:
 
 func _on_map_loaded(_m: DataMap) -> void:
 	_apply_collapsed_from_map()
+	select_top_tab(String(GameState.map.community_selected_tab) if GameState.map else "community")
 	_refresh("map_loaded", "")
 
 # ── Refresh loop ────────────────────────────────────────────────────────
 
 func _refresh(_trigger: String, _subject: String) -> void:
+	if _community_label and _community:
+		_community_label.text = CommunityInspector.summary_text(_community.get_snapshot(true))
 	for pid in _patron_cards.keys():
 		(_patron_cards[pid] as _PatronCard).update()
 	var hint := compute_hint(snapshot())
 	_hint_label.text = hint
+	_refresh_overlay()
 	print("[Dashboard] hint: \"%s\"" % hint)
+
+func select_top_tab(tab_name: String) -> void:
+	_selected_top_tab = tab_name if tab_name in ["community", "patrons"] else "community"
+	if _community_root: _community_root.visible = _selected_top_tab == "community"
+	if _patrons_root: _patrons_root.visible = _selected_top_tab == "patrons"
+	for key in _top_tabs: (_top_tabs[key] as Button).button_pressed = key == _selected_top_tab
+	if GameState.map: GameState.map.community_selected_tab = _selected_top_tab
+
+func open_community() -> void:
+	set_collapsed(false)
+	select_top_tab("community")
+	if _top_tabs.has("community"): (_top_tabs["community"] as Button).grab_focus()
+
+func _refresh_overlay() -> void:
+	if _community_overlay == null or _community_panel == null: return
+	var mode := String(GameState.map.community_overlay_mode) if GameState.map else "off"
+	_community_overlay.set_projection(_community_panel._model, mode)
 
 # ── Public helpers / snapshot for tests ─────────────────────────────────
 

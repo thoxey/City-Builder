@@ -160,6 +160,32 @@ func get_fulfilled(type_id: String) -> float:
 	var b: DemandBucket = buckets.get(type_id)
 	return b.fulfilled if b else 0.0
 
+func reset_to_starting_state(overrides: Dictionary = {}) -> void:
+	if buckets.is_empty():
+		_build_buckets()
+	var starts := {
+		"residential": float(overrides.get("residential", starting_housing)),
+		"industrial": float(overrides.get("industrial", starting_industrial)),
+		"commercial": float(overrides.get("commercial", starting_commercial)),
+	}
+	for bucket_id in starts:
+		var bucket: DemandBucket = buckets.get(bucket_id)
+		if bucket:
+			bucket.total_demand = starts[bucket_id]
+			bucket.set_fulfilled(0.0)
+
+func get_bucket_snapshot(type_id: String) -> Dictionary:
+	var bucket: DemandBucket = buckets.get(type_id)
+	if bucket == null:
+		return {"total": 0.0, "fulfilled": 0.0, "unserved": 0.0, "reference_cost": 0, "bank": 0}
+	return {
+		"total": bucket.total_demand,
+		"fulfilled": bucket.fulfilled,
+		"unserved": bucket.get_unserved(),
+		"reference_cost": bucket.reference_cost,
+		"bank": bucket.get_bank_count(),
+	}
+
 ## Category → bucket_id mapping. Growth categories are spendable; anything
 ## else (nature, road, pavement, unique-specific) maps to "" = free placement.
 static func bucket_for_category(category: String) -> String:
@@ -203,18 +229,35 @@ func _placement_params(structure: Structure) -> Dictionary:
 ## Non-mutating preview. Pool-gated structures must clear their tier threshold
 ## (against UNSERVED), and unserved must cover the cost.
 func can_afford(structure: Structure) -> bool:
+	return bool(quote_placement(structure)["ok"])
+
+## Returns the complete placement affordability decision without changing a
+## bucket or emitting signals. Builder uses this to validate every gate before
+## committing either cash or demand.
+func quote_placement(structure: Structure) -> Dictionary:
+	var result := {"ok": true, "bucket_id": "", "cost": 0.0, "have": 0.0,
+				   "threshold": 0.0, "reason": ""}
 	if structure == null:
-		return true
+		return result
 	var params := _placement_params(structure)
 	var bucket_id: String = params["bucket_id"]
 	if bucket_id.is_empty():
-		return true
+		return result
 	var bucket: DemandBucket = buckets.get(bucket_id)
 	if bucket == null:
-		return true
-	if bucket.get_unserved() < float(params["threshold"]):
-		return false
-	return bucket.get_unserved() >= float(params["cost"])
+		return result
+	var unserved: float = bucket.get_unserved()
+	result["bucket_id"] = bucket_id
+	result["cost"] = float(params["cost"])
+	result["have"] = unserved
+	result["threshold"] = float(params["threshold"])
+	if unserved < float(params["threshold"]):
+		result["ok"] = false
+		result["reason"] = "below_threshold"
+	elif unserved < float(params["cost"]):
+		result["ok"] = false
+		result["reason"] = "insufficient"
+	return result
 
 ## Attempts to spend the demand required to place `structure`.
 ## Returns a Dictionary describing the outcome:
@@ -226,39 +269,24 @@ func can_afford(structure: Structure) -> bool:
 ##   reason:    String — "below_threshold" | "insufficient" | ""
 ## On success the bucket's `fulfilled` is incremented (total stays monotonic).
 func try_spend(structure: Structure) -> Dictionary:
-	var result := {"ok": true, "bucket_id": "", "cost": 0.0, "have": 0.0,
-				   "threshold": 0.0, "reason": ""}
-
-	var params := _placement_params(structure)
-	var bucket_id: String = params["bucket_id"]
+	var result := quote_placement(structure)
+	var bucket_id: String = result["bucket_id"]
 	if bucket_id.is_empty():
 		return result
 	var bucket: DemandBucket = buckets.get(bucket_id)
 	if bucket == null:
 		return result
-
-	var cost: float = params["cost"]
-	var threshold: float = params["threshold"]
-	var unserved: float = bucket.get_unserved()
-	result["bucket_id"] = bucket_id
-	result["cost"]      = cost
-	result["have"]      = unserved
-	result["threshold"] = threshold
-
-	if unserved < threshold:
-		result["ok"] = false
-		result["reason"] = "below_threshold"
-		print("[Demand] place_blocked: bucket=%s reason=below_threshold threshold=%.1f unserved=%.1f" % [
-			bucket_id, threshold, unserved
-		])
+	if not result["ok"]:
+		var unserved: float = result["have"]
+		if result["reason"] == "below_threshold":
+			print("[Demand] place_blocked: bucket=%s reason=below_threshold threshold=%.1f unserved=%.1f" % [
+				bucket_id, float(result["threshold"]), unserved
+			])
+		else:
+			print("[Demand] place_blocked: bucket=%s cost=%.1f unserved=%.1f" % [bucket_id, float(result["cost"]), unserved])
 		return result
 
-	if unserved < cost:
-		result["ok"] = false
-		result["reason"] = "insufficient"
-		print("[Demand] place_blocked: bucket=%s cost=%.1f unserved=%.1f" % [bucket_id, cost, unserved])
-		return result
-
+	var cost: float = result["cost"]
 	bucket.add_fulfilled(cost)
 	print("[Demand] spent: bucket=%s cost=%.1f fulfilled=%.1f unserved=%.1f" % [
 		bucket_id, cost, bucket.fulfilled, bucket.get_unserved()
@@ -323,4 +351,3 @@ func _get_industrial_output() -> int:
 	if workplace and workplace.has_method("get_total_output"):
 		return workplace.get_total_output()
 	return 0
-

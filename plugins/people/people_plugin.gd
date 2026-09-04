@@ -33,14 +33,16 @@ enum PersonState { IDLE, WALKING_TO_ROAD, IN_CAR, WALKING_TO_DEST }
 var _road_network: PluginBase
 var _car_manager:  PluginBase
 var _day_night:    PluginBase
+var _community:    PluginBase
 
 func get_plugin_name() -> String: return "People"
-func get_dependencies() -> Array[String]: return ["RoadNetwork", "CarManager", "DayNight"]
+func get_dependencies() -> Array[String]: return ["RoadNetwork", "CarManager", "DayNight", "Community"]
 
 func inject(deps: Dictionary) -> void:
 	_road_network = deps.get("RoadNetwork")
 	_car_manager  = deps.get("CarManager")
 	_day_night    = deps.get("DayNight")
+	_community    = deps.get("Community")
 
 # ── MultiMesh pool ────────────────────────────────────────────────────────────
 
@@ -70,6 +72,9 @@ func _plugin_ready() -> void:
 	GameEvents.structure_placed.connect(func(_a, _b, _c): _rebuild())
 	GameEvents.structure_demolished.connect(func(_a): _rebuild())
 	GameEvents.map_loaded.connect(func(_a): _rebuild())
+	GameEvents.community_resident_arrived.connect(func(_id, _home): _rebuild())
+	GameEvents.community_resident_departed.connect(func(_id, _reason): _rebuild())
+	GameEvents.community_resident_rehomed.connect(func(_id, _home): _rebuild())
 	_day_night.hour_changed.connect(_on_hour)
 	_rebuild()
 
@@ -119,6 +124,18 @@ func _clear_people() -> void:
 	_person_by_journey.clear()
 
 func _spawn_people() -> void:
+	if _community and _community.has_method("get_resident_records"):
+		var records: Array = _community.get_resident_records(false)
+		var stagger := 0
+		for record: Dictionary in records:
+			if stagger >= MAX_PERSON_INSTANCES or _free_indices.is_empty():
+				break
+			var home_value: Variant = CommunityConstants.coordinate(record.get("home_anchor"))
+			if home_value == null:
+				continue
+			_spawn_person(Vector3i(home_value.x, 0, home_value.y), stagger, int(record.get("seed", record.get("resident_id", 1))))
+			stagger += 1
+		return
 	var residential := _get_tiles_by_category("residential")
 	if residential.is_empty():
 		return
@@ -131,18 +148,23 @@ func _spawn_people() -> void:
 			if _free_indices.is_empty():
 				push_warning("[People] person pool exhausted!")
 				return
-			var person := PersonSlot.new()
-			person.slot_index   = _free_indices.pop_back()
-			person.current_tile = tile
-			person.position     = Vector3(tile.x, WALK_HEIGHT, tile.z) + \
-					Vector3(randf_range(-0.25, 0.25), 0.0, randf_range(-0.25, 0.25))
-			person.visible = true
-			_people.append(person)
-			_home[person]   = tile
-			_origin[person] = tile
-			_state[person]  = PersonState.IDLE
-			_timer[person]  = stagger * SPAWN_STAGGER + randf_range(0.0, SPAWN_STAGGER)
+			_spawn_person(tile, stagger, hash([tile.x, tile.z, i]))
 			stagger += 1
+
+func _spawn_person(tile: Vector3i, stagger: int, seed: int) -> void:
+	var visual_rng := RandomNumberGenerator.new()
+	visual_rng.seed = seed
+	var person := PersonSlot.new()
+	person.slot_index = _free_indices.pop_back()
+	person.current_tile = tile
+	person.position = Vector3(tile.x, WALK_HEIGHT, tile.z) + Vector3(
+		visual_rng.randf_range(-0.25, 0.25), 0.0, visual_rng.randf_range(-0.25, 0.25))
+	person.visible = true
+	_people.append(person)
+	_home[person] = tile
+	_origin[person] = tile
+	_state[person] = PersonState.IDLE
+	_timer[person] = stagger * SPAWN_STAGGER + visual_rng.randf_range(0.0, SPAWN_STAGGER)
 
 # ── Process ───────────────────────────────────────────────────────────────────
 

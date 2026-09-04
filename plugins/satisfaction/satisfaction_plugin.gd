@@ -27,7 +27,13 @@ var weight_budget: float = 1.0
 var _score: float = 1.0
 
 func get_score() -> float:
+	var community := PluginManager.get_plugin("Community")
+	if community and community.has_method("get_population") and community.get_population() > 0:
+		return clampf(float(community.get_average_composite()) / 100.0, 0.0, 1.0)
 	return _score
+
+func reset_runtime_state() -> void:
+	_score = 1.0
 
 # ── Lifecycle ─────────────────────────────────────────────────────────────────
 

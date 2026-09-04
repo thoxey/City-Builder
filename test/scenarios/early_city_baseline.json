@@ -1,0 +1,31 @@
+{
+  "scenario_id": "early_city_baseline",
+  "description": "A bounded first-two-days city loop for comparing early balance changes.",
+  "initial_state": {
+    "map": "empty",
+    "cash": 1000,
+    "demand": { "residential": 100, "industrial": 100, "commercial": 100 },
+    "land": { "rule": "starter_rect", "rect": { "x": -4, "z": -4, "width": 8, "height": 8 } },
+    "clock": { "mode": "manual", "start_hour": 6 },
+    "narrative": { "mode": "presentation_disabled" }
+  },
+  "narrative_mode": "presentation_disabled",
+  "max_hours": 48,
+  "success_conditions": [
+    { "id": "positive_output", "path": "economy.industrial_output", "operator": "gt", "value": 0 }
+  ],
+  "soft_failure_conditions": [
+    { "id": "low_cash", "path": "economy.cash", "operator": "lt", "value": 100 }
+  ],
+  "hard_failure_conditions": [
+    { "id": "bankrupt_no_choices", "all": [
+      { "path": "economy.cash", "operator": "lte", "value": 0 },
+      { "path": "available_choice_count", "operator": "eq", "value": 0 }
+    ] }
+  ],
+  "milestones": [
+    { "id": "first_population", "path": "population.current", "operator": "gt", "value": 0 },
+    { "id": "tier_two_available", "path": "tier_two_available", "operator": "eq", "value": true },
+    { "id": "land_pressure", "path": "land.free_count", "operator": "lte", "value": 8 }
+  ]
+}

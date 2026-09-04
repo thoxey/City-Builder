@@ -190,6 +190,31 @@ func get_profile(building_id: String) -> UniqueProfile:
 func get_all_profiles() -> Dictionary:
 	return _profiles
 
+func evaluate_unlock(building_id: String) -> Dictionary:
+	if not _profiles.has(building_id):
+		return {"unique": false, "unlocked": true, "placed": false, "reasons": []}
+	var profile: UniqueProfile = _profiles[building_id]
+	var missing: Array[String] = []
+	for prerequisite in profile.prerequisite_ids:
+		if not _placed.has(String(prerequisite)):
+			missing.append(String(prerequisite))
+	var reasons: Array[String] = []
+	if _placed.has(building_id): reasons.append(PlaytestActionResult.UNIQUE_ALREADY_PLACED)
+	if not missing.is_empty(): reasons.append(PlaytestActionResult.UNMET_PREREQUISITE)
+	var current := _bucket_value(profile.bucket)
+	if current < profile.prerequisite_threshold:
+		reasons.append(PlaytestActionResult.BELOW_DEMAND_THRESHOLD)
+	return {
+		"unique": true,
+		"unlocked": reasons.is_empty(),
+		"placed": _placed.has(building_id),
+		"threshold": profile.prerequisite_threshold,
+		"current": current,
+		"prerequisites": Array(profile.prerequisite_ids),
+		"missing_prerequisites": missing,
+		"reasons": reasons,
+	}
+
 func placed_count() -> int:
 	return _placed.size()
 

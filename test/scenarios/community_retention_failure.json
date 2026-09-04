@@ -1,0 +1,20 @@
+{
+  "scenario_id": "community_retention_failure",
+  "description": "Persistent industrial nuisance drives a housed resident below threshold and exercises relocation/departure grace.",
+  "initial_state": {
+    "map": "empty",
+    "cash": 5000,
+    "demand": {"residential": 500, "industrial": 500, "commercial": 500},
+    "clock": {"mode": "manual", "start_hour": 6},
+    "narrative": {"mode": "presentation_disabled"}
+  },
+  "seed": 22004,
+  "duration_hours": 72,
+  "assertions": [
+    "one bad hour never causes departure",
+    "recovery resets the consecutive-below-threshold counter",
+    "home demolition creates homelessness rather than deleting the resident",
+    "available housing relocates the resident canonically",
+    "departure occurs only after the full configured grace period"
+  ]
+}

@@ -27,6 +27,15 @@
       "industrial": 0,
       "nature": 20,
       "radius": 1
+    },
+    {
+      "type": "CommunityEffectProfile",
+      "effects": [
+        {"effect_id": "accessible_recreation", "quality": "liveability", "manifestation": "care", "amount": 6.0, "scope": "local", "radius": 2, "stacking_group": "local_recreation", "reason": "Accessible outdoor recreation"},
+        {"effect_id": "shared_greenery", "quality": "beauty", "manifestation": "care", "amount": 7.0, "scope": "local", "radius": 2, "stacking_group": "shared_greenery", "reason": "Maintained shared greenery"},
+        {"effect_id": "local_landscape", "quality": "beauty", "manifestation": "identity", "amount": 5.0, "scope": "local", "radius": 2, "stacking_group": "local_landscape", "reason": "Preserved local landscape"},
+        {"effect_id": "pond_meeting_place", "quality": "belonging", "manifestation": "care", "amount": 4.0, "scope": "participant", "capacity": 20, "stacking_group": "community_gathering", "reason": "Met neighbours outdoors"}
+      ]
     }
   ],
   "tags": []

@@ -28,6 +28,12 @@ var _badge: Label           # red dot with count, overlaid on the button
 var _list_panel: PanelContainer
 var _list_box: VBoxContainer
 var _expanded: bool = false
+var _presentation_enabled: bool = true
+
+func set_presentation_enabled(enabled: bool) -> void:
+	_presentation_enabled = enabled
+	if _canvas:
+		_canvas.visible = enabled
 
 func get_plugin_name() -> String:
 	return "Inbox"
@@ -129,6 +135,8 @@ func _build_ui() -> void:
 # ── Signal handling ───────────────────────────────────────────────────────────
 
 func _on_event_resolved(record: Dictionary) -> void:
+	if not _presentation_enabled:
+		return
 	if String(record.get("event_type", "")) != "dialogue":
 		return
 	_pending.append(record.duplicate(true))

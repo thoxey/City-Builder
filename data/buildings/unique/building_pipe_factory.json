@@ -49,6 +49,14 @@
       "industrial": 0,
       "nature": -30,
       "radius": 1
+    },
+    {
+      "type": "CommunityEffectProfile",
+      "effects": [
+        {"effect_id": "factory_employment", "quality": "opportunity", "manifestation": "neutral", "amount": 16.0, "scope": "participant", "capacity": 35, "schedule": {"start": 8, "end": 18}, "stacking_group": "employment", "reason": "Held reliable industrial work"},
+        {"effect_id": "factory_pollution", "quality": "liveability", "manifestation": "neutral", "amount": -12.0, "scope": "local", "radius": 2, "sensitivity": "pollution", "stacking_group": "industrial_pollution", "reason": "Factory pollution affected the neighbourhood"},
+        {"effect_id": "factory_visual", "quality": "beauty", "manifestation": "neutral", "amount": -8.0, "scope": "local", "radius": 2, "stacking_group": "industrial_visual", "reason": "Heavy industry dominated the view"}
+      ]
     }
   ],
   "tags": []

@@ -1,0 +1,25 @@
+{
+  "scenario_id": "community_migration_week",
+  "description": "One candidate stream evaluates matched and nuisance-heavy towns with equal housing for seven days.",
+  "initial_state": {
+    "map": "empty",
+    "cash": 10000,
+    "demand": {"residential": 1000, "industrial": 1000, "commercial": 1000},
+    "clock": {"mode": "manual", "start_hour": 6},
+    "narrative": {"mode": "presentation_disabled"}
+  },
+  "seed": 22003,
+  "duration_hours": 168,
+  "candidate_batch_size": 4,
+  "towns": {
+    "matched": ["residential_t1", "building_duck_pond", "building_theatre", "building_nightclub"],
+    "nuisance": ["residential_t1", "building_pipe_factory", "building_garage"]
+  },
+  "assertions": [
+    "neither town exceeds housing capacity",
+    "below-threshold candidates do not arrive",
+    "each arrival takes its highest predicted legal home",
+    "matched town final population exceeds nuisance town",
+    "identity-heavy and freedom-heavy neighbourhood distributions diverge without diversity scoring"
+  ]
+}

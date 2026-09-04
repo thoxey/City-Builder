@@ -14,14 +14,16 @@ extends PluginBase
 ## as a single percent — non-monotonic, no fulfilled axis.
 
 func get_plugin_name() -> String: return "HUD"
-func get_dependencies() -> Array[String]: return ["CityStats", "Demand"]
+func get_dependencies() -> Array[String]: return ["CityStats", "Demand", "Community"]
 
 var _city_stats: PluginBase
 var _demand: PluginBase
+var _community: PluginBase
 
 func inject(deps: Dictionary) -> void:
 	_city_stats = deps.get("CityStats")
 	_demand = deps.get("Demand")
+	_community = deps.get("Community")
 
 # ── UI refs ───────────────────────────────────────────────────────────────────
 
@@ -31,6 +33,11 @@ var _output_label:          Label
 var _cash_label:            Label
 var _attractiveness_label:  Label
 var _demand_labels: Dictionary = {}  # bucket_type_id -> Label
+var _community_population_label: Label
+var _community_happiness_label: Label
+var _community_delta_label: Label
+var _last_population := -1
+var _community_delta_generation := 0
 
 # ── Lifecycle ─────────────────────────────────────────────────────────────────
 
@@ -45,12 +52,16 @@ func _plugin_ready() -> void:
 	GameEvents.cash_changed.connect(_on_cash_changed)
 	GameEvents.city_attractiveness_changed.connect(_on_attractiveness_changed)
 	_city_stats.stats_ticked.connect(_on_stats_ticked)
+	GameEvents.community_population_changed.connect(_on_community_population)
+	GameEvents.community_qualities_changed.connect(func(_q): _refresh_community_hud())
+	GameEvents.map_loaded.connect(func(_m): _last_population = -1; _refresh_community_hud())
 	# Seed the cash label with whatever is on the map right now — the Economy
 	# plugin emits cash_changed in its own _plugin_ready, but topo order may put
 	# Economy *after* HUD (HUD only deps CityStats + Demand), so we'd miss that
 	# first emit. Pull straight from GameState.map for the initial value.
 	if GameState.map:
 		_on_cash_changed(GameState.map.cash, 0)
+	_refresh_community_hud()
 
 # ── UI construction ───────────────────────────────────────────────────────────
 
@@ -92,6 +103,39 @@ func _build_ui() -> void:
 	hbox.add_child(_demand_labels["residential"])
 	hbox.add_child(_demand_labels["industrial"])
 	hbox.add_child(_demand_labels["commercial"])
+
+	# Community is deliberately a separate, compact strip so composite
+	# happiness cannot be confused with the legacy Satisfaction score.
+	var community_panel := PanelContainer.new()
+	community_panel.name = "CommunityHUD"
+	community_panel.set_anchors_preset(Control.PRESET_CENTER_TOP)
+	community_panel.offset_left = -210
+	community_panel.offset_right = 210
+	# The developer control strip occupies y=50..84 at the reference size.
+	# Keep Community's compact strip below it so both remain legible.
+	community_panel.offset_top = 90
+	community_panel.offset_bottom = 124
+	canvas.add_child(community_panel)
+	var community_row := HBoxContainer.new()
+	community_row.add_theme_constant_override("separation", 8)
+	community_panel.add_child(community_row)
+	community_row.add_child(CommunityUIFactory.icon("population", 22, "Population and residential capacity"))
+	_community_population_label = _make_label("People 0/0")
+	community_row.add_child(_community_population_label)
+	community_row.add_child(CommunityUIFactory.icon("composite-happiness", 22, "Average composite Community happiness"))
+	_community_happiness_label = _make_label("Happiness 50.0")
+	community_row.add_child(_community_happiness_label)
+	_community_delta_label = _make_label("")
+	community_row.add_child(_community_delta_label)
+	var open_button := Button.new()
+	open_button.name = "OpenCommunity"
+	open_button.text = "Community"
+	open_button.icon = load("res://sprites/community_icons/game/community-tab.png")
+	open_button.expand_icon = true
+	open_button.focus_mode = Control.FOCUS_ALL
+	open_button.tooltip_text = "Open Community insights"
+	open_button.pressed.connect(func(): GameEvents.community_ui_requested.emit())
+	community_row.add_child(open_button)
 
 func _make_label(text: String) -> Label:
 	var lbl := Label.new()
@@ -152,3 +196,28 @@ func _on_stats_ticked(supply: Dictionary, demand: Dictionary, _satisfaction: Dic
 		_budget_label.modulate = Color(1.0, 0.25, 0.2)
 
 	_output_label.text = "Output: %d/hr" % int(supply.get("industrial_output", 0))
+
+func _on_community_population(population: int, capacity: int) -> void:
+	if _community_population_label:
+		_community_population_label.text = "People %d/%d" % [population, capacity]
+	if _last_population >= 0 and population != _last_population and _community_delta_label:
+		var delta := population - _last_population
+		_community_delta_label.text = "%+d" % delta
+		_community_delta_label.tooltip_text = "Recent population change"
+		_community_delta_generation += 1
+		_clear_community_delta_later(_community_delta_generation)
+	_last_population = population
+	_refresh_community_hud()
+
+func _refresh_community_hud() -> void:
+	if _community == null: return
+	var snapshot: Dictionary = _community.get_snapshot(true)
+	if _community_population_label:
+		_community_population_label.text = "People %d/%d" % [int(snapshot.get("population", 0)), int(snapshot.get("capacity", 0))]
+	if _community_happiness_label:
+		_community_happiness_label.text = "Happiness %.1f" % float(snapshot.get("average_composite_happiness", 50.0))
+
+func _clear_community_delta_later(generation: int) -> void:
+	await get_tree().create_timer(4.0).timeout
+	if generation == _community_delta_generation and _community_delta_label:
+		_community_delta_label.text = ""
