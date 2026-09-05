@@ -1,0 +1,94 @@
+families:
+  - id: victorian_industrial_residential_01
+    request: "Victorian industrial residential background family"
+    size: 8
+    unique_model_per_variant: true
+    invariants:
+      neighbourhood_family: victorian_industrial
+      use: residential
+      typology: terrace
+      attachment: terrace
+      storeys: [2, 3]
+      primary_materials: [red_brick, brown_brick, local_stone, painted_render]
+      roof_material: slate
+      roof_orientation: ridge_parallel_to_street
+      camera: orthographic_isometric_front_three_quarter
+      mesh_profile: strict
+    variants:
+      - plain_2_bay_mid_terrace
+      - wider_3_bay_mid_terrace
+      - local_stone_variant
+      - painted_weathered_variant
+      - modest_bay_window_variant
+      - darker_brick_variant
+      - restrained_decorative_variant
+      - end_terrace_with_visible_side
+
+  - id: georgian_formal_residential_01
+    request: "Georgian formal residential family"
+    size: 8
+    unique_model_per_variant: true
+    invariants:
+      neighbourhood_family: georgian_formal
+      use: residential
+      typologies: [townhouse, terrace]
+      storeys: 3
+      primary_materials: [limestone, pale_painted_render, warm_brick]
+      roof_material: slate
+      camera: orthographic_isometric_front_three_quarter
+      mesh_profile: strict
+    variants:
+      - narrow_2_bay_townhouse
+      - formal_3_bay_townhouse
+      - limestone_mid_terrace
+      - warm_brick_mid_terrace
+      - railings_and_lightwell_variant
+      - concealed_roof_parapet_variant
+      - restrained_dormer_variant
+      - corner_end_terrace
+
+  - id: high_street_mixed_use_01
+    request: "South West high street mixed-use family"
+    size: 8
+    unique_model_per_variant: true
+    invariants:
+      neighbourhood_family: high_street
+      use: mixed_use
+      typology: shop_and_upper
+      storeys: [2, 3]
+      attachment: continuous_block
+      camera: orthographic_isometric_front_three_quarter
+      signage_policy: blank_or_generic
+      mesh_profile: strict
+    variants:
+      - small_shop_plus_flat
+      - cafe_plus_flats
+      - office_shopfront_plus_flat
+      - pale_render_shop_plus_rooms
+      - brown_brick_three_storey_unit
+      - paired_shopfront_wider_shell
+      - vacant_shop_plus_flats
+      - corner_shop_accent
+
+  - id: victorian_suburb_residential_01
+    request: "Victorian suburb residential family"
+    size: 8
+    unique_model_per_variant: true
+    invariants:
+      neighbourhood_family: victorian_suburb
+      use: residential
+      typologies: [semi_detached, detached_villa, short_terrace]
+      storeys: 2
+      setback: shallow_front_garden
+      roof_materials: [slate, restrained_clay_tile]
+      camera: orthographic_isometric_front_three_quarter
+      mesh_profile: strict
+    variants:
+      - plain_red_brick_semi
+      - stone_detailed_semi
+      - rendered_semi
+      - compact_detached_villa
+      - bay_window_detached_villa
+      - short_three_unit_terrace
+      - end_house_with_side_entry
+      - modest_corner_villa_accent

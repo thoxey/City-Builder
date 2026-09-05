@@ -1,0 +1,4 @@
+interface:
+  display_name: "South West Building Prompts"
+  short_description: "Compile coherent UK building-family image prompts"
+  default_prompt: "Use $south-west-building-prompts to resolve and compile a mesh-friendly South West England building family."
