@@ -15,6 +15,7 @@ var target_qualities: Dictionary = {}
 var composite_happiness: float = 50.0
 var below_departure_hours: int = 0
 var homeless_hours: int = 0
+var work_assignment: Variant = null
 var activity_assignment: Variant = null
 var applied_effects: Array = []
 
@@ -45,6 +46,7 @@ static func from_dict(data: Dictionary) -> CommunityResident:
 	resident.composite_happiness = clampf(float(data.get("composite_happiness", 50.0)), 0.0, 100.0)
 	resident.below_departure_hours = maxi(0, int(data.get("below_departure_hours", 0)))
 	resident.homeless_hours = maxi(0, int(data.get("homeless_hours", 0)))
+	resident.work_assignment = data.get("work_assignment")
 	resident.activity_assignment = data.get("activity_assignment")
 	resident.applied_effects = data.get("applied_effects", []).duplicate(true)
 	return resident
@@ -63,6 +65,7 @@ func to_dict(include_effects: bool = true, effect_limit: int = 12) -> Dictionary
 		"composite_happiness": CommunityConstants.rounded(composite_happiness),
 		"below_departure_hours": below_departure_hours,
 		"homeless_hours": homeless_hours,
+		"work_assignment": _json_safe(work_assignment),
 		"activity_assignment": _json_safe(activity_assignment),
 	}
 	if include_effects:

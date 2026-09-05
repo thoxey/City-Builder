@@ -41,6 +41,7 @@ func inject(deps: Dictionary) -> void:
 
 @export_group("Housing (residential)")
 @export var growth_rate_housing: float = 0.5
+@export var rooted_growth_rate_housing: float = 1.0
 @export var housing_max_cap: float = 1000.0
 ## City attractiveness sum that pegs housing growth at full speed and the
 ## housing cap at max_cap. Below this, both scale linearly.
@@ -48,22 +49,24 @@ func inject(deps: Dictionary) -> void:
 
 @export_group("Industrial")
 @export var industrial_ratio: float = 0.5
+@export var rooted_industrial_ratio: float = 0.35
 
 @export_group("Commercial")
-@export var commercial_ratio: float = 0.5
+@export var commercial_ratio: float = 0.75
+@export var rooted_commercial_ratio: float = 0.25
 
 @export_group("Reference costs (bank render + tier placeholder)")
 ## floor(unserved / reference_cost) = "N banked" shown in HUD.
 @export var ref_cost_housing: int = 5
-@export var ref_cost_industrial: int = 20
-@export var ref_cost_commercial: int = 30
+@export var ref_cost_industrial: int = 5
+@export var ref_cost_commercial: int = 5
 
 @export_group("Starting balances")
 ## Seeded into total_demand at startup so the player can place a few buildings
 ## before the simulation has had time to generate any demand.
-@export var starting_housing: float = 100.0
-@export var starting_industrial: float = 100.0
-@export var starting_commercial: float = 100.0
+@export var starting_housing: float = 25.0
+@export var starting_industrial: float = 5.0
+@export var starting_commercial: float = 5.0
 
 # ── Buckets ───────────────────────────────────────────────────────────────────
 
@@ -76,6 +79,7 @@ var _sources: Array[CityStatSource] = []    # registered sources (for teardown)
 func _plugin_ready() -> void:
 	_attractiveness = PluginManager.get_plugin("Attractiveness")
 	_build_buckets()
+	_restore_totals_from_map()
 	_register_sources()
 	if _day_night:
 		_day_night.hour_changed.connect(_on_hour)
@@ -117,20 +121,30 @@ func _register_sources() -> void:
 # ── Tick ──────────────────────────────────────────────────────────────────────
 
 func _on_hour(hour: float) -> void:
+	var rooted := GameState.map != null and bool(GameState.map.rooted_town_rules)
+	(buckets.get("residential") as HousingDemandBucket).growth_rate = rooted_growth_rate_housing if rooted else growth_rate_housing
+	(buckets.get("industrial") as IndustrialDemandBucket).ratio = rooted_industrial_ratio if rooted else industrial_ratio
+	(buckets.get("commercial") as CommercialDemandBucket).ratio = rooted_commercial_ratio if rooted else commercial_ratio
 	var attr: int = 0
 	if _attractiveness == null:
 		_attractiveness = PluginManager.get_plugin("Attractiveness")
-	if _attractiveness and _attractiveness.has_method("city_score"):
+	var community := PluginManager.get_plugin("Community")
+	if community and community.has_method("get_residential_demand_signal"):
+		attr = int(community.get_residential_demand_signal())
+	elif _attractiveness and _attractiveness.has_method("city_score"):
+		# Compatibility fallback for isolated tests and pre-Community scenes.
 		attr = int(_attractiveness.city_score())
 	var context := {
 		"attractiveness":    attr,
 		"population":        _get_population(),
+		"housing_capacity":  _get_housing_capacity(),
 		"industrial_output": _get_industrial_output(),
 	}
 
 	for b in _bucket_order:
 		b.tick(hour, context)
 		context[b.type_id] = b.total_demand
+	_sync_totals_to_map()
 
 	print("[Demand] tick: attr=%d residential=t%.1f/f%.1f/u%.1f industrial=t%.1f/f%.1f/u%.1f commercial=t%.1f/f%.1f/u%.1f output=%d" % [
 		attr,
@@ -173,6 +187,7 @@ func reset_to_starting_state(overrides: Dictionary = {}) -> void:
 		if bucket:
 			bucket.total_demand = starts[bucket_id]
 			bucket.set_fulfilled(0.0)
+	_sync_totals_to_map()
 
 func get_bucket_snapshot(type_id: String) -> Dictionary:
 	var bucket: DemandBucket = buckets.get(type_id)
@@ -304,7 +319,32 @@ func _on_demolished(pos: Vector3i) -> void:
 func _on_map_loaded(_map) -> void:
 	# Placed buildings on the loaded map need their capacity counted into the
 	# corresponding bucket's `fulfilled` so unserved comes out right.
+	_restore_totals_from_map()
 	_resync_fulfilled_from_registry()
+
+func _restore_totals_from_map() -> void:
+	if buckets.is_empty() or GameState == null or GameState.map == null:
+		return
+	var defaults := {
+		"residential": starting_housing,
+		"industrial": starting_industrial,
+		"commercial": starting_commercial,
+	}
+	for bucket_id in defaults:
+		var bucket: DemandBucket = buckets.get(bucket_id)
+		if bucket:
+			bucket.total_demand = float(GameState.map.demand_totals.get(bucket_id, defaults[bucket_id]))
+	_sync_totals_to_map()
+
+func _sync_totals_to_map() -> void:
+	if GameState == null or GameState.map == null:
+		return
+	var totals: Dictionary = {}
+	for bucket_id in ["residential", "industrial", "commercial"]:
+		var bucket: DemandBucket = buckets.get(bucket_id)
+		if bucket:
+			totals[bucket_id] = bucket.total_demand
+	GameState.map.demand_totals = totals
 
 ## Walks GameState.building_registry, sums per-bucket capacity, and writes
 ## each bucket's `fulfilled` to that total. Cheap enough — only fires on
@@ -344,6 +384,12 @@ func _get_population() -> int:
 	var residential := PluginManager.get_plugin("Residential")
 	if residential and residential.has_method("get_current_population"):
 		return residential.get_current_population()
+	return 0
+
+func _get_housing_capacity() -> int:
+	var residential := PluginManager.get_plugin("Residential")
+	if residential and residential.has_method("get_total_capacity"):
+		return residential.get_total_capacity()
 	return 0
 
 func _get_industrial_output() -> int:

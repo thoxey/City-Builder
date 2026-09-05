@@ -134,6 +134,33 @@ func test_rejection_never_partially_spends() -> void:
 	assert_eq(demand.spend_calls, 0)
 	assert_eq(GameState.map.cash, 100)
 
+func test_story_lock_rejection_is_an_atomic_no_op() -> void:
+	uniques.unique_ids["house"] = true
+	uniques.forced_decision = {
+		"selectable": false, "unlocked": false,
+		"reasons": [PlaytestActionResult.WANT_NOT_REVEALED],
+		"primary_reason": PlaytestActionResult.WANT_NOT_REVEALED,
+	}
+	var cells_before := GameState.cell_to_building.duplicate(true)
+	var registry_before := GameState.building_registry.duplicate(true)
+	var outcome: Dictionary = builder.try_place_building("house", Vector2i.ZERO)
+	assert_eq(outcome.reason, PlaytestActionResult.WANT_NOT_REVEALED)
+	assert_eq(GameState.cell_to_building, cells_before)
+	assert_eq(GameState.building_registry, registry_before)
+	assert_eq(economy.spend_calls, 0)
+	assert_eq(demand.spend_calls, 0)
+
+func test_replacement_cannot_remove_the_requested_unique_prerequisite() -> void:
+	assert_eq(builder.try_place_building("factory", Vector2i.ZERO).status, "applied")
+	uniques.unique_ids["house"] = true
+	uniques.placed["factory"] = true
+	uniques.profile.prerequisite_ids = PackedStringArray(["factory"])
+	var before := GameState.building_registry.duplicate(true)
+	var outcome: Dictionary = builder.try_place_building("house", Vector2i.ZERO, 0, true)
+	assert_eq(outcome.reason, PlaytestActionResult.UNMET_PREREQUISITE)
+	assert_has(outcome.details.planned_removal_building_ids, "factory")
+	assert_eq(GameState.building_registry, before, "rejected replacement preserves its prerequisite")
+
 func _structure(category: String, capacity: int, footprint: Array[Vector2i] = [Vector2i.ZERO]) -> Structure:
 	var structure := Structure.new()
 	structure.footprint = footprint
@@ -189,8 +216,26 @@ class StubUniques extends PluginBase:
 	var placed: Dictionary = {}
 	var unlocked := true
 	var profile := UniqueProfile.new()
+	var forced_decision: Dictionary = {}
 	func get_plugin_name() -> String: return "StubUniques"
 	func is_unique(id: String) -> bool: return unique_ids.has(id)
 	func is_placed(id: String) -> bool: return placed.has(id)
 	func is_unlocked(_id: String) -> bool: return unlocked
 	func get_profile(_id: String) -> UniqueProfile: return profile
+	func evaluate_unlock(id: String, excluded: Array = []) -> Dictionary:
+		if not forced_decision.is_empty():
+			return forced_decision.duplicate(true)
+		var reasons: Array[String] = []
+		if placed.has(id) and id not in excluded:
+			reasons.append(PlaytestActionResult.UNIQUE_ALREADY_PLACED)
+		var missing: Array[String] = []
+		for prerequisite in profile.prerequisite_ids:
+			if not placed.has(prerequisite) or prerequisite in excluded:
+				missing.append(prerequisite)
+		if not missing.is_empty():
+			reasons.append(PlaytestActionResult.UNMET_PREREQUISITE)
+		elif not unlocked:
+			reasons.append(PlaytestActionResult.BELOW_DEMAND_THRESHOLD)
+		return {"selectable":reasons.is_empty(), "unlocked":reasons.is_empty(),
+			"reasons":reasons, "primary_reason":reasons[0] if not reasons.is_empty() else null,
+			"missing_prerequisites":missing}

@@ -1,0 +1,34 @@
+{
+  "building_id": "building_town_hall",
+  "display_name": "Town Hall",
+  "description": "The free civic heart of every new town. Roads and working places grow outward from here.",
+  "model_path": "res://models/Meshy_AI_Clocktower_City_Hall_0403210028/Meshy_AI_Clocktower_City_Hall_0403210028_texture.glb",
+  "model_scale": 0.95,
+  "model_offset": [0, 0, 0],
+  "model_rotation_y": 0.0,
+  "footprint": [[0, 0], [1, 0], [0, 1], [1, 1]],
+  "category": "unique",
+  "community_role": "functional",
+  "cash_cost": 0,
+  "profiles": [
+    {"type": "BuildingMetadata"},
+    {
+      "type": "CommunityEffectProfile",
+      "effects": [{
+        "effect_id": "civic_heart",
+        "quality": "belonging",
+        "manifestation": "identity",
+        "amount": 2.0,
+        "scope": "local",
+        "radius": 3,
+        "stacking_group": "civic_heart",
+        "requires_active_building": false,
+        "reason": "Lived near the town's civic heart"
+      }]
+    }
+  ],
+  "tags": ["civic", "town_root"],
+  "ui_group": "civic",
+  "ui_order": 0,
+  "ui_icon": "city-hall"
+}

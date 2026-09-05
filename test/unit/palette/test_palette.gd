@@ -18,6 +18,10 @@ class StubCatalog:
 	func get_plugin_name() -> String: return "BuildingCatalog"
 	func get_all() -> Array[Structure]: return structures
 	func get_summary() -> Array: return summaries
+	func get_summary_by_id(bid: String) -> Dictionary:
+		for summary in summaries:
+			if summary.get("building_id", "") == bid: return summary
+		return {}
 	func get_pool_config(_pid: String) -> Dictionary: return {}
 	func add_structure(bid: String, category: String, pool_id: String,
 			has_road_meta: bool = false, profile_category: String = "") -> int:
@@ -79,9 +83,18 @@ class StubUniques:
 	# else falls through as a non-unique (unlock check skipped).
 	var unique_ids: Dictionary = {}    # bid -> true (declared unique)
 	var unlocked_ids: Dictionary = {}  # bid -> true (unlocked)
+	var decisions: Dictionary = {}
 	func get_plugin_name() -> String: return "UniqueRegistry"
 	func is_unique(bid: String) -> bool: return unique_ids.has(bid)
 	func is_unlocked(bid: String) -> bool: return unlocked_ids.has(bid)
+	func is_placed(_bid: String) -> bool: return false
+	func evaluate_unlock(bid: String, _excluded: Array = []) -> Dictionary:
+		if decisions.has(bid): return decisions[bid].duplicate(true)
+		var available := unlocked_ids.has(bid)
+		return {"selectable":available, "unlocked":available, "placed":false,
+			"reasons":[] if available else [PlaytestActionResult.BELOW_DEMAND_THRESHOLD],
+			"primary_reason":null if available else PlaytestActionResult.BELOW_DEMAND_THRESHOLD,
+			"threshold":0, "bucket":"town", "missing_prerequisites":[]}
 
 # ── Setup ─────────────────────────────────────────────────────────────────────
 
@@ -257,6 +270,28 @@ func test_unlocked_unique_appears_in_affordable() -> void:
 
 	assert_true("pub" in _plugin._affordable_ids, "unlocked uniques show up")
 
+func test_story_lock_projection_uses_authored_character_and_patron_labels() -> void:
+	_catalog.add_structure("radio", "unique", "")
+	_catalog.add_structure("theatre", "unique", "")
+	_uniques.unique_ids = {"radio":true, "theatre":true}
+	_uniques.decisions["radio"] = {
+		"selectable":false, "unlocked":false,
+		"reasons":[PlaytestActionResult.WANT_NOT_REVEALED],
+		"primary_reason":PlaytestActionResult.WANT_NOT_REVEALED,
+		"character":{"display_name":"Baba Soyink"},
+	}
+	_uniques.decisions["theatre"] = {
+		"selectable":false, "unlocked":false,
+		"reasons":[PlaytestActionResult.PATRON_NOT_READY],
+		"primary_reason":PlaytestActionResult.PATRON_NOT_READY,
+		"patron":{"display_name":"The Howarth Players"},
+	}
+	_rebuild()
+	var model: Dictionary = _plugin.get_build_menu_model()
+	assert_true(String(model.entries_by_id.radio.availability_label).contains("Baba Soyink"))
+	assert_true(String(model.entries_by_id.theatre.availability_label).contains("Howarth Players"))
+	assert_eq(model.entries_by_id.radio.reasons, [PlaytestActionResult.WANT_NOT_REVEALED])
+
 func test_menu_projection_contains_each_player_entry_once_and_is_detached() -> void:
 	_catalog.add_structure("house_a", "generic", "residential_t1", false, "residential")
 	_catalog.add_structure("house_b", "generic", "residential_t1", false, "residential")
@@ -266,6 +301,22 @@ func test_menu_projection_contains_each_player_entry_once_and_is_detached() -> v
 	assert_eq(model.entries_by_id.size(), 2)
 	model.entries_by_id.clear()
 	assert_eq(_plugin.get_build_menu_model().entries_by_id.size(), 2, "caller mutation must not reach Palette")
+
+func test_menu_projection_exposes_authored_community_scope_and_radius() -> void:
+	var index := _catalog.add_structure("pond", "nature", "")
+	_catalog.summaries[index]["community_role"] = "functional"
+	var profile := CommunityEffectProfile.from_dict({"effects": [{
+		"effect_id": "nearby_green", "quality": "beauty", "manifestation": "neutral",
+		"amount": 5, "scope": "local", "radius": 2, "stacking_group": "green",
+		"reason": "Nearby greenery",
+	}]})
+	_catalog.structures[index].metadata.append(profile)
+	_rebuild()
+	var entry: Dictionary = _plugin.get_build_menu_model()["entries_by_id"]["pond"]
+	assert_eq(entry["community_roles"], ["functional"])
+	assert_eq(entry["community_effects"][0]["quality"], "beauty")
+	assert_eq(entry["community_effects"][0]["scope"], "local")
+	assert_eq(entry["community_effects"][0]["radius"], 2)
 
 func test_request_selection_revalidates_and_retains_selection_on_rejection() -> void:
 	_catalog.add_structure("park", "nature", "")

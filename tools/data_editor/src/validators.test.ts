@@ -19,7 +19,13 @@ const baseChar = (): CharacterDoc => ({
 
 describe("validateCharacter", () => {
   it("passes on a well-formed new character", () => {
-    const r = validateCharacter(baseChar(), makeManifest(), { isNew: true });
+    const manifest = makeManifest();
+    manifest.buildings = manifest.buildings.map((building) =>
+      building.building_id === "building_members_club"
+        ? { ...building, character_id: "farmer_commercial" }
+        : building
+    );
+    const r = validateCharacter(baseChar(), manifest, { isNew: true });
     expect(r.errors).toEqual([]);
   });
 
@@ -57,6 +63,25 @@ describe("validateCharacter", () => {
     expect(r.errors.some((e) => e.includes("arrival_requires_tier"))).toBe(true);
   });
 
+  it("rejects an associated bucket outside the manifest", () => {
+    const doc = { ...baseChar(), associated_bucket: "cultural" } as unknown as CharacterDoc;
+    const r = validateCharacter(doc, makeManifest(), { isNew: true });
+    expect(r.errors.some((e) => e.includes('associated_bucket "cultural"'))).toBe(true);
+  });
+
+  it("rejects a want whose role, character, or bucket does not converge", () => {
+    const manifest = makeManifest();
+    const mismatched = manifest.buildings.map((building) =>
+      building.building_id === "building_members_club"
+        ? { ...building, chain_role: "chain", character_id: "aristocrat_industrial", bucket: "industrial" as const }
+        : building
+    );
+    const r = validateCharacter(baseChar(), { ...manifest, buildings: mismatched }, { isNew: true });
+    expect(r.errors.some((e) => e.includes("chain_role=want"))).toBe(true);
+    expect(r.errors.some((e) => e.includes("character_id"))).toBe(true);
+    expect(r.errors.some((e) => e.includes("bucket"))).toBe(true);
+  });
+
   it("warns (not errors) on empty want_building_id", () => {
     const doc = { ...baseChar(), want_building_id: "" };
     const r = validateCharacter(doc, makeManifest(), { isNew: true });
@@ -66,7 +91,7 @@ describe("validateCharacter", () => {
 });
 
 const basePatron = (): PatronDoc => ({
-  patron_id: "farmer",
+  patron_id: "aristocrat",
   display_name: "Farmers",
   bio: "till the land",
   character_ids: [
@@ -81,7 +106,7 @@ const basePatron = (): PatronDoc => ({
 
 describe("validatePatron", () => {
   it("passes on a well-formed new patron", () => {
-    const r = validatePatron(basePatron(), makeManifest(), { isNew: true });
+    const r = validatePatron(basePatron(), makeManifest(), { isNew: false, originalId: "aristocrat" });
     expect(r.errors).toEqual([]);
   });
 
@@ -130,6 +155,18 @@ describe("validatePatron", () => {
     expect(r.errors.some((e) => e.includes("duplicate bucket"))).toBe(true);
   });
 
+  it("rejects unknown and therefore incomplete patron bucket coverage", () => {
+    const manifest = makeManifest();
+    manifest.characters = manifest.characters.map((character) =>
+      character.character_id === "aristocrat_commercial"
+        ? { ...character, associated_bucket: "cultural" as never }
+        : character
+    );
+    const r = validatePatron(basePatron(), manifest, { isNew: false, originalId: "aristocrat" });
+    expect(r.errors.some((e) => e.includes('unknown bucket "cultural"'))).toBe(true);
+    expect(r.errors.some((e) => e.includes('include the "commercial" bucket'))).toBe(true);
+  });
+
   it("requires landmark_building_id", () => {
     const doc = { ...basePatron(), landmark_building_id: "" };
     const r = validatePatron(doc, makeManifest(), { isNew: true });
@@ -145,10 +182,10 @@ describe("validatePatron", () => {
     expect(r.errors.some((e) => e.includes("rect width and height"))).toBe(true);
   });
 
-  it("warns when landmark is not chain_role=landmark", () => {
+  it("rejects when landmark is not chain_role=landmark", () => {
     const manifest = makeManifest();
     const doc: PatronDoc = { ...basePatron(), landmark_building_id: "building_brewery" };
     const r = validatePatron(doc, manifest, { isNew: true });
-    expect(r.warnings.some((w) => w.includes("chain_role=landmark"))).toBe(true);
+    expect(r.errors.some((e) => e.includes("chain_role=landmark"))).toBe(true);
   });
 });

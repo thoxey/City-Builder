@@ -17,8 +17,12 @@
     ]
   ],
   "category": "nature",
+  "community_role": "functional",
   "cash_cost": 40,
   "profiles": [
+    {
+      "type": "BuildingMetadata"
+    },
     {
       "type": "AttractivenessProfile",
       "base": 40,
@@ -38,7 +42,7 @@
           "amount": 4.0,
           "scope": "local",
           "radius": 2,
-          "stacking_group": "local_recreation",
+          "stacking_group": "nearby_nature",
           "reason": "Nearby everyday nature"
         },
         {
@@ -48,7 +52,7 @@
           "amount": 6.0,
           "scope": "local",
           "radius": 2,
-          "stacking_group": "local_landscape",
+          "stacking_group": "wild_greenery",
           "reason": "A familiar patch of wild landscape"
         }
       ]

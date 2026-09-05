@@ -4,14 +4,23 @@
   "quality_baseline": 50.0,
   "hourly_response_rate": 0.1,
   "migration_hour": 6,
-  "migration_threshold": 60.0,
+  "migration_threshold": 50.0,
   "departure_threshold": 30.0,
   "departure_grace_hours": 24,
   "relocation_grace_hours": 24,
-  "candidate_batch_size": 4,
+  "candidate_batch_size": 20,
   "candidate_stream_limit": 4096,
   "resident_snapshot_limit": 500,
   "effect_snapshot_limit": 12,
   "sensitivity_min": 0.75,
-  "sensitivity_max": 1.25
+  "sensitivity_max": 1.25,
+  "town_hall_proximity": {
+    "core_max_road_tiles": 5,
+    "near_max_road_tiles": 10,
+    "core_shop_activity_bonus": 0.2,
+    "near_shop_activity_bonus": 0.1,
+    "core_home_liveability_penalty": -8.0,
+    "near_home_liveability_penalty": -4.0,
+    "commercial_income_per_bonus_visit": 2
+  }
 }

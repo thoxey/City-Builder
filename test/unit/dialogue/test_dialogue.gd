@@ -110,6 +110,7 @@ func test_arrival_close_calls_mark_want_revealed() -> void:
 	_plugin.open_event_for_test(rec)
 	_plugin._close_current()
 	assert_eq(_stub_chars.revealed_ids, ["cid_alice"])
+	assert_eq(_stub_events.acknowledged_ids, ["arr"])
 
 func test_non_arrival_close_does_not_mark_want_revealed() -> void:
 	var rec := _make_record("patron_ready", "patron_landmark_ready", "")
@@ -117,6 +118,26 @@ func test_non_arrival_close_does_not_mark_want_revealed() -> void:
 	_plugin.open_event_for_test(rec)
 	_plugin._close_current()
 	assert_eq(_stub_chars.revealed_ids, [], "non-arrival trees don't trigger reveal")
+
+func test_headless_resolution_matches_effect_reveal_and_ack_semantics() -> void:
+	var record := _make_record("headless", "character_arrived", "cid_alice")
+	record["payload"]["nodes"][0]["effects"] = []
+	record["payload"]["nodes"][0]["options"][0]["effects"] = [{"kind":"set_flag", "target":"met_alice"}]
+	_stub_events.records["headless"] = record
+	_stub_events.pending["headless"] = true
+	var outcome: Dictionary = _plugin.resolve_pending_event("headless")
+	assert_eq(outcome["status"], PlaytestActionResult.STATUS_APPLIED)
+	assert_eq(_stub_events.applied_effects, [{"kind":"set_flag", "target":"met_alice"}])
+	assert_eq(_stub_chars.revealed_ids, ["cid_alice"])
+	assert_eq(_stub_events.acknowledged_ids, ["headless"])
+	assert_eq(outcome["details"]["before_state"], "ARRIVED")
+	assert_eq(outcome["details"]["after_state"], "WANT_REVEALED")
+
+func test_headless_resolution_rejects_unknown_and_non_pending_events() -> void:
+	assert_eq(_plugin.resolve_pending_event("missing")["reason"], PlaytestActionResult.UNKNOWN_DIALOGUE_EVENT)
+	var record := _make_record("known", "character_arrived", "cid_alice")
+	_stub_events.records["known"] = record
+	assert_eq(_plugin.resolve_pending_event("known")["reason"], PlaytestActionResult.DIALOGUE_NOT_PENDING)
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -139,17 +160,30 @@ class _StubEvents:
 	extends PluginBase
 	signal event_resolved(record: Dictionary)
 	var applied_effects: Array = []
+	var records: Dictionary = {}
+	var pending: Dictionary = {}
+	var acknowledged_ids: Array[String] = []
 	func get_plugin_name() -> String: return "_StubEvents"
 	func apply_effects(effects: Array) -> void:
 		for e in effects: applied_effects.append(e)
 	func apply_effect(e: Dictionary) -> bool:
 		applied_effects.append(e); return true
+	func get_event(event_id: String) -> Dictionary: return records.get(event_id, {}).duplicate(true)
+	func is_dialogue_pending(event_id: String) -> bool: return pending.get(event_id, false)
+	func acknowledge_dialogue(event_id: String) -> bool:
+		if not pending.get(event_id, true): return false
+		pending.erase(event_id)
+		acknowledged_ids.append(event_id)
+		return true
 
 class _StubChars:
 	extends PluginBase
 	var revealed_ids: Array[String] = []
+	var states: Dictionary = {"cid_alice": 1}
 	func get_plugin_name() -> String: return "_StubChars"
 	func mark_want_revealed(cid: String) -> void:
 		revealed_ids.append(cid)
+		states[cid] = 2
+	func get_state(cid: String) -> int: return int(states.get(cid, 1))
 	func get_def(_cid: String) -> Dictionary:
 		return {"display_name": "Test", "bio": "", "portrait": ""}

@@ -89,6 +89,15 @@ func test_housing_zero_attractiveness_zero_growth() -> void:
 	bucket.tick(0.0, {"attractiveness": 0})
 	assert_eq(bucket.total_demand, 0.0, "no attractiveness, no growth")
 
+func test_high_occupancy_guarantees_credit_for_one_more_home() -> void:
+	var bucket := HousingDemandBucketCls.new()
+	bucket.reference_cost = 5
+	bucket.total_demand = 20.0
+	bucket.set_fulfilled(20.0)
+	bucket.tick(0.0, {"attractiveness": 0, "population": 8, "housing_capacity": 10})
+	assert_almost_eq(bucket.get_unserved(), 5.0, 0.0001,
+		"80% occupancy keeps migration and the housing build gate aligned")
+
 # ── Industrial / Commercial — monotonic, no easing ───────────────────────────
 
 func test_industrial_tracks_population_monotonic() -> void:
@@ -353,3 +362,24 @@ func test_quote_placement_distinguishes_threshold_and_insufficient() -> void:
 	assert_almost_eq(plugin.buckets["residential"].fulfilled, 0.0, 0.0001)
 	catalog.free()
 	plugin.queue_free()
+
+func test_accrued_totals_restore_before_fulfilled_registry_rebuild() -> void:
+	var saved_map := GameState.map
+	var saved_structures := GameState.structures
+	var saved_registry := GameState.building_registry
+	var map := DataMap.new()
+	map.demand_totals = {"residential": 245.0, "industrial": 180.0, "commercial": 160.0}
+	GameState.map = map
+	var house := _make_structure_with_profile("residential", 12)
+	GameState.structures = [house]
+	GameState.building_registry = {1:{"structure":0, "anchor":Vector2i.ZERO, "cells":[Vector2i.ZERO]}}
+	var plugin := _minimal_demand_plugin()
+	plugin._restore_totals_from_map()
+	plugin._resync_fulfilled_from_registry()
+	assert_almost_eq(plugin.get_total("residential"), 245.0, 0.0001)
+	assert_almost_eq(plugin.get_fulfilled("residential"), 12.0, 0.0001)
+	assert_almost_eq(plugin.get_unserved("residential"), 233.0, 0.0001)
+	plugin.queue_free()
+	GameState.map = saved_map
+	GameState.structures = saved_structures
+	GameState.building_registry = saved_registry

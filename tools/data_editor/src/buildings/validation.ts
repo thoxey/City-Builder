@@ -47,6 +47,14 @@ export function validateBuilding(
 
   if (doc.model_scale <= 0) errors.push("model_scale must be > 0");
 
+  const communityProfiles = doc.profiles.filter((p) => p.type === "CommunityEffectProfile");
+  if (doc.category === "nature" && !["functional", "cosmetic_only"].includes(doc.community_role ?? ""))
+    errors.push("nature content requires community_role functional or cosmetic_only");
+  if (doc.community_role === "functional" && communityProfiles.length === 0)
+    errors.push("functional community_role requires CommunityEffectProfile");
+  if (doc.community_role === "cosmetic_only" && communityProfiles.length > 0)
+    errors.push("cosmetic_only content cannot declare Community effects");
+
   for (const p of doc.profiles) {
     validateProfile(p, manifest, doc, errors, warnings);
   }
@@ -75,14 +83,20 @@ function validateProfile(
       if (p.tier < 0) errors.push("UniqueProfile tier must be ≥ 0");
       if (p.patron_id &&
           !manifest.patrons.some((pt) => pt.patron_id === p.patron_id))
-        warnings.push(`UniqueProfile.patron_id "${p.patron_id}" not in manifest`);
+        errors.push(`UniqueProfile.patron_id "${p.patron_id}" not in manifest`);
       if (p.character_id &&
           !manifest.characters.some((c) => c.character_id === p.character_id))
-        warnings.push(`UniqueProfile.character_id "${p.character_id}" not in manifest`);
+        errors.push(`UniqueProfile.character_id "${p.character_id}" not in manifest`);
       for (const pre of p.prerequisite_ids) {
         if (!manifest.buildings.some((b) => b.building_id === pre) && pre !== doc.building_id)
-          warnings.push(`UniqueProfile prerequisite "${pre}" not in manifest`);
+          errors.push(`UniqueProfile prerequisite "${pre}" not in manifest`);
       }
+      if (p.chain_role === "want") {
+        if (!p.character_id) errors.push("UniqueProfile want requires character_id");
+        if (!p.patron_id) errors.push("UniqueProfile want requires patron_id");
+      }
+      if (p.chain_role === "landmark" && !p.patron_id)
+        errors.push("UniqueProfile landmark requires patron_id");
       if (p.desirability_boost < 0)
         warnings.push("UniqueProfile desirability_boost is negative");
       return;
@@ -105,6 +119,29 @@ function validateProfile(
       else if (p.radius > 5)
         warnings.push("AttractivenessProfile.radius > 5 — costs grow fast");
       return;
+    case "CommunityEffectProfile": {
+      const buildingCapacity = doc.profiles
+        .filter((profile) => profile.type === "BuildingProfile")
+        .reduce((maximum, profile) => Math.max(maximum, profile.capacity), 0);
+      const groups = [p.effects, ...Object.values(p.programmes ?? {}).map((programme) => programme.effects)];
+      for (const effect of groups.flat()) {
+        if (!effect.effect_id) errors.push("Community effect requires effect_id");
+        if (!["opportunity", "liveability", "beauty", "belonging"].includes(effect.quality))
+          errors.push(`Community effect "${effect.effect_id}" has invalid quality`);
+        if (!["identity", "freedom", "care", "neutral"].includes(effect.manifestation))
+          errors.push(`Community effect "${effect.effect_id}" has invalid manifestation`);
+        if (!["city", "local", "resident", "participant"].includes(effect.scope))
+          errors.push(`Community effect "${effect.effect_id}" has invalid scope`);
+        if (!Number.isFinite(effect.amount)) errors.push(`Community effect "${effect.effect_id}" requires numeric amount`);
+        if (!effect.stacking_group?.trim()) errors.push(`Community effect "${effect.effect_id}" requires stacking_group`);
+        if (!effect.reason?.trim()) errors.push(`Community effect "${effect.effect_id}" requires reason`);
+        if (effect.scope === "local" && (!Number.isFinite(effect.radius) || (effect.radius ?? -1) < 0))
+          errors.push(`Local Community effect "${effect.effect_id}" requires non-negative radius`);
+        if (effect.scope === "participant" && (effect.capacity ?? buildingCapacity) <= 0)
+          errors.push(`Participant Community effect "${effect.effect_id}" requires capacity`);
+      }
+      return;
+    }
     case "BuildingMetadata":
       return;
   }

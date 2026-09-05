@@ -12,8 +12,7 @@ extends PluginBase
 ## ergonomics — extend if the player should have more room to breathe before
 ## the first donation.
 const STARTER_RECT := Rect2i(-4, -4, 8, 8)
-
-var _patrons: PluginBase
+const ROOTED_STARTER_RECT := Rect2i(-7, -7, 14, 14)
 
 ## Vector2i -> true. Source of truth during gameplay; mirrored to
 ## GameState.map.allowed_cells on every mutation so saves round-trip.
@@ -23,14 +22,13 @@ func get_plugin_name() -> String:
 	return "BuildableArea"
 
 func get_dependencies() -> Array[String]:
-	return ["PatronSystem"]
+	return []
 
 func inject(deps: Dictionary) -> void:
-	_patrons = deps.get("PatronSystem")
+	pass
 
 func _plugin_ready() -> void:
 	_load_or_seed()
-	GameEvents.patron_landmark_completed.connect(_on_patron_landmark_completed)
 	GameEvents.map_loaded.connect(_on_map_loaded)
 	print("[BuildableArea] seeded: cells=%d shape=rect rect=(%d,%d,%d,%d)" % [
 		_allowed.size(),
@@ -48,9 +46,11 @@ func _load_or_seed() -> void:
 			for c in saved:
 				_allowed[c] = true
 			return
-	# Fresh game or empty save — seed starter.
-	for x in range(STARTER_RECT.position.x, STARTER_RECT.position.x + STARTER_RECT.size.x):
-		for y in range(STARTER_RECT.position.y, STARTER_RECT.position.y + STARTER_RECT.size.y):
+	# The rooted loop needs room for sixty structures plus their road frontage;
+	# legacy fixtures retain the historical 8x8 baseline.
+	var starter := ROOTED_STARTER_RECT if GameState != null and GameState.map != null and GameState.map.rooted_town_rules else STARTER_RECT
+	for x in range(starter.position.x, starter.position.x + starter.size.x):
+		for y in range(starter.position.y, starter.position.y + starter.size.y):
 			_allowed[Vector2i(x, y)] = true
 	_sync_to_map()
 
@@ -66,37 +66,47 @@ func _sync_to_map() -> void:
 
 # ── Signal handlers ───────────────────────────────────────────────────────────
 
-func _on_patron_landmark_completed(patron_id: String) -> void:
-	if _patrons == null:
-		return
-	var def: Dictionary = _patrons.get_def(patron_id)
-	if def.is_empty():
-		return
-	var area: Dictionary = def.get("donation_area", {})
-	if area.is_empty():
-		push_warning("[BuildableArea] donation_area missing for patron %s" % patron_id)
-		return
-	var cells: Array[Vector2i] = LandDonationPayload.cells_from_dict(area)
-	_expand(cells, patron_id)
-
 func _on_map_loaded(_m: DataMap) -> void:
 	_load_or_seed()
 
 # ── Mutation ──────────────────────────────────────────────────────────────────
 
-func _expand(cells: Array[Vector2i], trigger: String) -> void:
+func _expand(cells: Array[Vector2i], trigger: String) -> Array[Vector2i]:
 	var added: Array[Vector2i] = []
 	for c in cells:
 		if not _allowed.has(c):
 			_allowed[c] = true
 			added.append(c)
 	if added.is_empty():
-		return
+		return added
 	_sync_to_map()
 	print("[BuildableArea] expand: trigger=%s new_cells=%d total_cells=%d" % [
 		trigger, added.size(), _allowed.size()
 	])
 	GameEvents.buildable_area_expanded.emit(added)
+	return added
+
+## Apply one patron's authored donation exactly once. The receipt is the
+## authority for idempotency; overlapping cells still produce a receipt.
+func apply_donation(patron_id: String, area: Dictionary) -> Dictionary:
+	if GameState == null or GameState.map == null:
+		return {"applied": false, "already_applied": false, "added_cells": [], "reason": "map_unavailable"}
+	if GameState.map.patron_donations_applied.get(patron_id, false):
+		return {"applied": false, "already_applied": true, "added_cells": [], "total_cells": _allowed.size()}
+	if area.is_empty():
+		return {"applied": false, "already_applied": false, "added_cells": [], "reason": "donation_area_missing"}
+	var cells: Array[Vector2i] = LandDonationPayload.cells_from_dict(area)
+	var added := _expand(cells, patron_id)
+	GameState.map.patron_donations_applied[patron_id] = true
+	return {
+		"applied": true,
+		"already_applied": false,
+		"added_cells": added,
+		"total_cells": _allowed.size(),
+	}
+
+func has_donation(patron_id: String) -> bool:
+	return GameState != null and GameState.map != null and bool(GameState.map.patron_donations_applied.get(patron_id, false))
 
 ## Direct-expand entry point for tests and external callers (e.g. a debug
 ## tool that wants to grant a specific rect). Wraps _expand so the signal

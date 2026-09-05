@@ -114,6 +114,57 @@ func get_pool_ui_metadata(pool_id: String) -> Dictionary:
 		"ui_icon": cfg.get("ui_icon", UI_ICON_FALLBACK),
 	}
 
+## Canonical placed-building projection for character tier gates. The result
+## is detached and JSON-safe so UI, automation, and save verification can all
+## consume the same evidence without walking live scene state.
+func get_bucket_tier_snapshot(bucket_id: String, registry_override: Variant = null) -> Dictionary:
+	var registry: Dictionary = GameState.building_registry if registry_override == null else registry_override
+	var evidence: Array = []
+	var attained_tier := 0
+	for internal_id in registry:
+		var entry: Dictionary = registry[internal_id]
+		var structure_index := int(entry.get("structure", -1))
+		var building_id := get_id_by_index(structure_index)
+		if building_id.is_empty():
+			continue
+		var structure := get_by_id(building_id)
+		if structure == null:
+			continue
+		var tier := 0
+		var source := ""
+		var config := get_pool_config(structure.pool_id)
+		if String(config.get("bucket", "")) == bucket_id:
+			tier = int(config.get("tier", 0))
+			source = "pool"
+		else:
+			var unique := structure.find_metadata(UniqueProfile) as UniqueProfile
+			if unique != null and unique.chain_role == "chain" and unique.bucket == bucket_id:
+				tier = unique.tier
+				source = "unique"
+		if tier <= 0:
+			continue
+		var anchor: Vector2i = entry.get("anchor", Vector2i.ZERO)
+		evidence.append({
+			"building_id": building_id,
+			"tier": tier,
+			"anchor": {"x": anchor.x, "z": anchor.y},
+			"source": source,
+		})
+		attained_tier = maxi(attained_tier, tier)
+	evidence.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
+		if a["building_id"] != b["building_id"]:
+			return a["building_id"] < b["building_id"]
+		if a["anchor"]["x"] != b["anchor"]["x"]:
+			return a["anchor"]["x"] < b["anchor"]["x"]
+		return a["anchor"]["z"] < b["anchor"]["z"]
+	)
+	return {
+		"bucket_id": bucket_id,
+		"display_name": bucket_id.capitalize(),
+		"attained_tier": attained_tier,
+		"tier_evidence": evidence,
+	}
+
 # ── Loading ───────────────────────────────────────────────────────────────────
 
 func _load_dir(dir_root: String) -> void:
@@ -299,8 +350,10 @@ func _load_one(path: String) -> Dictionary:
 	var summary := {
 		"building_id": bid,
 		"display_name": data.get("display_name", bid),
+		"source_path": path,
 		"category": data.get("category", ""),
 		"cash_cost": int(data.get("cash_cost", 0)),
+		"community_role": String(data.get("community_role", "")),
 		"pool_id": structure.pool_id,
 		"tags": data.get("tags", []),
 		"model_path": model_path,

@@ -15,7 +15,7 @@ extends PluginBase
 ## Collapse state is saved per DataMap so the player's preferred layout sticks.
 
 func get_plugin_name() -> String: return "Dashboard"
-func get_dependencies() -> Array[String]: return ["CharacterSystem", "PatronSystem", "Demand", "Community"]
+func get_dependencies() -> Array[String]: return ["CharacterSystem", "PatronSystem", "Demand", "Community", "BuildingCatalog"]
 
 const PANEL_WIDTH := 380
 const TAB_WIDTH := 28
@@ -61,9 +61,9 @@ func inject(deps: Dictionary) -> void:
 	_patrons    = deps.get("PatronSystem")
 	_demand     = deps.get("Demand")
 	_community  = deps.get("Community")
+	_catalog    = deps.get("BuildingCatalog")
 
 func _plugin_ready() -> void:
-	_catalog = PluginManager.get_plugin("BuildingCatalog")
 	_build_ui()
 	_apply_collapsed_from_map()
 	_wire_signals()
@@ -226,50 +226,95 @@ func _refresh_overlay() -> void:
 class Snapshot:
 	var patrons: Array = []     # Array[Dictionary] — per-patron summary
 	var character_defs: Dictionary = {}  # cid → def dict
+	var character_projections: Dictionary = {}
+	var patron_projections: Dictionary = {}
 	var first_arrived: String = ""
 	var first_want_revealed: String = ""
 	var first_landmark_available: String = ""
+	var next_step: Dictionary = {}
 
 func snapshot() -> Snapshot:
 	var snap := Snapshot.new()
 	for pid in _patrons.all_patron_ids():
 		var pdef: Dictionary = _patrons.get_def(pid)
 		var pstate: int = _patrons.get_state(pid)
+		if _patrons.has_method("get_progression_snapshot"):
+			snap.patron_projections[pid] = _patrons.get_progression_snapshot(pid).duplicate(true)
 		var chars := []
 		for cid in pdef.get("character_ids", []):
 			var cdef: Dictionary = _characters.get_def(cid)
 			var cstate: int = _characters.get_state(cid)
+			if _characters.has_method("evaluate_character_gate"):
+				snap.character_projections[cid] = _characters.evaluate_character_gate(cid).duplicate(true)
 			chars.append({"cid": cid, "state": cstate, "def": cdef})
 			snap.character_defs[cid] = cdef
-			if cstate == 1 and snap.first_arrived.is_empty():
-				snap.first_arrived = cid
-			elif cstate == 2 and snap.first_want_revealed.is_empty():
-				snap.first_want_revealed = cid
-		if pstate == 1 and snap.first_landmark_available.is_empty():
-			snap.first_landmark_available = pid
 		snap.patrons.append({"pid": pid, "state": pstate, "def": pdef, "characters": chars})
+	var ordered_character_ids: Array = snap.character_projections.keys()
+	ordered_character_ids.sort()
+	for cid in ordered_character_ids:
+		var state := int(snap.character_projections[cid].get("state", 0))
+		if state == 1 and snap.first_arrived.is_empty(): snap.first_arrived = cid
+		if state == 2 and snap.first_want_revealed.is_empty(): snap.first_want_revealed = cid
+	var ordered_patron_ids: Array = snap.patron_projections.keys()
+	ordered_patron_ids.sort()
+	for pid in ordered_patron_ids:
+		if int(snap.patron_projections[pid].get("state", 0)) == 1:
+			snap.first_landmark_available = pid
+			break
+	snap.next_step = _next_step_for_snapshot(snap)
 	return snap
 
 ## Priority: talk > build > landmark > generic.
 ## Public + static-friendly so tests can drive it with a hand-built snapshot.
 func compute_hint(snap: Snapshot) -> String:
-	if not snap.first_arrived.is_empty():
-		var name := _display_name_for(snap.character_defs.get(snap.first_arrived, {}), snap.first_arrived)
-		return "Talk to %s" % name
-	if not snap.first_want_revealed.is_empty():
-		var wc: Dictionary = snap.character_defs.get(snap.first_want_revealed, {})
-		var want_id: String = String(wc.get("want_building_id", ""))
-		var want_name := _building_display_name(want_id)
-		if want_name.is_empty():
-			want_name = "their want"
-		return "Build a %s" % want_name
-	if not snap.first_landmark_available.is_empty():
-		var lid: String = String(_patrons.get_def(snap.first_landmark_available).get("landmark_building_id", ""))
-		var lname := _building_display_name(lid)
-		if lname.is_empty():
-			lname = "landmark"
-		return "Place the %s" % lname
+	var step := snap.next_step if not snap.next_step.is_empty() else _next_step_for_snapshot(snap)
+	match String(step.get("kind", "grow")):
+		"resolve_arrival": return "Talk to %s" % String(step.get("subject_label", "the new arrival"))
+		"place_request": return "Build a %s" % String(step.get("subject_label", "requested building"))
+		"place_landmark":
+			var landmark_label := String(step.get("subject_label", "landmark"))
+			return "Place %s" % landmark_label if landmark_label.to_lower().begins_with("the ") else "Place the %s" % landmark_label
+		"fulfilled_demand": return "Grow %s: %d/%d fulfilled" % [String(step.get("bucket_label", "town")), int(step.get("current", 0)), int(step.get("required", 0))]
+		"placed_tier": return "Place tier %d %s (current tier %d)" % [int(step.get("required", 0)), String(step.get("bucket_label", "town")), int(step.get("current", 0))]
+		"complete": return "First patron complete"
 	return "Grow your town"
+
+func _next_step_for_snapshot(snap: Snapshot) -> Dictionary:
+	if not snap.first_arrived.is_empty():
+		var arrived: Dictionary = snap.character_projections.get(snap.first_arrived, {})
+		return {"kind":"resolve_arrival", "subject_id":snap.first_arrived,
+			"subject_label":arrived.get("display_name", _display_name_for(snap.character_defs.get(snap.first_arrived, {}), snap.first_arrived))}
+	if not snap.first_want_revealed.is_empty():
+		var cid := snap.first_want_revealed
+		var request: Dictionary = snap.character_projections.get(cid, {})
+		var want_id := String(request.get("want_building_id", snap.character_defs.get(cid, {}).get("want_building_id", "")))
+		return {"kind":"place_request", "subject_id":want_id,
+			"subject_label":request.get("want_display_name", _building_display_name(want_id))}
+	if not snap.first_landmark_available.is_empty():
+		var pid := snap.first_landmark_available
+		var patron: Dictionary = snap.patron_projections.get(pid, {})
+		var landmark_id := String(patron.get("landmark_building_id", _patrons.get_def(pid).get("landmark_building_id", "")))
+		return {"kind":"place_landmark", "subject_id":landmark_id,
+			"subject_label":patron.get("landmark_display_name", _building_display_name(landmark_id))}
+	var character_ids: Array = snap.character_projections.keys()
+	character_ids.sort()
+	for cid in character_ids:
+		var gate: Dictionary = snap.character_projections[cid]
+		if int(gate.get("state", 0)) != 0:
+			continue
+		if not gate.get("demand_met", false):
+			return {"kind":"fulfilled_demand", "subject_id":cid,
+				"bucket_label":gate.get("bucket_label", gate.get("bucket", "town")),
+				"current":gate.get("fulfilled", 0), "required":gate.get("required_fulfilled", 0)}
+		if not gate.get("tier_met", false):
+			return {"kind":"placed_tier", "subject_id":cid,
+				"bucket_label":gate.get("bucket_label", gate.get("bucket", "town")),
+				"current":gate.get("attained_tier", 0), "required":gate.get("required_tier", 0),
+				"tier_evidence":gate.get("tier_evidence", []).duplicate(true)}
+	var patron_ids: Array = snap.patron_projections.keys()
+	if not patron_ids.is_empty() and patron_ids.all(func(pid): return int(snap.patron_projections[pid].get("state", 0)) >= 2):
+		return {"kind":"complete", "subject_id":"", "subject_label":"First patron complete"}
+	return {"kind":"grow"}
 
 func _building_display_name(bid: String) -> String:
 	if bid.is_empty() or _catalog == null:
@@ -359,13 +404,14 @@ class _PatronCard:
 
 	func update() -> void:
 		var pdef: Dictionary = plugin.call("get_patron_def", pid)
-		var pstate: int = plugin.call("get_patron_state", pid)
+		var patron_projection: Dictionary = plugin.call("get_patron_projection", pid)
+		var pstate: int = int(patron_projection.get("state", plugin.call("get_patron_state", pid)))
 		title_label.text = "%s — %s" % [
 			String(pdef.get("display_name", pid)),
 			plugin.call("building_name_for_patron", pid),
 		]
 
-		var satisfied := 0
+		var satisfied := int(patron_projection.get("satisfied_count", 0))
 		for cid in pdef.get("character_ids", []):
 			var row: Dictionary = char_rows.get(cid, {})
 			if row.is_empty(): continue
@@ -373,7 +419,7 @@ class _PatronCard:
 			var cdef: Dictionary = plugin.call("get_character_def", cid)
 			(row["state"] as Label).text = String(STATE_ICON.get(cstate, "?"))
 			(row["hint"] as Label).text = plugin.call("format_character_line", cid, cstate, cdef)
-			if cstate >= 3:
+			if patron_projection.is_empty() and cstate >= 3:
 				satisfied += 1
 
 		var total := int(pdef.get("character_ids", []).size())
@@ -394,6 +440,9 @@ func get_patron_def(pid: String) -> Dictionary:
 func get_patron_state(pid: String) -> int:
 	return _patrons.get_state(pid)
 
+func get_patron_projection(pid: String) -> Dictionary:
+	return _patrons.get_progression_snapshot(pid) if _patrons.has_method("get_progression_snapshot") else {}
+
 func get_character_def(cid: String) -> Dictionary:
 	return _characters.get_def(cid)
 
@@ -409,6 +458,12 @@ func format_character_line(cid: String, state: int, cdef: Dictionary) -> String:
 	var name := _display_name_for(cdef, cid)
 	match state:
 		0:
+			if _characters.has_method("evaluate_character_gate"):
+				var gate: Dictionary = _characters.evaluate_character_gate(cid)
+				return "%s — %d/%d %s; tier %d/%d" % [name,
+					int(gate.get("fulfilled", 0)), int(gate.get("required_fulfilled", 0)),
+					String(gate.get("bucket_label", gate.get("bucket", "town"))),
+					int(gate.get("attained_tier", 0)), int(gate.get("required_tier", 0))]
 			var bucket := String(cdef.get("associated_bucket", ""))
 			var threshold := float(cdef.get("arrival_threshold", 0))
 			return "%s — needs %d %s demand" % [name, int(threshold), bucket]

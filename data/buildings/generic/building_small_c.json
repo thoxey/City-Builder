@@ -29,6 +29,7 @@
     ]
   ],
   "category": "generic",
+  "community_role": "functional",
   "pool_id": "residential_t2",
   "profiles": [
     {

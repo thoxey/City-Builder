@@ -9,26 +9,20 @@ extends GutTest
 const BuildableAreaCls := preload("res://plugins/buildable_area/buildable_area_plugin.gd")
 
 var _plugin: Node
-var _stub_patrons: Object
 var _saved_map: DataMap
 
 func before_each() -> void:
 	_saved_map = GameState.map
 	GameState.map = DataMap.new()
-	_stub_patrons = _StubPatrons.new()
+	GameState.map.rooted_town_rules = false
 	_plugin = BuildableAreaCls.new()
-	_plugin._patrons = _stub_patrons
 	add_child(_plugin)
 	# Exercise the real boot path — seed from STARTER_RECT.
 	_plugin._load_or_seed()
-	# Wire the signal listeners that _plugin_ready would have done.
-	GameEvents.patron_landmark_completed.connect(_plugin._on_patron_landmark_completed)
 	GameEvents.map_loaded.connect(_plugin._on_map_loaded)
 
 func after_each() -> void:
 	if _plugin and is_instance_valid(_plugin):
-		if GameEvents.patron_landmark_completed.is_connected(_plugin._on_patron_landmark_completed):
-			GameEvents.patron_landmark_completed.disconnect(_plugin._on_patron_landmark_completed)
 		if GameEvents.map_loaded.is_connected(_plugin._on_map_loaded):
 			GameEvents.map_loaded.disconnect(_plugin._on_map_loaded)
 		_plugin.queue_free()
@@ -54,53 +48,36 @@ func test_starter_plot_excludes_outside() -> void:
 # ── Expansion via patron landmark ─────────────────────────────────────────────
 
 func test_patron_landmark_completes_expands_mask() -> void:
-	_stub_patrons.set_def("aristocrat", {
-		"patron_id": "aristocrat",
-		"donation_area": {"shape": "rect", "rect": [10, -2, 4, 4]},
-	})
-
 	watch_signals(GameEvents)
-	GameEvents.patron_landmark_completed.emit("aristocrat")
+	var outcome: Dictionary = _plugin.apply_donation("aristocrat", {"shape": "rect", "rect": [10, -2, 4, 4]})
 
 	# 4×4 = 16 cells added, nothing overlaps starter.
 	assert_eq(_plugin.allowed_count(), 64 + 16)
 	assert_true(_plugin.is_allowed(Vector2i(10, -2)))
 	assert_true(_plugin.is_allowed(Vector2i(13, 1)))
 	assert_signal_emitted(GameEvents, "buildable_area_expanded")
+	assert_true(outcome["applied"])
+	assert_true(_plugin.has_donation("aristocrat"))
 
 func test_expansion_overlapping_starter_dedupes() -> void:
-	_stub_patrons.set_def("farmer", {
-		"patron_id": "farmer",
-		"donation_area": {"shape": "rect", "rect": [0, 0, 8, 8]},
-	})
-
 	# Overlaps starter (which holds 0..3 × 0..3 = 16 cells of this new rect)
-	GameEvents.patron_landmark_completed.emit("farmer")
+	_plugin.apply_donation("farmer", {"shape": "rect", "rect": [0, 0, 8, 8]})
 
 	# 64 starter cells already; new rect is 8×8 = 64 cells; overlap = 16 cells
 	# so added = 48 new cells.
 	assert_eq(_plugin.allowed_count(), 64 + 48)
 
 func test_expansion_with_missing_donation_area_is_noop() -> void:
-	_stub_patrons.set_def("aristocrat", {
-		"patron_id": "aristocrat",
-		# no donation_area
-	})
-	GameEvents.patron_landmark_completed.emit("aristocrat")
+	var outcome: Dictionary = _plugin.apply_donation("aristocrat", {})
 	assert_eq(_plugin.allowed_count(), 64, "still just the starter")
+	assert_false(outcome["applied"])
 
 # ── Polygon payload ───────────────────────────────────────────────────────────
 
 func test_polygon_payload_expands_specific_cells() -> void:
-	_stub_patrons.set_def("farmer", {
-		"patron_id": "farmer",
-		"donation_area": {
-			"shape": "polygon",
-			"polygon": [[10, 10], [11, 10], [10, 11]],
-		},
+	_plugin.apply_donation("farmer", {
+		"shape": "polygon", "polygon": [[10, 10], [11, 10], [10, 11]],
 	})
-
-	GameEvents.patron_landmark_completed.emit("farmer")
 
 	assert_true(_plugin.is_allowed(Vector2i(10, 10)))
 	assert_true(_plugin.is_allowed(Vector2i(11, 10)))
@@ -135,13 +112,21 @@ func test_mask_persists_via_datamap_allowed_cells() -> void:
 
 	# Simulate save → load: build a fresh plugin bound to the same DataMap.
 	var fresh := BuildableAreaCls.new()
-	fresh._patrons = _stub_patrons
 	add_child(fresh)
 	fresh._load_or_seed()
 
 	assert_eq(fresh.allowed_count(), count_before, "reseed picks up persisted cells")
 	assert_true(fresh.is_allowed(Vector2i(50, 50)))
 	fresh.queue_free()
+
+func test_donation_receipt_makes_duplicate_a_noop() -> void:
+	var area := {"shape": "rect", "rect": [10, -2, 4, 4]}
+	var first: Dictionary = _plugin.apply_donation("aristocrat", area)
+	var count_after_first: int = _plugin.allowed_count()
+	var second: Dictionary = _plugin.apply_donation("aristocrat", area)
+	assert_true(first["applied"])
+	assert_true(second["already_applied"])
+	assert_eq(_plugin.allowed_count(), count_after_first)
 
 # ── LandDonationPayload static parsing ────────────────────────────────────────
 
@@ -166,11 +151,3 @@ func test_payload_invalid_shape_returns_empty() -> void:
 		"shape": "bogus",
 	})
 	assert_eq(cells.size(), 0)
-
-# ── Stub ──────────────────────────────────────────────────────────────────────
-
-class _StubPatrons extends PluginBase:
-	var _defs: Dictionary = {}
-	func get_plugin_name() -> String: return "_StubPatrons"
-	func set_def(pid: String, def: Dictionary) -> void: _defs[pid] = def
-	func get_def(pid: String) -> Dictionary: return _defs.get(pid, {})

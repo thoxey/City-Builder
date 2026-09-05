@@ -162,15 +162,67 @@ func open_event(record: Dictionary) -> void:
 func _close_current() -> void:
 	var eid := String(_current.get("event_id", ""))
 	print("[Dialogue] modal_closed: event_id=%s nodes_visited=%d" % [eid, _visited])
-	# Arrival-tree → promote to WANT_REVEALED.
-	var trig: Dictionary = _current.get("trigger", {})
-	if String(trig.get("event", "")) == "character_arrived":
-		var cid := String(trig.get("character_id", ""))
-		if not cid.is_empty() and _characters and _characters.has_method("mark_want_revealed"):
-			_characters.mark_want_revealed(cid)
+	_complete_semantics(_current)
 	_current = {}
 	_current_node_id = ""
 	_canvas.visible = false
+
+## Resolve an authored pending dialogue through the same node/effect/close
+## semantics as the visible modal, selecting the first authored option at each
+## branch. This is the only headless narrative progression command.
+func resolve_pending_event(event_id: String) -> Dictionary:
+	if _event_system == null:
+		return PlaytestActionResult.rejected(PlaytestActionResult.UNKNOWN_DIALOGUE_EVENT)
+	var record: Dictionary = _event_system.get_event(event_id)
+	if record.is_empty() or String(record.get("event_type", "")) != "dialogue":
+		return PlaytestActionResult.rejected(PlaytestActionResult.UNKNOWN_DIALOGUE_EVENT, {"event_id": event_id})
+	if not _event_system.is_dialogue_pending(event_id):
+		return PlaytestActionResult.rejected(PlaytestActionResult.DIALOGUE_NOT_PENDING, {"event_id": event_id})
+	var trigger: Dictionary = record.get("trigger", {})
+	var character_id := String(trigger.get("character_id", ""))
+	var before_state := int(_characters.get_state(character_id)) if _characters != null and not character_id.is_empty() else -1
+	var payload: Dictionary = record.get("payload", {})
+	var node_id := String(payload.get("entry_node_id", ""))
+	var visited := 0
+	while not node_id.is_empty() and visited < 128:
+		var node := _find_node(payload, node_id)
+		if node.is_empty():
+			break
+		visited += 1
+		_event_system.apply_effects(node.get("on_enter", []))
+		var options: Array = node.get("options", [])
+		if options.is_empty():
+			break
+		var option: Dictionary = options[0]
+		_event_system.apply_effects(option.get("effects", []))
+		node_id = String(option.get("next", ""))
+	_complete_semantics(record)
+	var after_state := int(_characters.get_state(character_id)) if _characters != null and not character_id.is_empty() else -1
+	return PlaytestActionResult.applied({
+		"event_id": event_id,
+		"character_id": character_id,
+		"before_state": _character_state_name(before_state),
+		"after_state": _character_state_name(after_state),
+		"nodes_visited": visited,
+	})
+
+func _complete_semantics(record: Dictionary) -> void:
+	var trigger: Dictionary = record.get("trigger", {})
+	if String(trigger.get("event", "")) == "character_arrived":
+		var character_id := String(trigger.get("character_id", ""))
+		if not character_id.is_empty() and _characters and _characters.has_method("mark_want_revealed"):
+			_characters.mark_want_revealed(character_id)
+	if _event_system and _event_system.has_method("acknowledge_dialogue"):
+		_event_system.acknowledge_dialogue(String(record.get("event_id", "")))
+
+static func _character_state_name(state: int) -> String:
+	match state:
+		0: return "NOT_ARRIVED"
+		1: return "ARRIVED"
+		2: return "WANT_REVEALED"
+		3: return "SATISFIED"
+		4: return "CONTRIBUTES_TO_LANDMARK"
+		_: return "UNKNOWN(%d)" % state
 
 func is_modal_open() -> bool:
 	return _canvas and _canvas.visible

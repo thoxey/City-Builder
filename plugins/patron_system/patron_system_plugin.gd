@@ -28,6 +28,8 @@ enum PatronState {
 const DATA_DIR := "res://data/patrons"
 
 var _characters: PluginBase
+var _buildable: PluginBase
+var _catalog: PluginBase
 
 # patron_id -> Dictionary (parsed JSON def)
 var _defs: Dictionary = {}
@@ -36,10 +38,12 @@ func get_plugin_name() -> String:
 	return "PatronSystem"
 
 func get_dependencies() -> Array[String]:
-	return ["CharacterSystem", "UniqueRegistry"]
+	return ["CharacterSystem", "BuildableArea", "BuildingCatalog"]
 
 func inject(deps: Dictionary) -> void:
 	_characters = deps.get("CharacterSystem")
+	_buildable = deps.get("BuildableArea")
+	_catalog = deps.get("BuildingCatalog")
 
 func _plugin_ready() -> void:
 	_load_defs(DATA_DIR)
@@ -87,6 +91,7 @@ func _parse_one(path: String) -> Dictionary:
 	if String(data.get("patron_id", "")).is_empty():
 		push_error("[PatronSystem] missing_patron_id: path=%s" % path)
 		return {}
+	data["_source_path"] = path
 	return data
 
 func _seed_initial_states() -> void:
@@ -127,16 +132,21 @@ func _recheck_all_patrons() -> void:
 		_recheck(pid)
 
 func _recheck(pid: String) -> void:
-	if get_state(pid) != PatronState.LOCKED:
-		return  # COMPLETED is terminal; AVAILABLE stays until landmark placed
+	var state := get_state(pid)
 	var def: Dictionary = _defs[pid]
-	var cids: Array = def.get("character_ids", [])
-	var satisfied: int = 0
-	for cid in cids:
-		if _character_is_satisfied_or_contributed(String(cid)):
-			satisfied += 1
-	if satisfied >= cids.size() and cids.size() > 0:
-		_flip_to_available(pid, def.get("landmark_building_id", ""))
+	if state == PatronState.LOCKED:
+		var cids: Array = def.get("character_ids", [])
+		var satisfied: int = 0
+		for cid in cids:
+			if _character_is_satisfied_or_contributed(String(cid)):
+				satisfied += 1
+		if satisfied >= cids.size() and cids.size() > 0:
+			_flip_to_available(pid, def.get("landmark_building_id", ""))
+			state = PatronState.LANDMARK_AVAILABLE
+	if state == PatronState.LANDMARK_AVAILABLE and _is_landmark_placed(String(def.get("landmark_building_id", ""))):
+		_flip_to_completed(pid, String(def.get("landmark_building_id", "")))
+	elif state == PatronState.COMPLETED:
+		_repair_completion(pid)
 
 ## Accept both SATISFIED and CONTRIBUTES_TO_LANDMARK — once a landmark is
 ## placed, its contributors leave SATISFIED, but they've still "counted" for
@@ -154,6 +164,7 @@ func _flip_to_available(pid: String, landmark_id: String) -> void:
 	GameEvents.patron_landmark_ready.emit(pid)
 
 func _flip_to_completed(pid: String, landmark_id: String) -> void:
+	_apply_donation(pid)
 	_set_state(pid, PatronState.COMPLETED)
 	print("[PatronSystem] landmark_completed: patron=%s landmark=%s" % [pid, landmark_id])
 
@@ -164,6 +175,28 @@ func _flip_to_completed(pid: String, landmark_id: String) -> void:
 
 	GameEvents.patron_landmark_completed.emit(pid)
 
+func _repair_completion(pid: String) -> void:
+	_apply_donation(pid)
+	if _characters and _characters.has_method("promote_to_contributes"):
+		for cid in _defs[pid].get("character_ids", []):
+			_characters.promote_to_contributes(String(cid))
+
+func _apply_donation(pid: String) -> Dictionary:
+	if _buildable == null or not _buildable.has_method("apply_donation"):
+		return {"applied": false, "reason": "buildable_area_unavailable"}
+	return _buildable.apply_donation(pid, _defs[pid].get("donation_area", {}))
+
+func _is_landmark_placed(building_id: String) -> bool:
+	if _catalog == null or building_id.is_empty():
+		return false
+	var index := int(_catalog.get_item_index(building_id))
+	if index < 0:
+		return false
+	for internal_id in GameState.building_registry:
+		if int(GameState.building_registry[internal_id].get("structure", -1)) == index:
+			return true
+	return false
+
 # ── State read/write ──────────────────────────────────────────────────────────
 
 func get_state(pid: String) -> int:
@@ -173,7 +206,7 @@ func get_state(pid: String) -> int:
 
 func _set_state(pid: String, new_state: int) -> void:
 	var old: int = get_state(pid)
-	if old == new_state:
+	if new_state <= old:
 		return
 	GameState.map.patron_states[pid] = new_state
 	print("[PatronSystem] state: patron=%s %s->%s" % [
@@ -193,8 +226,41 @@ static func _state_name(s: int) -> String:
 func get_def(pid: String) -> Dictionary:
 	return _defs.get(pid, {})
 
+func get_progression_snapshot(pid: String) -> Dictionary:
+	var def: Dictionary = _defs.get(pid, {})
+	if def.is_empty():
+		return {}
+	var characters: Array = []
+	var satisfied := 0
+	for cid_v in def.get("character_ids", []):
+		var cid := String(cid_v)
+		var state := int(_characters.get_state(cid)) if _characters != null else 0
+		if state >= 3:
+			satisfied += 1
+		characters.append({"character_id": cid, "state": state, "state_name": _character_state_name(state)})
+	var landmark_id := String(def.get("landmark_building_id", ""))
+	var landmark_name := landmark_id
+	if _catalog != null:
+		landmark_name = String(_catalog.get_summary_by_id(landmark_id).get("display_name", landmark_id))
+	return {
+		"patron_id": pid,
+		"display_name": String(def.get("display_name", pid)),
+		"state": get_state(pid),
+		"state_name": _state_name(get_state(pid)),
+		"characters": characters,
+		"required_count": characters.size(),
+		"satisfied_count": satisfied,
+		"landmark_building_id": landmark_id,
+		"landmark_display_name": landmark_name,
+		"donation_applied": _buildable.has_donation(pid) if _buildable != null and _buildable.has_method("has_donation") else false,
+		"source_path": String(def.get("_source_path", "")),
+	}
+
 func all_patron_ids() -> Array:
 	return _defs.keys()
+
+static func _character_state_name(state: int) -> String:
+	return ["NOT_ARRIVED", "ARRIVED", "WANT_REVEALED", "SATISFIED", "CONTRIBUTES_TO_LANDMARK"][state] if state >= 0 and state <= 4 else "UNKNOWN(%d)" % state
 
 func is_landmark_available(pid: String) -> bool:
 	return get_state(pid) == PatronState.LANDMARK_AVAILABLE

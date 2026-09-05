@@ -113,6 +113,17 @@ func test_tick_credits_tax_income_from_industrial_output() -> void:
 
 	assert_eq(GameState.map.cash, 60, "12 output × 5 tax_rate = 60")
 	assert_signal_emitted(GameEvents, "cash_changed")
+	assert_eq(_economy.get_runtime_ledger()["cumulative_income"], 60)
+
+func test_runtime_ledger_tracks_road_spend_once() -> void:
+	GameState.map.cash = 100
+	var road := _make_structure_with_cost("road_straight", 2, "road")
+	_economy.try_spend_cash(road)
+	var ledger: Dictionary = _economy.get_runtime_ledger()
+	assert_eq(ledger["cumulative_spend"], 2)
+	assert_eq(ledger["spend_by_category"], {"road": 2})
+	_economy.reset_runtime_state()
+	assert_eq(_economy.get_runtime_ledger()["cumulative_spend"], 0)
 
 func test_cash_clamped_at_zero() -> void:
 	# Negative cash is impossible via tax income alone, so emulate a debit by
@@ -146,13 +157,13 @@ func test_get_cash_cost_reads_catalog_summary() -> void:
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
-func _make_structure_with_cost(bid: String, cost: int) -> Structure:
+func _make_structure_with_cost(bid: String, cost: int, category: String = "other") -> Structure:
 	# Stage the structure in GameState.structures so its index lookup works,
 	# then mirror it into the stub catalog summary so cost resolves.
 	var s := Structure.new()
 	_structures_buf.append(s)
 	GameState.structures = _structures_buf
-	_stub_catalog.summaries.append({"building_id": bid, "cash_cost": cost})
+	_stub_catalog.summaries.append({"building_id": bid, "cash_cost": cost, "category": category})
 	return s
 
 ## Stand-in for the BuildingCatalog plugin — only get_summary() is exercised.

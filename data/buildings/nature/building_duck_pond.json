@@ -17,8 +17,12 @@
     ]
   ],
   "category": "nature",
+  "community_role": "functional",
   "cash_cost": 50,
   "profiles": [
+    {
+      "type": "BuildingMetadata"
+    },
     {
       "type": "AttractivenessProfile",
       "base": 40,

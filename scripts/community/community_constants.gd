@@ -52,6 +52,10 @@ static func coordinate_record(value: Variant) -> Variant:
 	var cell: Variant = coordinate(value)
 	return null if cell == null else {"x": cell.x, "z": cell.y}
 
+static func coordinate_key(value: Variant) -> String:
+	var cell: Variant = coordinate(value)
+	return "none" if cell == null else "%d,%d" % [cell.x, cell.y]
+
 static func manhattan(a: Variant, b: Variant) -> int:
 	var ca: Variant = coordinate(a)
 	var cb: Variant = coordinate(b)

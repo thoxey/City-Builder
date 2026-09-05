@@ -51,14 +51,14 @@ static func evaluate(resident: CommunityResident, sources: Array, context: Dicti
 		var sign_key := "positive" if float(effect.get("amount", 0.0)) >= 0.0 else "negative"
 		var group_key := "%s|%s|%s" % [effect.get("quality", ""), effect.get("stacking_group", ""), sign_key]
 		var ordinal := int(group_counts.get(group_key, 0))
-		var stacking := 1.0 if ordinal == 0 else (0.5 if ordinal == 1 else 0.25)
+		var stacking := 1.0 if ordinal == 0 else (0.5 if ordinal == 1 else (0.25 if ordinal == 2 else 0.0))
 		group_counts[group_key] = ordinal + 1
-		var record := apply_effect(resident, item["source"], effect, stacking)
+		var record := apply_effect(resident, item["source"], effect, stacking, ordinal)
 		applied.append(record)
 		totals[effect["quality"]] += float(record["applied_amount"])
 	return {"totals": totals, "effects": applied}
 
-static func apply_effect(resident: CommunityResident, source: Dictionary, effect: Dictionary, stacking_multiplier: float = 1.0) -> Dictionary:
+static func apply_effect(resident: CommunityResident, source: Dictionary, effect: Dictionary, stacking_multiplier: float = 1.0, stacking_ordinal: int = 0) -> Dictionary:
 	var quality := String(effect.get("quality", ""))
 	var manifestation := String(effect.get("manifestation", "neutral"))
 	var preference := preference_multiplier(resident, quality, manifestation)
@@ -68,14 +68,26 @@ static func apply_effect(resident: CommunityResident, source: Dictionary, effect
 		sensitivity = float(resident.sensitivities.get(String(sensitivity_id), 1.0))
 	var exposure := 1.0
 	var amount := float(effect.get("amount", 0.0)) * exposure * preference * sensitivity * stacking_multiplier
+	var source_anchor: Variant = CommunityConstants.coordinate(source.get("anchor"))
+	var resident_anchor: Variant = CommunityConstants.coordinate(resident.home_anchor)
+	var distance := CommunityConstants.manhattan(resident_anchor, source_anchor) if resident_anchor != null and source_anchor != null else -1
+	var source_building_id := String(source.get("building_id", ""))
+	var effect_id := String(effect.get("effect_id", ""))
 	return {
-		"source_building_id": String(source.get("building_id", "")),
-		"source_anchor": CommunityConstants.coordinate_record(source.get("anchor")),
-		"effect_id": String(effect.get("effect_id", "")),
+		"exposure_id": "%d|%s|%s|%s" % [resident.resident_id, source_building_id, CommunityConstants.coordinate_key(source_anchor), effect_id],
+		"resident_id": resident.resident_id,
+		"resident_anchor": CommunityConstants.coordinate_record(resident_anchor),
+		"source_building_id": source_building_id,
+		"source_anchor": CommunityConstants.coordinate_record(source_anchor),
+		"effect_id": effect_id,
 		"quality": quality,
 		"manifestation": manifestation,
 		"scope": String(effect.get("scope", "")),
 		"base_amount": CommunityConstants.rounded(float(effect.get("amount", 0.0))),
+		"radius": int(effect.get("radius", -1)) if effect.get("radius") != null else -1,
+		"distance": distance,
+		"stacking_group": String(effect.get("stacking_group", "")),
+		"stacking_ordinal": stacking_ordinal,
 		"exposure": exposure,
 		"preference_multiplier": CommunityConstants.rounded(preference),
 		"sensitivity_multiplier": CommunityConstants.rounded(sensitivity),

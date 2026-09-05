@@ -1,7 +1,7 @@
 extends PluginBase
 
 const SCENARIO_ROOT := "res://test/scenarios/"
-const SNAPSHOT_SCHEMA := 1
+const SNAPSHOT_SCHEMA := 2
 
 var _builder: Node
 var _catalog: PluginBase
@@ -19,6 +19,10 @@ var _palette: PluginBase
 var _dialogue: PluginBase
 var _inbox: PluginBase
 var _community: PluginBase
+var _characters: PluginBase
+var _patrons: PluginBase
+var _event_system: PluginBase
+var _road_network: PluginBase
 
 var _session_id := ""
 var _scenario_id := ""
@@ -29,6 +33,8 @@ var _rng := RandomNumberGenerator.new()
 var _request_cache: Dictionary = {}
 var _request_order: Array[String] = []
 var _trace: Array[Dictionary] = []
+var _milestones: Array[Dictionary] = []
+var _milestone_ids: Dictionary = {}
 const REQUEST_CACHE_LIMIT := 256
 const TRACE_LIMIT := 5000
 const SNAPSHOT_COLLECTION_LIMIT := 10000
@@ -38,7 +44,8 @@ func get_plugin_name() -> String: return "Playtest"
 func get_dependencies() -> Array[String]:
 	return ["BuildingCatalog", "DayNight", "Demand", "Economy", "CityStats",
 		"Satisfaction", "Residential", "Workplace", "Attractiveness",
-		"BuildableArea", "UniqueRegistry", "Palette", "Dialogue", "Inbox", "Community"]
+		"BuildableArea", "UniqueRegistry", "Palette", "Dialogue", "Inbox", "Community",
+		"CharacterSystem", "PatronSystem", "EventSystem", "RoadNetwork"]
 
 func inject(deps: Dictionary) -> void:
 	_catalog = deps.get("BuildingCatalog")
@@ -56,6 +63,10 @@ func inject(deps: Dictionary) -> void:
 	_dialogue = deps.get("Dialogue")
 	_inbox = deps.get("Inbox")
 	_community = deps.get("Community")
+	_characters = deps.get("CharacterSystem")
+	_patrons = deps.get("PatronSystem")
+	_event_system = deps.get("EventSystem")
+	_road_network = deps.get("RoadNetwork")
 
 func _plugin_ready() -> void:
 	_builder = _find_builder()
@@ -74,6 +85,11 @@ func set_builder_for_tests(builder: Node) -> void:
 	_builder = builder
 
 func is_ready_for_commands() -> bool:
+	# PluginManager is an autoload, so ordinary game startup can initialize this
+	# plugin before SceneTree.current_scene exists. Resolve lazily when the first
+	# bridge command arrives instead of permanently caching that startup race.
+	if _builder == null:
+		_builder = _find_builder()
 	return OS.is_debug_build() and _builder != null
 
 func handle_command(operation: String, params: Dictionary) -> Dictionary:
@@ -83,6 +99,7 @@ func handle_command(operation: String, params: Dictionary) -> Dictionary:
 		"place": return _run_action("place", params)
 		"demolish": return _run_action("demolish", params)
 		"advance": return _run_action("advance", params)
+		"resolve_dialogue": return _run_action("resolve_dialogue", params)
 		"get_choices": return get_choices(params)
 	print("[Playtest] command_failed operation=%s reason=unknown_operation" % operation)
 	return {"error": {"reason": "internal_error", "message": "Unknown playtest operation: %s" % operation}}
@@ -104,10 +121,17 @@ func start_session(params: Dictionary = {}) -> Dictionary:
 	_request_cache.clear()
 	_request_order.clear()
 	_trace.clear()
+	_milestones.clear()
+	_milestone_ids.clear()
 	_session_id = "%s-%d-%d" % [scenario_id, Time.get_ticks_usec(), _seed]
+	if _dialogue and _dialogue.has_method("set_presentation_enabled"):
+		_dialogue.set_presentation_enabled(false)
+	if _inbox and _inbox.has_method("set_presentation_enabled"):
+		_inbox.set_presentation_enabled(false)
 	var initial: Dictionary = scenario.get("initial_state", {})
 	var fresh := DataMap.new()
 	fresh.cash = int(initial.get("cash", fresh.cash))
+	fresh.rooted_town_rules = bool(scenario.get("rooted_town_rules", false))
 	fresh.community_rng_seed = _seed
 	_builder.reset_to_fresh_map(fresh)
 	if _community and _community.has_method("apply_scenario_fixture"):
@@ -119,24 +143,31 @@ func start_session(params: Dictionary = {}) -> Dictionary:
 		_demand.reset_to_starting_state(initial.get("demand", {}))
 	if _clock and _clock.has_method("reset_manual_clock"):
 		_clock.reset_manual_clock(int(initial.get("clock", {}).get("start_hour", 6)))
-	if _dialogue and _dialogue.has_method("set_presentation_enabled"):
-		_dialogue.set_presentation_enabled(false)
-	if _inbox and _inbox.has_method("set_presentation_enabled"):
-		_inbox.set_presentation_enabled(false)
 	_status = "ready"
+	_observe_progression_milestones()
 	var result := {"session": _session_record(), "snapshot": get_snapshot()}
 	_append_trace("start", params, result)
 	print("[Playtest] session_started scenario=%s seed=%d session=%s" % [_scenario_id, _seed, _session_id])
 	return result
 
 func _load_scenario(scenario_id: String) -> Dictionary:
-	if not scenario_id.is_valid_filename() or scenario_id.contains("/") or scenario_id.contains("\\"):
+	var path := _scenario_path(scenario_id)
+	if path.is_empty():
 		return {}
-	var path := SCENARIO_ROOT + scenario_id + ".json"
 	if not FileAccess.file_exists(path):
 		return {}
 	var parsed = JSON.parse_string(FileAccess.get_file_as_string(path))
 	return parsed if parsed is Dictionary else {}
+
+static func _scenario_path(scenario_id: String) -> String:
+	if scenario_id.is_valid_filename() and not scenario_id.contains("\\"):
+		return SCENARIO_ROOT + scenario_id + ".json"
+	const FIRST_TOWN_PREFIX := "first_town/"
+	if scenario_id.begins_with(FIRST_TOWN_PREFIX):
+		var leaf := scenario_id.trim_prefix(FIRST_TOWN_PREFIX)
+		if leaf.is_valid_filename() and not leaf.contains("/") and not leaf.contains("\\"):
+			return SCENARIO_ROOT + FIRST_TOWN_PREFIX + leaf + ".json"
+	return ""
 
 func _session_record() -> Dictionary:
 	return {
@@ -192,9 +223,12 @@ func _run_action(kind: String, params: Dictionary) -> Dictionary:
 			outcome = PlaytestActionResult.rejected(PlaytestActionResult.INVALID_COORDINATE) if cell == null else _builder.try_demolish_cell(cell)
 		"advance":
 			outcome = _clock.advance_hours(int(params.get("hours", -1)))
+		"resolve_dialogue":
+			outcome = _dialogue.resolve_pending_event(String(params.get("event_id", ""))) if _dialogue else PlaytestActionResult.rejected(PlaytestActionResult.UNKNOWN_DIALOGUE_EVENT)
 		_:
 			outcome = PlaytestActionResult.rejected("internal_error")
 	_sequence += 1
+	_observe_progression_milestones()
 	outcome["request_id"] = request_id
 	outcome["session_id"] = _session_id
 	outcome["sequence"] = _sequence
@@ -227,6 +261,9 @@ func _append_trace(kind: String, request: Dictionary, outcome: Dictionary) -> vo
 
 func get_trace() -> Array:
 	return _trace.duplicate(true)
+
+func get_progression_milestones() -> Array:
+	return _milestones.duplicate(true)
 
 func persist_completed_trace() -> Dictionary:
 	if _status != "ready":
@@ -263,6 +300,12 @@ func get_choices(params: Dictionary = {}) -> Dictionary:
 		var cash_cost := 0
 		var demand_info: Variant = null
 		var unique := false
+		var progression_gates: Dictionary = {}
+		var palette_decision: Dictionary = entry.get("decision", {})
+		if not bool(palette_decision.get("can_select", true)):
+			for palette_reason in palette_decision.get("reasons", [palette_decision.get("state", "")]):
+				if not String(palette_reason).is_empty() and String(palette_reason) not in reasons:
+					reasons.append(String(palette_reason))
 		for sid: int in entry["structure_indices"]:
 			var summary: Dictionary = _catalog.get_summary_by_index(sid)
 			var id: String = summary.get("building_id", "")
@@ -282,10 +325,12 @@ func get_choices(params: Dictionary = {}) -> Dictionary:
 			if not String(demand_quote.get("bucket_id", "")).is_empty(): demand_info = demand_quote
 			if _uniques and _uniques.is_unique(id):
 				unique = true
-				for reason in _uniques.evaluate_unlock(id)["reasons"]:
+				var gate: Dictionary = _uniques.evaluate_unlock(id)
+				progression_gates[id] = gate.duplicate(true)
+				for reason in gate["reasons"]:
 					if reason not in reasons: reasons.append(reason)
 		variants.sort()
-		reasons.sort()
+		reasons.sort_custom(func(a: String, b: String) -> bool: return _reason_priority(a) < _reason_priority(b))
 		var available := reasons.is_empty()
 		if not category_filter.is_empty() and category != category_filter: continue
 		if available_only and not available: continue
@@ -294,9 +339,29 @@ func get_choices(params: Dictionary = {}) -> Dictionary:
 			"variants": variants, "category": category, "tier": _tier_for(entry["id"]),
 			"footprints": footprints, "cash_cost": cash_cost, "demand": demand_info,
 			"unique": unique, "available": available, "reasons": reasons,
+			"primary_reason": reasons[0] if not reasons.is_empty() else null,
+			"progression_gates": progression_gates,
 		})
 	choices.sort_custom(func(a: Dictionary, b: Dictionary): return a["choice_id"] < b["choice_id"])
 	return {"choices": choices}
+
+static func _reason_priority(reason: String) -> int:
+	var order := [
+		PlaytestActionResult.TOWN_HALL_REQUIRED,
+		PlaytestActionResult.TOWN_HALL_ALREADY_PLACED,
+		PlaytestActionResult.UNIQUE_ALREADY_PLACED,
+		PlaytestActionResult.WANT_NOT_REVEALED,
+		PlaytestActionResult.PATRON_NOT_READY,
+		PlaytestActionResult.UNMET_PREREQUISITE,
+		PlaytestActionResult.BELOW_DEMAND_THRESHOLD,
+		PlaytestActionResult.INSUFFICIENT_DEMAND,
+		PlaytestActionResult.INSUFFICIENT_CASH,
+		PlaytestActionResult.OUTSIDE_BUILDABLE_AREA,
+		PlaytestActionResult.OCCUPIED_FOOTPRINT,
+		PlaytestActionResult.REPLACEMENT_REQUIRED,
+	]
+	var index := order.find(reason)
+	return index if index >= 0 else order.size()
 
 func _tier_for(choice_id: String) -> Variant:
 	var marker := choice_id.rfind("_t")
@@ -341,12 +406,15 @@ func get_snapshot(compact: bool = false) -> Dictionary:
 			"cash": GameState.map.cash if GameState.map else 0,
 			"last_hourly_income": _economy.get_last_hourly_income() if _economy else 0,
 			"industrial_output": _workplace.get_total_output() if _workplace else 0,
+			"ledger": _economy.get_runtime_ledger() if _economy and _economy.has_method("get_runtime_ledger") else {},
 		},
 		"population": {
 			"current": _community.get_population() if _community else (_residential.get_current_population() if _residential else 0),
 			"residential_capacity": _residential.get_total_capacity() if _residential else 0,
 		},
 		"community": _community.get_snapshot(compact) if _community else {},
+		"connectivity": _road_network.get_connectivity_snapshot() if _road_network and _road_network.has_method("get_connectivity_snapshot") else {},
+		"operation": _operation_records(),
 		"satisfaction": {
 			"score": _rounded(_satisfaction.get_score() if _satisfaction else 1.0),
 			"components": _rounded_dictionary(satisfaction_parts),
@@ -376,6 +444,25 @@ func get_snapshot(compact: bool = false) -> Dictionary:
 	if _community and not compact and _community.has_method("get_ui_model"):
 		snapshot["community_ui"] = _community.get_ui_model()
 	return snapshot
+
+func _operation_records() -> Array:
+	var base: Array = _community.get_operation_records() if _community and _community.has_method("get_operation_records") else []
+	var contribution_by_anchor := {}
+	for owner in [_workplace, PluginManager.get_plugin("Commercial")]:
+		if owner and owner.has_method("get_operation_records"):
+			for record in owner.get_operation_records():
+				var point: Dictionary = record.get("anchor", {})
+				contribution_by_anchor["%d,%d" % [point.get("x", 0), point.get("z", 0)]] = record
+	var result: Array = []
+	for raw in base:
+		var record: Dictionary = raw.duplicate(true)
+		var point: Dictionary = record.get("anchor", {})
+		var contribution: Dictionary = contribution_by_anchor.get("%d,%d" % [point.get("x", 0), point.get("z", 0)], {})
+		for field in ["available_capacity", "latest_output", "latest_income", "latest_activity",
+			"town_hall_proximity", "activity_multiplier", "effective_activity"]:
+			if contribution.has(field): record[field] = contribution[field]
+		result.append(record)
+	return result
 
 func _land_counts() -> Dictionary:
 	var allowed_lookup := {}
@@ -419,15 +506,126 @@ func _demand_snapshot() -> Dictionary:
 	return result
 
 func _progression_snapshot() -> Dictionary:
-	var result := {"unlocked": [], "placed": []}
+	var result := {
+		"buckets": {}, "characters": {}, "patrons": {}, "story_buildings": {},
+		"unlocked": [], "placed": [], "donations_applied": [],
+		"flags": GameState.map.flags.duplicate(true) if GameState.map else {},
+		"event_counts": GameState.map.event_counts.duplicate(true) if GameState.map else {},
+		"pending_dialogue_event_ids": _event_system.pending_dialogue_event_ids() if _event_system else [],
+		"milestones": get_progression_milestones(),
+	}
+	for bucket_id in ["residential", "industrial", "commercial"]:
+		var tier: Dictionary = _catalog.get_bucket_tier_snapshot(bucket_id) if _catalog and _catalog.has_method("get_bucket_tier_snapshot") else {"attained_tier": 0, "tier_evidence": []}
+		result["buckets"][bucket_id] = {
+			"bucket_id": bucket_id,
+			"display_name": _demand.bucket_display_name(bucket_id) if _demand and _demand.has_method("bucket_display_name") else bucket_id,
+			"fulfilled": _rounded(_demand.get_fulfilled(bucket_id)) if _demand and _demand.has_method("get_fulfilled") else 0.0,
+			"attained_tier": int(tier.get("attained_tier", 0)),
+			"tier_evidence": tier.get("tier_evidence", []).duplicate(true),
+		}
+	if _characters:
+		var character_ids: Array = _characters.all_character_ids()
+		character_ids.sort()
+		for character_id in character_ids:
+			if _characters.is_quest_character(character_id):
+				result["characters"][character_id] = _characters.evaluate_character_gate(character_id)
+	if _patrons:
+		var patron_ids: Array = _patrons.all_patron_ids()
+		patron_ids.sort()
+		for patron_id in patron_ids:
+			result["patrons"][patron_id] = _patrons.get_progression_snapshot(patron_id)
 	if _uniques == null:
+		result["next_step"] = _next_progression_step(result)
 		return result
-	for id in _uniques.get_all_profiles().keys():
+	var unique_ids: Array = _uniques.get_all_profiles().keys()
+	unique_ids.sort()
+	for id in unique_ids:
+		result["story_buildings"][id] = _uniques.evaluate_unlock(id)
 		if _uniques.is_unlocked(id): result["unlocked"].append(id)
 		if _uniques.is_placed(id): result["placed"].append(id)
 	result["unlocked"].sort()
 	result["placed"].sort()
+	if GameState.map:
+		for patron_id in GameState.map.patron_donations_applied:
+			if GameState.map.patron_donations_applied[patron_id]:
+				result["donations_applied"].append(String(patron_id))
+	result["donations_applied"].sort()
+	result["next_step"] = _next_progression_step(result)
 	return result
+
+func _next_progression_step(progression: Dictionary) -> Dictionary:
+	var character_ids: Array = progression.get("characters", {}).keys()
+	character_ids.sort()
+	for character_id in character_ids:
+		var gate: Dictionary = progression["characters"][character_id]
+		if int(gate.get("state", 0)) == 1:
+			return {"kind": "resolve_arrival", "subject_id": character_id,
+				"subject_label": gate.get("display_name", character_id)}
+	for character_id in character_ids:
+		var gate: Dictionary = progression["characters"][character_id]
+		if int(gate.get("state", 0)) == 2:
+			return {"kind": "place_request", "subject_id": gate.get("want_building_id", ""),
+				"subject_label": gate.get("want_display_name", gate.get("want_building_id", "")),
+				"character_id": character_id, "character_label": gate.get("display_name", character_id)}
+	var patron_ids: Array = progression.get("patrons", {}).keys()
+	patron_ids.sort()
+	for patron_id in patron_ids:
+		var patron: Dictionary = progression["patrons"][patron_id]
+		if int(patron.get("state", 0)) == 1:
+			return {"kind": "place_landmark", "subject_id": patron.get("landmark_building_id", ""),
+				"subject_label": patron.get("landmark_display_name", patron.get("landmark_building_id", "")),
+				"patron_id": patron_id, "patron_label": patron.get("display_name", patron_id)}
+	for character_id in character_ids:
+		var gate: Dictionary = progression["characters"][character_id]
+		var state := int(gate.get("state", 0))
+		if state == 0:
+			if not gate.get("demand_met", false):
+				return {"kind": "fulfilled_demand", "subject_id": character_id,
+					"subject_label": gate.get("display_name", character_id),
+					"bucket": gate.get("bucket", ""), "bucket_label": gate.get("bucket_label", ""),
+					"current": gate.get("fulfilled", 0.0), "required": gate.get("required_fulfilled", 0.0)}
+			if not gate.get("tier_met", false):
+				return {"kind": "placed_tier", "subject_id": character_id,
+					"subject_label": gate.get("display_name", character_id),
+					"bucket": gate.get("bucket", ""), "bucket_label": gate.get("bucket_label", ""),
+					"current": gate.get("attained_tier", 0), "required": gate.get("required_tier", 0),
+					"tier_evidence": gate.get("tier_evidence", []).duplicate(true)}
+	return {"kind": "complete", "subject_id": "", "subject_label": "First patron complete"}
+
+func _observe_progression_milestones() -> void:
+	var progression := _progression_snapshot()
+	var candidates: Array[String] = []
+	for bucket_id in ["residential", "industrial", "commercial"]:
+		if int(progression.get("buckets", {}).get(bucket_id, {}).get("attained_tier", 0)) >= 1:
+			candidates.append("bucket.%s.tier1_placed" % bucket_id)
+	for character_id in progression.get("characters", {}):
+		var state := int(progression["characters"][character_id].get("state", 0))
+		if state >= 1: candidates.append("character.%s.arrived" % character_id)
+		if state >= 2: candidates.append("character.%s.want_revealed" % character_id)
+		if state >= 3: candidates.append("character.%s.satisfied" % character_id)
+	for patron_id in progression.get("patrons", {}):
+		var state := int(progression["patrons"][patron_id].get("state", 0))
+		if state >= 1: candidates.append("patron.%s.landmark_available" % patron_id)
+		if state >= 2: candidates.append("patron.%s.completed" % patron_id)
+		if progression["patrons"][patron_id].get("donation_applied", false):
+			candidates.append("patron.%s.land_donated" % patron_id)
+	for milestone_id in candidates:
+		if _milestone_ids.has(milestone_id):
+			continue
+		_milestone_ids[milestone_id] = true
+		var evidence := {
+			"milestone_id": milestone_id,
+			"sequence": _sequence,
+			"absolute_hour": _clock.get_absolute_hour() if _clock else 0,
+			"demand": progression.get("buckets", {}).duplicate(true),
+			"characters": progression.get("characters", {}).duplicate(true),
+			"patrons": progression.get("patrons", {}).duplicate(true),
+			"placed_building_ids": progression.get("placed", []).duplicate(),
+			"allowed_count": _land.allowed_count() if _land else 0,
+			"new_cells": maxi(0, (_land.allowed_count() if _land else 0) - (196 if GameState.map and GameState.map.rooted_town_rules else 64)),
+		}
+		evidence["state_hash"] = JSON.stringify(evidence).sha256_text()
+		_milestones.append(evidence)
 
 func _attractiveness_tiles() -> Array:
 	var rows: Array = []

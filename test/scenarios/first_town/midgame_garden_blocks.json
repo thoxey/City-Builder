@@ -1,0 +1,40 @@
+{
+  "scenario_id": "first_town/midgame_garden_blocks",
+  "seed": 6082,
+  "duration_hours": 72,
+  "capture_hours": 75,
+  "story_enabled": false,
+  "initial_state": {"cash": 3000, "demand": {"residential": 500, "industrial": 500, "commercial": 500}},
+  "fixture": {"residents": [
+    {"resident_id": 1, "seed": 6821, "cohort_id": "general", "home_anchor": {"x": -4, "z": -1}},
+    {"resident_id": 2, "seed": 6822, "cohort_id": "civic", "home_anchor": {"x": -2, "z": -1}},
+    {"resident_id": 3, "seed": 6823, "cohort_id": "independent", "home_anchor": {"x": 0, "z": -1}},
+    {"resident_id": 4, "seed": 6824, "cohort_id": "general", "home_anchor": {"x": 2, "z": -1}}
+  ]},
+  "layout": [
+    {"building_id":"building_small_a","anchor":{"x":-4,"z":-1}},
+    {"building_id":"building_small_d","anchor":{"x":-2,"z":-1}},
+    {"building_id":"building_small_a","anchor":{"x":0,"z":-1}},
+    {"building_id":"building_small_d","anchor":{"x":2,"z":-1}},
+    {"building_id":"building_duck_pond","anchor":{"x":-3,"z":-1}},
+    {"building_id":"building_nature_patch","anchor":{"x":-1,"z":-1}},
+    {"building_id":"building_duck_pond","anchor":{"x":1,"z":-1}},
+    {"building_id":"building_nature_patch","anchor":{"x":3,"z":-1}},
+    {"building_id":"building_small_b","anchor":{"x":-3,"z":1}},
+    {"building_id":"building_garage","anchor":{"x":-1,"z":1}},
+    {"building_id":"building_small_b","anchor":{"x":1,"z":1}},
+    {"building_id":"building_garage","anchor":{"x":3,"z":1}},
+    {"building_id":"road","anchor":{"x":-4,"z":-2}}, {"building_id":"road","anchor":{"x":-3,"z":-2}},
+    {"building_id":"road","anchor":{"x":-2,"z":-2}}, {"building_id":"road","anchor":{"x":-1,"z":-2}},
+    {"building_id":"road","anchor":{"x":0,"z":-2}}, {"building_id":"road","anchor":{"x":1,"z":-2}},
+    {"building_id":"road","anchor":{"x":2,"z":-2}}, {"building_id":"road","anchor":{"x":3,"z":-2}},
+    {"building_id":"road","anchor":{"x":-4,"z":0}}, {"building_id":"road","anchor":{"x":-3,"z":0}},
+    {"building_id":"road","anchor":{"x":-2,"z":0}}, {"building_id":"road","anchor":{"x":-1,"z":0}},
+    {"building_id":"road","anchor":{"x":0,"z":0}}, {"building_id":"road","anchor":{"x":1,"z":0}},
+    {"building_id":"road","anchor":{"x":2,"z":0}}, {"building_id":"road","anchor":{"x":3,"z":0}},
+    {"building_id":"road","anchor":{"x":-4,"z":2}}, {"building_id":"road","anchor":{"x":-3,"z":2}},
+    {"building_id":"road","anchor":{"x":-2,"z":2}}, {"building_id":"road","anchor":{"x":-1,"z":2}},
+    {"building_id":"road","anchor":{"x":0,"z":2}}, {"building_id":"road","anchor":{"x":1,"z":2}},
+    {"building_id":"road","anchor":{"x":2,"z":2}}, {"building_id":"road","anchor":{"x":3,"z":2}}
+  ]
+}

@@ -17,6 +17,7 @@
     ]
   ],
   "category": "road",
+  "cash_cost": 2,
   "pool_id": "road",
   "profiles": [
     {

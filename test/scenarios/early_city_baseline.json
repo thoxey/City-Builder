@@ -4,7 +4,7 @@
   "initial_state": {
     "map": "empty",
     "cash": 1000,
-    "demand": { "residential": 100, "industrial": 100, "commercial": 100 },
+    "demand": { "residential": 25, "industrial": 25, "commercial": 25 },
     "land": { "rule": "starter_rect", "rect": { "x": -4, "z": -4, "width": 8, "height": 8 } },
     "clock": { "mode": "manual", "start_hour": 6 },
     "narrative": { "mode": "presentation_disabled" }

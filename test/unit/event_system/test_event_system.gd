@@ -189,6 +189,30 @@ func test_event_count_bumps_on_dispatch() -> void:
 	_plugin._dispatch("character_arrived", {})
 	assert_eq(int(GameState.map.event_counts.get("once", 0)), 2)
 
+func test_dialogue_dispatch_persists_pending_id_until_acknowledged() -> void:
+	_plugin.set_events_for_test({"arrival": {
+		"event_id":"arrival", "event_type":"dialogue",
+		"trigger":{"event":"character_arrived"}, "payload":{},
+	}})
+	_plugin._dispatch("character_arrived", {})
+	assert_eq(GameState.map.pending_dialogue_event_ids, ["arrival"])
+	assert_true(_plugin.is_dialogue_pending("arrival"))
+	assert_true(_plugin.acknowledge_dialogue("arrival"))
+	assert_false(_plugin.is_dialogue_pending("arrival"))
+	assert_false(_plugin.acknowledge_dialogue("arrival"))
+
+func test_pending_dialogue_redispatch_does_not_increment_event_count() -> void:
+	_plugin.set_events_for_test({"arrival": {
+		"event_id":"arrival", "event_type":"dialogue",
+		"trigger":{"event":"character_arrived"}, "payload":{},
+	}})
+	_plugin._dispatch("character_arrived", {})
+	var sink := _Sink.new()
+	_plugin.event_resolved.connect(sink.on_resolved)
+	_plugin._redispatch_pending_dialogues()
+	assert_eq(sink.records.size(), 1)
+	assert_eq(int(GameState.map.event_counts["arrival"]), 1)
+
 # ── DSL coverage ──────────────────────────────────────────────────────────────
 
 func test_dsl_empty_expr_is_true() -> void:

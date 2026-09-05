@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { validateBuilding } from "./validation";
 import { blankBuilding, blankProfile, cloneBuilding } from "./blanks";
 import { makeManifest } from "../test/manifestFixture";
-import type { BuildingDoc, UniqueProfile } from "../types";
+import type { BuildingDoc, CommunityEffectProfileEntry, UniqueProfile } from "../types";
 
 function newUnique(): BuildingDoc {
   const doc = blankBuilding();
@@ -80,13 +80,13 @@ describe("validateBuilding — profiles", () => {
     expect(r.errors.some((e) => e.includes("pool_id"))).toBe(true);
   });
 
-  it("warns on UniqueProfile referencing unknown patron", () => {
+  it("rejects UniqueProfile referencing unknown patron", () => {
     const doc = newUnique();
     const prof = blankProfile("UniqueProfile") as UniqueProfile;
     prof.patron_id = "ghost";
     doc.profiles = [prof];
     const r = validateBuilding(doc, makeManifest(), { isNew: true });
-    expect(r.warnings.some((w) => w.includes("patron_id"))).toBe(true);
+    expect(r.errors.some((e) => e.includes("patron_id"))).toBe(true);
   });
 
   it("accepts UniqueProfile with known patron and character", () => {
@@ -101,13 +101,64 @@ describe("validateBuilding — profiles", () => {
     expect(r.errors).toEqual([]);
   });
 
-  it("warns on UniqueProfile prereq referencing missing building", () => {
+  it("rejects UniqueProfile prereq referencing missing building", () => {
     const doc = newUnique();
     const prof = blankProfile("UniqueProfile") as UniqueProfile;
     prof.prerequisite_ids = ["building_ghost"];
     doc.profiles = [prof];
     const r = validateBuilding(doc, makeManifest(), { isNew: true });
-    expect(r.warnings.some((w) => w.includes("prerequisite"))).toBe(true);
+    expect(r.errors.some((e) => e.includes("prerequisite"))).toBe(true);
+  });
+
+  it("requires want and landmark ownership fields", () => {
+    const want = newUnique();
+    const wantProfile = blankProfile("UniqueProfile") as UniqueProfile;
+    wantProfile.chain_role = "want";
+    want.profiles = [wantProfile];
+    const wantResult = validateBuilding(want, makeManifest(), { isNew: true });
+    expect(wantResult.errors.some((e) => e.includes("want requires character_id"))).toBe(true);
+    expect(wantResult.errors.some((e) => e.includes("want requires patron_id"))).toBe(true);
+
+    const landmark = newUnique();
+    const landmarkProfile = blankProfile("UniqueProfile") as UniqueProfile;
+    landmarkProfile.chain_role = "landmark";
+    landmark.profiles = [landmarkProfile];
+    expect(validateBuilding(landmark, makeManifest(), { isNew: true }).errors.some((e) => e.includes("landmark requires patron_id"))).toBe(true);
+  });
+});
+
+describe("validateBuilding — Community consequences", () => {
+  it("requires every nature item to declare a role", () => {
+    const doc = newUnique();
+    doc.category = "nature";
+    const r = validateBuilding(doc, makeManifest(), { isNew: true });
+    expect(r.errors.some((e) => e.includes("community_role"))).toBe(true);
+  });
+
+  it("rejects incomplete local and participant effects", () => {
+    const doc = newUnique();
+    doc.community_role = "functional";
+    doc.profiles = [{
+      type: "CommunityEffectProfile",
+      effects: [
+        { effect_id: "local", quality: "beauty", manifestation: "care", amount: 2, scope: "local", stacking_group: "", reason: "" },
+        { effect_id: "visit", quality: "belonging", manifestation: "care", amount: 2, scope: "participant", stacking_group: "visit", reason: "Visited" },
+      ],
+    } satisfies CommunityEffectProfileEntry];
+    const r = validateBuilding(doc, makeManifest(), { isNew: true });
+    expect(r.errors.some((e) => e.includes("non-negative radius"))).toBe(true);
+    expect(r.errors.some((e) => e.includes("requires stacking_group"))).toBe(true);
+    expect(r.errors.some((e) => e.includes("requires reason"))).toBe(true);
+    expect(r.errors.some((e) => e.includes("requires capacity"))).toBe(true);
+  });
+
+  it("keeps cosmetic-only content effect-free", () => {
+    const doc = newUnique();
+    doc.category = "nature";
+    doc.community_role = "cosmetic_only";
+    doc.profiles = [{ type: "CommunityEffectProfile", effects: [] }];
+    const r = validateBuilding(doc, makeManifest(), { isNew: true });
+    expect(r.errors.some((e) => e.includes("cannot declare Community effects"))).toBe(true);
   });
 });
 

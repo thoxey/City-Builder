@@ -27,7 +27,6 @@ func inject(deps: Dictionary) -> void:
 
 # ── UI refs ───────────────────────────────────────────────────────────────────
 
-var _satisfaction_label:    Label
 var _budget_label:          Label
 var _output_label:          Label
 var _cash_label:            Label
@@ -43,7 +42,6 @@ var _community_delta_generation := 0
 
 func _plugin_ready() -> void:
 	_build_ui()
-	GameEvents.satisfaction_changed.connect(_on_satisfaction)
 	# All three bucket signals route into the same refresh — the label shows
 	# fulfilled/total (banked), so any of the three moving requires a redraw.
 	GameEvents.demand_unserved_changed.connect(_on_bucket_changed)
@@ -82,13 +80,10 @@ func _build_ui() -> void:
 	hbox.add_theme_constant_override("separation", 12)
 	panel.add_child(hbox)
 
-	_satisfaction_label = _make_label("★ ---%")
 	_budget_label       = _make_label("Budget: ---/hr")
 	_output_label       = _make_label("Output: 0/hr")
 	_cash_label         = _make_label("$0")
 
-	hbox.add_child(_satisfaction_label)
-	hbox.add_child(_make_sep())
 	hbox.add_child(_cash_label)
 	hbox.add_child(_make_sep())
 	hbox.add_child(_budget_label)
@@ -147,16 +142,6 @@ func _make_sep() -> VSeparator:
 	return VSeparator.new()
 
 # ── Update ────────────────────────────────────────────────────────────────────
-
-func _on_satisfaction(score: float) -> void:
-	_satisfaction_label.text = "★ %d%%" % int(score * 100.0)
-	# Colour the star by score
-	if score >= 0.75:
-		_satisfaction_label.modulate = Color(0.2, 1.0, 0.3)
-	elif score >= 0.4:
-		_satisfaction_label.modulate = Color(1.0, 0.85, 0.1)
-	else:
-		_satisfaction_label.modulate = Color(1.0, 0.25, 0.2)
 
 func _on_cash_changed(amount: int, _delta: int) -> void:
 	_cash_label.text = "$%d" % amount

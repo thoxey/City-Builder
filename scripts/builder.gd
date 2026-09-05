@@ -11,6 +11,8 @@ var _palette:  PluginBase  # Palette plugin — owns the cyclable build menu
 var _land:     PluginBase  # BuildableArea — gates placement to allowed cells
 var _dialogue: PluginBase  # Dialogue plugin — suppresses input while a modal is open
 var _uniques:  PluginBase  # UniqueRegistry — authoritative one-of-a-kind rules
+var _community: PluginBase  # Community — placement coverage preview
+var _road_network: PluginBase # RoadNetwork — Town Hall-rooted placement authority
 var _community_inspect_mode: bool = false
 var _radial_input_active: bool = false
 var _placement_active: bool = false
@@ -25,6 +27,8 @@ var map: DataMap
 var _preview_idx: int = -1       # Structure index the cursor currently previews
 var _rotation_steps: int = 0     # 0–3, incremented by action_rotate()
 var _preview_indicators: Array[Sprite3D] = []
+var _last_preview_anchor := Vector2i(-99999, -99999)
+var _placement_overlay: MeshInstance3D
 
 # Road auto-tiling: precomputed at _ready()
 var _road_straight_idx: int = -1
@@ -63,14 +67,9 @@ var _overbuild_index:    int              = 0
 var _overbuild_fp_cells: Array[Vector2i]  = []
 
 func _ready():
-
-	# UI contracts and accessibility are authored against the actual desktop
-	# viewport. A forced 2× scale reduced 1280×720 to a 640×360 logical canvas
-	# and caused the HUD/sidebar to overlap.
-	get_window().content_scale_factor = 1.0
-
 	map = DataMap.new()
 	plane = Plane(Vector3.UP, Vector3.ZERO)
+	_setup_placement_overlay()
 
 	# Pull the building catalogue from JSON before anything else — the MeshLibrary
 	# is built from `structures` below, so this has to happen first.
@@ -87,6 +86,8 @@ func _ready():
 	_land     = PluginManager.get_plugin("BuildableArea")
 	_dialogue = PluginManager.get_plugin("Dialogue")
 	_uniques  = PluginManager.get_plugin("UniqueRegistry")
+	_community = PluginManager.get_plugin("Community")
+	_road_network = PluginManager.get_plugin("RoadNetwork")
 
 	var mesh_library = MeshLibrary.new()
 
@@ -136,11 +137,6 @@ func _ready():
 	_overbuild_dialog.confirmed.connect(_on_overbuild_confirmed)
 	_overbuild_dialog.canceled.connect(func(): _overbuild_pending = false)
 
-	if ResourceLoader.exists(SAVE_SLOT_1):
-		var slot1 = ResourceLoader.load(SAVE_SLOT_1)
-		if slot1:
-			_apply_map(slot1)
-
 	_fill_grass_background()
 
 	GameState.map = map
@@ -181,6 +177,9 @@ func _process(delta):
 	var anchor := Vector2i(int(gridmap_position.x), int(gridmap_position.z))
 	if _input_mode == "placement":
 		_update_preview_color(anchor)
+		if anchor != _last_preview_anchor:
+			_last_preview_anchor = anchor
+			_emit_placement_context("", anchor)
 	elif _input_mode == "demolition":
 		_set_selector_feedback("demolition-cursor")
 	elif _input_mode == "inspection":
@@ -215,6 +214,8 @@ func set_radial_input_active(active: bool) -> void:
 	_radial_input_active = active
 	if active and selector:
 		selector.visible = false
+	if active and _placement_overlay:
+		_placement_overlay.visible = false
 
 func begin_placement_from_palette() -> bool:
 	if _palette == null:
@@ -234,8 +235,11 @@ func begin_placement_from_palette() -> bool:
 func cancel_placement() -> void:
 	_placement_active = false
 	_preview_idx = -1
+	_last_preview_anchor = Vector2i(-99999, -99999)
 	if selector:
 		selector.visible = false
+	if _placement_overlay:
+		_placement_overlay.visible = false
 	update_structure()
 	_emit_placement_context()
 
@@ -258,17 +262,48 @@ func _set_input_mode(mode: String) -> void:
 	if mode == _input_mode:
 		return
 	_input_mode = mode
+	if _placement_overlay and mode != "placement":
+		_placement_overlay.visible = false
 	GameEvents.player_input_mode_changed.emit(mode)
 	_emit_placement_context()
 
-func _emit_placement_context(reason: String = "") -> void:
-	GameEvents.placement_context_changed.emit({
+func _emit_placement_context(reason: String = "", anchor: Variant = null) -> void:
+	var context := {
 		"mode": _input_mode,
 		"active": _placement_active,
 		"structure_index": _preview_idx,
 		"rotation": _rotation_steps,
 		"reason": reason,
-	})
+	}
+	if anchor != null:
+		context["anchor"] = CommunityConstants.coordinate_record(anchor)
+		var preview: Dictionary = {}
+		if _community and _community.has_method("get_placement_preview"):
+			preview = _community.get_placement_preview(_preview_idx, anchor, _rotation_steps)
+		preview["same_type_neighbours"] = _same_type_neighbours(anchor, _preview_idx)
+		context["community_preview"] = preview
+	GameEvents.placement_context_changed.emit(context)
+
+func _same_type_neighbours(anchor: Vector2i, structure_index: int) -> int:
+	if structure_index < 0 or structure_index >= structures.size():
+		return 0
+	var profile := structures[structure_index].find_metadata(BuildingProfile) as BuildingProfile
+	var attractiveness := structures[structure_index].find_metadata(AttractivenessProfile) as AttractivenessProfile
+	if profile == null or attractiveness == null or attractiveness.radius <= 0:
+		return 0
+	var count := 0
+	for internal_id in GameState.building_registry:
+		var entry: Dictionary = GameState.building_registry[internal_id]
+		var other_index := int(entry.get("structure", -1))
+		if other_index < 0 or other_index >= structures.size():
+			continue
+		var other_profile := structures[other_index].find_metadata(BuildingProfile) as BuildingProfile
+		if other_profile == null or other_profile.category != profile.category:
+			continue
+		var other_anchor: Vector2i = entry.get("anchor", Vector2i.ZERO)
+		if maxi(absi(other_anchor.x - anchor.x), absi(other_anchor.y - anchor.y)) <= attractiveness.radius:
+			count += 1
+	return count
 
 # Retrieve the mesh from a PackedScene, used for dynamically creating a MeshLibrary
 
@@ -408,6 +443,12 @@ func evaluate_placement(requested_id: String, anchor: Vector2i, rotation_steps: 
 		if bid >= 0 and bid not in occupied_bids:
 			occupied_bids.append(bid)
 	details["occupied_building_ids"] = occupied_bids
+	for occupied_id: int in occupied_bids:
+		var occupied_sid := int(GameState.building_registry.get(occupied_id, {}).get("structure", -1))
+		if _catalog and String(_catalog.get_id_by_index(occupied_sid)) == "building_town_hall":
+			return _reject_evaluation(PlaytestActionResult.DEMOLITION_NOT_ALLOWED,
+				{"building_id":"building_town_hall", "protected":true, "anchor":anchor,
+				 "occupied_building_ids":occupied_bids})
 	if not occupied_bids.is_empty() and not replace:
 		var has_proper_building := occupied_bids.any(func(bid: int):
 			var sid: int = GameState.building_registry.get(bid, {}).get("structure", -1)
@@ -415,21 +456,29 @@ func evaluate_placement(requested_id: String, anchor: Vector2i, rotation_steps: 
 		var reason := PlaytestActionResult.REPLACEMENT_REQUIRED if has_proper_building else PlaytestActionResult.OCCUPIED_FOOTPRINT
 		return _reject_evaluation(reason, details)
 
+	if _road_network and _road_network.has_method("evaluate_rooted_placement"):
+		var summary: Dictionary = _catalog.get_summary_by_id(resolved["building_id"])
+		var is_road := _is_road_structure(struct_idx)
+		var requires_access := String(summary.get("community_role", "")) != "cosmetic_only" and not is_road
+		var rooted: Dictionary = _road_network.evaluate_rooted_placement(
+			resolved["building_id"], fp_cells, is_road, requires_access)
+		details["rooted_town"] = rooted.duplicate(true)
+		if not bool(rooted.get("ok", false)):
+			return _reject_evaluation(String(rooted.get("reason", PlaytestActionResult.NOT_CONNECTED_TO_TOWN_HALL)), details)
+
 	if _uniques and _uniques.is_unique(resolved["building_id"]):
-		if _uniques.is_placed(resolved["building_id"]):
-			return _reject_evaluation(PlaytestActionResult.UNIQUE_ALREADY_PLACED, details)
-		if not _uniques.is_unlocked(resolved["building_id"]):
-			var profile: UniqueProfile = _uniques.get_profile(resolved["building_id"])
-			if profile:
-				var missing: Array[String] = []
-				for prereq in profile.prerequisite_ids:
-					if not _uniques.is_placed(String(prereq)):
-						missing.append(String(prereq))
-				if not missing.is_empty():
-					details["missing_prerequisites"] = missing
-					return _reject_evaluation(PlaytestActionResult.UNMET_PREREQUISITE, details)
-				details["threshold"] = profile.prerequisite_threshold
-			return _reject_evaluation(PlaytestActionResult.BELOW_DEMAND_THRESHOLD, details)
+		var planned_removals: Array[String] = []
+		if replace:
+			for occupied_id: int in occupied_bids:
+				var occupied_index := int(GameState.building_registry.get(occupied_id, {}).get("structure", -1))
+				var occupied_building_id := String(_catalog.get_id_by_index(occupied_index))
+				if not occupied_building_id.is_empty() and occupied_building_id not in planned_removals:
+					planned_removals.append(occupied_building_id)
+		var gate: Dictionary = _uniques.evaluate_unlock(resolved["building_id"], planned_removals)
+		details["progression_gate"] = gate.duplicate(true)
+		details["planned_removal_building_ids"] = planned_removals
+		if not bool(gate.get("selectable", gate.get("unlocked", false))):
+			return _reject_evaluation(String(gate.get("primary_reason", PlaytestActionResult.BELOW_DEMAND_THRESHOLD)), details)
 
 	var cash_quote: Dictionary = _economy.quote_cash(structure) if _economy else {"ok": true, "cost": 0, "have": 0, "reason": ""}
 	details["cash"] = cash_quote
@@ -560,6 +609,7 @@ func _commit_build(anchor: Vector2i, struct_idx: int, orient: int, fp_cells: Arr
 
 	var placed_pos := Vector3i(anchor.x, 0, anchor.y)
 	GameEvents.structure_placed.emit(placed_pos, struct_idx, orient)
+	_show_placement_effect_feedback(anchor, struct_idx)
 
 func _show_placement_outcome(outcome: Dictionary) -> void:
 	if outcome.get("status", "") != PlaytestActionResult.STATUS_REJECTED:
@@ -581,8 +631,18 @@ func _show_placement_outcome(outcome: Dictionary) -> void:
 			show_toast("Need %d more %s demand (have %d / %d)" % [int(ceil(float(q.get("cost", 0)) - float(q.get("have", 0)))), short_name, int(q.get("have", 0)), int(q.get("cost", 0))])
 		PlaytestActionResult.UNIQUE_ALREADY_PLACED:
 			show_toast("Unique building already placed")
+		PlaytestActionResult.TOWN_HALL_REQUIRED:
+			show_toast("Place your free Town Hall first")
+		PlaytestActionResult.TOWN_HALL_ALREADY_PLACED:
+			show_toast("Your town already has a Town Hall")
+		PlaytestActionResult.NOT_CONNECTED_TO_TOWN_HALL:
+			show_toast("Connect this to the Town Hall by road")
 		PlaytestActionResult.UNMET_PREREQUISITE:
 			show_toast("Building prerequisite not met")
+		PlaytestActionResult.WANT_NOT_REVEALED:
+			show_toast("Meet this character before building their request")
+		PlaytestActionResult.PATRON_NOT_READY:
+			show_toast("Complete the patron's requests first")
 		_:
 			show_toast("Cannot place here")
 
@@ -614,6 +674,10 @@ func try_demolish_cell(cell: Vector2i) -> Dictionary:
 	if _land and not _land.is_allowed(cell):
 		return PlaytestActionResult.rejected(PlaytestActionResult.DEMOLITION_NOT_ALLOWED, {"cell": cell})
 	var bid: int = GameState.cell_to_building[cell]
+	var sid := int(GameState.building_registry.get(bid, {}).get("structure", -1))
+	if _catalog and String(_catalog.get_id_by_index(sid)) == "building_town_hall":
+		return PlaytestActionResult.rejected(PlaytestActionResult.DEMOLITION_NOT_ALLOWED,
+			{"cell": cell, "building_id": "building_town_hall", "protected": true})
 	return PlaytestActionResult.applied(_demolish_by_bid(bid))
 
 func _demolish_by_bid(bid: int) -> Dictionary:
@@ -753,6 +817,133 @@ func _update_preview_color(anchor: Vector2i) -> void:
 		ind.texture = load("res://sprites/ui/build-menu/map-feedback/%s.png" % (
 			"affordable-placement-marker" if is_valid else ("replacement-overbuild-marker" if replacement else "blocked-footprint-marker")))
 	_set_selector_feedback("valid-placement-cursor" if is_valid else "invalid-placement-cursor")
+	_refresh_placement_overlay(anchor)
+
+func _setup_placement_overlay() -> void:
+	_placement_overlay = MeshInstance3D.new()
+	_placement_overlay.name = "PlacementInfluenceOverlay"
+	_placement_overlay.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	_placement_overlay.visible = false
+	add_child(_placement_overlay)
+
+func _preview_effect_radii() -> Array[int]:
+	var found: Dictionary = {}
+	if _preview_idx < 0 or _preview_idx >= structures.size():
+		return []
+	var structure: Structure = structures[_preview_idx]
+	var attractiveness := structure.find_metadata(AttractivenessProfile) as AttractivenessProfile
+	if attractiveness and attractiveness.radius > 0:
+		found[int(attractiveness.radius)] = true
+	var community_profile := structure.find_metadata(CommunityEffectProfile) as CommunityEffectProfile
+	if community_profile:
+		for effect in community_profile.effects:
+			if String(effect.get("scope", "")) == "local" and effect.get("radius") != null and int(effect["radius"]) > 0:
+				found[int(effect["radius"])] = true
+	var radii: Array[int] = []
+	for radius in found.keys():
+		radii.append(int(radius))
+	radii.sort()
+	return radii
+
+func _refresh_placement_overlay(anchor: Vector2i) -> void:
+	if _placement_overlay == null or _land == null:
+		return
+	var mesh := ImmediateMesh.new()
+	var material := StandardMaterial3D.new()
+	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	material.vertex_color_use_as_albedo = true
+	material.no_depth_test = true
+	mesh.surface_begin(Mesh.PRIMITIVE_LINES, material)
+	var allowed_lookup: Dictionary = {}
+	for cell_v in _land.allowed_cells():
+		allowed_lookup[cell_v] = true
+	var land_colour := Color(0.25, 0.9, 0.65, 0.78)
+	for cell_v in allowed_lookup.keys():
+		var cell: Vector2i = cell_v
+		var x := float(cell.x)
+		var z := float(cell.y)
+		if not allowed_lookup.has(cell + Vector2i(0, -1)):
+			_add_overlay_line(mesh, Vector3(x - 0.5, 0.11, z - 0.5), Vector3(x + 0.5, 0.11, z - 0.5), land_colour)
+		if not allowed_lookup.has(cell + Vector2i(1, 0)):
+			_add_overlay_line(mesh, Vector3(x + 0.5, 0.11, z - 0.5), Vector3(x + 0.5, 0.11, z + 0.5), land_colour)
+		if not allowed_lookup.has(cell + Vector2i(0, 1)):
+			_add_overlay_line(mesh, Vector3(x + 0.5, 0.11, z + 0.5), Vector3(x - 0.5, 0.11, z + 0.5), land_colour)
+		if not allowed_lookup.has(cell + Vector2i(-1, 0)):
+			_add_overlay_line(mesh, Vector3(x - 0.5, 0.11, z + 0.5), Vector3(x - 0.5, 0.11, z - 0.5), land_colour)
+	var radius_colours := [Color(0.95, 0.7, 0.18, 0.9), Color(0.95, 0.4, 0.22, 0.9), Color(0.72, 0.42, 0.92, 0.9)]
+	var radii := _preview_effect_radii()
+	for index in radii.size():
+		var extent := float(radii[index]) + 0.5
+		var points := [
+			Vector3(anchor.x, 0.13, anchor.y - extent),
+			Vector3(anchor.x + extent, 0.13, anchor.y),
+			Vector3(anchor.x, 0.13, anchor.y + extent),
+			Vector3(anchor.x - extent, 0.13, anchor.y),
+		]
+		var colour: Color = radius_colours[index % radius_colours.size()]
+		for point_index in points.size():
+			_add_overlay_line(mesh, points[point_index], points[(point_index + 1) % points.size()], colour)
+	mesh.surface_end()
+	_placement_overlay.mesh = mesh
+	_placement_overlay.visible = _input_mode == "placement"
+
+func _add_overlay_line(mesh: ImmediateMesh, start_point: Vector3, end_point: Vector3, colour: Color) -> void:
+	mesh.surface_set_color(colour)
+	mesh.surface_add_vertex(start_point)
+	mesh.surface_set_color(colour)
+	mesh.surface_add_vertex(end_point)
+
+func _show_placement_effect_feedback(anchor: Vector2i, struct_idx: int) -> void:
+	if DisplayServer.get_name() == "headless" or struct_idx < 0 or struct_idx >= structures.size():
+		return
+	var totals: Dictionary = {}
+	var structure: Structure = structures[struct_idx]
+	var attractiveness := structure.find_metadata(AttractivenessProfile) as AttractivenessProfile
+	if attractiveness and attractiveness.base != 0:
+		totals["beauty"] = float(attractiveness.base)
+	var community_profile := structure.find_metadata(CommunityEffectProfile) as CommunityEffectProfile
+	if community_profile:
+		for effect in community_profile.effects:
+			var quality := String(effect.get("quality", ""))
+			if quality in CommunityConstants.QUALITIES:
+				totals[quality] = float(totals.get(quality, 0.0)) + float(effect.get("amount", 0.0))
+	if totals.is_empty():
+		return
+	var feedback := Node3D.new()
+	feedback.name = "PlacementEffectFeedback"
+	feedback.position = Vector3(anchor.x, 3.0, anchor.y)
+	add_child(feedback)
+	var qualities: Array = totals.keys()
+	qualities.sort()
+	for index in qualities.size():
+		var quality := String(qualities[index])
+		var amount := float(totals[quality])
+		if is_zero_approx(amount):
+			continue
+		var x_offset := (float(index) - float(qualities.size() - 1) * 0.5) * 0.72
+		var icon := _feedback_sprite("res://sprites/community_icons/game/%s.png" % quality, Vector3(x_offset - 0.13, 0.0, 0.0), 0.005)
+		var direction := "increasing" if amount > 0.0 else "decreasing"
+		var arrow := _feedback_sprite("res://sprites/community_icons/game/%s.png" % direction, Vector3(x_offset + 0.22, 0.0, 0.0), 0.0035)
+		feedback.add_child(icon)
+		feedback.add_child(arrow)
+	var tween := create_tween()
+	tween.set_parallel(true)
+	tween.tween_property(feedback, "position:y", feedback.position.y + 1.6, 1.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	for child in feedback.get_children():
+		tween.tween_property(child, "modulate:a", 0.0, 1.1).set_delay(0.4)
+	tween.set_parallel(false)
+	tween.tween_callback(feedback.queue_free)
+
+func _feedback_sprite(path: String, offset: Vector3, pixel_size: float) -> Sprite3D:
+	var sprite := Sprite3D.new()
+	sprite.texture = load(path)
+	sprite.position = offset
+	sprite.pixel_size = pixel_size
+	sprite.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	sprite.no_depth_test = true
+	sprite.render_priority = 10
+	return sprite
 
 func _set_selector_feedback(asset_id: String) -> void:
 	if selector == null:
@@ -853,7 +1044,10 @@ func show_toast(message: String) -> void:
 
 # ── Save / Load ────────────────────────────────────────────────────────────────
 
-func _save_to(path: String, label: String) -> void:
+## Copies the live registry into the canonical DataMap resource. Keeping this
+## public lets progression boundary tests exercise the same save representation
+## as the player-facing slots without reaching into Builder internals.
+func serialize_map_state() -> DataMap:
 	map.structures.clear()
 	for bid in GameState.building_registry:
 		var entry: Dictionary = GameState.building_registry[bid]
@@ -864,18 +1058,44 @@ func _save_to(path: String, label: String) -> void:
 		for cell in entry.get("cells", []):
 			ds.footprint_cells.append(cell)
 		map.structures.append(ds)
-	ResourceSaver.save(map, path)
+	return map
+
+## Saves the current map through ResourceSaver and reports a semantic result.
+func save_map_to_path(path: String) -> Dictionary:
+	var state := serialize_map_state()
+	var directory := ProjectSettings.globalize_path(path.get_base_dir())
+	var directory_error := DirAccess.make_dir_recursive_absolute(directory)
+	if directory_error != OK:
+		return PlaytestActionResult.rejected("save_failed", {"path": path, "error": directory_error})
+	var error := ResourceSaver.save(state, path)
+	if error != OK:
+		return PlaytestActionResult.rejected("save_failed", {"path": path, "error": error})
+	return PlaytestActionResult.applied({"path": path, "structures": state.structures.size()})
+
+## Cold-loads a DataMap with cache bypass, then emits the normal reconciliation
+## boundary used by gameplay. This is intentionally presentation-free.
+func load_map_from_path(path: String) -> Dictionary:
+	var loaded = ResourceLoader.load(path, "", ResourceLoader.CACHE_MODE_IGNORE)
+	if loaded == null or not loaded is DataMap:
+		return PlaytestActionResult.rejected("save_not_found", {"path": path})
+	_apply_map(loaded)
+	GameState.map = map
+	GameEvents.map_loaded.emit(map)
+	return PlaytestActionResult.applied({"path": path, "structures": map.structures.size()})
+
+func _save_to(path: String, label: String) -> void:
+	var result := save_map_to_path(path)
+	if result.get("status") != PlaytestActionResult.STATUS_APPLIED:
+		show_toast("Save failed")
+		return
 	show_toast(label)
 	print("Saved to %s" % path)
 
 func _load_from(path: String, label: String) -> void:
-	var loaded = ResourceLoader.load(path)
-	if not loaded:
+	var result := load_map_from_path(path)
+	if result.get("status") != PlaytestActionResult.STATUS_APPLIED:
 		show_toast("No save found")
 		return
-	_apply_map(loaded)
-	GameState.map = map
-	GameEvents.map_loaded.emit(map)
 	show_toast(label)
 	print("Loaded from %s" % path)
 

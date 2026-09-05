@@ -12,16 +12,18 @@ extends PluginBase
 ## supply snapshot — the same signal Workplace publishes for the demand chain.
 
 func get_plugin_name() -> String: return "Economy"
-func get_dependencies() -> Array[String]: return ["DayNight", "CityStats", "BuildingCatalog"]
+func get_dependencies() -> Array[String]: return ["DayNight", "CityStats", "BuildingCatalog", "Commercial"]
 
 var _day_night:  PluginBase
 var _city_stats: PluginBase
 var _catalog:    PluginBase
+var _commercial: PluginBase
 
 func inject(deps: Dictionary) -> void:
 	_day_night  = deps.get("DayNight")
 	_city_stats = deps.get("CityStats")
 	_catalog    = deps.get("BuildingCatalog")
+	_commercial = deps.get("Commercial")
 
 # ── Tuning levers ─────────────────────────────────────────────────────────────
 
@@ -33,13 +35,34 @@ func inject(deps: Dictionary) -> void:
 
 var _last_supply: Dictionary = {}  # snapshot from CityStats.stats_ticked
 var _last_hourly_income: int = 0
+var _cumulative_income: int = 0
+var _last_shop_proximity_income: int = 0
+var _cumulative_shop_proximity_income: int = 0
+var _spend_by_category: Dictionary = {}
 
 func get_last_hourly_income() -> int:
 	return _last_hourly_income
 
+func get_runtime_ledger() -> Dictionary:
+	var spend := _spend_by_category.duplicate(true)
+	var total_spend := 0
+	for amount in spend.values():
+		total_spend += int(amount)
+	return {
+		"cumulative_income": _cumulative_income,
+		"last_shop_proximity_income": _last_shop_proximity_income,
+		"cumulative_shop_proximity_income": _cumulative_shop_proximity_income,
+		"cumulative_spend": total_spend,
+		"spend_by_category": spend,
+	}
+
 func reset_runtime_state() -> void:
 	_last_supply.clear()
 	_last_hourly_income = 0
+	_cumulative_income = 0
+	_last_shop_proximity_income = 0
+	_cumulative_shop_proximity_income = 0
+	_spend_by_category.clear()
 
 # ── Lifecycle ─────────────────────────────────────────────────────────────────
 
@@ -71,8 +94,12 @@ func _on_map_loaded(_map) -> void:
 func _on_hour(_hour: float) -> void:
 	# CityStats already ran (topo order) so _last_supply is fresh for this hour.
 	var output: int = int(_last_supply.get("industrial_output", 0))
-	var income: int = output * tax_rate
+	var shop_bonus_income := int(_commercial.get_town_hall_bonus_income()) if _commercial and _commercial.has_method("get_town_hall_bonus_income") else 0
+	var income: int = output * tax_rate + shop_bonus_income
+	_last_shop_proximity_income = shop_bonus_income
+	_cumulative_shop_proximity_income += shop_bonus_income
 	_last_hourly_income = income
+	_cumulative_income += income
 
 	_apply_delta(income)
 
@@ -127,8 +154,21 @@ func try_spend_cash(structure: Structure) -> Dictionary:
 		print("[Economy] place_blocked: cost=%d cash=%d" % [cost, have])
 		return result
 	_apply_delta(-cost)
+	var category := _cash_category(structure)
+	_spend_by_category[category] = int(_spend_by_category.get(category, 0)) + cost
 	print("[Economy] spent: cost=%d remaining=%d" % [cost, GameState.map.cash])
 	return result
+
+func _cash_category(structure: Structure) -> String:
+	if _catalog == null:
+		return "other"
+	var sid := GameState.structures.find(structure)
+	var summaries: Array = _catalog.get_summary()
+	if sid < 0 or sid >= summaries.size():
+		return "other"
+	var summary: Dictionary = summaries[sid]
+	var category := String(summary.get("category", "other"))
+	return category if not category.is_empty() else "other"
 
 # ── Cash mutator (single chokepoint, signal + clamp) ──────────────────────────
 

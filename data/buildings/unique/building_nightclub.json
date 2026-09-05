@@ -45,7 +45,7 @@
       "type": "AttractivenessProfile",
       "base": -10,
       "residential": -30,
-      "commercial": 0,
+      "commercial": -30,
       "industrial": 0,
       "nature": -10,
       "radius": 1

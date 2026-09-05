@@ -15,12 +15,14 @@ const OUTPUT_PER_WORKER := 1  # output units produced per filled worker slot per
 const BUDGET_PER_WORKER := 2  # budget units earned per filled worker slot per hour
 
 func get_plugin_name() -> String: return "Workplace"
-func get_dependencies() -> Array[String]: return ["CityStats"]
+func get_dependencies() -> Array[String]: return ["CityStats", "Community"]
 
 var _city_stats: PluginBase
+var _community: PluginBase
 
 func inject(deps: Dictionary) -> void:
 	_city_stats = deps.get("CityStats")
+	_community = deps.get("Community")
 
 # ── State — keyed by anchor Vector2i ─────────────────────────────────────────
 
@@ -63,7 +65,7 @@ func _on_map_loaded(_map) -> void:
 		_register(entry["anchor"], profile.capacity, profile.active_start, profile.active_end)
 
 func _register(anchor: Vector2i, capacity: int, start: float, end: float) -> void:
-	var sink     := _WorkerSink.new(capacity, start, end)
+	var sink     := _WorkerSink.new(anchor, capacity, start, end, _community)
 	var output   := _OutputSource.new(sink, OUTPUT_PER_WORKER)
 	var budget   := _BudgetSource.new(sink, BUDGET_PER_WORKER)
 	_worker_sinks[anchor]   = sink
@@ -85,35 +87,75 @@ func _unregister(anchor: Vector2i) -> void:
 		_budget_sources.erase(anchor)
 
 ## Sum of industrial output across every registered workplace this tick.
-## Equal to last_fulfilled × OUTPUT_PER_WORKER per building. Reads last tick's
-## fulfilment, so callers running in the same hour_changed pass see a one-tick
-## lag behind placement (intentional — matches the budget flow).
+## Equal to last_fulfilled × OUTPUT_PER_WORKER per building at the latest
+## simulation boundary.
 func get_total_output() -> int:
 	var total := 0
 	for sink in _worker_sinks.values():
 		total += (sink as _WorkerSink).last_fulfilled * OUTPUT_PER_WORKER
 	return total
 
+func get_operation_records(hour: int = -1) -> Array:
+	var active_hour := hour
+	if active_hour < 0:
+		var clock = PluginManager.get_plugin("DayNight")
+		active_hour = int(clock.current_hour()) if clock and clock.has_method("current_hour") else 0
+	var economy = PluginManager.get_plugin("Economy")
+	var income_rate := int(economy.tax_rate) if economy else 0
+	var canonical_by_anchor := {}
+	if _community and _community.has_method("get_operation_records"):
+		for record in _community.get_operation_records(active_hour):
+			var point: Dictionary = record.get("anchor", {})
+			if String(record.get("category", "")) == "industrial": canonical_by_anchor["%d,%d" % [point.get("x", 0), point.get("z", 0)]] = record
+	var anchors := _worker_sinks.keys()
+	anchors.sort_custom(func(a: Vector2i, b: Vector2i): return a.x < b.x if a.x != b.x else a.y < b.y)
+	var result: Array = []
+	for anchor: Vector2i in anchors:
+		var sink := _worker_sinks[anchor] as _WorkerSink
+		var row: Dictionary = canonical_by_anchor.get("%d,%d" % [anchor.x, anchor.y], {}).duplicate(true)
+		row["anchor"] = {"x": anchor.x, "z": anchor.y}
+		row["open_now"] = _active_window(active_hour, sink.active_start, sink.active_end)
+		row["capacity"] = sink.capacity
+		row["fulfilled"] = sink.last_fulfilled
+		row["available_capacity"] = maxi(0, sink.capacity - sink.last_fulfilled)
+		row["latest_output"] = sink.last_fulfilled * OUTPUT_PER_WORKER
+		row["latest_income"] = sink.last_fulfilled * OUTPUT_PER_WORKER * income_rate
+		result.append(row)
+	return result
+
+static func _active_window(hour: float, start: float, end: float) -> bool:
+	var current := fposmod(hour, 24.0); start = fposmod(start, 24.0); end = fposmod(end, 24.0)
+	if is_equal_approx(start, end): return true
+	return current >= start and current < end if start < end else current >= start or current < end
+
 # ── Inner classes ─────────────────────────────────────────────────────────────
 
 ## Worker demand — draws from population pool during open hours.
 ## Priority 10 ensures workers are served before commercial visitors (priority 100).
 class _WorkerSink extends CityStatSink:
+	var anchor: Vector2i
 	var capacity:       int
 	var active_start:   float
 	var active_end:     float
 	var last_fulfilled: int = 0
+	var _community
 
-	func _init(cap: int, start: float, end: float) -> void:
+	func _init(workplace_anchor: Vector2i, cap: int, start: float, end: float, community) -> void:
+		anchor = workplace_anchor
 		capacity     = cap
 		active_start = start
 		active_end   = end
+		_community = community
 		priority = 10
 
 	func get_type_id() -> String: return "population"
 
 	func tick(hour: float) -> int:
-		return capacity if _in_window(hour, active_start, active_end) else 0
+		if not _in_window(hour, active_start, active_end):
+			return 0
+		if _community and _community.has_method("get_fulfilled_workplace"):
+			return mini(capacity, int(_community.get_fulfilled_workplace(anchor, int(hour) % 24)))
+		return capacity
 
 	func on_fulfilled(fulfilled: int, _requested: int) -> void:
 		last_fulfilled = fulfilled
@@ -130,10 +172,10 @@ class _OutputSource extends CityStatSource:
 
 	func get_type_id() -> String: return "industrial_output"
 
-	func tick(_hour: float) -> int:
-		return _sink.last_fulfilled * _rate
+	func tick(hour: float) -> int:
+		return _sink.tick(hour) * _rate
 
-## Budget source — income generated by filled worker slots (one-tick lag from on_fulfilled).
+## Budget source — income generated by the workers reachable this boundary.
 class _BudgetSource extends CityStatSource:
 	var _sink: _WorkerSink
 	var _rate: int
@@ -144,5 +186,5 @@ class _BudgetSource extends CityStatSource:
 
 	func get_type_id() -> String: return "budget"
 
-	func tick(_hour: float) -> int:
-		return _sink.last_fulfilled * _rate
+	func tick(hour: float) -> int:
+		return _sink.tick(hour) * _rate

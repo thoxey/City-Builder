@@ -63,6 +63,11 @@ export function blankProfile(type: ProfileType): Profile {
         nature: 0,
         radius: 1,
       };
+    case "CommunityEffectProfile":
+      return {
+        type: "CommunityEffectProfile",
+        effects: [],
+      };
   }
 }
 
@@ -73,4 +78,5 @@ export const ALL_PROFILE_TYPES: ProfileType[] = [
   "GenericTierProfile",
   "RoadMetadata",
   "AttractivenessProfile",
+  "CommunityEffectProfile",
 ];

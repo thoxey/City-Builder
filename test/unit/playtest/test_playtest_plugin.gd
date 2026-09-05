@@ -18,6 +18,7 @@ func before_each() -> void:
 	playtest = PlaytestCls.new()
 	playtest._clock = clock
 	playtest._community = StubCommunity.new()
+	playtest._dialogue = StubDialogue.new()
 	playtest.set_builder_for_tests(builder)
 	add_child(playtest)
 
@@ -26,6 +27,7 @@ func after_each() -> void:
 	builder.free()
 	clock.free()
 	playtest._community.free()
+	playtest._dialogue.free()
 	GameState.map = saved_map
 	GameState.building_registry = saved_registry
 
@@ -33,6 +35,19 @@ func test_start_requires_builder_readiness() -> void:
 	playtest.set_builder_for_tests(null)
 	var result: Dictionary = playtest.start_session({"scenario_id": "fresh_city", "seed": 1})
 	assert_eq(result["error"]["reason"], "game_not_ready")
+
+func test_scenario_path_allows_first_town_namespace_without_traversal() -> void:
+	assert_eq(PlaytestCls._scenario_path("fresh_city"), "res://test/scenarios/fresh_city.json")
+	assert_eq(PlaytestCls._scenario_path("first_town/compact"), "res://test/scenarios/first_town/compact.json")
+	assert_eq(PlaytestCls._scenario_path("first_town/../secret"), "")
+	assert_eq(PlaytestCls._scenario_path("another/place"), "")
+
+func test_readiness_recovers_builder_after_autoload_startup_order() -> void:
+	var lazy := LazyPlaytest.new()
+	lazy.discovered_builder = builder
+	assert_true(lazy.is_ready_for_commands())
+	assert_eq(lazy._builder, builder)
+	lazy.free()
 
 func test_start_creates_ready_fresh_session() -> void:
 	var result: Dictionary = playtest.start_session({"scenario_id": "fresh_city", "seed": 12})
@@ -113,6 +128,20 @@ func test_request_cache_is_bounded() -> void:
 		playtest.handle_command("advance", {"request_id": "r%d" % i, "hours": 0})
 	assert_lte(playtest._request_cache.size(), playtest.REQUEST_CACHE_LIMIT)
 
+func test_resolve_dialogue_is_idempotent_semantic_action() -> void:
+	playtest.start_session({"scenario_id": "fresh_city", "seed": 1})
+	var request := {"request_id":"resolve-1", "event_id":"arrival"}
+	var first: Dictionary = playtest.handle_command("resolve_dialogue", request)
+	var duplicate: Dictionary = playtest.handle_command("resolve_dialogue", request)
+	assert_eq(first["status"], PlaytestActionResult.STATUS_APPLIED)
+	assert_eq(duplicate["status"], PlaytestActionResult.STATUS_DUPLICATE)
+	assert_eq(playtest._dialogue.resolved_ids, ["arrival"])
+
+func test_progression_snapshot_has_complete_contract_shape() -> void:
+	var progression: Dictionary = playtest.start_session({"scenario_id":"fresh_city", "seed":1})["snapshot"]["progression"]
+	for key in ["buckets", "characters", "patrons", "story_buildings", "unlocked", "placed", "donations_applied", "flags", "event_counts", "pending_dialogue_event_ids", "milestones"]:
+		assert_has(progression, key)
+
 class StubBuilder extends Node:
 	var reset_calls := 0
 	var place_calls := 0
@@ -130,6 +159,10 @@ class StubBuilder extends Node:
 		last_demolish = cell
 		return PlaytestActionResult.applied({"cell": cell})
 	static func _orientation_to_steps(_orientation: int) -> int: return 0
+
+class LazyPlaytest extends "res://plugins/playtest/playtest_plugin.gd":
+	var discovered_builder: Node
+	func _find_builder() -> Node: return discovered_builder
 
 class StubClock extends PluginBase:
 	var absolute_hour := 0
@@ -163,3 +196,10 @@ class StubCommunity extends PluginBase:
 		}
 		if not compact: result["residents"] = [{"resident_id": 1}, {"resident_id": 2}]
 		return result
+
+class StubDialogue extends PluginBase:
+	var resolved_ids: Array[String] = []
+	func set_presentation_enabled(_enabled: bool) -> void: pass
+	func resolve_pending_event(event_id: String) -> Dictionary:
+		resolved_ids.append(event_id)
+		return PlaytestActionResult.applied({"event_id":event_id})

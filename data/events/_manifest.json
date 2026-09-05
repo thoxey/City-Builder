@@ -1850,7 +1850,7 @@
 		{
 			"_path": "res://data/characters/aristocrat_industrial.json",
 			"arrival_requires_tier": 1,
-			"arrival_threshold": 10000.0,
+			"arrival_threshold": 100.0,
 			"associated_bucket": "industrial",
 			"bio": "Third-generation industrialist. Loves a working chimney.",
 			"character_id": "aristocrat_industrial",

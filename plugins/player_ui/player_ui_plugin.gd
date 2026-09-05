@@ -28,6 +28,7 @@ func _plugin_ready() -> void:
 	_builder = get_tree().current_scene.find_child("Builder", true, false) if get_tree().current_scene else null
 	_build_shell()
 	_refresh_model()
+	call_deferred("_ensure_forced_town_hall")
 	GameEvents.build_menu_model_changed.connect(func(_revision): _refresh_model())
 	GameEvents.placement_context_changed.connect(_on_placement_context)
 	get_viewport().size_changed.connect(_on_viewport_size_changed)
@@ -64,8 +65,16 @@ func _build_shell() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("build_menu"):
-		if _radial.visible: _radial.close_menu()
-		else: open_build_menu()
+		if _radial.visible:
+			_radial.back_or_close()
+		elif _town_hall_required():
+			_ensure_forced_town_hall()
+		elif _builder and _builder.is_placement_active():
+			_builder.cancel_placement()
+			_dock.show_idle()
+			open_build_menu(true)
+		else:
+			open_build_menu()
 		get_viewport().set_input_as_handled()
 
 func _process(_delta: float) -> void:
@@ -81,11 +90,14 @@ func _process(_delta: float) -> void:
 	if _radial and _radial.visible and _builder and _builder.get_input_mode() == "modal":
 		_radial.close_menu()
 
-func open_build_menu() -> void:
+func open_build_menu(restore_context: bool = false) -> void:
 	if _builder and _builder.get_input_mode() == "modal": return
+	if _town_hall_required():
+		_ensure_forced_town_hall()
+		return
 	_refresh_model()
 	var pointer := get_viewport().get_mouse_position()
-	_radial.open_menu(pointer)
+	_radial.open_menu(pointer, restore_context)
 	if _builder: _builder.set_radial_input_active(true)
 
 func _on_radial_closed() -> void:
@@ -123,12 +135,34 @@ func _cancel_tool() -> void:
 		if _builder.get_input_mode() == "demolition": _builder.set_demolition_active(false)
 		else: _builder.cancel_placement()
 	_dock.show_idle()
+	if _town_hall_required():
+		call_deferred("_ensure_forced_town_hall")
 
 func _on_placement_context(context: Dictionary) -> void:
 	var mode := String(context.get("mode", "world"))
 	if mode == "demolition": _dock.show_demolition()
-	elif bool(context.get("active", false)): _dock.show_placement(_selected_entry_id, String(context.get("reason", "")), int(context.get("rotation", 0)))
+	elif bool(context.get("active", false)): _dock.show_placement(_selected_entry_id, String(context.get("reason", "")), int(context.get("rotation", 0)), context.get("community_preview", {}))
 	elif mode != "radial": _dock.show_idle()
+
+func _town_hall_required() -> bool:
+	if GameState.map == null or not bool(GameState.map.rooted_town_rules):
+		return false
+	var road_network = PluginManager.get_plugin("RoadNetwork")
+	return road_network != null and int(road_network.get_town_hall_internal_id()) < 0
+
+func _ensure_forced_town_hall() -> void:
+	if not _town_hall_required() or _builder == null or _palette == null:
+		return
+	if _builder.is_placement_active() and _selected_entry_id == "building_town_hall":
+		return
+	if _radial and _radial.visible:
+		_radial.close_menu()
+	var result: Dictionary = _palette.request_select_entry("building_town_hall")
+	if not bool(result.get("accepted", false)):
+		return
+	_selected_entry_id = "building_town_hall"
+	if _builder.begin_placement_from_palette():
+		_dock.show_placement(_selected_entry_id, "Place this first to found your town")
 
 func _open_insights() -> void:
 	if _radial and _radial.visible: _radial.close_menu()

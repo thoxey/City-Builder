@@ -1,0 +1,31 @@
+{
+  "schema_version": 2,
+  "scenario_id": "first_town_connected",
+  "seed": 6006,
+  "description": "A resident, home, and workplace used to prove that roads gate town operation.",
+  "initial_state": {
+    "map": "empty",
+    "cash": 1000,
+    "demand": {
+      "residential": 25,
+      "industrial": 25,
+      "commercial": 25
+    },
+    "clock": {
+      "mode": "manual",
+      "start_hour": 6
+    },
+    "narrative": {
+      "mode": "presentation_disabled"
+    }
+  },
+  "fixture": {
+    "residents": [
+      {
+        "resident_id": 1,
+        "cohort_id": "general",
+        "home_anchor": {"x": -1, "z": 0}
+      }
+    ]
+  }
+}

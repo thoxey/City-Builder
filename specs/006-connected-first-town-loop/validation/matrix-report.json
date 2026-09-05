@@ -1,0 +1,1868 @@
+{
+  "adversaries": [
+    {
+      "final": {
+        "assignments": {
+          "activity": 0,
+          "work": 0
+        },
+        "community": {
+          "average_composite_happiness": 50.0,
+          "average_qualities": {
+            "beauty": 0.0,
+            "belonging": 0.0,
+            "liveability": 0.0,
+            "opportunity": 0.0
+          },
+          "migration": {
+            "arrivals": 0,
+            "departures": 0,
+            "last_day": 7,
+            "rejections": 0
+          }
+        },
+        "connectivity": {
+          "road_cell_count": 0
+        },
+        "demand": {
+          "commercial": {
+            "bank": 0,
+            "fulfilled": 0.0,
+            "reference_cost": 30,
+            "total": 25.0,
+            "unserved": 25.0
+          },
+          "industrial": {
+            "bank": 1,
+            "fulfilled": 0.0,
+            "reference_cost": 20,
+            "total": 25.0,
+            "unserved": 25.0
+          },
+          "residential": {
+            "bank": 5,
+            "fulfilled": 0.0,
+            "reference_cost": 5,
+            "total": 25.0,
+            "unserved": 25.0
+          }
+        },
+        "economy": {
+          "cash": 840,
+          "cumulative_income": 0,
+          "cumulative_spend": 160,
+          "industrial_output": 0,
+          "last_hourly_income": 0,
+          "spend_by_category": {
+            "nature": 160
+          }
+        },
+        "land": {
+          "extent_area": 25,
+          "free_count": 60,
+          "occupied_count": 4
+        },
+        "population": 0,
+        "spatial": {
+          "distinct_positive_residents": 0,
+          "exposure_count": 0,
+          "negative_exposure_count": 0,
+          "resident_serving_nature_count": 0
+        },
+        "tier_two_available": false
+      },
+      "passed": true,
+      "scenario_id": "first_town/nature_only_exploit"
+    }
+  ],
+  "failures": [],
+  "generated_at": "2026-09-05T20:06:21",
+  "pairs": [
+    {
+      "admissible": true,
+      "errors": [],
+      "expectations": [
+        {
+          "left": 1,
+          "passed": true,
+          "path": "spatial.negative_exposure_count",
+          "relation": "right_lt_left",
+          "right": 0
+        },
+        {
+          "left": 54.3013,
+          "passed": true,
+          "path": "community.average_qualities.beauty",
+          "relation": "right_gt_left",
+          "right": 63.0921
+        },
+        {
+          "left": 72.1869,
+          "passed": true,
+          "path": "community.average_qualities.liveability",
+          "relation": "right_gt_left",
+          "right": 76.783
+        },
+        {
+          "left": 0,
+          "passed": true,
+          "path": "assignments.work",
+          "relation": "right_gte_left",
+          "right": 0
+        },
+        {
+          "left": 5,
+          "passed": true,
+          "path": "connectivity.road_cell_count",
+          "relation": "right_gt_left",
+          "right": 7
+        },
+        {
+          "left": 1640,
+          "passed": true,
+          "path": "economy.cash",
+          "relation": "right_lt_left",
+          "right": 1636
+        }
+      ],
+      "left_hash": "0131100d5ee0b9aace08cd28ff706f5c11233dbd0056567a0eca3f0143619992",
+      "pair_id": "compact-spread",
+      "passed": true,
+      "right_hash": "c6f525977dc978f58dec5b6074f75f7c3a57511d5af06277541d95b6c18554c4"
+    },
+    {
+      "admissible": true,
+      "errors": [],
+      "expectations": [
+        {
+          "left": 50.0,
+          "passed": true,
+          "path": "community.average_qualities.beauty",
+          "relation": "right_gt_left",
+          "right": 61.7886
+        },
+        {
+          "left": 70.0,
+          "passed": true,
+          "path": "community.average_qualities.liveability",
+          "relation": "right_gt_left",
+          "right": 74.6324
+        },
+        {
+          "left": 0,
+          "passed": true,
+          "path": "spatial.resident_serving_nature_count",
+          "relation": "right_gt_left",
+          "right": 1
+        }
+      ],
+      "left_hash": "f8452663116fbfc2354d0328ea2c09d1dbeed37e0a05877c4858cd92d5088fa4",
+      "pair_id": "nature-served",
+      "passed": true,
+      "right_hash": "16353415573fc02bed5cfe2f690a63f48205ca795bf1f6e955776cd38bd0efbf"
+    },
+    {
+      "admissible": true,
+      "errors": [],
+      "expectations": [
+        {
+          "left": 1,
+          "passed": true,
+          "path": "spatial.distinct_positive_residents",
+          "relation": "right_gt_left",
+          "right": 2
+        }
+      ],
+      "left_hash": "572635a146d2edad3dd18b3a201cb56b7770f96f3a1e5f81261f79d6819b6eb0",
+      "pair_id": "amenity-distribution",
+      "passed": true,
+      "right_hash": "eef4b16c96e791678b735d4d7dffe78225062e31d7677ac62f4064fd99f91577"
+    },
+    {
+      "admissible": true,
+      "errors": [],
+      "expectations": [
+        {
+          "left": 79.6036,
+          "passed": true,
+          "path": "community.average_qualities.liveability",
+          "relation": "right_gt_left",
+          "right": 83.7195
+        },
+        {
+          "left": 72.7441,
+          "passed": true,
+          "path": "community.average_qualities.beauty",
+          "relation": "right_gte_left",
+          "right": 77.6114
+        },
+        {
+          "left": 1,
+          "passed": true,
+          "path": "spatial.distinct_positive_residents",
+          "relation": "right_gte_left",
+          "right": 1
+        }
+      ],
+      "left_hash": "39462563e310f31e8a2f31bb160c4a825c506f32fff0d213d47521fdbcded251",
+      "pair_id": "functional-mix",
+      "passed": true,
+      "right_hash": "d1811c566848389df99621b6356ba4e982c9f4585ca02c30abb3ed5815628b4c"
+    },
+    {
+      "admissible": true,
+      "errors": [],
+      "expectations": [
+        {
+          "left": 50.0,
+          "passed": true,
+          "path": "community.average_qualities.beauty",
+          "relation": "right_gt_left",
+          "right": 55.902
+        },
+        {
+          "left": 70.0,
+          "passed": true,
+          "path": "community.average_qualities.liveability",
+          "relation": "right_gt_left",
+          "right": 73.8197
+        },
+        {
+          "left": 1346,
+          "passed": true,
+          "path": "economy.cash",
+          "relation": "right_lt_left",
+          "right": 1306
+        },
+        {
+          "left": 0,
+          "passed": true,
+          "path": "economy.industrial_output",
+          "relation": "equal",
+          "right": 0
+        }
+      ],
+      "left_hash": "51a4b52ef342ffcbf124068b9c00e2983c932547257a21ce3cdaa9182b1cc01c",
+      "pair_id": "nature-integrated",
+      "passed": true,
+      "right_hash": "1a3651b61af560a83d16b188961aa0918db37facfdcc50d96f2ac4962e33be40"
+    },
+    {
+      "admissible": true,
+      "errors": [],
+      "expectations": [
+        {
+          "left": 1,
+          "passed": true,
+          "path": "assignments.work",
+          "relation": "right_lt_left",
+          "right": 0
+        },
+        {
+          "left": 1,
+          "passed": true,
+          "path": "economy.industrial_output",
+          "relation": "right_lt_left",
+          "right": 0
+        }
+      ],
+      "left_hash": "1fd6a722ecf4166843f3846dbd74445d0b8a7debbceac1426cf6a78c91382ec1",
+      "pair_id": "bridge-removal",
+      "passed": true,
+      "right_hash": "338fdb2e0953b5ba07623531a4e303b77c7364382b3558b66df441bf8ecb7cea"
+    },
+    {
+      "admissible": true,
+      "errors": [],
+      "expectations": [
+        {
+          "left": 50.0,
+          "passed": true,
+          "path": "community.average_qualities.beauty",
+          "relation": "equal",
+          "right": 50.0
+        },
+        {
+          "left": 70.0,
+          "passed": true,
+          "path": "community.average_qualities.liveability",
+          "relation": "equal",
+          "right": 70.0
+        },
+        {
+          "left": 0,
+          "passed": true,
+          "path": "connectivity.road_cell_count",
+          "relation": "right_gt_left",
+          "right": 5
+        },
+        {
+          "left": 1000,
+          "passed": true,
+          "path": "economy.cash",
+          "relation": "right_lt_left",
+          "right": 990
+        }
+      ],
+      "left_hash": "bb0389c084b28c0e5f6fcf19c543138e347d684d96c3d8f64fea74f46dc677ae",
+      "pair_id": "blank-sprawl",
+      "passed": true,
+      "right_hash": "0972934ba367c02b61b4862a3cdc75a9149a5038ebedc00d328104bd1538ed42"
+    },
+    {
+      "admissible": true,
+      "errors": [],
+      "expectations": [
+        {
+          "left": 1,
+          "passed": true,
+          "path": "spatial.exposure_count",
+          "relation": "right_gt_left",
+          "right": 3
+        },
+        {
+          "left": 50.0,
+          "passed": true,
+          "path": "community.average_qualities.beauty",
+          "relation": "right_gt_left",
+          "right": 50.5854
+        }
+      ],
+      "left_hash": "14bdb6b0a77a7d78923f33a840f2e18480333735f5f0b7e01a10ccf9a85f0772",
+      "pair_id": "radius-boundary",
+      "passed": true,
+      "right_hash": "4ecc4fd6a0e99448c566997f46fe8ef1a54eeac90e66c0f742ffb0055f30249e"
+    },
+    {
+      "admissible": true,
+      "errors": [],
+      "expectations": [
+        {
+          "left": 25,
+          "passed": true,
+          "path": "land.extent_area",
+          "relation": "equal",
+          "right": 25
+        },
+        {
+          "left": 0,
+          "passed": true,
+          "path": "spatial.distinct_positive_residents",
+          "relation": "right_gt_left",
+          "right": 1
+        }
+      ],
+      "left_hash": "143c53fb53ad7990356fc0c556b48583b774cede4f3c15c1f180f54b233b0153",
+      "pair_id": "same-bounding-box",
+      "passed": true,
+      "right_hash": "53753f7acb1c7663776a1c1dd2f745f019e80e663951a6b296dc6f32871354f2"
+    },
+    {
+      "admissible": true,
+      "errors": [],
+      "expectations": [
+        {
+          "left": "plays",
+          "passed": true,
+          "path": "programme.preferred_programme",
+          "relation": "not_equal",
+          "right": "rock_nights"
+        },
+        {
+          "left": 7.7084,
+          "passed": true,
+          "path": "programme.preference_margin",
+          "relation": "both_gt_zero",
+          "right": 0.0945
+        }
+      ],
+      "left_hash": "3cd3d8c1b65ddc2ce40d03ba6c685c8ef0243da4bbe6f0d8807a66fc6a7e96ea",
+      "pair_id": "cohort-programme",
+      "passed": true,
+      "right_hash": "a486380445b6c48e1df19bdabfae284a1241d098b0f6263a92145015237bf0f3"
+    }
+  ],
+  "scenario_traces": {
+    "first_town/amenity_clustered": {
+      "canonical_state_hash": "861942274e82bac94fc673050bcaadd729d565e408671af78ae028648403248d",
+      "final": {
+        "assignments": {
+          "activity": 0,
+          "work": 0
+        },
+        "community": {
+          "average_composite_happiness": 59.2079,
+          "average_qualities": {
+            "beauty": 55.6054,
+            "belonging": 50.0,
+            "liveability": 73.1586,
+            "opportunity": 50.0
+          },
+          "migration": {
+            "arrivals": 0,
+            "departures": 0,
+            "last_day": 7,
+            "rejections": 0
+          }
+        },
+        "connectivity": {
+          "road_cell_count": 0
+        },
+        "demand": {
+          "commercial": {
+            "bank": 16,
+            "fulfilled": 0.0,
+            "reference_cost": 30,
+            "total": 500.0,
+            "unserved": 500.0
+          },
+          "industrial": {
+            "bank": 25,
+            "fulfilled": 0.0,
+            "reference_cost": 20,
+            "total": 500.0,
+            "unserved": 500.0
+          },
+          "residential": {
+            "bank": 107,
+            "fulfilled": 10.0,
+            "reference_cost": 5,
+            "total": 549.32,
+            "unserved": 539.32
+          }
+        },
+        "economy": {
+          "cash": 920,
+          "cumulative_income": 0,
+          "cumulative_spend": 80,
+          "industrial_output": 0,
+          "last_hourly_income": 0,
+          "spend_by_category": {
+            "nature": 80
+          }
+        },
+        "land": {
+          "extent_area": 10,
+          "free_count": 60,
+          "occupied_count": 4
+        },
+        "population": 2,
+        "spatial": {
+          "distinct_positive_residents": 1,
+          "exposure_count": 6,
+          "negative_exposure_count": 0,
+          "resident_serving_nature_count": 2
+        },
+        "tier_two_available": true
+      },
+      "scenario_id": "first_town/amenity_clustered",
+      "state_hash": "572635a146d2edad3dd18b3a201cb56b7770f96f3a1e5f81261f79d6819b6eb0",
+      "success": true
+    },
+    "first_town/amenity_distributed": {
+      "canonical_state_hash": "702e7caf13ddf9dede7c69ce839d341d1d45ddc464cb3b67675d9341d3f82d29",
+      "final": {
+        "assignments": {
+          "activity": 0,
+          "work": 0
+        },
+        "community": {
+          "average_composite_happiness": 59.1756,
+          "average_qualities": {
+            "beauty": 56.9556,
+            "belonging": 50.0,
+            "liveability": 74.1164,
+            "opportunity": 50.0
+          },
+          "migration": {
+            "arrivals": 0,
+            "departures": 0,
+            "last_day": 7,
+            "rejections": 0
+          }
+        },
+        "connectivity": {
+          "road_cell_count": 0
+        },
+        "demand": {
+          "commercial": {
+            "bank": 16,
+            "fulfilled": 0.0,
+            "reference_cost": 30,
+            "total": 500.0,
+            "unserved": 500.0
+          },
+          "industrial": {
+            "bank": 25,
+            "fulfilled": 0.0,
+            "reference_cost": 20,
+            "total": 500.0,
+            "unserved": 500.0
+          },
+          "residential": {
+            "bank": 107,
+            "fulfilled": 10.0,
+            "reference_cost": 5,
+            "total": 549.309,
+            "unserved": 539.309
+          }
+        },
+        "economy": {
+          "cash": 920,
+          "cumulative_income": 0,
+          "cumulative_spend": 80,
+          "industrial_output": 0,
+          "last_hourly_income": 0,
+          "spend_by_category": {
+            "nature": 80
+          }
+        },
+        "land": {
+          "extent_area": 5,
+          "free_count": 60,
+          "occupied_count": 4
+        },
+        "population": 2,
+        "spatial": {
+          "distinct_positive_residents": 2,
+          "exposure_count": 6,
+          "negative_exposure_count": 0,
+          "resident_serving_nature_count": 2
+        },
+        "tier_two_available": true
+      },
+      "scenario_id": "first_town/amenity_distributed",
+      "state_hash": "eef4b16c96e791678b735d4d7dffe78225062e31d7677ac62f4064fd99f91577",
+      "success": true
+    },
+    "first_town/blank_compact": {
+      "canonical_state_hash": "e9ec0fac5c2c6c40a58a1939d05db50a8fd3ace9bc2dfa5d8300f6b547c7b876",
+      "final": {
+        "assignments": {
+          "activity": 0,
+          "work": 0
+        },
+        "community": {
+          "average_composite_happiness": 59.9396,
+          "average_qualities": {
+            "beauty": 50.0,
+            "belonging": 50.0,
+            "liveability": 70.0,
+            "opportunity": 50.0
+          },
+          "migration": {
+            "arrivals": 0,
+            "departures": 0,
+            "last_day": 7,
+            "rejections": 0
+          }
+        },
+        "connectivity": {
+          "road_cell_count": 0
+        },
+        "demand": {
+          "commercial": {
+            "bank": 16,
+            "fulfilled": 0.0,
+            "reference_cost": 30,
+            "total": 500.0,
+            "unserved": 500.0
+          },
+          "industrial": {
+            "bank": 25,
+            "fulfilled": 0.0,
+            "reference_cost": 20,
+            "total": 500.0,
+            "unserved": 500.0
+          },
+          "residential": {
+            "bank": 108,
+            "fulfilled": 5.0,
+            "reference_cost": 5,
+            "total": 549.931,
+            "unserved": 544.931
+          }
+        },
+        "economy": {
+          "cash": 1000,
+          "cumulative_income": 0,
+          "cumulative_spend": 0,
+          "industrial_output": 0,
+          "last_hourly_income": 0,
+          "spend_by_category": {
+
+          }
+        },
+        "land": {
+          "extent_area": 1,
+          "free_count": 63,
+          "occupied_count": 1
+        },
+        "population": 1,
+        "spatial": {
+          "distinct_positive_residents": 0,
+          "exposure_count": 1,
+          "negative_exposure_count": 0,
+          "resident_serving_nature_count": 0
+        },
+        "tier_two_available": true
+      },
+      "scenario_id": "first_town/blank_compact",
+      "state_hash": "bb0389c084b28c0e5f6fcf19c543138e347d684d96c3d8f64fea74f46dc677ae",
+      "success": true
+    },
+    "first_town/blank_sprawl": {
+      "canonical_state_hash": "f11ff5e8fd6a462667205bfd74e9e202548b7a2b02871476ea4836630282e61d",
+      "final": {
+        "assignments": {
+          "activity": 0,
+          "work": 0
+        },
+        "community": {
+          "average_composite_happiness": 59.9396,
+          "average_qualities": {
+            "beauty": 50.0,
+            "belonging": 50.0,
+            "liveability": 70.0,
+            "opportunity": 50.0
+          },
+          "migration": {
+            "arrivals": 0,
+            "departures": 0,
+            "last_day": 7,
+            "rejections": 0
+          }
+        },
+        "connectivity": {
+          "road_cell_count": 5
+        },
+        "demand": {
+          "commercial": {
+            "bank": 16,
+            "fulfilled": 0.0,
+            "reference_cost": 30,
+            "total": 500.0,
+            "unserved": 500.0
+          },
+          "industrial": {
+            "bank": 25,
+            "fulfilled": 0.0,
+            "reference_cost": 20,
+            "total": 500.0,
+            "unserved": 500.0
+          },
+          "residential": {
+            "bank": 108,
+            "fulfilled": 5.0,
+            "reference_cost": 5,
+            "total": 549.931,
+            "unserved": 544.931
+          }
+        },
+        "economy": {
+          "cash": 990,
+          "cumulative_income": 0,
+          "cumulative_spend": 10,
+          "industrial_output": 0,
+          "last_hourly_income": 0,
+          "spend_by_category": {
+            "road": 10
+          }
+        },
+        "land": {
+          "extent_area": 6,
+          "free_count": 58,
+          "occupied_count": 6
+        },
+        "population": 1,
+        "spatial": {
+          "distinct_positive_residents": 0,
+          "exposure_count": 1,
+          "negative_exposure_count": 0,
+          "resident_serving_nature_count": 0
+        },
+        "tier_two_available": true
+      },
+      "scenario_id": "first_town/blank_sprawl",
+      "state_hash": "0972934ba367c02b61b4862a3cdc75a9149a5038ebedc00d328104bd1538ed42",
+      "success": true
+    },
+    "first_town/bridge_connected": {
+      "canonical_state_hash": "fdf528ce98cb4e4f689e0b7377c9c52339d4f929f999eddbe5179ec838156a16",
+      "final": {
+        "assignments": {
+          "activity": 0,
+          "work": 1
+        },
+        "community": {
+          "average_composite_happiness": 52.2551,
+          "average_qualities": {
+            "beauty": 50.0,
+            "belonging": 50.0,
+            "liveability": 53.8,
+            "opportunity": 51.5
+          },
+          "migration": {
+            "arrivals": 0,
+            "departures": 0,
+            "last_day": -1,
+            "rejections": 0
+          }
+        },
+        "connectivity": {
+          "road_cell_count": 2
+        },
+        "demand": {
+          "commercial": {
+            "bank": 16,
+            "fulfilled": 0.0,
+            "reference_cost": 30,
+            "total": 500.0,
+            "unserved": 500.0
+          },
+          "industrial": {
+            "bank": 24,
+            "fulfilled": 5.0,
+            "reference_cost": 20,
+            "total": 500.0,
+            "unserved": 495.0
+          },
+          "residential": {
+            "bank": 99,
+            "fulfilled": 5.0,
+            "reference_cost": 5,
+            "total": 500.515,
+            "unserved": 495.515
+          }
+        },
+        "economy": {
+          "cash": 1001,
+          "cumulative_income": 5,
+          "cumulative_spend": 4,
+          "industrial_output": 1,
+          "last_hourly_income": 5,
+          "spend_by_category": {
+            "road": 4
+          }
+        },
+        "land": {
+          "extent_area": 4,
+          "free_count": 60,
+          "occupied_count": 4
+        },
+        "population": 1,
+        "spatial": {
+          "distinct_positive_residents": 0,
+          "exposure_count": 2,
+          "negative_exposure_count": 0,
+          "resident_serving_nature_count": 0
+        },
+        "tier_two_available": true
+      },
+      "scenario_id": "first_town/bridge_connected",
+      "state_hash": "1fd6a722ecf4166843f3846dbd74445d0b8a7debbceac1426cf6a78c91382ec1",
+      "success": true
+    },
+    "first_town/bridge_removed": {
+      "canonical_state_hash": "df5bca13cf5d0d832d69c417552348f842a622950fcdba3a7b3e28d50bd61d45",
+      "final": {
+        "assignments": {
+          "activity": 0,
+          "work": 0
+        },
+        "community": {
+          "average_composite_happiness": 51.6335,
+          "average_qualities": {
+            "beauty": 50.0,
+            "belonging": 50.0,
+            "liveability": 53.8,
+            "opportunity": 50.0
+          },
+          "migration": {
+            "arrivals": 0,
+            "departures": 0,
+            "last_day": -1,
+            "rejections": 0
+          }
+        },
+        "connectivity": {
+          "road_cell_count": 1
+        },
+        "demand": {
+          "commercial": {
+            "bank": 16,
+            "fulfilled": 0.0,
+            "reference_cost": 30,
+            "total": 500.0,
+            "unserved": 500.0
+          },
+          "industrial": {
+            "bank": 24,
+            "fulfilled": 5.0,
+            "reference_cost": 20,
+            "total": 500.0,
+            "unserved": 495.0
+          },
+          "residential": {
+            "bank": 99,
+            "fulfilled": 5.0,
+            "reference_cost": 5,
+            "total": 500.512,
+            "unserved": 495.512
+          }
+        },
+        "economy": {
+          "cash": 998,
+          "cumulative_income": 0,
+          "cumulative_spend": 2,
+          "industrial_output": 0,
+          "last_hourly_income": 0,
+          "spend_by_category": {
+            "road": 2
+          }
+        },
+        "land": {
+          "extent_area": 4,
+          "free_count": 61,
+          "occupied_count": 3
+        },
+        "population": 1,
+        "spatial": {
+          "distinct_positive_residents": 0,
+          "exposure_count": 1,
+          "negative_exposure_count": 0,
+          "resident_serving_nature_count": 0
+        },
+        "tier_two_available": true
+      },
+      "scenario_id": "first_town/bridge_removed",
+      "state_hash": "338fdb2e0953b5ba07623531a4e303b77c7364382b3558b66df441bf8ecb7cea",
+      "success": true
+    },
+    "first_town/built_only": {
+      "canonical_state_hash": "f2aa3408c356b97e19bd6b3fba008e844b94646047747c50e3a5822ad050aff5",
+      "final": {
+        "assignments": {
+          "activity": 0,
+          "work": 0
+        },
+        "community": {
+          "average_composite_happiness": 54.2506,
+          "average_qualities": {
+            "beauty": 50.0,
+            "belonging": 50.0,
+            "liveability": 70.0,
+            "opportunity": 52.6986
+          },
+          "migration": {
+            "arrivals": 0,
+            "departures": 0,
+            "last_day": 7,
+            "rejections": 0
+          }
+        },
+        "connectivity": {
+          "road_cell_count": 2
+        },
+        "demand": {
+          "commercial": {
+            "bank": 16,
+            "fulfilled": 0.0,
+            "reference_cost": 30,
+            "total": 500.0,
+            "unserved": 500.0
+          },
+          "industrial": {
+            "bank": 24,
+            "fulfilled": 5.0,
+            "reference_cost": 20,
+            "total": 500.0,
+            "unserved": 495.0
+          },
+          "residential": {
+            "bank": 108,
+            "fulfilled": 5.0,
+            "reference_cost": 5,
+            "total": 545.613,
+            "unserved": 540.613
+          }
+        },
+        "economy": {
+          "cash": 1346,
+          "cumulative_income": 350,
+          "cumulative_spend": 4,
+          "industrial_output": 0,
+          "last_hourly_income": 0,
+          "spend_by_category": {
+            "road": 4
+          }
+        },
+        "land": {
+          "extent_area": 4,
+          "free_count": 60,
+          "occupied_count": 4
+        },
+        "population": 1,
+        "spatial": {
+          "distinct_positive_residents": 0,
+          "exposure_count": 1,
+          "negative_exposure_count": 0,
+          "resident_serving_nature_count": 0
+        },
+        "tier_two_available": true
+      },
+      "scenario_id": "first_town/built_only",
+      "state_hash": "51a4b52ef342ffcbf124068b9c00e2983c932547257a21ce3cdaa9182b1cc01c",
+      "success": true
+    },
+    "first_town/cohort_freedom": {
+      "final": {
+        "programme": {
+          "preference_margin": 0.0945,
+          "preferred_programme": "rock_nights",
+          "scores": {
+            "community_use": 4.2568,
+            "plays": 4.9157,
+            "rock_nights": 5.0102
+          }
+        }
+      },
+      "scenario_id": "first_town/cohort_freedom",
+      "state_hash": "a486380445b6c48e1df19bdabfae284a1241d098b0f6263a92145015237bf0f3",
+      "success": true
+    },
+    "first_town/cohort_identity": {
+      "final": {
+        "programme": {
+          "preference_margin": 7.7084,
+          "preferred_programme": "plays",
+          "scores": {
+            "community_use": 4.5814,
+            "plays": 12.2898,
+            "rock_nights": -3.6854
+          }
+        }
+      },
+      "scenario_id": "first_town/cohort_identity",
+      "state_hash": "3cd3d8c1b65ddc2ce40d03ba6c685c8ef0243da4bbe6f0d8807a66fc6a7e96ea",
+      "success": true
+    },
+    "first_town/compact": {
+      "canonical_state_hash": "b082793608279f399c58d436839a1c6d4bc0c475adad5674e42bb6c39bdf9d3c",
+      "final": {
+        "assignments": {
+          "activity": 2,
+          "work": 0
+        },
+        "community": {
+          "average_composite_happiness": 57.7517,
+          "average_qualities": {
+            "beauty": 54.3013,
+            "belonging": 52.8253,
+            "liveability": 72.1869,
+            "opportunity": 52.6986
+          },
+          "migration": {
+            "arrivals": 0,
+            "departures": 0,
+            "last_day": 7,
+            "rejections": 0
+          }
+        },
+        "connectivity": {
+          "road_cell_count": 5
+        },
+        "demand": {
+          "commercial": {
+            "bank": 16,
+            "fulfilled": 0.0,
+            "reference_cost": 30,
+            "total": 500.0,
+            "unserved": 500.0
+          },
+          "industrial": {
+            "bank": 24,
+            "fulfilled": 5.0,
+            "reference_cost": 20,
+            "total": 500.0,
+            "unserved": 495.0
+          },
+          "residential": {
+            "bank": 107,
+            "fulfilled": 10.0,
+            "reference_cost": 5,
+            "total": 548.227,
+            "unserved": 538.227
+          }
+        },
+        "economy": {
+          "cash": 1640,
+          "cumulative_income": 700,
+          "cumulative_spend": 60,
+          "industrial_output": 0,
+          "last_hourly_income": 0,
+          "spend_by_category": {
+            "nature": 50,
+            "road": 10
+          }
+        },
+        "land": {
+          "extent_area": 12,
+          "free_count": 55,
+          "occupied_count": 9
+        },
+        "population": 2,
+        "spatial": {
+          "distinct_positive_residents": 1,
+          "exposure_count": 8,
+          "negative_exposure_count": 1,
+          "resident_serving_nature_count": 1
+        },
+        "tier_two_available": true
+      },
+      "scenario_id": "first_town/compact",
+      "state_hash": "0131100d5ee0b9aace08cd28ff706f5c11233dbd0056567a0eca3f0143619992",
+      "success": true
+    },
+    "first_town/functional_mix": {
+      "canonical_state_hash": "67f8c0c4d6098045ee9171347e5aad93eaf94d6336cfcc41dd8eee4cb94d811b",
+      "final": {
+        "assignments": {
+          "activity": 0,
+          "work": 0
+        },
+        "community": {
+          "average_composite_happiness": 65.561,
+          "average_qualities": {
+            "beauty": 77.6114,
+            "belonging": 50.0,
+            "liveability": 83.7195,
+            "opportunity": 50.0
+          },
+          "migration": {
+            "arrivals": 0,
+            "departures": 0,
+            "last_day": 7,
+            "rejections": 0
+          }
+        },
+        "connectivity": {
+          "road_cell_count": 0
+        },
+        "demand": {
+          "commercial": {
+            "bank": 16,
+            "fulfilled": 0.0,
+            "reference_cost": 30,
+            "total": 500.0,
+            "unserved": 500.0
+          },
+          "industrial": {
+            "bank": 25,
+            "fulfilled": 0.0,
+            "reference_cost": 20,
+            "total": 500.0,
+            "unserved": 500.0
+          },
+          "residential": {
+            "bank": 109,
+            "fulfilled": 5.0,
+            "reference_cost": 5,
+            "total": 554.395,
+            "unserved": 549.395
+          }
+        },
+        "economy": {
+          "cash": 820,
+          "cumulative_income": 0,
+          "cumulative_spend": 180,
+          "industrial_output": 0,
+          "last_hourly_income": 0,
+          "spend_by_category": {
+            "nature": 180
+          }
+        },
+        "land": {
+          "extent_area": 9,
+          "free_count": 59,
+          "occupied_count": 5
+        },
+        "population": 1,
+        "spatial": {
+          "distinct_positive_residents": 1,
+          "exposure_count": 11,
+          "negative_exposure_count": 0,
+          "resident_serving_nature_count": 4
+        },
+        "tier_two_available": true
+      },
+      "scenario_id": "first_town/functional_mix",
+      "state_hash": "d1811c566848389df99621b6356ba4e982c9f4585ca02c30abb3ed5815628b4c",
+      "success": true
+    },
+    "first_town/nature_integrated": {
+      "canonical_state_hash": "7752d6a5203a44bf70c5055d375f34f2c5d2087048c8ab861e16e3bf0c5e14f0",
+      "final": {
+        "assignments": {
+          "activity": 0,
+          "work": 0
+        },
+        "community": {
+          "average_composite_happiness": 55.7643,
+          "average_qualities": {
+            "beauty": 55.902,
+            "belonging": 50.0,
+            "liveability": 73.8197,
+            "opportunity": 52.6986
+          },
+          "migration": {
+            "arrivals": 0,
+            "departures": 0,
+            "last_day": 7,
+            "rejections": 0
+          }
+        },
+        "connectivity": {
+          "road_cell_count": 2
+        },
+        "demand": {
+          "commercial": {
+            "bank": 16,
+            "fulfilled": 0.0,
+            "reference_cost": 30,
+            "total": 500.0,
+            "unserved": 500.0
+          },
+          "industrial": {
+            "bank": 24,
+            "fulfilled": 5.0,
+            "reference_cost": 20,
+            "total": 500.0,
+            "unserved": 495.0
+          },
+          "residential": {
+            "bank": 108,
+            "fulfilled": 5.0,
+            "reference_cost": 5,
+            "total": 547.637,
+            "unserved": 542.637
+          }
+        },
+        "economy": {
+          "cash": 1306,
+          "cumulative_income": 350,
+          "cumulative_spend": 44,
+          "industrial_output": 0,
+          "last_hourly_income": 0,
+          "spend_by_category": {
+            "nature": 40,
+            "road": 4
+          }
+        },
+        "land": {
+          "extent_area": 8,
+          "free_count": 59,
+          "occupied_count": 5
+        },
+        "population": 1,
+        "spatial": {
+          "distinct_positive_residents": 1,
+          "exposure_count": 3,
+          "negative_exposure_count": 0,
+          "resident_serving_nature_count": 1
+        },
+        "tier_two_available": true
+      },
+      "scenario_id": "first_town/nature_integrated",
+      "state_hash": "1a3651b61af560a83d16b188961aa0918db37facfdcc50d96f2ac4962e33be40",
+      "success": true
+    },
+    "first_town/nature_only_exploit": {
+      "canonical_state_hash": "b0b097195e2eeb97bdb225d0ace2855ed42cb66e0122fe26a7d14b179c91b675",
+      "final": {
+        "assignments": {
+          "activity": 0,
+          "work": 0
+        },
+        "community": {
+          "average_composite_happiness": 50.0,
+          "average_qualities": {
+            "beauty": 0.0,
+            "belonging": 0.0,
+            "liveability": 0.0,
+            "opportunity": 0.0
+          },
+          "migration": {
+            "arrivals": 0,
+            "departures": 0,
+            "last_day": 7,
+            "rejections": 0
+          }
+        },
+        "connectivity": {
+          "road_cell_count": 0
+        },
+        "demand": {
+          "commercial": {
+            "bank": 0,
+            "fulfilled": 0.0,
+            "reference_cost": 30,
+            "total": 25.0,
+            "unserved": 25.0
+          },
+          "industrial": {
+            "bank": 1,
+            "fulfilled": 0.0,
+            "reference_cost": 20,
+            "total": 25.0,
+            "unserved": 25.0
+          },
+          "residential": {
+            "bank": 5,
+            "fulfilled": 0.0,
+            "reference_cost": 5,
+            "total": 25.0,
+            "unserved": 25.0
+          }
+        },
+        "economy": {
+          "cash": 840,
+          "cumulative_income": 0,
+          "cumulative_spend": 160,
+          "industrial_output": 0,
+          "last_hourly_income": 0,
+          "spend_by_category": {
+            "nature": 160
+          }
+        },
+        "land": {
+          "extent_area": 25,
+          "free_count": 60,
+          "occupied_count": 4
+        },
+        "population": 0,
+        "spatial": {
+          "distinct_positive_residents": 0,
+          "exposure_count": 0,
+          "negative_exposure_count": 0,
+          "resident_serving_nature_count": 0
+        },
+        "tier_two_available": false
+      },
+      "scenario_id": "first_town/nature_only_exploit",
+      "state_hash": "94f1d6f06ea0ff0ba79747ff0c8c6fd37587ec81b6cd1eec36040c533291cbf9",
+      "success": true
+    },
+    "first_town/nature_served": {
+      "canonical_state_hash": "33ea93490d579eb7e8eead64e3984b00030e512291269d682060a2887b876107",
+      "final": {
+        "assignments": {
+          "activity": 0,
+          "work": 0
+        },
+        "community": {
+          "average_composite_happiness": 65.0342,
+          "average_qualities": {
+            "beauty": 61.7886,
+            "belonging": 50.0,
+            "liveability": 74.6324,
+            "opportunity": 50.0
+          },
+          "migration": {
+            "arrivals": 0,
+            "departures": 0,
+            "last_day": 7,
+            "rejections": 0
+          }
+        },
+        "connectivity": {
+          "road_cell_count": 0
+        },
+        "demand": {
+          "commercial": {
+            "bank": 16,
+            "fulfilled": 0.0,
+            "reference_cost": 30,
+            "total": 500.0,
+            "unserved": 500.0
+          },
+          "industrial": {
+            "bank": 25,
+            "fulfilled": 0.0,
+            "reference_cost": 20,
+            "total": 500.0,
+            "unserved": 500.0
+          },
+          "residential": {
+            "bank": 109,
+            "fulfilled": 5.0,
+            "reference_cost": 5,
+            "total": 553.938,
+            "unserved": 548.938
+          }
+        },
+        "economy": {
+          "cash": 950,
+          "cumulative_income": 0,
+          "cumulative_spend": 50,
+          "industrial_output": 0,
+          "last_hourly_income": 0,
+          "spend_by_category": {
+            "nature": 50
+          }
+        },
+        "land": {
+          "extent_area": 2,
+          "free_count": 62,
+          "occupied_count": 2
+        },
+        "population": 1,
+        "spatial": {
+          "distinct_positive_residents": 1,
+          "exposure_count": 4,
+          "negative_exposure_count": 0,
+          "resident_serving_nature_count": 1
+        },
+        "tier_two_available": true
+      },
+      "scenario_id": "first_town/nature_served",
+      "state_hash": "16353415573fc02bed5cfe2f690a63f48205ca795bf1f6e955776cd38bd0efbf",
+      "success": true
+    },
+    "first_town/nature_unserved": {
+      "canonical_state_hash": "dc3cb48b99990dae17f0b81cea543e07d3dbffb15075f77314d179c9063566e5",
+      "final": {
+        "assignments": {
+          "activity": 0,
+          "work": 0
+        },
+        "community": {
+          "average_composite_happiness": 58.1984,
+          "average_qualities": {
+            "beauty": 50.0,
+            "belonging": 50.0,
+            "liveability": 70.0,
+            "opportunity": 50.0
+          },
+          "migration": {
+            "arrivals": 0,
+            "departures": 0,
+            "last_day": 7,
+            "rejections": 0
+          }
+        },
+        "connectivity": {
+          "road_cell_count": 0
+        },
+        "demand": {
+          "commercial": {
+            "bank": 16,
+            "fulfilled": 0.0,
+            "reference_cost": 30,
+            "total": 500.0,
+            "unserved": 500.0
+          },
+          "industrial": {
+            "bank": 25,
+            "fulfilled": 0.0,
+            "reference_cost": 20,
+            "total": 500.0,
+            "unserved": 500.0
+          },
+          "residential": {
+            "bank": 108,
+            "fulfilled": 5.0,
+            "reference_cost": 5,
+            "total": 548.522,
+            "unserved": 543.522
+          }
+        },
+        "economy": {
+          "cash": 950,
+          "cumulative_income": 0,
+          "cumulative_spend": 50,
+          "industrial_output": 0,
+          "last_hourly_income": 0,
+          "spend_by_category": {
+            "nature": 50
+          }
+        },
+        "land": {
+          "extent_area": 16,
+          "free_count": 62,
+          "occupied_count": 2
+        },
+        "population": 1,
+        "spatial": {
+          "distinct_positive_residents": 0,
+          "exposure_count": 1,
+          "negative_exposure_count": 0,
+          "resident_serving_nature_count": 0
+        },
+        "tier_two_available": true
+      },
+      "scenario_id": "first_town/nature_unserved",
+      "state_hash": "f8452663116fbfc2354d0328ea2c09d1dbeed37e0a05877c4858cd92d5088fa4",
+      "success": true
+    },
+    "first_town/radius_inside": {
+      "canonical_state_hash": "577b44f4927eec3eb1fad257cdc71aacbcb6ea955bd64503db2bffa0825496ec",
+      "final": {
+        "assignments": {
+          "activity": 0,
+          "work": 0
+        },
+        "community": {
+          "average_composite_happiness": 50.7406,
+          "average_qualities": {
+            "beauty": 50.5854,
+            "belonging": 50.0,
+            "liveability": 52.5781,
+            "opportunity": 50.0
+          },
+          "migration": {
+            "arrivals": 0,
+            "departures": 0,
+            "last_day": -1,
+            "rejections": 0
+          }
+        },
+        "connectivity": {
+          "road_cell_count": 0
+        },
+        "demand": {
+          "commercial": {
+            "bank": 16,
+            "fulfilled": 0.0,
+            "reference_cost": 30,
+            "total": 500.0,
+            "unserved": 500.0
+          },
+          "industrial": {
+            "bank": 25,
+            "fulfilled": 0.0,
+            "reference_cost": 20,
+            "total": 500.0,
+            "unserved": 500.0
+          },
+          "residential": {
+            "bank": 99,
+            "fulfilled": 5.0,
+            "reference_cost": 5,
+            "total": 500.254,
+            "unserved": 495.254
+          }
+        },
+        "economy": {
+          "cash": 960,
+          "cumulative_income": 0,
+          "cumulative_spend": 40,
+          "industrial_output": 0,
+          "last_hourly_income": 0,
+          "spend_by_category": {
+            "nature": 40
+          }
+        },
+        "land": {
+          "extent_area": 4,
+          "free_count": 62,
+          "occupied_count": 2
+        },
+        "population": 1,
+        "spatial": {
+          "distinct_positive_residents": 1,
+          "exposure_count": 3,
+          "negative_exposure_count": 0,
+          "resident_serving_nature_count": 1
+        },
+        "tier_two_available": true
+      },
+      "scenario_id": "first_town/radius_inside",
+      "state_hash": "4ecc4fd6a0e99448c566997f46fe8ef1a54eeac90e66c0f742ffb0055f30249e",
+      "success": true
+    },
+    "first_town/radius_outside": {
+      "canonical_state_hash": "16d68aad564cc0dd48af893d8b654a32e8c0b92024d9020b96511bfccb6b5f5a",
+      "final": {
+        "assignments": {
+          "activity": 0,
+          "work": 0
+        },
+        "community": {
+          "average_composite_happiness": 50.4486,
+          "average_qualities": {
+            "beauty": 50.0,
+            "belonging": 50.0,
+            "liveability": 52.0,
+            "opportunity": 50.0
+          },
+          "migration": {
+            "arrivals": 0,
+            "departures": 0,
+            "last_day": -1,
+            "rejections": 0
+          }
+        },
+        "connectivity": {
+          "road_cell_count": 0
+        },
+        "demand": {
+          "commercial": {
+            "bank": 16,
+            "fulfilled": 0.0,
+            "reference_cost": 30,
+            "total": 500.0,
+            "unserved": 500.0
+          },
+          "industrial": {
+            "bank": 25,
+            "fulfilled": 0.0,
+            "reference_cost": 20,
+            "total": 500.0,
+            "unserved": 500.0
+          },
+          "residential": {
+            "bank": 99,
+            "fulfilled": 5.0,
+            "reference_cost": 5,
+            "total": 500.252,
+            "unserved": 495.252
+          }
+        },
+        "economy": {
+          "cash": 960,
+          "cumulative_income": 0,
+          "cumulative_spend": 40,
+          "industrial_output": 0,
+          "last_hourly_income": 0,
+          "spend_by_category": {
+            "nature": 40
+          }
+        },
+        "land": {
+          "extent_area": 6,
+          "free_count": 62,
+          "occupied_count": 2
+        },
+        "population": 1,
+        "spatial": {
+          "distinct_positive_residents": 0,
+          "exposure_count": 1,
+          "negative_exposure_count": 0,
+          "resident_serving_nature_count": 0
+        },
+        "tier_two_available": true
+      },
+      "scenario_id": "first_town/radius_outside",
+      "state_hash": "14bdb6b0a77a7d78923f33a840f2e18480333735f5f0b7e01a10ccf9a85f0772",
+      "success": true
+    },
+    "first_town/repeated_spam": {
+      "canonical_state_hash": "22e8ec37db730e37c2005a8f14c2fcb5a91cc6ba16a3d89f0023c3527e1d1e18",
+      "final": {
+        "assignments": {
+          "activity": 0,
+          "work": 0
+        },
+        "community": {
+          "average_composite_happiness": 63.3319,
+          "average_qualities": {
+            "beauty": 72.7441,
+            "belonging": 50.0,
+            "liveability": 79.6036,
+            "opportunity": 50.0
+          },
+          "migration": {
+            "arrivals": 0,
+            "departures": 0,
+            "last_day": 7,
+            "rejections": 0
+          }
+        },
+        "connectivity": {
+          "road_cell_count": 0
+        },
+        "demand": {
+          "commercial": {
+            "bank": 16,
+            "fulfilled": 0.0,
+            "reference_cost": 30,
+            "total": 500.0,
+            "unserved": 500.0
+          },
+          "industrial": {
+            "bank": 25,
+            "fulfilled": 0.0,
+            "reference_cost": 20,
+            "total": 500.0,
+            "unserved": 500.0
+          },
+          "residential": {
+            "bank": 109,
+            "fulfilled": 5.0,
+            "reference_cost": 5,
+            "total": 552.636,
+            "unserved": 547.636
+          }
+        },
+        "economy": {
+          "cash": 800,
+          "cumulative_income": 0,
+          "cumulative_spend": 200,
+          "industrial_output": 0,
+          "last_hourly_income": 0,
+          "spend_by_category": {
+            "nature": 200
+          }
+        },
+        "land": {
+          "extent_area": 9,
+          "free_count": 59,
+          "occupied_count": 5
+        },
+        "population": 1,
+        "spatial": {
+          "distinct_positive_residents": 1,
+          "exposure_count": 12,
+          "negative_exposure_count": 0,
+          "resident_serving_nature_count": 4
+        },
+        "tier_two_available": true
+      },
+      "scenario_id": "first_town/repeated_spam",
+      "state_hash": "39462563e310f31e8a2f31bb160c4a825c506f32fff0d213d47521fdbcded251",
+      "success": true
+    },
+    "first_town/same_box_a": {
+      "canonical_state_hash": "273c3483693ccfc5a4719152646f38a09a060cc2329f3181c3a818735dc10459",
+      "final": {
+        "assignments": {
+          "activity": 0,
+          "work": 0
+        },
+        "community": {
+          "average_composite_happiness": 55.7908,
+          "average_qualities": {
+            "beauty": 52.1819,
+            "belonging": 50.0,
+            "liveability": 72.1885,
+            "opportunity": 50.0
+          },
+          "migration": {
+            "arrivals": 0,
+            "departures": 0,
+            "last_day": 7,
+            "rejections": 0
+          }
+        },
+        "connectivity": {
+          "road_cell_count": 0
+        },
+        "demand": {
+          "commercial": {
+            "bank": 16,
+            "fulfilled": 0.0,
+            "reference_cost": 30,
+            "total": 500.0,
+            "unserved": 500.0
+          },
+          "industrial": {
+            "bank": 25,
+            "fulfilled": 0.0,
+            "reference_cost": 20,
+            "total": 500.0,
+            "unserved": 500.0
+          },
+          "residential": {
+            "bank": 107,
+            "fulfilled": 10.0,
+            "reference_cost": 5,
+            "total": 546.614,
+            "unserved": 536.614
+          }
+        },
+        "economy": {
+          "cash": 920,
+          "cumulative_income": 0,
+          "cumulative_spend": 80,
+          "industrial_output": 0,
+          "last_hourly_income": 0,
+          "spend_by_category": {
+            "nature": 80
+          }
+        },
+        "land": {
+          "extent_area": 25,
+          "free_count": 60,
+          "occupied_count": 4
+        },
+        "population": 2,
+        "spatial": {
+          "distinct_positive_residents": 1,
+          "exposure_count": 4,
+          "negative_exposure_count": 0,
+          "resident_serving_nature_count": 1
+        },
+        "tier_two_available": true
+      },
+      "scenario_id": "first_town/same_box_a",
+      "state_hash": "53753f7acb1c7663776a1c1dd2f745f019e80e663951a6b296dc6f32871354f2",
+      "success": true
+    },
+    "first_town/same_box_b": {
+      "canonical_state_hash": "32505ad154e9f00aefa3c569ab3ded72c6984395a17e97920492146e06c267f1",
+      "final": {
+        "assignments": {
+          "activity": 0,
+          "work": 0
+        },
+        "community": {
+          "average_composite_happiness": 54.332,
+          "average_qualities": {
+            "beauty": 50.0,
+            "belonging": 50.0,
+            "liveability": 70.0,
+            "opportunity": 50.0
+          },
+          "migration": {
+            "arrivals": 0,
+            "departures": 0,
+            "last_day": 7,
+            "rejections": 0
+          }
+        },
+        "connectivity": {
+          "road_cell_count": 0
+        },
+        "demand": {
+          "commercial": {
+            "bank": 16,
+            "fulfilled": 0.0,
+            "reference_cost": 30,
+            "total": 500.0,
+            "unserved": 500.0
+          },
+          "industrial": {
+            "bank": 25,
+            "fulfilled": 0.0,
+            "reference_cost": 20,
+            "total": 500.0,
+            "unserved": 500.0
+          },
+          "residential": {
+            "bank": 106,
+            "fulfilled": 10.0,
+            "reference_cost": 5,
+            "total": 544.0,
+            "unserved": 534.0
+          }
+        },
+        "economy": {
+          "cash": 920,
+          "cumulative_income": 0,
+          "cumulative_spend": 80,
+          "industrial_output": 0,
+          "last_hourly_income": 0,
+          "spend_by_category": {
+            "nature": 80
+          }
+        },
+        "land": {
+          "extent_area": 25,
+          "free_count": 60,
+          "occupied_count": 4
+        },
+        "population": 2,
+        "spatial": {
+          "distinct_positive_residents": 0,
+          "exposure_count": 2,
+          "negative_exposure_count": 0,
+          "resident_serving_nature_count": 0
+        },
+        "tier_two_available": true
+      },
+      "scenario_id": "first_town/same_box_b",
+      "state_hash": "143c53fb53ad7990356fc0c556b48583b774cede4f3c15c1f180f54b233b0153",
+      "success": true
+    },
+    "first_town/spread": {
+      "canonical_state_hash": "876aae672eca8311b8dc43eaa84ee5bb88596f14ceebf70c825ffe60bf885c41",
+      "final": {
+        "assignments": {
+          "activity": 2,
+          "work": 0
+        },
+        "community": {
+          "average_composite_happiness": 60.4816,
+          "average_qualities": {
+            "beauty": 63.0921,
+            "belonging": 52.8253,
+            "liveability": 76.783,
+            "opportunity": 52.6986
+          },
+          "migration": {
+            "arrivals": 0,
+            "departures": 0,
+            "last_day": 7,
+            "rejections": 0
+          }
+        },
+        "connectivity": {
+          "road_cell_count": 7
+        },
+        "demand": {
+          "commercial": {
+            "bank": 16,
+            "fulfilled": 0.0,
+            "reference_cost": 30,
+            "total": 500.0,
+            "unserved": 500.0
+          },
+          "industrial": {
+            "bank": 24,
+            "fulfilled": 5.0,
+            "reference_cost": 20,
+            "total": 500.0,
+            "unserved": 495.0
+          },
+          "residential": {
+            "bank": 108,
+            "fulfilled": 10.0,
+            "reference_cost": 5,
+            "total": 550.754,
+            "unserved": 540.754
+          }
+        },
+        "economy": {
+          "cash": 1636,
+          "cumulative_income": 700,
+          "cumulative_spend": 64,
+          "industrial_output": 0,
+          "last_hourly_income": 0,
+          "spend_by_category": {
+            "nature": 50,
+            "road": 14
+          }
+        },
+        "land": {
+          "extent_area": 21,
+          "free_count": 53,
+          "occupied_count": 11
+        },
+        "population": 2,
+        "spatial": {
+          "distinct_positive_residents": 2,
+          "exposure_count": 10,
+          "negative_exposure_count": 0,
+          "resident_serving_nature_count": 1
+        },
+        "tier_two_available": true
+      },
+      "scenario_id": "first_town/spread",
+      "state_hash": "c6f525977dc978f58dec5b6074f75f7c3a57511d5af06277541d95b6c18554c4",
+      "success": true
+    }
+  },
+  "schema_version": 1,
+  "success": true
+}

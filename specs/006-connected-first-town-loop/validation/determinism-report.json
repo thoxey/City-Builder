@@ -1,0 +1,386 @@
+{
+  "failures": [],
+  "generated_at": "2026-09-05T20:06:21",
+  "scenarios": [
+    {
+      "deterministic": true,
+      "hash": "572635a146d2edad3dd18b3a201cb56b7770f96f3a1e5f81261f79d6819b6eb0",
+      "hashes": [
+        "572635a146d2edad3dd18b3a201cb56b7770f96f3a1e5f81261f79d6819b6eb0",
+        "572635a146d2edad3dd18b3a201cb56b7770f96f3a1e5f81261f79d6819b6eb0",
+        "572635a146d2edad3dd18b3a201cb56b7770f96f3a1e5f81261f79d6819b6eb0",
+        "572635a146d2edad3dd18b3a201cb56b7770f96f3a1e5f81261f79d6819b6eb0",
+        "572635a146d2edad3dd18b3a201cb56b7770f96f3a1e5f81261f79d6819b6eb0",
+        "572635a146d2edad3dd18b3a201cb56b7770f96f3a1e5f81261f79d6819b6eb0",
+        "572635a146d2edad3dd18b3a201cb56b7770f96f3a1e5f81261f79d6819b6eb0",
+        "572635a146d2edad3dd18b3a201cb56b7770f96f3a1e5f81261f79d6819b6eb0",
+        "572635a146d2edad3dd18b3a201cb56b7770f96f3a1e5f81261f79d6819b6eb0",
+        "572635a146d2edad3dd18b3a201cb56b7770f96f3a1e5f81261f79d6819b6eb0"
+      ],
+      "repeat_count": 10,
+      "scenario_id": "first_town/amenity_clustered"
+    },
+    {
+      "deterministic": true,
+      "hash": "eef4b16c96e791678b735d4d7dffe78225062e31d7677ac62f4064fd99f91577",
+      "hashes": [
+        "eef4b16c96e791678b735d4d7dffe78225062e31d7677ac62f4064fd99f91577",
+        "eef4b16c96e791678b735d4d7dffe78225062e31d7677ac62f4064fd99f91577",
+        "eef4b16c96e791678b735d4d7dffe78225062e31d7677ac62f4064fd99f91577",
+        "eef4b16c96e791678b735d4d7dffe78225062e31d7677ac62f4064fd99f91577",
+        "eef4b16c96e791678b735d4d7dffe78225062e31d7677ac62f4064fd99f91577",
+        "eef4b16c96e791678b735d4d7dffe78225062e31d7677ac62f4064fd99f91577",
+        "eef4b16c96e791678b735d4d7dffe78225062e31d7677ac62f4064fd99f91577",
+        "eef4b16c96e791678b735d4d7dffe78225062e31d7677ac62f4064fd99f91577",
+        "eef4b16c96e791678b735d4d7dffe78225062e31d7677ac62f4064fd99f91577",
+        "eef4b16c96e791678b735d4d7dffe78225062e31d7677ac62f4064fd99f91577"
+      ],
+      "repeat_count": 10,
+      "scenario_id": "first_town/amenity_distributed"
+    },
+    {
+      "deterministic": true,
+      "hash": "bb0389c084b28c0e5f6fcf19c543138e347d684d96c3d8f64fea74f46dc677ae",
+      "hashes": [
+        "bb0389c084b28c0e5f6fcf19c543138e347d684d96c3d8f64fea74f46dc677ae",
+        "bb0389c084b28c0e5f6fcf19c543138e347d684d96c3d8f64fea74f46dc677ae",
+        "bb0389c084b28c0e5f6fcf19c543138e347d684d96c3d8f64fea74f46dc677ae",
+        "bb0389c084b28c0e5f6fcf19c543138e347d684d96c3d8f64fea74f46dc677ae",
+        "bb0389c084b28c0e5f6fcf19c543138e347d684d96c3d8f64fea74f46dc677ae",
+        "bb0389c084b28c0e5f6fcf19c543138e347d684d96c3d8f64fea74f46dc677ae",
+        "bb0389c084b28c0e5f6fcf19c543138e347d684d96c3d8f64fea74f46dc677ae",
+        "bb0389c084b28c0e5f6fcf19c543138e347d684d96c3d8f64fea74f46dc677ae",
+        "bb0389c084b28c0e5f6fcf19c543138e347d684d96c3d8f64fea74f46dc677ae",
+        "bb0389c084b28c0e5f6fcf19c543138e347d684d96c3d8f64fea74f46dc677ae"
+      ],
+      "repeat_count": 10,
+      "scenario_id": "first_town/blank_compact"
+    },
+    {
+      "deterministic": true,
+      "hash": "0972934ba367c02b61b4862a3cdc75a9149a5038ebedc00d328104bd1538ed42",
+      "hashes": [
+        "0972934ba367c02b61b4862a3cdc75a9149a5038ebedc00d328104bd1538ed42",
+        "0972934ba367c02b61b4862a3cdc75a9149a5038ebedc00d328104bd1538ed42",
+        "0972934ba367c02b61b4862a3cdc75a9149a5038ebedc00d328104bd1538ed42",
+        "0972934ba367c02b61b4862a3cdc75a9149a5038ebedc00d328104bd1538ed42",
+        "0972934ba367c02b61b4862a3cdc75a9149a5038ebedc00d328104bd1538ed42",
+        "0972934ba367c02b61b4862a3cdc75a9149a5038ebedc00d328104bd1538ed42",
+        "0972934ba367c02b61b4862a3cdc75a9149a5038ebedc00d328104bd1538ed42",
+        "0972934ba367c02b61b4862a3cdc75a9149a5038ebedc00d328104bd1538ed42",
+        "0972934ba367c02b61b4862a3cdc75a9149a5038ebedc00d328104bd1538ed42",
+        "0972934ba367c02b61b4862a3cdc75a9149a5038ebedc00d328104bd1538ed42"
+      ],
+      "repeat_count": 10,
+      "scenario_id": "first_town/blank_sprawl"
+    },
+    {
+      "deterministic": true,
+      "hash": "1fd6a722ecf4166843f3846dbd74445d0b8a7debbceac1426cf6a78c91382ec1",
+      "hashes": [
+        "1fd6a722ecf4166843f3846dbd74445d0b8a7debbceac1426cf6a78c91382ec1",
+        "1fd6a722ecf4166843f3846dbd74445d0b8a7debbceac1426cf6a78c91382ec1",
+        "1fd6a722ecf4166843f3846dbd74445d0b8a7debbceac1426cf6a78c91382ec1",
+        "1fd6a722ecf4166843f3846dbd74445d0b8a7debbceac1426cf6a78c91382ec1",
+        "1fd6a722ecf4166843f3846dbd74445d0b8a7debbceac1426cf6a78c91382ec1",
+        "1fd6a722ecf4166843f3846dbd74445d0b8a7debbceac1426cf6a78c91382ec1",
+        "1fd6a722ecf4166843f3846dbd74445d0b8a7debbceac1426cf6a78c91382ec1",
+        "1fd6a722ecf4166843f3846dbd74445d0b8a7debbceac1426cf6a78c91382ec1",
+        "1fd6a722ecf4166843f3846dbd74445d0b8a7debbceac1426cf6a78c91382ec1",
+        "1fd6a722ecf4166843f3846dbd74445d0b8a7debbceac1426cf6a78c91382ec1"
+      ],
+      "repeat_count": 10,
+      "scenario_id": "first_town/bridge_connected"
+    },
+    {
+      "deterministic": true,
+      "hash": "338fdb2e0953b5ba07623531a4e303b77c7364382b3558b66df441bf8ecb7cea",
+      "hashes": [
+        "338fdb2e0953b5ba07623531a4e303b77c7364382b3558b66df441bf8ecb7cea",
+        "338fdb2e0953b5ba07623531a4e303b77c7364382b3558b66df441bf8ecb7cea",
+        "338fdb2e0953b5ba07623531a4e303b77c7364382b3558b66df441bf8ecb7cea",
+        "338fdb2e0953b5ba07623531a4e303b77c7364382b3558b66df441bf8ecb7cea",
+        "338fdb2e0953b5ba07623531a4e303b77c7364382b3558b66df441bf8ecb7cea",
+        "338fdb2e0953b5ba07623531a4e303b77c7364382b3558b66df441bf8ecb7cea",
+        "338fdb2e0953b5ba07623531a4e303b77c7364382b3558b66df441bf8ecb7cea",
+        "338fdb2e0953b5ba07623531a4e303b77c7364382b3558b66df441bf8ecb7cea",
+        "338fdb2e0953b5ba07623531a4e303b77c7364382b3558b66df441bf8ecb7cea",
+        "338fdb2e0953b5ba07623531a4e303b77c7364382b3558b66df441bf8ecb7cea"
+      ],
+      "repeat_count": 10,
+      "scenario_id": "first_town/bridge_removed"
+    },
+    {
+      "deterministic": true,
+      "hash": "51a4b52ef342ffcbf124068b9c00e2983c932547257a21ce3cdaa9182b1cc01c",
+      "hashes": [
+        "51a4b52ef342ffcbf124068b9c00e2983c932547257a21ce3cdaa9182b1cc01c",
+        "51a4b52ef342ffcbf124068b9c00e2983c932547257a21ce3cdaa9182b1cc01c",
+        "51a4b52ef342ffcbf124068b9c00e2983c932547257a21ce3cdaa9182b1cc01c",
+        "51a4b52ef342ffcbf124068b9c00e2983c932547257a21ce3cdaa9182b1cc01c",
+        "51a4b52ef342ffcbf124068b9c00e2983c932547257a21ce3cdaa9182b1cc01c",
+        "51a4b52ef342ffcbf124068b9c00e2983c932547257a21ce3cdaa9182b1cc01c",
+        "51a4b52ef342ffcbf124068b9c00e2983c932547257a21ce3cdaa9182b1cc01c",
+        "51a4b52ef342ffcbf124068b9c00e2983c932547257a21ce3cdaa9182b1cc01c",
+        "51a4b52ef342ffcbf124068b9c00e2983c932547257a21ce3cdaa9182b1cc01c",
+        "51a4b52ef342ffcbf124068b9c00e2983c932547257a21ce3cdaa9182b1cc01c"
+      ],
+      "repeat_count": 10,
+      "scenario_id": "first_town/built_only"
+    },
+    {
+      "deterministic": true,
+      "hash": "a486380445b6c48e1df19bdabfae284a1241d098b0f6263a92145015237bf0f3",
+      "hashes": [
+        "a486380445b6c48e1df19bdabfae284a1241d098b0f6263a92145015237bf0f3",
+        "a486380445b6c48e1df19bdabfae284a1241d098b0f6263a92145015237bf0f3",
+        "a486380445b6c48e1df19bdabfae284a1241d098b0f6263a92145015237bf0f3",
+        "a486380445b6c48e1df19bdabfae284a1241d098b0f6263a92145015237bf0f3",
+        "a486380445b6c48e1df19bdabfae284a1241d098b0f6263a92145015237bf0f3",
+        "a486380445b6c48e1df19bdabfae284a1241d098b0f6263a92145015237bf0f3",
+        "a486380445b6c48e1df19bdabfae284a1241d098b0f6263a92145015237bf0f3",
+        "a486380445b6c48e1df19bdabfae284a1241d098b0f6263a92145015237bf0f3",
+        "a486380445b6c48e1df19bdabfae284a1241d098b0f6263a92145015237bf0f3",
+        "a486380445b6c48e1df19bdabfae284a1241d098b0f6263a92145015237bf0f3"
+      ],
+      "repeat_count": 10,
+      "scenario_id": "first_town/cohort_freedom"
+    },
+    {
+      "deterministic": true,
+      "hash": "3cd3d8c1b65ddc2ce40d03ba6c685c8ef0243da4bbe6f0d8807a66fc6a7e96ea",
+      "hashes": [
+        "3cd3d8c1b65ddc2ce40d03ba6c685c8ef0243da4bbe6f0d8807a66fc6a7e96ea",
+        "3cd3d8c1b65ddc2ce40d03ba6c685c8ef0243da4bbe6f0d8807a66fc6a7e96ea",
+        "3cd3d8c1b65ddc2ce40d03ba6c685c8ef0243da4bbe6f0d8807a66fc6a7e96ea",
+        "3cd3d8c1b65ddc2ce40d03ba6c685c8ef0243da4bbe6f0d8807a66fc6a7e96ea",
+        "3cd3d8c1b65ddc2ce40d03ba6c685c8ef0243da4bbe6f0d8807a66fc6a7e96ea",
+        "3cd3d8c1b65ddc2ce40d03ba6c685c8ef0243da4bbe6f0d8807a66fc6a7e96ea",
+        "3cd3d8c1b65ddc2ce40d03ba6c685c8ef0243da4bbe6f0d8807a66fc6a7e96ea",
+        "3cd3d8c1b65ddc2ce40d03ba6c685c8ef0243da4bbe6f0d8807a66fc6a7e96ea",
+        "3cd3d8c1b65ddc2ce40d03ba6c685c8ef0243da4bbe6f0d8807a66fc6a7e96ea",
+        "3cd3d8c1b65ddc2ce40d03ba6c685c8ef0243da4bbe6f0d8807a66fc6a7e96ea"
+      ],
+      "repeat_count": 10,
+      "scenario_id": "first_town/cohort_identity"
+    },
+    {
+      "deterministic": true,
+      "hash": "0131100d5ee0b9aace08cd28ff706f5c11233dbd0056567a0eca3f0143619992",
+      "hashes": [
+        "0131100d5ee0b9aace08cd28ff706f5c11233dbd0056567a0eca3f0143619992",
+        "0131100d5ee0b9aace08cd28ff706f5c11233dbd0056567a0eca3f0143619992",
+        "0131100d5ee0b9aace08cd28ff706f5c11233dbd0056567a0eca3f0143619992",
+        "0131100d5ee0b9aace08cd28ff706f5c11233dbd0056567a0eca3f0143619992",
+        "0131100d5ee0b9aace08cd28ff706f5c11233dbd0056567a0eca3f0143619992",
+        "0131100d5ee0b9aace08cd28ff706f5c11233dbd0056567a0eca3f0143619992",
+        "0131100d5ee0b9aace08cd28ff706f5c11233dbd0056567a0eca3f0143619992",
+        "0131100d5ee0b9aace08cd28ff706f5c11233dbd0056567a0eca3f0143619992",
+        "0131100d5ee0b9aace08cd28ff706f5c11233dbd0056567a0eca3f0143619992",
+        "0131100d5ee0b9aace08cd28ff706f5c11233dbd0056567a0eca3f0143619992"
+      ],
+      "repeat_count": 10,
+      "scenario_id": "first_town/compact"
+    },
+    {
+      "deterministic": true,
+      "hash": "d1811c566848389df99621b6356ba4e982c9f4585ca02c30abb3ed5815628b4c",
+      "hashes": [
+        "d1811c566848389df99621b6356ba4e982c9f4585ca02c30abb3ed5815628b4c",
+        "d1811c566848389df99621b6356ba4e982c9f4585ca02c30abb3ed5815628b4c",
+        "d1811c566848389df99621b6356ba4e982c9f4585ca02c30abb3ed5815628b4c",
+        "d1811c566848389df99621b6356ba4e982c9f4585ca02c30abb3ed5815628b4c",
+        "d1811c566848389df99621b6356ba4e982c9f4585ca02c30abb3ed5815628b4c",
+        "d1811c566848389df99621b6356ba4e982c9f4585ca02c30abb3ed5815628b4c",
+        "d1811c566848389df99621b6356ba4e982c9f4585ca02c30abb3ed5815628b4c",
+        "d1811c566848389df99621b6356ba4e982c9f4585ca02c30abb3ed5815628b4c",
+        "d1811c566848389df99621b6356ba4e982c9f4585ca02c30abb3ed5815628b4c",
+        "d1811c566848389df99621b6356ba4e982c9f4585ca02c30abb3ed5815628b4c"
+      ],
+      "repeat_count": 10,
+      "scenario_id": "first_town/functional_mix"
+    },
+    {
+      "deterministic": true,
+      "hash": "1a3651b61af560a83d16b188961aa0918db37facfdcc50d96f2ac4962e33be40",
+      "hashes": [
+        "1a3651b61af560a83d16b188961aa0918db37facfdcc50d96f2ac4962e33be40",
+        "1a3651b61af560a83d16b188961aa0918db37facfdcc50d96f2ac4962e33be40",
+        "1a3651b61af560a83d16b188961aa0918db37facfdcc50d96f2ac4962e33be40",
+        "1a3651b61af560a83d16b188961aa0918db37facfdcc50d96f2ac4962e33be40",
+        "1a3651b61af560a83d16b188961aa0918db37facfdcc50d96f2ac4962e33be40",
+        "1a3651b61af560a83d16b188961aa0918db37facfdcc50d96f2ac4962e33be40",
+        "1a3651b61af560a83d16b188961aa0918db37facfdcc50d96f2ac4962e33be40",
+        "1a3651b61af560a83d16b188961aa0918db37facfdcc50d96f2ac4962e33be40",
+        "1a3651b61af560a83d16b188961aa0918db37facfdcc50d96f2ac4962e33be40",
+        "1a3651b61af560a83d16b188961aa0918db37facfdcc50d96f2ac4962e33be40"
+      ],
+      "repeat_count": 10,
+      "scenario_id": "first_town/nature_integrated"
+    },
+    {
+      "deterministic": true,
+      "hash": "94f1d6f06ea0ff0ba79747ff0c8c6fd37587ec81b6cd1eec36040c533291cbf9",
+      "hashes": [
+        "94f1d6f06ea0ff0ba79747ff0c8c6fd37587ec81b6cd1eec36040c533291cbf9",
+        "94f1d6f06ea0ff0ba79747ff0c8c6fd37587ec81b6cd1eec36040c533291cbf9",
+        "94f1d6f06ea0ff0ba79747ff0c8c6fd37587ec81b6cd1eec36040c533291cbf9",
+        "94f1d6f06ea0ff0ba79747ff0c8c6fd37587ec81b6cd1eec36040c533291cbf9",
+        "94f1d6f06ea0ff0ba79747ff0c8c6fd37587ec81b6cd1eec36040c533291cbf9",
+        "94f1d6f06ea0ff0ba79747ff0c8c6fd37587ec81b6cd1eec36040c533291cbf9",
+        "94f1d6f06ea0ff0ba79747ff0c8c6fd37587ec81b6cd1eec36040c533291cbf9",
+        "94f1d6f06ea0ff0ba79747ff0c8c6fd37587ec81b6cd1eec36040c533291cbf9",
+        "94f1d6f06ea0ff0ba79747ff0c8c6fd37587ec81b6cd1eec36040c533291cbf9",
+        "94f1d6f06ea0ff0ba79747ff0c8c6fd37587ec81b6cd1eec36040c533291cbf9"
+      ],
+      "repeat_count": 10,
+      "scenario_id": "first_town/nature_only_exploit"
+    },
+    {
+      "deterministic": true,
+      "hash": "16353415573fc02bed5cfe2f690a63f48205ca795bf1f6e955776cd38bd0efbf",
+      "hashes": [
+        "16353415573fc02bed5cfe2f690a63f48205ca795bf1f6e955776cd38bd0efbf",
+        "16353415573fc02bed5cfe2f690a63f48205ca795bf1f6e955776cd38bd0efbf",
+        "16353415573fc02bed5cfe2f690a63f48205ca795bf1f6e955776cd38bd0efbf",
+        "16353415573fc02bed5cfe2f690a63f48205ca795bf1f6e955776cd38bd0efbf",
+        "16353415573fc02bed5cfe2f690a63f48205ca795bf1f6e955776cd38bd0efbf",
+        "16353415573fc02bed5cfe2f690a63f48205ca795bf1f6e955776cd38bd0efbf",
+        "16353415573fc02bed5cfe2f690a63f48205ca795bf1f6e955776cd38bd0efbf",
+        "16353415573fc02bed5cfe2f690a63f48205ca795bf1f6e955776cd38bd0efbf",
+        "16353415573fc02bed5cfe2f690a63f48205ca795bf1f6e955776cd38bd0efbf",
+        "16353415573fc02bed5cfe2f690a63f48205ca795bf1f6e955776cd38bd0efbf"
+      ],
+      "repeat_count": 10,
+      "scenario_id": "first_town/nature_served"
+    },
+    {
+      "deterministic": true,
+      "hash": "f8452663116fbfc2354d0328ea2c09d1dbeed37e0a05877c4858cd92d5088fa4",
+      "hashes": [
+        "f8452663116fbfc2354d0328ea2c09d1dbeed37e0a05877c4858cd92d5088fa4",
+        "f8452663116fbfc2354d0328ea2c09d1dbeed37e0a05877c4858cd92d5088fa4",
+        "f8452663116fbfc2354d0328ea2c09d1dbeed37e0a05877c4858cd92d5088fa4",
+        "f8452663116fbfc2354d0328ea2c09d1dbeed37e0a05877c4858cd92d5088fa4",
+        "f8452663116fbfc2354d0328ea2c09d1dbeed37e0a05877c4858cd92d5088fa4",
+        "f8452663116fbfc2354d0328ea2c09d1dbeed37e0a05877c4858cd92d5088fa4",
+        "f8452663116fbfc2354d0328ea2c09d1dbeed37e0a05877c4858cd92d5088fa4",
+        "f8452663116fbfc2354d0328ea2c09d1dbeed37e0a05877c4858cd92d5088fa4",
+        "f8452663116fbfc2354d0328ea2c09d1dbeed37e0a05877c4858cd92d5088fa4",
+        "f8452663116fbfc2354d0328ea2c09d1dbeed37e0a05877c4858cd92d5088fa4"
+      ],
+      "repeat_count": 10,
+      "scenario_id": "first_town/nature_unserved"
+    },
+    {
+      "deterministic": true,
+      "hash": "4ecc4fd6a0e99448c566997f46fe8ef1a54eeac90e66c0f742ffb0055f30249e",
+      "hashes": [
+        "4ecc4fd6a0e99448c566997f46fe8ef1a54eeac90e66c0f742ffb0055f30249e",
+        "4ecc4fd6a0e99448c566997f46fe8ef1a54eeac90e66c0f742ffb0055f30249e",
+        "4ecc4fd6a0e99448c566997f46fe8ef1a54eeac90e66c0f742ffb0055f30249e",
+        "4ecc4fd6a0e99448c566997f46fe8ef1a54eeac90e66c0f742ffb0055f30249e",
+        "4ecc4fd6a0e99448c566997f46fe8ef1a54eeac90e66c0f742ffb0055f30249e",
+        "4ecc4fd6a0e99448c566997f46fe8ef1a54eeac90e66c0f742ffb0055f30249e",
+        "4ecc4fd6a0e99448c566997f46fe8ef1a54eeac90e66c0f742ffb0055f30249e",
+        "4ecc4fd6a0e99448c566997f46fe8ef1a54eeac90e66c0f742ffb0055f30249e",
+        "4ecc4fd6a0e99448c566997f46fe8ef1a54eeac90e66c0f742ffb0055f30249e",
+        "4ecc4fd6a0e99448c566997f46fe8ef1a54eeac90e66c0f742ffb0055f30249e"
+      ],
+      "repeat_count": 10,
+      "scenario_id": "first_town/radius_inside"
+    },
+    {
+      "deterministic": true,
+      "hash": "14bdb6b0a77a7d78923f33a840f2e18480333735f5f0b7e01a10ccf9a85f0772",
+      "hashes": [
+        "14bdb6b0a77a7d78923f33a840f2e18480333735f5f0b7e01a10ccf9a85f0772",
+        "14bdb6b0a77a7d78923f33a840f2e18480333735f5f0b7e01a10ccf9a85f0772",
+        "14bdb6b0a77a7d78923f33a840f2e18480333735f5f0b7e01a10ccf9a85f0772",
+        "14bdb6b0a77a7d78923f33a840f2e18480333735f5f0b7e01a10ccf9a85f0772",
+        "14bdb6b0a77a7d78923f33a840f2e18480333735f5f0b7e01a10ccf9a85f0772",
+        "14bdb6b0a77a7d78923f33a840f2e18480333735f5f0b7e01a10ccf9a85f0772",
+        "14bdb6b0a77a7d78923f33a840f2e18480333735f5f0b7e01a10ccf9a85f0772",
+        "14bdb6b0a77a7d78923f33a840f2e18480333735f5f0b7e01a10ccf9a85f0772",
+        "14bdb6b0a77a7d78923f33a840f2e18480333735f5f0b7e01a10ccf9a85f0772",
+        "14bdb6b0a77a7d78923f33a840f2e18480333735f5f0b7e01a10ccf9a85f0772"
+      ],
+      "repeat_count": 10,
+      "scenario_id": "first_town/radius_outside"
+    },
+    {
+      "deterministic": true,
+      "hash": "39462563e310f31e8a2f31bb160c4a825c506f32fff0d213d47521fdbcded251",
+      "hashes": [
+        "39462563e310f31e8a2f31bb160c4a825c506f32fff0d213d47521fdbcded251",
+        "39462563e310f31e8a2f31bb160c4a825c506f32fff0d213d47521fdbcded251",
+        "39462563e310f31e8a2f31bb160c4a825c506f32fff0d213d47521fdbcded251",
+        "39462563e310f31e8a2f31bb160c4a825c506f32fff0d213d47521fdbcded251",
+        "39462563e310f31e8a2f31bb160c4a825c506f32fff0d213d47521fdbcded251",
+        "39462563e310f31e8a2f31bb160c4a825c506f32fff0d213d47521fdbcded251",
+        "39462563e310f31e8a2f31bb160c4a825c506f32fff0d213d47521fdbcded251",
+        "39462563e310f31e8a2f31bb160c4a825c506f32fff0d213d47521fdbcded251",
+        "39462563e310f31e8a2f31bb160c4a825c506f32fff0d213d47521fdbcded251",
+        "39462563e310f31e8a2f31bb160c4a825c506f32fff0d213d47521fdbcded251"
+      ],
+      "repeat_count": 10,
+      "scenario_id": "first_town/repeated_spam"
+    },
+    {
+      "deterministic": true,
+      "hash": "53753f7acb1c7663776a1c1dd2f745f019e80e663951a6b296dc6f32871354f2",
+      "hashes": [
+        "53753f7acb1c7663776a1c1dd2f745f019e80e663951a6b296dc6f32871354f2",
+        "53753f7acb1c7663776a1c1dd2f745f019e80e663951a6b296dc6f32871354f2",
+        "53753f7acb1c7663776a1c1dd2f745f019e80e663951a6b296dc6f32871354f2",
+        "53753f7acb1c7663776a1c1dd2f745f019e80e663951a6b296dc6f32871354f2",
+        "53753f7acb1c7663776a1c1dd2f745f019e80e663951a6b296dc6f32871354f2",
+        "53753f7acb1c7663776a1c1dd2f745f019e80e663951a6b296dc6f32871354f2",
+        "53753f7acb1c7663776a1c1dd2f745f019e80e663951a6b296dc6f32871354f2",
+        "53753f7acb1c7663776a1c1dd2f745f019e80e663951a6b296dc6f32871354f2",
+        "53753f7acb1c7663776a1c1dd2f745f019e80e663951a6b296dc6f32871354f2",
+        "53753f7acb1c7663776a1c1dd2f745f019e80e663951a6b296dc6f32871354f2"
+      ],
+      "repeat_count": 10,
+      "scenario_id": "first_town/same_box_a"
+    },
+    {
+      "deterministic": true,
+      "hash": "143c53fb53ad7990356fc0c556b48583b774cede4f3c15c1f180f54b233b0153",
+      "hashes": [
+        "143c53fb53ad7990356fc0c556b48583b774cede4f3c15c1f180f54b233b0153",
+        "143c53fb53ad7990356fc0c556b48583b774cede4f3c15c1f180f54b233b0153",
+        "143c53fb53ad7990356fc0c556b48583b774cede4f3c15c1f180f54b233b0153",
+        "143c53fb53ad7990356fc0c556b48583b774cede4f3c15c1f180f54b233b0153",
+        "143c53fb53ad7990356fc0c556b48583b774cede4f3c15c1f180f54b233b0153",
+        "143c53fb53ad7990356fc0c556b48583b774cede4f3c15c1f180f54b233b0153",
+        "143c53fb53ad7990356fc0c556b48583b774cede4f3c15c1f180f54b233b0153",
+        "143c53fb53ad7990356fc0c556b48583b774cede4f3c15c1f180f54b233b0153",
+        "143c53fb53ad7990356fc0c556b48583b774cede4f3c15c1f180f54b233b0153",
+        "143c53fb53ad7990356fc0c556b48583b774cede4f3c15c1f180f54b233b0153"
+      ],
+      "repeat_count": 10,
+      "scenario_id": "first_town/same_box_b"
+    },
+    {
+      "deterministic": true,
+      "hash": "c6f525977dc978f58dec5b6074f75f7c3a57511d5af06277541d95b6c18554c4",
+      "hashes": [
+        "c6f525977dc978f58dec5b6074f75f7c3a57511d5af06277541d95b6c18554c4",
+        "c6f525977dc978f58dec5b6074f75f7c3a57511d5af06277541d95b6c18554c4",
+        "c6f525977dc978f58dec5b6074f75f7c3a57511d5af06277541d95b6c18554c4",
+        "c6f525977dc978f58dec5b6074f75f7c3a57511d5af06277541d95b6c18554c4",
+        "c6f525977dc978f58dec5b6074f75f7c3a57511d5af06277541d95b6c18554c4",
+        "c6f525977dc978f58dec5b6074f75f7c3a57511d5af06277541d95b6c18554c4",
+        "c6f525977dc978f58dec5b6074f75f7c3a57511d5af06277541d95b6c18554c4",
+        "c6f525977dc978f58dec5b6074f75f7c3a57511d5af06277541d95b6c18554c4",
+        "c6f525977dc978f58dec5b6074f75f7c3a57511d5af06277541d95b6c18554c4",
+        "c6f525977dc978f58dec5b6074f75f7c3a57511d5af06277541d95b6c18554c4"
+      ],
+      "repeat_count": 10,
+      "scenario_id": "first_town/spread"
+    }
+  ],
+  "schema_version": 1,
+  "success": true
+}

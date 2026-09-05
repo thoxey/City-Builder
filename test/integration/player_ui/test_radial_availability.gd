@@ -27,7 +27,7 @@ class _Builder extends Node:
 class _Dock extends PlayerToolDock:
 	var reason := ""
 	func set_model(_model: Dictionary) -> void: pass
-	func show_placement(_id: String, value := "", _rotation := 0) -> void: reason = value
+	func show_placement(_id: String, value: String = "", _rotation: int = 0, _preview: Dictionary = {}) -> void: reason = value
 class _Radial extends RadialBuildMenu:
 	var model_updates := 0
 	func set_model(_model: Dictionary) -> void: model_updates += 1

@@ -43,6 +43,20 @@ func test_choice_availability_contains_stable_reasons() -> void:
 	assert_eq(plugin.get_choices({"available_only": true})["choices"].size(), 0)
 	plugin.free(); catalog.free(); palette.free(); economy.free(); demand.free(); uniques.free()
 
+func test_progression_snapshot_serializes_canonical_next_step() -> void:
+	var plugin := PlaytestCls.new()
+	var characters := ProgressionCharacters.new()
+	var uniques := ChoiceUniques.new()
+	plugin._characters = characters
+	plugin._uniques = uniques
+	var progression: Dictionary = plugin._progression_snapshot()
+	assert_eq(progression.next_step.kind, "fulfilled_demand")
+	assert_eq(progression.next_step.subject_label, "Sir Reginald Cogsworth")
+	assert_eq(progression.next_step.current, 63.0)
+	assert_eq(progression.next_step.required, 100.0)
+	assert_true(JSON.stringify(progression).contains("fulfilled_demand"))
+	plugin.free(); characters.free(); uniques.free()
+
 class ChoiceCatalog extends PluginBase:
 	var items: Array[Structure] = []
 	var summaries: Array = []
@@ -77,3 +91,15 @@ class ChoiceUniques extends PluginBase:
 	func get_all_profiles() -> Dictionary: return {}
 	func is_unlocked(_id: String) -> bool: return false
 	func is_placed(_id: String) -> bool: return false
+
+class ProgressionCharacters extends PluginBase:
+	func get_plugin_name() -> String: return "ProgressionCharacters"
+	func all_character_ids() -> Array: return ["aristocrat_industrial"]
+	func is_quest_character(_id: String) -> bool: return true
+	func evaluate_character_gate(_id: String) -> Dictionary:
+		return {"character_id":"aristocrat_industrial", "display_name":"Sir Reginald Cogsworth",
+			"state":0, "state_name":"NOT_ARRIVED", "bucket":"industrial", "bucket_label":"industrial",
+			"fulfilled":63.0, "required_fulfilled":100.0, "demand_met":false,
+			"attained_tier":3, "required_tier":1, "tier_met":true,
+			"tier_evidence":[], "want_building_id":"building_crazy_golf",
+			"want_display_name":"Crazy Golf", "reasons":[PlaytestActionResult.FULFILLED_DEMAND_NOT_REACHED]}

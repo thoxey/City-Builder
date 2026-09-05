@@ -129,6 +129,10 @@ static func _effect(raw: Dictionary, context: Dictionary, hour: int, activity: V
 
 static func _places(source_records: Array, residents: Array, context: Dictionary, hour: int, config: Dictionary) -> Dictionary:
 	var result := {}
+	var operation_by_id := {}
+	for operation_raw in context.get("operation", []):
+		if operation_raw is Dictionary:
+			operation_by_id[int(operation_raw.get("internal_id", -1))] = operation_raw
 	for source_raw in source_records:
 		if not source_raw is Dictionary: continue
 		var source: Dictionary = source_raw; var anchor: Variant = CommunityConstants.coordinate_record(source.get("anchor")); var key := _anchor_key(anchor)
@@ -154,7 +158,8 @@ static func _places(source_records: Array, residents: Array, context: Dictionary
 			if effect.get("radius") != null and int(effect.get("radius", 0)) not in radii: radii.append(int(effect["radius"]))
 			if effect.get("capacity") != null and int(effect.get("capacity", 0)) not in capacities: capacities.append(int(effect["capacity"]))
 			var authored: Dictionary = effect.duplicate(true); authored["source_building_id"] = bid; authored["source_anchor"] = anchor; authored["base_amount"] = float(effect.get("amount", 0.0)); authored["applied_amount"] = float(effect.get("amount", 0.0)); authored["active_now"] = bool(source.get("active", true)) and CommunityEffectEvaluator.schedule_active(effect.get("schedule"), hour % 24); authored_effects.append(_effect(authored, context, hour))
-		result[key] = {"building_id": bid, "display_name": _building_name(bid, context), "anchor": anchor, "current_programme": String(source.get("programme", "")), "available_programmes": programme_options, "active": bool(source.get("active", true)), "active_schedule": source.get("building_schedule", null), "active_schedule_label": _schedule_label(source.get("building_schedule")), "radii": radii, "capacities": capacities, "housed_resident_ids": housed, "participating_resident_ids": participating, "affected_resident_ids": affected, "positive_effects": _aggregate_effects(positive, config), "negative_effects": _aggregate_effects(negative, config), "authored_effects": authored_effects, "linked_neighbourhood_anchor_keys": [], "active_hour": hour % 24}
+		var operation: Dictionary = operation_by_id.get(int(source.get("internal_id", -1)), {})
+		result[key] = {"building_id": bid, "display_name": _building_name(bid, context), "anchor": anchor, "current_programme": String(source.get("programme", "")), "available_programmes": programme_options, "active": bool(source.get("active", true)), "active_schedule": source.get("building_schedule", null), "active_schedule_label": _schedule_label(source.get("building_schedule")), "radii": radii, "capacities": capacities, "housed_resident_ids": housed, "participating_resident_ids": participating, "affected_resident_ids": affected, "positive_effects": _aggregate_effects(positive, config), "negative_effects": _aggregate_effects(negative, config), "authored_effects": authored_effects, "linked_neighbourhood_anchor_keys": [], "active_hour": hour % 24, "operation": operation.duplicate(true), "road_accessible": operation.get("road_accessible"), "open_now": operation.get("open_now", source.get("active", true)), "operating": operation.get("operating"), "operation_reason": operation.get("primary_reason", ""), "fulfilled": operation.get("fulfilled", participating.size())}
 	return result
 
 static func _neighbourhoods(residents: Array, places: Dictionary, config: Dictionary) -> Dictionary:

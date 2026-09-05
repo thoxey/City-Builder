@@ -5,8 +5,8 @@ signal entry_requested(entry_id: String)
 signal menu_closed
 
 const MAX_WEDGES := 8
-const INNER_RADIUS := 58.0
-const OUTER_RADIUS := 154.0
+const INNER_RADIUS := 70.0
+const OUTER_RADIUS := 188.0
 const SAFE_MARGIN := 18.0
 const STICK_DEAD_ZONE := 0.55
 const WedgeCls := preload("res://plugins/player_ui/radial_wedge.gd")
@@ -38,21 +38,24 @@ func _ready() -> void:
 		add_child(wedge)
 		_wedges.append(wedge)
 	_centre_button = Button.new()
-	_centre_button.custom_minimum_size = Vector2(92, 92)
+	_centre_button.custom_minimum_size = Vector2(110, 110)
 	_centre_button.flat = true
 	_centre_button.icon = load("res://sprites/ui/build-menu/controls/close.png")
 	_centre_button.expand_icon = true
+	_centre_button.add_theme_constant_override("icon_max_width", 82)
+	for state in ["icon_normal_color", "icon_hover_color", "icon_pressed_color", "icon_focus_color"]:
+		_centre_button.add_theme_color_override(state, Color.WHITE)
 	_centre_button.tooltip_text = "Close build menu"
 	_centre_button.pressed.connect(back_or_close)
 	add_child(_centre_button)
 	_detail_panel = PanelContainer.new()
 	_detail_panel.theme_type_variation = "DetailCard"
-	_detail_panel.custom_minimum_size = Vector2(260, 116)
+	_detail_panel.custom_minimum_size = Vector2(320, 144)
 	add_child(_detail_panel)
 	_detail_label = Label.new()
 	_detail_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_detail_label.add_theme_font_override("font", load("res://fonts/lilita_one_regular.ttf"))
-	_detail_label.add_theme_font_size_override("font_size", 16)
+	_detail_label.add_theme_font_size_override("font_size", 19)
 	_detail_panel.add_child(_detail_label)
 	resized.connect(_relayout)
 
@@ -61,15 +64,19 @@ func set_model(model: Dictionary) -> void:
 	if visible:
 		_rebuild_actions()
 
-func open_menu(preferred_origin: Vector2 = Vector2.INF) -> void:
-	_level = "categories"
-	_group_id = ""
+func open_menu(preferred_origin: Vector2 = Vector2.INF, restore_context: bool = false) -> void:
+	_level = "items" if restore_context and not _last_group.is_empty() else "categories"
+	_group_id = _last_group if _level == "items" else ""
 	_page_index = 0
+	_focused_index = 0
+	if _level == "items":
+		_restore_last_item_page()
 	_origin = size * 0.5 if not preferred_origin.is_finite() else preferred_origin
 	_origin = clamp_origin(_origin, _safe_rect(), OUTER_RADIUS + 86.0, SAFE_MARGIN)
 	visible = true
 	grab_focus()
 	_rebuild_actions()
+	_restore_last_item_focus()
 
 func close_menu() -> void:
 	if not visible: return
@@ -124,8 +131,8 @@ func _layout_wedges() -> void:
 		var start := -PI * 0.5 - span * 0.5 + span * i
 		_wedges[i].configure(_actions[i], _origin, start, start + span, INNER_RADIUS, OUTER_RADIUS)
 		_wedges[i].set_states(i == _focused_index, i == _hovered_index)
-	_centre_button.position = _origin - Vector2(46, 46)
-	_centre_button.size = Vector2(92, 92)
+	_centre_button.position = _origin - Vector2(55, 55)
+	_centre_button.size = Vector2(110, 110)
 	_centre_button.icon = load("res://sprites/ui/build-menu/controls/%s.png" % ("back" if _level == "items" else "close"))
 	_centre_button.tooltip_text = "Back to categories" if _level == "items" else "Close build menu"
 	var card_size := _detail_panel.custom_minimum_size
@@ -161,6 +168,8 @@ func _input(event: InputEvent) -> void:
 		if idx >= 0: _set_focus(idx); confirm_focused()
 		else: back_or_close()
 		accept_event()
+	elif event.is_action_pressed("build_menu"):
+		back_or_close(); accept_event()
 	elif event.is_action_pressed("ui_cancel"):
 		back_or_close(); accept_event()
 	elif event.is_action_pressed("ui_accept"):
@@ -205,6 +214,33 @@ func confirm_focused() -> void:
 		"previous_page":
 			_page_index -= 1; _focused_index = 0; _rebuild_actions()
 
+func _restore_last_item_page() -> void:
+	var target := String(_last_entry_by_group.get(_group_id, ""))
+	if target.is_empty():
+		return
+	var ids: Array = []
+	for group in _model.get("groups", []):
+		if group.id == _group_id:
+			ids = group.entry_ids
+			break
+	var pages := build_pages(ids)
+	for page_index in pages.size():
+		for action in pages[page_index]:
+			if String(action.get("target_id", "")) == target:
+				_page_index = page_index
+				return
+
+func _restore_last_item_focus() -> void:
+	if _level != "items":
+		return
+	var target := String(_last_entry_by_group.get(_group_id, ""))
+	for index in _actions.size():
+		if String(_actions[index].get("target_id", "")) == target:
+			_focused_index = index
+			_layout_wedges()
+			_update_detail()
+			return
+
 func _update_detail() -> void:
 	if _actions.is_empty():
 		_detail_label.text = "No build choices"
@@ -219,7 +255,15 @@ func _update_detail() -> void:
 	var demand: Dictionary = entry.get("demand_cost", {})
 	var demand_text := ""
 	if not String(demand.get("bucket_id", "")).is_empty(): demand_text = "  •  %d %s demand" % [int(demand.get("cost", 0)), String(demand.get("bucket_id", ""))]
-	_detail_label.text = "%s\n%s%s\n%s%s" % [entry.get("display_name", ""), cost_text, demand_text,
+	var effects: Array = entry.get("community_effects", [])
+	var effect_text := ""
+	if not effects.is_empty():
+		var labels: Array[String] = []
+		for effect in effects:
+			var radius := "" if effect.get("radius") == null else " r%d" % int(effect["radius"])
+			labels.append("%s %s%s" % [effect.get("quality", ""), effect.get("scope", ""), radius])
+		effect_text = "\nCommunity: " + ", ".join(labels)
+	_detail_label.text = "%s\n%s%s%s\n%s%s" % [entry.get("display_name", ""), cost_text, demand_text, effect_text,
 		"✓ " if entry.get("can_select", false) else "🔒 ", entry.get("availability_label", "")]
 
 static func clamp_origin(origin: Vector2, safe_rect: Rect2, radius: float, margin: float = 0.0) -> Vector2:

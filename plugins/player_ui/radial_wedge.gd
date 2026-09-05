@@ -20,7 +20,7 @@ var label: Label
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	icon_rect = TextureRect.new()
-	icon_rect.custom_minimum_size = Vector2(56, 56)
+	icon_rect.custom_minimum_size = Vector2(68, 68)
 	icon_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	icon_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	icon_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -30,7 +30,7 @@ func _ready() -> void:
 	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	label.add_theme_font_override("font", load("res://fonts/lilita_one_regular.ttf"))
-	label.add_theme_font_size_override("font_size", 12)
+	label.add_theme_font_size_override("font_size", 15)
 	label.add_theme_color_override("font_color", INK)
 	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(label)
@@ -62,10 +62,10 @@ func set_states(is_focused: bool, is_hovered: bool) -> void:
 func _layout_content() -> void:
 	var middle := (start_angle + end_angle) * 0.5
 	var position_on_ring := centre + Vector2.from_angle(middle) * ((inner_radius + outer_radius) * 0.5)
-	icon_rect.position = position_on_ring - Vector2(28, 38)
-	icon_rect.size = Vector2(56, 56)
-	label.position = position_on_ring + Vector2(-62, 17)
-	label.size = Vector2(124, 34)
+	icon_rect.position = position_on_ring - Vector2(34, 48)
+	icon_rect.size = Vector2(68, 68)
+	label.position = position_on_ring + Vector2(-74, 22)
+	label.size = Vector2(148, 40)
 
 func _draw() -> void:
 	if action.is_empty():

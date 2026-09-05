@@ -73,7 +73,8 @@ export type ProfileType =
   | "UniqueProfile"
   | "GenericTierProfile"
   | "RoadMetadata"
-  | "AttractivenessProfile";
+  | "AttractivenessProfile"
+  | "CommunityEffectProfile";
 
 export interface BuildingMetadataProfile {
   type: "BuildingMetadata";
@@ -122,13 +123,36 @@ export interface RoadMetadataProfile {
   connections: Array<[number, number]>;
 }
 
+export interface CommunityEffectEntry {
+  effect_id: string;
+  quality: "opportunity" | "liveability" | "beauty" | "belonging" | "";
+  manifestation: "identity" | "freedom" | "care" | "neutral" | "";
+  amount: number;
+  scope: "city" | "local" | "resident" | "participant" | "";
+  radius?: number;
+  capacity?: number;
+  stacking_group: string;
+  reason: string;
+  schedule?: { start: number; end: number };
+  requires_active_building?: boolean;
+  sensitivity?: string;
+}
+
+export interface CommunityEffectProfileEntry {
+  type: "CommunityEffectProfile";
+  effects: CommunityEffectEntry[];
+  programmes?: Record<string, { effects: CommunityEffectEntry[] }>;
+  default_programme?: string;
+}
+
 export type Profile =
   | BuildingMetadataProfile
   | BuildingProfile
   | UniqueProfile
   | GenericTierProfile
   | RoadMetadataProfile
-  | AttractivenessProfileEntry;
+  | AttractivenessProfileEntry
+  | CommunityEffectProfileEntry;
 
 export interface BuildingDoc {
   building_id: string;
@@ -142,6 +166,7 @@ export interface BuildingDoc {
   category: BuildingCategory | "";
   pool_id?: string;
   cash_cost?: number;
+  community_role?: "functional" | "cosmetic_only";
   profiles: Profile[];
   tags: string[];
 }

@@ -19,6 +19,7 @@ func before_each() -> void:
 	_stub_chars = _StubCharacters.new()
 	_plugin = PatronSysCls.new()
 	_plugin._characters = _stub_chars
+	_plugin._buildable = _StubBuildable.new()
 	add_child(_plugin)
 
 	_plugin._defs = {
@@ -30,6 +31,7 @@ func before_each() -> void:
 				"aristocrat_residential",
 			],
 			"landmark_building_id": "building_theatre",
+			"donation_area": {"shape": "rect", "rect": [8, -8, 12, 16]},
 		},
 		"businessman": {
 			"patron_id": "businessman",
@@ -39,6 +41,7 @@ func before_each() -> void:
 				"businessman_commercial",
 			],
 			"landmark_building_id": "building_sports_centre",
+			"donation_area": {"shape": "rect", "rect": [20, 20, 2, 2]},
 		},
 	}
 	_plugin._seed_initial_states()
@@ -120,6 +123,14 @@ func test_completed_promotes_contributing_characters() -> void:
 	for cid in ["aristocrat_commercial", "aristocrat_industrial", "aristocrat_residential"]:
 		assert_eq(_stub_chars.promoted_ids.get(cid, 0), 1,
 			"%s should be promoted once" % cid)
+	assert_true(_plugin._buildable.has_donation("aristocrat"))
+
+func test_completed_reconciliation_repairs_donation_without_duplicate_completion() -> void:
+	GameState.map.patron_states["aristocrat"] = PatronSysCls.PatronState.COMPLETED
+	_plugin._recheck("aristocrat")
+	_plugin._recheck("aristocrat")
+	assert_true(_plugin._buildable.has_donation("aristocrat"))
+	assert_eq(_plugin._buildable.apply_counts["aristocrat"], 1)
 
 func test_landmark_placed_early_is_guarded() -> void:
 	# Nothing satisfied yet — so state is LOCKED — but unique_placed fires
@@ -189,3 +200,15 @@ class _StubCharacters extends PluginBase:
 	func promote_to_contributes(cid: String) -> void:
 		promoted_ids[cid] = int(promoted_ids.get(cid, 0)) + 1
 		states[cid] = 4  # CharState.CONTRIBUTES_TO_LANDMARK
+
+class _StubBuildable extends PluginBase:
+	var receipts: Dictionary = {}
+	var apply_counts: Dictionary = {}
+	func get_plugin_name() -> String: return "_StubBuildable"
+	func apply_donation(pid: String, _area: Dictionary) -> Dictionary:
+		if receipts.get(pid, false):
+			return {"applied": false, "already_applied": true}
+		receipts[pid] = true
+		apply_counts[pid] = int(apply_counts.get(pid, 0)) + 1
+		return {"applied": true, "already_applied": false}
+	func has_donation(pid: String) -> bool: return receipts.get(pid, false)

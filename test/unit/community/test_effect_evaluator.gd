@@ -46,6 +46,16 @@ func test_radius_schedule_and_participation_boundaries() -> void:
 	resident.home_anchor = Vector2i(5, 0)
 	assert_false(CommunityEffectEvaluator.applies(local, resident, source, {"hour": 21}))
 
+func test_local_radius_is_inclusive_manhattan_not_bounding_box() -> void:
+	var resident := _resident(0.3, 0.4, 0.3)
+	var local := _effect("green", 5.0, "neutral", "local")
+	local["radius"] = 2
+	var source := {"building_id": "park", "anchor": Vector2i.ZERO, "active": true, "effects": [local]}
+	resident.home_anchor = Vector2i(1, 1)
+	assert_true(CommunityEffectEvaluator.applies(local, resident, source, {"hour": 12}), "distance 2 is included")
+	resident.home_anchor = Vector2i(2, 1)
+	assert_false(CommunityEffectEvaluator.applies(local, resident, source, {"hour": 12}), "diagonal distance 3 is excluded")
+
 func test_stacking_is_deterministic_and_diminishing() -> void:
 	var resident := _resident(0.3, 0.4, 0.3)
 	var sources := [
@@ -58,6 +68,19 @@ func test_stacking_is_deterministic_and_diminishing() -> void:
 	assert_eq(evaluated["effects"][1]["stacking_multiplier"], 0.5)
 	assert_eq(evaluated["effects"][2]["stacking_multiplier"], 0.25)
 	assert_almost_eq(evaluated["totals"]["belonging"], 12.0, 0.0001)
+
+func test_fourth_and_later_positive_same_group_effects_are_zero() -> void:
+	var resident := _resident(0.3, 0.4, 0.3)
+	var sources := []
+	for index in 5:
+		sources.append({
+			"building_id": "nature_%d" % index,
+			"anchor": Vector2i(index, 0),
+			"active": true,
+			"effects": [_effect("green_%d" % index, float(10 - index))],
+		})
+	var evaluated := CommunityEffectEvaluator.evaluate(resident, sources)
+	assert_eq(evaluated["effects"].map(func(effect): return effect["stacking_multiplier"]), [1.0, 0.5, 0.25, 0.0, 0.0])
 
 func test_smoothing_clamping_and_composite() -> void:
 	var resident := _resident(0.3, 0.4, 0.3)

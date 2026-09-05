@@ -6,6 +6,10 @@ class_name DataMap
 ## Starting grant of 1000 lets the player put down a few decoratives before tax kicks in.
 @export var cash: int = 1000
 
+## Fresh live games use the Town Hall-rooted placement rules. Legacy automated
+## scenarios explicitly disable this while their fixtures are migrated.
+@export var rooted_town_rules: bool = true
+
 @export var structures: Array[DataStructure]
 
 ## Character questline progress. Map character_id → CharState int.
@@ -30,6 +34,19 @@ class_name DataMap
 ## How many times each event_id has fired (life-of-save). Read by the
 ## `count.<event_id> >= N` DSL token. Bumped by EventSystem on dispatch.
 @export var event_counts: Dictionary = {}
+
+## Accrued demand totals are authoritative progression input and must survive a
+## cold save/load. Fulfilled demand is derived again from placed structures.
+@export var demand_totals: Dictionary = {}
+
+## Dialogue event IDs dispatched but not yet semantically resolved. Keeping
+## IDs (rather than presentation records) lets EventSystem rebuild from the
+## authored event definition after load without incrementing event_counts.
+@export var pending_dialogue_event_ids: Array[String] = []
+
+## Set-like receipt map keyed by patron_id. A receipt is written even when a
+## donation overlaps existing land so completion reconciliation is idempotent.
+@export var patron_donations_applied: Dictionary = {}
 
 ## Quest-tracker sidebar collapsed state. Persists across saves so the
 ## player's preferred layout sticks. Default visible.

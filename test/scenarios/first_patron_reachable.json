@@ -1,0 +1,1389 @@
+{
+  "schema_version": 2,
+  "scenario_id": "first_patron_reachable",
+  "seed": 5005,
+  "description": "Canonical public-command route from a fresh town to the first patron donation.",
+  "initial_state": {
+    "map": "empty",
+    "cash": 1000,
+    "demand": {
+      "residential": 500,
+      "industrial": 500,
+      "commercial": 500
+    },
+    "land": {
+      "rule": "starter_rect",
+      "rect": {
+        "x": -4,
+        "z": -4,
+        "width": 8,
+        "height": 8
+      }
+    },
+    "clock": {
+      "mode": "manual",
+      "start_hour": 6
+    },
+    "narrative": {
+      "mode": "presentation_disabled"
+    }
+  },
+  "max_hours": 3000,
+  "actions": [
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "001-building_duck_pond",
+        "building_id": "building_duck_pond",
+        "anchor": {
+          "x": -3,
+          "z": -3
+        }
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "002-building_duck_pond",
+        "building_id": "building_duck_pond",
+        "anchor": {
+          "x": 2,
+          "z": -3
+        }
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "003-building_duck_pond",
+        "building_id": "building_duck_pond",
+        "anchor": {
+          "x": -3,
+          "z": 2
+        }
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "004-building_duck_pond",
+        "building_id": "building_duck_pond",
+        "anchor": {
+          "x": 2,
+          "z": 2
+        }
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "005-building_duck_pond",
+        "building_id": "building_duck_pond",
+        "anchor": {
+          "x": -1,
+          "z": -3
+        }
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "006-building_duck_pond",
+        "building_id": "building_duck_pond",
+        "anchor": {
+          "x": -3,
+          "z": 0
+        }
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "007-building_duck_pond",
+        "building_id": "building_duck_pond",
+        "anchor": {
+          "x": 2,
+          "z": -1
+        }
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "008-building_duck_pond",
+        "building_id": "building_duck_pond",
+        "anchor": {
+          "x": 0,
+          "z": 2
+        }
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "009-building_duck_pond",
+        "building_id": "building_duck_pond",
+        "anchor": {
+          "x": -4,
+          "z": -4
+        }
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "010-building_duck_pond",
+        "building_id": "building_duck_pond",
+        "anchor": {
+          "x": -3,
+          "z": -4
+        }
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "011-building_duck_pond",
+        "building_id": "building_duck_pond",
+        "anchor": {
+          "x": -2,
+          "z": -4
+        }
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "012-building_duck_pond",
+        "building_id": "building_duck_pond",
+        "anchor": {
+          "x": -1,
+          "z": -4
+        }
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "013-building_duck_pond",
+        "building_id": "building_duck_pond",
+        "anchor": {
+          "x": 0,
+          "z": -4
+        }
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "014-building_duck_pond",
+        "building_id": "building_duck_pond",
+        "anchor": {
+          "x": 1,
+          "z": -4
+        }
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "015-building_duck_pond",
+        "building_id": "building_duck_pond",
+        "anchor": {
+          "x": 2,
+          "z": -4
+        }
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "016-building_duck_pond",
+        "building_id": "building_duck_pond",
+        "anchor": {
+          "x": 3,
+          "z": -4
+        }
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "017-building_duck_pond",
+        "building_id": "building_duck_pond",
+        "anchor": {
+          "x": -4,
+          "z": -3
+        }
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "018-building_duck_pond",
+        "building_id": "building_duck_pond",
+        "anchor": {
+          "x": -2,
+          "z": -3
+        }
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "019-building_duck_pond",
+        "building_id": "building_duck_pond",
+        "anchor": {
+          "x": 0,
+          "z": -3
+        }
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "020-building_duck_pond",
+        "building_id": "building_duck_pond",
+        "anchor": {
+          "x": 1,
+          "z": -3
+        }
+      }
+    },
+    {
+      "kind": "advance",
+      "params": {
+        "request_id": "021-grow-housing-demand",
+        "hours": 580
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "022-building_postwar_terrace",
+        "building_id": "building_postwar_terrace",
+        "anchor": {
+          "x": -4,
+          "z": -4
+        },
+        "replace": true
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "023-building_postwar_midblock",
+        "building_id": "building_postwar_midblock",
+        "anchor": {
+          "x": -3,
+          "z": -4
+        },
+        "replace": true
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "024-building_postwar_tower_block",
+        "building_id": "building_postwar_tower_block",
+        "anchor": {
+          "x": -2,
+          "z": -4
+        },
+        "replace": true
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "025-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": -1,
+          "z": -4
+        },
+        "variant_id": "building_small_a",
+        "replace": true
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "026-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": 0,
+          "z": -4
+        },
+        "variant_id": "building_small_a",
+        "replace": true
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "027-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": 1,
+          "z": -4
+        },
+        "variant_id": "building_small_a",
+        "replace": true
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "028-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": 2,
+          "z": -4
+        },
+        "variant_id": "building_small_a",
+        "replace": true
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "029-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": 3,
+          "z": -4
+        },
+        "variant_id": "building_small_a",
+        "replace": true
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "030-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": -4,
+          "z": -3
+        },
+        "variant_id": "building_small_a",
+        "replace": true
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "031-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": -2,
+          "z": -3
+        },
+        "variant_id": "building_small_a",
+        "replace": true
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "032-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": 0,
+          "z": -3
+        },
+        "variant_id": "building_small_a",
+        "replace": true
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "033-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": 1,
+          "z": -3
+        },
+        "variant_id": "building_small_a",
+        "replace": true
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "034-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": 3,
+          "z": -3
+        },
+        "variant_id": "building_small_a",
+        "replace": false
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "035-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": -4,
+          "z": -2
+        },
+        "variant_id": "building_small_a",
+        "replace": false
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "036-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": -3,
+          "z": -2
+        },
+        "variant_id": "building_small_a",
+        "replace": false
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "037-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": -2,
+          "z": -2
+        },
+        "variant_id": "building_small_a",
+        "replace": false
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "038-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": -1,
+          "z": -2
+        },
+        "variant_id": "building_small_a",
+        "replace": false
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "039-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": 0,
+          "z": -2
+        },
+        "variant_id": "building_small_a",
+        "replace": false
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "040-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": 1,
+          "z": -2
+        },
+        "variant_id": "building_small_a",
+        "replace": false
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "041-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": 2,
+          "z": -2
+        },
+        "variant_id": "building_small_a",
+        "replace": false
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "042-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": 3,
+          "z": -2
+        },
+        "variant_id": "building_small_a",
+        "replace": false
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "043-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": -4,
+          "z": -1
+        },
+        "variant_id": "building_small_a",
+        "replace": false
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "044-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": -3,
+          "z": -1
+        },
+        "variant_id": "building_small_a",
+        "replace": false
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "045-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": -2,
+          "z": -1
+        },
+        "variant_id": "building_small_a",
+        "replace": false
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "046-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": -1,
+          "z": -1
+        },
+        "variant_id": "building_small_a",
+        "replace": false
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "047-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": 0,
+          "z": -1
+        },
+        "variant_id": "building_small_a",
+        "replace": false
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "048-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": 1,
+          "z": -1
+        },
+        "variant_id": "building_small_a",
+        "replace": false
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "049-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": 3,
+          "z": -1
+        },
+        "variant_id": "building_small_a",
+        "replace": false
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "050-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": -4,
+          "z": 0
+        },
+        "variant_id": "building_small_a",
+        "replace": false
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "051-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": -2,
+          "z": 0
+        },
+        "variant_id": "building_small_a",
+        "replace": false
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "052-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": -1,
+          "z": 0
+        },
+        "variant_id": "building_small_a",
+        "replace": false
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "053-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": 0,
+          "z": 0
+        },
+        "variant_id": "building_small_a",
+        "replace": false
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "054-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": 1,
+          "z": 0
+        },
+        "variant_id": "building_small_a",
+        "replace": false
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "055-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": 2,
+          "z": 0
+        },
+        "variant_id": "building_small_a",
+        "replace": false
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "056-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": 3,
+          "z": 0
+        },
+        "variant_id": "building_small_a",
+        "replace": false
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "057-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": -4,
+          "z": 1
+        },
+        "variant_id": "building_small_a",
+        "replace": false
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "058-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": -3,
+          "z": 1
+        },
+        "variant_id": "building_small_a",
+        "replace": false
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "059-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": -2,
+          "z": 1
+        },
+        "variant_id": "building_small_a",
+        "replace": false
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "060-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": -1,
+          "z": 1
+        },
+        "variant_id": "building_small_a",
+        "replace": false
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "061-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": 0,
+          "z": 1
+        },
+        "variant_id": "building_small_a",
+        "replace": false
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "062-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": 1,
+          "z": 1
+        },
+        "variant_id": "building_small_a",
+        "replace": false
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "063-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": 2,
+          "z": 1
+        },
+        "variant_id": "building_small_a",
+        "replace": false
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "064-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": 3,
+          "z": 1
+        },
+        "variant_id": "building_small_a",
+        "replace": false
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "065-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": -4,
+          "z": 2
+        },
+        "variant_id": "building_small_a",
+        "replace": false
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "066-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": -2,
+          "z": 2
+        },
+        "variant_id": "building_small_a",
+        "replace": false
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "067-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": -1,
+          "z": 2
+        },
+        "variant_id": "building_small_a",
+        "replace": false
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "068-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": 1,
+          "z": 2
+        },
+        "variant_id": "building_small_a",
+        "replace": false
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "069-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": 3,
+          "z": 2
+        },
+        "variant_id": "building_small_a",
+        "replace": false
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "070-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": -4,
+          "z": 3
+        },
+        "variant_id": "building_small_a",
+        "replace": false
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "071-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": -3,
+          "z": 3
+        },
+        "variant_id": "building_small_a",
+        "replace": false
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "072-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": -2,
+          "z": 3
+        },
+        "variant_id": "building_small_a",
+        "replace": false
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "073-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": -1,
+          "z": 3
+        },
+        "variant_id": "building_small_a",
+        "replace": false
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "074-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": 0,
+          "z": 3
+        },
+        "variant_id": "building_small_a",
+        "replace": false
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "075-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": 1,
+          "z": 3
+        },
+        "variant_id": "building_small_a",
+        "replace": false
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "076-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": 2,
+          "z": 3
+        },
+        "variant_id": "building_small_a",
+        "replace": false
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "077-residential_t1",
+        "building_id": "residential_t1",
+        "anchor": {
+          "x": 3,
+          "z": 3
+        },
+        "variant_id": "building_small_a",
+        "replace": false
+      }
+    },
+    {
+      "kind": "resolve_dialogue",
+      "params": {
+        "request_id": "078-resolve-residential-arrival",
+        "event_id": "aristocrat_residential_arrival"
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "078a-theatre-blocked-before-patron",
+        "building_id": "building_theatre",
+        "anchor": {
+          "x": 0,
+          "z": -2
+        },
+        "replace": true
+      },
+      "expected_status": "rejected",
+      "expected_reason": "patron_not_ready"
+    },
+    {
+      "kind": "advance",
+      "params": {
+        "request_id": "079a-grow-population",
+        "hours": 428
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "080-building_pirate_radio",
+        "building_id": "building_pirate_radio",
+        "anchor": {
+          "x": -2,
+          "z": -2
+        },
+        "replace": true
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "081-building_windmill",
+        "building_id": "building_windmill",
+        "anchor": {
+          "x": -3,
+          "z": -3
+        },
+        "replace": true
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "082-building_lumber_mill",
+        "building_id": "building_lumber_mill",
+        "anchor": {
+          "x": 2,
+          "z": -3
+        },
+        "replace": true
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "083-building_pipe_factory",
+        "building_id": "building_pipe_factory",
+        "anchor": {
+          "x": -3,
+          "z": 2
+        },
+        "replace": true
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "084-industrial_t1",
+        "building_id": "industrial_t1",
+        "anchor": {
+          "x": 2,
+          "z": 2
+        },
+        "variant_id": "building_garage",
+        "replace": true
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "085-industrial_t1",
+        "building_id": "industrial_t1",
+        "anchor": {
+          "x": -1,
+          "z": -3
+        },
+        "variant_id": "building_garage",
+        "replace": true
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "086-industrial_t1",
+        "building_id": "industrial_t1",
+        "anchor": {
+          "x": -3,
+          "z": 0
+        },
+        "variant_id": "building_garage",
+        "replace": true
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "087-industrial_t1",
+        "building_id": "industrial_t1",
+        "anchor": {
+          "x": 2,
+          "z": -1
+        },
+        "variant_id": "building_garage",
+        "replace": true
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "088-industrial_t1",
+        "building_id": "industrial_t1",
+        "anchor": {
+          "x": 0,
+          "z": 2
+        },
+        "variant_id": "building_garage",
+        "replace": true
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "089-industrial_t1",
+        "building_id": "industrial_t1",
+        "anchor": {
+          "x": -1,
+          "z": -4
+        },
+        "variant_id": "building_garage",
+        "replace": true
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "090-industrial_t1",
+        "building_id": "industrial_t1",
+        "anchor": {
+          "x": 0,
+          "z": -4
+        },
+        "variant_id": "building_garage",
+        "replace": true
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "091-industrial_t1",
+        "building_id": "industrial_t1",
+        "anchor": {
+          "x": 1,
+          "z": -4
+        },
+        "variant_id": "building_garage",
+        "replace": true
+      }
+    },
+    {
+      "kind": "resolve_dialogue",
+      "params": {
+        "request_id": "092-resolve-industrial-arrival",
+        "event_id": "aristocrat_industrial_arrival"
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "093-building_crazy_golf",
+        "building_id": "building_crazy_golf",
+        "anchor": {
+          "x": 2,
+          "z": -4
+        },
+        "replace": true
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "094-industrial_t1",
+        "building_id": "industrial_t1",
+        "anchor": {
+          "x": 3,
+          "z": -4
+        },
+        "variant_id": "building_garage",
+        "replace": true
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "095-industrial_t1",
+        "building_id": "industrial_t1",
+        "anchor": {
+          "x": -4,
+          "z": -3
+        },
+        "variant_id": "building_garage",
+        "replace": true
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "096-industrial_t1",
+        "building_id": "industrial_t1",
+        "anchor": {
+          "x": -2,
+          "z": -3
+        },
+        "variant_id": "building_garage",
+        "replace": true
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "097-industrial_t1",
+        "building_id": "industrial_t1",
+        "anchor": {
+          "x": 0,
+          "z": -3
+        },
+        "variant_id": "building_garage",
+        "replace": true
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "098-industrial_t1",
+        "building_id": "industrial_t1",
+        "anchor": {
+          "x": 1,
+          "z": -3
+        },
+        "variant_id": "building_garage",
+        "replace": true
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "099-industrial_t1",
+        "building_id": "industrial_t1",
+        "anchor": {
+          "x": 3,
+          "z": -3
+        },
+        "variant_id": "building_garage",
+        "replace": true
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "100-industrial_t1",
+        "building_id": "industrial_t1",
+        "anchor": {
+          "x": -4,
+          "z": -2
+        },
+        "variant_id": "building_garage",
+        "replace": true
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "101-industrial_t1",
+        "building_id": "industrial_t1",
+        "anchor": {
+          "x": -3,
+          "z": -2
+        },
+        "variant_id": "building_garage",
+        "replace": true
+      }
+    },
+    {
+      "kind": "advance",
+      "params": {
+        "request_id": "102-produce-industrial-output",
+        "hours": 3
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "103-building_pub",
+        "building_id": "building_pub",
+        "anchor": {
+          "x": -4,
+          "z": -4
+        },
+        "replace": true
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "104-building_restaurant",
+        "building_id": "building_restaurant",
+        "anchor": {
+          "x": -3,
+          "z": -4
+        },
+        "replace": true
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "105-building_nightclub",
+        "building_id": "building_nightclub",
+        "anchor": {
+          "x": -2,
+          "z": -4
+        },
+        "replace": true
+      }
+    },
+    {
+      "kind": "resolve_dialogue",
+      "params": {
+        "request_id": "106-resolve-commercial-arrival",
+        "event_id": "aristocrat_commercial_arrival"
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "107-building_members_club",
+        "building_id": "building_members_club",
+        "anchor": {
+          "x": -1,
+          "z": -2
+        },
+        "replace": true
+      }
+    },
+    {
+      "kind": "place",
+      "params": {
+        "request_id": "108-building_theatre",
+        "building_id": "building_theatre",
+        "anchor": {
+          "x": 0,
+          "z": -2
+        },
+        "replace": true
+      }
+    }
+  ],
+  "expected_milestones": [
+    "character.aristocrat_residential.arrived",
+    "character.aristocrat_residential.want_revealed",
+    "character.aristocrat_residential.satisfied",
+    "character.aristocrat_industrial.arrived",
+    "character.aristocrat_industrial.want_revealed",
+    "character.aristocrat_industrial.satisfied",
+    "character.aristocrat_commercial.arrived",
+    "character.aristocrat_commercial.want_revealed",
+    "character.aristocrat_commercial.satisfied",
+    "patron.aristocrat.landmark_available",
+    "patron.aristocrat.completed",
+    "patron.aristocrat.land_donated"
+  ],
+  "success_conditions": [
+    {
+      "path": "progression.patrons.aristocrat.state_name",
+      "equals": "COMPLETED"
+    },
+    {
+      "path": "land.allowed_count",
+      "equals": 256
+    }
+  ],
+  "soft_failure_conditions": [],
+  "hard_failure_conditions": []
+}

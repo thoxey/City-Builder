@@ -48,6 +48,16 @@ func test_three_events_preserve_order() -> void:
 	_plugin.push_for_test(_make_record("c", "dialogue", "cid_c"))
 	assert_eq(_plugin.pending_event_ids(), ["a", "b", "c"])
 
+func test_duplicate_event_id_is_not_queued_twice() -> void:
+	_plugin.push_for_test(_make_record("a", "dialogue", "cid_a"))
+	_plugin.push_for_test(_make_record("a", "dialogue", "cid_a"))
+	assert_eq(_plugin.pending_event_ids(), ["a"])
+
+func test_presentation_disabled_still_tracks_semantic_pending_queue() -> void:
+	_plugin.set_presentation_enabled(false)
+	_plugin.push_for_test(_make_record("a", "dialogue", "cid_a"))
+	assert_eq(_plugin.pending_event_ids(), ["a"])
+
 func test_non_dialogue_events_ignored() -> void:
 	_plugin.push_for_test(_make_record("n1", "newspaper", ""))
 	_plugin.push_for_test(_make_record("t1", "notification", ""))

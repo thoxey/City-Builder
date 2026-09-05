@@ -51,6 +51,7 @@ func _plugin_ready() -> void:
 	_build_ui()
 	if _event_system:
 		_event_system.event_resolved.connect(_on_event_resolved)
+	GameEvents.map_loaded.connect(_on_map_loaded)
 	print("[Inbox] ready: pending=0")
 
 # ── UI ────────────────────────────────────────────────────────────────────────
@@ -135,17 +136,25 @@ func _build_ui() -> void:
 # ── Signal handling ───────────────────────────────────────────────────────────
 
 func _on_event_resolved(record: Dictionary) -> void:
-	if not _presentation_enabled:
-		return
 	if String(record.get("event_type", "")) != "dialogue":
 		return
+	var event_id := String(record.get("event_id", ""))
+	for existing in _pending:
+		if String(existing.get("event_id", "")) == event_id:
+			return
 	_pending.append(record.duplicate(true))
 	print("[Inbox] queued: event_id=%s pending=%d" % [
 		String(record.get("event_id", "")), _pending.size()
 	])
-	_refresh_badge()
-	if _expanded:
+	if _presentation_enabled:
+		_refresh_badge()
+	if _presentation_enabled and _expanded:
 		_rebuild_list()
+
+func _on_map_loaded(_map: DataMap) -> void:
+	_pending.clear()
+	if _button:
+		_refresh_badge()
 
 # ── Expansion / click handling ────────────────────────────────────────────────
 

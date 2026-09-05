@@ -1,0 +1,32 @@
+{
+  "files": [
+    "matched-compact.png",
+    "matched-spread.png",
+    "operation-inspection.png",
+    "placement-coverage-preview.png",
+    "midgame-green-corridors.png",
+    "midgame-garden-blocks.png"
+  ],
+  "frozen_camera": {
+    "position": {
+      "x": 2.0,
+      "y": 0.0,
+      "z": 1.0
+    },
+    "zoom": 42.0
+  },
+  "midgame_frozen_camera": {
+    "position": {
+      "x": -0.5,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "zoom": 36.0
+  },
+  "renderer": "forward_plus",
+  "schema_version": 1,
+  "viewport": {
+    "height": 720,
+    "width": 1280
+  }
+}

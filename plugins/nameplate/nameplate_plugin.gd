@@ -15,7 +15,7 @@ const SKIP_CATEGORIES: PackedStringArray = ["road", "nature"]
 var _catalog: PluginBase
 var _container: Node3D
 var _labels: Dictionary = {}  # Vector2i anchor -> Label3D
-var _visible: bool = true
+var _visible: bool = false
 
 func get_plugin_name() -> String:
 	return "Nameplate"
@@ -29,6 +29,7 @@ func inject(deps: Dictionary) -> void:
 func _plugin_ready() -> void:
 	_container = Node3D.new()
 	_container.name = "NameplateContainer"
+	_container.visible = _visible
 	add_child(_container)
 
 	GameEvents.structure_placed.connect(_on_structure_placed)

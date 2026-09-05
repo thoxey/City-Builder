@@ -1,0 +1,434 @@
+{
+  "failures": [],
+  "observations": {
+    "connected": {
+      "absolute_hour": 3,
+      "community": {
+        "assignments": [
+          {
+            "allocation_order": 0,
+            "anchor": {
+              "x": 2,
+              "z": 0
+            },
+            "assigned_hour": 9,
+            "building_id": "building_garage",
+            "component_id": "0,0",
+            "destination_internal_id": 1,
+            "internal_id": 1,
+            "priority": 0,
+            "programme": "",
+            "purpose": "work",
+            "resident_id": 1,
+            "route_distance": 1
+          }
+        ],
+        "population": 1
+      },
+      "connectivity": {
+        "buildings": [
+          {
+            "anchor": {
+              "x": -1,
+              "z": 0
+            },
+            "building_id": "building_small_a",
+            "component_ids": [
+              "0,0"
+            ],
+            "footprint_cells": [
+              {
+                "x": -1,
+                "z": 0
+              }
+            ],
+            "internal_id": 0,
+            "primary_reason": "",
+            "reasons": [],
+            "road_accessible": true,
+            "stops": [
+              {
+                "x": 0,
+                "z": 0
+              }
+            ]
+          },
+          {
+            "anchor": {
+              "x": 2,
+              "z": 0
+            },
+            "building_id": "building_garage",
+            "component_ids": [
+              "0,0"
+            ],
+            "footprint_cells": [
+              {
+                "x": 2,
+                "z": 0
+              }
+            ],
+            "internal_id": 1,
+            "primary_reason": "",
+            "reasons": [],
+            "road_accessible": true,
+            "stops": [
+              {
+                "x": 1,
+                "z": 0
+              }
+            ]
+          }
+        ],
+        "components": [
+          {
+            "cell_count": 2,
+            "cells": [
+              {
+                "x": 0,
+                "z": 0
+              },
+              {
+                "x": 1,
+                "z": 0
+              }
+            ],
+            "component_id": "0,0"
+          }
+        ],
+        "revision": 6,
+        "road_cell_count": 2,
+        "road_cells": [
+          {
+            "x": 0,
+            "z": 0
+          },
+          {
+            "x": 1,
+            "z": 0
+          }
+        ]
+      },
+      "economy": {
+        "cash": 1001,
+        "industrial_output": 1,
+        "last_hourly_income": 5,
+        "ledger": {
+          "cumulative_income": 5,
+          "cumulative_shop_proximity_income": 0,
+          "cumulative_spend": 4,
+          "last_shop_proximity_income": 0,
+          "spend_by_category": {
+            "road": 4
+          }
+        }
+      },
+      "operation": [
+        {
+          "anchor": {
+            "x": 2,
+            "z": 0
+          },
+          "available_capacity": 19,
+          "building_id": "building_garage",
+          "capacity": 20,
+          "category": "industrial",
+          "component_ids": [
+            "0,0"
+          ],
+          "fulfilled": 1,
+          "internal_id": 1,
+          "latest_activity": 1,
+          "latest_income": 5,
+          "latest_output": 1,
+          "open_now": true,
+          "operating": true,
+          "primary_reason": "",
+          "reasons": [],
+          "road_accessible": true,
+          "stops": [
+            {
+              "x": 1,
+              "z": 0
+            }
+          ],
+          "town_hall_proximity": {
+            "band": "",
+            "distance": -1,
+            "home_liveability_penalty": 0.0,
+            "reachable": false,
+            "route": {
+              "destination_internal_id": 1,
+              "distance": -1,
+              "origin_internal_id": -1,
+              "path": [],
+              "reachable": false,
+              "reason": "town_hall_required"
+            },
+            "shop_activity_bonus": 0.0
+          }
+        }
+      ],
+      "state_hash": "432ba1cf436cb67a3af8c6eba0458bb655720a3ddbb9d9c62b8f5f930bd0b0b3"
+    },
+    "disconnected": {
+      "absolute_hour": 4,
+      "community": {
+        "assignments": [],
+        "population": 1
+      },
+      "connectivity": {
+        "buildings": [
+          {
+            "anchor": {
+              "x": -1,
+              "z": 0
+            },
+            "building_id": "building_small_a",
+            "component_ids": [],
+            "footprint_cells": [
+              {
+                "x": -1,
+                "z": 0
+              }
+            ],
+            "internal_id": 0,
+            "primary_reason": "no_road_access",
+            "reasons": [
+              "no_road_access"
+            ],
+            "road_accessible": false,
+            "stops": []
+          },
+          {
+            "anchor": {
+              "x": 2,
+              "z": 0
+            },
+            "building_id": "building_garage",
+            "component_ids": [
+              "1,0"
+            ],
+            "footprint_cells": [
+              {
+                "x": 2,
+                "z": 0
+              }
+            ],
+            "internal_id": 1,
+            "primary_reason": "",
+            "reasons": [],
+            "road_accessible": true,
+            "stops": [
+              {
+                "x": 1,
+                "z": 0
+              }
+            ]
+          }
+        ],
+        "components": [
+          {
+            "cell_count": 1,
+            "cells": [
+              {
+                "x": 1,
+                "z": 0
+              }
+            ],
+            "component_id": "1,0"
+          }
+        ],
+        "revision": 7,
+        "road_cell_count": 1,
+        "road_cells": [
+          {
+            "x": 1,
+            "z": 0
+          }
+        ]
+      },
+      "economy": {
+        "cash": 1001,
+        "industrial_output": 0,
+        "last_hourly_income": 0,
+        "ledger": {
+          "cumulative_income": 5,
+          "cumulative_shop_proximity_income": 0,
+          "cumulative_spend": 4,
+          "last_shop_proximity_income": 0,
+          "spend_by_category": {
+            "road": 4
+          }
+        }
+      },
+      "operation": [
+        {
+          "anchor": {
+            "x": 2,
+            "z": 0
+          },
+          "available_capacity": 20,
+          "building_id": "building_garage",
+          "capacity": 20,
+          "category": "industrial",
+          "component_ids": [
+            "1,0"
+          ],
+          "fulfilled": 0,
+          "internal_id": 1,
+          "latest_activity": 0,
+          "latest_income": 0,
+          "latest_output": 0,
+          "open_now": true,
+          "operating": false,
+          "primary_reason": "isolated_road_component",
+          "reasons": [
+            "isolated_road_component",
+            "no_reachable_residents"
+          ],
+          "road_accessible": true,
+          "stops": [
+            {
+              "x": 1,
+              "z": 0
+            }
+          ],
+          "town_hall_proximity": {
+            "band": "",
+            "distance": -1,
+            "home_liveability_penalty": 0.0,
+            "reachable": false,
+            "route": {
+              "destination_internal_id": 1,
+              "distance": -1,
+              "origin_internal_id": -1,
+              "path": [],
+              "reachable": false,
+              "reason": "town_hall_required"
+            },
+            "shop_activity_bonus": 0.0
+          }
+        }
+      ],
+      "state_hash": "5a8627adb672d001a59a126cfef82a7ac1a2c2b2596f3141982d6b80db827787"
+    },
+    "roadless": {
+      "absolute_hour": 2,
+      "community": {
+        "assignments": [],
+        "population": 1
+      },
+      "connectivity": {
+        "buildings": [
+          {
+            "anchor": {
+              "x": -1,
+              "z": 0
+            },
+            "building_id": "building_small_a",
+            "component_ids": [],
+            "footprint_cells": [
+              {
+                "x": -1,
+                "z": 0
+              }
+            ],
+            "internal_id": 0,
+            "primary_reason": "no_road_access",
+            "reasons": [
+              "no_road_access"
+            ],
+            "road_accessible": false,
+            "stops": []
+          },
+          {
+            "anchor": {
+              "x": 2,
+              "z": 0
+            },
+            "building_id": "building_garage",
+            "component_ids": [],
+            "footprint_cells": [
+              {
+                "x": 2,
+                "z": 0
+              }
+            ],
+            "internal_id": 1,
+            "primary_reason": "no_road_access",
+            "reasons": [
+              "no_road_access"
+            ],
+            "road_accessible": false,
+            "stops": []
+          }
+        ],
+        "components": [],
+        "revision": 4,
+        "road_cell_count": 0,
+        "road_cells": []
+      },
+      "economy": {
+        "cash": 1000,
+        "industrial_output": 0,
+        "last_hourly_income": 0,
+        "ledger": {
+          "cumulative_income": 0,
+          "cumulative_shop_proximity_income": 0,
+          "cumulative_spend": 0,
+          "last_shop_proximity_income": 0,
+          "spend_by_category": {
+
+          }
+        }
+      },
+      "operation": [
+        {
+          "anchor": {
+            "x": 2,
+            "z": 0
+          },
+          "available_capacity": 20,
+          "building_id": "building_garage",
+          "capacity": 20,
+          "category": "industrial",
+          "component_ids": [],
+          "fulfilled": 0,
+          "internal_id": 1,
+          "latest_activity": 0,
+          "latest_income": 0,
+          "latest_output": 0,
+          "open_now": true,
+          "operating": false,
+          "primary_reason": "no_road_access",
+          "reasons": [
+            "no_road_access"
+          ],
+          "road_accessible": false,
+          "stops": [],
+          "town_hall_proximity": {
+            "band": "",
+            "distance": -1,
+            "home_liveability_penalty": 0.0,
+            "reachable": false,
+            "route": {
+              "destination_internal_id": 1,
+              "distance": -1,
+              "origin_internal_id": -1,
+              "path": [],
+              "reachable": false,
+              "reason": "town_hall_required"
+            },
+            "shop_activity_bonus": 0.0
+          }
+        }
+      ],
+      "state_hash": "12ab031246ca61174751ed7d1310fa1d41df5b7edf4258806550b56aff44f024"
+    }
+  },
+  "scenario_id": "first_town_connected",
+  "schema_version": 1,
+  "seed": 6006,
+  "success": true
+}

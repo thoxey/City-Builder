@@ -11,6 +11,12 @@ var _walk_graph: Dictionary = {}   # Vector3i → Array[Vector3i]  (all placed t
 var _building_tiles:      Array[Vector3i] = []
 var _building_stops:      Array[Vector3i] = []   # flat: road tiles adjacent to any building
 var _building_road_stops: Dictionary = {}         # building_tile → Array[Vector3i]
+var _component_by_cell: Dictionary = {}            # road tile -> stable component id
+var _components: Dictionary = {}                   # component id -> sorted road tiles
+var _access_by_building: Dictionary = {}           # internal building id -> access evidence
+var _revision: int = 0
+
+const TOWN_HALL_BUILDING_ID := "building_town_hall"
 
 func get_plugin_name() -> String: return "RoadNetwork"
 func get_dependencies() -> Array[String]: return []
@@ -32,6 +38,162 @@ func get_stops_for_building(tile: Vector3i) -> Array[Vector3i]:
 	if stored:
 		result.assign(stored)
 	return result
+
+func get_revision() -> int:
+	return _revision
+
+func get_town_hall_internal_id() -> int:
+	var catalog := PluginManager.get_plugin("BuildingCatalog")
+	var ids := GameState.building_registry.keys()
+	ids.sort()
+	for internal_id_raw in ids:
+		var sid := int(GameState.building_registry[internal_id_raw].get("structure", -1))
+		if catalog and String(catalog.get_id_by_index(sid)) == TOWN_HALL_BUILDING_ID:
+			return int(internal_id_raw)
+	return -1
+
+func get_rooted_component_ids() -> Array[String]:
+	var hall_id := get_town_hall_internal_id()
+	if hall_id < 0:
+		return []
+	var result: Array[String] = []
+	result.assign(get_access_for_building(hall_id).get("component_ids", []))
+	result.sort()
+	return result
+
+## Canonical, mutation-free placement gate for the rooted first-town layout.
+func evaluate_rooted_placement(building_id: String, footprint: Array[Vector2i],
+		is_road: bool, requires_road_access: bool) -> Dictionary:
+	if GameState.map == null or not bool(GameState.map.rooted_town_rules):
+		return {"ok": true, "reason": "", "rooted_component_ids": []}
+	var hall_id := get_town_hall_internal_id()
+	if hall_id < 0:
+		if building_id == TOWN_HALL_BUILDING_ID:
+			return {"ok": true, "reason": "", "rooted_component_ids": []}
+		return {"ok": false, "reason": PlaytestActionResult.TOWN_HALL_REQUIRED,
+			"rooted_component_ids": []}
+	if building_id == TOWN_HALL_BUILDING_ID:
+		return {"ok": false, "reason": PlaytestActionResult.TOWN_HALL_ALREADY_PLACED,
+			"town_hall_internal_id": hall_id, "rooted_component_ids": get_rooted_component_ids()}
+	if not is_road and not requires_road_access:
+		return {"ok": true, "reason": "", "town_hall_internal_id": hall_id,
+			"rooted_component_ids": get_rooted_component_ids(), "exempt": true}
+	var rooted := get_rooted_component_ids()
+	var hall_cells: Dictionary = {}
+	for cell in GameState.building_registry.get(hall_id, {}).get("cells", []):
+		hall_cells[Vector2i(cell.x, cell.y)] = true
+	var touches: Array = []
+	for cell in footprint:
+		for offset: Vector2i in [Vector2i(1,0), Vector2i(-1,0), Vector2i(0,1), Vector2i(0,-1)]:
+			var neighbor_2d := cell + offset
+			if is_road and hall_cells.has(neighbor_2d):
+				touches.append(_coordinate_record(neighbor_2d))
+				continue
+			var neighbor := Vector3i(neighbor_2d.x, 0, neighbor_2d.y)
+			var component_id := String(_component_by_cell.get(neighbor, ""))
+			if not component_id.is_empty() and component_id in rooted:
+				touches.append(_coordinate_record(neighbor))
+	if not touches.is_empty():
+		return {"ok": true, "reason": "", "town_hall_internal_id": hall_id,
+			"rooted_component_ids": rooted, "touching_root_cells": touches}
+	return {"ok": false, "reason": PlaytestActionResult.NOT_CONNECTED_TO_TOWN_HALL,
+		"town_hall_internal_id": hall_id, "rooted_component_ids": rooted,
+		"requires_road_access": requires_road_access, "is_road": is_road}
+
+## Canonical footprint-aware access decision for one placed building.
+func get_access_for_building(internal_id: int) -> Dictionary:
+	if not _access_by_building.has(internal_id):
+		return {
+			"internal_id": internal_id,
+			"road_accessible": false,
+			"stops": [],
+			"component_ids": [],
+			"reasons": ["unknown_building"],
+			"primary_reason": "unknown_building",
+		}
+	return (_access_by_building[internal_id] as Dictionary).duplicate(true)
+
+## Stable shortest road route between two placed buildings.
+func get_route_between_buildings(origin_id: int, destination_id: int) -> Dictionary:
+	var origin := get_access_for_building(origin_id)
+	var destination := get_access_for_building(destination_id)
+	var result := {
+		"origin_internal_id": origin_id,
+		"destination_internal_id": destination_id,
+		"reachable": false,
+		"distance": -1,
+		"path": [],
+		"shared_component_ids": [],
+		"reason": "",
+	}
+	if not bool(origin.get("road_accessible", false)) or not bool(destination.get("road_accessible", false)):
+		result["reason"] = "no_road_access"
+		return result
+	var destination_components: Dictionary = {}
+	for component_id in destination.get("component_ids", []):
+		destination_components[String(component_id)] = true
+	var shared: Array[String] = []
+	for component_id in origin.get("component_ids", []):
+		if destination_components.has(String(component_id)):
+			shared.append(String(component_id))
+	shared.sort()
+	result["shared_component_ids"] = shared
+	if shared.is_empty():
+		result["reason"] = "isolated_road_component"
+		return result
+	var target_cells: Dictionary = {}
+	for stop_record in destination.get("stops", []):
+		var stop: Variant = _record_cell(stop_record)
+		if stop != null and String(_component_by_cell.get(stop, "")) in shared:
+			target_cells[stop] = true
+	var starts: Array[Vector3i] = []
+	for stop_record in origin.get("stops", []):
+		var stop: Variant = _record_cell(stop_record)
+		if stop != null and String(_component_by_cell.get(stop, "")) in shared:
+			starts.append(stop)
+	_sort_cells(starts)
+	var path := _shortest_path(starts, target_cells)
+	if path.is_empty():
+		result["reason"] = "isolated_road_component"
+		return result
+	result["reachable"] = true
+	result["distance"] = maxi(0, path.size() - 1)
+	result["path"] = _cell_records(path)
+	return result
+
+func get_route_from_town_hall(destination_id: int) -> Dictionary:
+	var hall_id := get_town_hall_internal_id()
+	if hall_id < 0:
+		return {"origin_internal_id": -1, "destination_internal_id": destination_id,
+			"reachable": false, "distance": -1, "path": [], "reason": "town_hall_required"}
+	return get_route_between_buildings(hall_id, destination_id)
+
+func get_connectivity_snapshot() -> Dictionary:
+	var component_rows: Array = []
+	var component_ids := _components.keys()
+	component_ids.sort()
+	for component_id in component_ids:
+		var cells: Array = _components[component_id]
+		component_rows.append({
+			"component_id": component_id,
+			"cell_count": cells.size(),
+			"cells": _cell_records(cells),
+		})
+	var building_rows: Array = []
+	var building_ids := _access_by_building.keys()
+	building_ids.sort()
+	for internal_id in building_ids:
+		building_rows.append((_access_by_building[internal_id] as Dictionary).duplicate(true))
+	var road_cells: Array[Vector3i] = []
+	road_cells.assign(_graph.keys())
+	_sort_cells(road_cells)
+	return {
+		"revision": _revision,
+		"road_cell_count": road_cells.size(),
+		"road_cells": _cell_records(road_cells),
+		"components": component_rows,
+		"buildings": building_rows,
+	}
 
 func road_meta_for(sid: int) -> RoadMetadata:
 	return _road_meta_for(sid)
@@ -56,9 +218,14 @@ func _plugin_ready() -> void:
 # ── Build ─────────────────────────────────────────────────────────────────────
 
 func _rebuild() -> void:
+	if GameState.gridmap == null:
+		return
 	_build_graph()
 	_build_walk_graph()
 	_find_building_stops()
+	_build_components()
+	_build_access_projection()
+	_revision += 1
 	print("[RoadNetwork] road tiles: %d | walk tiles: %d | building stops: %d" % [
 			_graph.size(), _walk_graph.size(), _building_stops.size()])
 
@@ -127,6 +294,142 @@ func _find_building_stops() -> void:
 					if not nb in _building_stops:
 						_building_stops.append(nb)
 		_building_road_stops[cell] = stops
+
+func _build_components() -> void:
+	_component_by_cell.clear()
+	_components.clear()
+	var road_cells: Array[Vector3i] = []
+	road_cells.assign(_graph.keys())
+	_sort_cells(road_cells)
+	for start in road_cells:
+		if _component_by_cell.has(start):
+			continue
+		var pending: Array[Vector3i] = [start]
+		var found: Array[Vector3i] = []
+		var seen := {start: true}
+		while not pending.is_empty():
+			var current: Vector3i = pending.pop_front()
+			found.append(current)
+			var neighbors: Array[Vector3i] = []
+			neighbors.assign(_graph.get(current, []))
+			_sort_cells(neighbors)
+			for neighbor in neighbors:
+				if seen.has(neighbor):
+					continue
+				seen[neighbor] = true
+				pending.append(neighbor)
+		_sort_cells(found)
+		var component_id := _cell_key(found[0])
+		_components[component_id] = found
+		for cell in found:
+			_component_by_cell[cell] = component_id
+
+func _build_access_projection() -> void:
+	_access_by_building.clear()
+	var ids := GameState.building_registry.keys()
+	ids.sort()
+	var catalog := PluginManager.get_plugin("BuildingCatalog")
+	for internal_id_raw in ids:
+		var internal_id := int(internal_id_raw)
+		var entry: Dictionary = GameState.building_registry[internal_id_raw]
+		var sid := int(entry.get("structure", -1))
+		if sid < 0 or sid >= GameState.structures.size():
+			continue
+		if _road_meta_for(sid) != null:
+			continue
+		var footprint: Array[Vector3i] = []
+		for cell_raw in entry.get("cells", [entry.get("anchor", Vector2i.ZERO)]):
+			var cell_2d: Variant = cell_raw
+			if cell_2d is Vector3i:
+				footprint.append(cell_2d)
+			elif cell_2d is Vector2i:
+				footprint.append(Vector3i(cell_2d.x, 0, cell_2d.y))
+		_sort_cells(footprint)
+		var stops: Array[Vector3i] = []
+		for cell in footprint:
+			for offset: Vector3i in [Vector3i(1,0,0), Vector3i(-1,0,0), Vector3i(0,0,1), Vector3i(0,0,-1)]:
+				var neighbor := cell + offset
+				if _graph.has(neighbor) and neighbor not in stops:
+					stops.append(neighbor)
+		_sort_cells(stops)
+		var component_ids: Array[String] = []
+		for stop in stops:
+			var component_id := String(_component_by_cell.get(stop, ""))
+			if not component_id.is_empty() and component_id not in component_ids:
+				component_ids.append(component_id)
+		component_ids.sort()
+		var anchor: Variant = entry.get("anchor", Vector2i.ZERO)
+		var building_id := ""
+		if catalog and catalog.has_method("get_id_by_index"):
+			building_id = String(catalog.get_id_by_index(sid))
+		var accessible := not stops.is_empty()
+		_access_by_building[internal_id] = {
+			"internal_id": internal_id,
+			"building_id": building_id,
+			"anchor": _coordinate_record(anchor),
+			"footprint_cells": _cell_records(footprint),
+			"road_accessible": accessible,
+			"stops": _cell_records(stops),
+			"component_ids": component_ids,
+			"reasons": [] if accessible else ["no_road_access"],
+			"primary_reason": "" if accessible else "no_road_access",
+		}
+
+func _shortest_path(starts: Array[Vector3i], targets: Dictionary) -> Array[Vector3i]:
+	var pending: Array[Vector3i] = []
+	var previous: Dictionary = {}
+	for start in starts:
+		if previous.has(start):
+			continue
+		previous[start] = null
+		pending.append(start)
+	while not pending.is_empty():
+		var current: Vector3i = pending.pop_front()
+		if targets.has(current):
+			var path: Array[Vector3i] = []
+			var cursor: Variant = current
+			while cursor != null:
+				path.push_front(cursor)
+				cursor = previous[cursor]
+			return path
+		var neighbors: Array[Vector3i] = []
+		neighbors.assign(_graph.get(current, []))
+		_sort_cells(neighbors)
+		for neighbor in neighbors:
+			if previous.has(neighbor):
+				continue
+			previous[neighbor] = current
+			pending.append(neighbor)
+	return []
+
+static func _sort_cells(cells: Array[Vector3i]) -> void:
+	cells.sort_custom(func(a: Vector3i, b: Vector3i):
+		return a.x < b.x if a.x != b.x else (a.z < b.z if a.z != b.z else a.y < b.y))
+
+static func _cell_key(cell: Vector3i) -> String:
+	return "%d,%d" % [cell.x, cell.z]
+
+static func _coordinate_record(value: Variant) -> Dictionary:
+	if value is Vector2i:
+		return {"x": value.x, "z": value.y}
+	if value is Vector3i:
+		return {"x": value.x, "z": value.z}
+	return {"x": int(value.get("x", 0)), "z": int(value.get("z", value.get("y", 0)))} if value is Dictionary else {"x": 0, "z": 0}
+
+static func _cell_records(cells: Array) -> Array:
+	var result: Array = []
+	for cell in cells:
+		result.append(_coordinate_record(cell))
+	return result
+
+static func _record_cell(value: Variant) -> Variant:
+	if value is Vector3i:
+		return value
+	if value is Vector2i:
+		return Vector3i(value.x, 0, value.y)
+	if value is Dictionary:
+		return Vector3i(int(value.get("x", 0)), 0, int(value.get("z", value.get("y", 0))))
+	return null
 
 # ── Edge cost ─────────────────────────────────────────────────────────────────
 

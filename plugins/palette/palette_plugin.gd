@@ -19,18 +19,20 @@ extends PluginBase
 ##   select_next() / select_previous() — Q/E cycling among affordable entries
 
 func get_plugin_name() -> String: return "Palette"
-func get_dependencies() -> Array[String]: return ["BuildingCatalog", "Demand", "Economy", "UniqueRegistry"]
+func get_dependencies() -> Array[String]: return ["BuildingCatalog", "Demand", "Economy", "UniqueRegistry", "RoadNetwork"]
 
 var _catalog: PluginBase
 var _demand:  PluginBase
 var _economy: PluginBase
 var _uniques: PluginBase
+var _road_network: PluginBase
 
 func inject(deps: Dictionary) -> void:
 	_catalog = deps.get("BuildingCatalog")
 	_demand  = deps.get("Demand")
 	_economy = deps.get("Economy")
 	_uniques = deps.get("UniqueRegistry")
+	_road_network = deps.get("RoadNetwork")
 
 # ── State ─────────────────────────────────────────────────────────────────────
 
@@ -170,18 +172,25 @@ func _decision_for_structure(idx: int) -> Dictionary:
 	var structure: Structure = _catalog.get_all()[idx]
 	var summary: Dictionary = _catalog.get_summary()[idx]
 	var building_id := String(summary.get("building_id", ""))
+	if GameState.map and bool(GameState.map.rooted_town_rules) and _road_network:
+		var hall_placed := int(_road_network.get_town_hall_internal_id()) >= 0
+		if not hall_placed and building_id != "building_town_hall":
+			return {"state": PlaytestActionResult.TOWN_HALL_REQUIRED,
+				"label": "Place your free Town Hall first", "can_select": false,
+				"reasons": [PlaytestActionResult.TOWN_HALL_REQUIRED]}
+		if hall_placed and building_id == "building_town_hall":
+			return {"state": PlaytestActionResult.TOWN_HALL_ALREADY_PLACED,
+				"label": "Town Hall already placed", "can_select": false,
+				"reasons": [PlaytestActionResult.TOWN_HALL_ALREADY_PLACED]}
 	if _uniques and _uniques.has_method("is_unique") and _uniques.is_unique(building_id):
 		var unlock: Dictionary = _uniques.evaluate_unlock(building_id) if _uniques.has_method("evaluate_unlock") else {}
 		if unlock.is_empty() and _uniques.has_method("is_unlocked"):
 			unlock = {"placed": _uniques.is_placed(building_id) if _uniques.has_method("is_placed") else false,
 				"unlocked": _uniques.is_unlocked(building_id), "missing_prerequisites": []}
-		if bool(unlock.get("placed", false)):
-			return {"state": "already_built", "label": "Already built — this landmark is unique", "can_select": false}
-		var missing: Array = unlock.get("missing_prerequisites", [])
-		if not missing.is_empty():
-			return {"state": "locked_prerequisite", "label": "Requires %s" % _display_names_for_ids(missing), "can_select": false}
-		if not bool(unlock.get("unlocked", true)):
-			return {"state": "insufficient_demand", "label": "Requires %d %s demand" % [int(unlock.get("threshold", 0)), String(unlock.get("bucket", "town"))], "can_select": false}
+		if not bool(unlock.get("selectable", unlock.get("unlocked", true))):
+			var reason := String(unlock.get("primary_reason", ""))
+			var label := _label_for_unique_gate(unlock)
+			return {"state": reason, "label": label, "can_select": false, "reasons": unlock.get("reasons", []).duplicate(), "gate": unlock.duplicate(true)}
 	var cash: Dictionary = _economy.quote_cash(structure) if _economy and _economy.has_method("quote_cash") else {
 		"ok": _economy.can_afford_cash(structure) if _economy and _economy.has_method("can_afford_cash") else true,
 		"cost": int(summary.get("cash_cost", 0)), "have": 0}
@@ -195,7 +204,23 @@ func _decision_for_structure(idx: int) -> Dictionary:
 		if demand.get("reason", "") == "below_threshold":
 			return {"state": "insufficient_demand", "label": "Requires %d %s demand" % [int(demand.get("threshold", 0)), bucket], "can_select": false}
 		return {"state": "insufficient_demand", "label": "Need %d more %s demand" % [int(ceil(float(demand.get("cost", 0)) - float(demand.get("have", 0)))), bucket], "can_select": false}
-	return {"state": "available", "label": "Available", "can_select": true}
+	return {"state": "available", "label": "Available", "can_select": true, "reasons": []}
+
+func _label_for_unique_gate(gate: Dictionary) -> String:
+	match String(gate.get("primary_reason", "")):
+		PlaytestActionResult.UNIQUE_ALREADY_PLACED:
+			return "Already built — this story building is unique"
+		PlaytestActionResult.WANT_NOT_REVEALED:
+			var character: Dictionary = gate.get("character", {}) if gate.get("character") is Dictionary else {}
+			return "Talk to %s to reveal this request" % String(character.get("display_name", "the character"))
+		PlaytestActionResult.PATRON_NOT_READY:
+			var patron: Dictionary = gate.get("patron", {}) if gate.get("patron") is Dictionary else {}
+			return "Complete %s's requests first" % String(patron.get("display_name", "the patron"))
+		PlaytestActionResult.UNMET_PREREQUISITE:
+			return "Requires %s" % _display_names_for_ids(gate.get("missing_prerequisites", []))
+		PlaytestActionResult.BELOW_DEMAND_THRESHOLD:
+			return "Requires %d %s demand" % [int(gate.get("threshold", 0)), String(gate.get("bucket", "town"))]
+	return "Unavailable"
 
 func _display_names_for_ids(ids: Array) -> String:
 	var names: Array[String] = []
@@ -304,6 +329,7 @@ func get_entry_records() -> Array:
 			"id": entry.id,
 			"display_name": entry.display_name,
 			"structure_indices": entry.structure_indices.duplicate(),
+			"decision": _decision_for_structure(entry.structure_indices[0]).duplicate(true) if not entry.structure_indices.is_empty() else {},
 		})
 	return result
 
@@ -345,6 +371,9 @@ func _entry_projection(entry: PaletteEntry) -> Dictionary:
 	var costs: Array[int] = []
 	var demand_info: Dictionary = {}
 	var members: Array[String] = []
+	var community_roles: Array[String] = []
+	var community_effects: Array = []
+	var effect_keys := {}
 	for idx in entry.structure_indices:
 		var summary: Dictionary = _catalog.get_summary()[idx]
 		members.append(String(summary.get("building_id", "")))
@@ -353,14 +382,32 @@ func _entry_projection(entry: PaletteEntry) -> Dictionary:
 		if cost not in costs: costs.append(cost)
 		if demand_info.is_empty() and _demand and _demand.has_method("quote_placement"):
 			demand_info = _demand.quote_placement(_catalog.get_all()[idx]).duplicate(true)
+		var role := String(summary.get("community_role", ""))
+		if not role.is_empty() and role not in community_roles: community_roles.append(role)
+		var profile := _catalog.get_all()[idx].find_metadata(CommunityEffectProfile) as CommunityEffectProfile
+		if profile:
+			for effect in profile.effects:
+				var key := "%s|%s|%s" % [effect.get("effect_id", ""), effect.get("scope", ""), effect.get("radius", "")]
+				if effect_keys.has(key): continue
+				effect_keys[key] = true
+				community_effects.append({
+					"effect_id": effect.get("effect_id", ""), "quality": effect.get("quality", ""),
+					"scope": effect.get("scope", ""), "amount": effect.get("amount", 0.0),
+					"radius": effect.get("radius"), "reason": effect.get("reason", ""),
+				})
 	costs.sort()
+	community_roles.sort()
+	community_effects.sort_custom(func(a: Dictionary, b: Dictionary): return String(a["effect_id"]) < String(b["effect_id"]))
+	var decision := _decision_for_structure(entry.structure_indices[0])
 	return {"id":entry.id, "display_name":entry.display_name, "short_label":entry.display_name,
 		"group_id":entry.ui_group, "ui_order":entry.ui_order, "icon_key":entry.ui_icon,
 		"is_pool":entry.structure_indices.size() > 1 or (_catalog.get_all()[entry.structure_indices[0]].pool_id != ""),
 		"member_building_ids":members, "representative_structure_index":entry.structure_indices[0],
 		"cash_cost":costs[0] if costs.size() == 1 else {"min":costs[0], "max":costs[-1]},
 		"demand_cost":demand_info, "availability":entry.availability,
-		"availability_label":entry.availability_label, "can_select":entry.can_select}
+		"community_roles": community_roles, "community_effects": community_effects,
+		"availability_label":entry.availability_label, "can_select":entry.can_select,
+		"decision":decision.duplicate(true), "reasons":decision.get("reasons", []).duplicate()}
 
 func request_select_entry(entry_id: String) -> Dictionary:
 	var entry := _entry_by_id(entry_id)

@@ -77,13 +77,49 @@ func test_hint_landmark_when_no_char_work_pending() -> void:
 	_stub_chars.set_state("aristocrat_residential", 3)
 	_stub_patrons.set_state("aristocrat", 1)
 	var hint: String = _plugin.compute_hint(_plugin.snapshot())
-	assert_string_starts_with(hint, "Place the", "landmark hint")
+	assert_eq(hint, "Place The Theatre", "authored article is not duplicated")
 	assert_true(hint.contains("Theatre"), "uses the landmark building display_name")
 
+func test_landmark_hint_adds_an_article_when_the_authored_name_has_none() -> void:
+	var snap := DashboardCls.Snapshot.new()
+	snap.next_step = {"kind":"place_landmark", "subject_label":"Clocktower"}
+	assert_eq(_plugin.compute_hint(snap), "Place the Clocktower")
+
 func test_hint_fallback_when_all_idle() -> void:
-	# All characters NOT_ARRIVED (default), all patrons LOCKED (default).
+	# All characters NOT_ARRIVED (default): the first canonical gate is explicit.
 	var hint: String = _plugin.compute_hint(_plugin.snapshot())
-	assert_eq(hint, "Grow your town")
+	assert_string_starts_with(hint, "Grow commercial:")
+	assert_true(hint.contains("0/10"))
+
+func test_hint_reports_completion_when_every_patron_is_complete() -> void:
+	for cid in _stub_chars.defs:
+		_stub_chars.set_state(cid, 4)
+	for pid in _stub_patrons.defs:
+		_stub_patrons.set_state(pid, 2)
+	assert_eq(_plugin.compute_hint(_plugin.snapshot()), "First patron complete")
+
+func test_not_arrived_hint_uses_current_and_required_projection_values() -> void:
+	_stub_chars.gates["aristocrat_commercial"] = {
+		"character_id":"aristocrat_commercial", "display_name":"Lord Ashworth", "state":0,
+		"bucket":"commercial", "bucket_label":"commerce", "fulfilled":63.0,
+		"required_fulfilled":100.0, "demand_met":false,
+		"attained_tier":3, "required_tier":1, "tier_met":true,
+		"want_building_id":"building_members_club", "want_display_name":"Members Club",
+	}
+	var hint: String = _plugin.compute_hint(_plugin.snapshot())
+	assert_eq(hint, "Grow commerce: 63/100 fulfilled")
+	var line: String = _plugin.format_character_line("aristocrat_commercial", 0, _stub_chars.defs.aristocrat_commercial)
+	assert_true(line.contains("63/100 commerce"))
+	assert_true(line.contains("tier 3/1"))
+
+func test_not_arrived_hint_reports_tier_evidence_boundary() -> void:
+	_stub_chars.gates["aristocrat_commercial"] = {
+		"character_id":"aristocrat_commercial", "display_name":"Lord Ashworth", "state":0,
+		"bucket":"commercial", "bucket_label":"commerce", "fulfilled":100.0,
+		"required_fulfilled":100.0, "demand_met":true,
+		"attained_tier":0, "required_tier":1, "tier_met":false, "tier_evidence":[],
+	}
+	assert_eq(_plugin.compute_hint(_plugin.snapshot()), "Place tier 1 commerce (current tier 0)")
 
 # ── State icons ──────────────────────────────────────────────────────────
 
@@ -110,6 +146,7 @@ func test_set_collapsed_writes_to_map_flag() -> void:
 class _StubCharacters:
 	extends PluginBase
 	var states: Dictionary = {}
+	var gates: Dictionary = {}
 	var defs: Dictionary = {
 		"aristocrat_commercial": {
 			"character_id": "aristocrat_commercial",
@@ -145,6 +182,15 @@ class _StubCharacters:
 	func get_state(cid: String) -> int: return int(states.get(cid, 0))
 	func get_def(cid: String) -> Dictionary: return defs.get(cid, {})
 	func all_character_ids() -> Array: return defs.keys()
+	func evaluate_character_gate(cid: String) -> Dictionary:
+		if gates.has(cid): return gates[cid].duplicate(true)
+		var def: Dictionary = defs.get(cid, {})
+		return {"character_id":cid, "display_name":def.get("display_name", cid),
+			"state":get_state(cid), "bucket":def.get("associated_bucket", ""),
+			"bucket_label":def.get("associated_bucket", ""), "fulfilled":0.0,
+			"required_fulfilled":def.get("arrival_threshold", 0), "demand_met":false,
+			"attained_tier":0, "required_tier":1, "tier_met":false,
+			"want_building_id":def.get("want_building_id", "")}
 
 class _StubPatrons:
 	extends PluginBase
@@ -168,6 +214,12 @@ class _StubPatrons:
 	func get_state(pid: String) -> int: return int(states.get(pid, 0))
 	func get_def(pid: String) -> Dictionary: return defs.get(pid, {})
 	func all_patron_ids() -> Array: return defs.keys()
+	func get_progression_snapshot(pid: String) -> Dictionary:
+		var def: Dictionary = defs.get(pid, {})
+		return {"patron_id":pid, "display_name":def.get("display_name", pid),
+			"state":get_state(pid), "landmark_building_id":def.get("landmark_building_id", ""),
+			"landmark_display_name":"The Theatre" if pid == "aristocrat" else "Windmill",
+			"satisfied_count":0, "required_count":def.get("character_ids", []).size()}
 
 class _StubDemand:
 	extends PluginBase

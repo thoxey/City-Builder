@@ -75,6 +75,8 @@ func _plugin_ready() -> void:
 
 	_load_all(DATA_DIR)
 	_connect_triggers()
+	if not GameEvents.map_loaded.is_connected(_on_map_loaded):
+		GameEvents.map_loaded.connect(_on_map_loaded)
 
 	var by_type := _summarise_by_type()
 	print("[EventSystem] loading: dir=%s" % DATA_DIR)
@@ -91,14 +93,18 @@ func _plugin_ready() -> void:
 
 func _reconcile_boot_state() -> void:
 	if _characters and _characters.has_method("all_character_ids"):
-		for cid in _characters.all_character_ids():
+		var character_ids: Array = _characters.all_character_ids()
+		character_ids.sort()
+		for cid in character_ids:
 			var s: int = int(_characters.get_state(cid))
 			# CharState: 0=NOT_ARRIVED, 1=ARRIVED, 2=WANT_REVEALED, 3=SATISFIED, 4=CONTRIBUTES
 			if s >= 1: _maybe_dispatch_once("character_arrived",       {"character_id": cid})
 			if s >= 2: _maybe_dispatch_once("character_want_revealed", {"character_id": cid})
 			if s >= 3: _maybe_dispatch_once("character_satisfied",     {"character_id": cid})
 	if _patrons and _patrons.has_method("all_patron_ids"):
-		for pid in _patrons.all_patron_ids():
+		var patron_ids: Array = _patrons.all_patron_ids()
+		patron_ids.sort()
+		for pid in patron_ids:
 			var s: int = int(_patrons.get_state(pid))
 			# PatronState: 0=LOCKED, 1=LANDMARK_AVAILABLE, 2=COMPLETED
 			if s >= 1: _maybe_dispatch_once("patron_landmark_ready",     {"patron_id": pid})
@@ -300,6 +306,8 @@ func _deliver(rec: Dictionary) -> void:
 	var etype := String(rec.get("event_type", "unknown"))
 	print("[EventSystem] dispatch: event_id=%s type=%s" % [eid, etype])
 	_bump_count(eid)
+	if etype == "dialogue":
+		_enqueue_pending_dialogue(eid)
 	event_fired.emit(eid)
 	event_resolved.emit(rec)
 	print("[EventSystem] resolved: event_id=%s type=%s" % [eid, etype])
@@ -321,6 +329,28 @@ func _bump_count(event_id: String) -> void:
 	if GameState and GameState.map:
 		var d: Dictionary = GameState.map.event_counts
 		d[event_id] = int(d.get(event_id, 0)) + 1
+
+func _enqueue_pending_dialogue(event_id: String) -> void:
+	if GameState == null or GameState.map == null or event_id.is_empty():
+		return
+	if event_id not in GameState.map.pending_dialogue_event_ids:
+		GameState.map.pending_dialogue_event_ids.append(event_id)
+
+func _on_map_loaded(_map: DataMap) -> void:
+	call_deferred("_reconcile_after_map_load")
+
+func _reconcile_after_map_load() -> void:
+	_redispatch_pending_dialogues()
+	_reconcile_boot_state()
+
+func _redispatch_pending_dialogues() -> void:
+	if GameState == null or GameState.map == null:
+		return
+	for event_id in GameState.map.pending_dialogue_event_ids.duplicate():
+		var record: Dictionary = _events.get(event_id, {})
+		if record.is_empty() or String(record.get("event_type", "")) != "dialogue":
+			continue
+		event_resolved.emit(record)
 
 # ── Effects (called by Dialogue renderer on option click / on_enter) ─────────
 
@@ -412,6 +442,18 @@ func _build_condition_ctx() -> Dictionary:
 
 func get_event(event_id: String) -> Dictionary:
 	return _events.get(event_id, {}).duplicate(true)
+
+func is_dialogue_pending(event_id: String) -> bool:
+	return GameState != null and GameState.map != null and event_id in GameState.map.pending_dialogue_event_ids
+
+func pending_dialogue_event_ids() -> Array:
+	return GameState.map.pending_dialogue_event_ids.duplicate() if GameState != null and GameState.map != null else []
+
+func acknowledge_dialogue(event_id: String) -> bool:
+	if not is_dialogue_pending(event_id):
+		return false
+	GameState.map.pending_dialogue_event_ids.erase(event_id)
+	return true
 
 func all_event_ids() -> Array:
 	return _events.keys()

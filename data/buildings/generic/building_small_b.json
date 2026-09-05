@@ -17,6 +17,7 @@
     ]
   ],
   "category": "generic",
+  "community_role": "functional",
   "pool_id": "commercial_t1",
   "profiles": [
     {
@@ -27,16 +28,41 @@
       "category": "commercial",
       "capacity": 10,
       "active_start": 8.0,
-      "active_end": 18.0
+      "active_end": 22.0
     },
     {
       "type": "AttractivenessProfile",
       "base": -10,
       "residential": -10,
-      "commercial": 10,
+      "commercial": -30,
       "industrial": 0,
       "nature": 0,
       "radius": 1
+    },
+    {
+      "type": "CommunityEffectProfile",
+      "effects": [
+        {
+          "effect_id": "local_shopping",
+          "quality": "opportunity",
+          "manifestation": "freedom",
+          "amount": 5.0,
+          "scope": "participant",
+          "capacity": 10,
+          "stacking_group": "local_commerce",
+          "reason": "Reached useful local shops"
+        },
+        {
+          "effect_id": "high_street_encounter",
+          "quality": "belonging",
+          "manifestation": "care",
+          "amount": 3.0,
+          "scope": "participant",
+          "capacity": 10,
+          "stacking_group": "community_gathering",
+          "reason": "Met neighbours at local shops"
+        }
+      ]
     }
   ],
   "tags": [],

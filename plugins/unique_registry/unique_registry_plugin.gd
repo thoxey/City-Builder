@@ -14,6 +14,8 @@ extends PluginBase
 
 var _catalog: PluginBase
 var _demand:  PluginBase
+var _characters: PluginBase
+var _patrons: PluginBase
 
 # building_id -> UniqueProfile
 var _profiles: Dictionary = {}
@@ -27,11 +29,13 @@ func get_plugin_name() -> String:
 	return "UniqueRegistry"
 
 func get_dependencies() -> Array[String]:
-	return ["BuildingCatalog", "Demand"]
+	return ["BuildingCatalog", "Demand", "CharacterSystem", "PatronSystem"]
 
 func inject(deps: Dictionary) -> void:
 	_catalog = deps.get("BuildingCatalog")
 	_demand  = deps.get("Demand")
+	_characters = deps.get("CharacterSystem")
+	_patrons = deps.get("PatronSystem")
 
 func _plugin_ready() -> void:
 	_index_uniques()
@@ -41,6 +45,8 @@ func _plugin_ready() -> void:
 	GameEvents.structure_placed.connect(_on_structure_placed)
 	GameEvents.structure_demolished.connect(_on_structure_demolished)
 	GameEvents.demand_unserved_changed.connect(_on_demand_changed)
+	GameEvents.character_state_changed.connect(_on_progression_changed)
+	GameEvents.patron_state_changed.connect(_on_progression_changed)
 	GameEvents.map_loaded.connect(_on_map_loaded)
 
 	var chains := 0
@@ -123,6 +129,9 @@ func _on_structure_demolished(pos: Vector3i) -> void:
 func _on_demand_changed(_bucket: String, _value: float) -> void:
 	_refresh_unlocks()
 
+func _on_progression_changed(_id: String, _state: int) -> void:
+	_refresh_unlocks()
+
 func _on_map_loaded(_m: DataMap) -> void:
 	_rebuild_from_registry()
 	_refresh_unlocks()
@@ -145,22 +154,7 @@ func _refresh_unlocks() -> void:
 	_unlocked_cache = new_unlocked
 
 func _is_unlocked_internal(bid: String) -> bool:
-	var p: UniqueProfile = _profiles.get(bid)
-	if p == null:
-		return false
-	# Already placed → not available (one-of-a-kind guard).
-	if _placed.has(bid):
-		return false
-	# Prerequisite buildings must be on the map.
-	for prereq_v in p.prerequisite_ids:
-		if not _placed.has(String(prereq_v)):
-			return false
-	# Demand bucket must meet threshold.
-	if p.prerequisite_threshold > 0:
-		var v: float = _bucket_value(p.bucket)
-		if v < float(p.prerequisite_threshold):
-			return false
-	return true
+	return bool(evaluate_unlock(bid).get("unlocked", false))
 
 ## UniqueProfile.bucket is a category ("residential" / "industrial" /
 ## "commercial"). Demand addresses buckets by type_id ("residential" /
@@ -190,16 +184,53 @@ func get_profile(building_id: String) -> UniqueProfile:
 func get_all_profiles() -> Dictionary:
 	return _profiles
 
-func evaluate_unlock(building_id: String) -> Dictionary:
+func evaluate_unlock(building_id: String, excluded_building_ids: Array = []) -> Dictionary:
 	if not _profiles.has(building_id):
-		return {"unique": false, "unlocked": true, "placed": false, "reasons": []}
+		return {
+			"building_id": building_id, "unique": false, "unlocked": true,
+			"selectable": true, "placed": false, "reasons": [], "primary_reason": null,
+		}
 	var profile: UniqueProfile = _profiles[building_id]
 	var missing: Array[String] = []
 	for prerequisite in profile.prerequisite_ids:
-		if not _placed.has(String(prerequisite)):
+		if not _is_effectively_placed(String(prerequisite), excluded_building_ids):
 			missing.append(String(prerequisite))
 	var reasons: Array[String] = []
-	if _placed.has(building_id): reasons.append(PlaytestActionResult.UNIQUE_ALREADY_PLACED)
+	var placed := _is_effectively_placed(building_id, excluded_building_ids)
+	if placed:
+		reasons.append(PlaytestActionResult.UNIQUE_ALREADY_PLACED)
+	var character_evidence: Variant = null
+	if not profile.character_id.is_empty():
+		var character_state := 0
+		var character_name := profile.character_id
+		if _characters != null:
+			character_state = int(_characters.get_state(profile.character_id))
+			var character_def: Dictionary = _characters.get_def(profile.character_id)
+			character_name = String(character_def.get("display_name", profile.character_id))
+		character_evidence = {
+			"id": profile.character_id,
+			"display_name": character_name,
+			"state": character_state,
+			"state_name": _character_state_name(character_state),
+		}
+		if profile.chain_role == "want" and character_state < 2:
+			reasons.append(PlaytestActionResult.WANT_NOT_REVEALED)
+	var patron_evidence: Variant = null
+	if not profile.patron_id.is_empty():
+		var patron_state := 0
+		var patron_name := profile.patron_id
+		if _patrons != null:
+			patron_state = int(_patrons.get_state(profile.patron_id))
+			var patron_def: Dictionary = _patrons.get_def(profile.patron_id)
+			patron_name = String(patron_def.get("display_name", profile.patron_id))
+		patron_evidence = {
+			"id": profile.patron_id,
+			"display_name": patron_name,
+			"state": patron_state,
+			"state_name": _patron_state_name(patron_state),
+		}
+		if profile.chain_role == "landmark" and patron_state < 1:
+			reasons.append(PlaytestActionResult.PATRON_NOT_READY)
 	if not missing.is_empty(): reasons.append(PlaytestActionResult.UNMET_PREREQUISITE)
 	var current := _bucket_value(profile.bucket)
 	if current < profile.prerequisite_threshold:
@@ -208,17 +239,46 @@ func evaluate_unlock(building_id: String) -> Dictionary:
 	var bucket_label := String(bucket_id).capitalize()
 	if _demand and _demand.has_method("bucket_display_name"):
 		bucket_label = _demand.bucket_display_name(bucket_id)
+	var display_name := building_id
+	if _catalog != null:
+		display_name = String(_catalog.get_summary_by_id(building_id).get("display_name", building_id))
 	return {
+		"building_id": building_id,
+		"display_name": display_name,
 		"unique": true,
+		"role": profile.chain_role,
 		"unlocked": reasons.is_empty(),
-		"placed": _placed.has(building_id),
+		"selectable": reasons.is_empty(),
+		"placed": placed,
 		"threshold": profile.prerequisite_threshold,
 		"bucket": bucket_label,
 		"current": current,
 		"prerequisites": Array(profile.prerequisite_ids),
 		"missing_prerequisites": missing,
+		"character": character_evidence,
+		"patron": patron_evidence,
 		"reasons": reasons,
+		"primary_reason": reasons[0] if not reasons.is_empty() else null,
 	}
+
+func _is_effectively_placed(building_id: String, excluded_building_ids: Array) -> bool:
+	return _placed.has(building_id) and building_id not in excluded_building_ids
+
+static func _character_state_name(state: int) -> String:
+	match state:
+		0: return "NOT_ARRIVED"
+		1: return "ARRIVED"
+		2: return "WANT_REVEALED"
+		3: return "SATISFIED"
+		4: return "CONTRIBUTES_TO_LANDMARK"
+		_: return "UNKNOWN(%d)" % state
+
+static func _patron_state_name(state: int) -> String:
+	match state:
+		0: return "LOCKED"
+		1: return "LANDMARK_AVAILABLE"
+		2: return "COMPLETED"
+		_: return "UNKNOWN(%d)" % state
 
 func placed_count() -> int:
 	return _placed.size()

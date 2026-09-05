@@ -40,14 +40,25 @@ export function validateCharacter(
       errors.push(`patron_id "${doc.patron_id}" not in manifest — author patron first`);
 
     if (!doc.associated_bucket) errors.push("associated_bucket is required");
+    else if (!manifest.buckets.includes(doc.associated_bucket))
+      errors.push(`associated_bucket "${doc.associated_bucket}" not in manifest buckets`);
 
     if (doc.arrival_threshold < 0) errors.push("arrival_threshold must be ≥ 0");
     if (doc.arrival_requires_tier < 1 || doc.arrival_requires_tier > 3)
       errors.push("arrival_requires_tier must be 1, 2, or 3");
 
     if (doc.want_building_id) {
-      if (!manifest.buildings.some((b) => b.building_id === doc.want_building_id))
+      const want = manifest.buildings.find((b) => b.building_id === doc.want_building_id);
+      if (!want)
         errors.push(`want_building_id "${doc.want_building_id}" not in manifest`);
+      else {
+        if (want.chain_role !== "want")
+          errors.push(`want_building_id "${doc.want_building_id}" must have chain_role=want`);
+        if (want.character_id !== doc.character_id)
+          errors.push(`want_building_id "${doc.want_building_id}" must reference character_id "${doc.character_id}"`);
+        if (want.bucket && want.bucket !== doc.associated_bucket)
+          errors.push(`want_building_id "${doc.want_building_id}" must use bucket "${doc.associated_bucket}"`);
+      }
     } else {
       warnings.push("want_building_id is empty — character will never become satisfied");
     }
@@ -102,11 +113,17 @@ export function validatePatron(
     }
     if (c.patron_id !== doc.patron_id && c.patron_id !== "")
       warnings.push(`${cid} is currently assigned to patron "${c.patron_id}"`);
-    if (c.associated_bucket) {
+    if (c.associated_bucket && !manifest.buckets.includes(c.associated_bucket)) {
+      errors.push(`${cid} uses unknown bucket "${c.associated_bucket}"`);
+    } else if (c.associated_bucket) {
       if (buckets.has(c.associated_bucket))
         errors.push(`duplicate bucket "${c.associated_bucket}" — patron needs one of each`);
       buckets.add(c.associated_bucket);
     }
+  }
+  for (const required of manifest.buckets) {
+    if (!buckets.has(required))
+      errors.push(`character_ids must include the "${required}" bucket`);
   }
 
   if (doc.landmark_building_id) {
@@ -115,8 +132,12 @@ export function validatePatron(
     );
     if (!b)
       errors.push(`landmark_building_id "${doc.landmark_building_id}" not in manifest`);
-    else if (b.chain_role !== "landmark")
-      warnings.push(`"${doc.landmark_building_id}" is not marked chain_role=landmark`);
+    else {
+      if (b.chain_role !== "landmark")
+        errors.push(`"${doc.landmark_building_id}" must have chain_role=landmark`);
+      if (b.patron_id !== doc.patron_id)
+        errors.push(`"${doc.landmark_building_id}" must reference patron_id "${doc.patron_id}"`);
+    }
   } else {
     errors.push("landmark_building_id is required");
   }

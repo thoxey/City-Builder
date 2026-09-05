@@ -263,6 +263,38 @@ func test_missing_or_invalid_ui_metadata_uses_deterministic_fallbacks() -> void:
 	assert_eq(summary.ui_order, 1000)
 	assert_eq(summary.ui_icon, "missing-artwork")
 
+func test_summary_retains_authored_source_path() -> void:
+	_write_json("source.json", _minimal_building("source_building", GOOD_MODEL_A))
+	_plugin.ensure_loaded(FIXTURE_ROOT)
+	assert_eq(_plugin.get_summary_by_id("source_building")["source_path"], FIXTURE_ROOT.path_join("source.json"))
+
+func test_bucket_tier_snapshot_uses_placed_pool_and_chain_evidence_stably() -> void:
+	var pooled := _minimal_building("alpha_house", GOOD_MODEL_A)
+	pooled["pool_id"] = "residential_t2"
+	var chain := _minimal_building("beta_tower", GOOD_MODEL_B)
+	chain["profiles"] = [{"type":"UniqueProfile", "bucket":"residential", "tier":3, "chain_role":"chain"}]
+	var want := _minimal_building("gamma_want", GOOD_MODEL_C)
+	want["profiles"] = [{"type":"UniqueProfile", "bucket":"residential", "tier":9, "chain_role":"want"}]
+	_write_json("a.json", pooled)
+	_write_json("b.json", chain)
+	_write_json("c.json", want)
+	var pools_dir := FIXTURE_ROOT.path_join("_pools")
+	DirAccess.make_dir_recursive_absolute(pools_dir)
+	var file := FileAccess.open(pools_dir.path_join("residential_t2.json"), FileAccess.WRITE)
+	file.store_string(JSON.stringify({"pool_id":"residential_t2", "bucket":"residential", "tier":2}))
+	file.close()
+	_plugin.ensure_loaded(FIXTURE_ROOT)
+	var registry := {
+		3: {"structure":_plugin.get_item_index("beta_tower"), "anchor":Vector2i(2, 0)},
+		2: {"structure":_plugin.get_item_index("gamma_want"), "anchor":Vector2i(1, 0)},
+		1: {"structure":_plugin.get_item_index("alpha_house"), "anchor":Vector2i(0, 0)},
+	}
+	var snapshot: Dictionary = _plugin.get_bucket_tier_snapshot("residential", registry)
+	assert_eq(snapshot["attained_tier"], 3)
+	assert_eq(snapshot["tier_evidence"].map(func(row): return row["building_id"]), ["alpha_house", "beta_tower"])
+	assert_eq(snapshot["tier_evidence"][0]["source"], "pool")
+	assert_eq(snapshot["tier_evidence"][1]["source"], "unique")
+
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
 func _minimal_building(bid: String, model_path: String) -> Dictionary:

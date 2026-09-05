@@ -17,6 +17,7 @@
     ]
   ],
   "category": "generic",
+  "community_role": "functional",
   "pool_id": "industrial_t1",
   "profiles": [
     {
@@ -77,6 +78,7 @@
           "amount": -4.0,
           "scope": "local",
           "radius": 1,
+          "requires_active_building": false,
           "stacking_group": "industrial_visual",
           "reason": "Industrial clutter dominated the view"
         }

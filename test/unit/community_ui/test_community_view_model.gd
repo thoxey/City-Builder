@@ -31,3 +31,21 @@ func test_stable_resident_and_effect_ordering() -> void:
 	source["residents"].reverse()
 	var ids: Array = CommunityInspector.project(source, CommunityUITestFixtures.context(), {"hour": 23}, CommunityUITestFixtures.config())["residents"].map(func(row): return row["resident_id"])
 	assert_eq(ids, [1, 2])
+
+func test_place_projection_preserves_canonical_operation_reason() -> void:
+	var context := CommunityUITestFixtures.context()
+	context["places"][0]["internal_id"] = 7
+	context["operation"] = [{
+		"internal_id": 7,
+		"road_accessible": false,
+		"open_now": true,
+		"operating": false,
+		"fulfilled": 0,
+		"primary_reason": "no_road_access",
+		"reasons": ["no_road_access"],
+	}]
+	var model := CommunityInspector.project(CommunityUITestFixtures.snapshot(), context, {"hour": 23}, CommunityUITestFixtures.config())
+	var place: Dictionary = model["places"]["1,0"]
+	assert_false(place["road_accessible"])
+	assert_false(place["operating"])
+	assert_eq(place["operation_reason"], "no_road_access")

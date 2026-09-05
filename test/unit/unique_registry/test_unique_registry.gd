@@ -22,18 +22,22 @@ func before_each() -> void:
 	_reg = UniqueRegistryCls.new()
 	_reg._catalog = _stub_catalog
 	_reg._demand = _stub_demand
+	_reg._characters = _StubCharacters.new()
+	_reg._patrons = _StubPatrons.new()
 	add_child(_reg)
 	# _plugin_ready wires the signal handlers + runs _index_uniques etc.
 	_reg._plugin_ready()
 
 func after_each() -> void:
 	if _reg and is_instance_valid(_reg):
-		for signal_name in ["structure_placed", "structure_demolished", "demand_unserved_changed", "map_loaded"]:
+		for signal_name in ["structure_placed", "structure_demolished", "demand_unserved_changed", "character_state_changed", "patron_state_changed", "map_loaded"]:
 			var callable: Callable
 			match signal_name:
 				"structure_placed":     callable = _reg._on_structure_placed
 				"structure_demolished": callable = _reg._on_structure_demolished
 				"demand_unserved_changed":       callable = _reg._on_demand_changed
+				"character_state_changed": callable = _reg._on_progression_changed
+				"patron_state_changed": callable = _reg._on_progression_changed
 				"map_loaded":           callable = _reg._on_map_loaded
 			if GameEvents[signal_name].is_connected(callable):
 				GameEvents[signal_name].disconnect(callable)
@@ -188,6 +192,31 @@ func test_unlock_evaluation_explains_threshold_prerequisite_and_placed() -> void
 	GameEvents.structure_placed.emit(Vector3i(1, 0, 0), 1, 0)
 	assert_has(_reg.evaluate_unlock("building_restaurant")["reasons"], "unique_already_placed")
 
+func test_want_gate_precedes_prerequisite_and_demand_reasons() -> void:
+	_stub_catalog.register_unique(0, "building_members_club", "commercial", 0, "aristocrat", "aristocrat_commercial", "want", 60, ["building_nightclub"])
+	_reg._index_uniques()
+	_reg._characters.set_state("aristocrat_commercial", 1)
+	_stub_demand.set_value("commercial", 5.0)
+	var decision: Dictionary = _reg.evaluate_unlock("building_members_club")
+	assert_eq(decision["reasons"], [
+		PlaytestActionResult.WANT_NOT_REVEALED,
+		PlaytestActionResult.UNMET_PREREQUISITE,
+		PlaytestActionResult.BELOW_DEMAND_THRESHOLD,
+	])
+	assert_eq(decision["primary_reason"], PlaytestActionResult.WANT_NOT_REVEALED)
+
+func test_progression_state_refresh_emits_unlock_transition_once() -> void:
+	_stub_catalog.register_unique(0, "building_members_club", "commercial", 0, "aristocrat", "aristocrat_commercial", "want", 0, [])
+	_reg._index_uniques()
+	_reg._characters.set_state("aristocrat_commercial", 1)
+	_reg._refresh_unlocks()
+	watch_signals(GameEvents)
+	_reg._characters.set_state("aristocrat_commercial", 2)
+	GameEvents.character_state_changed.emit("aristocrat_commercial", 2)
+	_reg._refresh_unlocks()
+	assert_true(_reg.is_unlocked("building_members_club"))
+	assert_signal_emit_count(GameEvents, "unique_unlocked", 1)
+
 # ── Stubs ─────────────────────────────────────────────────────────────────────
 
 class _StubCatalog extends PluginBase:
@@ -244,6 +273,9 @@ class _StubCatalog extends PluginBase:
 	func get_id_by_index(idx: int) -> String:
 		return _id_by_idx.get(idx, "")
 
+	func get_summary_by_id(building_id: String) -> Dictionary:
+		return {"building_id": building_id, "display_name": building_id.replace("building_", "").replace("_", " ").capitalize()}
+
 
 class _StubDemand extends PluginBase:
 	var _values: Dictionary = {}  # type_id -> float
@@ -259,3 +291,17 @@ class _StubDemand extends PluginBase:
 			"industrial":  return "industrial"
 			"commercial":  return "commercial"
 			_:             return ""
+
+class _StubCharacters extends PluginBase:
+	var states: Dictionary = {}
+	func get_plugin_name() -> String: return "_StubCharacters"
+	func get_state(cid: String) -> int: return int(states.get(cid, 2))
+	func get_def(cid: String) -> Dictionary: return {"display_name": cid}
+	func set_state(cid: String, state: int) -> void: states[cid] = state
+
+class _StubPatrons extends PluginBase:
+	var states: Dictionary = {}
+	func get_plugin_name() -> String: return "_StubPatrons"
+	func get_state(pid: String) -> int: return int(states.get(pid, 1))
+	func get_def(pid: String) -> Dictionary: return {"display_name": pid}
+	func set_state(pid: String, state: int) -> void: states[pid] = state

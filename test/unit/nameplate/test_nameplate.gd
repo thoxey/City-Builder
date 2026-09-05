@@ -105,7 +105,11 @@ func test_toggle_flips_container_visibility() -> void:
 	_stub_catalog.register(0, "building_pub", "Pub", "unique")
 	GameEvents.structure_placed.emit(Vector3i(3, 0, 4), 0, 0)
 
-	assert_true(_plate.is_visible(), "default on")
+	assert_false(_plate.is_visible(), "default off")
+	_plate._set_visible(true)
+	assert_true(_plate.is_visible())
+	assert_true(_plate._container.visible, "container follows flag")
+
 	_plate._set_visible(false)
 	assert_false(_plate.is_visible())
 	assert_false(_plate._container.visible, "container follows flag")

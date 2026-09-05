@@ -17,9 +17,9 @@ func setup() -> void:
 	name = "PlayerToolDock"
 	theme_type_variation = "ToolDock"
 	set_anchors_preset(Control.PRESET_CENTER_BOTTOM)
-	offset_left = -360
-	offset_right = 360
-	offset_top = -82
+	offset_left = -430
+	offset_right = 430
+	offset_top = -96
 	offset_bottom = -12
 	var row := HBoxContainer.new()
 	row.alignment = BoxContainer.ALIGNMENT_CENTER
@@ -29,16 +29,16 @@ func setup() -> void:
 	_build_button.pressed.connect(func(): build_requested.emit())
 	row.add_child(_build_button)
 	_context_icon = TextureRect.new()
-	_context_icon.custom_minimum_size = Vector2(38, 38)
+	_context_icon.custom_minimum_size = Vector2(46, 46)
 	_context_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	_context_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	row.add_child(_context_icon)
 	_context_label = Label.new()
-	_context_label.custom_minimum_size = Vector2(220, 44)
+	_context_label.custom_minimum_size = Vector2(280, 52)
 	_context_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	_context_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_context_label.add_theme_font_override("font", FONT)
-	_context_label.add_theme_font_size_override("font_size", 14)
+	_context_label.add_theme_font_size_override("font_size", 18)
 	row.add_child(_context_label)
 	_demolish_button = _button("Demolish", "bulldoze", "Toggle demolition mode")
 	_demolish_button.toggle_mode = true
@@ -50,15 +50,15 @@ func setup() -> void:
 	show_idle()
 
 func set_right_safe_inset(inset: float) -> void:
-	offset_left = -360.0 - inset * 0.5
-	offset_right = 360.0 - inset * 0.5
+	offset_left = -430.0 - inset * 0.5
+	offset_right = 430.0 - inset * 0.5
 
 func _button(text_value: String, icon_key: String, tooltip: String) -> Button:
 	var button := Button.new()
 	button.text = text_value
 	button.icon = load("res://sprites/ui/build-menu/controls/%s.png" % icon_key)
 	button.expand_icon = true
-	button.custom_minimum_size = Vector2(96, 48)
+	button.custom_minimum_size = Vector2(116, 56)
 	button.tooltip_text = tooltip
 	button.add_theme_font_override("font", FONT)
 	return button
@@ -72,15 +72,27 @@ func show_idle() -> void:
 	_cancel_button.visible = false
 	_demolish_button.button_pressed = false
 
-func show_placement(entry_id: String, blocked_reason: String = "", rotation: int = 0) -> void:
+func show_placement(entry_id: String, blocked_reason: String = "", rotation: int = 0, preview: Dictionary = {}) -> void:
 	var entry: Dictionary = _model.get("entries_by_id", {}).get(entry_id, {})
 	var icon_key := String(entry.get("icon_key", "missing-artwork"))
 	var path := "res://sprites/ui/build-menu/entries/%s.png" % icon_key
 	_context_icon.texture = load(path) if ResourceLoader.exists(path) else load("res://sprites/ui/build-menu/controls/missing-artwork.png")
 	var cost: Variant = entry.get("cash_cost", 0)
 	var cost_text := "£%d" % int(cost) if cost is int or cost is float else "£%d–£%d" % [int(cost.get("min", 0)), int(cost.get("max", 0))]
-	_context_label.text = "%s  •  %s\n%s" % [entry.get("display_name", "Placement"), cost_text,
-		("Blocked: %s" % blocked_reason) if not blocked_reason.is_empty() else "Place: click/A  •  Rotate: RMB  •  %d°" % (rotation * 90)]
+	var effect_text := ""
+	var effects: Array = entry.get("community_effects", [])
+	if not effects.is_empty():
+		var max_radius := 0
+		for effect in effects:
+			if effect.get("radius") != null: max_radius = maxi(max_radius, int(effect["radius"]))
+		effect_text = "  •  Community reach %d" % max_radius if max_radius > 0 else "  •  Community effect"
+	if not preview.is_empty():
+		effect_text += "  •  %d homes in range / %d new / %d overlap" % [preview.get("homes_in_range", []).size(), preview.get("newly_served_homes", []).size(), preview.get("overlapping_coverage_homes", []).size()]
+		var same_type := int(preview.get("same_type_neighbours", 0))
+		if same_type > 0:
+			effect_text += "  •  Same-type neighbour penalty ×%d" % same_type
+	_context_label.text = "%s  •  %s%s\n%s" % [entry.get("display_name", "Placement"), cost_text, effect_text,
+		("Blocked: %s" % blocked_reason) if not blocked_reason.is_empty() else "Place: click/A  •  Rotate: Z  •  %d°" % (rotation * 90)]
 	_cancel_button.visible = true
 	_demolish_button.button_pressed = false
 

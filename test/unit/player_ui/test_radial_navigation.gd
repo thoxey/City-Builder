@@ -52,3 +52,31 @@ func test_device_switch_keeps_one_focus_and_escape_closes() -> void:
 	menu._input(escape)
 	assert_false(menu.visible)
 	menu.free()
+
+func test_restore_context_returns_to_last_group_and_item() -> void:
+	var menu := Radial.new()
+	add_child(menu)
+	menu.set_model({"groups":[
+		{"id":"nature", "label":"Nature", "icon_key":"nature", "total_count":2, "entry_ids":["grass", "pond"]},
+	], "entries_by_id":{
+		"grass":{"id":"grass", "short_label":"Grass", "display_name":"Grass", "icon_key":"grass", "can_select":true, "availability_label":"Available", "cash_cost":10},
+		"pond":{"id":"pond", "short_label":"Pond", "display_name":"Pond", "icon_key":"duck-pond", "can_select":true, "availability_label":"Available", "cash_cost":50},
+	}})
+	menu.open_menu(Vector2(500, 400))
+	menu.confirm_focused()
+	menu._set_focus(1)
+	menu.confirm_focused()
+	menu.close_menu()
+	menu.open_menu(Vector2(500, 400), true)
+	assert_eq(menu._level, "items")
+	assert_eq(menu._group_id, "nature")
+	assert_eq(menu._actions[menu._focused_index]["target_id"], "pond")
+	menu.free()
+
+func test_build_back_and_rotate_actions_do_not_share_right_click() -> void:
+	var build_events := InputMap.action_get_events("build_menu")
+	assert_true(build_events.any(func(event): return event is InputEventKey and event.physical_keycode == KEY_B))
+	assert_true(build_events.any(func(event): return event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT))
+	var rotate_events := InputMap.action_get_events("rotate")
+	assert_true(rotate_events.any(func(event): return event is InputEventKey and event.physical_keycode == KEY_Z))
+	assert_false(rotate_events.any(func(event): return event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT))

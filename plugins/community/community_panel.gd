@@ -117,8 +117,9 @@ func _render_overview() -> void:
 		empty_card["content"].add_child(CommunityUIFactory.label(empty["action_hint"], 12, CommunityUIFactory.MUSTARD))
 		_content.add_child(empty_card["root"])
 	_add_card("Housing", "housing-capacity", [
-		"%d occupied · %d free · %d capacity" % [int(overview.get("occupied_homes", 0)), int(overview.get("free_homes", 0)), int(overview.get("capacity", 0))],
+		"%d occupied places · %d free places · %d total" % [int(overview.get("occupied_homes", 0)), int(overview.get("free_homes", 0)), int(overview.get("capacity", 0))],
 		"%.0f%% occupied · %d without homes" % [float(overview.get("occupancy_percent", 0.0)), int(overview.get("homeless_count", 0))],
+		_housing_build_status(overview),
 	])
 	var qualities := CommunityUIFactory.card("Four qualities", "composite-happiness")
 	for quality in overview.get("qualities", []):
@@ -128,7 +129,13 @@ func _render_overview() -> void:
 		qualities["content"].add_child(CommunityUIFactory.icon_label(quality["icon_key"], text))
 	_content.add_child(qualities["root"])
 	var migration: Dictionary = overview.get("migration", {})
-	_add_card("Migration", "arrival", ["Arrivals %d · Departures %d" % [int(migration.get("arrivals", 0)), int(migration.get("departures", 0))], "Rejected %d · Net %+.0f" % [int(migration.get("rejections", 0)), float(migration.get("net", 0))], String(migration.get("latest_event", "No migration event yet"))])
+	var latest_event := String(migration.get("latest_event", ""))
+	if latest_event.is_empty(): latest_event = "No migration check has happened yet"
+	elif int(overview.get("free_homes", 0)) > 0 and latest_event.contains("no free housing"):
+		latest_event = "Earlier result (housing is available now): " + latest_event
+	else:
+		latest_event = "Latest daily check: " + latest_event
+	_add_card("Migration", "arrival", ["Arrivals %d · Departures %d" % [int(migration.get("arrivals", 0)), int(migration.get("departures", 0))], "Rejected %d · Net %+.0f" % [int(migration.get("rejections", 0)), float(migration.get("net", 0))], latest_event, "%d housing places are free right now" % int(overview.get("free_homes", 0))])
 	var composition := CommunityUIFactory.card("Composition", "community")
 	if overview.get("composition", {}).get("empty", true):
 		composition["content"].add_child(CommunityUIFactory.label("No residents to describe yet."))
@@ -138,7 +145,8 @@ func _render_overview() -> void:
 		for row in overview["composition"]["dominant_lenses"]:
 			composition["content"].add_child(CommunityUIFactory.label("%s emphasis  %d" % [row["label"], int(row["count"])]))
 	_content.add_child(composition["root"])
-	var drivers := CommunityUIFactory.card("Strongest drivers", "positive-effect")
+	var drivers := CommunityUIFactory.card("What is shaping happiness?", "positive-effect")
+	drivers["content"].add_child(CommunityUIFactory.label("Largest active effects, totalled across the residents they currently reach.", 12, CommunityUIFactory.TAUPE))
 	_render_driver_rows(drivers["content"], overview.get("positive_drivers", []), true)
 	_render_driver_rows(drivers["content"], overview.get("negative_drivers", []), false)
 	_content.add_child(drivers["root"])
@@ -153,7 +161,24 @@ func _render_driver_rows(parent: VBoxContainer, rows: Array, positive: bool) -> 
 		parent.add_child(CommunityUIFactory.label(("+ Positive" if positive else "− Negative") + ": none active", 12, CommunityUIFactory.TAUPE))
 		return
 	for row in rows.slice(0, 3):
-		parent.add_child(CommunityUIFactory.icon_label("positive-effect" if positive else "negative-effect", "%s %s · %s (%d residents)" % [CommunityUIFactory.signed_amount(float(row["amount"])), row["reason"], row["source_display_name"], int(row["residents"])]))
+		parent.add_child(CommunityUIFactory.icon_label("positive-effect" if positive else "negative-effect", "%s %s · %s · total across %d resident%s" % [CommunityUIFactory.signed_amount(float(row["amount"])), String(row.get("quality", "effect")).capitalize(), row["source_display_name"], int(row["residents"]), "" if int(row["residents"]) == 1 else "s"]))
+
+func _housing_build_status(overview: Dictionary) -> String:
+	var free_places := int(overview.get("free_homes", 0))
+	if free_places > 0:
+		return "Current: arrivals have room; an earlier rejection may no longer apply"
+	var capacity := int(overview.get("capacity", 0))
+	var demand = PluginManager.get_plugin("Demand")
+	var snapshot: Dictionary = demand.get_bucket_snapshot("residential") if demand and demand.has_method("get_bucket_snapshot") else {}
+	var available := int(floor(float(snapshot.get("unserved", 0.0))))
+	var next_cost := int(demand.ref_cost_housing) if demand else 5
+	if available >= next_cost:
+		if capacity <= 0:
+			return "Current: no homes yet; you can build a House now"
+		return "Current: town is full; you can build another House now"
+	if capacity <= 0:
+		return "Current: no homes yet; Homes demand %d/%d toward the first House" % [available, next_cost]
+	return "Current: town is full; Homes demand %d/%d toward the next House" % [available, next_cost]
 
 func _add_card(title: String, icon_slug: String, lines: Array) -> void:
 	var card := CommunityUIFactory.card(title, icon_slug)
@@ -263,7 +288,13 @@ func _render_places() -> void:
 func _render_place_detail(place: Dictionary) -> void:
 	if place.is_empty(): _selected_place_key = ""; _render(); return
 	var back := CommunityUIFactory.button("← Places"); back.pressed.connect(func(): _selected_place_key = ""; _render()); _content.add_child(back)
-	_add_card(place["display_name"], "place-inspection", [CommunityUIFactory.anchor_label(place["anchor"]), ("ACTIVE" if place["active"] else "INACTIVE") + " · " + place["active_schedule_label"], "Reach: %s · participant capacity: %s" % [str(place["radii"]), str(place["capacities"])], "%d housed · %d participating · %d affected" % [place["housed_resident_ids"].size(), place["participating_resident_ids"].size(), place["affected_resident_ids"].size()]])
+	var operation_line := "Operation data unavailable"
+	if not place.get("operation", {}).is_empty():
+		var access := "ROAD ACCESS" if bool(place.get("road_accessible", false)) else "NO ROAD ACCESS"
+		var state := "OPERATING" if bool(place.get("operating", false)) else "IDLE"
+		operation_line = "%s · %s · %d fulfilled" % [access, state, int(place.get("fulfilled", 0))]
+		if not String(place.get("operation_reason", "")).is_empty(): operation_line += " · " + String(place["operation_reason"]).replace("_", " ")
+	_add_card(place["display_name"], "place-inspection", [CommunityUIFactory.anchor_label(place["anchor"]), ("ACTIVE" if place["active"] else "INACTIVE") + " · " + place["active_schedule_label"], operation_line, "Reach: %s · participant capacity: %s" % [str(place["radii"]), str(place["capacities"])], "%d housed · %d participating · %d affected" % [place["housed_resident_ids"].size(), place["participating_resident_ids"].size(), place["affected_resident_ids"].size()]])
 	if not place["available_programmes"].is_empty():
 		var programme := CommunityUIFactory.card("Programme", "programme"); var options := OptionButton.new(); options.focus_mode = Control.FOCUS_ALL
 		for option in place["available_programmes"]: options.add_item(option["label"]); options.set_item_metadata(options.item_count - 1, option["programme_id"]); if option["programme_id"] == place["current_programme"]: options.select(options.item_count - 1)

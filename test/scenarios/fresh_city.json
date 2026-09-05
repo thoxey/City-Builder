@@ -5,9 +5,9 @@
     "map": "empty",
     "cash": 1000,
     "demand": {
-      "residential": 100.0,
-      "industrial": 100.0,
-      "commercial": 100.0
+      "residential": 25.0,
+      "industrial": 5.0,
+      "commercial": 5.0
     },
     "land": {
       "rule": "starter_rect",
