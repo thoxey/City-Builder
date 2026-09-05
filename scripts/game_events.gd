@@ -19,6 +19,13 @@ signal cash_changed(amount: int, delta: int)
 ## `entry_ids` is the ordered list of currently affordable entry ids;
 ## `selected_id` is the currently active entry (or "" if none affordable).
 signal palette_changed(entry_ids: Array, selected_id: String)
+## Palette's detached presentation projection changed. Consumers fetch it by
+## calling get_build_menu_model(); only the monotonically increasing revision
+## crosses the event bus.
+signal build_menu_model_changed(revision: int)
+## Presentation-only mode change used by PlayerUI/Builder coordination.
+signal player_input_mode_changed(mode: String)
+signal placement_context_changed(context: Dictionary)
 
 ## A unique building has just been placed on the map.
 signal unique_placed(building_id: String)

@@ -155,6 +155,16 @@ func _toggle_expanded() -> void:
 	if _expanded:
 		_rebuild_list()
 
+func toggle_from_shell() -> void:
+	_toggle_expanded()
+
+func get_pending_count() -> int:
+	return _pending.size()
+
+func set_shell_entry_point_external(external: bool) -> void:
+	if _button:
+		_button.visible = not external
+
 func _collapse() -> void:
 	_expanded = false
 	_list_panel.visible = false

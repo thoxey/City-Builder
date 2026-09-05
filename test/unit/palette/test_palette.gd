@@ -257,6 +257,28 @@ func test_unlocked_unique_appears_in_affordable() -> void:
 
 	assert_true("pub" in _plugin._affordable_ids, "unlocked uniques show up")
 
+func test_menu_projection_contains_each_player_entry_once_and_is_detached() -> void:
+	_catalog.add_structure("house_a", "generic", "residential_t1", false, "residential")
+	_catalog.add_structure("house_b", "generic", "residential_t1", false, "residential")
+	_catalog.add_structure("park", "nature", "")
+	_rebuild()
+	var model: Dictionary = _plugin.get_build_menu_model()
+	assert_eq(model.entries_by_id.size(), 2)
+	model.entries_by_id.clear()
+	assert_eq(_plugin.get_build_menu_model().entries_by_id.size(), 2, "caller mutation must not reach Palette")
+
+func test_request_selection_revalidates_and_retains_selection_on_rejection() -> void:
+	_catalog.add_structure("park", "nature", "")
+	_catalog.add_structure("pond", "nature", "")
+	_rebuild()
+	assert_true(_plugin.request_select_entry("park").accepted)
+	var selected_before: String = _plugin._selected_id
+	_economy.broke_for_ids["pond"] = true
+	var rejected: Dictionary = _plugin.request_select_entry("pond")
+	assert_false(rejected.accepted)
+	assert_eq(_plugin._selected_id, selected_before)
+	assert_ne(rejected.reason, "")
+
 func test_seeded_pool_pick_is_independent_of_global_random_state() -> void:
 	_catalog.add_structure("house_a", "generic", "residential_t1", false, "residential")
 	_catalog.add_structure("house_b", "generic", "residential_t1", false, "residential")

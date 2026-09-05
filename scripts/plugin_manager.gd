@@ -27,7 +27,6 @@ const PLUGINS: Array[GDScript] = [
 	preload("res://plugins/buildable_area/buildable_area_plugin.gd"),
 	preload("res://plugins/attractiveness/attractiveness_plugin.gd"),
 	preload("res://plugins/palette/palette_plugin.gd"),
-	preload("res://plugins/hud/hud_plugin.gd"),
 	preload("res://plugins/nameplate/nameplate_plugin.gd"),
 	preload("res://plugins/event_system/event_system_plugin.gd"),
 	preload("res://plugins/dialogue/dialogue_plugin.gd"),
@@ -35,15 +34,20 @@ const PLUGINS: Array[GDScript] = [
 	preload("res://plugins/newspaper/newspaper_plugin.gd"),
 	preload("res://plugins/notification/notification_plugin.gd"),
 	preload("res://plugins/dashboard/dashboard_plugin.gd"),
-	preload("res://plugins/quest_debug/quest_debug_plugin.gd"),
 	preload("res://plugins/example/example_plugin.gd"),
 	preload("res://plugins/playtest/playtest_plugin.gd"),
+	preload("res://plugins/player_ui/player_ui_plugin.gd"),
 ]
 
 var _registry: Dictionary = {}  # name → PluginBase
 
-static func should_activate_plugin(plugin_name: String, debug_build: bool = OS.is_debug_build()) -> bool:
-	return plugin_name != "Playtest" or debug_build
+static func should_activate_plugin(plugin_name: String, debug_build: bool = OS.is_debug_build(),
+		road_debug_enabled: bool = false) -> bool:
+	match plugin_name:
+		"QuestDebug": return false
+		"RoadDebug": return debug_build and road_debug_enabled
+		"Playtest": return debug_build
+		_: return true
 
 func _ready() -> void:
 	# ── Instantiate ───────────────────────────────────────────────────────────
@@ -51,7 +55,8 @@ func _ready() -> void:
 	for script: GDScript in PLUGINS:
 		var plugin := script.new() as PluginBase
 		var plugin_name := plugin.get_plugin_name()
-		if not should_activate_plugin(plugin_name):
+		var road_opt_in := bool(ProjectSettings.get_setting("development/road_debug_enabled", false))
+		if not should_activate_plugin(plugin_name, OS.is_debug_build(), road_opt_in):
 			plugin.free()
 			continue
 		if plugin_name.is_empty():

@@ -9,6 +9,11 @@ extends PluginBase
 ## so structures are available before the MeshLibrary is built.
 
 const DATA_ROOT := "res://data/buildings"
+const VALID_UI_GROUPS := [
+	"roads", "homes", "commerce", "industry", "nature", "civic", "landmarks",
+]
+const UI_GROUP_FALLBACK := "landmarks"
+const UI_ICON_FALLBACK := "missing-artwork"
 
 var _loaded: bool = false
 var _structures: Array[Structure] = []
@@ -101,6 +106,14 @@ func get_pool_indices(pool_id: String) -> Array[int]:
 func get_pool_config(pool_id: String) -> Dictionary:
 	return _pool_configs.get(pool_id, {})
 
+func get_pool_ui_metadata(pool_id: String) -> Dictionary:
+	var cfg: Dictionary = _pool_configs.get(pool_id, {})
+	return {
+		"ui_group": cfg.get("ui_group", UI_GROUP_FALLBACK),
+		"ui_order": int(cfg.get("ui_order", 1000)),
+		"ui_icon": cfg.get("ui_icon", UI_ICON_FALLBACK),
+	}
+
 # ── Loading ───────────────────────────────────────────────────────────────────
 
 func _load_dir(dir_root: String) -> void:
@@ -191,6 +204,8 @@ func _load_pool_configs(dir_root: String) -> void:
 		if pid.is_empty():
 			push_error("[BuildingCatalog] pool_missing_id: path=%s" % path)
 			continue
+		var metadata := _validated_ui_metadata(data, path)
+		data.merge(metadata, true)
 		_pool_configs[pid] = data
 		print("[BuildingCatalog] pool_loaded: id=%s tier=%d threshold=%d per_unit=%d" % [
 			pid,
@@ -290,8 +305,24 @@ func _load_one(path: String) -> Dictionary:
 		"tags": data.get("tags", []),
 		"model_path": model_path,
 	}
+	summary.merge(_validated_ui_metadata(data, path), true)
 
 	return {"id": bid, "structure": structure, "summary": summary}
+
+func _validated_ui_metadata(data: Dictionary, path: String) -> Dictionary:
+	var group := String(data.get("ui_group", ""))
+	if group not in VALID_UI_GROUPS:
+		push_warning("[BuildingCatalog] invalid_ui_group: path=%s value=%s; using %s" % [path, group, UI_GROUP_FALLBACK])
+		group = UI_GROUP_FALLBACK
+	var order_value: Variant = data.get("ui_order", 1000)
+	var order := int(order_value) if order_value is int or order_value is float else 1000
+	if not (order_value is int or order_value is float):
+		push_warning("[BuildingCatalog] invalid_ui_order: path=%s; using 1000" % path)
+	var icon := String(data.get("ui_icon", ""))
+	if icon.is_empty() or not icon.is_valid_filename():
+		push_warning("[BuildingCatalog] invalid_ui_icon: path=%s value=%s; using %s" % [path, icon, UI_ICON_FALLBACK])
+		icon = UI_ICON_FALLBACK
+	return {"ui_group": group, "ui_order": order, "ui_icon": icon}
 
 ## Instantiate a StructureMetadata subclass from a profile dict.
 ## Unknown types log a warning and return null.

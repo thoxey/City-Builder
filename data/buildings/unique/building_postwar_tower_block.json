@@ -51,5 +51,8 @@
       "radius": 1
     }
   ],
-  "tags": []
+  "tags": [],
+  "ui_group": "homes",
+  "ui_order": 50,
+  "ui_icon": "postwar-tower-block"
 }

@@ -1,6 +1,6 @@
 extends PluginBase
 
-## Palette — the build-menu data model + UI panel.
+## Palette — the authoritative build-menu data model.
 ##
 ## Collapses the raw catalog into cyclable entries:
 ##   - Structures sharing a pool_id (e.g. residential_t1 pool of small_a + small_d)
@@ -37,10 +37,8 @@ func inject(deps: Dictionary) -> void:
 var _all_entries: Array[PaletteEntry] = []   # every entry, stable order
 var _affordable_ids: Array[String] = []      # ids currently shown
 var _selected_id: String = ""                # "" when nothing affordable
-
-# UI refs
-var _list_vbox: VBoxContainer
-var _row_labels: Dictionary = {}             # entry_id -> Label
+var _menu_revision: int = 0
+var _last_projection_fingerprint: String = ""
 
 # Display-name overrides for pools (pools have no single authoritative source).
 const POOL_DISPLAY_NAMES := {
@@ -67,7 +65,6 @@ const CATEGORY_ORDER := {
 
 func _plugin_ready() -> void:
 	_build_entries()
-	_build_ui()
 	_refresh()
 
 	GameEvents.cash_changed.connect(func(_a, _d): _refresh())
@@ -104,6 +101,8 @@ func _build_entries() -> void:
 				entry.id = pool_id
 				entry.display_name = POOL_DISPLAY_NAMES.get(pool_id, pool_id)
 				entry.sort_key = _sort_key_for(category, pool_id, i)
+				var pool_ui: Dictionary = _catalog.get_pool_ui_metadata(pool_id) if _catalog.has_method("get_pool_ui_metadata") else summary
+				_apply_ui_metadata(entry, pool_ui)
 				by_pool[pool_id] = entry
 				_all_entries.append(entry)
 			entry.structure_indices.append(i)
@@ -113,9 +112,15 @@ func _build_entries() -> void:
 			solo.display_name = summary.get("display_name", solo.id)
 			solo.structure_indices = [i]
 			solo.sort_key = _sort_key_for(category, solo.id, i)
+			_apply_ui_metadata(solo, summary)
 			_all_entries.append(solo)
 
-	_all_entries.sort_custom(func(a, b): return a.sort_key < b.sort_key)
+	_all_entries.sort_custom(func(a, b):
+		if a.ui_group != b.ui_group:
+			return _group_order(a.ui_group) < _group_order(b.ui_group)
+		if a.ui_order != b.ui_order:
+			return a.ui_order < b.ui_order
+		return a.id < b.id)
 
 	print("[Palette] built: entries=%d" % _all_entries.size())
 	for e in _all_entries:
@@ -125,6 +130,14 @@ func _build_entries() -> void:
 static func _sort_key_for(category: String, id: String, tiebreaker: int) -> String:
 	var bucket: int = CATEGORY_ORDER.get(category, 99)
 	return "%d_%s_%05d" % [bucket, id, tiebreaker]
+
+static func _group_order(group_id: String) -> int:
+	return ["roads", "homes", "commerce", "industry", "nature", "civic", "landmarks"].find(group_id)
+
+static func _apply_ui_metadata(entry: PaletteEntry, data: Dictionary) -> void:
+	entry.ui_group = String(data.get("ui_group", "landmarks"))
+	entry.ui_order = int(data.get("ui_order", 1000))
+	entry.ui_icon = String(data.get("ui_icon", "missing-artwork"))
 
 # ── Affordability + selection ─────────────────────────────────────────────────
 
@@ -151,10 +164,71 @@ func _is_affordable(entry: PaletteEntry) -> bool:
 			return true
 	return false
 
+func _decision_for_structure(idx: int) -> Dictionary:
+	if idx < 0 or idx >= _catalog.get_all().size():
+		return {"state": "missing_content", "label": "Content is unavailable", "can_select": false}
+	var structure: Structure = _catalog.get_all()[idx]
+	var summary: Dictionary = _catalog.get_summary()[idx]
+	var building_id := String(summary.get("building_id", ""))
+	if _uniques and _uniques.has_method("is_unique") and _uniques.is_unique(building_id):
+		var unlock: Dictionary = _uniques.evaluate_unlock(building_id) if _uniques.has_method("evaluate_unlock") else {}
+		if unlock.is_empty() and _uniques.has_method("is_unlocked"):
+			unlock = {"placed": _uniques.is_placed(building_id) if _uniques.has_method("is_placed") else false,
+				"unlocked": _uniques.is_unlocked(building_id), "missing_prerequisites": []}
+		if bool(unlock.get("placed", false)):
+			return {"state": "already_built", "label": "Already built — this landmark is unique", "can_select": false}
+		var missing: Array = unlock.get("missing_prerequisites", [])
+		if not missing.is_empty():
+			return {"state": "locked_prerequisite", "label": "Requires %s" % _display_names_for_ids(missing), "can_select": false}
+		if not bool(unlock.get("unlocked", true)):
+			return {"state": "insufficient_demand", "label": "Requires %d %s demand" % [int(unlock.get("threshold", 0)), String(unlock.get("bucket", "town"))], "can_select": false}
+	var cash: Dictionary = _economy.quote_cash(structure) if _economy and _economy.has_method("quote_cash") else {
+		"ok": _economy.can_afford_cash(structure) if _economy and _economy.has_method("can_afford_cash") else true,
+		"cost": int(summary.get("cash_cost", 0)), "have": 0}
+	if not bool(cash.get("ok", true)):
+		return {"state": "insufficient_cash", "label": "Need £%d more" % maxi(0, int(cash.get("cost", 0)) - int(cash.get("have", 0))), "can_select": false}
+	var demand: Dictionary = _demand.quote_placement(structure) if _demand and _demand.has_method("quote_placement") else {
+		"ok": _demand.can_afford(structure) if _demand and _demand.has_method("can_afford") else true,
+		"bucket_id":"", "reason":"insufficient", "cost":0, "have":0}
+	if not bool(demand.get("ok", true)):
+		var bucket: String = _demand.bucket_display_name(String(demand.get("bucket_id", ""))) if _demand and _demand.has_method("bucket_display_name") else String(demand.get("bucket_id", "town"))
+		if demand.get("reason", "") == "below_threshold":
+			return {"state": "insufficient_demand", "label": "Requires %d %s demand" % [int(demand.get("threshold", 0)), bucket], "can_select": false}
+		return {"state": "insufficient_demand", "label": "Need %d more %s demand" % [int(ceil(float(demand.get("cost", 0)) - float(demand.get("have", 0)))), bucket], "can_select": false}
+	return {"state": "available", "label": "Available", "can_select": true}
+
+func _display_names_for_ids(ids: Array) -> String:
+	var names: Array[String] = []
+	for id in ids:
+		var summary: Dictionary = _catalog.get_summary_by_id(String(id)) if _catalog.has_method("get_summary_by_id") else {}
+		names.append(String(summary.get("display_name", String(id).replace("building_", "").replace("_", " ").capitalize())))
+	return ", ".join(names)
+
+func _update_entry_availability(entry: PaletteEntry) -> void:
+	if entry.structure_indices.is_empty():
+		entry.availability = "no_members"
+		entry.availability_label = "No buildable variants are available"
+		entry.can_select = false
+		return
+	var first_rejection := {"state": "missing_content", "label": "Content is unavailable", "can_select": false}
+	for idx in entry.structure_indices:
+		var decision := _decision_for_structure(idx)
+		if decision.can_select:
+			entry.availability = "available"
+			entry.availability_label = "Available"
+			entry.can_select = true
+			return
+		if first_rejection.state == "missing_content":
+			first_rejection = decision
+	entry.availability = first_rejection.state
+	entry.availability_label = first_rejection.label
+	entry.can_select = false
+
 func _refresh() -> void:
 	var new_ids: Array[String] = []
 	for e in _all_entries:
-		if _is_affordable(e):
+		_update_entry_availability(e)
+		if e.can_select:
 			new_ids.append(e.id)
 
 	# Keep selection if still affordable; otherwise snap to a nearby affordable.
@@ -167,8 +241,12 @@ func _refresh() -> void:
 	_selected_id = selection
 
 	if changed:
-		_rebuild_ui_rows()
 		GameEvents.palette_changed.emit(_affordable_ids.duplicate(), _selected_id)
+	var fingerprint := JSON.stringify(_projection_payload(false))
+	if fingerprint != _last_projection_fingerprint:
+		_last_projection_fingerprint = fingerprint
+		_menu_revision += 1
+		GameEvents.build_menu_model_changed.emit(_menu_revision)
 
 ## When the current selection falls off the affordable list, pick the entry
 ## nearest to its former position — keeps the cursor roughly where the player
@@ -229,6 +307,74 @@ func get_entry_records() -> Array:
 		})
 	return result
 
+func get_build_menu_model() -> Dictionary:
+	var result := _projection_payload(true)
+	result["revision"] = _menu_revision
+	return result.duplicate(true)
+
+func _projection_payload(include_revision: bool) -> Dictionary:
+	var entries_by_id := {}
+	var groups: Array = []
+	var group_defs := [
+		{"id":"roads", "label":"Roads & Paths", "icon_key":"roads-and-paths"},
+		{"id":"homes", "label":"Homes", "icon_key":"homes"},
+		{"id":"commerce", "label":"Commerce", "icon_key":"commerce"},
+		{"id":"industry", "label":"Industry", "icon_key":"industry"},
+		{"id":"nature", "label":"Nature", "icon_key":"nature"},
+		{"id":"civic", "label":"Leisure & Civic", "icon_key":"leisure-civic"},
+		{"id":"landmarks", "label":"Landmarks & Story", "icon_key":"landmarks-story"},
+	]
+	for def in group_defs:
+		var ids: Array[String] = []
+		var available_count := 0
+		for entry: PaletteEntry in _all_entries:
+			if entry.ui_group != def.id:
+				continue
+			ids.append(entry.id)
+			if entry.can_select: available_count += 1
+			entries_by_id[entry.id] = _entry_projection(entry)
+		if not ids.is_empty():
+			groups.append({"id":def.id, "label":def.label, "icon_key":def.icon_key,
+				"order":_group_order(def.id), "entry_ids":ids, "available_count":available_count, "total_count":ids.size()})
+	var payload := {"groups":groups, "entries_by_id":entries_by_id, "selected_entry_id":_selected_id,
+		"empty_state":"No build choices are available" if _all_entries.is_empty() else ""}
+	if include_revision: payload["revision"] = _menu_revision
+	return payload
+
+func _entry_projection(entry: PaletteEntry) -> Dictionary:
+	var costs: Array[int] = []
+	var demand_info: Dictionary = {}
+	var members: Array[String] = []
+	for idx in entry.structure_indices:
+		var summary: Dictionary = _catalog.get_summary()[idx]
+		members.append(String(summary.get("building_id", "")))
+		var cost := int(summary.get("cash_cost", 0))
+		if _economy and _economy.has_method("get_cash_cost"): cost = _economy.get_cash_cost(_catalog.get_all()[idx])
+		if cost not in costs: costs.append(cost)
+		if demand_info.is_empty() and _demand and _demand.has_method("quote_placement"):
+			demand_info = _demand.quote_placement(_catalog.get_all()[idx]).duplicate(true)
+	costs.sort()
+	return {"id":entry.id, "display_name":entry.display_name, "short_label":entry.display_name,
+		"group_id":entry.ui_group, "ui_order":entry.ui_order, "icon_key":entry.ui_icon,
+		"is_pool":entry.structure_indices.size() > 1 or (_catalog.get_all()[entry.structure_indices[0]].pool_id != ""),
+		"member_building_ids":members, "representative_structure_index":entry.structure_indices[0],
+		"cash_cost":costs[0] if costs.size() == 1 else {"min":costs[0], "max":costs[-1]},
+		"demand_cost":demand_info, "availability":entry.availability,
+		"availability_label":entry.availability_label, "can_select":entry.can_select}
+
+func request_select_entry(entry_id: String) -> Dictionary:
+	var entry := _entry_by_id(entry_id)
+	if entry == null:
+		return {"accepted":false, "entry_id":entry_id, "structure_index":-1, "reason":"Unknown build choice"}
+	_update_entry_availability(entry)
+	if not entry.can_select:
+		return {"accepted":false, "entry_id":entry_id, "structure_index":-1, "reason":entry.availability_label}
+	_selected_id = entry.id
+	_affordable_ids = _affordable_ids if entry.id in _affordable_ids else _affordable_ids + [entry.id]
+	GameEvents.palette_changed.emit(_affordable_ids.duplicate(), _selected_id)
+	_refresh()
+	return {"accepted":true, "entry_id":entry.id, "structure_index":current_structure_index(), "reason":""}
+
 func select_next() -> void:
 	_step_selection(1)
 
@@ -244,7 +390,6 @@ func _step_selection(delta: int) -> void:
 	else:
 		var next_pos := wrapi(current_pos + delta, 0, _affordable_ids.size())
 		_selected_id = _affordable_ids[next_pos]
-	_rebuild_ui_rows()
 	GameEvents.palette_changed.emit(_affordable_ids.duplicate(), _selected_id)
 
 func _entry_by_id(id: String) -> PaletteEntry:
@@ -253,51 +398,6 @@ func _entry_by_id(id: String) -> PaletteEntry:
 			return e
 	return null
 
-# ── UI panel ──────────────────────────────────────────────────────────────────
-
+## Compatibility no-op for older unit fixtures; Palette no longer constructs UI.
 func _build_ui() -> void:
-	var canvas := CanvasLayer.new()
-	canvas.layer = 5
-	add_child(canvas)
-
-	var panel := PanelContainer.new()
-	panel.set_anchors_preset(Control.PRESET_BOTTOM_LEFT)
-	panel.offset_left   = 10
-	panel.offset_right  = 220
-	panel.offset_top    = -260
-	panel.offset_bottom = -10
-	canvas.add_child(panel)
-
-	var vbox := VBoxContainer.new()
-	vbox.add_theme_constant_override("separation", 2)
-	panel.add_child(vbox)
-
-	var header := Label.new()
-	header.text = "Build (Q/E)"
-	header.add_theme_constant_override("outline_size", 2)
-	vbox.add_child(header)
-
-	_list_vbox = VBoxContainer.new()
-	_list_vbox.add_theme_constant_override("separation", 0)
-	vbox.add_child(_list_vbox)
-
-func _rebuild_ui_rows() -> void:
-	if _list_vbox == null:
-		return
-	for child in _list_vbox.get_children():
-		_list_vbox.remove_child(child)
-		child.queue_free()
-	_row_labels.clear()
-
-	for id in _affordable_ids:
-		var e := _entry_by_id(id)
-		if e == null:
-			continue
-		var lbl := Label.new()
-		var prefix := "> " if id == _selected_id else "  "
-		var suffix := "" if e.structure_indices.size() <= 1 else "  (×%d)" % e.structure_indices.size()
-		lbl.text = "%s%s%s" % [prefix, e.display_name, suffix]
-		if id == _selected_id:
-			lbl.modulate = Color(1.0, 0.95, 0.4)
-		_list_vbox.add_child(lbl)
-		_row_labels[id] = lbl
+	pass

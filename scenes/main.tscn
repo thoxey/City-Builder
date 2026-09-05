@@ -4,14 +4,7 @@
 [ext_resource type="Environment" uid="uid://jbptgqvstei3" path="res://scenes/main-environment.tres" id="1_yndf3"]
 [ext_resource type="Texture2D" uid="uid://cbk07cxgshg26" path="res://sprites/selector.png" id="4_wr1wv"]
 [ext_resource type="Script" uid="uid://dec71yx4xpg2c" path="res://scripts/view.gd" id="8_yovpv"]
-[ext_resource type="FontFile" uid="uid://d0cxd77jybrcn" path="res://fonts/lilita_one_regular.ttf" id="16_vlub6"]
-[ext_resource type="Texture2D" uid="uid://ciwbdik3tmxtp" path="res://sprites/instructions.png" id="22_pm3ni"]
 [ext_resource type="AudioStream" uid="uid://wvfsgkl8qob6" path="res://sounds/ambience.ogg" id="24_y6deb"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_q176i"]
-font = ExtResource("16_vlub6")
-font_size = 24
-shadow_color = Color(0, 0, 0, 0.392157)
 
 [node name="Main" type="Node3D" unique_id=1590601303]
 
@@ -61,96 +54,18 @@ shadow_opacity = 0.75
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1192517044]
 
-[node name="Top" type="Control" parent="CanvasLayer" unique_id=89838051]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="ResLabel" type="Label" parent="CanvasLayer/Top" unique_id=701000001]
-layout_mode = 0
-offset_left = 310.0
-offset_top = 27.0
-offset_right = 480.0
-offset_bottom = 61.0
-text = "Res: 0"
-label_settings = SubResource("LabelSettings_q176i")
-theme_override_colors/font_color = Color(0.4, 1.0, 0.4, 1.0)
-
-[node name="ComLabel" type="Label" parent="CanvasLayer/Top" unique_id=701000002]
-layout_mode = 0
-offset_left = 490.0
-offset_top = 27.0
-offset_right = 660.0
-offset_bottom = 61.0
-text = "Com: 0"
-label_settings = SubResource("LabelSettings_q176i")
-theme_override_colors/font_color = Color(0.4, 0.7, 1.0, 1.0)
-
-[node name="WorkLabel" type="Label" parent="CanvasLayer/Top" unique_id=701000003]
-layout_mode = 0
-offset_left = 670.0
-offset_top = 27.0
-offset_right = 860.0
-offset_bottom = 61.0
-text = "Work: 0"
-label_settings = SubResource("LabelSettings_q176i")
-theme_override_colors/font_color = Color(1.0, 0.85, 0.2, 1.0)
-
-[node name="Bottom" type="Control" parent="CanvasLayer" unique_id=227080816]
-layout_mode = 3
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -648.0
-offset_bottom = -648.0
-grow_vertical = 0
-
-[node name="Instructions" type="TextureRect" parent="CanvasLayer/Bottom" unique_id=1281273980]
-layout_mode = 0
-offset_left = 24.0
-offset_top = 375.0
-offset_right = 344.0
-offset_bottom = 887.0
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("22_pm3ni")
-
-[node name="DevCommands" type="Label" parent="CanvasLayer" unique_id=111222333]
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -220.0
-offset_top = -210.0
-offset_right = -16.0
-offset_bottom = -16.0
-grow_horizontal = 0
-grow_vertical = 0
-text = "1  Save Slot 1
-2  Load Temp
-3  Save Slot 2
-4  Load Slot 2
-C  Clear Map
-Q / E  Cycle Building
-RMB  Rotate
-Del  Demolish"
-label_settings = SubResource("LabelSettings_q176i")
-
 [node name="Toast" type="Label" parent="CanvasLayer" unique_id=305670871]
 modulate = Color(1, 1, 1, 0)
-anchors_preset = 8
+anchors_preset = 10
 anchor_left = 0.5
-anchor_top = 0.5
+anchor_top = 0.0
 anchor_right = 0.5
-anchor_bottom = 0.5
+anchor_bottom = 0.0
 offset_left = -300.0
-offset_top = -30.0
+offset_top = 78.0
 offset_right = 300.0
-offset_bottom = 30.0
+offset_bottom = 126.0
 grow_horizontal = 2
-grow_vertical = 2
-label_settings = SubResource("LabelSettings_q176i")
 horizontal_alignment = 1
 vertical_alignment = 1
 

@@ -85,8 +85,8 @@ func _build_ui() -> void:
 	_tab.set_anchors_preset(Control.PRESET_TOP_RIGHT)
 	_tab.offset_left   = -(PANEL_WIDTH + TAB_WIDTH)
 	_tab.offset_right  = -PANEL_WIDTH
-	_tab.offset_top    = 60
-	_tab.offset_bottom = 110
+	_tab.offset_top    = 90
+	_tab.offset_bottom = 140
 	_tab.pressed.connect(_on_toggle_collapsed)
 	_canvas.add_child(_tab)
 
@@ -94,8 +94,10 @@ func _build_ui() -> void:
 	_panel.set_anchors_preset(Control.PRESET_RIGHT_WIDE)
 	_panel.offset_left   = -PANEL_WIDTH
 	_panel.offset_right  = 0
-	_panel.offset_top    = 60
-	_panel.offset_bottom = -10
+	_panel.offset_top    = 90
+	# Reserve the bottom-right time controls. PlayerUI also reserves this
+	# drawer's width for radial and dock placement while it is expanded.
+	_panel.offset_bottom = -92
 	_canvas.add_child(_panel)
 
 	var outer := VBoxContainer.new()

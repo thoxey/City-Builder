@@ -13,3 +13,15 @@ var display_name: String
 var structure_indices: Array[int] = []
 ## String key used to sort the palette into a stable, human-readable order.
 var sort_key: String = ""
+
+## Authored player-menu presentation. Pool sidecar metadata takes precedence
+## over member metadata when this entry represents a pool.
+var ui_group: String = "landmarks"
+var ui_order: int = 1000
+var ui_icon: String = "missing-artwork"
+
+## Stable, reason-bearing availability projected by Palette. These values are
+## presentation state only; selection is always revalidated before acceptance.
+var availability: String = "missing_content"
+var availability_label: String = "Content is unavailable"
+var can_select: bool = false

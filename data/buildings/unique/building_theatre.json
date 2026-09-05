@@ -50,23 +50,133 @@
       "default_programme": "plays",
       "programmes": {
         "plays": [
-          {"effect_id": "plays_beauty", "quality": "beauty", "manifestation": "identity", "amount": 3.0, "scope": "participant", "capacity": 60, "stacking_group": "theatre_beauty", "reason": "Enjoyed recurring local plays"},
-          {"effect_id": "plays_belonging", "quality": "belonging", "manifestation": "identity", "amount": 3.0, "scope": "participant", "capacity": 60, "stacking_group": "theatre_belonging", "reason": "Shared familiar local stories"},
-          {"effect_id": "plays_opportunity", "quality": "opportunity", "manifestation": "identity", "amount": 1.0, "scope": "participant", "capacity": 60, "stacking_group": "theatre_opportunity", "reason": "Took part in local performance"}
+          {
+            "effect_id": "plays_beauty",
+            "quality": "beauty",
+            "manifestation": "identity",
+            "amount": 3.0,
+            "scope": "participant",
+            "capacity": 60,
+            "stacking_group": "theatre_beauty",
+            "reason": "Enjoyed recurring local plays"
+          },
+          {
+            "effect_id": "plays_belonging",
+            "quality": "belonging",
+            "manifestation": "identity",
+            "amount": 3.0,
+            "scope": "participant",
+            "capacity": 60,
+            "stacking_group": "theatre_belonging",
+            "reason": "Shared familiar local stories"
+          },
+          {
+            "effect_id": "plays_opportunity",
+            "quality": "opportunity",
+            "manifestation": "identity",
+            "amount": 1.0,
+            "scope": "participant",
+            "capacity": 60,
+            "stacking_group": "theatre_opportunity",
+            "reason": "Took part in local performance"
+          }
         ],
         "rock_nights": [
-          {"effect_id": "rock_opportunity", "quality": "opportunity", "manifestation": "freedom", "amount": 3.0, "scope": "participant", "capacity": 60, "schedule": {"start": 20, "end": 2}, "stacking_group": "theatre_opportunity", "reason": "Discovered a new music night"},
-          {"effect_id": "rock_belonging", "quality": "belonging", "manifestation": "freedom", "amount": 3.0, "scope": "participant", "capacity": 60, "schedule": {"start": 20, "end": 2}, "stacking_group": "theatre_belonging", "reason": "Found a compatible music scene"},
-          {"effect_id": "rock_beauty", "quality": "beauty", "manifestation": "freedom", "amount": 2.0, "scope": "participant", "capacity": 60, "schedule": {"start": 20, "end": 2}, "stacking_group": "theatre_beauty", "reason": "Loved the programme's novelty"},
-          {"effect_id": "rock_noise", "quality": "liveability", "manifestation": "neutral", "amount": -8.0, "scope": "local", "radius": 2, "schedule": {"start": 20, "end": 2}, "sensitivity": "noise", "stacking_group": "night_noise", "reason": "Amplified music carried into the neighbourhood"}
+          {
+            "effect_id": "rock_opportunity",
+            "quality": "opportunity",
+            "manifestation": "freedom",
+            "amount": 3.0,
+            "scope": "participant",
+            "capacity": 60,
+            "schedule": {
+              "start": 20,
+              "end": 2
+            },
+            "stacking_group": "theatre_opportunity",
+            "reason": "Discovered a new music night"
+          },
+          {
+            "effect_id": "rock_belonging",
+            "quality": "belonging",
+            "manifestation": "freedom",
+            "amount": 3.0,
+            "scope": "participant",
+            "capacity": 60,
+            "schedule": {
+              "start": 20,
+              "end": 2
+            },
+            "stacking_group": "theatre_belonging",
+            "reason": "Found a compatible music scene"
+          },
+          {
+            "effect_id": "rock_beauty",
+            "quality": "beauty",
+            "manifestation": "freedom",
+            "amount": 2.0,
+            "scope": "participant",
+            "capacity": 60,
+            "schedule": {
+              "start": 20,
+              "end": 2
+            },
+            "stacking_group": "theatre_beauty",
+            "reason": "Loved the programme's novelty"
+          },
+          {
+            "effect_id": "rock_noise",
+            "quality": "liveability",
+            "manifestation": "neutral",
+            "amount": -8.0,
+            "scope": "local",
+            "radius": 2,
+            "schedule": {
+              "start": 20,
+              "end": 2
+            },
+            "sensitivity": "noise",
+            "stacking_group": "night_noise",
+            "reason": "Amplified music carried into the neighbourhood"
+          }
         ],
         "community_use": [
-          {"effect_id": "community_belonging", "quality": "belonging", "manifestation": "care", "amount": 4.0, "scope": "participant", "capacity": 60, "stacking_group": "community_gathering", "reason": "Used a staffed community meeting place"},
-          {"effect_id": "community_liveability", "quality": "liveability", "manifestation": "care", "amount": 2.0, "scope": "participant", "capacity": 60, "stacking_group": "community_service", "reason": "Accessed shared community support"},
-          {"effect_id": "community_opportunity", "quality": "opportunity", "manifestation": "care", "amount": 1.0, "scope": "participant", "capacity": 60, "stacking_group": "theatre_opportunity", "reason": "Found a useful community role"}
+          {
+            "effect_id": "community_belonging",
+            "quality": "belonging",
+            "manifestation": "care",
+            "amount": 4.0,
+            "scope": "participant",
+            "capacity": 60,
+            "stacking_group": "community_gathering",
+            "reason": "Used a staffed community meeting place"
+          },
+          {
+            "effect_id": "community_liveability",
+            "quality": "liveability",
+            "manifestation": "care",
+            "amount": 2.0,
+            "scope": "participant",
+            "capacity": 60,
+            "stacking_group": "community_service",
+            "reason": "Accessed shared community support"
+          },
+          {
+            "effect_id": "community_opportunity",
+            "quality": "opportunity",
+            "manifestation": "care",
+            "amount": 1.0,
+            "scope": "participant",
+            "capacity": 60,
+            "stacking_group": "theatre_opportunity",
+            "reason": "Found a useful community role"
+          }
         ]
       }
     }
   ],
-  "tags": []
+  "tags": [],
+  "ui_group": "landmarks",
+  "ui_order": 20,
+  "ui_icon": "theatre"
 }

@@ -53,9 +53,21 @@
     {
       "type": "CommunityEffectProfile",
       "effects": [
-        {"effect_id": "secure_home", "quality": "liveability", "manifestation": "neutral", "amount": 20.0, "scope": "resident", "stacking_group": "housing", "requires_active_building": false, "reason": "Had a secure home"}
+        {
+          "effect_id": "secure_home",
+          "quality": "liveability",
+          "manifestation": "neutral",
+          "amount": 20.0,
+          "scope": "resident",
+          "stacking_group": "housing",
+          "requires_active_building": false,
+          "reason": "Had a secure home"
+        }
       ]
     }
   ],
-  "tags": []
+  "tags": [],
+  "ui_group": "homes",
+  "ui_order": 20,
+  "ui_icon": "tower-block"
 }

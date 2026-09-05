@@ -1,0 +1,14 @@
+{
+  "status": "pass",
+  "manifest_assets": 82,
+  "component_assets": 39,
+  "missing_files": 0,
+  "dimension_mismatches": 0,
+  "component_records_missing_required_fields": 0,
+  "runtime_non_rgba": 0,
+  "parchment_edge_difference_pixels": {
+    "left_right": 0,
+    "top_bottom": 0
+  },
+  "icons_policy": "locked icon source/runtime trees were read-only references during this task"
+}

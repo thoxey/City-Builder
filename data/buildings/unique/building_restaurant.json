@@ -51,5 +51,8 @@
       "radius": 1
     }
   ],
-  "tags": []
+  "tags": [],
+  "ui_group": "commerce",
+  "ui_order": 40,
+  "ui_icon": "restaurant"
 }

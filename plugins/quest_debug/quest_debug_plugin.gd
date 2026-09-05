@@ -28,7 +28,9 @@ func inject(deps: Dictionary) -> void:
 	_patrons    = deps.get("PatronSystem")
 
 func _plugin_ready() -> void:
-	_build_ui()
+	# Retained only as a callable development helper for old test harnesses.
+	# Ordinary play never constructs a QuestDebug panel.
+	pass
 
 # ── UI ────────────────────────────────────────────────────────────────────────
 

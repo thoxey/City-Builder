@@ -1,0 +1,6192 @@
+{
+  "family": "build-menu",
+  "version": 4,
+  "direction": "component exploration upper-left: clipped ticket",
+  "zoning_palette": {
+    "residential": "#58705A",
+    "commercial": "#2E8290",
+    "industrial": "#C9743F"
+  },
+  "alpha_policy": "straight RGBA",
+  "colour_space": "sRGB",
+  "mipmaps": false,
+  "proofs": [
+    "art/ui/build-menu/proofs/actual-size-24px.png",
+    "art/ui/build-menu/proofs/actual-size-32px.png",
+    "art/ui/build-menu/proofs/actual-size-56px.png",
+    "art/ui/build-menu/proofs/actual-size-72px.png",
+    "art/ui/build-menu/proofs/components-review.png",
+    "art/ui/build-menu/proofs/components/component-kit-grayscale.png",
+    "art/ui/build-menu/proofs/components/component-kit-review.png",
+    "art/ui/build-menu/proofs/components/component-skin-exploration-4-directions.png",
+    "art/ui/build-menu/proofs/components/components-on-gameplay.png",
+    "art/ui/build-menu/proofs/components/components-on-parchment.png",
+    "art/ui/build-menu/proofs/components/interaction-state-matrix.png",
+    "art/ui/build-menu/proofs/components/nine-slice-component-tests.png",
+    "art/ui/build-menu/proofs/components/nine-slice/bottom-tool-dock-frame-minimum.png",
+    "art/ui/build-menu/proofs/components/nine-slice/bottom-tool-dock-frame-tall.png",
+    "art/ui/build-menu/proofs/components/nine-slice/bottom-tool-dock-frame-wide.png",
+    "art/ui/build-menu/proofs/components/nine-slice/button-normal-minimum.png",
+    "art/ui/build-menu/proofs/components/nine-slice/button-normal-tall.png",
+    "art/ui/build-menu/proofs/components/nine-slice/button-normal-wide.png",
+    "art/ui/build-menu/proofs/components/nine-slice/insight-drawer-frame-minimum.png",
+    "art/ui/build-menu/proofs/components/nine-slice/insight-drawer-frame-tall.png",
+    "art/ui/build-menu/proofs/components/nine-slice/insight-drawer-frame-wide.png",
+    "art/ui/build-menu/proofs/components/nine-slice/meter-track-minimum.png",
+    "art/ui/build-menu/proofs/components/nine-slice/meter-track-tall.png",
+    "art/ui/build-menu/proofs/components/nine-slice/meter-track-wide.png",
+    "art/ui/build-menu/proofs/components/nine-slice/modal-confirmation-frame-minimum.png",
+    "art/ui/build-menu/proofs/components/nine-slice/modal-confirmation-frame-tall.png",
+    "art/ui/build-menu/proofs/components/nine-slice/modal-confirmation-frame-wide.png",
+    "art/ui/build-menu/proofs/components/nine-slice/notification-toast-frame-minimum.png",
+    "art/ui/build-menu/proofs/components/nine-slice/notification-toast-frame-tall.png",
+    "art/ui/build-menu/proofs/components/nine-slice/notification-toast-frame-wide.png",
+    "art/ui/build-menu/proofs/components/nine-slice/scroll-arrow-button-base-minimum.png",
+    "art/ui/build-menu/proofs/components/nine-slice/scroll-arrow-button-base-tall.png",
+    "art/ui/build-menu/proofs/components/nine-slice/scroll-arrow-button-base-wide.png",
+    "art/ui/build-menu/proofs/components/nine-slice/tab-active-minimum.png",
+    "art/ui/build-menu/proofs/components/nine-slice/tab-active-tall.png",
+    "art/ui/build-menu/proofs/components/nine-slice/tab-active-wide.png",
+    "art/ui/build-menu/proofs/components/nine-slice/tab-inactive-minimum.png",
+    "art/ui/build-menu/proofs/components/nine-slice/tab-inactive-tall.png",
+    "art/ui/build-menu/proofs/components/nine-slice/tab-inactive-wide.png",
+    "art/ui/build-menu/proofs/components/nine-slice/tooltip-detail-card-frame-minimum.png",
+    "art/ui/build-menu/proofs/components/nine-slice/tooltip-detail-card-frame-tall.png",
+    "art/ui/build-menu/proofs/components/nine-slice/tooltip-detail-card-frame-wide.png",
+    "art/ui/build-menu/proofs/components/nine-slice/top-status-bar-frame-minimum.png",
+    "art/ui/build-menu/proofs/components/nine-slice/top-status-bar-frame-tall.png",
+    "art/ui/build-menu/proofs/components/nine-slice/top-status-bar-frame-wide.png",
+    "art/ui/build-menu/proofs/components/notification-contexts.png",
+    "art/ui/build-menu/proofs/components/parchment-repeat-3x3.png",
+    "art/ui/build-menu/proofs/context-gameplay-56px.png",
+    "art/ui/build-menu/proofs/exploration-6-directions.png",
+    "art/ui/build-menu/proofs/family-contact-sheet.png",
+    "art/ui/build-menu/proofs/grayscale-proof.png",
+    "art/ui/build-menu/proofs/layout/actual-size-crops.png",
+    "art/ui/build-menu/proofs/layout/contact-sheet-grayscale.png",
+    "art/ui/build-menu/proofs/layout/contact-sheet.png",
+    "art/ui/build-menu/proofs/layout/original-vs-clean-comparison.png",
+    "art/ui/build-menu/proofs/layout/safe-area-overlay-proof.png",
+    "art/ui/build-menu/proofs/layout/ui-occupancy-proof.png",
+    "art/ui/build-menu/proofs/map-feedback/actual-size-24px.png",
+    "art/ui/build-menu/proofs/map-feedback/actual-size-32px.png",
+    "art/ui/build-menu/proofs/map-feedback/actual-size-48px.png",
+    "art/ui/build-menu/proofs/map-feedback/actual-size-64px.png",
+    "art/ui/build-menu/proofs/map-feedback/affordable-footprint-repeat-3x3.png",
+    "art/ui/build-menu/proofs/map-feedback/blocked-footprint-repeat-3x3.png",
+    "art/ui/build-menu/proofs/map-feedback/cursor-background-matrix.png",
+    "art/ui/build-menu/proofs/map-feedback/final-approved-asset-wall.png",
+    "art/ui/build-menu/proofs/map-feedback/grayscale-colour-vision-accessibility.png",
+    "art/ui/build-menu/proofs/map-feedback/hotspot-anchor-diagrams.png",
+    "art/ui/build-menu/proofs/map-feedback/interaction-context-sheet.png",
+    "art/ui/build-menu/proofs/map-feedback/map-feedback-asset-wall.png",
+    "art/ui/build-menu/proofs/map-feedback/marker-states-grayscale.png",
+    "art/ui/build-menu/proofs/map-feedback/multi-cell-footprints.png",
+    "art/ui/build-menu/proofs/map-feedback/selected-building-frame-sizes.png",
+    "art/ui/build-menu/proofs/master-contact-review.png",
+    "art/ui/build-menu/proofs/nine-slice-proofs.png",
+    "art/ui/build-menu/proofs/parchment-repeat-3x3.png",
+    "art/ui/build-menu/proofs/sizes/24/categories-commerce.png",
+    "art/ui/build-menu/proofs/sizes/24/categories-homes.png",
+    "art/ui/build-menu/proofs/sizes/24/categories-industry.png",
+    "art/ui/build-menu/proofs/sizes/24/categories-landmarks-story.png",
+    "art/ui/build-menu/proofs/sizes/24/categories-leisure-civic.png",
+    "art/ui/build-menu/proofs/sizes/24/categories-nature.png",
+    "art/ui/build-menu/proofs/sizes/24/categories-roads-and-paths.png",
+    "art/ui/build-menu/proofs/sizes/24/controls-back.png",
+    "art/ui/build-menu/proofs/sizes/24/controls-bulldoze.png",
+    "art/ui/build-menu/proofs/sizes/24/controls-cancel.png",
+    "art/ui/build-menu/proofs/sizes/24/controls-close.png",
+    "art/ui/build-menu/proofs/sizes/24/controls-locked.png",
+    "art/ui/build-menu/proofs/sizes/24/controls-missing-artwork.png",
+    "art/ui/build-menu/proofs/sizes/24/controls-next-page.png",
+    "art/ui/build-menu/proofs/sizes/24/controls-open-build.png",
+    "art/ui/build-menu/proofs/sizes/24/controls-place-confirm.png",
+    "art/ui/build-menu/proofs/sizes/24/controls-previous-page.png",
+    "art/ui/build-menu/proofs/sizes/24/controls-rotate.png",
+    "art/ui/build-menu/proofs/sizes/24/controls-unavailable-blocked.png",
+    "art/ui/build-menu/proofs/sizes/24/entries-city-hall.png",
+    "art/ui/build-menu/proofs/sizes/24/entries-crazy-golf.png",
+    "art/ui/build-menu/proofs/sizes/24/entries-duck-pond.png",
+    "art/ui/build-menu/proofs/sizes/24/entries-grass.png",
+    "art/ui/build-menu/proofs/sizes/24/entries-house.png",
+    "art/ui/build-menu/proofs/sizes/24/entries-lumber-mill.png",
+    "art/ui/build-menu/proofs/sizes/24/entries-nature-patch.png",
+    "art/ui/build-menu/proofs/sizes/24/entries-nightclub.png",
+    "art/ui/build-menu/proofs/sizes/24/entries-pavement.png",
+    "art/ui/build-menu/proofs/sizes/24/entries-pipe-factory.png",
+    "art/ui/build-menu/proofs/sizes/24/entries-pirate-radio-station.png",
+    "art/ui/build-menu/proofs/sizes/24/entries-postwar-mid-block.png",
+    "art/ui/build-menu/proofs/sizes/24/entries-postwar-terrace.png",
+    "art/ui/build-menu/proofs/sizes/24/entries-postwar-tower-block.png",
+    "art/ui/build-menu/proofs/sizes/24/entries-private-members-club.png",
+    "art/ui/build-menu/proofs/sizes/24/entries-pub.png",
+    "art/ui/build-menu/proofs/sizes/24/entries-restaurant.png",
+    "art/ui/build-menu/proofs/sizes/24/entries-road.png",
+    "art/ui/build-menu/proofs/sizes/24/entries-shop.png",
+    "art/ui/build-menu/proofs/sizes/24/entries-supermarket.png",
+    "art/ui/build-menu/proofs/sizes/24/entries-theatre.png",
+    "art/ui/build-menu/proofs/sizes/24/entries-tower-block.png",
+    "art/ui/build-menu/proofs/sizes/24/entries-windmill.png",
+    "art/ui/build-menu/proofs/sizes/24/entries-workshop.png",
+    "art/ui/build-menu/proofs/sizes/32/categories-commerce.png",
+    "art/ui/build-menu/proofs/sizes/32/categories-homes.png",
+    "art/ui/build-menu/proofs/sizes/32/categories-industry.png",
+    "art/ui/build-menu/proofs/sizes/32/categories-landmarks-story.png",
+    "art/ui/build-menu/proofs/sizes/32/categories-leisure-civic.png",
+    "art/ui/build-menu/proofs/sizes/32/categories-nature.png",
+    "art/ui/build-menu/proofs/sizes/32/categories-roads-and-paths.png",
+    "art/ui/build-menu/proofs/sizes/32/controls-back.png",
+    "art/ui/build-menu/proofs/sizes/32/controls-bulldoze.png",
+    "art/ui/build-menu/proofs/sizes/32/controls-cancel.png",
+    "art/ui/build-menu/proofs/sizes/32/controls-close.png",
+    "art/ui/build-menu/proofs/sizes/32/controls-locked.png",
+    "art/ui/build-menu/proofs/sizes/32/controls-missing-artwork.png",
+    "art/ui/build-menu/proofs/sizes/32/controls-next-page.png",
+    "art/ui/build-menu/proofs/sizes/32/controls-open-build.png",
+    "art/ui/build-menu/proofs/sizes/32/controls-place-confirm.png",
+    "art/ui/build-menu/proofs/sizes/32/controls-previous-page.png",
+    "art/ui/build-menu/proofs/sizes/32/controls-rotate.png",
+    "art/ui/build-menu/proofs/sizes/32/controls-unavailable-blocked.png",
+    "art/ui/build-menu/proofs/sizes/32/entries-city-hall.png",
+    "art/ui/build-menu/proofs/sizes/32/entries-crazy-golf.png",
+    "art/ui/build-menu/proofs/sizes/32/entries-duck-pond.png",
+    "art/ui/build-menu/proofs/sizes/32/entries-grass.png",
+    "art/ui/build-menu/proofs/sizes/32/entries-house.png",
+    "art/ui/build-menu/proofs/sizes/32/entries-lumber-mill.png",
+    "art/ui/build-menu/proofs/sizes/32/entries-nature-patch.png",
+    "art/ui/build-menu/proofs/sizes/32/entries-nightclub.png",
+    "art/ui/build-menu/proofs/sizes/32/entries-pavement.png",
+    "art/ui/build-menu/proofs/sizes/32/entries-pipe-factory.png",
+    "art/ui/build-menu/proofs/sizes/32/entries-pirate-radio-station.png",
+    "art/ui/build-menu/proofs/sizes/32/entries-postwar-mid-block.png",
+    "art/ui/build-menu/proofs/sizes/32/entries-postwar-terrace.png",
+    "art/ui/build-menu/proofs/sizes/32/entries-postwar-tower-block.png",
+    "art/ui/build-menu/proofs/sizes/32/entries-private-members-club.png",
+    "art/ui/build-menu/proofs/sizes/32/entries-pub.png",
+    "art/ui/build-menu/proofs/sizes/32/entries-restaurant.png",
+    "art/ui/build-menu/proofs/sizes/32/entries-road.png",
+    "art/ui/build-menu/proofs/sizes/32/entries-shop.png",
+    "art/ui/build-menu/proofs/sizes/32/entries-supermarket.png",
+    "art/ui/build-menu/proofs/sizes/32/entries-theatre.png",
+    "art/ui/build-menu/proofs/sizes/32/entries-tower-block.png",
+    "art/ui/build-menu/proofs/sizes/32/entries-windmill.png",
+    "art/ui/build-menu/proofs/sizes/32/entries-workshop.png",
+    "art/ui/build-menu/proofs/sizes/56/categories-commerce.png",
+    "art/ui/build-menu/proofs/sizes/56/categories-homes.png",
+    "art/ui/build-menu/proofs/sizes/56/categories-industry.png",
+    "art/ui/build-menu/proofs/sizes/56/categories-landmarks-story.png",
+    "art/ui/build-menu/proofs/sizes/56/categories-leisure-civic.png",
+    "art/ui/build-menu/proofs/sizes/56/categories-nature.png",
+    "art/ui/build-menu/proofs/sizes/56/categories-roads-and-paths.png",
+    "art/ui/build-menu/proofs/sizes/56/controls-back.png",
+    "art/ui/build-menu/proofs/sizes/56/controls-bulldoze.png",
+    "art/ui/build-menu/proofs/sizes/56/controls-cancel.png",
+    "art/ui/build-menu/proofs/sizes/56/controls-close.png",
+    "art/ui/build-menu/proofs/sizes/56/controls-locked.png",
+    "art/ui/build-menu/proofs/sizes/56/controls-missing-artwork.png",
+    "art/ui/build-menu/proofs/sizes/56/controls-next-page.png",
+    "art/ui/build-menu/proofs/sizes/56/controls-open-build.png",
+    "art/ui/build-menu/proofs/sizes/56/controls-place-confirm.png",
+    "art/ui/build-menu/proofs/sizes/56/controls-previous-page.png",
+    "art/ui/build-menu/proofs/sizes/56/controls-rotate.png",
+    "art/ui/build-menu/proofs/sizes/56/controls-unavailable-blocked.png",
+    "art/ui/build-menu/proofs/sizes/56/entries-city-hall.png",
+    "art/ui/build-menu/proofs/sizes/56/entries-crazy-golf.png",
+    "art/ui/build-menu/proofs/sizes/56/entries-duck-pond.png",
+    "art/ui/build-menu/proofs/sizes/56/entries-grass.png",
+    "art/ui/build-menu/proofs/sizes/56/entries-house.png",
+    "art/ui/build-menu/proofs/sizes/56/entries-lumber-mill.png",
+    "art/ui/build-menu/proofs/sizes/56/entries-nature-patch.png",
+    "art/ui/build-menu/proofs/sizes/56/entries-nightclub.png",
+    "art/ui/build-menu/proofs/sizes/56/entries-pavement.png",
+    "art/ui/build-menu/proofs/sizes/56/entries-pipe-factory.png",
+    "art/ui/build-menu/proofs/sizes/56/entries-pirate-radio-station.png",
+    "art/ui/build-menu/proofs/sizes/56/entries-postwar-mid-block.png",
+    "art/ui/build-menu/proofs/sizes/56/entries-postwar-terrace.png",
+    "art/ui/build-menu/proofs/sizes/56/entries-postwar-tower-block.png",
+    "art/ui/build-menu/proofs/sizes/56/entries-private-members-club.png",
+    "art/ui/build-menu/proofs/sizes/56/entries-pub.png",
+    "art/ui/build-menu/proofs/sizes/56/entries-restaurant.png",
+    "art/ui/build-menu/proofs/sizes/56/entries-road.png",
+    "art/ui/build-menu/proofs/sizes/56/entries-shop.png",
+    "art/ui/build-menu/proofs/sizes/56/entries-supermarket.png",
+    "art/ui/build-menu/proofs/sizes/56/entries-theatre.png",
+    "art/ui/build-menu/proofs/sizes/56/entries-tower-block.png",
+    "art/ui/build-menu/proofs/sizes/56/entries-windmill.png",
+    "art/ui/build-menu/proofs/sizes/56/entries-workshop.png",
+    "art/ui/build-menu/proofs/sizes/72/categories-commerce.png",
+    "art/ui/build-menu/proofs/sizes/72/categories-homes.png",
+    "art/ui/build-menu/proofs/sizes/72/categories-industry.png",
+    "art/ui/build-menu/proofs/sizes/72/categories-landmarks-story.png",
+    "art/ui/build-menu/proofs/sizes/72/categories-leisure-civic.png",
+    "art/ui/build-menu/proofs/sizes/72/categories-nature.png",
+    "art/ui/build-menu/proofs/sizes/72/categories-roads-and-paths.png",
+    "art/ui/build-menu/proofs/sizes/72/controls-back.png",
+    "art/ui/build-menu/proofs/sizes/72/controls-bulldoze.png",
+    "art/ui/build-menu/proofs/sizes/72/controls-cancel.png",
+    "art/ui/build-menu/proofs/sizes/72/controls-close.png",
+    "art/ui/build-menu/proofs/sizes/72/controls-locked.png",
+    "art/ui/build-menu/proofs/sizes/72/controls-missing-artwork.png",
+    "art/ui/build-menu/proofs/sizes/72/controls-next-page.png",
+    "art/ui/build-menu/proofs/sizes/72/controls-open-build.png",
+    "art/ui/build-menu/proofs/sizes/72/controls-place-confirm.png",
+    "art/ui/build-menu/proofs/sizes/72/controls-previous-page.png",
+    "art/ui/build-menu/proofs/sizes/72/controls-rotate.png",
+    "art/ui/build-menu/proofs/sizes/72/controls-unavailable-blocked.png",
+    "art/ui/build-menu/proofs/sizes/72/entries-city-hall.png",
+    "art/ui/build-menu/proofs/sizes/72/entries-crazy-golf.png",
+    "art/ui/build-menu/proofs/sizes/72/entries-duck-pond.png",
+    "art/ui/build-menu/proofs/sizes/72/entries-grass.png",
+    "art/ui/build-menu/proofs/sizes/72/entries-house.png",
+    "art/ui/build-menu/proofs/sizes/72/entries-lumber-mill.png",
+    "art/ui/build-menu/proofs/sizes/72/entries-nature-patch.png",
+    "art/ui/build-menu/proofs/sizes/72/entries-nightclub.png",
+    "art/ui/build-menu/proofs/sizes/72/entries-pavement.png",
+    "art/ui/build-menu/proofs/sizes/72/entries-pipe-factory.png",
+    "art/ui/build-menu/proofs/sizes/72/entries-pirate-radio-station.png",
+    "art/ui/build-menu/proofs/sizes/72/entries-postwar-mid-block.png",
+    "art/ui/build-menu/proofs/sizes/72/entries-postwar-terrace.png",
+    "art/ui/build-menu/proofs/sizes/72/entries-postwar-tower-block.png",
+    "art/ui/build-menu/proofs/sizes/72/entries-private-members-club.png",
+    "art/ui/build-menu/proofs/sizes/72/entries-pub.png",
+    "art/ui/build-menu/proofs/sizes/72/entries-restaurant.png",
+    "art/ui/build-menu/proofs/sizes/72/entries-road.png",
+    "art/ui/build-menu/proofs/sizes/72/entries-shop.png",
+    "art/ui/build-menu/proofs/sizes/72/entries-supermarket.png",
+    "art/ui/build-menu/proofs/sizes/72/entries-theatre.png",
+    "art/ui/build-menu/proofs/sizes/72/entries-tower-block.png",
+    "art/ui/build-menu/proofs/sizes/72/entries-windmill.png",
+    "art/ui/build-menu/proofs/sizes/72/entries-workshop.png",
+    "art/ui/build-menu/proofs/state-matrix.png"
+  ],
+  "assets": [
+    {
+      "id": "build-roads-and-paths",
+      "label": "Roads & Paths",
+      "family": "build-menu",
+      "role": "category-icon",
+      "motif": "curving road junction with directional branch",
+      "source_path": "art/ui/build-menu/masters/categories/roads-and-paths.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/categories/roads-and-paths.png",
+          "dimensions": [
+            256,
+            256
+          ]
+        }
+      ],
+      "display_size_range": [
+        56,
+        72
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "rimless rough parchment medallion with transparent exterior",
+      "palette_roles": [
+        "capacity",
+        "civic",
+        "ink",
+        "paper"
+      ],
+      "accessibility_label": "Roads & Paths",
+      "approval": "approved",
+      "prompt_version": "build-menu-c-zoning-v2",
+      "reference_ids": [
+        "community-icon-wall",
+        "exploration-direction-c"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow/ImageMagick formatting"
+    },
+    {
+      "id": "build-homes",
+      "label": "Homes",
+      "family": "build-menu",
+      "role": "category-icon",
+      "motif": "welcoming detached house",
+      "source_path": "art/ui/build-menu/masters/categories/homes.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/categories/homes.png",
+          "dimensions": [
+            256,
+            256
+          ]
+        }
+      ],
+      "display_size_range": [
+        56,
+        72
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "rimless rough parchment medallion with transparent exterior",
+      "palette_roles": [
+        "residential",
+        "ink",
+        "paper"
+      ],
+      "accessibility_label": "Homes",
+      "approval": "approved",
+      "prompt_version": "build-menu-c-zoning-v2",
+      "reference_ids": [
+        "community-icon-wall",
+        "exploration-direction-c"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow/ImageMagick formatting"
+    },
+    {
+      "id": "build-commerce",
+      "label": "Commerce",
+      "family": "build-menu",
+      "role": "category-icon",
+      "motif": "jaunty shopfront and awning",
+      "source_path": "art/ui/build-menu/masters/categories/commerce.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/categories/commerce.png",
+          "dimensions": [
+            256,
+            256
+          ]
+        }
+      ],
+      "display_size_range": [
+        56,
+        72
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "rimless rough parchment medallion with transparent exterior",
+      "palette_roles": [
+        "commercial",
+        "active",
+        "ink",
+        "paper"
+      ],
+      "accessibility_label": "Commerce",
+      "approval": "approved",
+      "prompt_version": "build-menu-c-zoning-v2",
+      "reference_ids": [
+        "community-icon-wall",
+        "exploration-direction-c"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow/ImageMagick formatting"
+    },
+    {
+      "id": "build-industry",
+      "label": "Industry",
+      "family": "build-menu",
+      "role": "category-icon",
+      "motif": "sawtooth factory and purposeful gear",
+      "source_path": "art/ui/build-menu/masters/categories/industry.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/categories/industry.png",
+          "dimensions": [
+            256,
+            256
+          ]
+        }
+      ],
+      "display_size_range": [
+        56,
+        72
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "rimless rough parchment medallion with transparent exterior",
+      "palette_roles": [
+        "industrial",
+        "civic",
+        "ink",
+        "paper"
+      ],
+      "accessibility_label": "Industry",
+      "approval": "approved",
+      "prompt_version": "build-menu-c-zoning-v2",
+      "reference_ids": [
+        "community-icon-wall",
+        "exploration-direction-c"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow/ImageMagick formatting"
+    },
+    {
+      "id": "build-nature",
+      "label": "Nature",
+      "family": "build-menu",
+      "role": "category-icon",
+      "motif": "wind-leaning tree joined to ground",
+      "source_path": "art/ui/build-menu/masters/categories/nature.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/categories/nature.png",
+          "dimensions": [
+            256,
+            256
+          ]
+        }
+      ],
+      "display_size_range": [
+        56,
+        72
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "rimless rough parchment medallion with transparent exterior",
+      "palette_roles": [
+        "building",
+        "civic",
+        "ink",
+        "paper"
+      ],
+      "accessibility_label": "Nature",
+      "approval": "approved",
+      "prompt_version": "build-menu-c-zoning-v2",
+      "reference_ids": [
+        "community-icon-wall",
+        "exploration-direction-c"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow/ImageMagick formatting"
+    },
+    {
+      "id": "build-leisure-civic",
+      "label": "Leisure & Civic",
+      "family": "build-menu",
+      "role": "category-icon",
+      "motif": "civic pavilion with activity pennant",
+      "source_path": "art/ui/build-menu/masters/categories/leisure-civic.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/categories/leisure-civic.png",
+          "dimensions": [
+            256,
+            256
+          ]
+        }
+      ],
+      "display_size_range": [
+        56,
+        72
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "rimless rough parchment medallion with transparent exterior",
+      "palette_roles": [
+        "civic",
+        "active",
+        "ink",
+        "paper"
+      ],
+      "accessibility_label": "Leisure & Civic",
+      "approval": "approved",
+      "prompt_version": "build-menu-c-zoning-v2",
+      "reference_ids": [
+        "community-icon-wall",
+        "exploration-direction-c"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow/ImageMagick formatting"
+    },
+    {
+      "id": "build-landmarks-story",
+      "label": "Landmarks & Story",
+      "family": "build-menu",
+      "role": "category-icon",
+      "motif": "distinctive landmark with discovery rays",
+      "source_path": "art/ui/build-menu/masters/categories/landmarks-story.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/categories/landmarks-story.png",
+          "dimensions": [
+            256,
+            256
+          ]
+        }
+      ],
+      "display_size_range": [
+        56,
+        72
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "rimless rough parchment medallion with transparent exterior",
+      "palette_roles": [
+        "building",
+        "active",
+        "ink",
+        "paper"
+      ],
+      "accessibility_label": "Landmarks & Story",
+      "approval": "approved",
+      "prompt_version": "build-menu-c-zoning-v2",
+      "reference_ids": [
+        "community-icon-wall",
+        "exploration-direction-c"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow/ImageMagick formatting"
+    },
+    {
+      "id": "build-road",
+      "label": "Road",
+      "family": "build-menu",
+      "role": "build-entry-icon",
+      "motif": "single curving road with directional branch",
+      "source_path": "art/ui/build-menu/masters/entries/road.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/entries/road.png",
+          "dimensions": [
+            256,
+            256
+          ]
+        }
+      ],
+      "display_size_range": [
+        24,
+        72
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "rimless rough parchment medallion with transparent exterior",
+      "palette_roles": [
+        "semantic-mixed",
+        "ink",
+        "paper"
+      ],
+      "accessibility_label": "Road",
+      "approval": "approved",
+      "prompt_version": "build-menu-c-zoning-v2",
+      "reference_ids": [
+        "community-icon-wall",
+        "exploration-direction-c"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow/ImageMagick formatting"
+    },
+    {
+      "id": "build-pavement",
+      "label": "Pavement",
+      "family": "build-menu",
+      "role": "build-entry-icon",
+      "motif": "angled paving slabs and curb",
+      "source_path": "art/ui/build-menu/masters/entries/pavement.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/entries/pavement.png",
+          "dimensions": [
+            256,
+            256
+          ]
+        }
+      ],
+      "display_size_range": [
+        24,
+        72
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "rimless rough parchment medallion with transparent exterior",
+      "palette_roles": [
+        "semantic-mixed",
+        "ink",
+        "paper"
+      ],
+      "accessibility_label": "Pavement",
+      "approval": "approved",
+      "prompt_version": "build-menu-c-zoning-v2",
+      "reference_ids": [
+        "community-icon-wall",
+        "exploration-direction-c"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow/ImageMagick formatting"
+    },
+    {
+      "id": "build-house",
+      "label": "House",
+      "family": "build-menu",
+      "role": "build-entry-icon",
+      "motif": "squat detached pitched-roof home",
+      "source_path": "art/ui/build-menu/masters/entries/house.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/entries/house.png",
+          "dimensions": [
+            256,
+            256
+          ]
+        }
+      ],
+      "display_size_range": [
+        24,
+        72
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "rimless rough parchment medallion with transparent exterior",
+      "palette_roles": [
+        "residential",
+        "ink",
+        "paper"
+      ],
+      "accessibility_label": "House",
+      "approval": "approved",
+      "prompt_version": "build-menu-c-zoning-v2",
+      "reference_ids": [
+        "community-icon-wall",
+        "exploration-direction-c"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow/ImageMagick formatting"
+    },
+    {
+      "id": "build-tower-block",
+      "label": "Tower Block",
+      "family": "build-menu",
+      "role": "build-entry-icon",
+      "motif": "simple tall narrow slab tower",
+      "source_path": "art/ui/build-menu/masters/entries/tower-block.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/entries/tower-block.png",
+          "dimensions": [
+            256,
+            256
+          ]
+        }
+      ],
+      "display_size_range": [
+        24,
+        72
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "rimless rough parchment medallion with transparent exterior",
+      "palette_roles": [
+        "residential",
+        "ink",
+        "paper"
+      ],
+      "accessibility_label": "Tower Block",
+      "approval": "approved",
+      "prompt_version": "build-menu-c-zoning-v2",
+      "reference_ids": [
+        "community-icon-wall",
+        "exploration-direction-c"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow/ImageMagick formatting"
+    },
+    {
+      "id": "build-shop",
+      "label": "Shop",
+      "family": "build-menu",
+      "role": "build-entry-icon",
+      "motif": "narrow commercial shop and awning",
+      "source_path": "art/ui/build-menu/masters/entries/shop.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/entries/shop.png",
+          "dimensions": [
+            256,
+            256
+          ]
+        }
+      ],
+      "display_size_range": [
+        24,
+        72
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "rimless rough parchment medallion with transparent exterior",
+      "palette_roles": [
+        "commercial",
+        "ink",
+        "paper"
+      ],
+      "accessibility_label": "Shop",
+      "approval": "approved",
+      "prompt_version": "build-menu-c-zoning-v2",
+      "reference_ids": [
+        "community-icon-wall",
+        "exploration-direction-c"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow/ImageMagick formatting"
+    },
+    {
+      "id": "build-supermarket",
+      "label": "Supermarket",
+      "family": "build-menu",
+      "role": "build-entry-icon",
+      "motif": "broad low commercial store and trolley",
+      "source_path": "art/ui/build-menu/masters/entries/supermarket.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/entries/supermarket.png",
+          "dimensions": [
+            256,
+            256
+          ]
+        }
+      ],
+      "display_size_range": [
+        24,
+        72
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "rimless rough parchment medallion with transparent exterior",
+      "palette_roles": [
+        "commercial",
+        "ink",
+        "paper"
+      ],
+      "accessibility_label": "Supermarket",
+      "approval": "approved",
+      "prompt_version": "build-menu-c-zoning-v2",
+      "reference_ids": [
+        "community-icon-wall",
+        "exploration-direction-c"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow/ImageMagick formatting"
+    },
+    {
+      "id": "build-workshop",
+      "label": "Workshop",
+      "family": "build-menu",
+      "role": "build-entry-icon",
+      "motif": "squat industrial shed and gear",
+      "source_path": "art/ui/build-menu/masters/entries/workshop.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/entries/workshop.png",
+          "dimensions": [
+            256,
+            256
+          ]
+        }
+      ],
+      "display_size_range": [
+        24,
+        72
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "rimless rough parchment medallion with transparent exterior",
+      "palette_roles": [
+        "industrial",
+        "ink",
+        "paper"
+      ],
+      "accessibility_label": "Workshop",
+      "approval": "approved",
+      "prompt_version": "build-menu-c-zoning-v2",
+      "reference_ids": [
+        "community-icon-wall",
+        "exploration-direction-c"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow/ImageMagick formatting"
+    },
+    {
+      "id": "build-city-hall",
+      "label": "City Hall",
+      "family": "build-menu",
+      "role": "build-entry-icon",
+      "motif": "civic hall, steps, cupola and clock",
+      "source_path": "art/ui/build-menu/masters/entries/city-hall.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/entries/city-hall.png",
+          "dimensions": [
+            256,
+            256
+          ]
+        }
+      ],
+      "display_size_range": [
+        24,
+        72
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "rimless rough parchment medallion with transparent exterior",
+      "palette_roles": [
+        "semantic-mixed",
+        "ink",
+        "paper"
+      ],
+      "accessibility_label": "City Hall",
+      "approval": "approved",
+      "prompt_version": "build-menu-c-zoning-v2",
+      "reference_ids": [
+        "community-icon-wall",
+        "exploration-direction-c"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow/ImageMagick formatting"
+    },
+    {
+      "id": "build-grass",
+      "label": "Grass",
+      "family": "build-menu",
+      "role": "build-entry-icon",
+      "motif": "low turf mound and three grass blades",
+      "source_path": "art/ui/build-menu/masters/entries/grass.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/entries/grass.png",
+          "dimensions": [
+            256,
+            256
+          ]
+        }
+      ],
+      "display_size_range": [
+        24,
+        72
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "rimless rough parchment medallion with transparent exterior",
+      "palette_roles": [
+        "semantic-mixed",
+        "ink",
+        "paper"
+      ],
+      "accessibility_label": "Grass",
+      "approval": "approved",
+      "prompt_version": "build-menu-c-zoning-v2",
+      "reference_ids": [
+        "community-icon-wall",
+        "exploration-direction-c"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow/ImageMagick formatting"
+    },
+    {
+      "id": "build-duck-pond",
+      "label": "Duck Pond",
+      "family": "build-menu",
+      "role": "build-entry-icon",
+      "motif": "duck on irregular pond",
+      "source_path": "art/ui/build-menu/masters/entries/duck-pond.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/entries/duck-pond.png",
+          "dimensions": [
+            256,
+            256
+          ]
+        }
+      ],
+      "display_size_range": [
+        24,
+        72
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "rimless rough parchment medallion with transparent exterior",
+      "palette_roles": [
+        "semantic-mixed",
+        "ink",
+        "paper"
+      ],
+      "accessibility_label": "Duck Pond",
+      "approval": "approved",
+      "prompt_version": "build-menu-c-zoning-v2",
+      "reference_ids": [
+        "community-icon-wall",
+        "exploration-direction-c"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow/ImageMagick formatting"
+    },
+    {
+      "id": "build-nature-patch",
+      "label": "Nature Patch",
+      "family": "build-menu",
+      "role": "build-entry-icon",
+      "motif": "joined tree, bushes and ground",
+      "source_path": "art/ui/build-menu/masters/entries/nature-patch.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/entries/nature-patch.png",
+          "dimensions": [
+            256,
+            256
+          ]
+        }
+      ],
+      "display_size_range": [
+        24,
+        72
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "rimless rough parchment medallion with transparent exterior",
+      "palette_roles": [
+        "semantic-mixed",
+        "ink",
+        "paper"
+      ],
+      "accessibility_label": "Nature Patch",
+      "approval": "approved",
+      "prompt_version": "build-menu-c-zoning-v2",
+      "reference_ids": [
+        "community-icon-wall",
+        "exploration-direction-c"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow/ImageMagick formatting"
+    },
+    {
+      "id": "build-crazy-golf",
+      "label": "Crazy Golf",
+      "family": "build-menu",
+      "role": "build-entry-icon",
+      "motif": "putting hill, flag and windmill obstacle",
+      "source_path": "art/ui/build-menu/masters/entries/crazy-golf.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/entries/crazy-golf.png",
+          "dimensions": [
+            256,
+            256
+          ]
+        }
+      ],
+      "display_size_range": [
+        24,
+        72
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "rimless rough parchment medallion with transparent exterior",
+      "palette_roles": [
+        "semantic-mixed",
+        "ink",
+        "paper"
+      ],
+      "accessibility_label": "Crazy Golf",
+      "approval": "approved",
+      "prompt_version": "build-menu-c-zoning-v2",
+      "reference_ids": [
+        "community-icon-wall",
+        "exploration-direction-c"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow/ImageMagick formatting"
+    },
+    {
+      "id": "build-lumber-mill",
+      "label": "Lumber Mill",
+      "family": "build-menu",
+      "role": "build-entry-icon",
+      "motif": "industrial mill, logs and circular saw",
+      "source_path": "art/ui/build-menu/masters/entries/lumber-mill.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/entries/lumber-mill.png",
+          "dimensions": [
+            256,
+            256
+          ]
+        }
+      ],
+      "display_size_range": [
+        24,
+        72
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "rimless rough parchment medallion with transparent exterior",
+      "palette_roles": [
+        "industrial",
+        "ink",
+        "paper"
+      ],
+      "accessibility_label": "Lumber Mill",
+      "approval": "approved",
+      "prompt_version": "build-menu-c-zoning-v2",
+      "reference_ids": [
+        "community-icon-wall",
+        "exploration-direction-c"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow/ImageMagick formatting"
+    },
+    {
+      "id": "build-private-members-club",
+      "label": "Private Members\u2019 Club",
+      "family": "build-menu",
+      "role": "build-entry-icon",
+      "motif": "exclusive townhouse and barrier",
+      "source_path": "art/ui/build-menu/masters/entries/private-members-club.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/entries/private-members-club.png",
+          "dimensions": [
+            256,
+            256
+          ]
+        }
+      ],
+      "display_size_range": [
+        24,
+        72
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "rimless rough parchment medallion with transparent exterior",
+      "palette_roles": [
+        "commercial",
+        "ink",
+        "paper"
+      ],
+      "accessibility_label": "Private Members\u2019 Club",
+      "approval": "approved",
+      "prompt_version": "build-menu-c-zoning-v2",
+      "reference_ids": [
+        "community-icon-wall",
+        "exploration-direction-c"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow/ImageMagick formatting"
+    },
+    {
+      "id": "build-nightclub",
+      "label": "Nightclub",
+      "family": "build-menu",
+      "role": "build-entry-icon",
+      "motif": "venue canopy, star light and rhythm marks",
+      "source_path": "art/ui/build-menu/masters/entries/nightclub.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/entries/nightclub.png",
+          "dimensions": [
+            256,
+            256
+          ]
+        }
+      ],
+      "display_size_range": [
+        24,
+        72
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "rimless rough parchment medallion with transparent exterior",
+      "palette_roles": [
+        "commercial",
+        "ink",
+        "paper"
+      ],
+      "accessibility_label": "Nightclub",
+      "approval": "approved",
+      "prompt_version": "build-menu-c-zoning-v2",
+      "reference_ids": [
+        "community-icon-wall",
+        "exploration-direction-c"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow/ImageMagick formatting"
+    },
+    {
+      "id": "build-pipe-factory",
+      "label": "Pipe Factory",
+      "family": "build-menu",
+      "role": "build-entry-icon",
+      "motif": "industrial shed and pipe elbows",
+      "source_path": "art/ui/build-menu/masters/entries/pipe-factory.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/entries/pipe-factory.png",
+          "dimensions": [
+            256,
+            256
+          ]
+        }
+      ],
+      "display_size_range": [
+        24,
+        72
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "rimless rough parchment medallion with transparent exterior",
+      "palette_roles": [
+        "industrial",
+        "ink",
+        "paper"
+      ],
+      "accessibility_label": "Pipe Factory",
+      "approval": "approved",
+      "prompt_version": "build-menu-c-zoning-v2",
+      "reference_ids": [
+        "community-icon-wall",
+        "exploration-direction-c"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow/ImageMagick formatting"
+    },
+    {
+      "id": "build-pirate-radio-station",
+      "label": "Pirate Radio Station",
+      "family": "build-menu",
+      "role": "build-entry-icon",
+      "motif": "studio shack and leaning broadcast mast",
+      "source_path": "art/ui/build-menu/masters/entries/pirate-radio-station.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/entries/pirate-radio-station.png",
+          "dimensions": [
+            256,
+            256
+          ]
+        }
+      ],
+      "display_size_range": [
+        24,
+        72
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "rimless rough parchment medallion with transparent exterior",
+      "palette_roles": [
+        "commercial",
+        "ink",
+        "paper"
+      ],
+      "accessibility_label": "Pirate Radio Station",
+      "approval": "approved",
+      "prompt_version": "build-menu-c-zoning-v2",
+      "reference_ids": [
+        "community-icon-wall",
+        "exploration-direction-c"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow/ImageMagick formatting"
+    },
+    {
+      "id": "build-postwar-mid-block",
+      "label": "Postwar Mid-Block",
+      "family": "build-menu",
+      "role": "build-entry-icon",
+      "motif": "wide medium-height residential block",
+      "source_path": "art/ui/build-menu/masters/entries/postwar-mid-block.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/entries/postwar-mid-block.png",
+          "dimensions": [
+            256,
+            256
+          ]
+        }
+      ],
+      "display_size_range": [
+        24,
+        72
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "rimless rough parchment medallion with transparent exterior",
+      "palette_roles": [
+        "residential",
+        "ink",
+        "paper"
+      ],
+      "accessibility_label": "Postwar Mid-Block",
+      "approval": "approved",
+      "prompt_version": "build-menu-c-zoning-v2",
+      "reference_ids": [
+        "community-icon-wall",
+        "exploration-direction-c"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow/ImageMagick formatting"
+    },
+    {
+      "id": "build-postwar-terrace",
+      "label": "Postwar Terrace",
+      "family": "build-menu",
+      "role": "build-entry-icon",
+      "motif": "long low joined residential terrace",
+      "source_path": "art/ui/build-menu/masters/entries/postwar-terrace.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/entries/postwar-terrace.png",
+          "dimensions": [
+            256,
+            256
+          ]
+        }
+      ],
+      "display_size_range": [
+        24,
+        72
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "rimless rough parchment medallion with transparent exterior",
+      "palette_roles": [
+        "residential",
+        "ink",
+        "paper"
+      ],
+      "accessibility_label": "Postwar Terrace",
+      "approval": "approved",
+      "prompt_version": "build-menu-c-zoning-v2",
+      "reference_ids": [
+        "community-icon-wall",
+        "exploration-direction-c"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow/ImageMagick formatting"
+    },
+    {
+      "id": "build-postwar-tower-block",
+      "label": "Postwar Tower Block",
+      "family": "build-menu",
+      "role": "build-entry-icon",
+      "motif": "offset brutalist residential slabs",
+      "source_path": "art/ui/build-menu/masters/entries/postwar-tower-block.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/entries/postwar-tower-block.png",
+          "dimensions": [
+            256,
+            256
+          ]
+        }
+      ],
+      "display_size_range": [
+        24,
+        72
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "rimless rough parchment medallion with transparent exterior",
+      "palette_roles": [
+        "residential",
+        "ink",
+        "paper"
+      ],
+      "accessibility_label": "Postwar Tower Block",
+      "approval": "approved",
+      "prompt_version": "build-menu-c-zoning-v2",
+      "reference_ids": [
+        "community-icon-wall",
+        "exploration-direction-c"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow/ImageMagick formatting"
+    },
+    {
+      "id": "build-pub",
+      "label": "Pub",
+      "family": "build-menu",
+      "role": "build-entry-icon",
+      "motif": "commercial corner pub and hanging sign",
+      "source_path": "art/ui/build-menu/masters/entries/pub.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/entries/pub.png",
+          "dimensions": [
+            256,
+            256
+          ]
+        }
+      ],
+      "display_size_range": [
+        24,
+        72
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "rimless rough parchment medallion with transparent exterior",
+      "palette_roles": [
+        "commercial",
+        "ink",
+        "paper"
+      ],
+      "accessibility_label": "Pub",
+      "approval": "approved",
+      "prompt_version": "build-menu-c-zoning-v2",
+      "reference_ids": [
+        "community-icon-wall",
+        "exploration-direction-c"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow/ImageMagick formatting"
+    },
+    {
+      "id": "build-restaurant",
+      "label": "Restaurant",
+      "family": "build-menu",
+      "role": "build-entry-icon",
+      "motif": "commercial frontage, canopy and tables",
+      "source_path": "art/ui/build-menu/masters/entries/restaurant.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/entries/restaurant.png",
+          "dimensions": [
+            256,
+            256
+          ]
+        }
+      ],
+      "display_size_range": [
+        24,
+        72
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "rimless rough parchment medallion with transparent exterior",
+      "palette_roles": [
+        "commercial",
+        "ink",
+        "paper"
+      ],
+      "accessibility_label": "Restaurant",
+      "approval": "approved",
+      "prompt_version": "build-menu-c-zoning-v2",
+      "reference_ids": [
+        "community-icon-wall",
+        "exploration-direction-c"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow/ImageMagick formatting"
+    },
+    {
+      "id": "build-theatre",
+      "label": "Theatre",
+      "family": "build-menu",
+      "role": "build-entry-icon",
+      "motif": "stepped marquee and curtain doorway",
+      "source_path": "art/ui/build-menu/masters/entries/theatre.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/entries/theatre.png",
+          "dimensions": [
+            256,
+            256
+          ]
+        }
+      ],
+      "display_size_range": [
+        24,
+        72
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "rimless rough parchment medallion with transparent exterior",
+      "palette_roles": [
+        "commercial",
+        "ink",
+        "paper"
+      ],
+      "accessibility_label": "Theatre",
+      "approval": "approved",
+      "prompt_version": "build-menu-c-zoning-v2",
+      "reference_ids": [
+        "community-icon-wall",
+        "exploration-direction-c"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow/ImageMagick formatting"
+    },
+    {
+      "id": "build-windmill",
+      "label": "Windmill",
+      "family": "build-menu",
+      "role": "build-entry-icon",
+      "motif": "landmark windmill with four large sails",
+      "source_path": "art/ui/build-menu/masters/entries/windmill.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/entries/windmill.png",
+          "dimensions": [
+            256,
+            256
+          ]
+        }
+      ],
+      "display_size_range": [
+        24,
+        72
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "rimless rough parchment medallion with transparent exterior",
+      "palette_roles": [
+        "semantic-mixed",
+        "ink",
+        "paper"
+      ],
+      "accessibility_label": "Windmill",
+      "approval": "approved",
+      "prompt_version": "build-menu-c-zoning-v2",
+      "reference_ids": [
+        "community-icon-wall",
+        "exploration-direction-c"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow/ImageMagick formatting"
+    },
+    {
+      "id": "build-open-build",
+      "label": "Open Build",
+      "family": "build-menu",
+      "role": "control-icon",
+      "motif": "open build",
+      "source_path": "art/ui/build-menu/masters/controls/open-build.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/controls/open-build.png",
+          "dimensions": [
+            128,
+            128
+          ]
+        }
+      ],
+      "display_size_range": [
+        16,
+        32
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "rimless rough parchment medallion with transparent exterior",
+      "palette_roles": [
+        "semantic-mixed",
+        "ink",
+        "paper"
+      ],
+      "accessibility_label": "Open Build",
+      "approval": "approved",
+      "prompt_version": "build-menu-c-zoning-v2",
+      "reference_ids": [
+        "community-icon-wall",
+        "exploration-direction-c"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow/ImageMagick formatting",
+      "fallback_state": "normal"
+    },
+    {
+      "id": "build-bulldoze",
+      "label": "Bulldoze",
+      "family": "build-menu",
+      "role": "control-icon",
+      "motif": "bulldoze",
+      "source_path": "art/ui/build-menu/masters/controls/bulldoze.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/controls/bulldoze.png",
+          "dimensions": [
+            128,
+            128
+          ]
+        }
+      ],
+      "display_size_range": [
+        16,
+        32
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "rimless rough parchment medallion with transparent exterior",
+      "palette_roles": [
+        "semantic-mixed",
+        "ink",
+        "paper"
+      ],
+      "accessibility_label": "Bulldoze",
+      "approval": "approved",
+      "prompt_version": "build-menu-c-zoning-v2",
+      "reference_ids": [
+        "community-icon-wall",
+        "exploration-direction-c"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow/ImageMagick formatting",
+      "fallback_state": "normal"
+    },
+    {
+      "id": "build-rotate",
+      "label": "Rotate",
+      "family": "build-menu",
+      "role": "control-icon",
+      "motif": "rotate",
+      "source_path": "art/ui/build-menu/masters/controls/rotate.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/controls/rotate.png",
+          "dimensions": [
+            128,
+            128
+          ]
+        }
+      ],
+      "display_size_range": [
+        16,
+        32
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "rimless rough parchment medallion with transparent exterior",
+      "palette_roles": [
+        "semantic-mixed",
+        "ink",
+        "paper"
+      ],
+      "accessibility_label": "Rotate",
+      "approval": "approved",
+      "prompt_version": "build-menu-c-zoning-v2",
+      "reference_ids": [
+        "community-icon-wall",
+        "exploration-direction-c"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow/ImageMagick formatting",
+      "fallback_state": "normal"
+    },
+    {
+      "id": "build-place-confirm",
+      "label": "Place/confirm",
+      "family": "build-menu",
+      "role": "control-icon",
+      "motif": "place/confirm",
+      "source_path": "art/ui/build-menu/masters/controls/place-confirm.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/controls/place-confirm.png",
+          "dimensions": [
+            128,
+            128
+          ]
+        }
+      ],
+      "display_size_range": [
+        16,
+        32
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "rimless rough parchment medallion with transparent exterior",
+      "palette_roles": [
+        "semantic-mixed",
+        "ink",
+        "paper"
+      ],
+      "accessibility_label": "Place/confirm",
+      "approval": "approved",
+      "prompt_version": "build-menu-c-zoning-v2",
+      "reference_ids": [
+        "community-icon-wall",
+        "exploration-direction-c"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow/ImageMagick formatting",
+      "fallback_state": "normal"
+    },
+    {
+      "id": "build-cancel",
+      "label": "Cancel",
+      "family": "build-menu",
+      "role": "control-icon",
+      "motif": "cancel",
+      "source_path": "art/ui/build-menu/masters/controls/cancel.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/controls/cancel.png",
+          "dimensions": [
+            128,
+            128
+          ]
+        }
+      ],
+      "display_size_range": [
+        16,
+        32
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "rimless rough parchment medallion with transparent exterior",
+      "palette_roles": [
+        "semantic-mixed",
+        "ink",
+        "paper"
+      ],
+      "accessibility_label": "Cancel",
+      "approval": "approved",
+      "prompt_version": "build-menu-c-zoning-v2",
+      "reference_ids": [
+        "community-icon-wall",
+        "exploration-direction-c"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow/ImageMagick formatting",
+      "fallback_state": "normal"
+    },
+    {
+      "id": "build-back",
+      "label": "Back",
+      "family": "build-menu",
+      "role": "control-icon",
+      "motif": "back",
+      "source_path": "art/ui/build-menu/masters/controls/back.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/controls/back.png",
+          "dimensions": [
+            128,
+            128
+          ]
+        }
+      ],
+      "display_size_range": [
+        16,
+        32
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "rimless rough parchment medallion with transparent exterior",
+      "palette_roles": [
+        "semantic-mixed",
+        "ink",
+        "paper"
+      ],
+      "accessibility_label": "Back",
+      "approval": "approved",
+      "prompt_version": "build-menu-c-zoning-v2",
+      "reference_ids": [
+        "community-icon-wall",
+        "exploration-direction-c"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow/ImageMagick formatting",
+      "fallback_state": "normal"
+    },
+    {
+      "id": "build-close",
+      "label": "Close",
+      "family": "build-menu",
+      "role": "control-icon",
+      "motif": "close",
+      "source_path": "art/ui/build-menu/masters/controls/close.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/controls/close.png",
+          "dimensions": [
+            128,
+            128
+          ]
+        }
+      ],
+      "display_size_range": [
+        16,
+        32
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "rimless rough parchment medallion with transparent exterior",
+      "palette_roles": [
+        "semantic-mixed",
+        "ink",
+        "paper"
+      ],
+      "accessibility_label": "Close",
+      "approval": "approved",
+      "prompt_version": "build-menu-c-zoning-v2",
+      "reference_ids": [
+        "community-icon-wall",
+        "exploration-direction-c"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow/ImageMagick formatting",
+      "fallback_state": "normal"
+    },
+    {
+      "id": "build-next-page",
+      "label": "Next page",
+      "family": "build-menu",
+      "role": "control-icon",
+      "motif": "next page",
+      "source_path": "art/ui/build-menu/masters/controls/next-page.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/controls/next-page.png",
+          "dimensions": [
+            128,
+            128
+          ]
+        }
+      ],
+      "display_size_range": [
+        16,
+        32
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "rimless rough parchment medallion with transparent exterior",
+      "palette_roles": [
+        "semantic-mixed",
+        "ink",
+        "paper"
+      ],
+      "accessibility_label": "Next page",
+      "approval": "approved",
+      "prompt_version": "build-menu-c-zoning-v2",
+      "reference_ids": [
+        "community-icon-wall",
+        "exploration-direction-c"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow/ImageMagick formatting",
+      "fallback_state": "normal"
+    },
+    {
+      "id": "build-previous-page",
+      "label": "Previous page",
+      "family": "build-menu",
+      "role": "control-icon",
+      "motif": "previous page",
+      "source_path": "art/ui/build-menu/masters/controls/previous-page.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/controls/previous-page.png",
+          "dimensions": [
+            128,
+            128
+          ]
+        }
+      ],
+      "display_size_range": [
+        16,
+        32
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "rimless rough parchment medallion with transparent exterior",
+      "palette_roles": [
+        "semantic-mixed",
+        "ink",
+        "paper"
+      ],
+      "accessibility_label": "Previous page",
+      "approval": "approved",
+      "prompt_version": "build-menu-c-zoning-v2",
+      "reference_ids": [
+        "community-icon-wall",
+        "exploration-direction-c"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow/ImageMagick formatting",
+      "fallback_state": "normal"
+    },
+    {
+      "id": "build-locked",
+      "label": "Locked",
+      "family": "build-menu",
+      "role": "control-icon",
+      "motif": "locked",
+      "source_path": "art/ui/build-menu/masters/controls/locked.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/controls/locked.png",
+          "dimensions": [
+            128,
+            128
+          ]
+        }
+      ],
+      "display_size_range": [
+        16,
+        32
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "rimless rough parchment medallion with transparent exterior",
+      "palette_roles": [
+        "semantic-mixed",
+        "ink",
+        "paper"
+      ],
+      "accessibility_label": "Locked",
+      "approval": "approved",
+      "prompt_version": "build-menu-c-zoning-v2",
+      "reference_ids": [
+        "community-icon-wall",
+        "exploration-direction-c"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow/ImageMagick formatting",
+      "fallback_state": "normal"
+    },
+    {
+      "id": "build-unavailable-blocked",
+      "label": "Unavailable/blocked",
+      "family": "build-menu",
+      "role": "control-icon",
+      "motif": "unavailable/blocked",
+      "source_path": "art/ui/build-menu/masters/controls/unavailable-blocked.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/controls/unavailable-blocked.png",
+          "dimensions": [
+            128,
+            128
+          ]
+        }
+      ],
+      "display_size_range": [
+        16,
+        32
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "rimless rough parchment medallion with transparent exterior",
+      "palette_roles": [
+        "semantic-mixed",
+        "ink",
+        "paper"
+      ],
+      "accessibility_label": "Unavailable/blocked",
+      "approval": "approved",
+      "prompt_version": "build-menu-c-zoning-v2",
+      "reference_ids": [
+        "community-icon-wall",
+        "exploration-direction-c"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow/ImageMagick formatting",
+      "fallback_state": "normal"
+    },
+    {
+      "id": "build-missing-artwork",
+      "label": "Missing artwork fallback",
+      "family": "build-menu",
+      "role": "control-icon",
+      "motif": "missing artwork fallback",
+      "source_path": "art/ui/build-menu/masters/controls/missing-artwork.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/controls/missing-artwork.png",
+          "dimensions": [
+            128,
+            128
+          ]
+        }
+      ],
+      "display_size_range": [
+        16,
+        32
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "rimless rough parchment medallion with transparent exterior",
+      "palette_roles": [
+        "semantic-mixed",
+        "ink",
+        "paper"
+      ],
+      "accessibility_label": "Missing artwork fallback",
+      "approval": "approved",
+      "prompt_version": "build-menu-c-zoning-v2",
+      "reference_ids": [
+        "community-icon-wall",
+        "exploration-direction-c"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow/ImageMagick formatting",
+      "fallback_state": "normal",
+      "fallback_for": "missing or failed icon resource"
+    },
+    {
+      "id": "top-status-bar-frame",
+      "label": "Top status-bar frame",
+      "family": "build-menu-components",
+      "role": "nine-slice-component",
+      "motif": "clipped-ticket printed UI construction",
+      "source_path": "art/ui/build-menu/masters/components/top-status-bar-frame.png",
+      "source_dimensions": [
+        2135,
+        736
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/components/top-status-bar-frame.png",
+          "dimensions": [
+            512,
+            128
+          ]
+        }
+      ],
+      "display_size_range": [
+        600,
+        1240
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; component-specific interior",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "active",
+        "civic",
+        "neutral",
+        "danger"
+      ],
+      "accessibility_purpose": "Top status-bar frame",
+      "approval": "ready_for_implementation_review",
+      "stretch_or_tile_mode": "stretch-x",
+      "state": "normal",
+      "fallback_state": "normal",
+      "edge_repair": null,
+      "prompt_version": "component-ticket-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "component-skin-exploration-upper-left"
+      ],
+      "tool": "built-in image generation plus deterministic ImageMagick formatting",
+      "slice_margins": [
+        96,
+        64,
+        96,
+        48
+      ],
+      "content_margins": [
+        104,
+        68,
+        104,
+        52
+      ],
+      "minimum_dimensions": [
+        224,
+        128
+      ],
+      "horizontal_mode": "stretch",
+      "vertical_mode": "stretch",
+      "draw_center": true
+    },
+    {
+      "id": "bottom-tool-dock-frame",
+      "label": "Bottom tool-dock frame",
+      "family": "build-menu-components",
+      "role": "nine-slice-component",
+      "motif": "clipped-ticket printed UI construction",
+      "source_path": "art/ui/build-menu/masters/components/bottom-tool-dock-frame.png",
+      "source_dimensions": [
+        1920,
+        819
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/components/bottom-tool-dock-frame.png",
+          "dimensions": [
+            512,
+            160
+          ]
+        }
+      ],
+      "display_size_range": [
+        224,
+        720
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; component-specific interior",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "active",
+        "civic",
+        "neutral",
+        "danger"
+      ],
+      "accessibility_purpose": "Bottom tool-dock frame",
+      "approval": "ready_for_implementation_review",
+      "stretch_or_tile_mode": "stretch-xy",
+      "state": "normal",
+      "fallback_state": "normal",
+      "edge_repair": null,
+      "prompt_version": "component-ticket-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "component-skin-exploration-upper-left"
+      ],
+      "tool": "built-in image generation plus deterministic ImageMagick formatting",
+      "slice_margins": [
+        96,
+        80,
+        96,
+        64
+      ],
+      "content_margins": [
+        104,
+        84,
+        104,
+        68
+      ],
+      "minimum_dimensions": [
+        224,
+        160
+      ],
+      "horizontal_mode": "stretch",
+      "vertical_mode": "stretch",
+      "draw_center": true
+    },
+    {
+      "id": "insight-drawer-frame",
+      "label": "Insight drawer frame",
+      "family": "build-menu-components",
+      "role": "nine-slice-component",
+      "motif": "clipped-ticket printed UI construction",
+      "source_path": "art/ui/build-menu/masters/components/insight-drawer-frame.png",
+      "source_dimensions": [
+        958,
+        1642
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/components/insight-drawer-frame.png",
+          "dimensions": [
+            320,
+            640
+          ]
+        }
+      ],
+      "display_size_range": [
+        256,
+        720
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; component-specific interior",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "active",
+        "civic",
+        "neutral",
+        "danger"
+      ],
+      "accessibility_purpose": "Insight drawer frame",
+      "approval": "ready_for_implementation_review",
+      "stretch_or_tile_mode": "stretch-y",
+      "state": "normal",
+      "fallback_state": "normal",
+      "edge_repair": "edge-connected checkerboard removal",
+      "prompt_version": "component-ticket-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "component-skin-exploration-upper-left"
+      ],
+      "tool": "built-in image generation plus deterministic ImageMagick formatting",
+      "slice_margins": [
+        64,
+        128,
+        64,
+        64
+      ],
+      "content_margins": [
+        72,
+        140,
+        72,
+        72
+      ],
+      "minimum_dimensions": [
+        192,
+        256
+      ],
+      "horizontal_mode": "stretch",
+      "vertical_mode": "stretch",
+      "draw_center": true
+    },
+    {
+      "id": "tooltip-detail-card-frame",
+      "label": "Tooltip/detail-card frame",
+      "family": "build-menu-components",
+      "role": "nine-slice-component",
+      "motif": "clipped-ticket printed UI construction",
+      "source_path": "art/ui/build-menu/masters/components/tooltip-detail-card-frame.png",
+      "source_dimensions": [
+        1536,
+        1024
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/components/tooltip-detail-card-frame.png",
+          "dimensions": [
+            384,
+            256
+          ]
+        }
+      ],
+      "display_size_range": [
+        192,
+        640
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; component-specific interior",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "active",
+        "civic",
+        "neutral",
+        "danger"
+      ],
+      "accessibility_purpose": "Tooltip/detail-card frame",
+      "approval": "ready_for_implementation_review",
+      "stretch_or_tile_mode": "stretch-xy",
+      "state": "normal",
+      "fallback_state": "normal",
+      "edge_repair": null,
+      "prompt_version": "component-ticket-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "component-skin-exploration-upper-left"
+      ],
+      "tool": "built-in image generation plus deterministic ImageMagick formatting",
+      "slice_margins": [
+        96,
+        88,
+        72,
+        80
+      ],
+      "content_margins": [
+        104,
+        96,
+        80,
+        88
+      ],
+      "minimum_dimensions": [
+        192,
+        184
+      ],
+      "horizontal_mode": "stretch",
+      "vertical_mode": "stretch",
+      "draw_center": true
+    },
+    {
+      "id": "notification-toast-frame",
+      "label": "Notification/toast frame",
+      "family": "build-menu-components",
+      "role": "nine-slice-component",
+      "motif": "clipped-ticket printed UI construction",
+      "source_path": "art/ui/build-menu/masters/components/notification-toast-frame.png",
+      "source_dimensions": [
+        1983,
+        793
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/components/notification-toast-frame.png",
+          "dimensions": [
+            512,
+            128
+          ]
+        }
+      ],
+      "display_size_range": [
+        160,
+        640
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; component-specific interior",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "active",
+        "civic",
+        "neutral",
+        "danger"
+      ],
+      "accessibility_purpose": "Notification/toast frame",
+      "approval": "ready_for_implementation_review",
+      "stretch_or_tile_mode": "stretch-x",
+      "state": "neutral",
+      "fallback_state": "neutral",
+      "edge_repair": "edge-connected checkerboard removal",
+      "prompt_version": "component-ticket-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "component-skin-exploration-upper-left"
+      ],
+      "tool": "built-in image generation plus deterministic ImageMagick formatting",
+      "slice_margins": [
+        64,
+        48,
+        64,
+        48
+      ],
+      "content_margins": [
+        88,
+        52,
+        72,
+        52
+      ],
+      "minimum_dimensions": [
+        160,
+        104
+      ],
+      "horizontal_mode": "stretch",
+      "vertical_mode": "stretch",
+      "draw_center": true
+    },
+    {
+      "id": "modal-confirmation-frame",
+      "label": "Modal/confirmation frame",
+      "family": "build-menu-components",
+      "role": "nine-slice-component",
+      "motif": "clipped-ticket printed UI construction",
+      "source_path": "art/ui/build-menu/masters/components/modal-confirmation-frame.png",
+      "source_dimensions": [
+        1536,
+        1024
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/components/modal-confirmation-frame.png",
+          "dimensions": [
+            512,
+            384
+          ]
+        }
+      ],
+      "display_size_range": [
+        224,
+        720
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; component-specific interior",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "active",
+        "civic",
+        "neutral",
+        "danger"
+      ],
+      "accessibility_purpose": "Modal/confirmation frame",
+      "approval": "ready_for_implementation_review",
+      "stretch_or_tile_mode": "stretch-xy",
+      "state": "normal",
+      "fallback_state": "normal",
+      "edge_repair": "edge-connected checkerboard removal",
+      "prompt_version": "component-ticket-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "component-skin-exploration-upper-left"
+      ],
+      "tool": "built-in image generation plus deterministic ImageMagick formatting",
+      "slice_margins": [
+        80,
+        80,
+        80,
+        112
+      ],
+      "content_margins": [
+        96,
+        96,
+        96,
+        128
+      ],
+      "minimum_dimensions": [
+        224,
+        256
+      ],
+      "horizontal_mode": "stretch",
+      "vertical_mode": "stretch",
+      "draw_center": true,
+      "footer_region": {
+        "origin": "top-left runtime pixels",
+        "rect": [
+          80,
+          272,
+          352,
+          96
+        ]
+      }
+    },
+    {
+      "id": "button-normal",
+      "label": "Button base \u2014 normal",
+      "family": "build-menu-components",
+      "role": "stateful-nine-slice",
+      "motif": "clipped-ticket printed UI construction",
+      "source_path": "art/ui/build-menu/masters/components/button-normal.png",
+      "source_dimensions": [
+        1983,
+        793
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/components/button-normal.png",
+          "dimensions": [
+            384,
+            96
+          ]
+        }
+      ],
+      "display_size_range": [
+        88,
+        480
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; component-specific interior",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "active",
+        "civic",
+        "neutral",
+        "danger"
+      ],
+      "accessibility_purpose": "Button base \u2014 normal",
+      "approval": "ready_for_implementation_review",
+      "stretch_or_tile_mode": "stretch-x",
+      "state": "normal",
+      "fallback_state": "normal",
+      "edge_repair": "deterministic state alignment and alpha cleanup",
+      "prompt_version": "component-ticket-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "component-skin-exploration-upper-left"
+      ],
+      "tool": "built-in image generation plus deterministic ImageMagick formatting",
+      "slice_margins": [
+        56,
+        44,
+        56,
+        36
+      ],
+      "content_margins": [
+        64,
+        48,
+        64,
+        40
+      ],
+      "minimum_dimensions": [
+        128,
+        88
+      ],
+      "horizontal_mode": "stretch",
+      "vertical_mode": "stretch",
+      "draw_center": true
+    },
+    {
+      "id": "button-hover",
+      "label": "Button base \u2014 hover",
+      "family": "build-menu-components",
+      "role": "stateful-nine-slice",
+      "motif": "clipped-ticket printed UI construction",
+      "source_path": "art/ui/build-menu/masters/components/button-hover.png",
+      "source_dimensions": [
+        1983,
+        793
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/components/button-hover.png",
+          "dimensions": [
+            384,
+            96
+          ]
+        }
+      ],
+      "display_size_range": [
+        88,
+        480
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; component-specific interior",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "active",
+        "civic",
+        "neutral",
+        "danger"
+      ],
+      "accessibility_purpose": "Button base \u2014 hover",
+      "approval": "ready_for_implementation_review",
+      "stretch_or_tile_mode": "stretch-x",
+      "state": "hover",
+      "fallback_state": "normal",
+      "edge_repair": "deterministic state alignment and alpha cleanup",
+      "prompt_version": "component-ticket-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "component-skin-exploration-upper-left"
+      ],
+      "tool": "built-in image generation plus deterministic ImageMagick formatting",
+      "slice_margins": [
+        56,
+        44,
+        56,
+        36
+      ],
+      "content_margins": [
+        64,
+        48,
+        64,
+        40
+      ],
+      "minimum_dimensions": [
+        128,
+        88
+      ],
+      "horizontal_mode": "stretch",
+      "vertical_mode": "stretch",
+      "draw_center": true
+    },
+    {
+      "id": "button-pressed",
+      "label": "Button base \u2014 pressed",
+      "family": "build-menu-components",
+      "role": "stateful-nine-slice",
+      "motif": "clipped-ticket printed UI construction",
+      "source_path": "art/ui/build-menu/masters/components/button-pressed.png",
+      "source_dimensions": [
+        1983,
+        793
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/components/button-pressed.png",
+          "dimensions": [
+            384,
+            96
+          ]
+        }
+      ],
+      "display_size_range": [
+        88,
+        480
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; component-specific interior",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "active",
+        "civic",
+        "neutral",
+        "danger"
+      ],
+      "accessibility_purpose": "Button base \u2014 pressed",
+      "approval": "ready_for_implementation_review",
+      "stretch_or_tile_mode": "stretch-x",
+      "state": "pressed",
+      "fallback_state": "normal",
+      "edge_repair": "deterministic state alignment and alpha cleanup",
+      "prompt_version": "component-ticket-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "component-skin-exploration-upper-left"
+      ],
+      "tool": "built-in image generation plus deterministic ImageMagick formatting",
+      "slice_margins": [
+        56,
+        44,
+        56,
+        36
+      ],
+      "content_margins": [
+        64,
+        48,
+        64,
+        40
+      ],
+      "minimum_dimensions": [
+        128,
+        88
+      ],
+      "horizontal_mode": "stretch",
+      "vertical_mode": "stretch",
+      "draw_center": true
+    },
+    {
+      "id": "button-selected",
+      "label": "Button base \u2014 selected",
+      "family": "build-menu-components",
+      "role": "stateful-nine-slice",
+      "motif": "clipped-ticket printed UI construction",
+      "source_path": "art/ui/build-menu/masters/components/button-selected.png",
+      "source_dimensions": [
+        1983,
+        793
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/components/button-selected.png",
+          "dimensions": [
+            384,
+            96
+          ]
+        }
+      ],
+      "display_size_range": [
+        88,
+        480
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; component-specific interior",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "active",
+        "civic",
+        "neutral",
+        "danger"
+      ],
+      "accessibility_purpose": "Button base \u2014 selected",
+      "approval": "ready_for_implementation_review",
+      "stretch_or_tile_mode": "stretch-x",
+      "state": "selected",
+      "fallback_state": "normal",
+      "edge_repair": "deterministic state alignment and alpha cleanup",
+      "prompt_version": "component-ticket-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "component-skin-exploration-upper-left"
+      ],
+      "tool": "built-in image generation plus deterministic ImageMagick formatting",
+      "slice_margins": [
+        56,
+        44,
+        56,
+        36
+      ],
+      "content_margins": [
+        64,
+        48,
+        64,
+        40
+      ],
+      "minimum_dimensions": [
+        128,
+        88
+      ],
+      "horizontal_mode": "stretch",
+      "vertical_mode": "stretch",
+      "draw_center": true
+    },
+    {
+      "id": "button-disabled",
+      "label": "Button base \u2014 disabled",
+      "family": "build-menu-components",
+      "role": "stateful-nine-slice",
+      "motif": "clipped-ticket printed UI construction",
+      "source_path": "art/ui/build-menu/masters/components/button-disabled.png",
+      "source_dimensions": [
+        1983,
+        793
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/components/button-disabled.png",
+          "dimensions": [
+            384,
+            96
+          ]
+        }
+      ],
+      "display_size_range": [
+        88,
+        480
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; component-specific interior",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "active",
+        "civic",
+        "neutral",
+        "danger"
+      ],
+      "accessibility_purpose": "Button base \u2014 disabled",
+      "approval": "ready_for_implementation_review",
+      "stretch_or_tile_mode": "stretch-x",
+      "state": "disabled",
+      "fallback_state": "normal",
+      "edge_repair": "deterministic state alignment and alpha cleanup",
+      "prompt_version": "component-ticket-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "component-skin-exploration-upper-left"
+      ],
+      "tool": "built-in image generation plus deterministic ImageMagick formatting",
+      "slice_margins": [
+        56,
+        44,
+        56,
+        36
+      ],
+      "content_margins": [
+        64,
+        48,
+        64,
+        40
+      ],
+      "minimum_dimensions": [
+        128,
+        88
+      ],
+      "horizontal_mode": "stretch",
+      "vertical_mode": "stretch",
+      "draw_center": true
+    },
+    {
+      "id": "focus-overlay",
+      "label": "Focus overlay",
+      "family": "build-menu-components",
+      "role": "state-overlay",
+      "motif": "clipped-ticket printed UI construction",
+      "source_path": "art/ui/build-menu/masters/components/focus-overlay.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/components/focus-overlay.png",
+          "dimensions": [
+            128,
+            128
+          ]
+        }
+      ],
+      "display_size_range": [
+        56,
+        128
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; component-specific interior",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "active",
+        "civic",
+        "neutral",
+        "danger"
+      ],
+      "accessibility_purpose": "Focus overlay",
+      "approval": "approved_pipeline_output",
+      "stretch_or_tile_mode": "overlay",
+      "state": "focused",
+      "fallback_state": "normal",
+      "edge_repair": null,
+      "prompt_version": "component-ticket-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "component-skin-exploration-upper-left"
+      ],
+      "tool": "built-in image generation plus deterministic ImageMagick formatting",
+      "slice_margins": null,
+      "content_margins": null,
+      "minimum_dimensions": [
+        56,
+        56
+      ],
+      "accessibility_cue": "independent ink burst outline with mustard corner ticks"
+    },
+    {
+      "id": "disabled-hatch-overlay",
+      "label": "Disabled hatch overlay",
+      "family": "build-menu-components",
+      "role": "tileable-state-overlay",
+      "motif": "clipped-ticket printed UI construction",
+      "source_path": "art/ui/build-menu/masters/components/disabled-hatch-overlay.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/components/disabled-hatch-overlay.png",
+          "dimensions": [
+            128,
+            128
+          ]
+        }
+      ],
+      "display_size_range": [
+        16,
+        512
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; component-specific interior",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "active",
+        "civic",
+        "neutral",
+        "danger"
+      ],
+      "accessibility_purpose": "Disabled hatch overlay",
+      "approval": "approved_pipeline_output",
+      "stretch_or_tile_mode": "tile-xy",
+      "state": "disabled",
+      "fallback_state": "normal",
+      "edge_repair": "deterministic mirrored repeat",
+      "prompt_version": "component-ticket-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "component-skin-exploration-upper-left"
+      ],
+      "tool": "built-in image generation plus deterministic ImageMagick formatting",
+      "tile_axes": [
+        "x",
+        "y"
+      ],
+      "tile_dimensions": [
+        128,
+        128
+      ],
+      "repeat_mode": "repeat",
+      "slice_margins": null,
+      "content_margins": null,
+      "minimum_dimensions": [
+        16,
+        16
+      ],
+      "accessibility_cue": "physical diagonal interrupted pattern"
+    },
+    {
+      "id": "destructive-warning-overlay",
+      "label": "Destructive warning overlay",
+      "family": "build-menu-components",
+      "role": "state-overlay",
+      "motif": "clipped-ticket printed UI construction",
+      "source_path": "art/ui/build-menu/masters/components/destructive-warning-overlay.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/components/destructive-warning-overlay.png",
+          "dimensions": [
+            128,
+            128
+          ]
+        }
+      ],
+      "display_size_range": [
+        32,
+        256
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; component-specific interior",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "active",
+        "civic",
+        "neutral",
+        "danger"
+      ],
+      "accessibility_purpose": "Destructive warning overlay",
+      "approval": "approved_pipeline_output",
+      "stretch_or_tile_mode": "overlay",
+      "state": "destructive",
+      "fallback_state": "neutral",
+      "edge_repair": null,
+      "prompt_version": "component-ticket-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "component-skin-exploration-upper-left"
+      ],
+      "tool": "built-in image generation plus deterministic ImageMagick formatting",
+      "slice_margins": null,
+      "content_margins": null,
+      "minimum_dimensions": [
+        32,
+        32
+      ],
+      "accessibility_cue": "fracture and impact silhouette"
+    },
+    {
+      "id": "tab-inactive",
+      "label": "Tab \u2014 inactive",
+      "family": "build-menu-components",
+      "role": "stateful-nine-slice",
+      "motif": "clipped-ticket printed UI construction",
+      "source_path": "art/ui/build-menu/masters/components/tab-inactive.png",
+      "source_dimensions": [
+        1983,
+        793
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/components/tab-inactive.png",
+          "dimensions": [
+            320,
+            96
+          ]
+        }
+      ],
+      "display_size_range": [
+        88,
+        480
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; component-specific interior",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "active",
+        "civic",
+        "neutral",
+        "danger"
+      ],
+      "accessibility_purpose": "Tab \u2014 inactive",
+      "approval": "ready_for_implementation_review",
+      "stretch_or_tile_mode": "stretch-x",
+      "state": "inactive",
+      "fallback_state": "inactive",
+      "edge_repair": "deterministic neutral-tab derivation",
+      "prompt_version": "component-ticket-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "component-skin-exploration-upper-left"
+      ],
+      "tool": "built-in image generation plus deterministic ImageMagick formatting",
+      "slice_margins": [
+        56,
+        44,
+        56,
+        32
+      ],
+      "content_margins": [
+        64,
+        48,
+        64,
+        36
+      ],
+      "minimum_dimensions": [
+        128,
+        88
+      ],
+      "horizontal_mode": "stretch",
+      "vertical_mode": "stretch",
+      "draw_center": true
+    },
+    {
+      "id": "tab-active",
+      "label": "Tab \u2014 active",
+      "family": "build-menu-components",
+      "role": "stateful-nine-slice",
+      "motif": "clipped-ticket printed UI construction",
+      "source_path": "art/ui/build-menu/masters/components/tab-active.png",
+      "source_dimensions": [
+        1983,
+        873
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/components/tab-active.png",
+          "dimensions": [
+            320,
+            112
+          ]
+        }
+      ],
+      "display_size_range": [
+        104,
+        480
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; component-specific interior",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "active",
+        "civic",
+        "neutral",
+        "danger"
+      ],
+      "accessibility_purpose": "Tab \u2014 active",
+      "approval": "ready_for_implementation_review",
+      "stretch_or_tile_mode": "stretch-x",
+      "state": "active",
+      "fallback_state": "inactive",
+      "edge_repair": "deterministic connector extension",
+      "prompt_version": "component-ticket-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "component-skin-exploration-upper-left"
+      ],
+      "tool": "built-in image generation plus deterministic ImageMagick formatting",
+      "slice_margins": [
+        56,
+        44,
+        56,
+        48
+      ],
+      "content_margins": [
+        64,
+        48,
+        64,
+        52
+      ],
+      "minimum_dimensions": [
+        128,
+        104
+      ],
+      "horizontal_mode": "stretch",
+      "vertical_mode": "stretch",
+      "draw_center": true,
+      "connection_edge": "bottom"
+    },
+    {
+      "id": "radial-wedge-focus-overlay",
+      "label": "Radial wedge overlay \u2014 focus",
+      "family": "build-menu-components",
+      "role": "radial-state-overlay",
+      "motif": "clipped-ticket printed UI construction",
+      "source_path": "art/ui/build-menu/masters/components/radial-wedge-focus-overlay.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/components/radial-wedge-focus-overlay.png",
+          "dimensions": [
+            256,
+            256
+          ]
+        }
+      ],
+      "display_size_range": [
+        112,
+        320
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; component-specific interior",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "active",
+        "civic",
+        "neutral",
+        "danger"
+      ],
+      "accessibility_purpose": "Radial wedge overlay \u2014 focus",
+      "approval": "approved_pipeline_output",
+      "stretch_or_tile_mode": "overlay",
+      "state": "focus",
+      "fallback_state": "normal",
+      "edge_repair": null,
+      "prompt_version": "component-ticket-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "component-skin-exploration-upper-left"
+      ],
+      "tool": "built-in image generation plus deterministic ImageMagick formatting",
+      "slice_margins": null,
+      "content_margins": null,
+      "minimum_dimensions": [
+        112,
+        112
+      ],
+      "geometry_policy": "transparent edge treatment over engine-rendered annular sector"
+    },
+    {
+      "id": "radial-wedge-selected-overlay",
+      "label": "Radial wedge overlay \u2014 selected",
+      "family": "build-menu-components",
+      "role": "radial-state-overlay",
+      "motif": "clipped-ticket printed UI construction",
+      "source_path": "art/ui/build-menu/masters/components/radial-wedge-selected-overlay.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/components/radial-wedge-selected-overlay.png",
+          "dimensions": [
+            256,
+            256
+          ]
+        }
+      ],
+      "display_size_range": [
+        112,
+        320
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; component-specific interior",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "active",
+        "civic",
+        "neutral",
+        "danger"
+      ],
+      "accessibility_purpose": "Radial wedge overlay \u2014 selected",
+      "approval": "approved_pipeline_output",
+      "stretch_or_tile_mode": "overlay",
+      "state": "selected",
+      "fallback_state": "normal",
+      "edge_repair": null,
+      "prompt_version": "component-ticket-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "component-skin-exploration-upper-left"
+      ],
+      "tool": "built-in image generation plus deterministic ImageMagick formatting",
+      "slice_margins": null,
+      "content_margins": null,
+      "minimum_dimensions": [
+        112,
+        112
+      ],
+      "geometry_policy": "transparent edge treatment over engine-rendered annular sector"
+    },
+    {
+      "id": "radial-wedge-disabled-overlay",
+      "label": "Radial wedge overlay \u2014 disabled",
+      "family": "build-menu-components",
+      "role": "radial-state-overlay",
+      "motif": "clipped-ticket printed UI construction",
+      "source_path": "art/ui/build-menu/masters/components/radial-wedge-disabled-overlay.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/components/radial-wedge-disabled-overlay.png",
+          "dimensions": [
+            256,
+            256
+          ]
+        }
+      ],
+      "display_size_range": [
+        112,
+        320
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; component-specific interior",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "active",
+        "civic",
+        "neutral",
+        "danger"
+      ],
+      "accessibility_purpose": "Radial wedge overlay \u2014 disabled",
+      "approval": "approved_pipeline_output",
+      "stretch_or_tile_mode": "overlay",
+      "state": "disabled",
+      "fallback_state": "normal",
+      "edge_repair": null,
+      "prompt_version": "component-ticket-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "component-skin-exploration-upper-left"
+      ],
+      "tool": "built-in image generation plus deterministic ImageMagick formatting",
+      "slice_margins": null,
+      "content_margins": null,
+      "minimum_dimensions": [
+        112,
+        112
+      ],
+      "geometry_policy": "transparent edge treatment over engine-rendered annular sector"
+    },
+    {
+      "id": "radial-wedge-destructive-overlay",
+      "label": "Radial wedge overlay \u2014 destructive",
+      "family": "build-menu-components",
+      "role": "radial-state-overlay",
+      "motif": "clipped-ticket printed UI construction",
+      "source_path": "art/ui/build-menu/masters/components/radial-wedge-destructive-overlay.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/components/radial-wedge-destructive-overlay.png",
+          "dimensions": [
+            256,
+            256
+          ]
+        }
+      ],
+      "display_size_range": [
+        112,
+        320
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; component-specific interior",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "active",
+        "civic",
+        "neutral",
+        "danger"
+      ],
+      "accessibility_purpose": "Radial wedge overlay \u2014 destructive",
+      "approval": "approved_pipeline_output",
+      "stretch_or_tile_mode": "overlay",
+      "state": "destructive",
+      "fallback_state": "normal",
+      "edge_repair": null,
+      "prompt_version": "component-ticket-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "component-skin-exploration-upper-left"
+      ],
+      "tool": "built-in image generation plus deterministic ImageMagick formatting",
+      "slice_margins": null,
+      "content_margins": null,
+      "minimum_dimensions": [
+        112,
+        112
+      ],
+      "geometry_policy": "transparent edge treatment over engine-rendered annular sector"
+    },
+    {
+      "id": "meter-track",
+      "label": "Meter track",
+      "family": "build-menu-components",
+      "role": "nine-slice-component",
+      "motif": "clipped-ticket printed UI construction",
+      "source_path": "art/ui/build-menu/masters/components/meter-track.png",
+      "source_dimensions": [
+        1774,
+        887
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/components/meter-track.png",
+          "dimensions": [
+            512,
+            48
+          ]
+        }
+      ],
+      "display_size_range": [
+        48,
+        640
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; component-specific interior",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "active",
+        "civic",
+        "neutral",
+        "danger"
+      ],
+      "accessibility_purpose": "Meter track",
+      "approval": "ready_for_implementation_review",
+      "stretch_or_tile_mode": "stretch-x",
+      "state": "normal",
+      "fallback_state": "normal",
+      "edge_repair": "edge-connected checkerboard removal",
+      "prompt_version": "component-ticket-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "component-skin-exploration-upper-left"
+      ],
+      "tool": "built-in image generation plus deterministic ImageMagick formatting",
+      "slice_margins": [
+        40,
+        20,
+        40,
+        20
+      ],
+      "content_margins": [
+        44,
+        22,
+        44,
+        22
+      ],
+      "minimum_dimensions": [
+        96,
+        48
+      ],
+      "horizontal_mode": "stretch",
+      "vertical_mode": "stretch",
+      "draw_center": true
+    },
+    {
+      "id": "meter-fill",
+      "label": "Meter fill strip",
+      "family": "build-menu-components",
+      "role": "tileable-strip",
+      "motif": "clipped-ticket printed UI construction",
+      "source_path": "art/ui/build-menu/masters/components/meter-fill.png",
+      "source_dimensions": [
+        1870,
+        841
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/components/meter-fill.png",
+          "dimensions": [
+            128,
+            32
+          ]
+        }
+      ],
+      "display_size_range": [
+        16,
+        640
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; component-specific interior",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "active",
+        "civic",
+        "neutral",
+        "danger"
+      ],
+      "accessibility_purpose": "Meter fill strip",
+      "approval": "approved_pipeline_output",
+      "stretch_or_tile_mode": "tile-x",
+      "state": "normal",
+      "fallback_state": "normal",
+      "edge_repair": "edge-connected checkerboard removal and end-edge normalisation",
+      "prompt_version": "component-ticket-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "component-skin-exploration-upper-left"
+      ],
+      "tool": "built-in image generation plus deterministic ImageMagick formatting",
+      "tile_axes": [
+        "x"
+      ],
+      "tile_dimensions": [
+        128,
+        32
+      ],
+      "repeat_mode": "repeat",
+      "slice_margins": null,
+      "content_margins": null,
+      "minimum_dimensions": [
+        8,
+        16
+      ]
+    },
+    {
+      "id": "meter-warning-marker",
+      "label": "Meter warning marker",
+      "family": "build-menu-components",
+      "role": "fixed-overlay",
+      "motif": "clipped-ticket printed UI construction",
+      "source_path": "art/ui/build-menu/masters/components/meter-warning-marker.png",
+      "source_dimensions": [
+        1537,
+        1023
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/components/meter-warning-marker.png",
+          "dimensions": [
+            64,
+            64
+          ]
+        }
+      ],
+      "display_size_range": [
+        24,
+        64
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; component-specific interior",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "active",
+        "civic",
+        "neutral",
+        "danger"
+      ],
+      "accessibility_purpose": "Meter warning marker",
+      "approval": "approved_pipeline_output",
+      "stretch_or_tile_mode": "fixed",
+      "state": "warning",
+      "fallback_state": "normal",
+      "edge_repair": "edge-connected checkerboard removal",
+      "prompt_version": "component-ticket-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "component-skin-exploration-upper-left"
+      ],
+      "tool": "built-in image generation plus deterministic ImageMagick formatting",
+      "slice_margins": null,
+      "content_margins": null,
+      "minimum_dimensions": [
+        24,
+        24
+      ],
+      "accessibility_cue": "downward pennant crossed by ink rule"
+    },
+    {
+      "id": "meter-end-caps",
+      "label": "Meter end caps",
+      "family": "build-menu-components",
+      "role": "modular-pair",
+      "motif": "clipped-ticket printed UI construction",
+      "source_path": "art/ui/build-menu/masters/components/meter-end-caps.png",
+      "source_dimensions": [
+        1536,
+        1024
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/components/meter-end-caps.png",
+          "dimensions": [
+            96,
+            64
+          ]
+        }
+      ],
+      "display_size_range": [
+        24,
+        64
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; component-specific interior",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "active",
+        "civic",
+        "neutral",
+        "danger"
+      ],
+      "accessibility_purpose": "Meter end caps",
+      "approval": "approved_pipeline_output",
+      "stretch_or_tile_mode": "fixed",
+      "state": "normal",
+      "fallback_state": "normal",
+      "edge_repair": "edge-connected checkerboard removal",
+      "prompt_version": "component-ticket-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "component-skin-exploration-upper-left"
+      ],
+      "tool": "built-in image generation plus deterministic ImageMagick formatting",
+      "slice_margins": null,
+      "content_margins": null,
+      "minimum_dimensions": [
+        24,
+        16
+      ],
+      "regions": {
+        "left": [
+          0,
+          0,
+          48,
+          64
+        ],
+        "right": [
+          48,
+          0,
+          48,
+          64
+        ],
+        "origin": "top-left runtime pixels"
+      }
+    },
+    {
+      "id": "divider-horizontal",
+      "label": "Horizontal divider",
+      "family": "build-menu-components",
+      "role": "tileable-strip",
+      "motif": "clipped-ticket printed UI construction",
+      "source_path": "art/ui/build-menu/masters/components/divider-horizontal.png",
+      "source_dimensions": [
+        2172,
+        724
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/components/divider-horizontal.png",
+          "dimensions": [
+            512,
+            32
+          ]
+        }
+      ],
+      "display_size_range": [
+        64,
+        640
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; component-specific interior",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "active",
+        "civic",
+        "neutral",
+        "danger"
+      ],
+      "accessibility_purpose": "Horizontal divider",
+      "approval": "approved_pipeline_output",
+      "stretch_or_tile_mode": "stretch-x",
+      "state": "normal",
+      "fallback_state": "normal",
+      "edge_repair": "low-alpha halo removal",
+      "prompt_version": "component-ticket-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "component-skin-exploration-upper-left"
+      ],
+      "tool": "built-in image generation plus deterministic ImageMagick formatting",
+      "tile_axes": [
+        "x"
+      ],
+      "repeat_mode": "stretch",
+      "slice_margins": null,
+      "content_margins": null,
+      "minimum_dimensions": [
+        64,
+        8
+      ]
+    },
+    {
+      "id": "divider-vertical",
+      "label": "Vertical divider",
+      "family": "build-menu-components",
+      "role": "tileable-strip",
+      "motif": "clipped-ticket printed UI construction",
+      "source_path": "art/ui/build-menu/masters/components/divider-vertical.png",
+      "source_dimensions": [
+        1024,
+        1536
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/components/divider-vertical.png",
+          "dimensions": [
+            32,
+            512
+          ]
+        }
+      ],
+      "display_size_range": [
+        64,
+        720
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; component-specific interior",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "active",
+        "civic",
+        "neutral",
+        "danger"
+      ],
+      "accessibility_purpose": "Vertical divider",
+      "approval": "approved_pipeline_output",
+      "stretch_or_tile_mode": "stretch-y",
+      "state": "normal",
+      "fallback_state": "normal",
+      "edge_repair": "low-alpha halo removal",
+      "prompt_version": "component-ticket-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "component-skin-exploration-upper-left"
+      ],
+      "tool": "built-in image generation plus deterministic ImageMagick formatting",
+      "tile_axes": [
+        "y"
+      ],
+      "repeat_mode": "stretch",
+      "slice_margins": null,
+      "content_margins": null,
+      "minimum_dimensions": [
+        8,
+        64
+      ]
+    },
+    {
+      "id": "divider-ornamental-short",
+      "label": "Short ornamental divider",
+      "family": "build-menu-components",
+      "role": "fixed-decoration",
+      "motif": "clipped-ticket printed UI construction",
+      "source_path": "art/ui/build-menu/masters/components/divider-ornamental-short.png",
+      "source_dimensions": [
+        2048,
+        768
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/components/divider-ornamental-short.png",
+          "dimensions": [
+            192,
+            48
+          ]
+        }
+      ],
+      "display_size_range": [
+        64,
+        192
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; component-specific interior",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "active",
+        "civic",
+        "neutral",
+        "danger"
+      ],
+      "accessibility_purpose": "Short ornamental divider",
+      "approval": "approved_pipeline_output",
+      "stretch_or_tile_mode": "fixed",
+      "state": "normal",
+      "fallback_state": "normal",
+      "edge_repair": "low-alpha halo removal",
+      "prompt_version": "component-ticket-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "component-skin-exploration-upper-left"
+      ],
+      "tool": "built-in image generation plus deterministic ImageMagick formatting",
+      "slice_margins": null,
+      "content_margins": null,
+      "minimum_dimensions": [
+        64,
+        16
+      ]
+    },
+    {
+      "id": "divider-section-header",
+      "label": "Section-header underline",
+      "family": "build-menu-components",
+      "role": "tileable-strip",
+      "motif": "clipped-ticket printed UI construction",
+      "source_path": "art/ui/build-menu/masters/components/divider-section-header.png",
+      "source_dimensions": [
+        2172,
+        724
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/components/divider-section-header.png",
+          "dimensions": [
+            384,
+            48
+          ]
+        }
+      ],
+      "display_size_range": [
+        96,
+        480
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; component-specific interior",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "active",
+        "civic",
+        "neutral",
+        "danger"
+      ],
+      "accessibility_purpose": "Section-header underline",
+      "approval": "approved_pipeline_output",
+      "stretch_or_tile_mode": "stretch-x",
+      "state": "normal",
+      "fallback_state": "normal",
+      "edge_repair": "low-alpha halo removal",
+      "prompt_version": "component-ticket-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "component-skin-exploration-upper-left"
+      ],
+      "tool": "built-in image generation plus deterministic ImageMagick formatting",
+      "tile_axes": [
+        "x"
+      ],
+      "repeat_mode": "stretch",
+      "slice_margins": null,
+      "content_margins": null,
+      "minimum_dimensions": [
+        96,
+        16
+      ]
+    },
+    {
+      "id": "scroll-track",
+      "label": "Scrollbar track",
+      "family": "build-menu-components",
+      "role": "resizable-strip",
+      "motif": "clipped-ticket printed UI construction",
+      "source_path": "art/ui/build-menu/masters/components/scroll-track.png",
+      "source_dimensions": [
+        1024,
+        1536
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/components/scroll-track.png",
+          "dimensions": [
+            64,
+            512
+          ]
+        }
+      ],
+      "display_size_range": [
+        96,
+        720
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; component-specific interior",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "active",
+        "civic",
+        "neutral",
+        "danger"
+      ],
+      "accessibility_purpose": "Scrollbar track",
+      "approval": "ready_for_implementation_review",
+      "stretch_or_tile_mode": "stretch-y",
+      "state": "normal",
+      "fallback_state": "normal",
+      "edge_repair": "low-alpha halo removal",
+      "prompt_version": "component-ticket-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "component-skin-exploration-upper-left"
+      ],
+      "tool": "built-in image generation plus deterministic ImageMagick formatting",
+      "slice_margins": [
+        24,
+        48,
+        24,
+        48
+      ],
+      "content_margins": [
+        24,
+        48,
+        24,
+        48
+      ],
+      "minimum_dimensions": [
+        48,
+        96
+      ],
+      "horizontal_mode": "stretch",
+      "vertical_mode": "stretch",
+      "draw_center": true
+    },
+    {
+      "id": "scroll-handle-normal",
+      "label": "Scrollbar handle \u2014 normal",
+      "family": "build-menu-components",
+      "role": "stateful-fixed-control",
+      "motif": "clipped-ticket printed UI construction",
+      "source_path": "art/ui/build-menu/masters/components/scroll-handle-normal.png",
+      "source_dimensions": [
+        290,
+        910
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/components/scroll-handle-normal.png",
+          "dimensions": [
+            64,
+            160
+          ]
+        }
+      ],
+      "display_size_range": [
+        64,
+        160
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; component-specific interior",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "active",
+        "civic",
+        "neutral",
+        "danger"
+      ],
+      "accessibility_purpose": "Scrollbar handle \u2014 normal",
+      "approval": "approved_pipeline_output",
+      "stretch_or_tile_mode": "fixed",
+      "state": "normal",
+      "fallback_state": "normal",
+      "edge_repair": "deterministic extraction, alignment, and low-alpha cleanup",
+      "prompt_version": "component-ticket-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "component-skin-exploration-upper-left"
+      ],
+      "tool": "built-in image generation plus deterministic ImageMagick formatting",
+      "slice_margins": null,
+      "content_margins": null,
+      "minimum_dimensions": [
+        32,
+        64
+      ],
+      "accessibility_cue": "three grip notches plus structural state treatment"
+    },
+    {
+      "id": "scroll-handle-hover",
+      "label": "Scrollbar handle \u2014 hover",
+      "family": "build-menu-components",
+      "role": "stateful-fixed-control",
+      "motif": "clipped-ticket printed UI construction",
+      "source_path": "art/ui/build-menu/masters/components/scroll-handle-hover.png",
+      "source_dimensions": [
+        290,
+        910
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/components/scroll-handle-hover.png",
+          "dimensions": [
+            64,
+            160
+          ]
+        }
+      ],
+      "display_size_range": [
+        64,
+        160
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; component-specific interior",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "active",
+        "civic",
+        "neutral",
+        "danger"
+      ],
+      "accessibility_purpose": "Scrollbar handle \u2014 hover",
+      "approval": "approved_pipeline_output",
+      "stretch_or_tile_mode": "fixed",
+      "state": "hover",
+      "fallback_state": "normal",
+      "edge_repair": "deterministic extraction, alignment, and low-alpha cleanup",
+      "prompt_version": "component-ticket-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "component-skin-exploration-upper-left"
+      ],
+      "tool": "built-in image generation plus deterministic ImageMagick formatting",
+      "slice_margins": null,
+      "content_margins": null,
+      "minimum_dimensions": [
+        32,
+        64
+      ],
+      "accessibility_cue": "three grip notches plus structural state treatment"
+    },
+    {
+      "id": "scroll-handle-pressed",
+      "label": "Scrollbar handle \u2014 pressed",
+      "family": "build-menu-components",
+      "role": "stateful-fixed-control",
+      "motif": "clipped-ticket printed UI construction",
+      "source_path": "art/ui/build-menu/masters/components/scroll-handle-pressed.png",
+      "source_dimensions": [
+        290,
+        910
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/components/scroll-handle-pressed.png",
+          "dimensions": [
+            64,
+            160
+          ]
+        }
+      ],
+      "display_size_range": [
+        64,
+        160
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; component-specific interior",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "active",
+        "civic",
+        "neutral",
+        "danger"
+      ],
+      "accessibility_purpose": "Scrollbar handle \u2014 pressed",
+      "approval": "approved_pipeline_output",
+      "stretch_or_tile_mode": "fixed",
+      "state": "pressed",
+      "fallback_state": "normal",
+      "edge_repair": "deterministic extraction, alignment, and low-alpha cleanup",
+      "prompt_version": "component-ticket-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "component-skin-exploration-upper-left"
+      ],
+      "tool": "built-in image generation plus deterministic ImageMagick formatting",
+      "slice_margins": null,
+      "content_margins": null,
+      "minimum_dimensions": [
+        32,
+        64
+      ],
+      "accessibility_cue": "three grip notches plus structural state treatment"
+    },
+    {
+      "id": "scroll-handle-focused",
+      "label": "Scrollbar handle \u2014 focused",
+      "family": "build-menu-components",
+      "role": "stateful-fixed-control",
+      "motif": "clipped-ticket printed UI construction",
+      "source_path": "art/ui/build-menu/masters/components/scroll-handle-focused.png",
+      "source_dimensions": [
+        290,
+        910
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/components/scroll-handle-focused.png",
+          "dimensions": [
+            64,
+            160
+          ]
+        }
+      ],
+      "display_size_range": [
+        64,
+        160
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; component-specific interior",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "active",
+        "civic",
+        "neutral",
+        "danger"
+      ],
+      "accessibility_purpose": "Scrollbar handle \u2014 focused",
+      "approval": "approved_pipeline_output",
+      "stretch_or_tile_mode": "fixed",
+      "state": "focused",
+      "fallback_state": "normal",
+      "edge_repair": "deterministic extraction, alignment, and low-alpha cleanup",
+      "prompt_version": "component-ticket-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "component-skin-exploration-upper-left"
+      ],
+      "tool": "built-in image generation plus deterministic ImageMagick formatting",
+      "slice_margins": null,
+      "content_margins": null,
+      "minimum_dimensions": [
+        32,
+        64
+      ],
+      "accessibility_cue": "three grip notches plus structural state treatment"
+    },
+    {
+      "id": "scroll-caps",
+      "label": "Scrollbar caps",
+      "family": "build-menu-components",
+      "role": "modular-pair",
+      "motif": "clipped-ticket printed UI construction",
+      "source_path": "art/ui/build-menu/masters/components/scroll-caps.png",
+      "source_dimensions": [
+        1024,
+        1536
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/components/scroll-caps.png",
+          "dimensions": [
+            64,
+            128
+          ]
+        }
+      ],
+      "display_size_range": [
+        32,
+        64
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; component-specific interior",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "active",
+        "civic",
+        "neutral",
+        "danger"
+      ],
+      "accessibility_purpose": "Scrollbar caps",
+      "approval": "approved_pipeline_output",
+      "stretch_or_tile_mode": "fixed",
+      "state": "normal",
+      "fallback_state": "normal",
+      "edge_repair": "low-alpha halo removal",
+      "prompt_version": "component-ticket-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "component-skin-exploration-upper-left"
+      ],
+      "tool": "built-in image generation plus deterministic ImageMagick formatting",
+      "slice_margins": null,
+      "content_margins": null,
+      "minimum_dimensions": [
+        32,
+        32
+      ],
+      "regions": {
+        "top": [
+          0,
+          0,
+          64,
+          64
+        ],
+        "bottom": [
+          0,
+          64,
+          64,
+          64
+        ],
+        "origin": "top-left runtime pixels"
+      }
+    },
+    {
+      "id": "scroll-arrow-button-base",
+      "label": "Scrollbar arrow-button base",
+      "family": "build-menu-components",
+      "role": "nine-slice-component",
+      "motif": "clipped-ticket printed UI construction",
+      "source_path": "art/ui/build-menu/masters/components/scroll-arrow-button-base.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/components/scroll-arrow-button-base.png",
+          "dimensions": [
+            96,
+            96
+          ]
+        }
+      ],
+      "display_size_range": [
+        64,
+        160
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; component-specific interior",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "active",
+        "civic",
+        "neutral",
+        "danger"
+      ],
+      "accessibility_purpose": "Scrollbar arrow-button base",
+      "approval": "ready_for_implementation_review",
+      "stretch_or_tile_mode": "stretch-xy",
+      "state": "normal",
+      "fallback_state": "normal",
+      "edge_repair": null,
+      "prompt_version": "component-ticket-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "component-skin-exploration-upper-left"
+      ],
+      "tool": "built-in image generation plus deterministic ImageMagick formatting",
+      "slice_margins": [
+        24,
+        24,
+        24,
+        24
+      ],
+      "content_margins": [
+        28,
+        28,
+        28,
+        28
+      ],
+      "minimum_dimensions": [
+        64,
+        64
+      ],
+      "horizontal_mode": "stretch",
+      "vertical_mode": "stretch",
+      "draw_center": true
+    },
+    {
+      "id": "badge-neutral",
+      "label": "Badge/counter frame \u2014 neutral",
+      "family": "build-menu-components",
+      "role": "fixed-counter-frame",
+      "motif": "clipped-ticket printed UI construction",
+      "source_path": "art/ui/build-menu/masters/components/badge-neutral.png",
+      "source_dimensions": [
+        1218,
+        1120
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/components/badge-neutral.png",
+          "dimensions": [
+            128,
+            128
+          ]
+        }
+      ],
+      "display_size_range": [
+        32,
+        128
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; component-specific interior",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "active",
+        "civic",
+        "neutral",
+        "danger"
+      ],
+      "accessibility_purpose": "Badge/counter frame \u2014 neutral",
+      "approval": "approved_pipeline_output",
+      "stretch_or_tile_mode": "fixed",
+      "state": "neutral",
+      "fallback_state": "neutral",
+      "edge_repair": "deterministic removal of generated symbol region and alpha cleanup",
+      "prompt_version": "component-ticket-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "component-skin-exploration-upper-left"
+      ],
+      "tool": "built-in image generation plus deterministic ImageMagick formatting",
+      "slice_margins": null,
+      "content_margins": [
+        28,
+        28,
+        28,
+        28
+      ],
+      "minimum_dimensions": [
+        32,
+        32
+      ],
+      "accessibility_cue": "state-specific silhouette plus colour"
+    },
+    {
+      "id": "badge-active",
+      "label": "Badge/counter frame \u2014 active",
+      "family": "build-menu-components",
+      "role": "fixed-counter-frame",
+      "motif": "clipped-ticket printed UI construction",
+      "source_path": "art/ui/build-menu/masters/components/badge-active.png",
+      "source_dimensions": [
+        1225,
+        733
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/components/badge-active.png",
+          "dimensions": [
+            128,
+            128
+          ]
+        }
+      ],
+      "display_size_range": [
+        32,
+        128
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; component-specific interior",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "active",
+        "civic",
+        "neutral",
+        "danger"
+      ],
+      "accessibility_purpose": "Badge/counter frame \u2014 active",
+      "approval": "approved_pipeline_output",
+      "stretch_or_tile_mode": "fixed",
+      "state": "active",
+      "fallback_state": "neutral",
+      "edge_repair": "deterministic removal of generated symbol region and alpha cleanup",
+      "prompt_version": "component-ticket-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "component-skin-exploration-upper-left"
+      ],
+      "tool": "built-in image generation plus deterministic ImageMagick formatting",
+      "slice_margins": null,
+      "content_margins": [
+        28,
+        28,
+        28,
+        28
+      ],
+      "minimum_dimensions": [
+        32,
+        32
+      ],
+      "accessibility_cue": "state-specific silhouette plus colour"
+    },
+    {
+      "id": "badge-warning",
+      "label": "Badge/counter frame \u2014 warning",
+      "family": "build-menu-components",
+      "role": "fixed-counter-frame",
+      "motif": "clipped-ticket printed UI construction",
+      "source_path": "art/ui/build-menu/masters/components/badge-warning.png",
+      "source_dimensions": [
+        1221,
+        850
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/components/badge-warning.png",
+          "dimensions": [
+            128,
+            128
+          ]
+        }
+      ],
+      "display_size_range": [
+        32,
+        128
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; component-specific interior",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "active",
+        "civic",
+        "neutral",
+        "danger"
+      ],
+      "accessibility_purpose": "Badge/counter frame \u2014 warning",
+      "approval": "approved_pipeline_output",
+      "stretch_or_tile_mode": "fixed",
+      "state": "warning",
+      "fallback_state": "neutral",
+      "edge_repair": "deterministic removal of generated symbol region and alpha cleanup",
+      "prompt_version": "component-ticket-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "component-skin-exploration-upper-left"
+      ],
+      "tool": "built-in image generation plus deterministic ImageMagick formatting",
+      "slice_margins": null,
+      "content_margins": [
+        28,
+        28,
+        28,
+        28
+      ],
+      "minimum_dimensions": [
+        32,
+        32
+      ],
+      "accessibility_cue": "state-specific silhouette plus colour"
+    },
+    {
+      "id": "parchment-print-grain",
+      "label": "Parchment print grain",
+      "family": "build-menu-components",
+      "role": "tileable-texture",
+      "motif": "clipped-ticket printed UI construction",
+      "source_path": "art/ui/build-menu/masters/components/parchment-print-grain.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/components/parchment-print-grain.png",
+          "dimensions": [
+            256,
+            256
+          ]
+        }
+      ],
+      "display_size_range": [
+        64,
+        2048
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "opaque repeat tile",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "active",
+        "civic",
+        "neutral",
+        "danger"
+      ],
+      "accessibility_purpose": "Parchment print grain",
+      "approval": "approved_pipeline_output",
+      "stretch_or_tile_mode": "tile-xy",
+      "state": "normal",
+      "fallback_state": "normal",
+      "edge_repair": "deterministic mirrored-quadrant seam construction",
+      "prompt_version": "component-ticket-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "component-skin-exploration-upper-left"
+      ],
+      "tool": "built-in image generation plus deterministic ImageMagick formatting",
+      "tile_axes": [
+        "x",
+        "y"
+      ],
+      "tile_dimensions": [
+        256,
+        256
+      ],
+      "repeat_mode": "repeat",
+      "slice_margins": null,
+      "content_margins": null,
+      "minimum_dimensions": [
+        64,
+        64
+      ],
+      "seam_proof": "art/ui/build-menu/proofs/components/parchment-repeat-3x3.png"
+    },
+    {
+      "id": "map-feedback-neutral-map-pointer",
+      "label": "Neutral map pointer",
+      "family": "map-feedback",
+      "role": "cursor",
+      "motif": "neutral arrowhead with cuff",
+      "source_path": "art/ui/build-menu/masters/map-feedback/neutral-map-pointer.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/map-feedback/neutral-map-pointer.png",
+          "dimensions": [
+            128,
+            128
+          ]
+        }
+      ],
+      "display_size_range": [
+        24,
+        64
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; zero RGB in fully transparent pixels",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "neutral",
+        "active",
+        "danger",
+        "civic",
+        "building"
+      ],
+      "accessibility_label": "Neutral map pointer",
+      "approval": "approved_pipeline_output",
+      "human_art_approval": "pending",
+      "prompt_version": "map-feedback-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "community-icon-shape-library"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow formatting",
+      "hotspot": {
+        "value": [
+          0.26,
+          0.24
+        ],
+        "origin": "top-left",
+        "units": "normalized"
+      },
+      "state": "idle",
+      "fallback_state": "idle"
+    },
+    {
+      "id": "map-feedback-valid-placement-cursor",
+      "label": "Valid placement cursor",
+      "family": "map-feedback",
+      "role": "cursor",
+      "motif": "open hand, doorway and lift ticks",
+      "source_path": "art/ui/build-menu/masters/map-feedback/valid-placement-cursor.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/map-feedback/valid-placement-cursor.png",
+          "dimensions": [
+            128,
+            128
+          ]
+        }
+      ],
+      "display_size_range": [
+        24,
+        64
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; zero RGB in fully transparent pixels",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "neutral",
+        "active",
+        "danger",
+        "civic",
+        "building"
+      ],
+      "accessibility_label": "Valid placement cursor",
+      "approval": "approved_pipeline_output",
+      "human_art_approval": "pending",
+      "prompt_version": "map-feedback-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "community-icon-shape-library"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow formatting",
+      "hotspot": {
+        "value": [
+          0.37,
+          0.24
+        ],
+        "origin": "top-left",
+        "units": "normalized"
+      },
+      "state": "idle",
+      "fallback_state": "idle"
+    },
+    {
+      "id": "map-feedback-invalid-placement-cursor",
+      "label": "Invalid placement cursor",
+      "family": "map-feedback",
+      "role": "cursor",
+      "motif": "pointer interrupted by crossed barricade",
+      "source_path": "art/ui/build-menu/masters/map-feedback/invalid-placement-cursor.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/map-feedback/invalid-placement-cursor.png",
+          "dimensions": [
+            128,
+            128
+          ]
+        }
+      ],
+      "display_size_range": [
+        24,
+        64
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; zero RGB in fully transparent pixels",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "neutral",
+        "active",
+        "danger",
+        "civic",
+        "building"
+      ],
+      "accessibility_label": "Invalid placement cursor",
+      "approval": "approved_pipeline_output",
+      "human_art_approval": "pending",
+      "prompt_version": "map-feedback-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "community-icon-shape-library"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow formatting",
+      "hotspot": {
+        "value": [
+          0.25,
+          0.23
+        ],
+        "origin": "top-left",
+        "units": "normalized"
+      },
+      "state": "idle",
+      "fallback_state": "idle"
+    },
+    {
+      "id": "map-feedback-demolition-cursor",
+      "label": "Demolition cursor",
+      "family": "map-feedback",
+      "role": "cursor",
+      "motif": "broad impact tool and fracture tip",
+      "source_path": "art/ui/build-menu/masters/map-feedback/demolition-cursor.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/map-feedback/demolition-cursor.png",
+          "dimensions": [
+            128,
+            128
+          ]
+        }
+      ],
+      "display_size_range": [
+        24,
+        64
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; zero RGB in fully transparent pixels",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "neutral",
+        "active",
+        "danger",
+        "civic",
+        "building"
+      ],
+      "accessibility_label": "Demolition cursor",
+      "approval": "approved_pipeline_output",
+      "human_art_approval": "pending",
+      "prompt_version": "map-feedback-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "community-icon-shape-library"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow formatting",
+      "hotspot": {
+        "value": [
+          0.78,
+          0.82
+        ],
+        "origin": "top-left",
+        "units": "normalized"
+      },
+      "state": "idle",
+      "fallback_state": "idle"
+    },
+    {
+      "id": "map-feedback-inspect-select-cursor",
+      "label": "Inspect/select cursor",
+      "family": "map-feedback",
+      "role": "cursor",
+      "motif": "teal lens around building with attention rays",
+      "source_path": "art/ui/build-menu/masters/map-feedback/inspect-select-cursor.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/map-feedback/inspect-select-cursor.png",
+          "dimensions": [
+            128,
+            128
+          ]
+        }
+      ],
+      "display_size_range": [
+        24,
+        64
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; zero RGB in fully transparent pixels",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "neutral",
+        "active",
+        "danger",
+        "civic",
+        "building"
+      ],
+      "accessibility_label": "Inspect/select cursor",
+      "approval": "approved_pipeline_output",
+      "human_art_approval": "pending",
+      "prompt_version": "map-feedback-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "community-icon-shape-library"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow formatting",
+      "hotspot": {
+        "value": [
+          0.45,
+          0.43
+        ],
+        "origin": "top-left",
+        "units": "normalized"
+      },
+      "state": "idle",
+      "fallback_state": "idle"
+    },
+    {
+      "id": "map-feedback-affordable-placement-marker",
+      "label": "Affordable placement marker",
+      "family": "map-feedback",
+      "role": "ground-marker",
+      "motif": "open authoritative ground footprint",
+      "source_path": "art/ui/build-menu/masters/map-feedback/affordable-placement-marker.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/map-feedback/affordable-placement-marker.png",
+          "dimensions": [
+            256,
+            256
+          ]
+        }
+      ],
+      "display_size_range": [
+        32,
+        128
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; zero RGB in fully transparent pixels",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "active"
+      ],
+      "accessibility_label": "Affordable placement marker",
+      "approval": "approved_pipeline_output",
+      "human_art_approval": "pending",
+      "prompt_version": "map-feedback-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "community-icon-shape-library"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow formatting",
+      "anchor": {
+        "value": [
+          0.5,
+          0.5
+        ],
+        "origin": "top-left",
+        "units": "normalized"
+      },
+      "state": "idle",
+      "fallback_state": "idle"
+    },
+    {
+      "id": "map-feedback-blocked-footprint-marker",
+      "label": "Blocked footprint marker",
+      "family": "map-feedback",
+      "role": "ground-marker",
+      "motif": "crossed obstruction and structural hatch",
+      "source_path": "art/ui/build-menu/masters/map-feedback/blocked-footprint-marker.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/map-feedback/blocked-footprint-marker.png",
+          "dimensions": [
+            256,
+            256
+          ]
+        }
+      ],
+      "display_size_range": [
+        32,
+        128
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; zero RGB in fully transparent pixels",
+      "palette_roles": [
+        "ink",
+        "neutral",
+        "danger"
+      ],
+      "accessibility_label": "Blocked footprint marker",
+      "approval": "approved_pipeline_output",
+      "human_art_approval": "pending",
+      "prompt_version": "map-feedback-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "community-icon-shape-library"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow formatting",
+      "anchor": {
+        "value": [
+          0.5,
+          0.5
+        ],
+        "origin": "top-left",
+        "units": "normalized"
+      },
+      "state": "idle",
+      "fallback_state": "idle"
+    },
+    {
+      "id": "map-feedback-replacement-overbuild-marker",
+      "label": "Replacement/overbuild marker",
+      "family": "map-feedback",
+      "role": "ground-marker",
+      "motif": "building encircled by exchange arrows",
+      "source_path": "art/ui/build-menu/masters/map-feedback/replacement-overbuild-marker.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/map-feedback/replacement-overbuild-marker.png",
+          "dimensions": [
+            256,
+            256
+          ]
+        }
+      ],
+      "display_size_range": [
+        32,
+        128
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; zero RGB in fully transparent pixels",
+      "palette_roles": [
+        "ink",
+        "building",
+        "capacity"
+      ],
+      "accessibility_label": "Replacement/overbuild marker",
+      "approval": "approved_pipeline_output",
+      "human_art_approval": "pending",
+      "prompt_version": "map-feedback-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "community-icon-shape-library"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow formatting",
+      "anchor": {
+        "value": [
+          0.5,
+          0.82
+        ],
+        "origin": "top-left",
+        "units": "normalized"
+      },
+      "state": "idle",
+      "fallback_state": "idle"
+    },
+    {
+      "id": "map-feedback-demolition-target-marker",
+      "label": "Demolition target marker",
+      "family": "map-feedback",
+      "role": "ground-marker",
+      "motif": "fractured corner strikes and central crack",
+      "source_path": "art/ui/build-menu/masters/map-feedback/demolition-target-marker.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/map-feedback/demolition-target-marker.png",
+          "dimensions": [
+            256,
+            256
+          ]
+        }
+      ],
+      "display_size_range": [
+        32,
+        128
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; zero RGB in fully transparent pixels",
+      "palette_roles": [
+        "ink",
+        "neutral",
+        "danger"
+      ],
+      "accessibility_label": "Demolition target marker",
+      "approval": "approved_pipeline_output",
+      "human_art_approval": "pending",
+      "prompt_version": "map-feedback-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "community-icon-shape-library"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow formatting",
+      "anchor": {
+        "value": [
+          0.5,
+          0.5
+        ],
+        "origin": "top-left",
+        "units": "normalized"
+      },
+      "state": "idle",
+      "fallback_state": "idle"
+    },
+    {
+      "id": "map-feedback-rotation-indicator-clockwise",
+      "label": "Rotation indicator \u2014 clockwise",
+      "family": "map-feedback",
+      "role": "direction-indicator",
+      "motif": "broad curved hand-inked directional arrow",
+      "source_path": "art/ui/build-menu/masters/map-feedback/rotation-indicator-clockwise.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/map-feedback/rotation-indicator-clockwise.png",
+          "dimensions": [
+            128,
+            128
+          ]
+        }
+      ],
+      "display_size_range": [
+        32,
+        96
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; zero RGB in fully transparent pixels",
+      "palette_roles": [
+        "ink",
+        "capacity",
+        "active"
+      ],
+      "accessibility_label": "Rotation indicator \u2014 clockwise",
+      "approval": "approved_pipeline_output",
+      "human_art_approval": "pending",
+      "prompt_version": "map-feedback-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "community-icon-shape-library"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow formatting",
+      "anchor": {
+        "value": [
+          0.5,
+          0.5
+        ],
+        "origin": "top-left",
+        "units": "normalized"
+      },
+      "direction": "clockwise"
+    },
+    {
+      "id": "map-feedback-notification-map-pin-neutral",
+      "label": "Notification map pin \u2014 neutral",
+      "family": "map-feedback",
+      "role": "map-pin",
+      "motif": "anchored pin with neutral structural badge",
+      "source_path": "art/ui/build-menu/masters/map-feedback/notification-map-pin-neutral.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/map-feedback/notification-map-pin-neutral.png",
+          "dimensions": [
+            128,
+            128
+          ]
+        }
+      ],
+      "display_size_range": [
+        24,
+        64
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; zero RGB in fully transparent pixels",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "neutral",
+        "active",
+        "capacity",
+        "danger"
+      ],
+      "accessibility_label": "Notification map pin \u2014 neutral",
+      "approval": "approved_pipeline_output",
+      "human_art_approval": "pending",
+      "prompt_version": "map-feedback-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "community-icon-shape-library"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow formatting",
+      "anchor": {
+        "value": [
+          0.5,
+          0.88
+        ],
+        "origin": "top-left",
+        "units": "normalized"
+      },
+      "state": "neutral",
+      "fallback_state": "neutral",
+      "animation": {
+        "states": [
+          "idle",
+          "emphasis",
+          "settle"
+        ],
+        "source_frames": [
+          "art/ui/build-menu/masters/map-feedback/notification-map-pin-neutral-idle.png",
+          "art/ui/build-menu/masters/map-feedback/notification-map-pin-neutral-emphasis.png",
+          "art/ui/build-menu/masters/map-feedback/notification-map-pin-neutral-settle.png"
+        ],
+        "frames": [
+          "sprites/ui/build-menu/map-feedback/notification-map-pin-neutral-idle.png",
+          "sprites/ui/build-menu/map-feedback/notification-map-pin-neutral-emphasis.png",
+          "sprites/ui/build-menu/map-feedback/notification-map-pin-neutral-settle.png"
+        ],
+        "sheet": "sprites/ui/build-menu/map-feedback/notification-map-pin-neutral-strip.png",
+        "cell_dimensions": [
+          128,
+          128
+        ],
+        "frame_order": [
+          "idle",
+          "emphasis",
+          "settle"
+        ],
+        "fallback_state": "idle"
+      }
+    },
+    {
+      "id": "map-feedback-notification-map-pin-positive",
+      "label": "Notification map pin \u2014 positive",
+      "family": "map-feedback",
+      "role": "map-pin",
+      "motif": "anchored pin with positive structural badge",
+      "source_path": "art/ui/build-menu/masters/map-feedback/notification-map-pin-positive.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/map-feedback/notification-map-pin-positive.png",
+          "dimensions": [
+            128,
+            128
+          ]
+        }
+      ],
+      "display_size_range": [
+        24,
+        64
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; zero RGB in fully transparent pixels",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "neutral",
+        "active",
+        "capacity",
+        "danger"
+      ],
+      "accessibility_label": "Notification map pin \u2014 positive",
+      "approval": "approved_pipeline_output",
+      "human_art_approval": "pending",
+      "prompt_version": "map-feedback-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "community-icon-shape-library"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow formatting",
+      "anchor": {
+        "value": [
+          0.5,
+          0.88
+        ],
+        "origin": "top-left",
+        "units": "normalized"
+      },
+      "state": "positive",
+      "fallback_state": "neutral"
+    },
+    {
+      "id": "map-feedback-notification-map-pin-warning",
+      "label": "Notification map pin \u2014 warning",
+      "family": "map-feedback",
+      "role": "map-pin",
+      "motif": "anchored pin with warning structural badge",
+      "source_path": "art/ui/build-menu/masters/map-feedback/notification-map-pin-warning.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/map-feedback/notification-map-pin-warning.png",
+          "dimensions": [
+            128,
+            128
+          ]
+        }
+      ],
+      "display_size_range": [
+        24,
+        64
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; zero RGB in fully transparent pixels",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "neutral",
+        "active",
+        "capacity",
+        "danger"
+      ],
+      "accessibility_label": "Notification map pin \u2014 warning",
+      "approval": "approved_pipeline_output",
+      "human_art_approval": "pending",
+      "prompt_version": "map-feedback-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "community-icon-shape-library"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow formatting",
+      "anchor": {
+        "value": [
+          0.5,
+          0.88
+        ],
+        "origin": "top-left",
+        "units": "normalized"
+      },
+      "state": "warning",
+      "fallback_state": "neutral"
+    },
+    {
+      "id": "map-feedback-notification-map-pin-destructive",
+      "label": "Notification map pin \u2014 destructive",
+      "family": "map-feedback",
+      "role": "map-pin",
+      "motif": "anchored pin with destructive structural badge",
+      "source_path": "art/ui/build-menu/masters/map-feedback/notification-map-pin-destructive.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/map-feedback/notification-map-pin-destructive.png",
+          "dimensions": [
+            128,
+            128
+          ]
+        }
+      ],
+      "display_size_range": [
+        24,
+        64
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; zero RGB in fully transparent pixels",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "neutral",
+        "active",
+        "capacity",
+        "danger"
+      ],
+      "accessibility_label": "Notification map pin \u2014 destructive",
+      "approval": "approved_pipeline_output",
+      "human_art_approval": "pending",
+      "prompt_version": "map-feedback-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "community-icon-shape-library"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow formatting",
+      "anchor": {
+        "value": [
+          0.5,
+          0.88
+        ],
+        "origin": "top-left",
+        "units": "normalized"
+      },
+      "state": "destructive",
+      "fallback_state": "neutral"
+    },
+    {
+      "id": "map-feedback-offscreen-direction-neutral",
+      "label": "Off-screen direction marker \u2014 neutral",
+      "family": "map-feedback",
+      "role": "offscreen-direction-marker",
+      "motif": "upward canonical arrow with neutral structural treatment",
+      "source_path": "art/ui/build-menu/masters/map-feedback/offscreen-direction-neutral.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/map-feedback/offscreen-direction-neutral.png",
+          "dimensions": [
+            128,
+            128
+          ]
+        }
+      ],
+      "display_size_range": [
+        24,
+        48
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; zero RGB in fully transparent pixels",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "neutral",
+        "active",
+        "danger"
+      ],
+      "accessibility_label": "Off-screen direction marker \u2014 neutral",
+      "approval": "approved_pipeline_output",
+      "human_art_approval": "pending",
+      "prompt_version": "map-feedback-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "community-icon-shape-library"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow formatting",
+      "anchor": {
+        "value": [
+          0.5,
+          0.5
+        ],
+        "origin": "top-left",
+        "units": "normalized"
+      },
+      "rotation_origin": [
+        0.5,
+        0.5
+      ],
+      "canonical_orientation": "up",
+      "state": "neutral",
+      "fallback_state": "neutral"
+    },
+    {
+      "id": "map-feedback-offscreen-direction-positive",
+      "label": "Off-screen direction marker \u2014 positive",
+      "family": "map-feedback",
+      "role": "offscreen-direction-marker",
+      "motif": "upward canonical arrow with positive structural treatment",
+      "source_path": "art/ui/build-menu/masters/map-feedback/offscreen-direction-positive.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/map-feedback/offscreen-direction-positive.png",
+          "dimensions": [
+            128,
+            128
+          ]
+        }
+      ],
+      "display_size_range": [
+        24,
+        48
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; zero RGB in fully transparent pixels",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "neutral",
+        "active",
+        "danger"
+      ],
+      "accessibility_label": "Off-screen direction marker \u2014 positive",
+      "approval": "approved_pipeline_output",
+      "human_art_approval": "pending",
+      "prompt_version": "map-feedback-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "community-icon-shape-library"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow formatting",
+      "anchor": {
+        "value": [
+          0.5,
+          0.5
+        ],
+        "origin": "top-left",
+        "units": "normalized"
+      },
+      "rotation_origin": [
+        0.5,
+        0.5
+      ],
+      "canonical_orientation": "up",
+      "state": "positive",
+      "fallback_state": "neutral"
+    },
+    {
+      "id": "map-feedback-offscreen-direction-warning",
+      "label": "Off-screen direction marker \u2014 warning",
+      "family": "map-feedback",
+      "role": "offscreen-direction-marker",
+      "motif": "upward canonical arrow with warning structural treatment",
+      "source_path": "art/ui/build-menu/masters/map-feedback/offscreen-direction-warning.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/map-feedback/offscreen-direction-warning.png",
+          "dimensions": [
+            128,
+            128
+          ]
+        }
+      ],
+      "display_size_range": [
+        24,
+        48
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; zero RGB in fully transparent pixels",
+      "palette_roles": [
+        "ink",
+        "paper",
+        "neutral",
+        "active",
+        "danger"
+      ],
+      "accessibility_label": "Off-screen direction marker \u2014 warning",
+      "approval": "approved_pipeline_output",
+      "human_art_approval": "pending",
+      "prompt_version": "map-feedback-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "community-icon-shape-library"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow formatting",
+      "anchor": {
+        "value": [
+          0.5,
+          0.5
+        ],
+        "origin": "top-left",
+        "units": "normalized"
+      },
+      "rotation_origin": [
+        0.5,
+        0.5
+      ],
+      "canonical_orientation": "up",
+      "state": "warning",
+      "fallback_state": "neutral"
+    },
+    {
+      "id": "map-feedback-effect-radius-boundary-accent",
+      "label": "Effect-radius boundary edge accent",
+      "family": "map-feedback",
+      "role": "modular-edge-accent",
+      "motif": "curved teal dash with pennant and pulse ticks",
+      "source_path": "art/ui/build-menu/masters/map-feedback/effect-radius-boundary-accent.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/map-feedback/effect-radius-boundary-accent.png",
+          "dimensions": [
+            128,
+            128
+          ]
+        }
+      ],
+      "display_size_range": [
+        24,
+        64
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; zero RGB in fully transparent pixels",
+      "palette_roles": [
+        "ink",
+        "civic"
+      ],
+      "accessibility_label": "Effect-radius boundary edge accent",
+      "approval": "approved_pipeline_output",
+      "human_art_approval": "pending",
+      "prompt_version": "map-feedback-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "community-icon-shape-library"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow formatting",
+      "anchor": {
+        "value": [
+          0.5,
+          0.5
+        ],
+        "origin": "top-left",
+        "units": "normalized"
+      },
+      "repeat_axis": "circular-tangent",
+      "fallback_state": "idle"
+    },
+    {
+      "id": "map-feedback-effect-radius-corner-accent",
+      "label": "Effect-radius boundary corner accent",
+      "family": "map-feedback",
+      "role": "modular-corner-accent",
+      "motif": "paired curved teal boundary dashes",
+      "source_path": "art/ui/build-menu/masters/map-feedback/effect-radius-corner-accent.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/map-feedback/effect-radius-corner-accent.png",
+          "dimensions": [
+            128,
+            128
+          ]
+        }
+      ],
+      "display_size_range": [
+        24,
+        64
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; zero RGB in fully transparent pixels",
+      "palette_roles": [
+        "ink",
+        "civic"
+      ],
+      "accessibility_label": "Effect-radius boundary corner accent",
+      "approval": "approved_pipeline_output",
+      "human_art_approval": "pending",
+      "prompt_version": "map-feedback-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "community-icon-shape-library"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow formatting",
+      "anchor": {
+        "value": [
+          0.5,
+          0.5
+        ],
+        "origin": "top-left",
+        "units": "normalized"
+      }
+    },
+    {
+      "id": "map-feedback-effect-radius-pulse-accent",
+      "label": "Effect-radius pulse accent",
+      "family": "map-feedback",
+      "role": "pulse-accent",
+      "motif": "three hand-inked teal pulse rings",
+      "source_path": "art/ui/build-menu/masters/map-feedback/effect-radius-pulse-accent.png",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/map-feedback/effect-radius-pulse-accent.png",
+          "dimensions": [
+            128,
+            128
+          ]
+        }
+      ],
+      "display_size_range": [
+        24,
+        64
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; zero RGB in fully transparent pixels",
+      "palette_roles": [
+        "civic"
+      ],
+      "accessibility_label": "Effect-radius pulse accent",
+      "approval": "approved_pipeline_output",
+      "human_art_approval": "pending",
+      "prompt_version": "map-feedback-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "community-icon-shape-library"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow formatting",
+      "anchor": {
+        "value": [
+          0.5,
+          0.5
+        ],
+        "origin": "top-left",
+        "units": "normalized"
+      },
+      "animation": {
+        "states": [
+          "idle",
+          "emphasis",
+          "settle"
+        ],
+        "source_frames": [
+          "art/ui/build-menu/masters/map-feedback/effect-radius-pulse-idle.png",
+          "art/ui/build-menu/masters/map-feedback/effect-radius-pulse-emphasis.png",
+          "art/ui/build-menu/masters/map-feedback/effect-radius-pulse-settle.png"
+        ],
+        "frames": [
+          "sprites/ui/build-menu/map-feedback/effect-radius-pulse-idle.png",
+          "sprites/ui/build-menu/map-feedback/effect-radius-pulse-emphasis.png",
+          "sprites/ui/build-menu/map-feedback/effect-radius-pulse-settle.png"
+        ],
+        "sheet": "sprites/ui/build-menu/map-feedback/effect-radius-pulse-strip.png",
+        "cell_dimensions": [
+          128,
+          128
+        ],
+        "frame_order": [
+          "idle",
+          "emphasis",
+          "settle"
+        ],
+        "fallback_state": "idle"
+      }
+    },
+    {
+      "id": "map-feedback-affordable-footprint-modules",
+      "label": "Affordable footprint connectivity modules",
+      "family": "map-feedback",
+      "role": "modular-region-sheet",
+      "motif": "all N/E/S/W connectivity masks for affordable ground outline",
+      "source_path": "art/ui/build-menu/masters/map-feedback/affordable-footprint-modules.png",
+      "source_dimensions": [
+        2048,
+        2048
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/map-feedback/affordable-footprint-modules.png",
+          "dimensions": [
+            512,
+            512
+          ]
+        }
+      ],
+      "display_size_range": [
+        32,
+        128
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; zero RGB in fully transparent pixels",
+      "palette_roles": [
+        "ink",
+        "active"
+      ],
+      "accessibility_label": "Affordable footprint connectivity modules",
+      "approval": "approved_pipeline_output",
+      "human_art_approval": "pending",
+      "prompt_version": "map-feedback-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "community-icon-shape-library"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow formatting",
+      "regions": {
+        "mask-0000": [
+          0,
+          0,
+          128,
+          128
+        ],
+        "mask-0001": [
+          128,
+          0,
+          128,
+          128
+        ],
+        "mask-0010": [
+          256,
+          0,
+          128,
+          128
+        ],
+        "mask-0011": [
+          384,
+          0,
+          128,
+          128
+        ],
+        "mask-0100": [
+          0,
+          128,
+          128,
+          128
+        ],
+        "mask-0101": [
+          128,
+          128,
+          128,
+          128
+        ],
+        "mask-0110": [
+          256,
+          128,
+          128,
+          128
+        ],
+        "mask-0111": [
+          384,
+          128,
+          128,
+          128
+        ],
+        "mask-1000": [
+          0,
+          256,
+          128,
+          128
+        ],
+        "mask-1001": [
+          128,
+          256,
+          128,
+          128
+        ],
+        "mask-1010": [
+          256,
+          256,
+          128,
+          128
+        ],
+        "mask-1011": [
+          384,
+          256,
+          128,
+          128
+        ],
+        "mask-1100": [
+          0,
+          384,
+          128,
+          128
+        ],
+        "mask-1101": [
+          128,
+          384,
+          128,
+          128
+        ],
+        "mask-1110": [
+          256,
+          384,
+          128,
+          128
+        ],
+        "mask-1111": [
+          384,
+          384,
+          128,
+          128
+        ]
+      },
+      "cell_dimensions": [
+        128,
+        128
+      ],
+      "padding": 0,
+      "extrusion": 0,
+      "connectivity_bits": "N=1,E=2,S=4,W=8",
+      "anchor": {
+        "value": [
+          0.5,
+          0.5
+        ],
+        "origin": "top-left",
+        "units": "normalized"
+      },
+      "seam_proof": "art/ui/build-menu/proofs/map-feedback/affordable-footprint-repeat-3x3.png"
+    },
+    {
+      "id": "map-feedback-blocked-footprint-modules",
+      "label": "Blocked footprint connectivity modules",
+      "family": "map-feedback",
+      "role": "modular-region-sheet",
+      "motif": "all N/E/S/W connectivity masks for blocked ground outline",
+      "source_path": "art/ui/build-menu/masters/map-feedback/blocked-footprint-modules.png",
+      "source_dimensions": [
+        2048,
+        2048
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/map-feedback/blocked-footprint-modules.png",
+          "dimensions": [
+            512,
+            512
+          ]
+        }
+      ],
+      "display_size_range": [
+        32,
+        128
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; zero RGB in fully transparent pixels",
+      "palette_roles": [
+        "ink",
+        "danger"
+      ],
+      "accessibility_label": "Blocked footprint connectivity modules",
+      "approval": "approved_pipeline_output",
+      "human_art_approval": "pending",
+      "prompt_version": "map-feedback-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "community-icon-shape-library"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow formatting",
+      "regions": {
+        "mask-0000": [
+          0,
+          0,
+          128,
+          128
+        ],
+        "mask-0001": [
+          128,
+          0,
+          128,
+          128
+        ],
+        "mask-0010": [
+          256,
+          0,
+          128,
+          128
+        ],
+        "mask-0011": [
+          384,
+          0,
+          128,
+          128
+        ],
+        "mask-0100": [
+          0,
+          128,
+          128,
+          128
+        ],
+        "mask-0101": [
+          128,
+          128,
+          128,
+          128
+        ],
+        "mask-0110": [
+          256,
+          128,
+          128,
+          128
+        ],
+        "mask-0111": [
+          384,
+          128,
+          128,
+          128
+        ],
+        "mask-1000": [
+          0,
+          256,
+          128,
+          128
+        ],
+        "mask-1001": [
+          128,
+          256,
+          128,
+          128
+        ],
+        "mask-1010": [
+          256,
+          256,
+          128,
+          128
+        ],
+        "mask-1011": [
+          384,
+          256,
+          128,
+          128
+        ],
+        "mask-1100": [
+          0,
+          384,
+          128,
+          128
+        ],
+        "mask-1101": [
+          128,
+          384,
+          128,
+          128
+        ],
+        "mask-1110": [
+          256,
+          384,
+          128,
+          128
+        ],
+        "mask-1111": [
+          384,
+          384,
+          128,
+          128
+        ]
+      },
+      "cell_dimensions": [
+        128,
+        128
+      ],
+      "padding": 0,
+      "extrusion": 0,
+      "connectivity_bits": "N=1,E=2,S=4,W=8",
+      "anchor": {
+        "value": [
+          0.5,
+          0.5
+        ],
+        "origin": "top-left",
+        "units": "normalized"
+      },
+      "seam_proof": "art/ui/build-menu/proofs/map-feedback/blocked-footprint-repeat-3x3.png"
+    },
+    {
+      "id": "map-feedback-selected-building-modules",
+      "label": "Selected-building connectivity modules",
+      "family": "map-feedback",
+      "role": "modular-region-sheet",
+      "motif": "all N/E/S/W connectivity masks for selected ground outline",
+      "source_path": "art/ui/build-menu/masters/map-feedback/selected-building-modules.png",
+      "source_dimensions": [
+        2048,
+        2048
+      ],
+      "runtime": [
+        {
+          "path": "sprites/ui/build-menu/map-feedback/selected-building-modules.png",
+          "dimensions": [
+            512,
+            512
+          ]
+        }
+      ],
+      "display_size_range": [
+        32,
+        128
+      ],
+      "colour_mode": "RGBA",
+      "colour_space": "sRGB",
+      "alpha": "straight",
+      "background_rule": "transparent exterior; zero RGB in fully transparent pixels",
+      "palette_roles": [
+        "ink",
+        "active"
+      ],
+      "accessibility_label": "Selected-building connectivity modules",
+      "approval": "approved_pipeline_output",
+      "human_art_approval": "pending",
+      "prompt_version": "map-feedback-v1",
+      "reference_ids": [
+        "approved-build-menu-icon-wall",
+        "community-icon-shape-library"
+      ],
+      "tool": "built-in image generation plus deterministic Pillow formatting",
+      "regions": {
+        "mask-0000": [
+          0,
+          0,
+          128,
+          128
+        ],
+        "mask-0001": [
+          128,
+          0,
+          128,
+          128
+        ],
+        "mask-0010": [
+          256,
+          0,
+          128,
+          128
+        ],
+        "mask-0011": [
+          384,
+          0,
+          128,
+          128
+        ],
+        "mask-0100": [
+          0,
+          128,
+          128,
+          128
+        ],
+        "mask-0101": [
+          128,
+          128,
+          128,
+          128
+        ],
+        "mask-0110": [
+          256,
+          128,
+          128,
+          128
+        ],
+        "mask-0111": [
+          384,
+          128,
+          128,
+          128
+        ],
+        "mask-1000": [
+          0,
+          256,
+          128,
+          128
+        ],
+        "mask-1001": [
+          128,
+          256,
+          128,
+          128
+        ],
+        "mask-1010": [
+          256,
+          256,
+          128,
+          128
+        ],
+        "mask-1011": [
+          384,
+          256,
+          128,
+          128
+        ],
+        "mask-1100": [
+          0,
+          384,
+          128,
+          128
+        ],
+        "mask-1101": [
+          128,
+          384,
+          128,
+          128
+        ],
+        "mask-1110": [
+          256,
+          384,
+          128,
+          128
+        ],
+        "mask-1111": [
+          384,
+          384,
+          128,
+          128
+        ]
+      },
+      "cell_dimensions": [
+        128,
+        128
+      ],
+      "padding": 0,
+      "extrusion": 0,
+      "connectivity_bits": "N=1,E=2,S=4,W=8",
+      "anchor": {
+        "value": [
+          0.5,
+          0.5
+        ],
+        "origin": "top-left",
+        "units": "normalized"
+      },
+      "seam_proof": "art/ui/build-menu/proofs/map-feedback/selected-building-frame-sizes.png",
+      "source_reference_path": "art/ui/build-menu/masters/map-feedback/selected-building-corner-source.png"
+    }
+  ],
+  "component_palette": {
+    "ink": "#171713",
+    "parchment": "#E7D3AD",
+    "building": "#58705A",
+    "capacity": "#C9743F",
+    "civic": "#2E8290",
+    "active": "#D3A526",
+    "care": "#B9516D",
+    "danger": "#A9473F",
+    "neutral": "#77745A"
+  }
+}

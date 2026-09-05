@@ -12,12 +12,19 @@ var _land:     PluginBase  # BuildableArea — gates placement to allowed cells
 var _dialogue: PluginBase  # Dialogue plugin — suppresses input while a modal is open
 var _uniques:  PluginBase  # UniqueRegistry — authoritative one-of-a-kind rules
 var _community_inspect_mode: bool = false
+var _radial_input_active: bool = false
+var _placement_active: bool = false
+var _demolition_active: bool = false
+var _placement_block_frame: int = -1
+var _input_mode: String = "world"
+
+const INPUT_MODES := ["world", "radial", "placement", "demolition", "inspection", "modal"]
 
 var map: DataMap
 
 var _preview_idx: int = -1       # Structure index the cursor currently previews
 var _rotation_steps: int = 0     # 0–3, incremented by action_rotate()
-var _preview_indicators: Array[MeshInstance3D] = []
+var _preview_indicators: Array[Sprite3D] = []
 
 # Road auto-tiling: precomputed at _ready()
 var _road_straight_idx: int = -1
@@ -141,17 +148,22 @@ func _ready():
 	GameState._notify_ready()
 
 func _process(delta):
-
-	if _overbuild_pending:
+	var dialogue_open: bool = bool(_dialogue and _dialogue.is_input_suppressed())
+	var requested := resolve_input_mode(dialogue_open or _overbuild_pending,
+		_radial_input_active, _community_inspect_mode, _demolition_active or Input.is_action_pressed("demolish"), _placement_active)
+	_set_input_mode(requested)
+	if _input_mode == "modal" or _input_mode == "radial":
+		return
+	if _input_mode == "placement" and Input.is_action_just_pressed("ui_cancel"):
+		cancel_placement()
+		return
+	if _input_mode == "demolition" and Input.is_action_just_pressed("ui_cancel"):
+		set_demolition_active(false)
 		return
 
-	# While a narrative modal owns the screen, freeze all Builder input so the
-	# player can't place / demolish / save-load underneath the dialogue.
-	if _dialogue and _dialogue.is_input_suppressed():
-		return
-
-	action_rotate()
-	action_structure_toggle()
+	if _input_mode == "placement":
+		action_rotate()
+		action_structure_toggle()
 
 	action_save_slot1()
 	action_load_temp()
@@ -167,11 +179,16 @@ func _process(delta):
 	selector.position = lerp(selector.position, gridmap_position, min(delta * 40, 1.0))
 
 	var anchor := Vector2i(int(gridmap_position.x), int(gridmap_position.z))
-	_update_preview_color(anchor)
+	if _input_mode == "placement":
+		_update_preview_color(anchor)
+	elif _input_mode == "demolition":
+		_set_selector_feedback("demolition-cursor")
+	elif _input_mode == "inspection":
+		_set_selector_feedback("inspect-select-cursor")
 
 	# Explicit Community inspect mode consumes the click before placement or
 	# demolition, then publishes only the canonical building anchor.
-	if _community_inspect_mode:
+	if _input_mode == "inspection":
 		if Input.is_action_just_pressed("build"):
 			var building_instance_id := int(GameState.cell_to_building.get(anchor, -1))
 			var selected_anchor := anchor
@@ -180,8 +197,78 @@ func _process(delta):
 			GameEvents.community_place_selected.emit(selected_anchor)
 		return
 
-	action_build(gridmap_position)
-	action_demolish(gridmap_position)
+	if _input_mode == "placement":
+		action_build(gridmap_position)
+	elif _input_mode == "demolition":
+		action_demolish(gridmap_position)
+
+static func resolve_input_mode(modal: bool, radial: bool, inspection: bool,
+		demolition: bool, placement: bool) -> String:
+	if modal: return "modal"
+	if radial: return "radial"
+	if inspection: return "inspection"
+	if demolition: return "demolition"
+	if placement: return "placement"
+	return "world"
+
+func set_radial_input_active(active: bool) -> void:
+	_radial_input_active = active
+	if active and selector:
+		selector.visible = false
+
+func begin_placement_from_palette() -> bool:
+	if _palette == null:
+		return false
+	_preview_idx = _palette.current_structure_index()
+	if _preview_idx < 0:
+		return false
+	_placement_active = true
+	_demolition_active = false
+	_placement_block_frame = Engine.get_process_frames()
+	if selector:
+		selector.visible = true
+	update_structure()
+	_emit_placement_context()
+	return true
+
+func cancel_placement() -> void:
+	_placement_active = false
+	_preview_idx = -1
+	if selector:
+		selector.visible = false
+	update_structure()
+	_emit_placement_context()
+
+func set_demolition_active(active: bool) -> void:
+	_demolition_active = active
+	if active:
+		cancel_placement()
+		if selector: selector.visible = true
+	else:
+		if selector: selector.visible = false
+	_emit_placement_context()
+
+func get_input_mode() -> String:
+	return _input_mode
+
+func is_placement_active() -> bool:
+	return _placement_active
+
+func _set_input_mode(mode: String) -> void:
+	if mode == _input_mode:
+		return
+	_input_mode = mode
+	GameEvents.player_input_mode_changed.emit(mode)
+	_emit_placement_context()
+
+func _emit_placement_context(reason: String = "") -> void:
+	GameEvents.placement_context_changed.emit({
+		"mode": _input_mode,
+		"active": _placement_active,
+		"structure_index": _preview_idx,
+		"rotation": _rotation_steps,
+		"reason": reason,
+	})
 
 # Retrieve the mesh from a PackedScene, used for dynamically creating a MeshLibrary
 
@@ -381,6 +468,8 @@ func try_place_building(requested_id: String, anchor: Vector2i, rotation_steps: 
 func action_build(gridmap_position):
 	if _preview_idx < 0:
 		return
+	if Engine.get_process_frames() <= _placement_block_frame:
+		return
 	var anchor := Vector2i(int(gridmap_position.x), int(gridmap_position.z))
 	var is_road := _is_road_structure(_preview_idx)
 
@@ -564,6 +653,7 @@ func action_rotate():
 	if Input.is_action_just_pressed("rotate"):
 		selector.rotate_y(deg_to_rad(90))
 		_rotation_steps = (_rotation_steps + 1) % 4
+		_emit_placement_context()
 		Audio.play("sounds/rotate.ogg", -30)
 
 # ── Toggle between structures ─────────────────────────────────────────────────
@@ -584,11 +674,17 @@ func action_structure_toggle():
 func _on_palette_changed(_ids: Array, selected_id: String) -> void:
 	if _palette == null:
 		return
+	if not _placement_active:
+		return
 	var new_idx: int = _palette.current_structure_index()
+	if selected_id.is_empty():
+		cancel_placement()
+		return
 	if new_idx == _preview_idx:
 		return
 	_preview_idx = new_idx
 	update_structure()
+	_emit_placement_context()
 
 func update_structure():
 	for n in selector_container.get_children():
@@ -628,36 +724,44 @@ func update_structure():
 		selector_container.add_child(indicator)
 		_preview_indicators.append(indicator)
 
-func _make_cell_indicator() -> MeshInstance3D:
-	var mi := MeshInstance3D.new()
-	var quad := PlaneMesh.new()
-	quad.size = Vector2(0.9, 0.9)
-	mi.mesh = quad
-	var mat := StandardMaterial3D.new()
-	mat.albedo_color = Color(0.0, 1.0, 0.0, 0.4)
-	mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	mat.cull_mode = BaseMaterial3D.CULL_DISABLED
-	mi.material_override = mat
-	return mi
+func _make_cell_indicator() -> Sprite3D:
+	var marker := Sprite3D.new()
+	marker.texture = load("res://sprites/ui/build-menu/map-feedback/affordable-placement-marker.png")
+	marker.pixel_size = 0.007
+	marker.rotation_degrees.x = -90.0
+	marker.no_depth_test = true
+	marker.render_priority = 2
+	return marker
 
 func _update_preview_color(anchor: Vector2i) -> void:
 	if _preview_indicators.is_empty() or _preview_idx < 0:
 		return
 	var fp_cells := _get_footprint_cells(anchor, _preview_idx, _rotation_steps)
 	var is_valid := true
+	var replacement := false
 	for cell in fp_cells:
 		if GameState.cell_to_building.has(cell):
 			is_valid = false
+			replacement = true
 			break
 		# Outside the buildable-area mask → preview turns red so the player
 		# sees they can't place there before clicking.
 		if _land and not _land.is_allowed(cell):
 			is_valid = false
 			break
-	var color := Color(0.0, 1.0, 0.0, 0.4) if is_valid else Color(1.0, 0.2, 0.2, 0.4)
 	for ind in _preview_indicators:
-		(ind.material_override as StandardMaterial3D).albedo_color = color
+		ind.texture = load("res://sprites/ui/build-menu/map-feedback/%s.png" % (
+			"affordable-placement-marker" if is_valid else ("replacement-overbuild-marker" if replacement else "blocked-footprint-marker")))
+	_set_selector_feedback("valid-placement-cursor" if is_valid else "invalid-placement-cursor")
+
+func _set_selector_feedback(asset_id: String) -> void:
+	if selector == null:
+		return
+	var sprite := selector.get_node_or_null("Sprite") as Sprite3D
+	var path := "res://sprites/ui/build-menu/map-feedback/%s.png" % asset_id
+	if sprite and ResourceLoader.exists(path):
+		sprite.texture = load(path)
+		sprite.pixel_size = 0.007
 
 # ── Road auto-tiling ──────────────────────────────────────────────────────────
 

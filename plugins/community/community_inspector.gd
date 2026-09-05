@@ -24,9 +24,17 @@ static func project(snapshot: Dictionary, catalog_context: Dictionary = {}, cloc
 		quality_rows.append(_quality(quality, current, null, previous_qualities.get(quality), population == 0))
 
 	var residents: Array = []
+	var residents_are_sorted := true
+	var previous_resident_id := -9223372036854775808
 	for raw in snapshot.get("residents", []):
-		if raw is Dictionary: residents.append(_resident(raw, catalog_context, display_config, hour))
-	residents.sort_custom(func(a: Dictionary, b: Dictionary): return int(a["resident_id"]) < int(b["resident_id"]))
+		if raw is Dictionary:
+			var resident := _resident(raw, catalog_context, display_config, hour)
+			var resident_id := int(resident["resident_id"])
+			residents_are_sorted = residents_are_sorted and resident_id >= previous_resident_id
+			previous_resident_id = resident_id
+			residents.append(resident)
+	if not residents_are_sorted:
+		residents.sort_custom(func(a: Dictionary, b: Dictionary): return int(a["resident_id"]) < int(b["resident_id"]))
 	var resident_limit := int(display_config.get("resident_snapshot_limit", 500))
 	var resident_capped := residents.size() > resident_limit
 	residents = residents.slice(0, resident_limit)
@@ -80,8 +88,12 @@ static func _resident(raw: Dictionary, context: Dictionary, config: Dictionary, 
 	var outlook := String(context.get("cohort_names", {}).get(cohort_id, cohort_id.replace("_heavy", "").replace("_", " ").capitalize()))
 	var lens_totals := {"identity": 0.0, "freedom": 0.0, "care": 0.0}
 	var lens_by_quality := {}
+	var manifestation_weights: Dictionary = raw.get("manifestation_weights", {})
 	for quality in CommunityConstants.QUALITIES:
-		var weights: Dictionary = raw.get("manifestation_weights", {}).get(quality, {}).duplicate(true)
+		var source_weights: Dictionary = manifestation_weights.get(quality, {})
+		# Weight rows contain scalar values only; a shallow copy preserves the
+		# detached projection contract without paying for recursive duplication.
+		var weights: Dictionary = {} if source_weights.is_empty() else source_weights.duplicate()
 		lens_by_quality[quality] = weights
 		for lens in CommunityConstants.LENSES: lens_totals[lens] += float(weights.get(lens, 0.0))
 	var dominant := _dominant(lens_totals)
@@ -97,15 +109,18 @@ static func _resident(raw: Dictionary, context: Dictionary, config: Dictionary, 
 	var effects: Array = []
 	for effect in raw.get("applied_effects", []):
 		if effect is Dictionary: effects.append(_effect(effect, context, hour, activity))
-	effects.sort_custom(_effect_before)
+	if effects.size() > 1: effects.sort_custom(_effect_before)
 	var positive: Array = []; var negative: Array = []
 	for effect in effects:
 		if float(effect["applied_amount"]) >= 0.0: positive.append(effect)
 		else: negative.append(effect)
 	var quality_rows: Array = []
-	for quality in CommunityConstants.QUALITIES: quality_rows.append(_quality(quality, float(raw.get("current_qualities", {}).get(quality, 50.0)), float(raw.get("target_qualities", {}).get(quality, 50.0)), null))
+	var current_qualities: Dictionary = raw.get("current_qualities", {})
+	var target_qualities: Dictionary = raw.get("target_qualities", {})
+	for quality in CommunityConstants.QUALITIES: quality_rows.append(_quality(quality, float(current_qualities.get(quality, 50.0)), float(target_qualities.get(quality, 50.0)), null))
 	var sensitivities: Array = []
-	for key in ["noise", "pollution", "crowding", "travel"]: sensitivities.append({"sensitivity_id": key, "label": key.capitalize(), "value": float(raw.get("sensitivities", {}).get(key, 1.0)), "icon_key": key + "-sensitivity"})
+	var raw_sensitivities: Dictionary = raw.get("sensitivities", {})
+	for key in ["noise", "pollution", "crowding", "travel"]: sensitivities.append({"sensitivity_id": key, "label": key.capitalize(), "value": float(raw_sensitivities.get(key, 1.0)), "icon_key": key + "-sensitivity"})
 	return {"resident_id": id, "label": "Resident #%d" % id, "cohort_id": cohort_id, "outlook_label": outlook, "dominant_lens": dominant, "dominant_lens_label": LENS_LABELS[dominant], "home_anchor": home, "home_label": "No home" if is_homeless else "Home %s" % _anchor_text(home), "is_homeless": is_homeless, "activity": null if activity == null else activity.duplicate(true), "composite_happiness": float(raw.get("composite_happiness", 50.0)), "qualities": quality_rows, "lens_weights_by_quality": lens_by_quality, "sensitivities": sensitivities, "retention": {"state": "homeless" if is_homeless else ("at_risk" if below > 0 else "stable"), "below_threshold_hours": below, "departure_grace_hours": departure_grace, "homeless_hours": homeless_hours, "relocation_grace_hours": relocation_grace, "progress": clampf(float(elapsed) / float(grace), 0.0, 1.0), "hours_remaining": maxi(0, grace - elapsed), "message": ("Relocation window: %d/%d hours" % [homeless_hours, relocation_grace]) if is_homeless else (("Departure risk: %d/%d hours" % [below, departure_grace]) if below > 0 else "Stable")}, "positive_effects": positive, "negative_effects": negative}
 
 static func _effect(raw: Dictionary, context: Dictionary, hour: int, activity: Variant = null) -> Dictionary:

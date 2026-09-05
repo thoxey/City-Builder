@@ -22,10 +22,14 @@ This package includes a basic template for a 3D city builder in Godot 4.6. Inclu
 | <kbd>F</kbd> | Camera to center |
 | <kbd>Middle mouse button</kbd> | Hold to rotate camera |
 | <kbd>Scroll wheel</kbd> | Zoom |
+| <kbd>B</kbd> or dock Build button | Open/close the radial build menu |
+| Mouse, arrow keys, <kbd>Q</kbd>/<kbd>E</kbd>, or left stick | Choose a radial category/item |
+| <kbd>Enter</kbd> / gamepad confirm | Confirm the focused radial choice |
+| <kbd>Esc</kbd> / gamepad cancel | Back, close, or cancel the active tool |
 | <kbd>Left mouse button</kbd> | Place building |
 | <kbd>DEL</kbd> | Remove building |
 | <kbd>Right mouse button</kbd> | Rotate building |
-| <kbd>Q</kbd> <kbd>E</kbd>  | Toggle between buildings |
+| <kbd>Q</kbd> <kbd>E</kbd>  | Previous/next radial choice while the menu is open |
 | <kbd>F1</kbd> | Save |
 | <kbd>F2</kbd> | Load |
 
@@ -33,7 +37,7 @@ This package includes a basic template for a 3D city builder in Godot 4.6. Inclu
 
 #### 1. How to add more buildings?
 
-Duplicate one of the existing resources in the 'structures' folder, adjust the properties in the inspector. Select the 'Builder' node in the scene and add your new resources to the 'Structures' array.
+Add or duplicate a JSON definition under `data/buildings/`. Every standalone entry and pool sidecar must provide `ui_group`, `ui_order`, and `ui_icon`; the catalog validates these fields and the Palette projects them into the radial menu. See `tools/data_editor/README.md` for the authoring contract.
 
 #### 2. How to adjust building models?
 

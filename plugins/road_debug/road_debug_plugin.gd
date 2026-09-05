@@ -28,6 +28,9 @@ func inject(deps: Dictionary) -> void:
 	_traffic = deps.get("RoadNetwork")
 
 func _plugin_ready() -> void:
+	if not OS.is_debug_build() or not bool(ProjectSettings.get_setting("development/road_debug_enabled", false)):
+		set_process_input(false)
+		return
 	_mesh = ImmediateMesh.new()
 
 	var mat := StandardMaterial3D.new()
@@ -46,6 +49,8 @@ func _plugin_ready() -> void:
 	GameEvents.map_loaded.connect(_on_map_changed_1)
 
 func _input(event: InputEvent) -> void:
+	if not OS.is_debug_build() or not bool(ProjectSettings.get_setting("development/road_debug_enabled", false)):
+		return
 	if event is InputEventKey and event.pressed and not event.echo:
 		if event.physical_keycode == KEY_TAB:
 			_overlay_visible = !_overlay_visible

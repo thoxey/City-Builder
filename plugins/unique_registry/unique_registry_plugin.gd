@@ -204,11 +204,16 @@ func evaluate_unlock(building_id: String) -> Dictionary:
 	var current := _bucket_value(profile.bucket)
 	if current < profile.prerequisite_threshold:
 		reasons.append(PlaytestActionResult.BELOW_DEMAND_THRESHOLD)
+	var bucket_id: String = String(_demand.bucket_for_category(profile.bucket)) if _demand and _demand.has_method("bucket_for_category") else profile.bucket
+	var bucket_label := String(bucket_id).capitalize()
+	if _demand and _demand.has_method("bucket_display_name"):
+		bucket_label = _demand.bucket_display_name(bucket_id)
 	return {
 		"unique": true,
 		"unlocked": reasons.is_empty(),
 		"placed": _placed.has(building_id),
 		"threshold": profile.prerequisite_threshold,
+		"bucket": bucket_label,
 		"current": current,
 		"prerequisites": Array(profile.prerequisite_ids),
 		"missing_prerequisites": missing,

@@ -1,0 +1,6 @@
+{
+  "pool_id": "pavement",
+  "ui_group": "roads",
+  "ui_order": 20,
+  "ui_icon": "pavement"
+}

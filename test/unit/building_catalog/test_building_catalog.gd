@@ -243,6 +243,26 @@ func test_pool_config_loads_from_sidecar_dir() -> void:
 	assert_null(_plugin.get_by_id("residential_t1"), "pool config must not register as a building")
 	assert_eq(_plugin.get_all().size(), 1, "only the real building loads")
 
+func test_valid_ui_metadata_projects_to_summary() -> void:
+	var data := _minimal_building("park", GOOD_MODEL_A)
+	data.merge({"ui_group":"nature", "ui_order":20, "ui_icon":"nature-patch"})
+	_write_json("park.json", data)
+	_plugin.ensure_loaded(FIXTURE_ROOT)
+	var summary := _plugin.get_summary_by_id("park")
+	assert_eq(summary.ui_group, "nature")
+	assert_eq(summary.ui_order, 20)
+	assert_eq(summary.ui_icon, "nature-patch")
+
+func test_missing_or_invalid_ui_metadata_uses_deterministic_fallbacks() -> void:
+	var data := _minimal_building("fallback", GOOD_MODEL_A)
+	data.merge({"ui_group":"not-a-group", "ui_order":"late", "ui_icon":""})
+	_write_json("fallback.json", data)
+	_plugin.ensure_loaded(FIXTURE_ROOT)
+	var summary := _plugin.get_summary_by_id("fallback")
+	assert_eq(summary.ui_group, "landmarks")
+	assert_eq(summary.ui_order, 1000)
+	assert_eq(summary.ui_icon, "missing-artwork")
+
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
 func _minimal_building(bid: String, model_path: String) -> Dictionary:

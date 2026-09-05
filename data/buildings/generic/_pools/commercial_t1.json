@@ -3,5 +3,8 @@
   "bucket": "commercial",
   "tier": 1,
   "demand_threshold": 0,
-  "demand_per_unit": 5
+  "demand_per_unit": 5,
+  "ui_group": "commerce",
+  "ui_order": 10,
+  "ui_icon": "shop"
 }

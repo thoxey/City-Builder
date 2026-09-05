@@ -30,5 +30,8 @@
       "radius": 1
     }
   ],
-  "tags": []
+  "tags": [],
+  "ui_group": "nature",
+  "ui_order": 10,
+  "ui_icon": "grass"
 }

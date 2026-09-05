@@ -1,0 +1,94 @@
+[gd_resource type="Theme" load_steps=16 format=3]
+
+[ext_resource type="FontFile" path="res://fonts/lilita_one_regular.ttf" id="1_font"]
+[ext_resource type="Texture2D" path="res://sprites/ui/build-menu/components/top-status-bar-frame.png" id="2_top"]
+[ext_resource type="Texture2D" path="res://sprites/ui/build-menu/components/bottom-tool-dock-frame.png" id="3_dock"]
+[ext_resource type="Texture2D" path="res://sprites/ui/build-menu/components/tooltip-detail-card-frame.png" id="4_detail"]
+[ext_resource type="Texture2D" path="res://sprites/ui/build-menu/components/button-normal.png" id="5_normal"]
+[ext_resource type="Texture2D" path="res://sprites/ui/build-menu/components/button-hover.png" id="6_hover"]
+[ext_resource type="Texture2D" path="res://sprites/ui/build-menu/components/button-pressed.png" id="7_pressed"]
+[ext_resource type="Texture2D" path="res://sprites/ui/build-menu/components/button-disabled.png" id="8_disabled"]
+
+[sub_resource type="StyleBoxTexture" id="StyleTop"]
+texture = ExtResource("2_top")
+texture_margin_left = 96.0
+texture_margin_top = 64.0
+texture_margin_right = 96.0
+texture_margin_bottom = 48.0
+content_margin_left = 104.0
+content_margin_top = 8.0
+content_margin_right = 104.0
+content_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxTexture" id="StyleDock"]
+texture = ExtResource("3_dock")
+texture_margin_left = 96.0
+texture_margin_top = 80.0
+texture_margin_right = 96.0
+texture_margin_bottom = 64.0
+content_margin_left = 24.0
+content_margin_top = 8.0
+content_margin_right = 24.0
+content_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxTexture" id="StyleDetail"]
+texture = ExtResource("4_detail")
+texture_margin_left = 96.0
+texture_margin_top = 88.0
+texture_margin_right = 72.0
+texture_margin_bottom = 80.0
+content_margin_left = 18.0
+content_margin_top = 14.0
+content_margin_right = 18.0
+content_margin_bottom = 14.0
+
+[sub_resource type="StyleBoxTexture" id="StyleButtonNormal"]
+texture = ExtResource("5_normal")
+texture_margin_left = 64.0
+texture_margin_top = 44.0
+texture_margin_right = 64.0
+texture_margin_bottom = 36.0
+content_margin_left = 10.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id="StyleButtonHover"]
+texture = ExtResource("6_hover")
+texture_margin_left = 64.0
+texture_margin_top = 44.0
+texture_margin_right = 64.0
+texture_margin_bottom = 36.0
+
+[sub_resource type="StyleBoxTexture" id="StyleButtonPressed"]
+texture = ExtResource("7_pressed")
+texture_margin_left = 64.0
+texture_margin_top = 44.0
+texture_margin_right = 64.0
+texture_margin_bottom = 36.0
+
+[sub_resource type="StyleBoxTexture" id="StyleButtonDisabled"]
+texture = ExtResource("8_disabled")
+texture_margin_left = 64.0
+texture_margin_top = 44.0
+texture_margin_right = 64.0
+texture_margin_bottom = 36.0
+
+[resource]
+default_font = ExtResource("1_font")
+default_font_size = 15
+Label/colors/font_color = Color(0.0901961, 0.0901961, 0.0745098, 1)
+Button/colors/font_color = Color(0.0901961, 0.0901961, 0.0745098, 1)
+Button/colors/font_hover_color = Color(0.0901961, 0.0901961, 0.0745098, 1)
+Button/colors/font_pressed_color = Color(0.0901961, 0.0901961, 0.0745098, 1)
+Button/styles/normal = SubResource("StyleButtonNormal")
+Button/styles/hover = SubResource("StyleButtonHover")
+Button/styles/pressed = SubResource("StyleButtonPressed")
+Button/styles/focus = SubResource("StyleButtonHover")
+Button/styles/disabled = SubResource("StyleButtonDisabled")
+StatusBar/base_type = &"PanelContainer"
+StatusBar/styles/panel = SubResource("StyleTop")
+ToolDock/base_type = &"PanelContainer"
+ToolDock/styles/panel = SubResource("StyleDock")
+DetailCard/base_type = &"PanelContainer"
+DetailCard/styles/panel = SubResource("StyleDetail")

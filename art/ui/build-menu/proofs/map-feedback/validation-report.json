@@ -1,0 +1,18 @@
+{
+  "status": "pass",
+  "manifest_assets": 105,
+  "map_feedback_assets": 23,
+  "errors": [],
+  "warnings": [
+    "New map-feedback art is pipeline-complete and awaits human aesthetic approval."
+  ],
+  "checks": [
+    "RGBA",
+    "dimensions",
+    "source/runtime existence",
+    "unique IDs",
+    "transparent contract",
+    "modular connectivity metadata",
+    "hotspot/anchor metadata"
+  ]
+}
