@@ -1,0 +1,1121 @@
+{
+  "authority_smoke": {
+    "public_operations": [
+      "start",
+      "place",
+      "advance"
+    ],
+    "scenario_id": "civilian_simulation/connected_day",
+    "state_hash": "90c7f883d1f5e42aaaf2bb1ebdb346084fe6e9340023d2e05fca1515b9f14733",
+    "success": true
+  },
+  "canonical_trace": [
+    {
+      "checkpoint": "admitted",
+      "traffic": {
+        "active_car_count": 2,
+        "active_journeys": [
+          {
+            "current_claim_slot": 0,
+            "current_tile": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "destination_stop": {
+              "x": 4,
+              "y": 0,
+              "z": 0
+            },
+            "display_position": {
+              "x": 0.18,
+              "y": 0.0,
+              "z": -0.2
+            },
+            "journey_id": 0,
+            "next_claim_slot": null,
+            "next_tile": null,
+            "origin_stop": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "plan_key": "plan-1",
+            "resident_id": 1,
+            "road_path": [
+              {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "z": 0
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "z": 0
+              },
+              {
+                "x": 3,
+                "y": 0,
+                "z": 0
+              },
+              {
+                "x": 4,
+                "y": 0,
+                "z": 0
+              }
+            ],
+            "road_revision": 1,
+            "segment_progress": 0.0,
+            "travel_direction": {
+              "x": 1,
+              "z": 0
+            },
+            "waiting": true
+          },
+          {
+            "current_claim_slot": 1,
+            "current_tile": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "destination_stop": {
+              "x": 4,
+              "y": 0,
+              "z": 0
+            },
+            "display_position": {
+              "x": -0.18,
+              "y": 0.0,
+              "z": -0.2
+            },
+            "journey_id": 1,
+            "next_claim_slot": null,
+            "next_tile": null,
+            "origin_stop": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "plan_key": "plan-2",
+            "resident_id": 2,
+            "road_path": [
+              {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "z": 0
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "z": 0
+              },
+              {
+                "x": 3,
+                "y": 0,
+                "z": 0
+              },
+              {
+                "x": 4,
+                "y": 0,
+                "z": 0
+              }
+            ],
+            "road_revision": 1,
+            "segment_progress": 0.0,
+            "travel_direction": {
+              "x": 1,
+              "z": 0
+            },
+            "waiting": true
+          }
+        ],
+        "pedestrian_spacing": [],
+        "pending_departure_count": 2,
+        "pending_departures": [
+          {
+            "destination_stop": {
+              "x": 4,
+              "y": 0,
+              "z": 0
+            },
+            "first_direction": {
+              "x": 1,
+              "z": 0
+            },
+            "journey_id": 2,
+            "origin_stop": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "plan_key": "plan-3",
+            "request_epoch": 0,
+            "request_sequence": 2,
+            "resident_id": 3,
+            "road_path": [
+              {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "z": 0
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "z": 0
+              },
+              {
+                "x": 3,
+                "y": 0,
+                "z": 0
+              },
+              {
+                "x": 4,
+                "y": 0,
+                "z": 0
+              }
+            ],
+            "road_revision": 1,
+            "waiting_reason": "origin_capacity"
+          },
+          {
+            "destination_stop": {
+              "x": 4,
+              "y": 0,
+              "z": 0
+            },
+            "first_direction": {
+              "x": 1,
+              "z": 0
+            },
+            "journey_id": 3,
+            "origin_stop": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "plan_key": "plan-4",
+            "request_epoch": 0,
+            "request_sequence": 3,
+            "resident_id": 4,
+            "road_path": [
+              {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "z": 0
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "z": 0
+              },
+              {
+                "x": 3,
+                "y": 0,
+                "z": 0
+              },
+              {
+                "x": 4,
+                "y": 0,
+                "z": 0
+              }
+            ],
+            "road_revision": 1,
+            "waiting_reason": "origin_capacity"
+          }
+        ],
+        "schema_version": 1,
+        "tile_occupancy": [
+          {
+            "capacity": 2,
+            "claim_count": 2,
+            "claims": [
+              {
+                "claim_order": 0,
+                "direction": {
+                  "x": 1,
+                  "z": 0
+                },
+                "journey_id": 0,
+                "phase": "current",
+                "slot": 0
+              },
+              {
+                "claim_order": 1,
+                "direction": {
+                  "x": 1,
+                  "z": 0
+                },
+                "journey_id": 1,
+                "phase": "current",
+                "slot": 1
+              }
+            ],
+            "tile": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            }
+          },
+          {
+            "capacity": 2,
+            "claim_count": 2,
+            "claims": [
+              {
+                "claim_order": 0,
+                "direction": {
+                  "x": 1,
+                  "z": 0
+                },
+                "journey_id": 90,
+                "phase": "current",
+                "slot": 0
+              },
+              {
+                "claim_order": 1,
+                "direction": {
+                  "x": 1,
+                  "z": 0
+                },
+                "journey_id": 91,
+                "phase": "current",
+                "slot": 1
+              }
+            ],
+            "tile": {
+              "x": 1,
+              "y": 0,
+              "z": 0
+            }
+          }
+        ],
+        "violations": [],
+        "waiting_car_count": 2
+      }
+    },
+    {
+      "checkpoint": "gridlock_end",
+      "traffic": {
+        "active_car_count": 2,
+        "active_journeys": [
+          {
+            "current_claim_slot": 0,
+            "current_tile": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "destination_stop": {
+              "x": 4,
+              "y": 0,
+              "z": 0
+            },
+            "display_position": {
+              "x": 0.18,
+              "y": 0.0,
+              "z": -0.2
+            },
+            "journey_id": 0,
+            "next_claim_slot": null,
+            "next_tile": null,
+            "origin_stop": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "plan_key": "plan-1",
+            "resident_id": 1,
+            "road_path": [
+              {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "z": 0
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "z": 0
+              },
+              {
+                "x": 3,
+                "y": 0,
+                "z": 0
+              },
+              {
+                "x": 4,
+                "y": 0,
+                "z": 0
+              }
+            ],
+            "road_revision": 1,
+            "segment_progress": 0.0,
+            "travel_direction": {
+              "x": 1,
+              "z": 0
+            },
+            "waiting": true
+          },
+          {
+            "current_claim_slot": 1,
+            "current_tile": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "destination_stop": {
+              "x": 4,
+              "y": 0,
+              "z": 0
+            },
+            "display_position": {
+              "x": -0.18,
+              "y": 0.0,
+              "z": -0.2
+            },
+            "journey_id": 1,
+            "next_claim_slot": null,
+            "next_tile": null,
+            "origin_stop": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "plan_key": "plan-2",
+            "resident_id": 2,
+            "road_path": [
+              {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "z": 0
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "z": 0
+              },
+              {
+                "x": 3,
+                "y": 0,
+                "z": 0
+              },
+              {
+                "x": 4,
+                "y": 0,
+                "z": 0
+              }
+            ],
+            "road_revision": 1,
+            "segment_progress": 0.0,
+            "travel_direction": {
+              "x": 1,
+              "z": 0
+            },
+            "waiting": true
+          }
+        ],
+        "pedestrian_spacing": [],
+        "pending_departure_count": 2,
+        "pending_departures": [
+          {
+            "destination_stop": {
+              "x": 4,
+              "y": 0,
+              "z": 0
+            },
+            "first_direction": {
+              "x": 1,
+              "z": 0
+            },
+            "journey_id": 2,
+            "origin_stop": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "plan_key": "plan-3",
+            "request_epoch": 0,
+            "request_sequence": 2,
+            "resident_id": 3,
+            "road_path": [
+              {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "z": 0
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "z": 0
+              },
+              {
+                "x": 3,
+                "y": 0,
+                "z": 0
+              },
+              {
+                "x": 4,
+                "y": 0,
+                "z": 0
+              }
+            ],
+            "road_revision": 1,
+            "waiting_reason": "origin_capacity"
+          },
+          {
+            "destination_stop": {
+              "x": 4,
+              "y": 0,
+              "z": 0
+            },
+            "first_direction": {
+              "x": 1,
+              "z": 0
+            },
+            "journey_id": 3,
+            "origin_stop": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "plan_key": "plan-4",
+            "request_epoch": 0,
+            "request_sequence": 3,
+            "resident_id": 4,
+            "road_path": [
+              {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "z": 0
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "z": 0
+              },
+              {
+                "x": 3,
+                "y": 0,
+                "z": 0
+              },
+              {
+                "x": 4,
+                "y": 0,
+                "z": 0
+              }
+            ],
+            "road_revision": 1,
+            "waiting_reason": "origin_capacity"
+          }
+        ],
+        "schema_version": 1,
+        "tile_occupancy": [
+          {
+            "capacity": 2,
+            "claim_count": 2,
+            "claims": [
+              {
+                "claim_order": 0,
+                "direction": {
+                  "x": 1,
+                  "z": 0
+                },
+                "journey_id": 0,
+                "phase": "current",
+                "slot": 0
+              },
+              {
+                "claim_order": 1,
+                "direction": {
+                  "x": 1,
+                  "z": 0
+                },
+                "journey_id": 1,
+                "phase": "current",
+                "slot": 1
+              }
+            ],
+            "tile": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            }
+          },
+          {
+            "capacity": 2,
+            "claim_count": 2,
+            "claims": [
+              {
+                "claim_order": 0,
+                "direction": {
+                  "x": 1,
+                  "z": 0
+                },
+                "journey_id": 90,
+                "phase": "current",
+                "slot": 0
+              },
+              {
+                "claim_order": 1,
+                "direction": {
+                  "x": 1,
+                  "z": 0
+                },
+                "journey_id": 91,
+                "phase": "current",
+                "slot": 1
+              }
+            ],
+            "tile": {
+              "x": 1,
+              "y": 0,
+              "z": 0
+            }
+          }
+        ],
+        "violations": [],
+        "waiting_car_count": 2
+      }
+    },
+    {
+      "checkpoint": "queue_release",
+      "traffic": {
+        "active_car_count": 4,
+        "active_journeys": [
+          {
+            "current_claim_slot": 0,
+            "current_tile": {
+              "x": 1,
+              "y": 0,
+              "z": 0
+            },
+            "destination_stop": {
+              "x": 4,
+              "y": 0,
+              "z": 0
+            },
+            "display_position": {
+              "x": 1.58,
+              "y": 0.0,
+              "z": -0.2
+            },
+            "journey_id": 0,
+            "next_claim_slot": 0,
+            "next_tile": {
+              "x": 2,
+              "y": 0,
+              "z": 0
+            },
+            "origin_stop": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "plan_key": "plan-1",
+            "resident_id": 1,
+            "road_path": [
+              {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "z": 0
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "z": 0
+              },
+              {
+                "x": 3,
+                "y": 0,
+                "z": 0
+              },
+              {
+                "x": 4,
+                "y": 0,
+                "z": 0
+              }
+            ],
+            "road_revision": 1,
+            "segment_progress": 0.4,
+            "travel_direction": {
+              "x": 1,
+              "z": 0
+            },
+            "waiting": false
+          },
+          {
+            "current_claim_slot": 1,
+            "current_tile": {
+              "x": 1,
+              "y": 0,
+              "z": 0
+            },
+            "destination_stop": {
+              "x": 4,
+              "y": 0,
+              "z": 0
+            },
+            "display_position": {
+              "x": 1.22,
+              "y": 0.0,
+              "z": -0.2
+            },
+            "journey_id": 1,
+            "next_claim_slot": 1,
+            "next_tile": {
+              "x": 2,
+              "y": 0,
+              "z": 0
+            },
+            "origin_stop": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "plan_key": "plan-2",
+            "resident_id": 2,
+            "road_path": [
+              {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "z": 0
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "z": 0
+              },
+              {
+                "x": 3,
+                "y": 0,
+                "z": 0
+              },
+              {
+                "x": 4,
+                "y": 0,
+                "z": 0
+              }
+            ],
+            "road_revision": 1,
+            "segment_progress": 0.4,
+            "travel_direction": {
+              "x": 1,
+              "z": 0
+            },
+            "waiting": false
+          },
+          {
+            "current_claim_slot": 0,
+            "current_tile": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "destination_stop": {
+              "x": 4,
+              "y": 0,
+              "z": 0
+            },
+            "display_position": {
+              "x": 0.18,
+              "y": 0.0,
+              "z": -0.2
+            },
+            "journey_id": 2,
+            "next_claim_slot": null,
+            "next_tile": null,
+            "origin_stop": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "plan_key": "plan-3",
+            "resident_id": 3,
+            "road_path": [
+              {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "z": 0
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "z": 0
+              },
+              {
+                "x": 3,
+                "y": 0,
+                "z": 0
+              },
+              {
+                "x": 4,
+                "y": 0,
+                "z": 0
+              }
+            ],
+            "road_revision": 1,
+            "segment_progress": 0.0,
+            "travel_direction": {
+              "x": 1,
+              "z": 0
+            },
+            "waiting": true
+          },
+          {
+            "current_claim_slot": 1,
+            "current_tile": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "destination_stop": {
+              "x": 4,
+              "y": 0,
+              "z": 0
+            },
+            "display_position": {
+              "x": -0.18,
+              "y": 0.0,
+              "z": -0.2
+            },
+            "journey_id": 3,
+            "next_claim_slot": null,
+            "next_tile": null,
+            "origin_stop": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "plan_key": "plan-4",
+            "resident_id": 4,
+            "road_path": [
+              {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "z": 0
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "z": 0
+              },
+              {
+                "x": 3,
+                "y": 0,
+                "z": 0
+              },
+              {
+                "x": 4,
+                "y": 0,
+                "z": 0
+              }
+            ],
+            "road_revision": 1,
+            "segment_progress": 0.0,
+            "travel_direction": {
+              "x": 1,
+              "z": 0
+            },
+            "waiting": true
+          }
+        ],
+        "pedestrian_spacing": [],
+        "pending_departure_count": 0,
+        "pending_departures": [],
+        "schema_version": 1,
+        "tile_occupancy": [
+          {
+            "capacity": 2,
+            "claim_count": 2,
+            "claims": [
+              {
+                "claim_order": 4,
+                "direction": {
+                  "x": 1,
+                  "z": 0
+                },
+                "journey_id": 2,
+                "phase": "current",
+                "slot": 0
+              },
+              {
+                "claim_order": 5,
+                "direction": {
+                  "x": 1,
+                  "z": 0
+                },
+                "journey_id": 3,
+                "phase": "current",
+                "slot": 1
+              }
+            ],
+            "tile": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            }
+          },
+          {
+            "capacity": 2,
+            "claim_count": 2,
+            "claims": [
+              {
+                "claim_order": 2,
+                "direction": {
+                  "x": 1,
+                  "z": 0
+                },
+                "journey_id": 0,
+                "phase": "current",
+                "slot": 0
+              },
+              {
+                "claim_order": 3,
+                "direction": {
+                  "x": 1,
+                  "z": 0
+                },
+                "journey_id": 1,
+                "phase": "current",
+                "slot": 1
+              }
+            ],
+            "tile": {
+              "x": 1,
+              "y": 0,
+              "z": 0
+            }
+          },
+          {
+            "capacity": 2,
+            "claim_count": 2,
+            "claims": [
+              {
+                "claim_order": 6,
+                "direction": {
+                  "x": 1,
+                  "z": 0
+                },
+                "journey_id": 0,
+                "phase": "next",
+                "slot": 0
+              },
+              {
+                "claim_order": 7,
+                "direction": {
+                  "x": 1,
+                  "z": 0
+                },
+                "journey_id": 1,
+                "phase": "next",
+                "slot": 1
+              }
+            ],
+            "tile": {
+              "x": 2,
+              "y": 0,
+              "z": 0
+            }
+          }
+        ],
+        "violations": [],
+        "waiting_car_count": 2
+      }
+    },
+    {
+      "checkpoint": "completed",
+      "traffic": {
+        "active_car_count": 0,
+        "active_journeys": [],
+        "pedestrian_spacing": [],
+        "pending_departure_count": 0,
+        "pending_departures": [],
+        "schema_version": 1,
+        "tile_occupancy": [],
+        "violations": [],
+        "waiting_car_count": 0
+      }
+    },
+    {
+      "checkpoint": "pedestrians",
+      "traffic": {
+        "pedestrian_spacing": [
+          {
+            "display_position": {
+              "x": 0.45,
+              "y": 0.1,
+              "z": 0.32
+            },
+            "from_tile": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "lateral_slot": -0.06,
+            "limited_progress": 0.45,
+            "order": 0,
+            "resident_id": 1,
+            "to_tile": {
+              "x": 1,
+              "y": 0,
+              "z": 0
+            }
+          },
+          {
+            "display_position": {
+              "x": 0.29,
+              "y": 0.1,
+              "z": 0.36
+            },
+            "from_tile": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "lateral_slot": -0.02,
+            "limited_progress": 0.29,
+            "order": 1,
+            "resident_id": 2,
+            "to_tile": {
+              "x": 1,
+              "y": 0,
+              "z": 0
+            }
+          },
+          {
+            "display_position": {
+              "x": 0.13,
+              "y": 0.1,
+              "z": 0.4
+            },
+            "from_tile": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "lateral_slot": 0.02,
+            "limited_progress": 0.13,
+            "order": 2,
+            "resident_id": 3,
+            "to_tile": {
+              "x": 1,
+              "y": 0,
+              "z": 0
+            }
+          },
+          {
+            "display_position": {
+              "x": 0.0,
+              "y": 0.1,
+              "z": 0.44
+            },
+            "from_tile": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "lateral_slot": 0.06,
+            "limited_progress": 0.0,
+            "order": 3,
+            "resident_id": 4,
+            "to_tile": {
+              "x": 1,
+              "y": 0,
+              "z": 0
+            }
+          }
+        ],
+        "violations": []
+      }
+    }
+  ],
+  "deterministic": true,
+  "failures": [],
+  "fault_detection": {
+    "canonical_route_changed_by_congestion": true,
+    "car_transform_off_road": true,
+    "duplicate_car_position": true,
+    "invalid_next_tile_claim": true,
+    "missing_current_tile_claim": true,
+    "pending_order_violation": true,
+    "persistent_pedestrian_overlap": true,
+    "road_tile_over_capacity": true,
+    "spawned_without_admission": true
+  },
+  "repeat_count": 10,
+  "scenario_id": "traffic_flow_coherence",
+  "schema_version": 1,
+  "seed": 1010,
+  "success": true,
+  "trace_hashes": [
+    "9f97c76d2c2a125d853508fb8b424913d8aaade3bfa228e9664f6fa95c59625d",
+    "9f97c76d2c2a125d853508fb8b424913d8aaade3bfa228e9664f6fa95c59625d",
+    "9f97c76d2c2a125d853508fb8b424913d8aaade3bfa228e9664f6fa95c59625d",
+    "9f97c76d2c2a125d853508fb8b424913d8aaade3bfa228e9664f6fa95c59625d",
+    "9f97c76d2c2a125d853508fb8b424913d8aaade3bfa228e9664f6fa95c59625d",
+    "9f97c76d2c2a125d853508fb8b424913d8aaade3bfa228e9664f6fa95c59625d",
+    "9f97c76d2c2a125d853508fb8b424913d8aaade3bfa228e9664f6fa95c59625d",
+    "9f97c76d2c2a125d853508fb8b424913d8aaade3bfa228e9664f6fa95c59625d",
+    "9f97c76d2c2a125d853508fb8b424913d8aaade3bfa228e9664f6fa95c59625d",
+    "9f97c76d2c2a125d853508fb8b424913d8aaade3bfa228e9664f6fa95c59625d"
+  ]
+}
