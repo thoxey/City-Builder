@@ -37,6 +37,12 @@ Run the canonical scenario at least three times with normal and reversed contrib
 
 Expected: all authoritative and ordered outputs match. Timing values may differ and must not enter either hash.
 
+Canonical-evaluator comparison command:
+
+```sh
+CITY_BUILDER_COMMUNITY_EVALUATOR=canonical CITY_BUILDER_REBALANCE_EVIDENCE_PATH=/tmp/community-canonical.json /Applications/Godot.app/Contents/MacOS/Godot --headless --path . --log-file /tmp/community-canonical.log -s res://scripts/run_town_rebalance.gd
+```
+
 ## 4. Full suite
 
 ```sh
@@ -55,7 +61,11 @@ Expected: three 135-building/240-hour runs meet the [performance evidence contra
 
 ## 6. Rendered reference profile
 
-Run `res://scripts/run_rendered_performance_profile.gd` with the named reference save and UI/people/cars visible. Exclude documented load warm-up and explicit diagnostic capture.
+```sh
+/Applications/Godot.app/Contents/MacOS/Godot --path . --log-file /tmp/city-builder-rendered.log -s res://scripts/run_rendered_performance_profile.gd
+```
+
+The runner creates and cold-loads the named reference save, warms for 120 frames, then records three 180-frame samples with UI and people visible. Explicit diagnostics and load/warm-up are excluded.
 
 Expected: median ≥60 FPS, process-time percentiles within budget, and at least 95% main-thread time attributed to named boundaries or `engine_unattributed`.
 
@@ -70,3 +80,5 @@ For each compatibility adapter:
 5. rerun the canonical scenario before merging.
 
 Store evidence in `specs/015-transactional-performance/validation/`. Performance reports are diagnostic artifacts and must not modify gameplay saves or hashes.
+
+Delivered reports are `benchmark-headless.json`, `benchmark-rendered.json`, the combined `benchmark-after.json`, `parity-report.json`, `test-results.md`, and `acceptance-report.md` in that directory.

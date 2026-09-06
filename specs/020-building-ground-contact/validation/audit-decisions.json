@@ -1,0 +1,179 @@
+{
+  "schema_version": 1,
+  "classification_order": [
+    "pass",
+    "grass_underlay",
+    "transform",
+    "mesh_repair"
+  ],
+  "after_review": {
+    "reviewed_at": "2026-09-06",
+    "review_basis": "Three independent original-resolution reviews of the final normal-renderer sheets for exposed guide, footprint overflow, hard-surface bleed, z-fighting, floating seams, and rotation discontinuity.",
+    "reviewed_rotation_degrees": [
+      0,
+      90,
+      180,
+      270
+    ],
+    "verdict": "pass",
+    "building_ids": [
+      "building_crazy_golf",
+      "building_duck_pond",
+      "building_garage",
+      "building_lumber_mill",
+      "building_members_club",
+      "building_nature_patch",
+      "building_nightclub",
+      "building_pipe_factory",
+      "building_pirate_radio",
+      "building_postwar_midblock",
+      "building_postwar_terrace",
+      "building_postwar_tower_block",
+      "building_pub",
+      "building_restaurant",
+      "building_small_a",
+      "building_small_b",
+      "building_small_c",
+      "building_small_d",
+      "building_theatre",
+      "building_town_hall",
+      "building_windmill",
+      "grass",
+      "grass_trees",
+      "grass_trees_tall",
+      "pavement",
+      "pavement_fountain",
+      "road_corner",
+      "road_intersection",
+      "road_split",
+      "road_straight",
+      "road_straight_lightposts"
+    ]
+  },
+  "rows": {
+    "building_crazy_golf": {
+      "status": "pass",
+      "rationale": "The bordered course slab reaches the full 1x1 footprint at ground height in all four rotations."
+    },
+    "building_duck_pond": {
+      "status": "pass",
+      "rationale": "The opaque pond surround covers the full 1x1 footprint; retaining replace prevents grass bleed through the water asset."
+    },
+    "building_garage": {
+      "status": "grass_underlay",
+      "rationale": "The correctly sized garage and hardstanding fill one axis but leave a persistent exposed strip on the 0.880-cell axis; uniform scale would overflow."
+    },
+    "building_lumber_mill": {
+      "status": "grass_underlay",
+      "rationale": "The centred fenced yard fills one axis but leaves an exposed 0.886-cell short-axis band; a grass continuation is safer than scaling the architecture."
+    },
+    "building_members_club": {
+      "status": "pass",
+      "rationale": "The complete hardstanding and curb slab reaches the footprint boundary across all rotations."
+    },
+    "building_nature_patch": {
+      "status": "pass",
+      "rationale": "The authored vegetated base is effectively full-cell and visually continuous to every edge."
+    },
+    "building_nightclub": {
+      "status": "grass_underlay",
+      "rationale": "The centred terrace fills one axis but covers only 0.625 cells on the other; scaling would overflow the full axis substantially."
+    },
+    "building_pipe_factory": {
+      "status": "pass",
+      "rationale": "The concrete industrial slab reads as full-footprint; its sub-percent bevel inset does not expose a visible untreated strip."
+    },
+    "building_pirate_radio": {
+      "status": "grass_underlay",
+      "rationale": "The correctly sized tower compound leaves a thin but continuous exposed short-axis strip; scaling would overflow its full axis."
+    },
+    "building_postwar_midblock": {
+      "status": "grass_underlay",
+      "rationale": "The block and base fill one axis but leave broad exposed bands on the 0.762-cell axis; uniform scale is unsafe."
+    },
+    "building_postwar_terrace": {
+      "status": "pass",
+      "rationale": "The terrace base is effectively 1x1 and reaches the footprint outline in every rotation."
+    },
+    "building_postwar_tower_block": {
+      "status": "grass_underlay",
+      "rationale": "The grounded concrete podium fills one axis but leaves a consistent exposed strip on the 0.829-cell axis."
+    },
+    "building_pub": {
+      "status": "grass_underlay",
+      "rationale": "The intentionally asymmetric building, garden, and paths are correctly sized but do not provide a complete base; offset or scale would damage the composition."
+    },
+    "building_restaurant": {
+      "status": "grass_underlay",
+      "rationale": "The paved restaurant base is grounded but leaves a repeatable 0.911-cell edge band while the other axis is already full."
+    },
+    "building_small_a": {
+      "status": "grass_underlay",
+      "rationale": "The house and landscaped plot are correctly sized but expose a short-axis strip; the existing garden makes a grass continuation natural."
+    },
+    "building_small_b": {
+      "status": "grass_underlay",
+      "rationale": "The shop and paved forecourt fill one axis but leave a visible 0.902-cell outer band; scaling would overflow."
+    },
+    "building_small_c": {
+      "status": "grass_underlay",
+      "rationale": "The 2x2 tower and podium are centred but cover only 1.757 cells in depth while already spanning the full two-cell width."
+    },
+    "building_small_d": {
+      "status": "grass_underlay",
+      "rationale": "The walled landscaped base fills one axis but leaves a visible 0.846-cell short-axis strip across rotations."
+    },
+    "building_theatre": {
+      "status": "grass_underlay",
+      "rationale": "The correctly sized theatre fills one axis but leaves broad exposed bands on the 0.645-cell axis; uniform scale would overflow."
+    },
+    "building_town_hall": {
+      "status": "grass_underlay",
+      "rationale": "The mandatory 2x2 checkpoint spans the full width but only 1.100 cells in depth; a footprint underlay repairs all four cells without unsafe scaling."
+    },
+    "building_windmill": {
+      "status": "grass_underlay",
+      "rationale": "The walled grass plot fills one axis but exposes a persistent strip on its 0.907-cell near-ground axis; scaling would overflow."
+    },
+    "grass": {
+      "status": "pass",
+      "rationale": "The purpose-built grass plane fills the 1x1 footprint exactly."
+    },
+    "grass_trees": {
+      "status": "pass",
+      "rationale": "The integrated terrain plate is effectively full-cell and exposes no meaningful footprint strip."
+    },
+    "grass_trees_tall": {
+      "status": "grass_underlay",
+      "rationale": "The vegetation is correctly scaled but its ground plate covers only about 0.844x0.791 cells; elevated trees already reach the full overall axis."
+    },
+    "pavement": {
+      "status": "pass",
+      "rationale": "The full paved hardstanding covers the complete footprint and must continue replacing grass."
+    },
+    "pavement_fountain": {
+      "status": "pass",
+      "rationale": "The paved fountain surround covers the complete footprint and must continue replacing grass."
+    },
+    "road_corner": {
+      "status": "pass",
+      "rationale": "The road and kerb plate covers the full 1x1 footprint."
+    },
+    "road_intersection": {
+      "status": "pass",
+      "rationale": "The intersection hard surface covers the full 1x1 footprint."
+    },
+    "road_split": {
+      "status": "pass",
+      "rationale": "The split-road hard surface covers the full 1x1 footprint."
+    },
+    "road_straight": {
+      "status": "pass",
+      "rationale": "The straight-road hard surface covers the full 1x1 footprint."
+    },
+    "road_straight_lightposts": {
+      "status": "pass",
+      "rationale": "The straight-road hard surface remains full-footprint beneath its light posts."
+    }
+  }
+}

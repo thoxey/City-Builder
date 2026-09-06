@@ -1,0 +1,64 @@
+{
+  "captures": [
+    {
+      "file": "1280x720-dialogue-keywords-wrap.png",
+      "state": "dialogue-keywords-wrap",
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "1280x720-demand-hover-held-effects.png",
+      "state": "demand-hover-held-effects",
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "1920x1080-dialogue-keywords-wrap.png",
+      "state": "dialogue-keywords-wrap",
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "file": "1920x1080-demand-hover-held-effects.png",
+      "state": "demand-hover-held-effects",
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "file": "3840x2160-dialogue-keywords-wrap.png",
+      "state": "dialogue-keywords-wrap",
+      "viewport": [
+        3840,
+        2160
+      ]
+    },
+    {
+      "file": "3840x2160-demand-hover-held-effects.png",
+      "state": "demand-hover-held-effects",
+      "viewport": [
+        3840,
+        2160
+      ]
+    },
+    {
+      "file": "1920x1080-feedback-animation-samples.png",
+      "state": "feedback-animation-samples",
+      "viewport": [
+        1920,
+        1080
+      ]
+    }
+  ],
+  "feature": "017-ui-feedback-improvements",
+  "feedback_duration_seconds": 3.2,
+  "high_dpi_policy": "Dialogue and HUD controls scale from the 1920-wide authored canvas up to 2x at 3840; 1280 retains compact 1x controls",
+  "renderer": "normal"
+}

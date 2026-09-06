@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "milestone": "US3",
+  "passed": true,
+  "tests": [
+    "test/unit/presentation/test_projection_registry.gd",
+    "test/unit/dashboard/test_operational_projections.gd",
+    "test/contract/community/test_community_runtime_boundaries.gd",
+    "test/contract/simulation/test_building_change_set.gd",
+    "test/integration/simulation/test_building_index_updates.gd",
+    "test/integration/simulation/test_building_mutation_atomicity.gd",
+    "test/integration/placement_consequences/test_domain_quote_parity.gd"
+  ],
+  "timing": {"community_ui_projection_500_ms": 13.497, "placement_quote_500_residents_135_sources_median_ms": 10.591},
+  "result": "Operational reads are detached/versioned; diagnostic construction remains explicit; rejected mutations preserve authority and index versions."
+}

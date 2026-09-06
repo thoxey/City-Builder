@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "milestone": "US4",
+  "passed": true,
+  "tests": [
+    "test/unit/community/test_migration_batch_context.gd",
+    "test/integration/simulation/test_migration_transaction_parity.gd",
+    "test/unit/community/test_civilian_intents.gd",
+    "test/unit/traffic/test_stable_admission_queue.gd",
+    "test/unit/people/test_people_processing_order.gd",
+    "test/integration/performance/test_entity_loop_budget.gd"
+  ],
+  "result": "Migration facts reuse explicit revisions, candidate RNG/decisions remain exact, stale assignment deltas are one-shot, and the 512-person/256-slot combined loop passes its 8 ms p95 gate."
+}

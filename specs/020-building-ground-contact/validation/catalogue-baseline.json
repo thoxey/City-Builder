@@ -1,0 +1,2126 @@
+{
+  "catalogue_count": 31,
+  "catalogue_source": "BuildingCatalog.get_summary()",
+  "rows": [
+    {
+      "building_id": "building_crazy_golf",
+      "cash_cost": 0,
+      "category": "unique",
+      "community_role": "participant",
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "model_offset": [
+        0.0000244840521190781,
+        0.0,
+        0.0000219954126805533
+      ],
+      "model_path": "res://models/city-builder/building_crazy_golf.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 0.500029506,
+      "palette_excluded": false,
+      "pool_id": "",
+      "profiles": [
+        {
+          "type": "BuildingMetadata"
+        },
+        {
+          "active_end": 20.0,
+          "active_start": 10.0,
+          "capacity": 20.0,
+          "category": "commercial",
+          "type": "BuildingProfile"
+        },
+        {
+          "effects": [
+            {
+              "amount": 0.5,
+              "capacity": 20.0,
+              "effect_id": "crazy_golf_round",
+              "manifestation": "freedom",
+              "quality": "beauty",
+              "reason": "Played a round of crazy golf",
+              "schedule": {
+                "end": 20.0,
+                "start": 10.0
+              },
+              "scope": "participant",
+              "stacking_group": "local_leisure_visit"
+            }
+          ],
+          "type": "CommunityEffectProfile"
+        },
+        {
+          "bucket": "industrial",
+          "chain_role": "want",
+          "character_id": "aristocrat_industrial",
+          "desirability_boost": 0.05,
+          "patron_id": "aristocrat",
+          "prerequisite_ids": [
+            "building_pipe_factory"
+          ],
+          "prerequisite_threshold": 60.0,
+          "tier": 0.0,
+          "type": "UniqueProfile"
+        },
+        {
+          "base": 20.0,
+          "commercial": 20.0,
+          "industrial": 0.0,
+          "nature": 10.0,
+          "radius": 1.0,
+          "residential": 10.0,
+          "type": "AttractivenessProfile"
+        }
+      ],
+      "tags": [],
+      "ui_group": "civic",
+      "ui_icon": "crazy-golf",
+      "ui_order": 10
+    },
+    {
+      "building_id": "building_duck_pond",
+      "cash_cost": 50,
+      "category": "nature",
+      "community_role": "functional",
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "model_offset": [
+        -0.00000473866657557664,
+        0.0,
+        -0.00000424691825173795
+      ],
+      "model_path": "res://models/city-builder/building_duck_pond.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 0.500010267,
+      "palette_excluded": false,
+      "pool_id": "",
+      "profiles": [
+        {
+          "type": "BuildingMetadata"
+        },
+        {
+          "base": 40.0,
+          "commercial": 20.0,
+          "industrial": 0.0,
+          "nature": 20.0,
+          "radius": 1.0,
+          "residential": 30.0,
+          "type": "AttractivenessProfile"
+        },
+        {
+          "effects": [
+            {
+              "amount": 6.0,
+              "effect_id": "accessible_recreation",
+              "manifestation": "care",
+              "quality": "liveability",
+              "radius": 2.0,
+              "reason": "Accessible outdoor recreation",
+              "scope": "local",
+              "stacking_group": "local_recreation"
+            },
+            {
+              "amount": 7.0,
+              "effect_id": "shared_greenery",
+              "manifestation": "care",
+              "quality": "beauty",
+              "radius": 2.0,
+              "reason": "Maintained shared greenery",
+              "scope": "local",
+              "stacking_group": "shared_greenery"
+            },
+            {
+              "amount": 5.0,
+              "effect_id": "local_landscape",
+              "manifestation": "identity",
+              "quality": "beauty",
+              "radius": 2.0,
+              "reason": "Preserved local landscape",
+              "scope": "local",
+              "stacking_group": "local_landscape"
+            },
+            {
+              "amount": 4.0,
+              "capacity": 20.0,
+              "effect_id": "pond_meeting_place",
+              "manifestation": "care",
+              "quality": "belonging",
+              "reason": "Met neighbours outdoors",
+              "scope": "participant",
+              "stacking_group": "community_gathering"
+            }
+          ],
+          "type": "CommunityEffectProfile"
+        }
+      ],
+      "tags": [],
+      "ui_group": "nature",
+      "ui_icon": "duck-pond",
+      "ui_order": 30
+    },
+    {
+      "building_id": "building_garage",
+      "cash_cost": 0,
+      "category": "generic",
+      "community_role": "functional",
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "model_offset": [
+        -0.0000399993550672662,
+        0.0,
+        -0.000201025075512007
+      ],
+      "model_path": "res://models/city-builder/building_garage.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 0.500058002,
+      "palette_excluded": false,
+      "pool_id": "industrial_t1",
+      "profiles": [
+        {
+          "type": "BuildingMetadata"
+        },
+        {
+          "active_end": 18.0,
+          "active_start": 8.0,
+          "capacity": 20.0,
+          "category": "industrial",
+          "type": "BuildingProfile"
+        },
+        {
+          "base": -30.0,
+          "commercial": -10.0,
+          "industrial": 0.0,
+          "nature": -20.0,
+          "radius": 1.0,
+          "residential": -30.0,
+          "type": "AttractivenessProfile"
+        },
+        {
+          "effects": [
+            {
+              "amount": 15.0,
+              "capacity": 20.0,
+              "effect_id": "garage_employment",
+              "manifestation": "neutral",
+              "quality": "opportunity",
+              "reason": "Held suitable skilled work",
+              "schedule": {
+                "end": 18.0,
+                "start": 8.0
+              },
+              "scope": "participant",
+              "stacking_group": "employment"
+            },
+            {
+              "amount": -7.0,
+              "effect_id": "garage_noise",
+              "manifestation": "neutral",
+              "quality": "liveability",
+              "radius": 1.0,
+              "reason": "Workshop noise reached home",
+              "schedule": {
+                "end": 18.0,
+                "start": 8.0
+              },
+              "scope": "local",
+              "sensitivity": "noise",
+              "stacking_group": "industrial_noise"
+            },
+            {
+              "amount": -4.0,
+              "effect_id": "garage_visual",
+              "manifestation": "neutral",
+              "quality": "beauty",
+              "radius": 1.0,
+              "reason": "Industrial clutter dominated the view",
+              "requires_active_building": false,
+              "scope": "local",
+              "stacking_group": "industrial_visual"
+            }
+          ],
+          "type": "CommunityEffectProfile"
+        }
+      ],
+      "tags": [],
+      "ui_group": "industry",
+      "ui_icon": "workshop",
+      "ui_order": 10
+    },
+    {
+      "building_id": "building_lumber_mill",
+      "cash_cost": 0,
+      "category": "unique",
+      "community_role": "",
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "model_offset": [
+        0.000164050899911672,
+        0.0,
+        0.000120942291687243
+      ],
+      "model_path": "res://models/city-builder/building_lumber_mill.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 0.525803316,
+      "palette_excluded": false,
+      "pool_id": "",
+      "profiles": [
+        {
+          "type": "BuildingMetadata"
+        },
+        {
+          "active_end": 18.0,
+          "active_start": 8.0,
+          "capacity": 20.0,
+          "category": "industrial",
+          "type": "BuildingProfile"
+        },
+        {
+          "bucket": "industrial",
+          "chain_role": "chain",
+          "character_id": "aristocrat_industrial",
+          "desirability_boost": 0.0,
+          "patron_id": "aristocrat",
+          "prerequisite_ids": [
+            "building_windmill"
+          ],
+          "prerequisite_threshold": 30.0,
+          "tier": 2.0,
+          "type": "UniqueProfile"
+        },
+        {
+          "base": -10.0,
+          "commercial": -10.0,
+          "industrial": 0.0,
+          "nature": -10.0,
+          "radius": 1.0,
+          "residential": -20.0,
+          "type": "AttractivenessProfile"
+        }
+      ],
+      "tags": [],
+      "ui_group": "industry",
+      "ui_icon": "lumber-mill",
+      "ui_order": 40
+    },
+    {
+      "building_id": "building_members_club",
+      "cash_cost": 0,
+      "category": "unique",
+      "community_role": "participant",
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "model_offset": [
+        -0.0000172267245943658,
+        0.0,
+        -0.0000230087061936501
+      ],
+      "model_path": "res://models/city-builder/building_members_club.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 0.500028522,
+      "palette_excluded": false,
+      "pool_id": "",
+      "profiles": [
+        {
+          "type": "BuildingMetadata"
+        },
+        {
+          "active_end": 2.0,
+          "active_start": 18.0,
+          "capacity": 25.0,
+          "category": "commercial",
+          "type": "BuildingProfile"
+        },
+        {
+          "effects": [
+            {
+              "amount": 0.5,
+              "capacity": 25.0,
+              "effect_id": "members_club_evening",
+              "manifestation": "freedom",
+              "quality": "belonging",
+              "reason": "Spent the evening at the private members' club",
+              "schedule": {
+                "end": 2.0,
+                "start": 18.0
+              },
+              "scope": "participant",
+              "stacking_group": "local_social_visit"
+            }
+          ],
+          "type": "CommunityEffectProfile"
+        },
+        {
+          "bucket": "commercial",
+          "chain_role": "want",
+          "character_id": "aristocrat_commercial",
+          "desirability_boost": 0.1,
+          "patron_id": "aristocrat",
+          "prerequisite_ids": [
+            "building_nightclub"
+          ],
+          "prerequisite_threshold": 60.0,
+          "tier": 0.0,
+          "type": "UniqueProfile"
+        },
+        {
+          "base": 30.0,
+          "commercial": -25.0,
+          "industrial": 10.0,
+          "nature": 10.0,
+          "radius": 1.0,
+          "residential": 20.0,
+          "type": "AttractivenessProfile"
+        }
+      ],
+      "tags": [],
+      "ui_group": "commerce",
+      "ui_icon": "private-members-club",
+      "ui_order": 50
+    },
+    {
+      "building_id": "building_nature_patch",
+      "cash_cost": 40,
+      "category": "nature",
+      "community_role": "functional",
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "model_offset": [
+        -0.000153830987983383,
+        0.0,
+        -0.000106037390651181
+      ],
+      "model_path": "res://models/city-builder/building_nature_patch.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 0.500214326,
+      "palette_excluded": false,
+      "pool_id": "",
+      "profiles": [
+        {
+          "type": "BuildingMetadata"
+        },
+        {
+          "base": 40.0,
+          "commercial": 20.0,
+          "industrial": 0.0,
+          "nature": 20.0,
+          "radius": 1.0,
+          "residential": 30.0,
+          "type": "AttractivenessProfile"
+        },
+        {
+          "effects": [
+            {
+              "amount": 4.0,
+              "effect_id": "nearby_nature",
+              "manifestation": "care",
+              "quality": "liveability",
+              "radius": 2.0,
+              "reason": "Nearby everyday nature",
+              "scope": "local",
+              "stacking_group": "nearby_nature"
+            },
+            {
+              "amount": 6.0,
+              "effect_id": "wild_greenery",
+              "manifestation": "identity",
+              "quality": "beauty",
+              "radius": 2.0,
+              "reason": "A familiar patch of wild landscape",
+              "scope": "local",
+              "stacking_group": "wild_greenery"
+            }
+          ],
+          "type": "CommunityEffectProfile"
+        }
+      ],
+      "tags": [],
+      "ui_group": "nature",
+      "ui_icon": "nature-patch",
+      "ui_order": 20
+    },
+    {
+      "building_id": "building_nightclub",
+      "cash_cost": 0,
+      "category": "unique",
+      "community_role": "",
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "model_offset": [
+        -0.0000519955574418418,
+        0.0,
+        -0.0000320408289553598
+      ],
+      "model_path": "res://models/city-builder/building_nightclub.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 0.500051996,
+      "palette_excluded": false,
+      "pool_id": "",
+      "profiles": [
+        {
+          "type": "BuildingMetadata"
+        },
+        {
+          "active_end": 4.0,
+          "active_start": 21.0,
+          "capacity": 60.0,
+          "category": "commercial",
+          "type": "BuildingProfile"
+        },
+        {
+          "bucket": "commercial",
+          "chain_role": "chain",
+          "character_id": "aristocrat_commercial",
+          "desirability_boost": 0.0,
+          "patron_id": "aristocrat",
+          "prerequisite_ids": [
+            "building_restaurant"
+          ],
+          "prerequisite_threshold": 60.0,
+          "tier": 3.0,
+          "type": "UniqueProfile"
+        },
+        {
+          "base": -10.0,
+          "commercial": -30.0,
+          "industrial": 0.0,
+          "nature": -10.0,
+          "radius": 1.0,
+          "residential": -30.0,
+          "type": "AttractivenessProfile"
+        },
+        {
+          "effects": [
+            {
+              "amount": 8.0,
+              "capacity": 60.0,
+              "effect_id": "night_entertainment",
+              "manifestation": "freedom",
+              "quality": "opportunity",
+              "reason": "Evening entertainment and roles",
+              "schedule": {
+                "end": 4.0,
+                "start": 21.0
+              },
+              "scope": "participant",
+              "stacking_group": "entertainment"
+            },
+            {
+              "amount": 8.0,
+              "capacity": 60.0,
+              "effect_id": "compatible_crowd",
+              "manifestation": "freedom",
+              "quality": "belonging",
+              "reason": "Found people with similar interests",
+              "schedule": {
+                "end": 4.0,
+                "start": 21.0
+              },
+              "scope": "participant",
+              "stacking_group": "social_scene"
+            },
+            {
+              "amount": 4.0,
+              "capacity": 60.0,
+              "effect_id": "night_vibrancy",
+              "manifestation": "freedom",
+              "quality": "beauty",
+              "reason": "Enjoyed the town's night-time energy",
+              "schedule": {
+                "end": 4.0,
+                "start": 21.0
+              },
+              "scope": "participant",
+              "stacking_group": "vibrancy"
+            },
+            {
+              "amount": -12.0,
+              "effect_id": "late_music_noise",
+              "manifestation": "neutral",
+              "quality": "liveability",
+              "radius": 2.0,
+              "reason": "Late music disturbed sleep",
+              "schedule": {
+                "end": 4.0,
+                "start": 21.0
+              },
+              "scope": "local",
+              "sensitivity": "noise",
+              "stacking_group": "night_noise"
+            }
+          ],
+          "type": "CommunityEffectProfile"
+        }
+      ],
+      "tags": [],
+      "ui_group": "civic",
+      "ui_icon": "nightclub",
+      "ui_order": 20
+    },
+    {
+      "building_id": "building_pipe_factory",
+      "cash_cost": 0,
+      "category": "unique",
+      "community_role": "",
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "model_offset": [
+        -0.0000312495321850292,
+        0.0,
+        -0.0000157514332386199
+      ],
+      "model_path": "res://models/city-builder/building_pipe_factory.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 0.500028776,
+      "palette_excluded": false,
+      "pool_id": "",
+      "profiles": [
+        {
+          "type": "BuildingMetadata"
+        },
+        {
+          "active_end": 18.0,
+          "active_start": 8.0,
+          "capacity": 35.0,
+          "category": "industrial",
+          "type": "BuildingProfile"
+        },
+        {
+          "bucket": "industrial",
+          "chain_role": "chain",
+          "character_id": "aristocrat_industrial",
+          "desirability_boost": 0.0,
+          "patron_id": "aristocrat",
+          "prerequisite_ids": [
+            "building_lumber_mill"
+          ],
+          "prerequisite_threshold": 60.0,
+          "tier": 3.0,
+          "type": "UniqueProfile"
+        },
+        {
+          "base": -30.0,
+          "commercial": -20.0,
+          "industrial": 0.0,
+          "nature": -30.0,
+          "radius": 1.0,
+          "residential": -40.0,
+          "type": "AttractivenessProfile"
+        },
+        {
+          "effects": [
+            {
+              "amount": 16.0,
+              "capacity": 35.0,
+              "effect_id": "factory_employment",
+              "manifestation": "neutral",
+              "quality": "opportunity",
+              "reason": "Held reliable industrial work",
+              "schedule": {
+                "end": 18.0,
+                "start": 8.0
+              },
+              "scope": "participant",
+              "stacking_group": "employment"
+            },
+            {
+              "amount": -12.0,
+              "effect_id": "factory_pollution",
+              "manifestation": "neutral",
+              "quality": "liveability",
+              "radius": 2.0,
+              "reason": "Factory pollution affected the neighbourhood",
+              "scope": "local",
+              "sensitivity": "pollution",
+              "stacking_group": "industrial_pollution"
+            },
+            {
+              "amount": -8.0,
+              "effect_id": "factory_visual",
+              "manifestation": "neutral",
+              "quality": "beauty",
+              "radius": 2.0,
+              "reason": "Heavy industry dominated the view",
+              "scope": "local",
+              "stacking_group": "industrial_visual"
+            }
+          ],
+          "type": "CommunityEffectProfile"
+        }
+      ],
+      "tags": [],
+      "ui_group": "industry",
+      "ui_icon": "pipe-factory",
+      "ui_order": 50
+    },
+    {
+      "building_id": "building_pirate_radio",
+      "cash_cost": 0,
+      "category": "unique",
+      "community_role": "productive",
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "model_offset": [
+        -0.000159676230396144,
+        0.0,
+        0.0000350432710547466
+      ],
+      "model_path": "res://models/city-builder/building_pirate_radio.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 0.523533849,
+      "palette_excluded": false,
+      "pool_id": "",
+      "profiles": [
+        {
+          "type": "BuildingMetadata"
+        },
+        {
+          "bucket": "residential",
+          "chain_role": "want",
+          "character_id": "aristocrat_residential",
+          "desirability_boost": 0.05,
+          "patron_id": "aristocrat",
+          "prerequisite_ids": [
+            "building_postwar_tower_block"
+          ],
+          "prerequisite_threshold": 60.0,
+          "tier": 0.0,
+          "type": "UniqueProfile"
+        },
+        {
+          "base": 20.0,
+          "commercial": 10.0,
+          "industrial": 0.0,
+          "nature": 0.0,
+          "radius": 1.0,
+          "residential": 20.0,
+          "type": "AttractivenessProfile"
+        }
+      ],
+      "tags": [],
+      "ui_group": "landmarks",
+      "ui_icon": "pirate-radio-station",
+      "ui_order": 10
+    },
+    {
+      "building_id": "building_postwar_midblock",
+      "cash_cost": 0,
+      "category": "unique",
+      "community_role": "",
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "model_offset": [
+        -0.00000900116083357716,
+        0.0,
+        -0.000042785319237737
+      ],
+      "model_path": "res://models/city-builder/building_postwar_midblock.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 0.500047763,
+      "palette_excluded": false,
+      "pool_id": "",
+      "profiles": [
+        {
+          "type": "BuildingMetadata"
+        },
+        {
+          "active_end": 24.0,
+          "active_start": 0.0,
+          "capacity": 16.0,
+          "category": "residential",
+          "type": "BuildingProfile"
+        },
+        {
+          "bucket": "residential",
+          "chain_role": "chain",
+          "character_id": "aristocrat_residential",
+          "desirability_boost": 0.0,
+          "patron_id": "aristocrat",
+          "prerequisite_ids": [
+            "building_postwar_terrace"
+          ],
+          "prerequisite_threshold": 75.0,
+          "tier": 2.0,
+          "type": "UniqueProfile"
+        },
+        {
+          "base": -10.0,
+          "commercial": 10.0,
+          "industrial": 0.0,
+          "nature": -10.0,
+          "radius": 1.0,
+          "residential": -20.0,
+          "type": "AttractivenessProfile"
+        }
+      ],
+      "tags": [],
+      "ui_group": "homes",
+      "ui_icon": "postwar-mid-block",
+      "ui_order": 40
+    },
+    {
+      "building_id": "building_postwar_terrace",
+      "cash_cost": 0,
+      "category": "unique",
+      "community_role": "",
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "model_offset": [
+        -0.0000194917138287565,
+        0.0,
+        -0.00000453018401458394
+      ],
+      "model_path": "res://models/city-builder/building_postwar_terrace.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 0.500025512,
+      "palette_excluded": false,
+      "pool_id": "",
+      "profiles": [
+        {
+          "type": "BuildingMetadata"
+        },
+        {
+          "active_end": 24.0,
+          "active_start": 0.0,
+          "capacity": 8.0,
+          "category": "residential",
+          "type": "BuildingProfile"
+        },
+        {
+          "bucket": "residential",
+          "chain_role": "chain",
+          "character_id": "aristocrat_residential",
+          "desirability_boost": 0.0,
+          "patron_id": "aristocrat",
+          "prerequisite_ids": [],
+          "prerequisite_threshold": 40.0,
+          "tier": 1.0,
+          "type": "UniqueProfile"
+        },
+        {
+          "base": -10.0,
+          "commercial": 10.0,
+          "industrial": 0.0,
+          "nature": -10.0,
+          "radius": 1.0,
+          "residential": -10.0,
+          "type": "AttractivenessProfile"
+        }
+      ],
+      "tags": [],
+      "ui_group": "homes",
+      "ui_icon": "postwar-terrace",
+      "ui_order": 30
+    },
+    {
+      "building_id": "building_postwar_tower_block",
+      "cash_cost": 0,
+      "category": "unique",
+      "community_role": "",
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "model_offset": [
+        -0.0000497477631142829,
+        0.0,
+        -0.0000335327968059573
+      ],
+      "model_path": "res://models/city-builder/building_postwar_tower_block.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 0.500077289,
+      "palette_excluded": false,
+      "pool_id": "",
+      "profiles": [
+        {
+          "type": "BuildingMetadata"
+        },
+        {
+          "active_end": 24.0,
+          "active_start": 0.0,
+          "capacity": 40.0,
+          "category": "residential",
+          "type": "BuildingProfile"
+        },
+        {
+          "bucket": "residential",
+          "chain_role": "chain",
+          "character_id": "aristocrat_residential",
+          "desirability_boost": 0.0,
+          "patron_id": "aristocrat",
+          "prerequisite_ids": [
+            "building_postwar_midblock"
+          ],
+          "prerequisite_threshold": 225.0,
+          "tier": 3.0,
+          "type": "UniqueProfile"
+        },
+        {
+          "base": -20.0,
+          "commercial": 20.0,
+          "industrial": 0.0,
+          "nature": -20.0,
+          "radius": 1.0,
+          "residential": -30.0,
+          "type": "AttractivenessProfile"
+        }
+      ],
+      "tags": [],
+      "ui_group": "homes",
+      "ui_icon": "postwar-tower-block",
+      "ui_order": 50
+    },
+    {
+      "building_id": "building_pub",
+      "cash_cost": 0,
+      "category": "unique",
+      "community_role": "participant",
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "model_offset": [
+        0.0,
+        0.0,
+        0.000117612580652349
+      ],
+      "model_path": "res://models/city-builder/building_pub.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 0.560094154,
+      "palette_excluded": false,
+      "pool_id": "",
+      "profiles": [
+        {
+          "type": "BuildingMetadata"
+        },
+        {
+          "active_end": 23.0,
+          "active_start": 17.0,
+          "capacity": 30.0,
+          "category": "commercial",
+          "type": "BuildingProfile"
+        },
+        {
+          "effects": [
+            {
+              "amount": 0.5,
+              "capacity": 30.0,
+              "effect_id": "pub_social_visit",
+              "manifestation": "identity",
+              "quality": "belonging",
+              "reason": "Met neighbours at the local pub",
+              "schedule": {
+                "end": 23.0,
+                "start": 17.0
+              },
+              "scope": "participant",
+              "stacking_group": "local_social_visit"
+            }
+          ],
+          "type": "CommunityEffectProfile"
+        },
+        {
+          "bucket": "commercial",
+          "chain_role": "chain",
+          "character_id": "aristocrat_commercial",
+          "desirability_boost": 0.0,
+          "patron_id": "aristocrat",
+          "prerequisite_ids": [],
+          "prerequisite_threshold": 15.0,
+          "tier": 1.0,
+          "type": "UniqueProfile"
+        },
+        {
+          "base": 0.0,
+          "commercial": -25.0,
+          "industrial": 0.0,
+          "nature": 0.0,
+          "radius": 1.0,
+          "residential": -10.0,
+          "type": "AttractivenessProfile"
+        }
+      ],
+      "tags": [],
+      "ui_group": "commerce",
+      "ui_icon": "pub",
+      "ui_order": 30
+    },
+    {
+      "building_id": "building_restaurant",
+      "cash_cost": 0,
+      "category": "unique",
+      "community_role": "participant",
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "model_offset": [
+        -0.0000342601342708804,
+        0.0,
+        -0.0000255274499068037
+      ],
+      "model_path": "res://models/city-builder/building_restaurant.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 0.500034499,
+      "palette_excluded": false,
+      "pool_id": "",
+      "profiles": [
+        {
+          "type": "BuildingMetadata"
+        },
+        {
+          "active_end": 23.0,
+          "active_start": 12.0,
+          "capacity": 40.0,
+          "category": "commercial",
+          "type": "BuildingProfile"
+        },
+        {
+          "effects": [
+            {
+              "amount": 0.5,
+              "capacity": 40.0,
+              "effect_id": "restaurant_shared_meal",
+              "manifestation": "care",
+              "quality": "liveability",
+              "reason": "Shared a meal at the local restaurant",
+              "schedule": {
+                "end": 23.0,
+                "start": 12.0
+              },
+              "scope": "participant",
+              "stacking_group": "local_food_visit"
+            }
+          ],
+          "type": "CommunityEffectProfile"
+        },
+        {
+          "bucket": "commercial",
+          "chain_role": "chain",
+          "character_id": "aristocrat_commercial",
+          "desirability_boost": 0.0,
+          "patron_id": "aristocrat",
+          "prerequisite_ids": [
+            "building_pub"
+          ],
+          "prerequisite_threshold": 30.0,
+          "tier": 2.0,
+          "type": "UniqueProfile"
+        },
+        {
+          "base": 10.0,
+          "commercial": -25.0,
+          "industrial": 0.0,
+          "nature": 0.0,
+          "radius": 1.0,
+          "residential": 0.0,
+          "type": "AttractivenessProfile"
+        }
+      ],
+      "tags": [],
+      "ui_group": "commerce",
+      "ui_icon": "restaurant",
+      "ui_order": 40
+    },
+    {
+      "building_id": "building_small_a",
+      "cash_cost": 0,
+      "category": "generic",
+      "community_role": "functional",
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "model_offset": [
+        0.00164480099920183,
+        0.0,
+        0.000309403025312349
+      ],
+      "model_path": "res://models/city-builder/building_small_a.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 0.529388743,
+      "palette_excluded": false,
+      "pool_id": "residential_t1",
+      "profiles": [
+        {
+          "type": "BuildingMetadata"
+        },
+        {
+          "active_end": 9.0,
+          "active_start": 6.0,
+          "capacity": 5.0,
+          "category": "residential",
+          "type": "BuildingProfile"
+        },
+        {
+          "base": -10.0,
+          "commercial": 10.0,
+          "industrial": 0.0,
+          "nature": 0.0,
+          "radius": 1.0,
+          "residential": -10.0,
+          "type": "AttractivenessProfile"
+        },
+        {
+          "effects": [
+            {
+              "amount": 20.0,
+              "effect_id": "secure_home",
+              "manifestation": "neutral",
+              "quality": "liveability",
+              "reason": "Had a secure home",
+              "requires_active_building": false,
+              "scope": "resident",
+              "stacking_group": "housing"
+            }
+          ],
+          "type": "CommunityEffectProfile"
+        }
+      ],
+      "tags": [],
+      "ui_group": "homes",
+      "ui_icon": "house",
+      "ui_order": 10
+    },
+    {
+      "building_id": "building_small_b",
+      "cash_cost": 0,
+      "category": "generic",
+      "community_role": "functional",
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "model_offset": [
+        -0.000103415870398749,
+        0.0,
+        -0.0000661176018184051
+      ],
+      "model_path": "res://models/city-builder/building_small_b.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 0.504442628,
+      "palette_excluded": false,
+      "pool_id": "commercial_t1",
+      "profiles": [
+        {
+          "type": "BuildingMetadata"
+        },
+        {
+          "active_end": 22.0,
+          "active_start": 8.0,
+          "capacity": 10.0,
+          "category": "commercial",
+          "type": "BuildingProfile"
+        },
+        {
+          "base": -10.0,
+          "commercial": -30.0,
+          "industrial": 0.0,
+          "nature": 0.0,
+          "radius": 1.0,
+          "residential": -10.0,
+          "type": "AttractivenessProfile"
+        },
+        {
+          "effects": [
+            {
+              "amount": 5.0,
+              "capacity": 10.0,
+              "effect_id": "local_shopping",
+              "manifestation": "freedom",
+              "quality": "opportunity",
+              "reason": "Reached useful local shops",
+              "scope": "participant",
+              "stacking_group": "local_commerce"
+            },
+            {
+              "amount": 4.0,
+              "capacity": 10.0,
+              "effect_id": "high_street_encounter",
+              "manifestation": "care",
+              "quality": "belonging",
+              "reason": "Met neighbours at local shops",
+              "scope": "participant",
+              "stacking_group": "community_gathering"
+            }
+          ],
+          "type": "CommunityEffectProfile"
+        }
+      ],
+      "tags": [],
+      "ui_group": "commerce",
+      "ui_icon": "shop",
+      "ui_order": 10
+    },
+    {
+      "building_id": "building_small_c",
+      "cash_cost": 0,
+      "category": "generic",
+      "community_role": "functional",
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "model_offset": [
+        -0.000309129420202225,
+        0.0,
+        -0.0000475813030789141
+      ],
+      "model_path": "res://models/city-builder/building_small_c.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 1.00035313,
+      "palette_excluded": false,
+      "pool_id": "residential_t2",
+      "profiles": [
+        {
+          "type": "BuildingMetadata"
+        },
+        {
+          "active_end": 24.0,
+          "active_start": 0.0,
+          "capacity": 12.0,
+          "category": "residential",
+          "type": "BuildingProfile"
+        },
+        {
+          "base": -10.0,
+          "commercial": 10.0,
+          "industrial": 0.0,
+          "nature": 0.0,
+          "radius": 1.0,
+          "residential": -10.0,
+          "type": "AttractivenessProfile"
+        },
+        {
+          "effects": [
+            {
+              "amount": 20.0,
+              "effect_id": "secure_home",
+              "manifestation": "neutral",
+              "quality": "liveability",
+              "reason": "Had a secure home",
+              "requires_active_building": false,
+              "scope": "resident",
+              "stacking_group": "housing"
+            }
+          ],
+          "type": "CommunityEffectProfile"
+        }
+      ],
+      "tags": [],
+      "ui_group": "homes",
+      "ui_icon": "tower-block",
+      "ui_order": 20
+    },
+    {
+      "building_id": "building_small_d",
+      "cash_cost": 0,
+      "category": "generic",
+      "community_role": "functional",
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "model_offset": [
+        -0.0000567648748983629,
+        0.0,
+        0.0000329886206600349
+      ],
+      "model_path": "res://models/city-builder/building_small_d.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 0.500187288,
+      "palette_excluded": false,
+      "pool_id": "residential_t1",
+      "profiles": [
+        {
+          "type": "BuildingMetadata"
+        },
+        {
+          "active_end": 9.0,
+          "active_start": 6.0,
+          "capacity": 4.0,
+          "category": "residential",
+          "type": "BuildingProfile"
+        },
+        {
+          "base": -10.0,
+          "commercial": 10.0,
+          "industrial": 0.0,
+          "nature": 0.0,
+          "radius": 1.0,
+          "residential": -10.0,
+          "type": "AttractivenessProfile"
+        },
+        {
+          "effects": [
+            {
+              "amount": 20.0,
+              "effect_id": "secure_home",
+              "manifestation": "neutral",
+              "quality": "liveability",
+              "reason": "Had a secure home",
+              "requires_active_building": false,
+              "scope": "resident",
+              "stacking_group": "housing"
+            }
+          ],
+          "type": "CommunityEffectProfile"
+        }
+      ],
+      "tags": [],
+      "ui_group": "homes",
+      "ui_icon": "house",
+      "ui_order": 10
+    },
+    {
+      "building_id": "building_theatre",
+      "cash_cost": 0,
+      "category": "unique",
+      "community_role": "participant",
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "model_offset": [
+        -0.0000505186799273361,
+        0.0,
+        -0.000153076514834538
+      ],
+      "model_path": "res://models/city-builder/building_theatre.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 0.500184589,
+      "palette_excluded": false,
+      "pool_id": "",
+      "profiles": [
+        {
+          "type": "BuildingMetadata"
+        },
+        {
+          "bucket": "residential",
+          "chain_role": "landmark",
+          "character_id": "",
+          "desirability_boost": 0.25,
+          "patron_id": "aristocrat",
+          "prerequisite_ids": [
+            "building_members_club",
+            "building_crazy_golf",
+            "building_pirate_radio"
+          ],
+          "prerequisite_threshold": 0.0,
+          "tier": 0.0,
+          "type": "UniqueProfile"
+        },
+        {
+          "base": 10.0,
+          "commercial": 10.0,
+          "industrial": 10.0,
+          "nature": 10.0,
+          "radius": 3.0,
+          "residential": 10.0,
+          "type": "AttractivenessProfile"
+        },
+        {
+          "default_programme": "plays",
+          "programmes": {
+            "community_use": [
+              {
+                "amount": 4.0,
+                "capacity": 60.0,
+                "effect_id": "community_belonging",
+                "manifestation": "care",
+                "quality": "belonging",
+                "reason": "Used a staffed community meeting place",
+                "schedule": {
+                  "end": 18.0,
+                  "start": 10.0
+                },
+                "scope": "participant",
+                "stacking_group": "community_gathering"
+              },
+              {
+                "amount": 2.0,
+                "capacity": 60.0,
+                "effect_id": "community_liveability",
+                "manifestation": "care",
+                "quality": "liveability",
+                "reason": "Accessed shared community support",
+                "schedule": {
+                  "end": 18.0,
+                  "start": 10.0
+                },
+                "scope": "participant",
+                "stacking_group": "community_service"
+              },
+              {
+                "amount": 1.0,
+                "capacity": 60.0,
+                "effect_id": "community_opportunity",
+                "manifestation": "care",
+                "quality": "opportunity",
+                "reason": "Found a useful community role",
+                "schedule": {
+                  "end": 18.0,
+                  "start": 10.0
+                },
+                "scope": "participant",
+                "stacking_group": "theatre_opportunity"
+              }
+            ],
+            "plays": [
+              {
+                "amount": 3.0,
+                "capacity": 60.0,
+                "effect_id": "plays_beauty",
+                "manifestation": "identity",
+                "quality": "beauty",
+                "reason": "Enjoyed recurring local plays",
+                "schedule": {
+                  "end": 22.0,
+                  "start": 18.0
+                },
+                "scope": "participant",
+                "stacking_group": "theatre_beauty"
+              },
+              {
+                "amount": 3.0,
+                "capacity": 60.0,
+                "effect_id": "plays_belonging",
+                "manifestation": "identity",
+                "quality": "belonging",
+                "reason": "Shared familiar local stories",
+                "schedule": {
+                  "end": 22.0,
+                  "start": 18.0
+                },
+                "scope": "participant",
+                "stacking_group": "theatre_belonging"
+              },
+              {
+                "amount": 1.0,
+                "capacity": 60.0,
+                "effect_id": "plays_opportunity",
+                "manifestation": "identity",
+                "quality": "opportunity",
+                "reason": "Took part in local performance",
+                "schedule": {
+                  "end": 22.0,
+                  "start": 18.0
+                },
+                "scope": "participant",
+                "stacking_group": "theatre_opportunity"
+              }
+            ],
+            "rock_nights": [
+              {
+                "amount": 3.0,
+                "capacity": 60.0,
+                "effect_id": "rock_opportunity",
+                "manifestation": "freedom",
+                "quality": "opportunity",
+                "reason": "Discovered a new music night",
+                "schedule": {
+                  "end": 2.0,
+                  "start": 20.0
+                },
+                "scope": "participant",
+                "stacking_group": "theatre_opportunity"
+              },
+              {
+                "amount": 3.0,
+                "capacity": 60.0,
+                "effect_id": "rock_belonging",
+                "manifestation": "freedom",
+                "quality": "belonging",
+                "reason": "Found a compatible music scene",
+                "schedule": {
+                  "end": 2.0,
+                  "start": 20.0
+                },
+                "scope": "participant",
+                "stacking_group": "theatre_belonging"
+              },
+              {
+                "amount": 2.0,
+                "capacity": 60.0,
+                "effect_id": "rock_beauty",
+                "manifestation": "freedom",
+                "quality": "beauty",
+                "reason": "Loved the programme's novelty",
+                "schedule": {
+                  "end": 2.0,
+                  "start": 20.0
+                },
+                "scope": "participant",
+                "stacking_group": "theatre_beauty"
+              },
+              {
+                "amount": -8.0,
+                "effect_id": "rock_noise",
+                "manifestation": "neutral",
+                "quality": "liveability",
+                "radius": 2.0,
+                "reason": "Amplified music carried into the neighbourhood",
+                "schedule": {
+                  "end": 2.0,
+                  "start": 20.0
+                },
+                "scope": "local",
+                "sensitivity": "noise",
+                "stacking_group": "night_noise"
+              }
+            ]
+          },
+          "type": "CommunityEffectProfile"
+        }
+      ],
+      "tags": [],
+      "ui_group": "landmarks",
+      "ui_icon": "theatre",
+      "ui_order": 20
+    },
+    {
+      "building_id": "building_town_hall",
+      "cash_cost": 0,
+      "category": "unique",
+      "community_role": "local_only",
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "model_offset": [
+        -0.000057504865253577,
+        0.0,
+        0.0000154419503815006
+      ],
+      "model_path": "res://models/city-builder/building_town_hall.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 1.00028156,
+      "palette_excluded": false,
+      "pool_id": "",
+      "profiles": [
+        {
+          "type": "BuildingMetadata"
+        },
+        {
+          "effects": [
+            {
+              "amount": 4.0,
+              "effect_id": "civic_heart",
+              "manifestation": "identity",
+              "quality": "belonging",
+              "radius": 5.0,
+              "reason": "Lived near the town's civic heart",
+              "requires_active_building": false,
+              "scope": "local",
+              "stacking_group": "civic_heart"
+            }
+          ],
+          "type": "CommunityEffectProfile"
+        }
+      ],
+      "tags": [
+        "civic",
+        "town_root"
+      ],
+      "ui_group": "civic",
+      "ui_icon": "city-hall",
+      "ui_order": 0
+    },
+    {
+      "building_id": "building_windmill",
+      "cash_cost": 0,
+      "category": "unique",
+      "community_role": "",
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "model_offset": [
+        -0.0000545175571460277,
+        0.0,
+        -0.0000820296991150826
+      ],
+      "model_path": "res://models/city-builder/building_windmill.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 0.50008355,
+      "palette_excluded": false,
+      "pool_id": "",
+      "profiles": [
+        {
+          "type": "BuildingMetadata"
+        },
+        {
+          "active_end": 18.0,
+          "active_start": 8.0,
+          "capacity": 8.0,
+          "category": "industrial",
+          "type": "BuildingProfile"
+        },
+        {
+          "bucket": "industrial",
+          "chain_role": "chain",
+          "character_id": "aristocrat_industrial",
+          "desirability_boost": 0.0,
+          "patron_id": "aristocrat",
+          "prerequisite_ids": [],
+          "prerequisite_threshold": 10.0,
+          "tier": 1.0,
+          "type": "UniqueProfile"
+        },
+        {
+          "base": 10.0,
+          "commercial": 0.0,
+          "industrial": 0.0,
+          "nature": 10.0,
+          "radius": 1.0,
+          "residential": 10.0,
+          "type": "AttractivenessProfile"
+        }
+      ],
+      "tags": [],
+      "ui_group": "industry",
+      "ui_icon": "windmill",
+      "ui_order": 30
+    },
+    {
+      "building_id": "grass",
+      "cash_cost": 10,
+      "category": "nature",
+      "community_role": "cosmetic_only",
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "model_offset": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "model_path": "res://models/city-builder/grass.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 1.0,
+      "palette_excluded": true,
+      "pool_id": "grass",
+      "profiles": [
+        {
+          "base": 10.0,
+          "commercial": 0.0,
+          "industrial": 0.0,
+          "nature": 10.0,
+          "radius": 1.0,
+          "residential": 10.0,
+          "type": "AttractivenessProfile"
+        }
+      ],
+      "tags": [],
+      "ui_group": "nature",
+      "ui_icon": "grass",
+      "ui_order": 10
+    },
+    {
+      "building_id": "grass_trees",
+      "cash_cost": 15,
+      "category": "nature",
+      "community_role": "cosmetic_only",
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "model_offset": [
+        0.0000130627977341646,
+        0.0,
+        -0.00942328851670027
+      ],
+      "model_path": "res://models/city-builder/grass_trees.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 0.512648837,
+      "palette_excluded": false,
+      "pool_id": "grass",
+      "profiles": [
+        {
+          "base": 20.0,
+          "commercial": 10.0,
+          "industrial": 0.0,
+          "nature": 10.0,
+          "radius": 1.0,
+          "residential": 20.0,
+          "type": "AttractivenessProfile"
+        }
+      ],
+      "tags": [],
+      "ui_group": "nature",
+      "ui_icon": "grass",
+      "ui_order": 10
+    },
+    {
+      "building_id": "grass_trees_tall",
+      "cash_cost": 20,
+      "category": "nature",
+      "community_role": "cosmetic_only",
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "model_offset": [
+        -0.0105713363736868,
+        0.0,
+        0.00318272807635367
+      ],
+      "model_path": "res://models/city-builder/grass_trees_tall.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 0.586628969,
+      "palette_excluded": false,
+      "pool_id": "grass",
+      "profiles": [
+        {
+          "base": 30.0,
+          "commercial": 10.0,
+          "industrial": 0.0,
+          "nature": 20.0,
+          "radius": 1.0,
+          "residential": 20.0,
+          "type": "AttractivenessProfile"
+        }
+      ],
+      "tags": [],
+      "ui_group": "nature",
+      "ui_icon": "grass",
+      "ui_order": 10
+    },
+    {
+      "building_id": "pavement",
+      "cash_cost": 0,
+      "category": "road",
+      "community_role": "",
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "model_offset": [
+        -0.00000274217154583312,
+        0.0,
+        0.0000159910323418444
+      ],
+      "model_path": "res://models/city-builder/pavement.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 0.500065246,
+      "palette_excluded": false,
+      "pool_id": "pavement",
+      "profiles": [
+        {
+          "base": 0.0,
+          "commercial": 10.0,
+          "industrial": 0.0,
+          "nature": 0.0,
+          "radius": 1.0,
+          "residential": 0.0,
+          "type": "AttractivenessProfile"
+        }
+      ],
+      "tags": [],
+      "ui_group": "roads",
+      "ui_icon": "pavement",
+      "ui_order": 20
+    },
+    {
+      "building_id": "pavement_fountain",
+      "cash_cost": 0,
+      "category": "road",
+      "community_role": "",
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "model_offset": [
+        -0.0000127557195810368,
+        0.0,
+        -0.0000510377794853412
+      ],
+      "model_path": "res://models/city-builder/pavement_fountain.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 0.500012756,
+      "palette_excluded": false,
+      "pool_id": "pavement",
+      "profiles": [
+        {
+          "base": 20.0,
+          "commercial": 20.0,
+          "industrial": 0.0,
+          "nature": 10.0,
+          "radius": 1.0,
+          "residential": 10.0,
+          "type": "AttractivenessProfile"
+        }
+      ],
+      "tags": [],
+      "ui_group": "roads",
+      "ui_icon": "pavement",
+      "ui_order": 20
+    },
+    {
+      "building_id": "road_corner",
+      "cash_cost": 0,
+      "category": "road",
+      "community_role": "",
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "model_offset": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "model_path": "res://models/road-corner.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 1.0,
+      "palette_excluded": false,
+      "pool_id": "",
+      "profiles": [
+        {
+          "connections": [
+            [
+              0.0,
+              1.0
+            ],
+            [
+              -1.0,
+              0.0
+            ]
+          ],
+          "road_type": 1.0,
+          "type": "RoadMetadata"
+        },
+        {
+          "base": 0.0,
+          "commercial": 10.0,
+          "industrial": 10.0,
+          "nature": -10.0,
+          "radius": 1.0,
+          "residential": 0.0,
+          "type": "AttractivenessProfile"
+        }
+      ],
+      "tags": [],
+      "ui_group": "roads",
+      "ui_icon": "road",
+      "ui_order": 10
+    },
+    {
+      "building_id": "road_intersection",
+      "cash_cost": 0,
+      "category": "road",
+      "community_role": "",
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "model_offset": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "model_path": "res://models/road-intersection.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 1.0,
+      "palette_excluded": false,
+      "pool_id": "",
+      "profiles": [
+        {
+          "connections": [
+            [
+              0.0,
+              -1.0
+            ],
+            [
+              0.0,
+              1.0
+            ],
+            [
+              1.0,
+              0.0
+            ],
+            [
+              -1.0,
+              0.0
+            ]
+          ],
+          "road_type": 3.0,
+          "type": "RoadMetadata"
+        },
+        {
+          "base": 0.0,
+          "commercial": 10.0,
+          "industrial": 10.0,
+          "nature": -10.0,
+          "radius": 1.0,
+          "residential": 0.0,
+          "type": "AttractivenessProfile"
+        }
+      ],
+      "tags": [],
+      "ui_group": "roads",
+      "ui_icon": "road",
+      "ui_order": 10
+    },
+    {
+      "building_id": "road_split",
+      "cash_cost": 0,
+      "category": "road",
+      "community_role": "",
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "model_offset": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "model_path": "res://models/road-split.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 1.0,
+      "palette_excluded": false,
+      "pool_id": "",
+      "profiles": [
+        {
+          "connections": [
+            [
+              -1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "road_type": 2.0,
+          "type": "RoadMetadata"
+        },
+        {
+          "base": 0.0,
+          "commercial": 10.0,
+          "industrial": 10.0,
+          "nature": -10.0,
+          "radius": 1.0,
+          "residential": 0.0,
+          "type": "AttractivenessProfile"
+        }
+      ],
+      "tags": [],
+      "ui_group": "roads",
+      "ui_icon": "road",
+      "ui_order": 10
+    },
+    {
+      "building_id": "road_straight",
+      "cash_cost": 2,
+      "category": "road",
+      "community_role": "",
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "model_offset": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "model_path": "res://models/road-straight.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 1.0,
+      "palette_excluded": false,
+      "pool_id": "road",
+      "profiles": [
+        {
+          "connections": [
+            [
+              0.0,
+              -1.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "road_type": 0.0,
+          "type": "RoadMetadata"
+        },
+        {
+          "base": 0.0,
+          "commercial": 10.0,
+          "industrial": 10.0,
+          "nature": -10.0,
+          "radius": 1.0,
+          "residential": 0.0,
+          "type": "AttractivenessProfile"
+        }
+      ],
+      "tags": [],
+      "ui_group": "roads",
+      "ui_icon": "road",
+      "ui_order": 10
+    },
+    {
+      "building_id": "road_straight_lightposts",
+      "cash_cost": 0,
+      "category": "road",
+      "community_role": "",
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "model_offset": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "model_path": "res://models/road-straight-lightposts.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 1.0,
+      "palette_excluded": false,
+      "pool_id": "",
+      "profiles": [
+        {
+          "connections": [
+            [
+              0.0,
+              -1.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "road_type": 0.0,
+          "type": "RoadMetadata"
+        },
+        {
+          "base": 0.0,
+          "commercial": 10.0,
+          "industrial": 10.0,
+          "nature": -10.0,
+          "radius": 1.0,
+          "residential": 0.0,
+          "type": "AttractivenessProfile"
+        }
+      ],
+      "tags": [],
+      "ui_group": "roads",
+      "ui_icon": "road",
+      "ui_order": 10
+    }
+  ],
+  "schema_version": 1
+}

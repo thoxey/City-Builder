@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "feature": "020-building-ground-contact",
+  "seed": 6066,
+  "baseline": "deterministic-baseline.json",
+  "after": "deterministic-after.json",
+  "after_repeat": "deterministic-after-repeat.json",
+  "checkpoint_hashes": [
+    "3bec0ccd0b56988661e323d18c97c772916b50f62912ffdbc1a20143e3999019",
+    "4a44cd8886990489b13ccd9de6756f3eb04c563f39b1a68b9ad613b57c889b3c",
+    "8b1856d363d08568c1f8824d0dc0d0ebc117365e03f37b55d74efee099aefec4"
+  ],
+  "checkpoint_hashes_match": true,
+  "criteria_match": true,
+  "normalized_final_summary_sha256": "f0414f9a14b076d1e4c6d098ffd47bdfc6e6e75a24b9de1ecad15420e855c01b",
+  "normalized_final_summaries_match": true,
+  "current_tree_repeat_matches": true,
+  "concurrent_ledger_note": {
+    "baseline_entry_count": 1440,
+    "after_entry_count": 1640,
+    "baseline_post_capture_hash": "e85c364f73d5c08d5a58ccba6a5d6f4398242e53a6d5ddc003aa19743c9e0f73",
+    "after_post_capture_hash": "fa19631150065fb74ba228104e843ae0a59a02e051e913748ce38a17c0733004",
+    "explanation": "Concurrent feature-019 transaction/presentation work changed the post-checkpoint ledger between the frozen and final runs. All three gameplay checkpoint hashes and the normalized final gameplay payload match; two runs of the settled tree also match each other exactly."
+  },
+  "verdict": "pass"
+}

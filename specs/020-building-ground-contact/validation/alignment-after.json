@@ -1,0 +1,6124 @@
+{
+  "comparison": "first rendered preview mesh vs live committed GridMap mesh vs ResourceSaver/clear/cache-bypassed Builder cold-load GridMap mesh",
+  "failures": [],
+  "feature": "020-building-ground-contact",
+  "row_count": 64,
+  "rows": [
+    {
+      "aligned": true,
+      "building_id": "building_garage",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          1.0,
+          0.322665929794312,
+          0.879898071289062
+        ],
+        "max": [
+          0.5,
+          0.322665929794312,
+          0.439949065446854
+        ],
+        "min": [
+          -0.5,
+          0.0,
+          -0.439949005842209
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 2,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 0,
+      "degrees": 0,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 0,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          1.0,
+          0.322665929794312,
+          0.879898071289062
+        ],
+        "max": [
+          0.5,
+          0.322665929794312,
+          0.439949065446854
+        ],
+        "min": [
+          -0.5,
+          0.0,
+          -0.439949005842209
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 2,
+      "post_load_orientation": 0,
+      "preview_bounds": {
+        "extent": [
+          1.0,
+          0.322665929794312,
+          0.879898071289062
+        ],
+        "max": [
+          0.5,
+          0.322665929794312,
+          0.439949065446854
+        ],
+        "min": [
+          -0.5,
+          0.0,
+          -0.439949005842209
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "preview_commit_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_garage",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          0.879898071289062,
+          0.322665929794312,
+          1.0
+        ],
+        "max": [
+          0.439949065446854,
+          0.322665929794312,
+          0.5
+        ],
+        "min": [
+          -0.439949005842209,
+          0.0,
+          -0.5
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 2,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 16,
+      "degrees": 90,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 16,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          0.879898071289062,
+          0.322665929794312,
+          1.0
+        ],
+        "max": [
+          0.439949065446854,
+          0.322665929794312,
+          0.5
+        ],
+        "min": [
+          -0.439949005842209,
+          0.0,
+          -0.5
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 2,
+      "post_load_orientation": 16,
+      "preview_bounds": {
+        "extent": [
+          0.879898130893707,
+          0.322665929794312,
+          1.0
+        ],
+        "max": [
+          0.439949095249176,
+          0.322665929794312,
+          0.5
+        ],
+        "min": [
+          -0.439949035644531,
+          0.0,
+          -0.5
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0000000298023223876953,
+        0.0,
+        0.0
+      ],
+      "preview_commit_min_delta": [
+        -0.0000000298023223876953,
+        0.0,
+        0.0
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_garage",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          1.0,
+          0.322665929794312,
+          0.879898071289062
+        ],
+        "max": [
+          0.5,
+          0.322665929794312,
+          0.439949005842209
+        ],
+        "min": [
+          -0.5,
+          0.0,
+          -0.439949065446854
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 2,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 10,
+      "degrees": 180,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 10,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          1.0,
+          0.322665929794312,
+          0.879898071289062
+        ],
+        "max": [
+          0.5,
+          0.322665929794312,
+          0.439949005842209
+        ],
+        "min": [
+          -0.5,
+          0.0,
+          -0.439949065446854
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 2,
+      "post_load_orientation": 10,
+      "preview_bounds": {
+        "extent": [
+          1.00000011920929,
+          0.322665929794312,
+          0.879898130893707
+        ],
+        "max": [
+          0.500000059604645,
+          0.322665929794312,
+          0.439949035644531
+        ],
+        "min": [
+          -0.500000059604645,
+          0.0,
+          -0.439949095249176
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0000000596046447753906,
+        0.0,
+        0.0000000298023223876953
+      ],
+      "preview_commit_min_delta": [
+        -0.0000000596046447753906,
+        0.0,
+        -0.0000000298023223876953
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_garage",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          0.879898071289062,
+          0.322665929794312,
+          1.0
+        ],
+        "max": [
+          0.439949005842209,
+          0.322665929794312,
+          0.5
+        ],
+        "min": [
+          -0.439949065446854,
+          0.0,
+          -0.5
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 2,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 22,
+      "degrees": 270,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 22,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          0.879898071289062,
+          0.322665929794312,
+          1.0
+        ],
+        "max": [
+          0.439949005842209,
+          0.322665929794312,
+          0.5
+        ],
+        "min": [
+          -0.439949065446854,
+          0.0,
+          -0.5
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 2,
+      "post_load_orientation": 22,
+      "preview_bounds": {
+        "extent": [
+          0.879898071289062,
+          0.322665929794312,
+          1.0
+        ],
+        "max": [
+          0.439949005842209,
+          0.322665929794312,
+          0.5
+        ],
+        "min": [
+          -0.439949065446854,
+          0.0,
+          -0.5
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "preview_commit_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_lumber_mill",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          1.00000011920929,
+          0.374379813671112,
+          0.885698795318604
+        ],
+        "max": [
+          0.500000059604645,
+          0.374379813671112,
+          0.442849367856979
+        ],
+        "min": [
+          -0.500000059604645,
+          0.0,
+          -0.442849427461624
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 3,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 0,
+      "degrees": 0,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 0,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          1.00000011920929,
+          0.374379813671112,
+          0.885698795318604
+        ],
+        "max": [
+          0.500000059604645,
+          0.374379813671112,
+          0.442849367856979
+        ],
+        "min": [
+          -0.500000059604645,
+          0.0,
+          -0.442849427461624
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 3,
+      "post_load_orientation": 0,
+      "preview_bounds": {
+        "extent": [
+          1.00000011920929,
+          0.374379813671112,
+          0.885698795318604
+        ],
+        "max": [
+          0.500000059604645,
+          0.374379813671112,
+          0.442849367856979
+        ],
+        "min": [
+          -0.500000059604645,
+          0.0,
+          -0.442849427461624
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "preview_commit_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_lumber_mill",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          0.885698795318604,
+          0.374379813671112,
+          1.00000011920929
+        ],
+        "max": [
+          0.442849367856979,
+          0.374379813671112,
+          0.500000059604645
+        ],
+        "min": [
+          -0.442849427461624,
+          0.0,
+          -0.500000059604645
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 3,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 16,
+      "degrees": 90,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 16,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          0.885698795318604,
+          0.374379813671112,
+          1.00000011920929
+        ],
+        "max": [
+          0.442849367856979,
+          0.374379813671112,
+          0.500000059604645
+        ],
+        "min": [
+          -0.442849427461624,
+          0.0,
+          -0.500000059604645
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 3,
+      "post_load_orientation": 16,
+      "preview_bounds": {
+        "extent": [
+          0.885698914527893,
+          0.374379813671112,
+          1.00000011920929
+        ],
+        "max": [
+          0.442849457263947,
+          0.374379813671112,
+          0.500000059604645
+        ],
+        "min": [
+          -0.442849457263947,
+          0.0,
+          -0.500000059604645
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0000000894069671630859,
+        0.0,
+        0.0
+      ],
+      "preview_commit_min_delta": [
+        -0.0000000298023223876953,
+        0.0,
+        0.0
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_lumber_mill",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          1.00000011920929,
+          0.374379813671112,
+          0.885698795318604
+        ],
+        "max": [
+          0.500000059604645,
+          0.374379813671112,
+          0.442849397659302
+        ],
+        "min": [
+          -0.500000059604645,
+          0.0,
+          -0.442849397659302
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 3,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 10,
+      "degrees": 180,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 10,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          1.00000011920929,
+          0.374379813671112,
+          0.885698795318604
+        ],
+        "max": [
+          0.500000059604645,
+          0.374379813671112,
+          0.442849397659302
+        ],
+        "min": [
+          -0.500000059604645,
+          0.0,
+          -0.442849397659302
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 3,
+      "post_load_orientation": 10,
+      "preview_bounds": {
+        "extent": [
+          1.00000023841858,
+          0.374379813671112,
+          0.885698914527893
+        ],
+        "max": [
+          0.500000178813934,
+          0.374379813671112,
+          0.442849487066269
+        ],
+        "min": [
+          -0.500000059604645,
+          0.0,
+          -0.442849427461624
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.000000119209289550781,
+        0.0,
+        0.0000000894069671630859
+      ],
+      "preview_commit_min_delta": [
+        0.0,
+        0.0,
+        -0.0000000298023223876953
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_lumber_mill",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          0.885698795318604,
+          0.374379813671112,
+          1.00000011920929
+        ],
+        "max": [
+          0.442849397659302,
+          0.374379813671112,
+          0.500000059604645
+        ],
+        "min": [
+          -0.442849397659302,
+          0.0,
+          -0.500000059604645
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 3,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 22,
+      "degrees": 270,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 22,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          0.885698795318604,
+          0.374379813671112,
+          1.00000011920929
+        ],
+        "max": [
+          0.442849397659302,
+          0.374379813671112,
+          0.500000059604645
+        ],
+        "min": [
+          -0.442849397659302,
+          0.0,
+          -0.500000059604645
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 3,
+      "post_load_orientation": 22,
+      "preview_bounds": {
+        "extent": [
+          0.885698795318604,
+          0.374379813671112,
+          1.00000011920929
+        ],
+        "max": [
+          0.442849397659302,
+          0.374379813671112,
+          0.500000059604645
+        ],
+        "min": [
+          -0.442849397659302,
+          0.0,
+          -0.500000059604645
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "preview_commit_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_nightclub",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          1.0,
+          0.548231959342957,
+          0.625302076339722
+        ],
+        "max": [
+          0.5,
+          0.548231959342957,
+          0.312651067972183
+        ],
+        "min": [
+          -0.5,
+          0.0,
+          -0.312651008367538
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 6,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 0,
+      "degrees": 0,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 0,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          1.0,
+          0.548231959342957,
+          0.625302076339722
+        ],
+        "max": [
+          0.5,
+          0.548231959342957,
+          0.312651067972183
+        ],
+        "min": [
+          -0.5,
+          0.0,
+          -0.312651008367538
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 6,
+      "post_load_orientation": 0,
+      "preview_bounds": {
+        "extent": [
+          1.0,
+          0.548231959342957,
+          0.625302076339722
+        ],
+        "max": [
+          0.5,
+          0.548231959342957,
+          0.312651067972183
+        ],
+        "min": [
+          -0.5,
+          0.0,
+          -0.312651008367538
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "preview_commit_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_nightclub",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          0.625302076339722,
+          0.548231959342957,
+          1.0
+        ],
+        "max": [
+          0.312651067972183,
+          0.548231959342957,
+          0.5
+        ],
+        "min": [
+          -0.312651008367538,
+          0.0,
+          -0.499999970197678
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 6,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 16,
+      "degrees": 90,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 16,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          0.625302076339722,
+          0.548231959342957,
+          1.0
+        ],
+        "max": [
+          0.312651067972183,
+          0.548231959342957,
+          0.5
+        ],
+        "min": [
+          -0.312651008367538,
+          0.0,
+          -0.499999970197678
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 6,
+      "post_load_orientation": 16,
+      "preview_bounds": {
+        "extent": [
+          0.625302076339722,
+          0.548231959342957,
+          1.0
+        ],
+        "max": [
+          0.312651038169861,
+          0.548231959342957,
+          0.5
+        ],
+        "min": [
+          -0.312651038169861,
+          0.0,
+          -0.499999970197678
+        ]
+      },
+      "preview_commit_max_delta": [
+        -0.0000000298023223876953,
+        0.0,
+        0.0
+      ],
+      "preview_commit_min_delta": [
+        -0.0000000298023223876953,
+        0.0,
+        0.0
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_nightclub",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          1.0,
+          0.548231959342957,
+          0.625302076339722
+        ],
+        "max": [
+          0.5,
+          0.548231959342957,
+          0.312651038169861
+        ],
+        "min": [
+          -0.499999970197678,
+          0.0,
+          -0.312651038169861
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 6,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 10,
+      "degrees": 180,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 10,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          1.0,
+          0.548231959342957,
+          0.625302076339722
+        ],
+        "max": [
+          0.5,
+          0.548231959342957,
+          0.312651038169861
+        ],
+        "min": [
+          -0.499999970197678,
+          0.0,
+          -0.312651038169861
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 6,
+      "post_load_orientation": 10,
+      "preview_bounds": {
+        "extent": [
+          1.0,
+          0.548231959342957,
+          0.625302076339722
+        ],
+        "max": [
+          0.5,
+          0.548231959342957,
+          0.312651008367538
+        ],
+        "min": [
+          -0.499999970197678,
+          0.0,
+          -0.312651067972183
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0,
+        0.0,
+        -0.0000000298023223876953
+      ],
+      "preview_commit_min_delta": [
+        0.0,
+        0.0,
+        -0.0000000298023223876953
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_nightclub",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          0.625302076339722,
+          0.548231959342957,
+          1.0
+        ],
+        "max": [
+          0.312651038169861,
+          0.548231959342957,
+          0.5
+        ],
+        "min": [
+          -0.312651038169861,
+          0.0,
+          -0.5
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 6,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 22,
+      "degrees": 270,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 22,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          0.625302076339722,
+          0.548231959342957,
+          1.0
+        ],
+        "max": [
+          0.312651038169861,
+          0.548231959342957,
+          0.5
+        ],
+        "min": [
+          -0.312651038169861,
+          0.0,
+          -0.5
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 6,
+      "post_load_orientation": 22,
+      "preview_bounds": {
+        "extent": [
+          0.625302076339722,
+          0.548231959342957,
+          1.0
+        ],
+        "max": [
+          0.312651038169861,
+          0.548231959342957,
+          0.5
+        ],
+        "min": [
+          -0.312651038169861,
+          0.0,
+          -0.5
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "preview_commit_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_pirate_radio",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          0.99999988079071,
+          1.04701948165894,
+          0.929664134979248
+        ],
+        "max": [
+          0.499999910593033,
+          1.04701948165894,
+          0.464832067489624
+        ],
+        "min": [
+          -0.499999970197678,
+          0.0,
+          -0.464832067489624
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 8,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 0,
+      "degrees": 0,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 0,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          0.99999988079071,
+          1.04701948165894,
+          0.929664134979248
+        ],
+        "max": [
+          0.499999910593033,
+          1.04701948165894,
+          0.464832067489624
+        ],
+        "min": [
+          -0.499999970197678,
+          0.0,
+          -0.464832067489624
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 8,
+      "post_load_orientation": 0,
+      "preview_bounds": {
+        "extent": [
+          0.99999988079071,
+          1.04701948165894,
+          0.929664134979248
+        ],
+        "max": [
+          0.499999910593033,
+          1.04701948165894,
+          0.464832067489624
+        ],
+        "min": [
+          -0.499999970197678,
+          0.0,
+          -0.464832067489624
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "preview_commit_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_pirate_radio",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          0.929664134979248,
+          1.04701948165894,
+          0.99999988079071
+        ],
+        "max": [
+          0.464832067489624,
+          1.04701948165894,
+          0.499999940395355
+        ],
+        "min": [
+          -0.464832067489624,
+          0.0,
+          -0.499999940395355
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 8,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 16,
+      "degrees": 90,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 16,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          0.929664134979248,
+          1.04701948165894,
+          0.99999988079071
+        ],
+        "max": [
+          0.464832067489624,
+          1.04701948165894,
+          0.499999940395355
+        ],
+        "min": [
+          -0.464832067489624,
+          0.0,
+          -0.499999940395355
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 8,
+      "post_load_orientation": 16,
+      "preview_bounds": {
+        "extent": [
+          0.929664194583893,
+          1.04701948165894,
+          0.999999940395355
+        ],
+        "max": [
+          0.464832097291946,
+          1.04701948165894,
+          0.5
+        ],
+        "min": [
+          -0.464832097291946,
+          0.0,
+          -0.499999940395355
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0000000298023223876953,
+        0.0,
+        0.0000000596046447753906
+      ],
+      "preview_commit_min_delta": [
+        -0.0000000298023223876953,
+        0.0,
+        0.0
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_pirate_radio",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          0.99999988079071,
+          1.04701948165894,
+          0.929664134979248
+        ],
+        "max": [
+          0.499999940395355,
+          1.04701948165894,
+          0.464832067489624
+        ],
+        "min": [
+          -0.499999940395355,
+          0.0,
+          -0.464832067489624
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 8,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 10,
+      "degrees": 180,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 10,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          0.99999988079071,
+          1.04701948165894,
+          0.929664134979248
+        ],
+        "max": [
+          0.499999940395355,
+          1.04701948165894,
+          0.464832067489624
+        ],
+        "min": [
+          -0.499999940395355,
+          0.0,
+          -0.464832067489624
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 8,
+      "post_load_orientation": 10,
+      "preview_bounds": {
+        "extent": [
+          1.0,
+          1.04701948165894,
+          0.929664194583893
+        ],
+        "max": [
+          0.5,
+          1.04701948165894,
+          0.464832097291946
+        ],
+        "min": [
+          -0.5,
+          0.0,
+          -0.464832097291946
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0000000596046447753906,
+        0.0,
+        0.0000000298023223876953
+      ],
+      "preview_commit_min_delta": [
+        -0.0000000596046447753906,
+        0.0,
+        -0.0000000298023223876953
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_pirate_radio",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          0.929664134979248,
+          1.04701948165894,
+          0.99999988079071
+        ],
+        "max": [
+          0.464832067489624,
+          1.04701948165894,
+          0.499999910593033
+        ],
+        "min": [
+          -0.464832067489624,
+          0.0,
+          -0.499999970197678
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 8,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 22,
+      "degrees": 270,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 22,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          0.929664134979248,
+          1.04701948165894,
+          0.99999988079071
+        ],
+        "max": [
+          0.464832067489624,
+          1.04701948165894,
+          0.499999910593033
+        ],
+        "min": [
+          -0.464832067489624,
+          0.0,
+          -0.499999970197678
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 8,
+      "post_load_orientation": 22,
+      "preview_bounds": {
+        "extent": [
+          0.929664134979248,
+          1.04701948165894,
+          0.99999988079071
+        ],
+        "max": [
+          0.464832067489624,
+          1.04701948165894,
+          0.499999910593033
+        ],
+        "min": [
+          -0.464832067489624,
+          0.0,
+          -0.499999970197678
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "preview_commit_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_postwar_midblock",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          0.761573731899261,
+          0.611768960952759,
+          1.0
+        ],
+        "max": [
+          0.380786865949631,
+          0.611768960952759,
+          0.5
+        ],
+        "min": [
+          -0.380786865949631,
+          0.0000000298023223876953,
+          -0.5
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 9,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 0,
+      "degrees": 0,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 0,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          0.761573731899261,
+          0.611768960952759,
+          1.0
+        ],
+        "max": [
+          0.380786865949631,
+          0.611768960952759,
+          0.5
+        ],
+        "min": [
+          -0.380786865949631,
+          0.0000000298023223876953,
+          -0.5
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 9,
+      "post_load_orientation": 0,
+      "preview_bounds": {
+        "extent": [
+          0.761573731899261,
+          0.611768960952759,
+          1.0
+        ],
+        "max": [
+          0.380786865949631,
+          0.611768960952759,
+          0.5
+        ],
+        "min": [
+          -0.380786865949631,
+          0.0000000298023223876953,
+          -0.5
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "preview_commit_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_postwar_midblock",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          1.0,
+          0.611768960952759,
+          0.761573731899261
+        ],
+        "max": [
+          0.5,
+          0.611768960952759,
+          0.380786865949631
+        ],
+        "min": [
+          -0.5,
+          0.0000000298023223876953,
+          -0.380786865949631
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 9,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 16,
+      "degrees": 90,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 16,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          1.0,
+          0.611768960952759,
+          0.761573731899261
+        ],
+        "max": [
+          0.5,
+          0.611768960952759,
+          0.380786865949631
+        ],
+        "min": [
+          -0.5,
+          0.0000000298023223876953,
+          -0.380786865949631
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 9,
+      "post_load_orientation": 16,
+      "preview_bounds": {
+        "extent": [
+          1.0,
+          0.611768960952759,
+          0.761573791503906
+        ],
+        "max": [
+          0.5,
+          0.611768960952759,
+          0.380786895751953
+        ],
+        "min": [
+          -0.5,
+          0.0000000298023223876953,
+          -0.380786895751953
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0,
+        0.0,
+        0.0000000298023223876953
+      ],
+      "preview_commit_min_delta": [
+        0.0,
+        0.0,
+        -0.0000000298023223876953
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_postwar_midblock",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          0.761573731899261,
+          0.611768960952759,
+          1.0
+        ],
+        "max": [
+          0.380786865949631,
+          0.611768960952759,
+          0.5
+        ],
+        "min": [
+          -0.380786865949631,
+          0.0000000298023223876953,
+          -0.5
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 9,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 10,
+      "degrees": 180,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 10,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          0.761573731899261,
+          0.611768960952759,
+          1.0
+        ],
+        "max": [
+          0.380786865949631,
+          0.611768960952759,
+          0.5
+        ],
+        "min": [
+          -0.380786865949631,
+          0.0000000298023223876953,
+          -0.5
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 9,
+      "post_load_orientation": 10,
+      "preview_bounds": {
+        "extent": [
+          0.761573791503906,
+          0.611768960952759,
+          1.0
+        ],
+        "max": [
+          0.380786895751953,
+          0.611768960952759,
+          0.499999940395355
+        ],
+        "min": [
+          -0.380786895751953,
+          0.0000000298023223876953,
+          -0.500000059604645
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0000000298023223876953,
+        0.0,
+        -0.0000000596046447753906
+      ],
+      "preview_commit_min_delta": [
+        -0.0000000298023223876953,
+        0.0,
+        -0.0000000596046447753906
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_postwar_midblock",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          1.0,
+          0.611768960952759,
+          0.761573731899261
+        ],
+        "max": [
+          0.5,
+          0.611768960952759,
+          0.380786865949631
+        ],
+        "min": [
+          -0.5,
+          0.0000000298023223876953,
+          -0.380786865949631
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 9,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 22,
+      "degrees": 270,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 22,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          1.0,
+          0.611768960952759,
+          0.761573731899261
+        ],
+        "max": [
+          0.5,
+          0.611768960952759,
+          0.380786865949631
+        ],
+        "min": [
+          -0.5,
+          0.0000000298023223876953,
+          -0.380786865949631
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 9,
+      "post_load_orientation": 22,
+      "preview_bounds": {
+        "extent": [
+          1.0,
+          0.611768960952759,
+          0.761573731899261
+        ],
+        "max": [
+          0.5,
+          0.611768960952759,
+          0.380786865949631
+        ],
+        "min": [
+          -0.5,
+          0.0000000298023223876953,
+          -0.380786865949631
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "preview_commit_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_postwar_tower_block",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          1.0,
+          0.630622029304504,
+          0.82889711856842
+        ],
+        "max": [
+          0.5,
+          0.630622029304504,
+          0.41444855928421
+        ],
+        "min": [
+          -0.5,
+          -0.0000000298023223876953,
+          -0.41444855928421
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 11,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 0,
+      "degrees": 0,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 0,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          1.0,
+          0.630622029304504,
+          0.82889711856842
+        ],
+        "max": [
+          0.5,
+          0.630622029304504,
+          0.41444855928421
+        ],
+        "min": [
+          -0.5,
+          -0.0000000298023223876953,
+          -0.41444855928421
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 11,
+      "post_load_orientation": 0,
+      "preview_bounds": {
+        "extent": [
+          1.0,
+          0.630622029304504,
+          0.82889711856842
+        ],
+        "max": [
+          0.5,
+          0.630622029304504,
+          0.41444855928421
+        ],
+        "min": [
+          -0.5,
+          -0.0000000298023223876953,
+          -0.41444855928421
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "preview_commit_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_postwar_tower_block",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          0.82889711856842,
+          0.630622029304504,
+          1.0
+        ],
+        "max": [
+          0.41444855928421,
+          0.630622029304504,
+          0.5
+        ],
+        "min": [
+          -0.41444855928421,
+          -0.0000000298023223876953,
+          -0.5
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 11,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 16,
+      "degrees": 90,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 16,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          0.82889711856842,
+          0.630622029304504,
+          1.0
+        ],
+        "max": [
+          0.41444855928421,
+          0.630622029304504,
+          0.5
+        ],
+        "min": [
+          -0.41444855928421,
+          -0.0000000298023223876953,
+          -0.5
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 11,
+      "post_load_orientation": 16,
+      "preview_bounds": {
+        "extent": [
+          0.828897178173065,
+          0.630622029304504,
+          1.0
+        ],
+        "max": [
+          0.414448589086533,
+          0.630622029304504,
+          0.5
+        ],
+        "min": [
+          -0.414448589086533,
+          -0.0000000298023223876953,
+          -0.5
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0000000298023223876953,
+        0.0,
+        0.0
+      ],
+      "preview_commit_min_delta": [
+        -0.0000000298023223876953,
+        0.0,
+        0.0
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_postwar_tower_block",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          1.0,
+          0.630622029304504,
+          0.82889711856842
+        ],
+        "max": [
+          0.5,
+          0.630622029304504,
+          0.41444855928421
+        ],
+        "min": [
+          -0.5,
+          -0.0000000298023223876953,
+          -0.41444855928421
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 11,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 10,
+      "degrees": 180,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 10,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          1.0,
+          0.630622029304504,
+          0.82889711856842
+        ],
+        "max": [
+          0.5,
+          0.630622029304504,
+          0.41444855928421
+        ],
+        "min": [
+          -0.5,
+          -0.0000000298023223876953,
+          -0.41444855928421
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 11,
+      "post_load_orientation": 10,
+      "preview_bounds": {
+        "extent": [
+          1.00000011920929,
+          0.630622029304504,
+          0.828897178173065
+        ],
+        "max": [
+          0.500000059604645,
+          0.630622029304504,
+          0.414448589086533
+        ],
+        "min": [
+          -0.500000059604645,
+          -0.0000000298023223876953,
+          -0.414448589086533
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0000000596046447753906,
+        0.0,
+        0.0000000298023223876953
+      ],
+      "preview_commit_min_delta": [
+        -0.0000000596046447753906,
+        0.0,
+        -0.0000000298023223876953
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_postwar_tower_block",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          0.82889711856842,
+          0.630622029304504,
+          1.0
+        ],
+        "max": [
+          0.41444855928421,
+          0.630622029304504,
+          0.5
+        ],
+        "min": [
+          -0.41444855928421,
+          -0.0000000298023223876953,
+          -0.5
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 11,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 22,
+      "degrees": 270,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 22,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          0.82889711856842,
+          0.630622029304504,
+          1.0
+        ],
+        "max": [
+          0.41444855928421,
+          0.630622029304504,
+          0.5
+        ],
+        "min": [
+          -0.41444855928421,
+          -0.0000000298023223876953,
+          -0.5
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 11,
+      "post_load_orientation": 22,
+      "preview_bounds": {
+        "extent": [
+          0.82889711856842,
+          0.630622029304504,
+          1.0
+        ],
+        "max": [
+          0.41444855928421,
+          0.630622029304504,
+          0.5
+        ],
+        "min": [
+          -0.41444855928421,
+          -0.0000000298023223876953,
+          -0.5
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "preview_commit_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_pub",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          0.992197811603546,
+          1.12002468109131,
+          1.0
+        ],
+        "max": [
+          0.496098905801773,
+          1.12002468109131,
+          0.499999940395355
+        ],
+        "min": [
+          -0.496098905801773,
+          0.0,
+          -0.500000059604645
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 12,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 0,
+      "degrees": 0,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 0,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          0.992197811603546,
+          1.12002468109131,
+          1.0
+        ],
+        "max": [
+          0.496098905801773,
+          1.12002468109131,
+          0.499999940395355
+        ],
+        "min": [
+          -0.496098905801773,
+          0.0,
+          -0.500000059604645
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 12,
+      "post_load_orientation": 0,
+      "preview_bounds": {
+        "extent": [
+          0.992197811603546,
+          1.12002468109131,
+          1.0
+        ],
+        "max": [
+          0.496098905801773,
+          1.12002468109131,
+          0.499999940395355
+        ],
+        "min": [
+          -0.496098905801773,
+          0.0,
+          -0.500000059604645
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "preview_commit_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_pub",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          1.0,
+          1.12002468109131,
+          0.992197811603546
+        ],
+        "max": [
+          0.499999940395355,
+          1.12002468109131,
+          0.496098905801773
+        ],
+        "min": [
+          -0.500000059604645,
+          0.0,
+          -0.496098905801773
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 12,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 16,
+      "degrees": 90,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 16,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          1.0,
+          1.12002468109131,
+          0.992197811603546
+        ],
+        "max": [
+          0.499999940395355,
+          1.12002468109131,
+          0.496098905801773
+        ],
+        "min": [
+          -0.500000059604645,
+          0.0,
+          -0.496098905801773
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 12,
+      "post_load_orientation": 16,
+      "preview_bounds": {
+        "extent": [
+          1.00000011920929,
+          1.12002468109131,
+          0.992197871208191
+        ],
+        "max": [
+          0.500000059604645,
+          1.12002468109131,
+          0.496098935604095
+        ],
+        "min": [
+          -0.500000059604645,
+          0.0,
+          -0.496098935604095
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.000000119209289550781,
+        0.0,
+        0.0000000298023223876953
+      ],
+      "preview_commit_min_delta": [
+        0.0,
+        0.0,
+        -0.0000000298023223876953
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_pub",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          0.992197811603546,
+          1.12002468109131,
+          1.0
+        ],
+        "max": [
+          0.496098905801773,
+          1.12002468109131,
+          0.5
+        ],
+        "min": [
+          -0.496098905801773,
+          0.0,
+          -0.5
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 12,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 10,
+      "degrees": 180,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 10,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          0.992197811603546,
+          1.12002468109131,
+          1.0
+        ],
+        "max": [
+          0.496098905801773,
+          1.12002468109131,
+          0.5
+        ],
+        "min": [
+          -0.496098905801773,
+          0.0,
+          -0.5
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 12,
+      "post_load_orientation": 10,
+      "preview_bounds": {
+        "extent": [
+          0.992197871208191,
+          1.12002468109131,
+          1.00000023841858
+        ],
+        "max": [
+          0.496098935604095,
+          1.12002468109131,
+          0.500000178813934
+        ],
+        "min": [
+          -0.496098935604095,
+          0.0,
+          -0.500000059604645
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0000000298023223876953,
+        0.0,
+        0.000000178813934326172
+      ],
+      "preview_commit_min_delta": [
+        -0.0000000298023223876953,
+        0.0,
+        -0.0000000596046447753906
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_pub",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          1.0,
+          1.12002468109131,
+          0.992197811603546
+        ],
+        "max": [
+          0.5,
+          1.12002468109131,
+          0.496098905801773
+        ],
+        "min": [
+          -0.5,
+          0.0,
+          -0.496098905801773
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 12,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 22,
+      "degrees": 270,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 22,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          1.0,
+          1.12002468109131,
+          0.992197811603546
+        ],
+        "max": [
+          0.5,
+          1.12002468109131,
+          0.496098905801773
+        ],
+        "min": [
+          -0.5,
+          0.0,
+          -0.496098905801773
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 12,
+      "post_load_orientation": 22,
+      "preview_bounds": {
+        "extent": [
+          1.0,
+          1.12002468109131,
+          0.992197811603546
+        ],
+        "max": [
+          0.5,
+          1.12002468109131,
+          0.496098905801773
+        ],
+        "min": [
+          -0.5,
+          0.0,
+          -0.496098905801773
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "preview_commit_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_restaurant",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          0.911012351512909,
+          0.510174214839935,
+          1.0
+        ],
+        "max": [
+          0.455506145954132,
+          0.510174214839935,
+          0.5
+        ],
+        "min": [
+          -0.455506205558777,
+          0.0,
+          -0.5
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 13,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 0,
+      "degrees": 0,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 0,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          0.911012351512909,
+          0.510174214839935,
+          1.0
+        ],
+        "max": [
+          0.455506145954132,
+          0.510174214839935,
+          0.5
+        ],
+        "min": [
+          -0.455506205558777,
+          0.0,
+          -0.5
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 13,
+      "post_load_orientation": 0,
+      "preview_bounds": {
+        "extent": [
+          0.911012351512909,
+          0.510174214839935,
+          1.0
+        ],
+        "max": [
+          0.455506145954132,
+          0.510174214839935,
+          0.5
+        ],
+        "min": [
+          -0.455506205558777,
+          0.0,
+          -0.5
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "preview_commit_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_restaurant",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          1.0,
+          0.510174214839935,
+          0.911012351512909
+        ],
+        "max": [
+          0.5,
+          0.510174214839935,
+          0.455506205558777
+        ],
+        "min": [
+          -0.5,
+          0.0,
+          -0.455506145954132
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 13,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 16,
+      "degrees": 90,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 16,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          1.0,
+          0.510174214839935,
+          0.911012351512909
+        ],
+        "max": [
+          0.5,
+          0.510174214839935,
+          0.455506205558777
+        ],
+        "min": [
+          -0.5,
+          0.0,
+          -0.455506145954132
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 13,
+      "post_load_orientation": 16,
+      "preview_bounds": {
+        "extent": [
+          1.0,
+          0.510174214839935,
+          0.911012411117554
+        ],
+        "max": [
+          0.499999940395355,
+          0.510174214839935,
+          0.455506235361099
+        ],
+        "min": [
+          -0.500000059604645,
+          0.0,
+          -0.455506175756454
+        ]
+      },
+      "preview_commit_max_delta": [
+        -0.0000000596046447753906,
+        0.0,
+        0.0000000298023223876953
+      ],
+      "preview_commit_min_delta": [
+        -0.0000000596046447753906,
+        0.0,
+        -0.0000000298023223876953
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_restaurant",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          0.911012351512909,
+          0.510174214839935,
+          1.0
+        ],
+        "max": [
+          0.455506205558777,
+          0.510174214839935,
+          0.5
+        ],
+        "min": [
+          -0.455506145954132,
+          0.0,
+          -0.499999970197678
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 13,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 10,
+      "degrees": 180,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 10,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          0.911012351512909,
+          0.510174214839935,
+          1.0
+        ],
+        "max": [
+          0.455506205558777,
+          0.510174214839935,
+          0.5
+        ],
+        "min": [
+          -0.455506145954132,
+          0.0,
+          -0.499999970197678
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 13,
+      "post_load_orientation": 10,
+      "preview_bounds": {
+        "extent": [
+          0.911012411117554,
+          0.510174214839935,
+          1.00000011920929
+        ],
+        "max": [
+          0.455506235361099,
+          0.510174214839935,
+          0.500000059604645
+        ],
+        "min": [
+          -0.455506175756454,
+          0.0,
+          -0.500000059604645
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0000000298023223876953,
+        0.0,
+        0.0000000596046447753906
+      ],
+      "preview_commit_min_delta": [
+        -0.0000000298023223876953,
+        0.0,
+        -0.0000000894069671630859
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_restaurant",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          1.0,
+          0.510174214839935,
+          0.911012351512909
+        ],
+        "max": [
+          0.5,
+          0.510174214839935,
+          0.455506145954132
+        ],
+        "min": [
+          -0.499999970197678,
+          0.0,
+          -0.455506205558777
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 13,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 22,
+      "degrees": 270,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 22,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          1.0,
+          0.510174214839935,
+          0.911012351512909
+        ],
+        "max": [
+          0.5,
+          0.510174214839935,
+          0.455506145954132
+        ],
+        "min": [
+          -0.499999970197678,
+          0.0,
+          -0.455506205558777
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 13,
+      "post_load_orientation": 22,
+      "preview_bounds": {
+        "extent": [
+          1.0,
+          0.510174214839935,
+          0.911012351512909
+        ],
+        "max": [
+          0.5,
+          0.510174214839935,
+          0.455506145954132
+        ],
+        "min": [
+          -0.499999970197678,
+          0.0,
+          -0.455506205558777
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "preview_commit_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_small_a",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          0.873314619064331,
+          0.961277842521667,
+          1.0
+        ],
+        "max": [
+          0.436657309532166,
+          0.961277842521667,
+          0.5
+        ],
+        "min": [
+          -0.436657309532166,
+          0.0000000298023223876953,
+          -0.5
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 14,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 0,
+      "degrees": 0,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 0,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          0.873314619064331,
+          0.961277842521667,
+          1.0
+        ],
+        "max": [
+          0.436657309532166,
+          0.961277842521667,
+          0.5
+        ],
+        "min": [
+          -0.436657309532166,
+          0.0000000298023223876953,
+          -0.5
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 14,
+      "post_load_orientation": 0,
+      "preview_bounds": {
+        "extent": [
+          0.873314619064331,
+          0.961277842521667,
+          1.0
+        ],
+        "max": [
+          0.436657309532166,
+          0.961277842521667,
+          0.5
+        ],
+        "min": [
+          -0.436657309532166,
+          0.0000000298023223876953,
+          -0.5
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "preview_commit_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_small_a",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          1.0,
+          0.961277842521667,
+          0.873314619064331
+        ],
+        "max": [
+          0.5,
+          0.961277842521667,
+          0.436657309532166
+        ],
+        "min": [
+          -0.5,
+          0.0000000298023223876953,
+          -0.436657309532166
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 14,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 16,
+      "degrees": 90,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 16,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          1.0,
+          0.961277842521667,
+          0.873314619064331
+        ],
+        "max": [
+          0.5,
+          0.961277842521667,
+          0.436657309532166
+        ],
+        "min": [
+          -0.5,
+          0.0000000298023223876953,
+          -0.436657309532166
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 14,
+      "post_load_orientation": 16,
+      "preview_bounds": {
+        "extent": [
+          1.0,
+          0.961277842521667,
+          0.873314678668976
+        ],
+        "max": [
+          0.5,
+          0.961277842521667,
+          0.436657339334488
+        ],
+        "min": [
+          -0.5,
+          0.0000000298023223876953,
+          -0.436657339334488
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0,
+        0.0,
+        0.0000000298023223876953
+      ],
+      "preview_commit_min_delta": [
+        0.0,
+        0.0,
+        -0.0000000298023223876953
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_small_a",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          0.873314619064331,
+          0.961277842521667,
+          1.0
+        ],
+        "max": [
+          0.436657309532166,
+          0.961277842521667,
+          0.5
+        ],
+        "min": [
+          -0.436657309532166,
+          0.0000000298023223876953,
+          -0.5
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 14,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 10,
+      "degrees": 180,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 10,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          0.873314619064331,
+          0.961277842521667,
+          1.0
+        ],
+        "max": [
+          0.436657309532166,
+          0.961277842521667,
+          0.5
+        ],
+        "min": [
+          -0.436657309532166,
+          0.0000000298023223876953,
+          -0.5
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 14,
+      "post_load_orientation": 10,
+      "preview_bounds": {
+        "extent": [
+          0.873314678668976,
+          0.961277842521667,
+          1.00000011920929
+        ],
+        "max": [
+          0.436657339334488,
+          0.961277842521667,
+          0.500000059604645
+        ],
+        "min": [
+          -0.436657339334488,
+          0.0000000298023223876953,
+          -0.500000059604645
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0000000298023223876953,
+        0.0,
+        0.0000000596046447753906
+      ],
+      "preview_commit_min_delta": [
+        -0.0000000298023223876953,
+        0.0,
+        -0.0000000596046447753906
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_small_a",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          1.0,
+          0.961277842521667,
+          0.873314619064331
+        ],
+        "max": [
+          0.5,
+          0.961277842521667,
+          0.436657309532166
+        ],
+        "min": [
+          -0.5,
+          0.0000000298023223876953,
+          -0.436657309532166
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 14,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 22,
+      "degrees": 270,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 22,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          1.0,
+          0.961277842521667,
+          0.873314619064331
+        ],
+        "max": [
+          0.5,
+          0.961277842521667,
+          0.436657309532166
+        ],
+        "min": [
+          -0.5,
+          0.0000000298023223876953,
+          -0.436657309532166
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 14,
+      "post_load_orientation": 22,
+      "preview_bounds": {
+        "extent": [
+          1.0,
+          0.961277842521667,
+          0.873314619064331
+        ],
+        "max": [
+          0.5,
+          0.961277842521667,
+          0.436657309532166
+        ],
+        "min": [
+          -0.5,
+          0.0000000298023223876953,
+          -0.436657309532166
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "preview_commit_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_small_b",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          0.90194034576416,
+          1.00881862640381,
+          1.0
+        ],
+        "max": [
+          0.450970143079758,
+          1.00881862640381,
+          0.5
+        ],
+        "min": [
+          -0.450970202684402,
+          0.0,
+          -0.5
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 15,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 0,
+      "degrees": 0,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 0,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          0.90194034576416,
+          1.00881862640381,
+          1.0
+        ],
+        "max": [
+          0.450970143079758,
+          1.00881862640381,
+          0.5
+        ],
+        "min": [
+          -0.450970202684402,
+          0.0,
+          -0.5
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 15,
+      "post_load_orientation": 0,
+      "preview_bounds": {
+        "extent": [
+          0.90194034576416,
+          1.00881862640381,
+          1.0
+        ],
+        "max": [
+          0.450970143079758,
+          1.00881862640381,
+          0.5
+        ],
+        "min": [
+          -0.450970202684402,
+          0.0,
+          -0.5
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "preview_commit_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_small_b",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          1.0,
+          1.00881862640381,
+          0.90194034576416
+        ],
+        "max": [
+          0.5,
+          1.00881862640381,
+          0.45097017288208
+        ],
+        "min": [
+          -0.5,
+          0.0,
+          -0.45097017288208
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 15,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 16,
+      "degrees": 90,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 16,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          1.0,
+          1.00881862640381,
+          0.90194034576416
+        ],
+        "max": [
+          0.5,
+          1.00881862640381,
+          0.45097017288208
+        ],
+        "min": [
+          -0.5,
+          0.0,
+          -0.45097017288208
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 15,
+      "post_load_orientation": 16,
+      "preview_bounds": {
+        "extent": [
+          1.0,
+          1.00881862640381,
+          0.90194046497345
+        ],
+        "max": [
+          0.499999940395355,
+          1.00881862640381,
+          0.450970262289047
+        ],
+        "min": [
+          -0.500000059604645,
+          0.0,
+          -0.450970202684402
+        ]
+      },
+      "preview_commit_max_delta": [
+        -0.0000000596046447753906,
+        0.0,
+        0.0000000894069671630859
+      ],
+      "preview_commit_min_delta": [
+        -0.0000000596046447753906,
+        0.0,
+        -0.0000000298023223876953
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_small_b",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          0.90194034576416,
+          1.00881862640381,
+          1.0
+        ],
+        "max": [
+          0.45097017288208,
+          1.00881862640381,
+          0.5
+        ],
+        "min": [
+          -0.45097017288208,
+          0.0,
+          -0.499999970197678
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 15,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 10,
+      "degrees": 180,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 10,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          0.90194034576416,
+          1.00881862640381,
+          1.0
+        ],
+        "max": [
+          0.45097017288208,
+          1.00881862640381,
+          0.5
+        ],
+        "min": [
+          -0.45097017288208,
+          0.0,
+          -0.499999970197678
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 15,
+      "post_load_orientation": 10,
+      "preview_bounds": {
+        "extent": [
+          0.90194046497345,
+          1.00881862640381,
+          1.00000011920929
+        ],
+        "max": [
+          0.450970262289047,
+          1.00881862640381,
+          0.500000059604645
+        ],
+        "min": [
+          -0.450970202684402,
+          0.0,
+          -0.500000059604645
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0000000894069671630859,
+        0.0,
+        0.0000000596046447753906
+      ],
+      "preview_commit_min_delta": [
+        -0.0000000298023223876953,
+        0.0,
+        -0.0000000894069671630859
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_small_b",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          1.0,
+          1.00881862640381,
+          0.90194034576416
+        ],
+        "max": [
+          0.5,
+          1.00881862640381,
+          0.450970143079758
+        ],
+        "min": [
+          -0.499999970197678,
+          0.0,
+          -0.450970202684402
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 15,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 22,
+      "degrees": 270,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 22,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          1.0,
+          1.00881862640381,
+          0.90194034576416
+        ],
+        "max": [
+          0.5,
+          1.00881862640381,
+          0.450970143079758
+        ],
+        "min": [
+          -0.499999970197678,
+          0.0,
+          -0.450970202684402
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 15,
+      "post_load_orientation": 22,
+      "preview_bounds": {
+        "extent": [
+          1.0,
+          1.00881862640381,
+          0.90194034576416
+        ],
+        "max": [
+          0.5,
+          1.00881862640381,
+          0.450970143079758
+        ],
+        "min": [
+          -0.499999970197678,
+          0.0,
+          -0.450970202684402
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "preview_commit_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_small_c",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          2.0,
+          1.92566776275635,
+          1.75688314437866
+        ],
+        "max": [
+          1.5,
+          1.92566776275635,
+          1.37844157218933
+        ],
+        "min": [
+          -0.499999970197678,
+          0.0,
+          -0.378441601991653
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 16,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 0,
+      "degrees": 0,
+      "expected_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "expected_orientation": 0,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          2.0,
+          1.92566776275635,
+          1.75688314437866
+        ],
+        "max": [
+          1.5,
+          1.92566776275635,
+          1.37844157218933
+        ],
+        "min": [
+          -0.499999970197678,
+          0.0,
+          -0.378441601991653
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 16,
+      "post_load_orientation": 0,
+      "preview_bounds": {
+        "extent": [
+          2.0,
+          1.92566776275635,
+          1.75688314437866
+        ],
+        "max": [
+          1.5,
+          1.92566776275635,
+          1.37844157218933
+        ],
+        "min": [
+          -0.499999970197678,
+          0.0,
+          -0.378441601991653
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "preview_commit_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_small_c",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          1.75688314437866,
+          1.92566776275635,
+          2.0
+        ],
+        "max": [
+          1.37844157218933,
+          1.92566776275635,
+          0.5
+        ],
+        "min": [
+          -0.378441601991653,
+          0.0,
+          -1.5
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 16,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 16,
+      "degrees": 90,
+      "expected_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          -1
+        ]
+      ],
+      "expected_orientation": 16,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          1.75688314437866,
+          1.92566776275635,
+          2.0
+        ],
+        "max": [
+          1.37844157218933,
+          1.92566776275635,
+          0.5
+        ],
+        "min": [
+          -0.378441601991653,
+          0.0,
+          -1.5
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 16,
+      "post_load_orientation": 16,
+      "preview_bounds": {
+        "extent": [
+          1.75688326358795,
+          1.92566776275635,
+          2.0
+        ],
+        "max": [
+          1.37844157218933,
+          1.92566776275635,
+          0.5
+        ],
+        "min": [
+          -0.378441691398621,
+          0.0,
+          -1.5
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "preview_commit_min_delta": [
+        -0.0000000894069671630859,
+        0.0,
+        0.0
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_small_c",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          2.0,
+          1.92566776275635,
+          1.75688314437866
+        ],
+        "max": [
+          0.5,
+          1.92566776275635,
+          0.378441572189331
+        ],
+        "min": [
+          -1.5,
+          0.0,
+          -1.37844157218933
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 16,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 10,
+      "degrees": 180,
+      "expected_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          -1,
+          -1
+        ]
+      ],
+      "expected_orientation": 10,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          2.0,
+          1.92566776275635,
+          1.75688314437866
+        ],
+        "max": [
+          0.5,
+          1.92566776275635,
+          0.378441572189331
+        ],
+        "min": [
+          -1.5,
+          0.0,
+          -1.37844157218933
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 16,
+      "post_load_orientation": 10,
+      "preview_bounds": {
+        "extent": [
+          2.0,
+          1.92566776275635,
+          1.75688326358795
+        ],
+        "max": [
+          0.49999988079071,
+          1.92566776275635,
+          0.378441691398621
+        ],
+        "min": [
+          -1.50000011920929,
+          0.0,
+          -1.37844157218933
+        ]
+      },
+      "preview_commit_max_delta": [
+        -0.000000119209289550781,
+        0.0,
+        0.000000119209289550781
+      ],
+      "preview_commit_min_delta": [
+        -0.000000119209289550781,
+        0.0,
+        0.0
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_small_c",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          1.75688314437866,
+          1.92566776275635,
+          2.0
+        ],
+        "max": [
+          0.378441572189331,
+          1.92566776275635,
+          1.5
+        ],
+        "min": [
+          -1.37844157218933,
+          0.0,
+          -0.499999970197678
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 16,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 22,
+      "degrees": 270,
+      "expected_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          1
+        ]
+      ],
+      "expected_orientation": 22,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          1.75688314437866,
+          1.92566776275635,
+          2.0
+        ],
+        "max": [
+          0.378441572189331,
+          1.92566776275635,
+          1.5
+        ],
+        "min": [
+          -1.37844157218933,
+          0.0,
+          -0.499999970197678
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 16,
+      "post_load_orientation": 22,
+      "preview_bounds": {
+        "extent": [
+          1.75688314437866,
+          1.92566776275635,
+          2.0
+        ],
+        "max": [
+          0.378441572189331,
+          1.92566776275635,
+          1.5
+        ],
+        "min": [
+          -1.37844157218933,
+          0.0,
+          -0.499999970197678
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "preview_commit_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_small_d",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          1.0,
+          0.713360190391541,
+          0.846467018127441
+        ],
+        "max": [
+          0.5,
+          0.713360190391541,
+          0.423233538866043
+        ],
+        "min": [
+          -0.5,
+          0.0000000298023223876953,
+          -0.423233479261398
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 17,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 0,
+      "degrees": 0,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 0,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          1.0,
+          0.713360190391541,
+          0.846467018127441
+        ],
+        "max": [
+          0.5,
+          0.713360190391541,
+          0.423233538866043
+        ],
+        "min": [
+          -0.5,
+          0.0000000298023223876953,
+          -0.423233479261398
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 17,
+      "post_load_orientation": 0,
+      "preview_bounds": {
+        "extent": [
+          1.0,
+          0.713360190391541,
+          0.846467018127441
+        ],
+        "max": [
+          0.5,
+          0.713360190391541,
+          0.423233538866043
+        ],
+        "min": [
+          -0.5,
+          0.0000000298023223876953,
+          -0.423233479261398
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "preview_commit_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_small_d",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          0.846467018127441,
+          0.713360190391541,
+          1.0
+        ],
+        "max": [
+          0.423233538866043,
+          0.713360190391541,
+          0.5
+        ],
+        "min": [
+          -0.423233479261398,
+          0.0000000298023223876953,
+          -0.499999970197678
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 17,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 16,
+      "degrees": 90,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 16,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          0.846467018127441,
+          0.713360190391541,
+          1.0
+        ],
+        "max": [
+          0.423233538866043,
+          0.713360190391541,
+          0.5
+        ],
+        "min": [
+          -0.423233479261398,
+          0.0000000298023223876953,
+          -0.499999970197678
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 17,
+      "post_load_orientation": 16,
+      "preview_bounds": {
+        "extent": [
+          0.846467018127441,
+          0.713360190391541,
+          1.0
+        ],
+        "max": [
+          0.423233509063721,
+          0.713360190391541,
+          0.5
+        ],
+        "min": [
+          -0.423233509063721,
+          0.0000000298023223876953,
+          -0.499999970197678
+        ]
+      },
+      "preview_commit_max_delta": [
+        -0.0000000298023223876953,
+        0.0,
+        0.0
+      ],
+      "preview_commit_min_delta": [
+        -0.0000000298023223876953,
+        0.0,
+        0.0
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_small_d",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          1.0,
+          0.713360190391541,
+          0.846467018127441
+        ],
+        "max": [
+          0.5,
+          0.713360190391541,
+          0.423233509063721
+        ],
+        "min": [
+          -0.499999970197678,
+          0.0000000298023223876953,
+          -0.423233509063721
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 17,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 10,
+      "degrees": 180,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 10,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          1.0,
+          0.713360190391541,
+          0.846467018127441
+        ],
+        "max": [
+          0.5,
+          0.713360190391541,
+          0.423233509063721
+        ],
+        "min": [
+          -0.499999970197678,
+          0.0000000298023223876953,
+          -0.423233509063721
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 17,
+      "post_load_orientation": 10,
+      "preview_bounds": {
+        "extent": [
+          1.0,
+          0.713360190391541,
+          0.846467018127441
+        ],
+        "max": [
+          0.499999940395355,
+          0.713360190391541,
+          0.423233479261398
+        ],
+        "min": [
+          -0.500000059604645,
+          0.0000000298023223876953,
+          -0.423233538866043
+        ]
+      },
+      "preview_commit_max_delta": [
+        -0.0000000596046447753906,
+        0.0,
+        -0.0000000298023223876953
+      ],
+      "preview_commit_min_delta": [
+        -0.0000000894069671630859,
+        0.0,
+        -0.0000000298023223876953
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_small_d",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          0.846467018127441,
+          0.713360190391541,
+          1.0
+        ],
+        "max": [
+          0.423233509063721,
+          0.713360190391541,
+          0.5
+        ],
+        "min": [
+          -0.423233509063721,
+          0.0000000298023223876953,
+          -0.5
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 17,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 22,
+      "degrees": 270,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 22,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          0.846467018127441,
+          0.713360190391541,
+          1.0
+        ],
+        "max": [
+          0.423233509063721,
+          0.713360190391541,
+          0.5
+        ],
+        "min": [
+          -0.423233509063721,
+          0.0000000298023223876953,
+          -0.5
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 17,
+      "post_load_orientation": 22,
+      "preview_bounds": {
+        "extent": [
+          0.846467018127441,
+          0.713360190391541,
+          1.0
+        ],
+        "max": [
+          0.423233509063721,
+          0.713360190391541,
+          0.5
+        ],
+        "min": [
+          -0.423233509063721,
+          0.0000000298023223876953,
+          -0.5
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "preview_commit_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_theatre",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          0.644727945327759,
+          0.531639695167542,
+          1.0
+        ],
+        "max": [
+          0.322364002466202,
+          0.531639695167542,
+          0.5
+        ],
+        "min": [
+          -0.322363942861557,
+          0.0,
+          -0.5
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 18,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 0,
+      "degrees": 0,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 0,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          0.644727945327759,
+          0.531639695167542,
+          1.0
+        ],
+        "max": [
+          0.322364002466202,
+          0.531639695167542,
+          0.5
+        ],
+        "min": [
+          -0.322363942861557,
+          0.0,
+          -0.5
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 18,
+      "post_load_orientation": 0,
+      "preview_bounds": {
+        "extent": [
+          0.644727945327759,
+          0.531639695167542,
+          1.0
+        ],
+        "max": [
+          0.322364002466202,
+          0.531639695167542,
+          0.5
+        ],
+        "min": [
+          -0.322363942861557,
+          0.0,
+          -0.5
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "preview_commit_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_theatre",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          1.0,
+          0.531639695167542,
+          0.644727945327759
+        ],
+        "max": [
+          0.5,
+          0.531639695167542,
+          0.322363942861557
+        ],
+        "min": [
+          -0.5,
+          0.0,
+          -0.322364002466202
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 18,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 16,
+      "degrees": 90,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 16,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          1.0,
+          0.531639695167542,
+          0.644727945327759
+        ],
+        "max": [
+          0.5,
+          0.531639695167542,
+          0.322363942861557
+        ],
+        "min": [
+          -0.5,
+          0.0,
+          -0.322364002466202
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 18,
+      "post_load_orientation": 16,
+      "preview_bounds": {
+        "extent": [
+          1.0,
+          0.531639695167542,
+          0.644728004932404
+        ],
+        "max": [
+          0.5,
+          0.531639695167542,
+          0.322363972663879
+        ],
+        "min": [
+          -0.5,
+          0.0,
+          -0.322364032268524
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0,
+        0.0,
+        0.0000000298023223876953
+      ],
+      "preview_commit_min_delta": [
+        0.0,
+        0.0,
+        -0.0000000298023223876953
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_theatre",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          0.644727945327759,
+          0.531639695167542,
+          1.0
+        ],
+        "max": [
+          0.322363942861557,
+          0.531639695167542,
+          0.5
+        ],
+        "min": [
+          -0.322364002466202,
+          0.0,
+          -0.5
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 18,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 10,
+      "degrees": 180,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 10,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          0.644727945327759,
+          0.531639695167542,
+          1.0
+        ],
+        "max": [
+          0.322363942861557,
+          0.531639695167542,
+          0.5
+        ],
+        "min": [
+          -0.322364002466202,
+          0.0,
+          -0.5
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 18,
+      "post_load_orientation": 10,
+      "preview_bounds": {
+        "extent": [
+          0.644728004932404,
+          0.531639695167542,
+          1.0
+        ],
+        "max": [
+          0.322363972663879,
+          0.531639695167542,
+          0.5
+        ],
+        "min": [
+          -0.322364032268524,
+          0.0,
+          -0.5
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0000000298023223876953,
+        0.0,
+        0.0
+      ],
+      "preview_commit_min_delta": [
+        -0.0000000298023223876953,
+        0.0,
+        0.0
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_theatre",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          1.0,
+          0.531639695167542,
+          0.644727945327759
+        ],
+        "max": [
+          0.5,
+          0.531639695167542,
+          0.322364002466202
+        ],
+        "min": [
+          -0.5,
+          0.0,
+          -0.322363942861557
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 18,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 22,
+      "degrees": 270,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 22,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          1.0,
+          0.531639695167542,
+          0.644727945327759
+        ],
+        "max": [
+          0.5,
+          0.531639695167542,
+          0.322364002466202
+        ],
+        "min": [
+          -0.5,
+          0.0,
+          -0.322363942861557
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 18,
+      "post_load_orientation": 22,
+      "preview_bounds": {
+        "extent": [
+          1.0,
+          0.531639695167542,
+          0.644727945327759
+        ],
+        "max": [
+          0.5,
+          0.531639695167542,
+          0.322364002466202
+        ],
+        "min": [
+          -0.5,
+          0.0,
+          -0.322363942861557
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "preview_commit_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_town_hall",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          2.0,
+          1.78642201423645,
+          1.10021471977234
+        ],
+        "max": [
+          1.5,
+          1.78642201423645,
+          1.05010735988617
+        ],
+        "min": [
+          -0.5,
+          -0.0000000596046447753906,
+          -0.0501073598861694
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 19,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 0,
+      "degrees": 0,
+      "expected_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "expected_orientation": 0,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          2.0,
+          1.78642201423645,
+          1.10021471977234
+        ],
+        "max": [
+          1.5,
+          1.78642201423645,
+          1.05010735988617
+        ],
+        "min": [
+          -0.5,
+          -0.0000000596046447753906,
+          -0.0501073598861694
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 19,
+      "post_load_orientation": 0,
+      "preview_bounds": {
+        "extent": [
+          2.0,
+          1.78642201423645,
+          1.10021471977234
+        ],
+        "max": [
+          1.5,
+          1.78642201423645,
+          1.05010735988617
+        ],
+        "min": [
+          -0.5,
+          -0.0000000596046447753906,
+          -0.0501073598861694
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "preview_commit_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_town_hall",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          1.10021471977234,
+          1.78642201423645,
+          2.0
+        ],
+        "max": [
+          1.05010735988617,
+          1.78642201423645,
+          0.5
+        ],
+        "min": [
+          -0.0501073598861694,
+          -0.0000000596046447753906,
+          -1.5
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 19,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 16,
+      "degrees": 90,
+      "expected_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          -1
+        ]
+      ],
+      "expected_orientation": 16,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          1.10021471977234,
+          1.78642201423645,
+          2.0
+        ],
+        "max": [
+          1.05010735988617,
+          1.78642201423645,
+          0.5
+        ],
+        "min": [
+          -0.0501073598861694,
+          -0.0000000596046447753906,
+          -1.5
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 19,
+      "post_load_orientation": 16,
+      "preview_bounds": {
+        "extent": [
+          1.10021495819092,
+          1.78642201423645,
+          2.0
+        ],
+        "max": [
+          1.05010747909546,
+          1.78642201423645,
+          0.49999988079071
+        ],
+        "min": [
+          -0.0501074194908142,
+          -0.0000000596046447753906,
+          -1.50000011920929
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.000000119209289550781,
+        0.0,
+        -0.000000119209289550781
+      ],
+      "preview_commit_min_delta": [
+        -0.0000000596046447753906,
+        0.0,
+        -0.000000119209289550781
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_town_hall",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          2.0,
+          1.78642201423645,
+          1.10021471977234
+        ],
+        "max": [
+          0.5,
+          1.78642201423645,
+          0.0501073598861694
+        ],
+        "min": [
+          -1.5,
+          -0.0000000596046447753906,
+          -1.05010735988617
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 19,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 10,
+      "degrees": 180,
+      "expected_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          -1,
+          -1
+        ]
+      ],
+      "expected_orientation": 10,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          2.0,
+          1.78642201423645,
+          1.10021471977234
+        ],
+        "max": [
+          0.5,
+          1.78642201423645,
+          0.0501073598861694
+        ],
+        "min": [
+          -1.5,
+          -0.0000000596046447753906,
+          -1.05010735988617
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 19,
+      "post_load_orientation": 10,
+      "preview_bounds": {
+        "extent": [
+          2.0,
+          1.78642201423645,
+          1.10021483898163
+        ],
+        "max": [
+          0.49999988079071,
+          1.78642201423645,
+          0.050107479095459
+        ],
+        "min": [
+          -1.50000011920929,
+          -0.0000000596046447753906,
+          -1.05010735988617
+        ]
+      },
+      "preview_commit_max_delta": [
+        -0.000000119209289550781,
+        0.0,
+        0.000000119209289550781
+      ],
+      "preview_commit_min_delta": [
+        -0.000000119209289550781,
+        0.0,
+        0.0
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_town_hall",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          1.10021471977234,
+          1.78642201423645,
+          2.0
+        ],
+        "max": [
+          0.0501073598861694,
+          1.78642201423645,
+          1.5
+        ],
+        "min": [
+          -1.05010735988617,
+          -0.0000000596046447753906,
+          -0.5
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 19,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 22,
+      "degrees": 270,
+      "expected_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          1
+        ]
+      ],
+      "expected_orientation": 22,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          1.10021471977234,
+          1.78642201423645,
+          2.0
+        ],
+        "max": [
+          0.0501073598861694,
+          1.78642201423645,
+          1.5
+        ],
+        "min": [
+          -1.05010735988617,
+          -0.0000000596046447753906,
+          -0.5
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 19,
+      "post_load_orientation": 22,
+      "preview_bounds": {
+        "extent": [
+          1.10021471977234,
+          1.78642201423645,
+          2.0
+        ],
+        "max": [
+          0.0501073598861694,
+          1.78642201423645,
+          1.5
+        ],
+        "min": [
+          -1.05010735988617,
+          -0.0000000596046447753906,
+          -0.5
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "preview_commit_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_windmill",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          1.0,
+          0.996703505516052,
+          0.934526205062866
+        ],
+        "max": [
+          0.5,
+          0.996703505516052,
+          0.467263102531433
+        ],
+        "min": [
+          -0.5,
+          -0.0000000298023223876953,
+          -0.467263102531433
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 20,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 0,
+      "degrees": 0,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 0,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          1.0,
+          0.996703505516052,
+          0.934526205062866
+        ],
+        "max": [
+          0.5,
+          0.996703505516052,
+          0.467263102531433
+        ],
+        "min": [
+          -0.5,
+          -0.0000000298023223876953,
+          -0.467263102531433
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 20,
+      "post_load_orientation": 0,
+      "preview_bounds": {
+        "extent": [
+          1.0,
+          0.996703505516052,
+          0.934526205062866
+        ],
+        "max": [
+          0.5,
+          0.996703505516052,
+          0.467263102531433
+        ],
+        "min": [
+          -0.5,
+          -0.0000000298023223876953,
+          -0.467263102531433
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "preview_commit_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_windmill",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          0.934526205062866,
+          0.996703505516052,
+          1.0
+        ],
+        "max": [
+          0.467263102531433,
+          0.996703505516052,
+          0.5
+        ],
+        "min": [
+          -0.467263102531433,
+          -0.0000000298023223876953,
+          -0.5
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 20,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 16,
+      "degrees": 90,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 16,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          0.934526205062866,
+          0.996703505516052,
+          1.0
+        ],
+        "max": [
+          0.467263102531433,
+          0.996703505516052,
+          0.5
+        ],
+        "min": [
+          -0.467263102531433,
+          -0.0000000298023223876953,
+          -0.5
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 20,
+      "post_load_orientation": 16,
+      "preview_bounds": {
+        "extent": [
+          0.934526264667511,
+          0.996703505516052,
+          1.0
+        ],
+        "max": [
+          0.467263132333755,
+          0.996703505516052,
+          0.5
+        ],
+        "min": [
+          -0.467263132333755,
+          -0.0000000298023223876953,
+          -0.5
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0000000298023223876953,
+        0.0,
+        0.0
+      ],
+      "preview_commit_min_delta": [
+        -0.0000000298023223876953,
+        0.0,
+        0.0
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_windmill",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          1.0,
+          0.996703505516052,
+          0.934526205062866
+        ],
+        "max": [
+          0.5,
+          0.996703505516052,
+          0.467263102531433
+        ],
+        "min": [
+          -0.5,
+          -0.0000000298023223876953,
+          -0.467263102531433
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 20,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 10,
+      "degrees": 180,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 10,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          1.0,
+          0.996703505516052,
+          0.934526205062866
+        ],
+        "max": [
+          0.5,
+          0.996703505516052,
+          0.467263102531433
+        ],
+        "min": [
+          -0.5,
+          -0.0000000298023223876953,
+          -0.467263102531433
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 20,
+      "post_load_orientation": 10,
+      "preview_bounds": {
+        "extent": [
+          1.00000011920929,
+          0.996703505516052,
+          0.934526264667511
+        ],
+        "max": [
+          0.500000059604645,
+          0.996703505516052,
+          0.467263132333755
+        ],
+        "min": [
+          -0.500000059604645,
+          -0.0000000298023223876953,
+          -0.467263132333755
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0000000596046447753906,
+        0.0,
+        0.0000000298023223876953
+      ],
+      "preview_commit_min_delta": [
+        -0.0000000596046447753906,
+        0.0,
+        -0.0000000298023223876953
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "building_windmill",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          0.934526205062866,
+          0.996703505516052,
+          1.0
+        ],
+        "max": [
+          0.467263102531433,
+          0.996703505516052,
+          0.5
+        ],
+        "min": [
+          -0.467263102531433,
+          -0.0000000298023223876953,
+          -0.5
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 20,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 22,
+      "degrees": 270,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 22,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          0.934526205062866,
+          0.996703505516052,
+          1.0
+        ],
+        "max": [
+          0.467263102531433,
+          0.996703505516052,
+          0.5
+        ],
+        "min": [
+          -0.467263102531433,
+          -0.0000000298023223876953,
+          -0.5
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 20,
+      "post_load_orientation": 22,
+      "preview_bounds": {
+        "extent": [
+          0.934526205062866,
+          0.996703505516052,
+          1.0
+        ],
+        "max": [
+          0.467263102531433,
+          0.996703505516052,
+          0.5
+        ],
+        "min": [
+          -0.467263102531433,
+          -0.0000000298023223876953,
+          -0.5
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "preview_commit_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "grass_trees_tall",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          1.0,
+          0.752379238605499,
+          0.821736335754395
+        ],
+        "max": [
+          0.5,
+          0.752379238605499,
+          0.41086819767952
+        ],
+        "min": [
+          -0.5,
+          0.0,
+          -0.410868138074875
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 23,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 0,
+      "degrees": 0,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 0,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          1.0,
+          0.752379238605499,
+          0.821736335754395
+        ],
+        "max": [
+          0.5,
+          0.752379238605499,
+          0.41086819767952
+        ],
+        "min": [
+          -0.5,
+          0.0,
+          -0.410868138074875
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 23,
+      "post_load_orientation": 0,
+      "preview_bounds": {
+        "extent": [
+          1.0,
+          0.752379238605499,
+          0.821736335754395
+        ],
+        "max": [
+          0.5,
+          0.752379238605499,
+          0.41086819767952
+        ],
+        "min": [
+          -0.5,
+          0.0,
+          -0.410868138074875
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "preview_commit_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "grass_trees_tall",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          0.821736335754395,
+          0.752379238605499,
+          1.0
+        ],
+        "max": [
+          0.41086819767952,
+          0.752379238605499,
+          0.5
+        ],
+        "min": [
+          -0.410868138074875,
+          0.0,
+          -0.499999970197678
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 23,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 16,
+      "degrees": 90,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 16,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          0.821736335754395,
+          0.752379238605499,
+          1.0
+        ],
+        "max": [
+          0.41086819767952,
+          0.752379238605499,
+          0.5
+        ],
+        "min": [
+          -0.410868138074875,
+          0.0,
+          -0.499999970197678
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 23,
+      "post_load_orientation": 16,
+      "preview_bounds": {
+        "extent": [
+          0.821736335754395,
+          0.752379238605499,
+          1.0
+        ],
+        "max": [
+          0.410868167877197,
+          0.752379238605499,
+          0.5
+        ],
+        "min": [
+          -0.410868167877197,
+          0.0,
+          -0.499999970197678
+        ]
+      },
+      "preview_commit_max_delta": [
+        -0.0000000298023223876953,
+        0.0,
+        0.0
+      ],
+      "preview_commit_min_delta": [
+        -0.0000000298023223876953,
+        0.0,
+        0.0
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "grass_trees_tall",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          1.0,
+          0.752379238605499,
+          0.821736335754395
+        ],
+        "max": [
+          0.5,
+          0.752379238605499,
+          0.410868167877197
+        ],
+        "min": [
+          -0.499999970197678,
+          0.0,
+          -0.410868167877197
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 23,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 10,
+      "degrees": 180,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 10,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          1.0,
+          0.752379238605499,
+          0.821736335754395
+        ],
+        "max": [
+          0.5,
+          0.752379238605499,
+          0.410868167877197
+        ],
+        "min": [
+          -0.499999970197678,
+          0.0,
+          -0.410868167877197
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 23,
+      "post_load_orientation": 10,
+      "preview_bounds": {
+        "extent": [
+          1.0,
+          0.752379238605499,
+          0.821736335754395
+        ],
+        "max": [
+          0.5,
+          0.752379238605499,
+          0.410868138074875
+        ],
+        "min": [
+          -0.5,
+          0.0,
+          -0.41086819767952
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0,
+        0.0,
+        -0.0000000298023223876953
+      ],
+      "preview_commit_min_delta": [
+        -0.0000000298023223876953,
+        0.0,
+        -0.0000000298023223876953
+      ],
+      "save_status": "applied"
+    },
+    {
+      "aligned": true,
+      "building_id": "grass_trees_tall",
+      "clear_ok": true,
+      "commit_bounds": {
+        "extent": [
+          0.821736335754395,
+          0.752379238605499,
+          1.0
+        ],
+        "max": [
+          0.410868167877197,
+          0.752379238605499,
+          0.5
+        ],
+        "min": [
+          -0.410868167877197,
+          0.0,
+          -0.5
+        ]
+      },
+      "commit_cells_ok": true,
+      "commit_ground_ok": true,
+      "commit_item": 23,
+      "commit_load_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_load_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "commit_orientation": 22,
+      "degrees": 270,
+      "expected_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected_orientation": 22,
+      "load_status": "applied",
+      "post_load_bounds": {
+        "extent": [
+          0.821736335754395,
+          0.752379238605499,
+          1.0
+        ],
+        "max": [
+          0.410868167877197,
+          0.752379238605499,
+          0.5
+        ],
+        "min": [
+          -0.410868167877197,
+          0.0,
+          -0.5
+        ]
+      },
+      "post_load_cells_ok": true,
+      "post_load_ground_ok": true,
+      "post_load_item": 23,
+      "post_load_orientation": 22,
+      "preview_bounds": {
+        "extent": [
+          0.821736335754395,
+          0.752379238605499,
+          1.0
+        ],
+        "max": [
+          0.410868167877197,
+          0.752379238605499,
+          0.5
+        ],
+        "min": [
+          -0.410868167877197,
+          0.0,
+          -0.5
+        ]
+      },
+      "preview_commit_max_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "preview_commit_min_delta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "save_status": "applied"
+    }
+  ],
+  "save_path": "user://feature020/alignment-roundtrip.tres",
+  "schema_version": 2,
+  "success": true,
+  "tolerance": 0.0001
+}

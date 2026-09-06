@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "feature": "019-opening-playtest-polish",
+  "driver": "res://test/integration/opening_tutorial/opening_tutorial_builder_save_load_fixtures.gd",
+  "scenario_id": "first_town/opening_balance",
+  "seed": 19019,
+  "godot": "4.6.2.stable.official.71f334935",
+  "success": true,
+  "cases": {
+    "incomplete_nine": {
+      "road_count": 9,
+      "saved_structure_count": 10,
+      "loaded_structure_count": 10,
+      "registry_count_after_load": 10,
+      "rooted_road_count_after_load": 9,
+      "persisted_had_road_receipt": false,
+      "loaded_has_road_receipt": false,
+      "loaded_step_id": "connect_rooted_roads",
+      "road_receipt_count": -1,
+      "projection_progress": {
+        "current": 9,
+        "required": 10,
+        "unit": "road_cells"
+      }
+    },
+    "incomplete_ten": {
+      "road_count": 10,
+      "saved_structure_count": 11,
+      "loaded_structure_count": 11,
+      "registry_count_after_load": 11,
+      "rooted_road_count_after_load": 10,
+      "persisted_had_road_receipt": false,
+      "loaded_has_road_receipt": true,
+      "loaded_step_id": "establish_nature",
+      "road_receipt_count": 10,
+      "projection_progress": {
+        "current": 0,
+        "required": 2,
+        "unit": "distinct_building_ids"
+      }
+    },
+    "legacy_four": {
+      "road_count": 4,
+      "saved_structure_count": 5,
+      "loaded_structure_count": 5,
+      "registry_count_after_load": 5,
+      "rooted_road_count_after_load": 4,
+      "persisted_had_road_receipt": true,
+      "loaded_has_road_receipt": true,
+      "loaded_step_id": "establish_nature",
+      "road_receipt_count": 4,
+      "projection_progress": {
+        "current": 0,
+        "required": 2,
+        "unit": "distinct_building_ids"
+      }
+    },
+    "legacy_non_anchor_home": {
+      "saved_structure_count": 2,
+      "loaded_structure_count": 2,
+      "migrated_saved_structure_count": 2,
+      "second_loaded_structure_count": 2,
+      "persisted_had_home_baselines": false,
+      "loaded_home_baseline_count": 1,
+      "backfilled_other_home": true,
+      "persisted_anchor_baseline_preserved": true,
+      "anchor_fixture_detects_overwrite": true,
+      "first_load_score_exact": true,
+      "first_load_rebound_score_exact": true,
+      "migrated_score_persisted": true,
+      "second_load_score_exact": true,
+      "second_load_rebound_score_exact": true,
+      "selected_anchor": {
+        "x": 1,
+        "z": 0
+      },
+      "adjacent_anchor": {
+        "x": 2,
+        "z": 0
+      },
+      "adjacency_result": "penalty_observed",
+      "expected_adjacency_result": "penalty_observed",
+      "adjacency_home_delta": -10,
+      "expected_home_delta": -10,
+      "adjacency_city_delta": -30,
+      "expected_city_delta": -30,
+      "adjacency_receipt_present": true,
+      "registry_count_after_new_home": 3
+    }
+  },
+  "legacy_plain_grass": {
+    "verified_by": "res://scripts/run_opening_tutorial_scenario.gd",
+    "seed": 12012,
+    "catalogue_identity": true,
+    "inspection_and_demolition": true
+  },
+  "failures": []
+}

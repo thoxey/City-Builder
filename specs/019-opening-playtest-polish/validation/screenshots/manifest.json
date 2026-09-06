@@ -1,0 +1,874 @@
+{
+  "capture_source": "real main scene, authoritative runtime projections and committed commands",
+  "captures": [
+    {
+      "dashboard_clearance_px": 295.0,
+      "dashboard_rect": {
+        "height": 898.0,
+        "width": 380.0,
+        "x": 1540.0,
+        "y": 90.0
+      },
+      "expected_panel_visible": false,
+      "file": "1280x720-unchanged-hidden.png",
+      "guidance_clearance_px": 111.0,
+      "guidance_rect": {
+        "height": 176.0,
+        "width": 540.0,
+        "x": 24.0,
+        "y": 750.0
+      },
+      "guidance_visible": true,
+      "panel_rect": {
+        "height": 72.0,
+        "width": 570.0,
+        "x": 675.0,
+        "y": 792.0
+      },
+      "panel_visible": false,
+      "quote_reason": "",
+      "quote_status": "valid",
+      "rows": [],
+      "source": "real_main_scene",
+      "state": "unchanged-hidden",
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "dashboard_clearance_px": 295.0,
+      "dashboard_rect": {
+        "height": 898.0,
+        "width": 380.0,
+        "x": 1540.0,
+        "y": 90.0
+      },
+      "expected_panel_visible": false,
+      "file": "1920x1080-unchanged-hidden.png",
+      "guidance_clearance_px": 111.0,
+      "guidance_rect": {
+        "height": 176.0,
+        "width": 540.0,
+        "x": 24.0,
+        "y": 750.0
+      },
+      "guidance_visible": true,
+      "panel_rect": {
+        "height": 72.0,
+        "width": 570.0,
+        "x": 675.0,
+        "y": 792.0
+      },
+      "panel_visible": false,
+      "quote_reason": "",
+      "quote_status": "valid",
+      "rows": [],
+      "source": "real_main_scene",
+      "state": "unchanged-hidden",
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "dashboard_clearance_px": 295.0,
+      "dashboard_rect": {
+        "height": 898.0,
+        "width": 380.0,
+        "x": 1540.0,
+        "y": 90.0
+      },
+      "expected_panel_visible": true,
+      "file": "1280x720-changed.png",
+      "guidance_clearance_px": 111.0,
+      "guidance_rect": {
+        "height": 176.0,
+        "width": 540.0,
+        "x": 24.0,
+        "y": 750.0
+      },
+      "guidance_visible": true,
+      "panel_rect": {
+        "height": 72.0,
+        "width": 570.0,
+        "x": 675.0,
+        "y": 792.0
+      },
+      "panel_visible": true,
+      "quote_reason": "",
+      "quote_status": "valid",
+      "rows": [
+        "Town appeal +20.0 across 1 tile"
+      ],
+      "source": "real_main_scene",
+      "state": "changed",
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "dashboard_clearance_px": 295.0,
+      "dashboard_rect": {
+        "height": 898.0,
+        "width": 380.0,
+        "x": 1540.0,
+        "y": 90.0
+      },
+      "expected_panel_visible": true,
+      "file": "1920x1080-changed.png",
+      "guidance_clearance_px": 111.0,
+      "guidance_rect": {
+        "height": 176.0,
+        "width": 540.0,
+        "x": 24.0,
+        "y": 750.0
+      },
+      "guidance_visible": true,
+      "panel_rect": {
+        "height": 72.0,
+        "width": 570.0,
+        "x": 675.0,
+        "y": 792.0
+      },
+      "panel_visible": true,
+      "quote_reason": "",
+      "quote_status": "valid",
+      "rows": [
+        "Town appeal +20.0 across 1 tile"
+      ],
+      "source": "real_main_scene",
+      "state": "changed",
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "dashboard_clearance_px": 295.0,
+      "dashboard_rect": {
+        "height": 898.0,
+        "width": 380.0,
+        "x": 1540.0,
+        "y": 90.0
+      },
+      "expected_panel_visible": true,
+      "file": "1280x720-invalid.png",
+      "guidance_clearance_px": 111.0,
+      "guidance_rect": {
+        "height": 176.0,
+        "width": 540.0,
+        "x": 24.0,
+        "y": 750.0
+      },
+      "guidance_visible": true,
+      "panel_rect": {
+        "height": 72.0,
+        "width": 570.0,
+        "x": 675.0,
+        "y": 792.0
+      },
+      "panel_visible": true,
+      "quote_reason": "outside_buildable_area",
+      "quote_status": "invalid",
+      "rows": [
+        "Blocked — Outside Buildable Area"
+      ],
+      "source": "real_main_scene",
+      "state": "invalid",
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "dashboard_clearance_px": 295.0,
+      "dashboard_rect": {
+        "height": 898.0,
+        "width": 380.0,
+        "x": 1540.0,
+        "y": 90.0
+      },
+      "expected_panel_visible": true,
+      "file": "1920x1080-invalid.png",
+      "guidance_clearance_px": 111.0,
+      "guidance_rect": {
+        "height": 176.0,
+        "width": 540.0,
+        "x": 24.0,
+        "y": 750.0
+      },
+      "guidance_visible": true,
+      "panel_rect": {
+        "height": 72.0,
+        "width": 570.0,
+        "x": 675.0,
+        "y": 792.0
+      },
+      "panel_visible": true,
+      "quote_reason": "outside_buildable_area",
+      "quote_status": "invalid",
+      "rows": [
+        "Blocked — Outside Buildable Area"
+      ],
+      "source": "real_main_scene",
+      "state": "invalid",
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "dashboard_clearance_px": 295.0,
+      "dashboard_rect": {
+        "height": 898.0,
+        "width": 380.0,
+        "x": 1540.0,
+        "y": 90.0
+      },
+      "expected_panel_visible": true,
+      "file": "1280x720-replacement.png",
+      "guidance_clearance_px": 111.0,
+      "guidance_rect": {
+        "height": 176.0,
+        "width": 540.0,
+        "x": 24.0,
+        "y": 750.0
+      },
+      "guidance_visible": true,
+      "panel_rect": {
+        "height": 94.0,
+        "width": 570.0,
+        "x": 675.0,
+        "y": 770.0
+      },
+      "panel_visible": true,
+      "quote_reason": "",
+      "quote_status": "replacement",
+      "rows": [
+        "Replacement — removes 1 building after confirmation",
+        "Town appeal +30.0 across 1 tile"
+      ],
+      "source": "real_main_scene",
+      "state": "replacement",
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "dashboard_clearance_px": 295.0,
+      "dashboard_rect": {
+        "height": 898.0,
+        "width": 380.0,
+        "x": 1540.0,
+        "y": 90.0
+      },
+      "expected_panel_visible": true,
+      "file": "1920x1080-replacement.png",
+      "guidance_clearance_px": 111.0,
+      "guidance_rect": {
+        "height": 176.0,
+        "width": 540.0,
+        "x": 24.0,
+        "y": 750.0
+      },
+      "guidance_visible": true,
+      "panel_rect": {
+        "height": 94.0,
+        "width": 570.0,
+        "x": 675.0,
+        "y": 770.0
+      },
+      "panel_visible": true,
+      "quote_reason": "",
+      "quote_status": "replacement",
+      "rows": [
+        "Replacement — removes 1 building after confirmation",
+        "Town appeal +30.0 across 1 tile"
+      ],
+      "source": "real_main_scene",
+      "state": "replacement",
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "dashboard_clearance_px": 295.0,
+      "dashboard_rect": {
+        "height": 898.0,
+        "width": 380.0,
+        "x": 1540.0,
+        "y": 90.0
+      },
+      "expected_panel_visible": true,
+      "file": "1280x720-uncertain.png",
+      "guidance_clearance_px": 111.0,
+      "guidance_rect": {
+        "height": 176.0,
+        "width": 540.0,
+        "x": 24.0,
+        "y": 750.0
+      },
+      "guidance_visible": true,
+      "panel_rect": {
+        "height": 72.0,
+        "width": 570.0,
+        "x": 675.0,
+        "y": 792.0
+      },
+      "panel_visible": true,
+      "quote_reason": "",
+      "quote_status": "valid",
+      "rows": [
+        "Network changes settle after placement"
+      ],
+      "source": "real_main_scene",
+      "state": "uncertain",
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "dashboard_clearance_px": 295.0,
+      "dashboard_rect": {
+        "height": 898.0,
+        "width": 380.0,
+        "x": 1540.0,
+        "y": 90.0
+      },
+      "expected_panel_visible": true,
+      "file": "1920x1080-uncertain.png",
+      "guidance_clearance_px": 111.0,
+      "guidance_rect": {
+        "height": 176.0,
+        "width": 540.0,
+        "x": 24.0,
+        "y": 750.0
+      },
+      "guidance_visible": true,
+      "panel_rect": {
+        "height": 72.0,
+        "width": 570.0,
+        "x": 675.0,
+        "y": 792.0
+      },
+      "panel_visible": true,
+      "quote_reason": "",
+      "quote_status": "valid",
+      "rows": [
+        "Network changes settle after placement"
+      ],
+      "source": "real_main_scene",
+      "state": "uncertain",
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "dashboard_clearance_px": 295.0,
+      "dashboard_rect": {
+        "height": 898.0,
+        "width": 380.0,
+        "x": 1540.0,
+        "y": 90.0
+      },
+      "file": "1280x720-ten-rooted-roads.png",
+      "guidance_clearance_px": 111.0,
+      "guidance_model": {
+        "beat_id": "B03",
+        "blocker": null,
+        "expression": "thoughtful",
+        "kind": "opening_tutorial",
+        "portrait_path": "res://data/characters/ambrose/expressions/line_art/thoughtful.png",
+        "portrait_source": "semantic_expression",
+        "progress": {
+          "current": 0,
+          "required": 2,
+          "unit": "distinct_building_ids"
+        },
+        "speaker_id": "ambrose",
+        "speaker_name": "Ambrose",
+        "status": "active",
+        "target_id": "opening_tutorial|establish_nature|B03|default",
+        "target_label": "",
+        "text": "AMBROSE PLACEHOLDER: tell the player to place two different kinds of nature",
+        "tutorial_step_id": "establish_nature"
+      },
+      "guidance_rect": {
+        "height": 176.0,
+        "width": 540.0,
+        "x": 24.0,
+        "y": 750.0
+      },
+      "guidance_visible": true,
+      "panel_rect": {
+        "height": 72.0,
+        "width": 570.0,
+        "x": 675.0,
+        "y": 792.0
+      },
+      "panel_visible": false,
+      "projection": {
+        "beat_id": "B03",
+        "blocker": null,
+        "copy_args": {
+          "city_beauty": 0,
+          "step_id": "establish_nature"
+        },
+        "copy_key": "opening.establish_nature.b03",
+        "expression": "thoughtful",
+        "full_dialogue_event_id": "",
+        "progress": {
+          "current": 0,
+          "required": 2,
+          "unit": "distinct_building_ids"
+        },
+        "projection_key": "opening_tutorial|establish_nature|B03|default",
+        "revision": 14,
+        "schema_version": 1,
+        "speaker_id": "ambrose",
+        "status": "active",
+        "step_id": "establish_nature",
+        "target": null,
+        "text": "AMBROSE PLACEHOLDER: tell the player to place two different kinds of nature",
+        "tutorial_id": "opening_tutorial"
+      },
+      "source": "real_main_scene",
+      "state": "ten-rooted-roads",
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "dashboard_clearance_px": 295.0,
+      "dashboard_rect": {
+        "height": 898.0,
+        "width": 380.0,
+        "x": 1540.0,
+        "y": 90.0
+      },
+      "file": "1920x1080-ten-rooted-roads.png",
+      "guidance_clearance_px": 111.0,
+      "guidance_model": {
+        "beat_id": "B03",
+        "blocker": null,
+        "expression": "thoughtful",
+        "kind": "opening_tutorial",
+        "portrait_path": "res://data/characters/ambrose/expressions/line_art/thoughtful.png",
+        "portrait_source": "semantic_expression",
+        "progress": {
+          "current": 0,
+          "required": 2,
+          "unit": "distinct_building_ids"
+        },
+        "speaker_id": "ambrose",
+        "speaker_name": "Ambrose",
+        "status": "active",
+        "target_id": "opening_tutorial|establish_nature|B03|default",
+        "target_label": "",
+        "text": "AMBROSE PLACEHOLDER: tell the player to place two different kinds of nature",
+        "tutorial_step_id": "establish_nature"
+      },
+      "guidance_rect": {
+        "height": 176.0,
+        "width": 540.0,
+        "x": 24.0,
+        "y": 750.0
+      },
+      "guidance_visible": true,
+      "panel_rect": {
+        "height": 72.0,
+        "width": 570.0,
+        "x": 675.0,
+        "y": 792.0
+      },
+      "panel_visible": false,
+      "projection": {
+        "beat_id": "B03",
+        "blocker": null,
+        "copy_args": {
+          "city_beauty": 0,
+          "step_id": "establish_nature"
+        },
+        "copy_key": "opening.establish_nature.b03",
+        "expression": "thoughtful",
+        "full_dialogue_event_id": "",
+        "progress": {
+          "current": 0,
+          "required": 2,
+          "unit": "distinct_building_ids"
+        },
+        "projection_key": "opening_tutorial|establish_nature|B03|default",
+        "revision": 14,
+        "schema_version": 1,
+        "speaker_id": "ambrose",
+        "status": "active",
+        "step_id": "establish_nature",
+        "target": null,
+        "text": "AMBROSE PLACEHOLDER: tell the player to place two different kinds of nature",
+        "tutorial_id": "opening_tutorial"
+      },
+      "source": "real_main_scene",
+      "state": "ten-rooted-roads",
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "dashboard_clearance_px": 295.0,
+      "dashboard_rect": {
+        "height": 898.0,
+        "width": 380.0,
+        "x": 1540.0,
+        "y": 90.0
+      },
+      "file": "1280x720-adjacency-another-home.png",
+      "guidance_clearance_px": 111.0,
+      "guidance_model": {
+        "beat_id": "B08",
+        "blocker": null,
+        "expression": "thoughtful",
+        "kind": "opening_tutorial",
+        "portrait_path": "res://data/characters/ambrose/expressions/line_art/thoughtful.png",
+        "portrait_source": "semantic_expression",
+        "progress": {
+          "current": 0,
+          "required": 1,
+          "unit": "building"
+        },
+        "speaker_id": "ambrose",
+        "speaker_name": "Ambrose",
+        "status": "active",
+        "target_id": "opening_tutorial|observe_adjacent_home|B08|default",
+        "target_label": "",
+        "text": "AMBROSE PLACEHOLDER: ask the player to place a home directly beside another home",
+        "tutorial_step_id": "observe_adjacent_home"
+      },
+      "guidance_rect": {
+        "height": 176.0,
+        "width": 540.0,
+        "x": 24.0,
+        "y": 750.0
+      },
+      "guidance_visible": true,
+      "panel_rect": {
+        "height": 72.0,
+        "width": 570.0,
+        "x": 675.0,
+        "y": 792.0
+      },
+      "panel_visible": false,
+      "projection": {
+        "beat_id": "B08",
+        "blocker": null,
+        "copy_args": {
+          "city_beauty": 70,
+          "step_id": "observe_adjacent_home"
+        },
+        "copy_key": "opening.observe_adjacent_home.b08",
+        "expression": "thoughtful",
+        "full_dialogue_event_id": "",
+        "progress": {
+          "current": 0,
+          "required": 1,
+          "unit": "building"
+        },
+        "projection_key": "opening_tutorial|observe_adjacent_home|B08|default",
+        "revision": 17,
+        "schema_version": 1,
+        "speaker_id": "ambrose",
+        "status": "active",
+        "step_id": "observe_adjacent_home",
+        "target": null,
+        "text": "AMBROSE PLACEHOLDER: ask the player to place a home directly beside another home",
+        "tutorial_id": "opening_tutorial"
+      },
+      "source": "real_main_scene",
+      "state": "adjacency-another-home",
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "dashboard_clearance_px": 295.0,
+      "dashboard_rect": {
+        "height": 898.0,
+        "width": 380.0,
+        "x": 1540.0,
+        "y": 90.0
+      },
+      "file": "1920x1080-adjacency-another-home.png",
+      "guidance_clearance_px": 111.0,
+      "guidance_model": {
+        "beat_id": "B08",
+        "blocker": null,
+        "expression": "thoughtful",
+        "kind": "opening_tutorial",
+        "portrait_path": "res://data/characters/ambrose/expressions/line_art/thoughtful.png",
+        "portrait_source": "semantic_expression",
+        "progress": {
+          "current": 0,
+          "required": 1,
+          "unit": "building"
+        },
+        "speaker_id": "ambrose",
+        "speaker_name": "Ambrose",
+        "status": "active",
+        "target_id": "opening_tutorial|observe_adjacent_home|B08|default",
+        "target_label": "",
+        "text": "AMBROSE PLACEHOLDER: ask the player to place a home directly beside another home",
+        "tutorial_step_id": "observe_adjacent_home"
+      },
+      "guidance_rect": {
+        "height": 176.0,
+        "width": 540.0,
+        "x": 24.0,
+        "y": 750.0
+      },
+      "guidance_visible": true,
+      "panel_rect": {
+        "height": 72.0,
+        "width": 570.0,
+        "x": 675.0,
+        "y": 792.0
+      },
+      "panel_visible": false,
+      "projection": {
+        "beat_id": "B08",
+        "blocker": null,
+        "copy_args": {
+          "city_beauty": 70,
+          "step_id": "observe_adjacent_home"
+        },
+        "copy_key": "opening.observe_adjacent_home.b08",
+        "expression": "thoughtful",
+        "full_dialogue_event_id": "",
+        "progress": {
+          "current": 0,
+          "required": 1,
+          "unit": "building"
+        },
+        "projection_key": "opening_tutorial|observe_adjacent_home|B08|default",
+        "revision": 17,
+        "schema_version": 1,
+        "speaker_id": "ambrose",
+        "status": "active",
+        "step_id": "observe_adjacent_home",
+        "target": null,
+        "text": "AMBROSE PLACEHOLDER: ask the player to place a home directly beside another home",
+        "tutorial_id": "opening_tutorial"
+      },
+      "source": "real_main_scene",
+      "state": "adjacency-another-home",
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "dashboard_clearance_px": 295.0,
+      "dashboard_rect": {
+        "height": 898.0,
+        "width": 380.0,
+        "x": 1540.0,
+        "y": 90.0
+      },
+      "file": "1280x720-first-quest-handoff.png",
+      "guidance_clearance_px": 111.0,
+      "guidance_model": {
+        "expression": "pleased",
+        "kind": "first_quest",
+        "portrait_path": "res://data/characters/ambrose/expressions/line_art/pleased.png",
+        "portrait_source": "semantic_expression",
+        "speaker_id": "ambrose",
+        "speaker_name": "Ambrose",
+        "target_id": "first_land_quest",
+        "target_label": "First land quest",
+        "text": "Continue to your first land quest."
+      },
+      "guidance_rect": {
+        "height": 176.0,
+        "width": 540.0,
+        "x": 24.0,
+        "y": 750.0
+      },
+      "guidance_visible": true,
+      "panel_rect": {
+        "height": 72.0,
+        "width": 570.0,
+        "x": 675.0,
+        "y": 792.0
+      },
+      "panel_visible": false,
+      "projection": {
+        "expression": "pleased",
+        "kind": "first_quest",
+        "portrait_path": "res://data/characters/ambrose/expressions/line_art/pleased.png",
+        "portrait_source": "semantic_expression",
+        "speaker_id": "ambrose",
+        "speaker_name": "Ambrose",
+        "target_id": "first_land_quest",
+        "target_label": "First land quest",
+        "text": "Continue to your first land quest."
+      },
+      "source": "real_main_scene",
+      "state": "first-quest-handoff",
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "dashboard_clearance_px": 295.0,
+      "dashboard_rect": {
+        "height": 898.0,
+        "width": 380.0,
+        "x": 1540.0,
+        "y": 90.0
+      },
+      "file": "1920x1080-first-quest-handoff.png",
+      "guidance_clearance_px": 111.0,
+      "guidance_model": {
+        "expression": "pleased",
+        "kind": "first_quest",
+        "portrait_path": "res://data/characters/ambrose/expressions/line_art/pleased.png",
+        "portrait_source": "semantic_expression",
+        "speaker_id": "ambrose",
+        "speaker_name": "Ambrose",
+        "target_id": "first_land_quest",
+        "target_label": "First land quest",
+        "text": "Continue to your first land quest."
+      },
+      "guidance_rect": {
+        "height": 176.0,
+        "width": 540.0,
+        "x": 24.0,
+        "y": 750.0
+      },
+      "guidance_visible": true,
+      "panel_rect": {
+        "height": 72.0,
+        "width": 570.0,
+        "x": 675.0,
+        "y": 792.0
+      },
+      "panel_visible": false,
+      "projection": {
+        "expression": "pleased",
+        "kind": "first_quest",
+        "portrait_path": "res://data/characters/ambrose/expressions/line_art/pleased.png",
+        "portrait_source": "semantic_expression",
+        "speaker_id": "ambrose",
+        "speaker_name": "Ambrose",
+        "target_id": "first_land_quest",
+        "target_label": "First land quest",
+        "text": "Continue to your first land quest."
+      },
+      "source": "real_main_scene",
+      "state": "first-quest-handoff",
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "dashboard_clearance_px": 295.0,
+      "dashboard_rect": {
+        "height": 898.0,
+        "width": 380.0,
+        "x": 1540.0,
+        "y": 90.0
+      },
+      "excluded_variant": "grass",
+      "file": "1280x720-grass-pool-variants.png",
+      "grass_pool_variants": [
+        "grass_trees",
+        "grass_trees_tall"
+      ],
+      "guidance_clearance_px": 111.0,
+      "guidance_rect": {
+        "height": 176.0,
+        "width": 540.0,
+        "x": 24.0,
+        "y": 750.0
+      },
+      "guidance_visible": true,
+      "panel_rect": {
+        "height": 72.0,
+        "width": 570.0,
+        "x": 675.0,
+        "y": 792.0
+      },
+      "panel_visible": true,
+      "preview_rows": [
+        "Town appeal +50.0 across 2 tiles"
+      ],
+      "source": "real_main_scene",
+      "state": "grass-pool-variants",
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "dashboard_clearance_px": 295.0,
+      "dashboard_rect": {
+        "height": 898.0,
+        "width": 380.0,
+        "x": 1540.0,
+        "y": 90.0
+      },
+      "excluded_variant": "grass",
+      "file": "1920x1080-grass-pool-variants.png",
+      "grass_pool_variants": [
+        "grass_trees",
+        "grass_trees_tall"
+      ],
+      "guidance_clearance_px": 111.0,
+      "guidance_rect": {
+        "height": 176.0,
+        "width": 540.0,
+        "x": 24.0,
+        "y": 750.0
+      },
+      "guidance_visible": true,
+      "panel_rect": {
+        "height": 72.0,
+        "width": 570.0,
+        "x": 675.0,
+        "y": 792.0
+      },
+      "panel_visible": true,
+      "preview_rows": [
+        "Town appeal +50.0 across 2 tiles"
+      ],
+      "source": "real_main_scene",
+      "state": "grass-pool-variants",
+      "viewport": [
+        1920,
+        1080
+      ]
+    }
+  ],
+  "display_server": "macOS",
+  "excluded_variant": "grass",
+  "failures": [],
+  "feature": "019-opening-playtest-polish",
+  "grass_pool_variants": [
+    "grass_trees",
+    "grass_trees_tall"
+  ],
+  "renderer": "forward_plus",
+  "scenario_id": "first_town/opening_balance",
+  "schema_version": 2,
+  "seed": 19019,
+  "success": true
+}

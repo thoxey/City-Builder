@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "milestone": "US2",
+  "passed": true,
+  "tests": [
+    "test/unit/presentation/test_presentation_scheduler.gd",
+    "test/contract/presentation/test_presenter_contract.gd",
+    "test/integration/presentation/test_core_presenters.gd",
+    "test/integration/presentation/test_game_events_adapter.gd",
+    "test/integration/player_ui/test_status_bar_committed_hour.gd"
+  ],
+  "result": "Visible Dashboard, Community and status presenters observe one committed version; hidden presenters do no work and catch up once."
+}

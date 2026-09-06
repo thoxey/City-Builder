@@ -6,7 +6,7 @@
       "cash": 2610,
       "real_minutes": 5,
       "required_meaningful_placements": 15,
-      "state_hash": "fb537749ba649ba0de22c8ee5ad742ab52a6f8d8d532cd67557de2b49f23656f"
+      "state_hash": "e4c35003a6a95360791917c8bf6d1ae834d39afd44e0740af2e886171f613307"
     },
     {
       "absolute_hour": 120,
@@ -14,7 +14,7 @@
       "cash": 5542,
       "real_minutes": 10,
       "required_meaningful_placements": 30,
-      "state_hash": "afcbdac3107cfffa3c891a703c4d8810a67150d678618648190605bd522a5f24"
+      "state_hash": "4a44cd8886990489b13ccd9de6756f3eb04c563f39b1a68b9ad613b57c889b3c"
     },
     {
       "absolute_hour": 240,
@@ -22,7 +22,7 @@
       "cash": 26935,
       "real_minutes": 20,
       "required_meaningful_placements": 60,
-      "state_hash": "a54815aaf61d479ef311b1bae4b82ac8d8db32a10f65203c96316d1df51c1f34"
+      "state_hash": "8b1856d363d08568c1f8824d0dc0d0ebc117365e03f37b55d74efee099aefec4"
     }
   ],
   "criteria": {
@@ -2368,7 +2368,7 @@
       "migration": {
         "arrivals": 140,
         "departures": 0,
-        "last_day": 10,
+        "last_day": 9,
         "rejections": 60
       }
     },
@@ -3430,22 +3430,84 @@
       "hour": 6,
       "manual": true
     },
-    "state_hash": "97f9a572217d4dfa12de8feb8f9a66589aa25fa416aaf48e10a12450712bf83b"
+    "state_hash": "e85c364f73d5c08d5a58ccba6a5d6f4398242e53a6d5ddc003aa19743c9e0f73"
   },
   "performance": {
+    "community_boundaries": {
+      "hour.collect": {
+        "boundary": "hour.collect",
+        "excluded_count": 0,
+        "max": 11490.0,
+        "median": 646.0,
+        "p95": 5268.0,
+        "passed": true,
+        "sample_count": 481,
+        "statistic": "p95",
+        "threshold": 1e99999,
+        "value": 5268.0
+      },
+      "hour.commit": {
+        "boundary": "hour.commit",
+        "excluded_count": 0,
+        "max": 175508.0,
+        "median": 3385.0,
+        "p95": 58726.0,
+        "passed": true,
+        "sample_count": 481,
+        "statistic": "p95",
+        "threshold": 1e99999,
+        "value": 58726.0
+      },
+      "hour.validate_reduce": {
+        "boundary": "hour.validate_reduce",
+        "excluded_count": 0,
+        "max": 4088.0,
+        "median": 42.0,
+        "p95": 3483.0,
+        "passed": true,
+        "sample_count": 481,
+        "statistic": "p95",
+        "threshold": 1e99999,
+        "value": 3483.0
+      },
+      "migration.candidates": {
+        "boundary": "migration.candidates",
+        "excluded_count": 0,
+        "max": 5920.0,
+        "median": 2284.0,
+        "p95": 4648.0,
+        "passed": true,
+        "sample_count": 200,
+        "statistic": "p95",
+        "threshold": 1e99999,
+        "value": 4648.0
+      },
+      "migration.context": {
+        "boundary": "migration.context",
+        "excluded_count": 0,
+        "max": 758.0,
+        "median": 258.0,
+        "p95": 758.0,
+        "passed": true,
+        "sample_count": 10,
+        "statistic": "p95",
+        "threshold": 1e99999,
+        "value": 758.0
+      }
+    },
     "hour_sample_count": 240,
-    "max_hour_usec": 532393,
-    "max_migration_usec": 532393,
-    "profiled_command_usec": 42267773,
+    "max_hour_usec": 197491,
+    "max_migration_usec": 109688,
+    "profiled_command_usec": 12260389,
     "profiled_snapshot_usec": 0,
     "route_cache": {
       "anchor_entries": 135,
       "entries": 206,
-      "hits": 2051,
+      "hits": 1871,
       "misses": 206
     },
-    "scenario_elapsed_usec": 48816519,
-    "total_tick_usec": 34493812
+    "scenario_elapsed_usec": 18639582,
+    "total_tick_usec": 9828409
   },
   "proximity_records": [
     {

@@ -14,9 +14,9 @@ Use that change set to drive a separate presentation scheduler. UI presenters re
 
 **Language/Version**: GDScript 4.x on Godot 4.6.2; JSON configuration and evidence
 
-**Primary Dependencies**: Existing PluginBase/PluginManager dependency injection, GameState/DataMap authority, GameEvents compatibility signals, GUT 9.3.0, MultiMesh rendering, Builder and Playtest command seams
+**Primary Dependencies**: Existing PluginBase/PluginManager dependency injection, GameState/Builder shared-city authority, Community-owned resident authority, DataMap persistence projection, GameEvents compatibility signals, GUT 9.3.0, MultiMesh rendering, Builder and Playtest command seams
 
-**Storage**: Existing save-state dictionaries remain authoritative; transaction/presentation/performance records are bounded runtime diagnostics and JSON/Markdown validation evidence
+**Storage**: Existing DataMap save-state dictionaries remain the durable projection of authoritative domain state; compiled indexes, transaction/presentation records, and performance records are rebuildable runtime data or bounded diagnostics and never become save authority
 
 **Testing**: GUT unit, contract, and integration suites; deterministic replay; headless canonical city runners; rendered-town profiling
 
@@ -34,7 +34,7 @@ Use that change set to drive a separate presentation scheduler. UI presenters re
 
 *GATE: Passed before research and re-checked after Phase 1 design.*
 
-- **One Gameplay Truth — PASS**: GameState/DataMap remains authoritative. Coordinators accept proposals and publish committed deltas; neither transaction records, projections, caches, nor presenters become state authorities. Builder/Playtest remain the command seam.
+- **One Gameplay Truth — PASS**: GameState/Builder remains authoritative for shared city state and Community remains authoritative for resident simulation, with DataMap as its persistence projection. Coordinators accept proposals and publish committed deltas; neither transaction records, compiled indexes, projections, caches, nor presenters become state authorities. Builder/Playtest remain the command seam.
 - **Deterministic, Controllable Simulation — PASS**: DayNight remains the clock. Stable contributor/intent keys, explicit reducer order, immutable pre-state contexts, atomic commit, and registration-order tests replace implicit signal ordering. Timing records never affect decisions or hashes.
 - **Observable, Explainable State — PASS**: Intent ledger entries preserve per-contributor proposals and dispositions. Change sets explain aggregate effects. Full diagnostics remain available explicitly while routine reads use bounded projections.
 - **Data-Driven Balance and Narrative Separation — PASS**: Existing balance/configuration values remain external data. The transaction layer moves execution structure only and does not add tuning or narrative rules.
@@ -58,6 +58,7 @@ specs/015-transactional-performance/
 │   ├── authoritative-change-set.md
 │   ├── performance-evidence.md
 │   ├── presentation-invalidation.md
+│   ├── community-runtime-boundaries.md
 │   └── simulation-transaction.md
 ├── checklists/
 │   ├── requirements.md
@@ -156,6 +157,13 @@ Add canonical invalidation domains and a scheduler that translates committed cha
 
 Define small named operational projections for each visible consumer and retain CommunityInspector/Playtest full snapshots only as explicit diagnostics. Make Builder produce a mutation change set after atomic place/replace/demolish. Use affected entity/domain keys to update road, occupancy, programme, attractiveness, operation, and presentation indexes incrementally.
 
+Community follows the explicit boundary contract in
+`contracts/community-runtime-boundaries.md`: authored dictionaries compile into
+a disposable typed runtime index, operational evaluation returns domain values,
+and `CommunityInspector` alone materializes bounded presentation explanations.
+The index is owned by Community, revision-keyed, absent from saves, and never
+read by a presenter.
+
 ### Phase E — Domain Hot Loops
 
 Cache immutable migration batch contexts by explicit dependency revisions. Replace CarManager’s repeated origin discovery, sorting, and pending-array duplication with stable per-origin FIFO queues plus a deterministic origin cursor. Maintain People’s resident order on insert/remove, process only active/relevant sets, and keep diagnostic sorting outside the normal frame.
@@ -182,7 +190,7 @@ The P1 transaction story is the architectural MVP. P2 can begin once change-set 
 
 ## Test Seams
 
-- **Contract**: record validation, stable ordering, reducer conflict rules, change-set immutability, invalidation coalescing, visibility catch-up, evidence schema.
+- **Contract**: record validation, stable ordering, reducer conflict rules, change-set immutability, Community authority/runtime/view boundaries, invalidation coalescing, visibility catch-up, evidence schema.
 - **Unit**: coordinator state machine, reducers, projection cache versions, migration dependency revisions, stable traffic queues, maintained people order, budget statistics.
 - **Integration**: real plugin registration and injection, DayNight single transaction, GameState atomic commit, Builder change sets, independent dashboard/community/HUD presentation.
 - **Deterministic replay**: same seed and reversed contributor registration order produce identical state hashes, ledgers, traffic/migration decisions, and snapshots.

@@ -1,0 +1,477 @@
+{
+  "all_passed": true,
+  "environment": {
+    "build_mode": "debug",
+    "engine_version": "4.6.2-stable (official)",
+    "platform": "macOS",
+    "renderer": "forward_plus"
+  },
+  "equivalence": {
+    "ledger_hashes_match": true,
+    "state_hashes_match": true
+  },
+  "exclusions": [
+    "scene load",
+    "explicit diagnostic capture"
+  ],
+  "failures": [],
+  "gates": {
+    "expected_state_hash": "fa19631150065fb74ba228104e843ae0a59a02e051e913748ce38a17c0733004",
+    "hour_max_usec": 33300,
+    "hour_p95_usec": 16700,
+    "scenario_each_run_usec": 35000000
+  },
+  "percentile_rule": "nearest-rank ceil(p*n), one-based",
+  "reproduce_command": "Godot --headless --path /Users/tom/Starter-Kit-City-Builder/ -s res://scripts/run_performance_playthroughs.gd",
+  "run_count": 3,
+  "runs": [
+    {
+      "community_boundaries": {
+        "community.hour.collect": {
+          "max": 4721.0,
+          "median": 117.0,
+          "p95": 2258.0,
+          "sample_count": 240.0
+        },
+        "community.hour.commit": {
+          "max": 16748.0,
+          "median": 322.0,
+          "p95": 782.0,
+          "sample_count": 240.0
+        },
+        "community.hour.evaluate": {
+          "max": 4210.0,
+          "median": 1492.0,
+          "p95": 3528.0,
+          "sample_count": 240.0
+        },
+        "migration.candidates": {
+          "boundary": "migration.candidates",
+          "excluded_count": 0.0,
+          "max": 2032.0,
+          "median": 516.0,
+          "p95": 1250.0,
+          "passed": true,
+          "sample_count": 200.0,
+          "statistic": "p95",
+          "threshold": 999999999999999903803069407426113968898218766118103141789833949572356552411722264192305659040010509526872994217248819197070144216063125530186267630296136203765329090687113225440746189048800695790727969805197112921161540803823920273299782054992133678869364753954248541633605124057805104488924519071744.0,
+          "value": 1250.0
+        },
+        "migration.context": {
+          "boundary": "migration.context",
+          "excluded_count": 0.0,
+          "max": 800.0,
+          "median": 443.0,
+          "p95": 800.0,
+          "passed": true,
+          "sample_count": 10.0,
+          "statistic": "p95",
+          "threshold": 999999999999999903803069407426113968898218766118103141789833949572356552411722264192305659040010509526872994217248819197070144216063125530186267630296136203765329090687113225440746189048800695790727969805197112921161540803823920273299782054992133678869364753954248541633605124057805104488924519071744.0,
+          "value": 800.0
+        },
+        "reducers": {
+          "city_stats": {
+            "max": 13673.0,
+            "median": 289.0,
+            "p95": 4833.0,
+            "sample_count": 240.0
+          },
+          "community": {
+            "max": 23884.0,
+            "median": 2123.0,
+            "p95": 5421.0,
+            "sample_count": 240.0
+          },
+          "demand": {
+            "max": 98.0,
+            "median": 44.0,
+            "p95": 72.0,
+            "sample_count": 240.0
+          },
+          "economy": {
+            "max": 582.0,
+            "median": 216.0,
+            "p95": 316.0,
+            "sample_count": 240.0
+          },
+          "people": {
+            "max": 772.0,
+            "median": 5.0,
+            "p95": 11.0,
+            "sample_count": 240.0
+          },
+          "satisfaction": {
+            "max": 13.0,
+            "median": 6.0,
+            "p95": 9.0,
+            "sample_count": 240.0
+          }
+        },
+        "transaction.hour.collect": {
+          "max": 759.0,
+          "median": 260.0,
+          "p95": 378.0,
+          "sample_count": 241.0
+        },
+        "transaction.hour.commit": {
+          "max": 24969.0,
+          "median": 154.0,
+          "p95": 5034.0,
+          "sample_count": 1681.0
+        },
+        "transaction.hour.notify": {
+          "boundary": "hour.notify",
+          "excluded_count": 0.0,
+          "max": 7263.0,
+          "median": 452.0,
+          "p95": 738.0,
+          "passed": true,
+          "sample_count": 241.0,
+          "statistic": "p95",
+          "threshold": 999999999999999903803069407426113968898218766118103141789833949572356552411722264192305659040010509526872994217248819197070144216063125530186267630296136203765329090687113225440746189048800695790727969805197112921161540803823920273299782054992133678869364753954248541633605124057805104488924519071744.0,
+          "value": 738.0
+        },
+        "transaction.hour.total": {
+          "boundary": "hour.total",
+          "excluded_count": 0.0,
+          "max": 26948.0,
+          "median": 3914.0,
+          "p95": 13703.0,
+          "passed": true,
+          "sample_count": 241.0,
+          "statistic": "p95",
+          "threshold": 999999999999999903803069407426113968898218766118103141789833949572356552411722264192305659040010509526872994217248819197070144216063125530186267630296136203765329090687113225440746189048800695790727969805197112921161540803823920273299782054992133678869364753954248541633605124057805104488924519071744.0,
+          "value": 13703.0
+        },
+        "transaction.hour.validate_reduce": {
+          "max": 169.0,
+          "median": 42.0,
+          "p95": 62.0,
+          "sample_count": 241.0
+        }
+      },
+      "failures": [],
+      "hour_total": {
+        "max_migration_usec": 27017.0,
+        "max_usec": 27017.0,
+        "median_usec": 3943.0,
+        "p95_usec": 13732.0,
+        "sample_count": 240.0
+      },
+      "ledger_hash": "adcc840bc5e503c48159d3bca947688aa0699aa56c2554090bbfc8aea0ed5163",
+      "outer_elapsed_usec": 10572086,
+      "run": 1,
+      "scenario_elapsed_usec": 9599646.0,
+      "seed": 6066.0,
+      "state_hash": "fa19631150065fb74ba228104e843ae0a59a02e051e913748ce38a17c0733004",
+      "success": true,
+      "workload": {
+        "buildings": 135,
+        "hours": 240.0,
+        "meaningful_placements": 60.0,
+        "residents": 140.0,
+        "road_cells": 75.0
+      }
+    },
+    {
+      "community_boundaries": {
+        "community.hour.collect": {
+          "max": 4922.0,
+          "median": 121.0,
+          "p95": 2034.0,
+          "sample_count": 240.0
+        },
+        "community.hour.commit": {
+          "max": 17514.0,
+          "median": 327.0,
+          "p95": 845.0,
+          "sample_count": 240.0
+        },
+        "community.hour.evaluate": {
+          "max": 5168.0,
+          "median": 1521.0,
+          "p95": 3711.0,
+          "sample_count": 240.0
+        },
+        "migration.candidates": {
+          "boundary": "migration.candidates",
+          "excluded_count": 0.0,
+          "max": 2018.0,
+          "median": 511.0,
+          "p95": 1166.0,
+          "passed": true,
+          "sample_count": 200.0,
+          "statistic": "p95",
+          "threshold": 999999999999999903803069407426113968898218766118103141789833949572356552411722264192305659040010509526872994217248819197070144216063125530186267630296136203765329090687113225440746189048800695790727969805197112921161540803823920273299782054992133678869364753954248541633605124057805104488924519071744.0,
+          "value": 1166.0
+        },
+        "migration.context": {
+          "boundary": "migration.context",
+          "excluded_count": 0.0,
+          "max": 869.0,
+          "median": 387.0,
+          "p95": 869.0,
+          "passed": true,
+          "sample_count": 10.0,
+          "statistic": "p95",
+          "threshold": 999999999999999903803069407426113968898218766118103141789833949572356552411722264192305659040010509526872994217248819197070144216063125530186267630296136203765329090687113225440746189048800695790727969805197112921161540803823920273299782054992133678869364753954248541633605124057805104488924519071744.0,
+          "value": 869.0
+        },
+        "reducers": {
+          "city_stats": {
+            "max": 14926.0,
+            "median": 308.0,
+            "p95": 4426.0,
+            "sample_count": 240.0
+          },
+          "community": {
+            "max": 23374.0,
+            "median": 2278.0,
+            "p95": 6282.0,
+            "sample_count": 240.0
+          },
+          "demand": {
+            "max": 96.0,
+            "median": 48.0,
+            "p95": 75.0,
+            "sample_count": 240.0
+          },
+          "economy": {
+            "max": 434.0,
+            "median": 227.0,
+            "p95": 341.0,
+            "sample_count": 240.0
+          },
+          "people": {
+            "max": 843.0,
+            "median": 6.0,
+            "p95": 10.0,
+            "sample_count": 240.0
+          },
+          "satisfaction": {
+            "max": 13.0,
+            "median": 6.0,
+            "p95": 9.0,
+            "sample_count": 240.0
+          }
+        },
+        "transaction.hour.collect": {
+          "max": 733.0,
+          "median": 266.0,
+          "p95": 399.0,
+          "sample_count": 241.0
+        },
+        "transaction.hour.commit": {
+          "max": 24427.0,
+          "median": 159.0,
+          "p95": 5228.0,
+          "sample_count": 1681.0
+        },
+        "transaction.hour.notify": {
+          "boundary": "hour.notify",
+          "excluded_count": 0.0,
+          "max": 8010.0,
+          "median": 466.0,
+          "p95": 865.0,
+          "passed": true,
+          "sample_count": 241.0,
+          "statistic": "p95",
+          "threshold": 999999999999999903803069407426113968898218766118103141789833949572356552411722264192305659040010509526872994217248819197070144216063125530186267630296136203765329090687113225440746189048800695790727969805197112921161540803823920273299782054992133678869364753954248541633605124057805104488924519071744.0,
+          "value": 865.0
+        },
+        "transaction.hour.total": {
+          "boundary": "hour.total",
+          "excluded_count": 0.0,
+          "max": 26426.0,
+          "median": 4127.0,
+          "p95": 13627.0,
+          "passed": true,
+          "sample_count": 241.0,
+          "statistic": "p95",
+          "threshold": 999999999999999903803069407426113968898218766118103141789833949572356552411722264192305659040010509526872994217248819197070144216063125530186267630296136203765329090687113225440746189048800695790727969805197112921161540803823920273299782054992133678869364753954248541633605124057805104488924519071744.0,
+          "value": 13627.0
+        },
+        "transaction.hour.validate_reduce": {
+          "max": 224.0,
+          "median": 43.0,
+          "p95": 116.0,
+          "sample_count": 241.0
+        }
+      },
+      "failures": [],
+      "hour_total": {
+        "max_migration_usec": 26511.0,
+        "max_usec": 26511.0,
+        "median_usec": 4152.0,
+        "p95_usec": 13663.0,
+        "sample_count": 240.0
+      },
+      "ledger_hash": "adcc840bc5e503c48159d3bca947688aa0699aa56c2554090bbfc8aea0ed5163",
+      "outer_elapsed_usec": 10856863,
+      "run": 2,
+      "scenario_elapsed_usec": 9724822.0,
+      "seed": 6066.0,
+      "state_hash": "fa19631150065fb74ba228104e843ae0a59a02e051e913748ce38a17c0733004",
+      "success": true,
+      "workload": {
+        "buildings": 135,
+        "hours": 240.0,
+        "meaningful_placements": 60.0,
+        "residents": 140.0,
+        "road_cells": 75.0
+      }
+    },
+    {
+      "community_boundaries": {
+        "community.hour.collect": {
+          "max": 4773.0,
+          "median": 122.0,
+          "p95": 2078.0,
+          "sample_count": 240.0
+        },
+        "community.hour.commit": {
+          "max": 17454.0,
+          "median": 340.0,
+          "p95": 873.0,
+          "sample_count": 240.0
+        },
+        "community.hour.evaluate": {
+          "max": 4629.0,
+          "median": 1537.0,
+          "p95": 3644.0,
+          "sample_count": 240.0
+        },
+        "migration.candidates": {
+          "boundary": "migration.candidates",
+          "excluded_count": 0.0,
+          "max": 2198.0,
+          "median": 519.0,
+          "p95": 1238.0,
+          "passed": true,
+          "sample_count": 200.0,
+          "statistic": "p95",
+          "threshold": 999999999999999903803069407426113968898218766118103141789833949572356552411722264192305659040010509526872994217248819197070144216063125530186267630296136203765329090687113225440746189048800695790727969805197112921161540803823920273299782054992133678869364753954248541633605124057805104488924519071744.0,
+          "value": 1238.0
+        },
+        "migration.context": {
+          "boundary": "migration.context",
+          "excluded_count": 0.0,
+          "max": 835.0,
+          "median": 524.0,
+          "p95": 835.0,
+          "passed": true,
+          "sample_count": 10.0,
+          "statistic": "p95",
+          "threshold": 999999999999999903803069407426113968898218766118103141789833949572356552411722264192305659040010509526872994217248819197070144216063125530186267630296136203765329090687113225440746189048800695790727969805197112921161540803823920273299782054992133678869364753954248541633605124057805104488924519071744.0,
+          "value": 835.0
+        },
+        "reducers": {
+          "city_stats": {
+            "max": 14142.0,
+            "median": 296.0,
+            "p95": 4139.0,
+            "sample_count": 240.0
+          },
+          "community": {
+            "max": 24189.0,
+            "median": 2287.0,
+            "p95": 5561.0,
+            "sample_count": 240.0
+          },
+          "demand": {
+            "max": 145.0,
+            "median": 46.0,
+            "p95": 77.0,
+            "sample_count": 240.0
+          },
+          "economy": {
+            "max": 616.0,
+            "median": 223.0,
+            "p95": 342.0,
+            "sample_count": 240.0
+          },
+          "people": {
+            "max": 766.0,
+            "median": 6.0,
+            "p95": 13.0,
+            "sample_count": 240.0
+          },
+          "satisfaction": {
+            "max": 27.0,
+            "median": 5.0,
+            "p95": 9.0,
+            "sample_count": 240.0
+          }
+        },
+        "transaction.hour.collect": {
+          "max": 790.0,
+          "median": 264.0,
+          "p95": 569.0,
+          "sample_count": 241.0
+        },
+        "transaction.hour.commit": {
+          "max": 25481.0,
+          "median": 146.0,
+          "p95": 5139.0,
+          "sample_count": 1681.0
+        },
+        "transaction.hour.notify": {
+          "boundary": "hour.notify",
+          "excluded_count": 0.0,
+          "max": 6659.0,
+          "median": 462.0,
+          "p95": 988.0,
+          "passed": true,
+          "sample_count": 241.0,
+          "statistic": "p95",
+          "threshold": 999999999999999903803069407426113968898218766118103141789833949572356552411722264192305659040010509526872994217248819197070144216063125530186267630296136203765329090687113225440746189048800695790727969805197112921161540803823920273299782054992133678869364753954248541633605124057805104488924519071744.0,
+          "value": 988.0
+        },
+        "transaction.hour.total": {
+          "boundary": "hour.total",
+          "excluded_count": 0.0,
+          "max": 27602.0,
+          "median": 4141.0,
+          "p95": 14376.0,
+          "passed": true,
+          "sample_count": 241.0,
+          "statistic": "p95",
+          "threshold": 999999999999999903803069407426113968898218766118103141789833949572356552411722264192305659040010509526872994217248819197070144216063125530186267630296136203765329090687113225440746189048800695790727969805197112921161540803823920273299782054992133678869364753954248541633605124057805104488924519071744.0,
+          "value": 14376.0
+        },
+        "transaction.hour.validate_reduce": {
+          "max": 165.0,
+          "median": 44.0,
+          "p95": 59.0,
+          "sample_count": 241.0
+        }
+      },
+      "failures": [],
+      "hour_total": {
+        "max_migration_usec": 27668.0,
+        "max_usec": 27668.0,
+        "median_usec": 4183.0,
+        "p95_usec": 14404.0,
+        "sample_count": 240.0
+      },
+      "ledger_hash": "adcc840bc5e503c48159d3bca947688aa0699aa56c2554090bbfc8aea0ed5163",
+      "outer_elapsed_usec": 10877854,
+      "run": 3,
+      "scenario_elapsed_usec": 9814746.0,
+      "seed": 6066.0,
+      "state_hash": "fa19631150065fb74ba228104e843ae0a59a02e051e913748ce38a17c0733004",
+      "success": true,
+      "workload": {
+        "buildings": 135,
+        "hours": 240.0,
+        "meaningful_placements": 60.0,
+        "residents": 140.0,
+        "road_cells": 75.0
+      }
+    }
+  ],
+  "scenario_id": "first_town/rebalance",
+  "schema_version": 2,
+  "total_elapsed_usec": 32314707,
+  "workload_id": "transactional_reference_town_135x240"
+}

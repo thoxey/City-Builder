@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "feature": "020-building-ground-contact",
+  "threshold_percent": 5.0,
+  "frozen_baseline_comparison": {
+    "baseline": "performance-before.json",
+    "after": "performance-after.json",
+    "median_deltas_percent": {
+      "load": 7.130779,
+      "placement": 16.367368,
+      "steady_frame": 140.95183,
+      "draw_calls": -4.347826,
+      "visible_objects": -3.411514,
+      "primitives": -0.06422
+    },
+    "investigation_required": true,
+    "finding": "The frozen run predates concurrent feature-019 changes and its frame samples switch from the 16.7 ms display cadence to about 6.9 ms. Current final and repeat runs remain at the 16.7 ms cadence while rendering fewer objects, calls, and primitives than the frozen run, so the raw frame delta is not attributable to added render work."
+  },
+  "paired_current_tree_comparison": {
+    "control": "performance-current-control.json",
+    "after": "performance-current-underlay.json",
+    "control_method": "The validation harness changes every in-memory catalogue ground_treatment to replace after scene setup. It does not edit source, saves, models, or production behavior.",
+    "median_deltas_percent": {
+      "load": -1.830387,
+      "placement": -1.987892,
+      "steady_frame": -0.006003,
+      "draw_calls": 2.906977,
+      "visible_objects": 2.247191,
+      "primitives": 0.004324
+    },
+    "all_timing_medians_within_threshold": true,
+    "all_render_count_medians_within_threshold": true
+  },
+  "reference_town": {
+    "building_count": 135,
+    "occupied_cell_count": 138,
+    "underlay_cell_count": 46
+  },
+  "verdict": "pass"
+}

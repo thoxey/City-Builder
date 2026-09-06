@@ -1,0 +1,712 @@
+{
+  "captures": [
+    {
+      "degrees": 0,
+      "path": "res://specs/020-building-ground-contact/validation/town-hall-context/1280x720/town-hall-preview-000-close.png",
+      "stage": "preview",
+      "viewport": [
+        1280,
+        720
+      ],
+      "zoom": "close"
+    },
+    {
+      "degrees": 0,
+      "path": "res://specs/020-building-ground-contact/validation/town-hall-context/1280x720/town-hall-preview-000-town-context.png",
+      "stage": "preview",
+      "viewport": [
+        1280,
+        720
+      ],
+      "zoom": "town-context"
+    },
+    {
+      "degrees": 0,
+      "path": "res://specs/020-building-ground-contact/validation/town-hall-context/1920x1080/town-hall-preview-000-close.png",
+      "stage": "preview",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "zoom": "close"
+    },
+    {
+      "degrees": 0,
+      "path": "res://specs/020-building-ground-contact/validation/town-hall-context/1920x1080/town-hall-preview-000-town-context.png",
+      "stage": "preview",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "zoom": "town-context"
+    },
+    {
+      "degrees": 0,
+      "path": "res://specs/020-building-ground-contact/validation/town-hall-context/1280x720/town-hall-loaded-000-close.png",
+      "stage": "loaded",
+      "viewport": [
+        1280,
+        720
+      ],
+      "zoom": "close"
+    },
+    {
+      "degrees": 0,
+      "path": "res://specs/020-building-ground-contact/validation/town-hall-context/1280x720/town-hall-loaded-000-town-context.png",
+      "stage": "loaded",
+      "viewport": [
+        1280,
+        720
+      ],
+      "zoom": "town-context"
+    },
+    {
+      "degrees": 0,
+      "path": "res://specs/020-building-ground-contact/validation/town-hall-context/1920x1080/town-hall-loaded-000-close.png",
+      "stage": "loaded",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "zoom": "close"
+    },
+    {
+      "degrees": 0,
+      "path": "res://specs/020-building-ground-contact/validation/town-hall-context/1920x1080/town-hall-loaded-000-town-context.png",
+      "stage": "loaded",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "zoom": "town-context"
+    },
+    {
+      "degrees": 90,
+      "path": "res://specs/020-building-ground-contact/validation/town-hall-context/1280x720/town-hall-preview-090-close.png",
+      "stage": "preview",
+      "viewport": [
+        1280,
+        720
+      ],
+      "zoom": "close"
+    },
+    {
+      "degrees": 90,
+      "path": "res://specs/020-building-ground-contact/validation/town-hall-context/1280x720/town-hall-preview-090-town-context.png",
+      "stage": "preview",
+      "viewport": [
+        1280,
+        720
+      ],
+      "zoom": "town-context"
+    },
+    {
+      "degrees": 90,
+      "path": "res://specs/020-building-ground-contact/validation/town-hall-context/1920x1080/town-hall-preview-090-close.png",
+      "stage": "preview",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "zoom": "close"
+    },
+    {
+      "degrees": 90,
+      "path": "res://specs/020-building-ground-contact/validation/town-hall-context/1920x1080/town-hall-preview-090-town-context.png",
+      "stage": "preview",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "zoom": "town-context"
+    },
+    {
+      "degrees": 90,
+      "path": "res://specs/020-building-ground-contact/validation/town-hall-context/1280x720/town-hall-loaded-090-close.png",
+      "stage": "loaded",
+      "viewport": [
+        1280,
+        720
+      ],
+      "zoom": "close"
+    },
+    {
+      "degrees": 90,
+      "path": "res://specs/020-building-ground-contact/validation/town-hall-context/1280x720/town-hall-loaded-090-town-context.png",
+      "stage": "loaded",
+      "viewport": [
+        1280,
+        720
+      ],
+      "zoom": "town-context"
+    },
+    {
+      "degrees": 90,
+      "path": "res://specs/020-building-ground-contact/validation/town-hall-context/1920x1080/town-hall-loaded-090-close.png",
+      "stage": "loaded",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "zoom": "close"
+    },
+    {
+      "degrees": 90,
+      "path": "res://specs/020-building-ground-contact/validation/town-hall-context/1920x1080/town-hall-loaded-090-town-context.png",
+      "stage": "loaded",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "zoom": "town-context"
+    }
+  ],
+  "display_server": "macOS",
+  "engine_version": "4.6.2-stable (official)",
+  "failures": [],
+  "feature": "020-building-ground-contact",
+  "ground_map_node_y": -0.00499999988824129,
+  "ground_snapshots": [
+    {
+      "degrees": 0,
+      "replace": [
+        {
+          "cell": [
+            -1,
+            -1
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            -1,
+            2
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            0,
+            -1
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            0,
+            2
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            1,
+            -1
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            1,
+            2
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            2,
+            -1
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            2,
+            2
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            -1,
+            0
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            2,
+            0
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            -1,
+            1
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            2,
+            1
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            -2,
+            0
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            3,
+            1
+          ],
+          "item": -1
+        }
+      ],
+      "stage": "commit",
+      "town_hall": [
+        {
+          "cell": [
+            0,
+            0
+          ],
+          "item": 1
+        },
+        {
+          "cell": [
+            1,
+            0
+          ],
+          "item": 1
+        },
+        {
+          "cell": [
+            0,
+            1
+          ],
+          "item": 1
+        },
+        {
+          "cell": [
+            1,
+            1
+          ],
+          "item": 1
+        }
+      ]
+    },
+    {
+      "degrees": 0,
+      "replace": [
+        {
+          "cell": [
+            -1,
+            -1
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            -1,
+            2
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            0,
+            -1
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            0,
+            2
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            1,
+            -1
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            1,
+            2
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            2,
+            -1
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            2,
+            2
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            -1,
+            0
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            2,
+            0
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            -1,
+            1
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            2,
+            1
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            -2,
+            0
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            3,
+            1
+          ],
+          "item": -1
+        }
+      ],
+      "stage": "load",
+      "town_hall": [
+        {
+          "cell": [
+            0,
+            0
+          ],
+          "item": 1
+        },
+        {
+          "cell": [
+            1,
+            0
+          ],
+          "item": 1
+        },
+        {
+          "cell": [
+            0,
+            1
+          ],
+          "item": 1
+        },
+        {
+          "cell": [
+            1,
+            1
+          ],
+          "item": 1
+        }
+      ]
+    },
+    {
+      "degrees": 90,
+      "replace": [
+        {
+          "cell": [
+            -1,
+            -2
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            -1,
+            1
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            0,
+            -2
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            0,
+            1
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            1,
+            -2
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            1,
+            1
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            2,
+            -2
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            2,
+            1
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            -1,
+            -1
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            2,
+            -1
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            -1,
+            0
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            2,
+            0
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            -2,
+            -1
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            3,
+            0
+          ],
+          "item": -1
+        }
+      ],
+      "stage": "commit",
+      "town_hall": [
+        {
+          "cell": [
+            0,
+            0
+          ],
+          "item": 1
+        },
+        {
+          "cell": [
+            0,
+            -1
+          ],
+          "item": 1
+        },
+        {
+          "cell": [
+            1,
+            0
+          ],
+          "item": 1
+        },
+        {
+          "cell": [
+            1,
+            -1
+          ],
+          "item": 1
+        }
+      ]
+    },
+    {
+      "degrees": 90,
+      "replace": [
+        {
+          "cell": [
+            -1,
+            -2
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            -1,
+            1
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            0,
+            -2
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            0,
+            1
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            1,
+            -2
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            1,
+            1
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            2,
+            -2
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            2,
+            1
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            -1,
+            -1
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            2,
+            -1
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            -1,
+            0
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            2,
+            0
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            -2,
+            -1
+          ],
+          "item": -1
+        },
+        {
+          "cell": [
+            3,
+            0
+          ],
+          "item": -1
+        }
+      ],
+      "stage": "load",
+      "town_hall": [
+        {
+          "cell": [
+            0,
+            0
+          ],
+          "item": 1
+        },
+        {
+          "cell": [
+            0,
+            -1
+          ],
+          "item": 1
+        },
+        {
+          "cell": [
+            1,
+            0
+          ],
+          "item": 1
+        },
+        {
+          "cell": [
+            1,
+            -1
+          ],
+          "item": 1
+        }
+      ]
+    }
+  ],
+  "normal_item_y": 0.0,
+  "renderer": "forward_plus",
+  "schema_version": 1,
+  "success": true,
+  "underlay_item_y": -0.00300000002607703
+}

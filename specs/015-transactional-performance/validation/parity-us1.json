@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "milestone": "US1",
+  "passed": true,
+  "evidence": {
+    "atomic_rejection": "test/unit/simulation/test_transaction_coordinator.gd",
+    "normal_reversed_registration": "test/integration/simulation/test_hourly_transaction_determinism.gd",
+    "legacy_post_commit_visibility": "test/integration/simulation/test_hourly_compatibility.gd",
+    "player_visible_stats": "test/integration/player_ui/test_status_bar_committed_hour.gd",
+    "state_hash": "fa19631150065fb74ba228104e843ae0a59a02e051e913748ce38a17c0733004",
+    "ledger_hash": "adcc840bc5e503c48159d3bca947688aa0699aa56c2554090bbfc8aea0ed5163"
+  },
+  "note": "The canonical state and ledger identities match three equivalent compiled runs and the canonical evaluator run."
+}

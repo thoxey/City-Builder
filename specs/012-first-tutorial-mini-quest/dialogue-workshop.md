@@ -21,13 +21,13 @@ basic actions unobtrusive and reserves the dialogue frame for causal lessons.
 | ID | Trigger | Speaker / expression | Emotional purpose | Gameplay lesson | Format |
 |---|---|---|---|---|---|
 | B01 | Fresh rooted town; no Hall | Ambrose / thoughtful | Welcome the player with calm purpose | Place the free Town Hall first | Compact |
-| B02 | Hall placed; rooted roads < 4 | Ambrose / pleased | Turn ceremony into motion | Add a short road connected to the Hall | Compact |
-| B03 | Rooted roads ≥ 4; < 2 nature kinds | Ambrose / thoughtful | Invite authorship rather than optimisation | Place two different kinds of nature | Compact, progress-aware |
+| B02 | Hall placed; rooted roads < 10 | Ambrose / pleased | Turn ceremony into motion | Build ten road cells rooted at the Hall | Compact |
+| B03 | Rooted roads ≥ 10; < 2 nature kinds | Ambrose / thoughtful | Invite authorship rather than optimisation | Place two different kinds of nature | Compact, progress-aware |
 | B04 | Two kinds; attractiveness ≤ 0 | Ambrose / concerned | Correct without blaming | Beauty must be positive; add/improve nature | Compact, blocker variant |
 | B05 | Nature objective completes | Ambrose / pleased; optional player / thoughtful | Reward causality and make the resource loop legible | Positive Beauty produces Homes demand | Short full exchange |
 | B06 | Homes not affordable yet | Ambrose / thoughtful | Make waiting feel intentional | Homes demand is accruing; show truthful progress | Compact wait variant |
 | B07 | No early home placed and affordable | Ambrose / thoughtful | Channel the new resource into action | Place any legal early home | Compact |
-| B08 | One home exists | Ambrose / concerned | Set up a safe, deliberate experiment | Put a second home directly beside it | Compact |
+| B08 | An eligible home exists; no observed adjacent pair | Ambrose / concerned | Set up a safe, deliberate experiment | Place a home directly beside another home | Compact |
 | B09 | Adjacent home committed | Ambrose / disapproving or surprised; player / concerned | Make the downside memorable, not punitive | Compare actual local/city score; crowding can reduce quality | Short full exchange; actual-result variant |
 | B10 | Adjacency observed; no improvement yet | Ambrose / thoughtful | Convert criticism into agency | Add nature/decoration that improves the affected home | Compact |
 | B11 | Home score improves | Ambrose / pleased | Confirm the player repaired the problem | Decoration offsets local drawbacks | Compact acknowledgement |
@@ -44,13 +44,13 @@ basic actions unobtrusive and reserves the dialogue frame for causal lessons.
 | ID | Explicit placeholder copy |
 |---|---|
 | B01 | `AMBROSE PLACEHOLDER: tell the player to place the Town Hall` |
-| B02 | `AMBROSE PLACEHOLDER: tell the player to build four connected road pieces from the Town Hall` |
+| B02 | `AMBROSE PLACEHOLDER: tell the player to build ten connected road pieces from the Town Hall` |
 | B03 | `AMBROSE PLACEHOLDER: tell the player to place two different kinds of nature` |
 | B04 | `AMBROSE PLACEHOLDER: tell the player to add or improve nature until Beauty is positive` |
 | B05 | `AMBROSE PLACEHOLDER: explain that positive Beauty creates Homes demand` |
 | B06 | `AMBROSE PLACEHOLDER: explain that Homes demand is still accruing` |
 | B07 | `AMBROSE PLACEHOLDER: tell the player to place an early home` |
-| B08 | `AMBROSE PLACEHOLDER: ask the player to place a second home directly beside the first` |
+| B08 | `AMBROSE PLACEHOLDER: ask the player to place a home directly beside another home` |
 | B09 | `AMBROSE PLACEHOLDER: explain the home adjacency result that was actually observed` |
 | B10 | `AMBROSE PLACEHOLDER: ask the player to improve the affected home with nature or decoration` |
 | B11 | `AMBROSE PLACEHOLDER: acknowledge that decoration improved the affected home` |

@@ -1,0 +1,64 @@
+{
+  "captured_before_implementation": true,
+  "source_commit": "d04d3b01c2db7aa76ce54fa5a77f979762283b6d",
+  "command": "Godot --headless --path . -s res://scripts/run_opening_balance_playtest.gd -- --single-seed=19019",
+  "seed": 19019,
+  "semantic_trace_hash": "b31852b709cb8cd2ca442ecacac72464b73f016e1ddd3997d63cc0db1c61525c",
+  "final_state_hash": "49ab87ecfcf0de90cf8e42736e4bd2fa86789b62e9e4908849067ba03fcc160c",
+  "elapsed_hours": 113,
+  "idle_hours": 113,
+  "milestone_hours": {
+    "town_hall_placed": 0,
+    "rooted_grid_complete": 0,
+    "beauty_200": 0,
+    "first_home": 0,
+    "first_work": 0,
+    "first_shop": 0,
+    "terrace_placed": 0,
+    "homes_total_75": 113,
+    "midblock_unlocked": 113
+  },
+  "fixtures": {
+    "opening_tutorial_rooted_road_requirement": 4,
+    "postwar_terrace_lifetime_homes": 25,
+    "pub_lifetime_shops": 10,
+    "grass_pool_variants": ["grass", "grass_trees", "grass_trees_tall"],
+    "location_panel": "routine valid access and zero-valued rows were retained"
+  },
+  "historical_tutorial_runtime_probe": {
+    "source": "isolated git archive of source_commit; only the scenario seed and serialized probe fields were instrumented, with gameplay code unchanged",
+    "command": "Godot --headless --path <isolated-source-commit> -s res://scripts/run_opening_tutorial_scenario.gd",
+    "godot": "4.6.2.stable.official.71f334935",
+    "scenario_id": "first_town/opening_balance",
+    "seed": 19019,
+    "success": true,
+    "road_boundary": {
+      "after_three": {
+        "rooted_road_count": 3,
+        "receipt_present": false,
+        "beat_id": "B02"
+      },
+      "after_four": {
+        "rooted_road_count": 4,
+        "receipt_present": true,
+        "receipt_count": 4,
+        "beat_id": "B03"
+      }
+    },
+    "handoff_count": 1,
+    "event_counts": {
+      "tutorial_opening_beauty_homes": 1,
+      "tutorial_opening_home_adjacency": 1,
+      "tutorial_opening_work_participation": 1,
+      "tutorial_opening_complete": 1
+    },
+    "verification": {
+      "early_action_reconciled": true,
+      "duplicate_reconcile_idempotent": true,
+      "demolition_non_regression": true,
+      "cold_load_parity": true
+    },
+    "state_hash": "616cca4fbba7b1c6cea5e87d8b5f561bde2785399c63479141c1898daf07ab79",
+    "failures": []
+  }
+}

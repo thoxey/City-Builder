@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "captured": "2026-09-06",
+  "git_head": "d04d3b01c2db7aa76ce54fa5a77f979762283b6d",
+  "branch": "codex/009-performance-foundation",
+  "dirty_tree_fingerprint": "84e9e1436578c37f605fcff0c067a73b9af24317",
+  "engine_version": "4.6.2.stable.official.71f334935",
+  "build_mode": "editor_debug_headless",
+  "reference_machine_id": "Toms-MacBook-Pro.local-darwin-25.5.0-arm64",
+  "scenario_id": "first_town/rebalance",
+  "seed": 6066,
+  "workload": {"buildings": 135, "road_cells": 75, "residents": 140, "hours": 240},
+  "percentile_rule": "nearest_rank_ceil",
+  "run_count": 3,
+  "runs": [
+    {"run": 1, "scenario_elapsed_usec": 47422841, "max_hour_usec": 505230, "max_migration_usec": 505230, "total_tick_usec": 33418594, "state_hash": "97f9a572217d4dfa12de8feb8f9a66589aa25fa416aaf48e10a12450712bf83b"},
+    {"run": 2, "scenario_elapsed_usec": 46924563, "max_hour_usec": 479610, "max_migration_usec": 479610, "total_tick_usec": 33065994, "state_hash": "97f9a572217d4dfa12de8feb8f9a66589aa25fa416aaf48e10a12450712bf83b"},
+    {"run": 3, "scenario_elapsed_usec": 46626088, "max_hour_usec": 501692, "max_migration_usec": 501692, "total_tick_usec": 32832612, "state_hash": "97f9a572217d4dfa12de8feb8f9a66589aa25fa416aaf48e10a12450712bf83b"}
+  ],
+  "rendered_planning_observation": {"median_process_usec": 18250, "max_process_usec": 578000, "mean_fps": 54.4, "population": 140, "active_cars": 20, "pending_cars": 25},
+  "baseline_test": {"scripts": 116, "tests": 566, "passing": 566, "assertions": 3751, "elapsed_seconds": 85.087}
+}

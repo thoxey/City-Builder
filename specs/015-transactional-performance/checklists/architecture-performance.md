@@ -53,8 +53,11 @@
 - [x] CHK030 Is the bounded, non-save retention policy for detailed ledgers documented without implying permanent player history? [Assumption, Research §Decision 6]
 - [x] CHK031 Is rendering optimization constrained to attributed evidence and current visual contracts? [Scope, Research §Decision 13]
 - [x] CHK032 Are baseline reproduction caveats and missing raw metadata explicitly identified before implementation? [Dependency, Baseline §Reproduction caveat]
+- [x] CHK033 Are shared-city authority, Community resident authority, and DataMap persistence responsibilities distinguished without creating two mutable models? [Consistency, Spec §FR-031, Community Runtime Contract §Ownership]
+- [x] CHK034 Are compiled runtime indexes explicitly rebuildable, revision-keyed, non-saveable, non-hashed, and unavailable to presenters? [Boundary, Spec §FR-032, Community Runtime Contract §Compilation Boundary]
+- [x] CHK035 Are operational evaluation, explanation diagnostics, and UI view models independently testable with parity and mutation-isolation gates? [Coverage, Spec §FR-033–FR-035/SC-012, Community Runtime Contract §Required Gates]
 
 ## Notes
 
-- All 32 requirement-quality checks pass in the pre-implementation review.
+- All 35 requirement-quality checks pass in the pre-implementation review.
 - This checklist evaluates the planning artifacts; runtime behavior is validated later by `tasks.md` and `quickstart.md`.

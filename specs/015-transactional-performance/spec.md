@@ -153,6 +153,11 @@ As a developer, I can detect regressions at the correct boundary because simulat
 - **FR-028**: Performance data, transaction diagnostics, and presentation diagnostics MUST NOT affect saved gameplay state or deterministic hashes.
 - **FR-029**: Debug logging in hourly, per-frame, placement, and presentation hot paths MUST be disabled or aggregated by default and MUST be explicitly opt-in.
 - **FR-030**: Each delivery story MUST preserve a compatibility adapter until all existing consumers have moved to the new contract and parity evidence passes.
+- **FR-031**: `GameState`/Builder MUST remain the authority for shared placed-city state, Community MUST remain the live authority for resident simulation, and `DataMap` MUST remain a persistence projection rather than an independently mutable resident model.
+- **FR-032**: Authored Community dictionaries MAY be compiled into a Community-owned typed runtime index only when that index is revision-keyed, deterministically rebuildable, absent from saves and hashes, and inaccessible to presenters.
+- **FR-033**: Normal Community evaluation MUST return compact domain results without constructing player-facing effect or view-model dictionaries; rich explanations MUST be produced through an explicit bounded projection.
+- **FR-034**: Community operational and diagnostic projections MUST be detached and read-only, and UI code MUST NOT calculate Community outcomes or write Community, `GameState`, or `DataMap` fields.
+- **FR-035**: The compiled and canonical Community evaluation paths MUST preserve effect applicability, ordering, stacking, rounding, resident outcomes, migration decisions, and deterministic replay exactly.
 
 ### Key Entities
 
@@ -185,6 +190,7 @@ As a developer, I can detect regressions at the correct boundary because simulat
 - **SC-009**: The rendered reference town sustains at least 60 observed frames per second at the median, with process time at most 16.7 ms median, 25 ms at the 95th percentile, and 50 ms maximum outside loading or explicit diagnostic capture.
 - **SC-010**: All transaction, invalidation, cache, ordering, parity, deterministic replay, focused performance, full automated Godot, and canonical full-city scenario gates pass before removal of compatibility adapters.
 - **SC-011**: Profiling evidence attributes at least 95% of measured main-thread frame time to named boundaries or an explicit engine/unattributed category.
+- **SC-012**: Canonical-versus-compiled Community parity, rebuild-versus-incremental index parity, non-save/hash checks, and detached-projection mutation tests pass for every existing Community fixture and canonical scenario.
 
 ## Assumptions
 

@@ -1,0 +1,26 @@
+{
+  "schema_version": 2,
+  "captured": "2026-09-06",
+  "all_passed": true,
+  "headless_report": "specs/015-transactional-performance/validation/benchmark-headless.json",
+  "rendered_report": "specs/015-transactional-performance/validation/benchmark-rendered.json",
+  "headless": {
+    "scenario_seconds": [9.599646, 9.724822, 9.814746],
+    "hour_p95_ms": [13.732, 13.663, 14.404],
+    "hour_max_ms": [27.017, 26.511, 27.668],
+    "state_hashes_match": true,
+    "ledger_hashes_match": true
+  },
+  "rendered": {
+    "median_fps": [60.3609585320215, 60.3500301750151, 60.2663773880552],
+    "frame_median_ms": [16.567, 16.570, 16.593],
+    "frame_p95_ms": [16.965, 16.885, 16.891],
+    "frame_max_ms": [19.272, 16.990, 34.456],
+    "explicit_engine_unattributed_category": true
+  },
+  "isolated": {
+    "community_ui_500_residents_ms": 13.497,
+    "placement_quote_500_residents_135_sources_median_ms": 10.591,
+    "entity_loop_512_people_256_vehicle_slots_p95_under_ms": 8.0
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "all_passed": true,
+  "environment": {
+    "build_mode": "debug",
+    "display_server": "macOS",
+    "engine_version": "4.6.2-stable (official)",
+    "platform": "macOS",
+    "renderer": "forward_plus"
+  },
+  "exclusions": {
+    "diagnostic_capture": true,
+    "load": true,
+    "warmup_frames": 120
+  },
+  "failures": [],
+  "percentile_rule": "nearest-rank ceil(p*n), one-based",
+  "reproduce_command": "Godot --path /Users/tom/Starter-Kit-City-Builder/ -s res://scripts/run_rendered_performance_profile.gd",
+  "run_count": 3,
+  "runs": [
+    {
+      "engine_unattributed": {
+        "median_usec": 16233,
+        "p95_usec": 16611
+      },
+      "failures": [],
+      "frame_accounting": {
+        "coverage_ratio": 1.0,
+        "unattributed_ratio": 0.978275345709421
+      },
+      "frame_total": {
+        "max_usec": 19272,
+        "median_fps": 60.3609585320215,
+        "median_usec": 16567,
+        "p95_usec": 16965,
+        "sample_count": 180
+      },
+      "ledger_hash": "adcc840bc5e503c48159d3bca947688aa0699aa56c2554090bbfc8aea0ed5163",
+      "measured_frames": 180,
+      "passed": true,
+      "run": 1,
+      "state_hash": "fa19631150065fb74ba228104e843ae0a59a02e051e913748ce38a17c0733004",
+      "warmup_frames": 120,
+      "workload": {
+        "buildings": 135,
+        "people_instances": 140,
+        "residents": 140,
+        "ui_presenters": 4,
+        "vehicles": 0
+      }
+    },
+    {
+      "engine_unattributed": {
+        "median_usec": 16231,
+        "p95_usec": 16565
+      },
+      "failures": [],
+      "frame_accounting": {
+        "coverage_ratio": 1.0,
+        "unattributed_ratio": 0.97944777627942
+      },
+      "frame_total": {
+        "max_usec": 16990,
+        "median_fps": 60.3500301750151,
+        "median_usec": 16570,
+        "p95_usec": 16885,
+        "sample_count": 180
+      },
+      "ledger_hash": "adcc840bc5e503c48159d3bca947688aa0699aa56c2554090bbfc8aea0ed5163",
+      "measured_frames": 180,
+      "passed": true,
+      "run": 2,
+      "state_hash": "fa19631150065fb74ba228104e843ae0a59a02e051e913748ce38a17c0733004",
+      "warmup_frames": 120,
+      "workload": {
+        "buildings": 135,
+        "people_instances": 140,
+        "residents": 140,
+        "ui_presenters": 4,
+        "vehicles": 0
+      }
+    },
+    {
+      "engine_unattributed": {
+        "median_usec": 16260,
+        "p95_usec": 16549
+      },
+      "failures": [],
+      "frame_accounting": {
+        "coverage_ratio": 1.0,
+        "unattributed_ratio": 0.978175926552813
+      },
+      "frame_total": {
+        "max_usec": 34456,
+        "median_fps": 60.2663773880552,
+        "median_usec": 16593,
+        "p95_usec": 16891,
+        "sample_count": 180
+      },
+      "ledger_hash": "adcc840bc5e503c48159d3bca947688aa0699aa56c2554090bbfc8aea0ed5163",
+      "measured_frames": 180,
+      "passed": true,
+      "run": 3,
+      "state_hash": "fa19631150065fb74ba228104e843ae0a59a02e051e913748ce38a17c0733004",
+      "warmup_frames": 120,
+      "workload": {
+        "buildings": 135,
+        "people_instances": 140,
+        "residents": 140,
+        "ui_presenters": 4,
+        "vehicles": 0
+      }
+    }
+  ],
+  "schema_version": 2,
+  "workload_id": "transactional_reference_town_135x240"
+}

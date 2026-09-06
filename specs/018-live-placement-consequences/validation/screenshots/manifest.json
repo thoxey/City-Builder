@@ -1,0 +1,46 @@
+{
+  "captures": [
+    {
+      "file": "1280x720-valid-location.png",
+      "state": "valid-location",
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "1280x720-replacement-uncertain.png",
+      "state": "replacement-uncertain",
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "1920x1080-valid-location.png",
+      "state": "valid-location",
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "file": "1920x1080-replacement-uncertain.png",
+      "state": "replacement-uncertain",
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "file": "1920x1080-invalid-location.png",
+      "state": "invalid-location",
+      "viewport": [
+        1920,
+        1080
+      ]
+    }
+  ],
+  "feature": "018-live-placement-consequences",
+  "renderer": "normal"
+}

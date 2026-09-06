@@ -1,0 +1,5113 @@
+{
+  "baseline": {
+    "display_server": "macOS",
+    "engine_version": "4.6.2-stable (official)",
+    "renderer": "forward_plus",
+    "shot_viewport": {
+      "height": 360.0,
+      "width": 640.0
+    }
+  },
+  "captured_count": 31,
+  "catalogue_count": 31,
+  "catalogue_source": "BuildingCatalog.get_summary()",
+  "display_server": "macOS",
+  "effective_underlay_y": -0.008,
+  "engine_version": "4.6.2-stable (official)",
+  "feature": "020-building-ground-contact",
+  "ground_map_y": -0.005,
+  "phase": "after",
+  "renderer": "forward_plus",
+  "rows": [
+    {
+      "after_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_crazy_golf.png"
+      ],
+      "approved": true,
+      "before_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/before/building_crazy_golf.png"
+      ],
+      "building_id": "building_crazy_golf",
+      "definition_path": "res://data/buildings/unique/building_crazy_golf.json",
+      "first_mesh": {
+        "materials": [
+          {
+            "class": "StandardMaterial3D",
+            "name": "material.001",
+            "resource_path": "res://models/city-builder/building_crazy_golf.glb::StandardMaterial3D_7sttd",
+            "surface": 0
+          }
+        ],
+        "readable": true,
+        "resource_name": "building_crazy_golf_output_unwrapped",
+        "resource_path": "res://models/city-builder/building_crazy_golf.glb::ArrayMesh_vf1j5",
+        "surface_count": 1,
+        "texture_bindings": [
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_crazy_golf_Baked_BaseColor.png",
+            "slot": "albedo_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_crazy_golf_Baked_MetallicRoughness.png",
+            "slot": "metallic_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_crazy_golf_Baked_MetallicRoughness.png",
+            "slot": "roughness_texture",
+            "surface": 0,
+            "width": 2048
+          }
+        ],
+        "vertex_count": 42765
+      },
+      "first_mesh_readable": true,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "materials": [
+        {
+          "class": "StandardMaterial3D",
+          "name": "material.001",
+          "resource_path": "res://models/city-builder/building_crazy_golf.glb::StandardMaterial3D_7sttd",
+          "surface": 0
+        }
+      ],
+      "model_hash_after": "e6d421a49f466b2d542db1fdf992d3d8f1454adad641009cc630b1cf47e58c57",
+      "model_hash_before": "e6d421a49f466b2d542db1fdf992d3d8f1454adad641009cc630b1cf47e58c57",
+      "model_offset": [
+        0.0000244840521190781,
+        0.0,
+        0.0000219954126805533
+      ],
+      "model_path": "res://models/city-builder/building_crazy_golf.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 0.500029506,
+      "near_ground_bounds": {
+        "band_max_y": 0.04,
+        "extent": [
+          0.999832987785339,
+          0.0399968549609184,
+          0.999944984912872
+        ],
+        "max": [
+          0.499985009431839,
+          0.0399968549609184,
+          0.499944984912872
+        ],
+        "min": [
+          -0.499848008155823,
+          0.0,
+          -0.5
+        ],
+        "point_count": 7479
+      },
+      "overall_bounds": {
+        "extent": [
+          0.999969959259033,
+          0.224881261587143,
+          1.0
+        ],
+        "max": [
+          0.499984979629517,
+          0.224881261587143,
+          0.5
+        ],
+        "min": [
+          -0.499984979629517,
+          0.0,
+          -0.5
+        ]
+      },
+      "rationale": "The bordered course slab reaches the full 1x1 footprint at ground height in all four rotations.",
+      "rotation_results": [
+        {
+          "degrees": 0,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_crazy_golf.png",
+          "quadrant": 0,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 90,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_crazy_golf.png",
+          "quadrant": 1,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 180,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_crazy_golf.png",
+          "quadrant": 2,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 270,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_crazy_golf.png",
+          "quadrant": 3,
+          "verdict": "pass"
+        }
+      ],
+      "source_hash_after": "81e91db69a848757947d20e8a7d105fca3687e7d7a8693c40327f9821c120bcd",
+      "source_hash_before": "81e91db69a848757947d20e8a7d105fca3687e7d7a8693c40327f9821c120bcd",
+      "source_model_path": "artifacts/building-concepts/meshy-production/runtime-v1/models/building_crazy_golf.glb",
+      "status": "pass",
+      "texture_bindings": [
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_crazy_golf_Baked_BaseColor.png",
+          "slot": "albedo_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_crazy_golf_Baked_MetallicRoughness.png",
+          "slot": "metallic_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_crazy_golf_Baked_MetallicRoughness.png",
+          "slot": "roughness_texture",
+          "surface": 0,
+          "width": 2048
+        }
+      ],
+      "transform_source": "res://artifacts/building-concepts/meshy-production/runtime-v1/results.json"
+    },
+    {
+      "after_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_duck_pond.png"
+      ],
+      "approved": true,
+      "before_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/before/building_duck_pond.png"
+      ],
+      "building_id": "building_duck_pond",
+      "definition_path": "res://data/buildings/nature/building_duck_pond.json",
+      "first_mesh": {
+        "materials": [
+          {
+            "class": "StandardMaterial3D",
+            "name": "material.001",
+            "resource_path": "res://models/city-builder/building_duck_pond.glb::StandardMaterial3D_rg43a",
+            "surface": 0
+          }
+        ],
+        "readable": true,
+        "resource_name": "building_duck_pond_output_unwrapped",
+        "resource_path": "res://models/city-builder/building_duck_pond.glb::ArrayMesh_h5frf",
+        "surface_count": 1,
+        "texture_bindings": [
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_duck_pond_Baked_BaseColor.png",
+            "slot": "albedo_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_duck_pond_Baked_MetallicRoughness.png",
+            "slot": "metallic_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_duck_pond_Baked_MetallicRoughness.png",
+            "slot": "roughness_texture",
+            "surface": 0,
+            "width": 2048
+          }
+        ],
+        "vertex_count": 56850
+      },
+      "first_mesh_readable": true,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "materials": [
+        {
+          "class": "StandardMaterial3D",
+          "name": "material.001",
+          "resource_path": "res://models/city-builder/building_duck_pond.glb::StandardMaterial3D_rg43a",
+          "surface": 0
+        }
+      ],
+      "model_hash_after": "03f54a8f94588e8998a2cf8df85194356323add51a82fbf1bcefccd3e4a96d74",
+      "model_hash_before": "03f54a8f94588e8998a2cf8df85194356323add51a82fbf1bcefccd3e4a96d74",
+      "model_offset": [
+        -0.00000473866657557664,
+        0.0,
+        -0.00000424691825173795
+      ],
+      "model_path": "res://models/city-builder/building_duck_pond.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 0.500010267,
+      "near_ground_bounds": {
+        "band_max_y": 0.0400000074505806,
+        "extent": [
+          0.999936997890472,
+          0.0399958491325378,
+          1.0
+        ],
+        "max": [
+          0.499968498945236,
+          0.0399958565831184,
+          0.499999970197678
+        ],
+        "min": [
+          -0.499968498945236,
+          0.00000000745058059692383,
+          -0.5
+        ],
+        "point_count": 3607
+      },
+      "overall_bounds": {
+        "extent": [
+          0.999936997890472,
+          0.242154955863953,
+          1.0
+        ],
+        "max": [
+          0.499968498945236,
+          0.242154955863953,
+          0.5
+        ],
+        "min": [
+          -0.499968498945236,
+          0.00000000745058059692383,
+          -0.5
+        ]
+      },
+      "rationale": "The opaque pond surround covers the full 1x1 footprint; retaining replace prevents grass bleed through the water asset.",
+      "rotation_results": [
+        {
+          "degrees": 0,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_duck_pond.png",
+          "quadrant": 0,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 90,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_duck_pond.png",
+          "quadrant": 1,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 180,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_duck_pond.png",
+          "quadrant": 2,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 270,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_duck_pond.png",
+          "quadrant": 3,
+          "verdict": "pass"
+        }
+      ],
+      "source_hash_after": "4770f0ece26e6964f02ffc557501cbc5395a2df988cecf19fbbe0e202c5d2a60",
+      "source_hash_before": "4770f0ece26e6964f02ffc557501cbc5395a2df988cecf19fbbe0e202c5d2a60",
+      "source_model_path": "artifacts/building-concepts/meshy-production/runtime-v1/models/building_duck_pond.glb",
+      "status": "pass",
+      "texture_bindings": [
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_duck_pond_Baked_BaseColor.png",
+          "slot": "albedo_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_duck_pond_Baked_MetallicRoughness.png",
+          "slot": "metallic_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_duck_pond_Baked_MetallicRoughness.png",
+          "slot": "roughness_texture",
+          "surface": 0,
+          "width": 2048
+        }
+      ],
+      "transform_source": "res://artifacts/building-concepts/meshy-production/runtime-v1/results.json"
+    },
+    {
+      "after_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1280-close/building_garage.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1280-wide/building_garage.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1920-close/building_garage.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1920-wide/building_garage.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_garage.png"
+      ],
+      "approved": true,
+      "before_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/before/building_garage.png"
+      ],
+      "building_id": "building_garage",
+      "definition_path": "res://data/buildings/generic/building_garage.json",
+      "first_mesh": {
+        "materials": [
+          {
+            "class": "StandardMaterial3D",
+            "name": "material.001",
+            "resource_path": "res://models/city-builder/building_garage.glb::StandardMaterial3D_aj5mo",
+            "surface": 0
+          }
+        ],
+        "readable": true,
+        "resource_name": "building_garage_output_unwrapped",
+        "resource_path": "res://models/city-builder/building_garage.glb::ArrayMesh_dodpy",
+        "surface_count": 1,
+        "texture_bindings": [
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_garage_Baked_BaseColor.png",
+            "slot": "albedo_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_garage_Baked_MetallicRoughness.png",
+            "slot": "metallic_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_garage_Baked_MetallicRoughness.png",
+            "slot": "roughness_texture",
+            "surface": 0,
+            "width": 2048
+          }
+        ],
+        "vertex_count": 31782
+      },
+      "first_mesh_readable": true,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "materials": [
+        {
+          "class": "StandardMaterial3D",
+          "name": "material.001",
+          "resource_path": "res://models/city-builder/building_garage.glb::StandardMaterial3D_aj5mo",
+          "surface": 0
+        }
+      ],
+      "model_hash_after": "93089e3e52ecda540e913316d7578ee8a9e72b194d9ee9106211863e9012e2dc",
+      "model_hash_before": "93089e3e52ecda540e913316d7578ee8a9e72b194d9ee9106211863e9012e2dc",
+      "model_offset": [
+        -0.0000399993550672662,
+        0.0,
+        -0.000201025075512007
+      ],
+      "model_path": "res://models/city-builder/building_garage.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 0.500058002,
+      "near_ground_bounds": {
+        "band_max_y": 0.04,
+        "extent": [
+          0.999947011470795,
+          0.0399987027049065,
+          0.879898071289062
+        ],
+        "max": [
+          0.499947011470795,
+          0.0399987027049065,
+          0.439949035644531
+        ],
+        "min": [
+          -0.5,
+          0.0,
+          -0.439949005842209
+        ],
+        "point_count": 10468
+      },
+      "overall_bounds": {
+        "extent": [
+          1.0,
+          0.322665929794312,
+          0.879898071289062
+        ],
+        "max": [
+          0.5,
+          0.322665929794312,
+          0.439949065446854
+        ],
+        "min": [
+          -0.5,
+          0.0,
+          -0.439949005842209
+        ]
+      },
+      "rationale": "The correctly sized garage and hardstanding fill one axis but leave a persistent exposed strip on the 0.880-cell axis; uniform scale would overflow.",
+      "rotation_results": [
+        {
+          "degrees": 0,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_garage.png",
+          "quadrant": 0,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 90,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_garage.png",
+          "quadrant": 1,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 180,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_garage.png",
+          "quadrant": 2,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 270,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_garage.png",
+          "quadrant": 3,
+          "verdict": "pass"
+        }
+      ],
+      "source_hash_after": "cc83035b2763e80da87d78dcd0c61364fb6436f2a980de01ca7f8218fd2b4b46",
+      "source_hash_before": "cc83035b2763e80da87d78dcd0c61364fb6436f2a980de01ca7f8218fd2b4b46",
+      "source_model_path": "artifacts/building-concepts/meshy-production/runtime-v1/models/building_garage.glb",
+      "status": "grass_underlay",
+      "texture_bindings": [
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_garage_Baked_BaseColor.png",
+          "slot": "albedo_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_garage_Baked_MetallicRoughness.png",
+          "slot": "metallic_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_garage_Baked_MetallicRoughness.png",
+          "slot": "roughness_texture",
+          "surface": 0,
+          "width": 2048
+        }
+      ],
+      "transform_source": "res://artifacts/building-concepts/meshy-production/runtime-v1/results.json"
+    },
+    {
+      "after_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1280-close/building_lumber_mill.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1280-wide/building_lumber_mill.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1920-close/building_lumber_mill.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1920-wide/building_lumber_mill.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_lumber_mill.png"
+      ],
+      "approved": true,
+      "before_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/before/building_lumber_mill.png"
+      ],
+      "building_id": "building_lumber_mill",
+      "definition_path": "res://data/buildings/unique/building_lumber_mill.json",
+      "first_mesh": {
+        "materials": [
+          {
+            "class": "StandardMaterial3D",
+            "name": "material.001",
+            "resource_path": "res://models/city-builder/building_lumber_mill.glb::StandardMaterial3D_ou5cs",
+            "surface": 0
+          }
+        ],
+        "readable": true,
+        "resource_name": "building_lumber_mill_output_unwrapped",
+        "resource_path": "res://models/city-builder/building_lumber_mill.glb::ArrayMesh_63vn7",
+        "surface_count": 1,
+        "texture_bindings": [
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_lumber_mill_Baked_BaseColor.png",
+            "slot": "albedo_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_lumber_mill_Baked_MetallicRoughness.png",
+            "slot": "metallic_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_lumber_mill_Baked_MetallicRoughness.png",
+            "slot": "roughness_texture",
+            "surface": 0,
+            "width": 2048
+          }
+        ],
+        "vertex_count": 61803
+      },
+      "first_mesh_readable": true,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "materials": [
+        {
+          "class": "StandardMaterial3D",
+          "name": "material.001",
+          "resource_path": "res://models/city-builder/building_lumber_mill.glb::StandardMaterial3D_ou5cs",
+          "surface": 0
+        }
+      ],
+      "model_hash_after": "850579c25025142f1b556eb3b0b22f8a5b27785382817634945d96410afefc74",
+      "model_hash_before": "850579c25025142f1b556eb3b0b22f8a5b27785382817634945d96410afefc74",
+      "model_offset": [
+        0.000164050899911672,
+        0.0,
+        0.000120942291687243
+      ],
+      "model_path": "res://models/city-builder/building_lumber_mill.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 0.525803316,
+      "near_ground_bounds": {
+        "band_max_y": 0.04,
+        "extent": [
+          1.0,
+          0.0399962812662125,
+          0.885698795318604
+        ],
+        "max": [
+          0.5,
+          0.0399962812662125,
+          0.442849397659302
+        ],
+        "min": [
+          -0.500000059604645,
+          0.0,
+          -0.442849427461624
+        ],
+        "point_count": 2844
+      },
+      "overall_bounds": {
+        "extent": [
+          1.00000011920929,
+          0.374379813671112,
+          0.885698795318604
+        ],
+        "max": [
+          0.500000059604645,
+          0.374379813671112,
+          0.442849367856979
+        ],
+        "min": [
+          -0.500000059604645,
+          0.0,
+          -0.442849427461624
+        ]
+      },
+      "rationale": "The centred fenced yard fills one axis but leaves an exposed 0.886-cell short-axis band; a grass continuation is safer than scaling the architecture.",
+      "rotation_results": [
+        {
+          "degrees": 0,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_lumber_mill.png",
+          "quadrant": 0,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 90,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_lumber_mill.png",
+          "quadrant": 1,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 180,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_lumber_mill.png",
+          "quadrant": 2,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 270,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_lumber_mill.png",
+          "quadrant": 3,
+          "verdict": "pass"
+        }
+      ],
+      "source_hash_after": "469a5c528ff094bb435657c18ff743441a6d4c7aca44837ce645bcfda6eef50c",
+      "source_hash_before": "469a5c528ff094bb435657c18ff743441a6d4c7aca44837ce645bcfda6eef50c",
+      "source_model_path": "artifacts/building-concepts/meshy-production/runtime-v1/models/building_lumber_mill.glb",
+      "status": "grass_underlay",
+      "texture_bindings": [
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_lumber_mill_Baked_BaseColor.png",
+          "slot": "albedo_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_lumber_mill_Baked_MetallicRoughness.png",
+          "slot": "metallic_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_lumber_mill_Baked_MetallicRoughness.png",
+          "slot": "roughness_texture",
+          "surface": 0,
+          "width": 2048
+        }
+      ],
+      "transform_source": "res://artifacts/building-concepts/meshy-production/runtime-v1/results.json"
+    },
+    {
+      "after_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_members_club.png"
+      ],
+      "approved": true,
+      "before_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/before/building_members_club.png"
+      ],
+      "building_id": "building_members_club",
+      "definition_path": "res://data/buildings/unique/building_members_club.json",
+      "first_mesh": {
+        "materials": [
+          {
+            "class": "StandardMaterial3D",
+            "name": "material.001",
+            "resource_path": "res://models/city-builder/building_members_club.glb::StandardMaterial3D_g37pf",
+            "surface": 0
+          }
+        ],
+        "readable": true,
+        "resource_name": "building_members_club_output_unwrapped",
+        "resource_path": "res://models/city-builder/building_members_club.glb::ArrayMesh_8pchg",
+        "surface_count": 1,
+        "texture_bindings": [
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_members_club_Baked_BaseColor.png",
+            "slot": "albedo_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_members_club_Baked_MetallicRoughness.png",
+            "slot": "metallic_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_members_club_Baked_MetallicRoughness.png",
+            "slot": "roughness_texture",
+            "surface": 0,
+            "width": 2048
+          }
+        ],
+        "vertex_count": 72650
+      },
+      "first_mesh_readable": true,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "materials": [
+        {
+          "class": "StandardMaterial3D",
+          "name": "material.001",
+          "resource_path": "res://models/city-builder/building_members_club.glb::StandardMaterial3D_g37pf",
+          "surface": 0
+        }
+      ],
+      "model_hash_after": "1155b121f46617b5383e8f900225feb2d8fb1a8e6f0aa1a7c1b860e2e7826ad3",
+      "model_hash_before": "1155b121f46617b5383e8f900225feb2d8fb1a8e6f0aa1a7c1b860e2e7826ad3",
+      "model_offset": [
+        -0.0000172267245943658,
+        0.0,
+        -0.0000230087061936501
+      ],
+      "model_path": "res://models/city-builder/building_members_club.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 0.500028522,
+      "near_ground_bounds": {
+        "band_max_y": 0.0643418395519257,
+        "extent": [
+          0.999967575073242,
+          0.0643320679664612,
+          1.0
+        ],
+        "max": [
+          0.499983787536621,
+          0.0643320381641388,
+          0.5
+        ],
+        "min": [
+          -0.499983787536621,
+          -0.0000000298023223876953,
+          -0.500000059604645
+        ],
+        "point_count": 4521
+      },
+      "overall_bounds": {
+        "extent": [
+          0.999967575073242,
+          0.804273366928101,
+          1.0
+        ],
+        "max": [
+          0.499983787536621,
+          0.804273366928101,
+          0.499999940395355
+        ],
+        "min": [
+          -0.499983787536621,
+          -0.0000000298023223876953,
+          -0.500000059604645
+        ]
+      },
+      "rationale": "The complete hardstanding and curb slab reaches the footprint boundary across all rotations.",
+      "rotation_results": [
+        {
+          "degrees": 0,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_members_club.png",
+          "quadrant": 0,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 90,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_members_club.png",
+          "quadrant": 1,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 180,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_members_club.png",
+          "quadrant": 2,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 270,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_members_club.png",
+          "quadrant": 3,
+          "verdict": "pass"
+        }
+      ],
+      "source_hash_after": "4523db50f29025c584b10b53b92506431dba8dcd856d1b1f33e15742dab80445",
+      "source_hash_before": "4523db50f29025c584b10b53b92506431dba8dcd856d1b1f33e15742dab80445",
+      "source_model_path": "artifacts/building-concepts/meshy-production/runtime-v1/models/building_members_club.glb",
+      "status": "pass",
+      "texture_bindings": [
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_members_club_Baked_BaseColor.png",
+          "slot": "albedo_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_members_club_Baked_MetallicRoughness.png",
+          "slot": "metallic_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_members_club_Baked_MetallicRoughness.png",
+          "slot": "roughness_texture",
+          "surface": 0,
+          "width": 2048
+        }
+      ],
+      "transform_source": "res://artifacts/building-concepts/meshy-production/runtime-v1/results.json"
+    },
+    {
+      "after_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_nature_patch.png"
+      ],
+      "approved": true,
+      "before_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/before/building_nature_patch.png"
+      ],
+      "building_id": "building_nature_patch",
+      "definition_path": "res://data/buildings/nature/building_nature_patch.json",
+      "first_mesh": {
+        "materials": [
+          {
+            "class": "StandardMaterial3D",
+            "name": "material.001",
+            "resource_path": "res://models/city-builder/building_nature_patch.glb::StandardMaterial3D_fiy37",
+            "surface": 0
+          }
+        ],
+        "readable": true,
+        "resource_name": "building_nature_patch_output_unwrapped",
+        "resource_path": "res://models/city-builder/building_nature_patch.glb::ArrayMesh_tauml",
+        "surface_count": 1,
+        "texture_bindings": [
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_nature_patch_Baked_BaseColor.png",
+            "slot": "albedo_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_nature_patch_Baked_MetallicRoughness.png",
+            "slot": "metallic_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_nature_patch_Baked_MetallicRoughness.png",
+            "slot": "roughness_texture",
+            "surface": 0,
+            "width": 2048
+          }
+        ],
+        "vertex_count": 94972
+      },
+      "first_mesh_readable": true,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "materials": [
+        {
+          "class": "StandardMaterial3D",
+          "name": "material.001",
+          "resource_path": "res://models/city-builder/building_nature_patch.glb::StandardMaterial3D_fiy37",
+          "surface": 0
+        }
+      ],
+      "model_hash_after": "40514f7e3010622135b1a26050896c473cf6b12d0ec7e5f0e462d239505d3eeb",
+      "model_hash_before": "40514f7e3010622135b1a26050896c473cf6b12d0ec7e5f0e462d239505d3eeb",
+      "model_offset": [
+        -0.000153830987983383,
+        0.0,
+        -0.000106037390651181
+      ],
+      "model_path": "res://models/city-builder/building_nature_patch.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 0.500214326,
+      "near_ground_bounds": {
+        "band_max_y": 0.04,
+        "extent": [
+          1.0,
+          0.0386194661259651,
+          0.998787999153137
+        ],
+        "max": [
+          0.5,
+          0.0386194661259651,
+          0.499393999576569
+        ],
+        "min": [
+          -0.5,
+          0.0,
+          -0.499393999576569
+        ],
+        "point_count": 1041
+      },
+      "overall_bounds": {
+        "extent": [
+          1.0,
+          0.30851411819458,
+          0.998787999153137
+        ],
+        "max": [
+          0.5,
+          0.30851411819458,
+          0.499393999576569
+        ],
+        "min": [
+          -0.5,
+          0.0,
+          -0.499393999576569
+        ]
+      },
+      "rationale": "The authored vegetated base is effectively full-cell and visually continuous to every edge.",
+      "rotation_results": [
+        {
+          "degrees": 0,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_nature_patch.png",
+          "quadrant": 0,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 90,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_nature_patch.png",
+          "quadrant": 1,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 180,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_nature_patch.png",
+          "quadrant": 2,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 270,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_nature_patch.png",
+          "quadrant": 3,
+          "verdict": "pass"
+        }
+      ],
+      "source_hash_after": "ff81bd39a7f742a73293590fe05be743945aa1e80a43274281cab3079ae20622",
+      "source_hash_before": "ff81bd39a7f742a73293590fe05be743945aa1e80a43274281cab3079ae20622",
+      "source_model_path": "artifacts/building-concepts/meshy-production/runtime-v1/models/building_nature_patch.glb",
+      "status": "pass",
+      "texture_bindings": [
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_nature_patch_Baked_BaseColor.png",
+          "slot": "albedo_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_nature_patch_Baked_MetallicRoughness.png",
+          "slot": "metallic_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_nature_patch_Baked_MetallicRoughness.png",
+          "slot": "roughness_texture",
+          "surface": 0,
+          "width": 2048
+        }
+      ],
+      "transform_source": "res://artifacts/building-concepts/meshy-production/runtime-v1/results.json"
+    },
+    {
+      "after_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1280-close/building_nightclub.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1280-wide/building_nightclub.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1920-close/building_nightclub.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1920-wide/building_nightclub.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_nightclub.png"
+      ],
+      "approved": true,
+      "before_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/before/building_nightclub.png"
+      ],
+      "building_id": "building_nightclub",
+      "definition_path": "res://data/buildings/unique/building_nightclub.json",
+      "first_mesh": {
+        "materials": [
+          {
+            "class": "StandardMaterial3D",
+            "name": "material.001",
+            "resource_path": "res://models/city-builder/building_nightclub.glb::StandardMaterial3D_i7bkj",
+            "surface": 0
+          }
+        ],
+        "readable": true,
+        "resource_name": "building_nightclub_output_unwrapped",
+        "resource_path": "res://models/city-builder/building_nightclub.glb::ArrayMesh_2vh37",
+        "surface_count": 1,
+        "texture_bindings": [
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_nightclub_Baked_BaseColor.png",
+            "slot": "albedo_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_nightclub_Baked_MetallicRoughness.png",
+            "slot": "metallic_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_nightclub_Baked_MetallicRoughness.png",
+            "slot": "roughness_texture",
+            "surface": 0,
+            "width": 2048
+          }
+        ],
+        "vertex_count": 71843
+      },
+      "first_mesh_readable": true,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "materials": [
+        {
+          "class": "StandardMaterial3D",
+          "name": "material.001",
+          "resource_path": "res://models/city-builder/building_nightclub.glb::StandardMaterial3D_i7bkj",
+          "surface": 0
+        }
+      ],
+      "model_hash_after": "4656114216c35eabbd3fa31a4c44ed0ffbeb62cb6d489957b23465fb88f9da48",
+      "model_hash_before": "4656114216c35eabbd3fa31a4c44ed0ffbeb62cb6d489957b23465fb88f9da48",
+      "model_offset": [
+        -0.0000519955574418418,
+        0.0,
+        -0.0000320408289553598
+      ],
+      "model_path": "res://models/city-builder/building_nightclub.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 0.500051996,
+      "near_ground_bounds": {
+        "band_max_y": 0.0438585567474365,
+        "extent": [
+          1.0,
+          0.0438240468502045,
+          0.625302076339722
+        ],
+        "max": [
+          0.499999970197678,
+          0.0438240468502045,
+          0.312651038169861
+        ],
+        "min": [
+          -0.5,
+          0.0,
+          -0.312651008367538
+        ],
+        "point_count": 2234
+      },
+      "overall_bounds": {
+        "extent": [
+          1.0,
+          0.548231959342957,
+          0.625302076339722
+        ],
+        "max": [
+          0.5,
+          0.548231959342957,
+          0.312651067972183
+        ],
+        "min": [
+          -0.5,
+          0.0,
+          -0.312651008367538
+        ]
+      },
+      "rationale": "The centred terrace fills one axis but covers only 0.625 cells on the other; scaling would overflow the full axis substantially.",
+      "rotation_results": [
+        {
+          "degrees": 0,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_nightclub.png",
+          "quadrant": 0,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 90,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_nightclub.png",
+          "quadrant": 1,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 180,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_nightclub.png",
+          "quadrant": 2,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 270,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_nightclub.png",
+          "quadrant": 3,
+          "verdict": "pass"
+        }
+      ],
+      "source_hash_after": "3869c7876313940dac3963d36a3cbacc2ed93e9194277c5704981d0d181231b4",
+      "source_hash_before": "3869c7876313940dac3963d36a3cbacc2ed93e9194277c5704981d0d181231b4",
+      "source_model_path": "artifacts/building-concepts/meshy-production/runtime-v1/models/building_nightclub.glb",
+      "status": "grass_underlay",
+      "texture_bindings": [
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_nightclub_Baked_BaseColor.png",
+          "slot": "albedo_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_nightclub_Baked_MetallicRoughness.png",
+          "slot": "metallic_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_nightclub_Baked_MetallicRoughness.png",
+          "slot": "roughness_texture",
+          "surface": 0,
+          "width": 2048
+        }
+      ],
+      "transform_source": "res://artifacts/building-concepts/meshy-production/runtime-v1/results.json"
+    },
+    {
+      "after_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_pipe_factory.png"
+      ],
+      "approved": true,
+      "before_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/before/building_pipe_factory.png"
+      ],
+      "building_id": "building_pipe_factory",
+      "definition_path": "res://data/buildings/unique/building_pipe_factory.json",
+      "first_mesh": {
+        "materials": [
+          {
+            "class": "StandardMaterial3D",
+            "name": "material.001",
+            "resource_path": "res://models/city-builder/building_pipe_factory.glb::StandardMaterial3D_8bswo",
+            "surface": 0
+          }
+        ],
+        "readable": true,
+        "resource_name": "building_pipe_factory_output_unwrapped",
+        "resource_path": "res://models/city-builder/building_pipe_factory.glb::ArrayMesh_h4u03",
+        "surface_count": 1,
+        "texture_bindings": [
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_pipe_factory_Baked_BaseColor.png",
+            "slot": "albedo_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_pipe_factory_Baked_MetallicRoughness.png",
+            "slot": "metallic_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_pipe_factory_Baked_MetallicRoughness.png",
+            "slot": "roughness_texture",
+            "surface": 0,
+            "width": 2048
+          }
+        ],
+        "vertex_count": 58988
+      },
+      "first_mesh_readable": true,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "materials": [
+        {
+          "class": "StandardMaterial3D",
+          "name": "material.001",
+          "resource_path": "res://models/city-builder/building_pipe_factory.glb::StandardMaterial3D_8bswo",
+          "surface": 0
+        }
+      ],
+      "model_hash_after": "bae0d12190ff53782ec6eb8505ac10f7d7a2e2a590f71eeee8539338cb7b80e1",
+      "model_hash_before": "bae0d12190ff53782ec6eb8505ac10f7d7a2e2a590f71eeee8539338cb7b80e1",
+      "model_offset": [
+        -0.0000312495321850292,
+        0.0,
+        -0.0000157514332386199
+      ],
+      "model_path": "res://models/city-builder/building_pipe_factory.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 0.500028776,
+      "near_ground_bounds": {
+        "band_max_y": 0.04,
+        "extent": [
+          0.992011070251465,
+          0.039986789226532,
+          0.99748283624649
+        ],
+        "max": [
+          0.49714732170105,
+          0.039986789226532,
+          0.499999970197678
+        ],
+        "min": [
+          -0.494863718748093,
+          0.0,
+          -0.497482866048813
+        ],
+        "point_count": 4997
+      },
+      "overall_bounds": {
+        "extent": [
+          0.9942946434021,
+          0.375967562198639,
+          1.0
+        ],
+        "max": [
+          0.497147291898727,
+          0.375967562198639,
+          0.5
+        ],
+        "min": [
+          -0.497147351503372,
+          0.0,
+          -0.5
+        ]
+      },
+      "rationale": "The concrete industrial slab reads as full-footprint; its sub-percent bevel inset does not expose a visible untreated strip.",
+      "rotation_results": [
+        {
+          "degrees": 0,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_pipe_factory.png",
+          "quadrant": 0,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 90,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_pipe_factory.png",
+          "quadrant": 1,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 180,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_pipe_factory.png",
+          "quadrant": 2,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 270,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_pipe_factory.png",
+          "quadrant": 3,
+          "verdict": "pass"
+        }
+      ],
+      "source_hash_after": "5b9ede9736849d9e1d53a844e6449c680f2b524b11e5c06353c1b1f1e434281e",
+      "source_hash_before": "5b9ede9736849d9e1d53a844e6449c680f2b524b11e5c06353c1b1f1e434281e",
+      "source_model_path": "artifacts/building-concepts/meshy-production/runtime-v1/models/building_pipe_factory.glb",
+      "status": "pass",
+      "texture_bindings": [
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_pipe_factory_Baked_BaseColor.png",
+          "slot": "albedo_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_pipe_factory_Baked_MetallicRoughness.png",
+          "slot": "metallic_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_pipe_factory_Baked_MetallicRoughness.png",
+          "slot": "roughness_texture",
+          "surface": 0,
+          "width": 2048
+        }
+      ],
+      "transform_source": "res://artifacts/building-concepts/meshy-production/runtime-v1/results.json"
+    },
+    {
+      "after_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1280-close/building_pirate_radio.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1280-wide/building_pirate_radio.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1920-close/building_pirate_radio.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1920-wide/building_pirate_radio.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_pirate_radio.png"
+      ],
+      "approved": true,
+      "before_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/before/building_pirate_radio.png"
+      ],
+      "building_id": "building_pirate_radio",
+      "definition_path": "res://data/buildings/unique/building_pirate_radio.json",
+      "first_mesh": {
+        "materials": [
+          {
+            "class": "StandardMaterial3D",
+            "name": "material.001",
+            "resource_path": "res://models/city-builder/building_pirate_radio.glb::StandardMaterial3D_tr37r",
+            "surface": 0
+          }
+        ],
+        "readable": true,
+        "resource_name": "building_pirate_radio_output_unwrapped",
+        "resource_path": "res://models/city-builder/building_pirate_radio.glb::ArrayMesh_bk81m",
+        "surface_count": 1,
+        "texture_bindings": [
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_pirate_radio_Baked_BaseColor.png",
+            "slot": "albedo_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_pirate_radio_Baked_MetallicRoughness.png",
+            "slot": "metallic_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_pirate_radio_Baked_MetallicRoughness.png",
+            "slot": "roughness_texture",
+            "surface": 0,
+            "width": 2048
+          }
+        ],
+        "vertex_count": 88689
+      },
+      "first_mesh_readable": true,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "materials": [
+        {
+          "class": "StandardMaterial3D",
+          "name": "material.001",
+          "resource_path": "res://models/city-builder/building_pirate_radio.glb::StandardMaterial3D_tr37r",
+          "surface": 0
+        }
+      ],
+      "model_hash_after": "8ef60ed5f56f54d39500a1f564ecef0249bc8d69740293ff523dc8386907d0bb",
+      "model_hash_before": "8ef60ed5f56f54d39500a1f564ecef0249bc8d69740293ff523dc8386907d0bb",
+      "model_offset": [
+        -0.000159676230396144,
+        0.0,
+        0.0000350432710547466
+      ],
+      "model_path": "res://models/city-builder/building_pirate_radio.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 0.523533849,
+      "near_ground_bounds": {
+        "band_max_y": 0.0837615585327148,
+        "extent": [
+          0.99999988079071,
+          0.0837596654891968,
+          0.929664134979248
+        ],
+        "max": [
+          0.499999940395355,
+          0.0837596654891968,
+          0.464832067489624
+        ],
+        "min": [
+          -0.499999970197678,
+          0.0,
+          -0.464832067489624
+        ],
+        "point_count": 34533
+      },
+      "overall_bounds": {
+        "extent": [
+          0.99999988079071,
+          1.04701948165894,
+          0.929664134979248
+        ],
+        "max": [
+          0.499999910593033,
+          1.04701948165894,
+          0.464832067489624
+        ],
+        "min": [
+          -0.499999970197678,
+          0.0,
+          -0.464832067489624
+        ]
+      },
+      "rationale": "The correctly sized tower compound leaves a thin but continuous exposed short-axis strip; scaling would overflow its full axis.",
+      "rotation_results": [
+        {
+          "degrees": 0,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_pirate_radio.png",
+          "quadrant": 0,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 90,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_pirate_radio.png",
+          "quadrant": 1,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 180,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_pirate_radio.png",
+          "quadrant": 2,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 270,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_pirate_radio.png",
+          "quadrant": 3,
+          "verdict": "pass"
+        }
+      ],
+      "source_hash_after": "ff4c97e252865487ef26011a96150f8c99ef4d3b66d58973335a23727c0e9454",
+      "source_hash_before": "ff4c97e252865487ef26011a96150f8c99ef4d3b66d58973335a23727c0e9454",
+      "source_model_path": "artifacts/building-concepts/meshy-production/runtime-v1/models/building_pirate_radio.glb",
+      "status": "grass_underlay",
+      "texture_bindings": [
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_pirate_radio_Baked_BaseColor.png",
+          "slot": "albedo_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_pirate_radio_Baked_MetallicRoughness.png",
+          "slot": "metallic_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_pirate_radio_Baked_MetallicRoughness.png",
+          "slot": "roughness_texture",
+          "surface": 0,
+          "width": 2048
+        }
+      ],
+      "transform_source": "res://artifacts/building-concepts/meshy-production/runtime-v1/results.json"
+    },
+    {
+      "after_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1280-close/building_postwar_midblock.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1280-wide/building_postwar_midblock.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1920-close/building_postwar_midblock.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1920-wide/building_postwar_midblock.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_postwar_midblock.png"
+      ],
+      "approved": true,
+      "before_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/before/building_postwar_midblock.png"
+      ],
+      "building_id": "building_postwar_midblock",
+      "definition_path": "res://data/buildings/unique/building_postwar_midblock.json",
+      "first_mesh": {
+        "materials": [
+          {
+            "class": "StandardMaterial3D",
+            "name": "material.001",
+            "resource_path": "res://models/city-builder/building_postwar_midblock.glb::StandardMaterial3D_3ph4p",
+            "surface": 0
+          }
+        ],
+        "readable": true,
+        "resource_name": "building_postwar_midblock_output_unwrapped",
+        "resource_path": "res://models/city-builder/building_postwar_midblock.glb::ArrayMesh_774t0",
+        "surface_count": 1,
+        "texture_bindings": [
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_postwar_midblock_Baked_BaseColor.png",
+            "slot": "albedo_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_postwar_midblock_Baked_MetallicRoughness.png",
+            "slot": "metallic_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_postwar_midblock_Baked_MetallicRoughness.png",
+            "slot": "roughness_texture",
+            "surface": 0,
+            "width": 2048
+          }
+        ],
+        "vertex_count": 40100
+      },
+      "first_mesh_readable": true,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "materials": [
+        {
+          "class": "StandardMaterial3D",
+          "name": "material.001",
+          "resource_path": "res://models/city-builder/building_postwar_midblock.glb::StandardMaterial3D_3ph4p",
+          "surface": 0
+        }
+      ],
+      "model_hash_after": "068eb1b7fab4083cec4770808ebeb6ee4c8ee54da6e7fec908beab82fc573f01",
+      "model_hash_before": "068eb1b7fab4083cec4770808ebeb6ee4c8ee54da6e7fec908beab82fc573f01",
+      "model_offset": [
+        -0.00000900116083357716,
+        0.0,
+        -0.000042785319237737
+      ],
+      "model_path": "res://models/city-builder/building_postwar_midblock.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 0.500047763,
+      "near_ground_bounds": {
+        "band_max_y": 0.0489415466785431,
+        "extent": [
+          0.76157021522522,
+          0.0489362180233002,
+          0.999999940395355
+        ],
+        "max": [
+          0.380783349275589,
+          0.0489362478256226,
+          0.499999940395355
+        ],
+        "min": [
+          -0.380786865949631,
+          0.0000000298023223876953,
+          -0.5
+        ],
+        "point_count": 3770
+      },
+      "overall_bounds": {
+        "extent": [
+          0.761573731899261,
+          0.611768960952759,
+          1.0
+        ],
+        "max": [
+          0.380786865949631,
+          0.611768960952759,
+          0.5
+        ],
+        "min": [
+          -0.380786865949631,
+          0.0000000298023223876953,
+          -0.5
+        ]
+      },
+      "rationale": "The block and base fill one axis but leave broad exposed bands on the 0.762-cell axis; uniform scale is unsafe.",
+      "rotation_results": [
+        {
+          "degrees": 0,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_postwar_midblock.png",
+          "quadrant": 0,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 90,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_postwar_midblock.png",
+          "quadrant": 1,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 180,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_postwar_midblock.png",
+          "quadrant": 2,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 270,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_postwar_midblock.png",
+          "quadrant": 3,
+          "verdict": "pass"
+        }
+      ],
+      "source_hash_after": "ee57dee76ab348272ef3a3b181460dcbb15f6df8cbf0758481a7362d98b1642e",
+      "source_hash_before": "ee57dee76ab348272ef3a3b181460dcbb15f6df8cbf0758481a7362d98b1642e",
+      "source_model_path": "artifacts/building-concepts/meshy-production/runtime-v1/models/building_postwar_midblock.glb",
+      "status": "grass_underlay",
+      "texture_bindings": [
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_postwar_midblock_Baked_BaseColor.png",
+          "slot": "albedo_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_postwar_midblock_Baked_MetallicRoughness.png",
+          "slot": "metallic_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_postwar_midblock_Baked_MetallicRoughness.png",
+          "slot": "roughness_texture",
+          "surface": 0,
+          "width": 2048
+        }
+      ],
+      "transform_source": "res://artifacts/building-concepts/meshy-production/runtime-v1/results.json"
+    },
+    {
+      "after_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_postwar_terrace.png"
+      ],
+      "approved": true,
+      "before_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/before/building_postwar_terrace.png"
+      ],
+      "building_id": "building_postwar_terrace",
+      "definition_path": "res://data/buildings/unique/building_postwar_terrace.json",
+      "first_mesh": {
+        "materials": [
+          {
+            "class": "StandardMaterial3D",
+            "name": "material.001",
+            "resource_path": "res://models/city-builder/building_postwar_terrace.glb::StandardMaterial3D_evnop",
+            "surface": 0
+          }
+        ],
+        "readable": true,
+        "resource_name": "building_postwar_terrace_output_unwrapped",
+        "resource_path": "res://models/city-builder/building_postwar_terrace.glb::ArrayMesh_0fywf",
+        "surface_count": 1,
+        "texture_bindings": [
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_postwar_terrace_Baked_BaseColor.png",
+            "slot": "albedo_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_postwar_terrace_Baked_MetallicRoughness.png",
+            "slot": "metallic_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_postwar_terrace_Baked_MetallicRoughness.png",
+            "slot": "roughness_texture",
+            "surface": 0,
+            "width": 2048
+          }
+        ],
+        "vertex_count": 40414
+      },
+      "first_mesh_readable": true,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "materials": [
+        {
+          "class": "StandardMaterial3D",
+          "name": "material.001",
+          "resource_path": "res://models/city-builder/building_postwar_terrace.glb::StandardMaterial3D_evnop",
+          "surface": 0
+        }
+      ],
+      "model_hash_after": "ef043417311407c67d2a3e0474fbeb95f927351a11a759e5c7425a61d470939e",
+      "model_hash_before": "ef043417311407c67d2a3e0474fbeb95f927351a11a759e5c7425a61d470939e",
+      "model_offset": [
+        -0.0000194917138287565,
+        0.0,
+        -0.00000453018401458394
+      ],
+      "model_path": "res://models/city-builder/building_postwar_terrace.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 0.500025512,
+      "near_ground_bounds": {
+        "band_max_y": 0.0476945495605469,
+        "extent": [
+          1.0,
+          0.0476934015750885,
+          0.998282849788666
+        ],
+        "max": [
+          0.5,
+          0.0476934015750885,
+          0.499141424894333
+        ],
+        "min": [
+          -0.5,
+          0.0,
+          -0.499141424894333
+        ],
+        "point_count": 5415
+      },
+      "overall_bounds": {
+        "extent": [
+          1.0,
+          0.596181869506836,
+          0.998282849788666
+        ],
+        "max": [
+          0.5,
+          0.596181869506836,
+          0.499141424894333
+        ],
+        "min": [
+          -0.5,
+          0.0,
+          -0.499141424894333
+        ]
+      },
+      "rationale": "The terrace base is effectively 1x1 and reaches the footprint outline in every rotation.",
+      "rotation_results": [
+        {
+          "degrees": 0,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_postwar_terrace.png",
+          "quadrant": 0,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 90,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_postwar_terrace.png",
+          "quadrant": 1,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 180,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_postwar_terrace.png",
+          "quadrant": 2,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 270,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_postwar_terrace.png",
+          "quadrant": 3,
+          "verdict": "pass"
+        }
+      ],
+      "source_hash_after": "eade275a1348e1f03624a36acee6f8af2942efd2e810b28a4667bc32cf1dc32e",
+      "source_hash_before": "eade275a1348e1f03624a36acee6f8af2942efd2e810b28a4667bc32cf1dc32e",
+      "source_model_path": "artifacts/building-concepts/meshy-production/runtime-v1/models/building_postwar_terrace.glb",
+      "status": "pass",
+      "texture_bindings": [
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_postwar_terrace_Baked_BaseColor.png",
+          "slot": "albedo_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_postwar_terrace_Baked_MetallicRoughness.png",
+          "slot": "metallic_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_postwar_terrace_Baked_MetallicRoughness.png",
+          "slot": "roughness_texture",
+          "surface": 0,
+          "width": 2048
+        }
+      ],
+      "transform_source": "res://artifacts/building-concepts/meshy-production/runtime-v1/results.json"
+    },
+    {
+      "after_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1280-close/building_postwar_tower_block.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1280-wide/building_postwar_tower_block.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1920-close/building_postwar_tower_block.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1920-wide/building_postwar_tower_block.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_postwar_tower_block.png"
+      ],
+      "approved": true,
+      "before_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/before/building_postwar_tower_block.png"
+      ],
+      "building_id": "building_postwar_tower_block",
+      "definition_path": "res://data/buildings/unique/building_postwar_tower_block.json",
+      "first_mesh": {
+        "materials": [
+          {
+            "class": "StandardMaterial3D",
+            "name": "material.001",
+            "resource_path": "res://models/city-builder/building_postwar_tower_block.glb::StandardMaterial3D_xton2",
+            "surface": 0
+          }
+        ],
+        "readable": true,
+        "resource_name": "building_postwar_tower_block_output_unwrapped",
+        "resource_path": "res://models/city-builder/building_postwar_tower_block.glb::ArrayMesh_lwnv8",
+        "surface_count": 1,
+        "texture_bindings": [
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_postwar_tower_block_Baked_BaseColor.png",
+            "slot": "albedo_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_postwar_tower_block_Baked_MetallicRoughness.png",
+            "slot": "metallic_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_postwar_tower_block_Baked_MetallicRoughness.png",
+            "slot": "roughness_texture",
+            "surface": 0,
+            "width": 2048
+          }
+        ],
+        "vertex_count": 45977
+      },
+      "first_mesh_readable": true,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "materials": [
+        {
+          "class": "StandardMaterial3D",
+          "name": "material.001",
+          "resource_path": "res://models/city-builder/building_postwar_tower_block.glb::StandardMaterial3D_xton2",
+          "surface": 0
+        }
+      ],
+      "model_hash_after": "d8b149d921b9dc94d687f04f1b271e717983686412038e2a05eaf5fb044c008d",
+      "model_hash_before": "d8b149d921b9dc94d687f04f1b271e717983686412038e2a05eaf5fb044c008d",
+      "model_offset": [
+        -0.0000497477631142829,
+        0.0,
+        -0.0000335327968059573
+      ],
+      "model_path": "res://models/city-builder/building_postwar_tower_block.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 0.500077289,
+      "near_ground_bounds": {
+        "band_max_y": 0.050449732542038,
+        "extent": [
+          1.0,
+          0.0502827763557434,
+          0.82889711856842
+        ],
+        "max": [
+          0.5,
+          0.050282746553421,
+          0.41444855928421
+        ],
+        "min": [
+          -0.5,
+          -0.0000000298023223876953,
+          -0.41444855928421
+        ],
+        "point_count": 8334
+      },
+      "overall_bounds": {
+        "extent": [
+          1.0,
+          0.630622029304504,
+          0.82889711856842
+        ],
+        "max": [
+          0.5,
+          0.630622029304504,
+          0.41444855928421
+        ],
+        "min": [
+          -0.5,
+          -0.0000000298023223876953,
+          -0.41444855928421
+        ]
+      },
+      "rationale": "The grounded concrete podium fills one axis but leaves a consistent exposed strip on the 0.829-cell axis.",
+      "rotation_results": [
+        {
+          "degrees": 0,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_postwar_tower_block.png",
+          "quadrant": 0,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 90,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_postwar_tower_block.png",
+          "quadrant": 1,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 180,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_postwar_tower_block.png",
+          "quadrant": 2,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 270,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_postwar_tower_block.png",
+          "quadrant": 3,
+          "verdict": "pass"
+        }
+      ],
+      "source_hash_after": "b4742f0d1d3bb7c6aed8c2fbc30f95f61c3debe2d13b1e3707bbad8074128f89",
+      "source_hash_before": "b4742f0d1d3bb7c6aed8c2fbc30f95f61c3debe2d13b1e3707bbad8074128f89",
+      "source_model_path": "artifacts/building-concepts/meshy-production/runtime-v1/models/building_postwar_tower_block.glb",
+      "status": "grass_underlay",
+      "texture_bindings": [
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_postwar_tower_block_Baked_BaseColor.png",
+          "slot": "albedo_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_postwar_tower_block_Baked_MetallicRoughness.png",
+          "slot": "metallic_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_postwar_tower_block_Baked_MetallicRoughness.png",
+          "slot": "roughness_texture",
+          "surface": 0,
+          "width": 2048
+        }
+      ],
+      "transform_source": "res://artifacts/building-concepts/meshy-production/runtime-v1/results.json"
+    },
+    {
+      "after_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1280-close/building_pub.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1280-wide/building_pub.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1920-close/building_pub.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1920-wide/building_pub.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_pub.png"
+      ],
+      "approved": true,
+      "before_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/before/building_pub.png"
+      ],
+      "building_id": "building_pub",
+      "definition_path": "res://data/buildings/unique/building_pub.json",
+      "first_mesh": {
+        "materials": [
+          {
+            "class": "StandardMaterial3D",
+            "name": "material.001",
+            "resource_path": "res://models/city-builder/building_pub.glb::StandardMaterial3D_yn8ns",
+            "surface": 0
+          }
+        ],
+        "readable": true,
+        "resource_name": "building_pub_output_unwrapped",
+        "resource_path": "res://models/city-builder/building_pub.glb::ArrayMesh_nt838",
+        "surface_count": 1,
+        "texture_bindings": [
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_pub_Baked_BaseColor.png",
+            "slot": "albedo_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_pub_Baked_MetallicRoughness.png",
+            "slot": "metallic_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_pub_Baked_MetallicRoughness.png",
+            "slot": "roughness_texture",
+            "surface": 0,
+            "width": 2048
+          }
+        ],
+        "vertex_count": 69210
+      },
+      "first_mesh_readable": true,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "materials": [
+        {
+          "class": "StandardMaterial3D",
+          "name": "material.001",
+          "resource_path": "res://models/city-builder/building_pub.glb::StandardMaterial3D_yn8ns",
+          "surface": 0
+        }
+      ],
+      "model_hash_after": "231bea7cb420e329a1325751460822f51a1f53a2d351fb9f806bd2b03fd27634",
+      "model_hash_before": "231bea7cb420e329a1325751460822f51a1f53a2d351fb9f806bd2b03fd27634",
+      "model_offset": [
+        0.0,
+        0.0,
+        0.000117612580652349
+      ],
+      "model_path": "res://models/city-builder/building_pub.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 0.560094154,
+      "near_ground_bounds": {
+        "band_max_y": 0.0896019744873047,
+        "extent": [
+          0.871653378009796,
+          0.0895883142948151,
+          0.989242434501648
+        ],
+        "max": [
+          0.496098905801773,
+          0.0895883142948151,
+          0.5
+        ],
+        "min": [
+          -0.375554472208023,
+          0.0,
+          -0.489242434501648
+        ],
+        "point_count": 10077
+      },
+      "overall_bounds": {
+        "extent": [
+          0.992197811603546,
+          1.12002468109131,
+          1.0
+        ],
+        "max": [
+          0.496098905801773,
+          1.12002468109131,
+          0.499999940395355
+        ],
+        "min": [
+          -0.496098905801773,
+          0.0,
+          -0.500000059604645
+        ]
+      },
+      "rationale": "The intentionally asymmetric building, garden, and paths are correctly sized but do not provide a complete base; offset or scale would damage the composition.",
+      "rotation_results": [
+        {
+          "degrees": 0,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_pub.png",
+          "quadrant": 0,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 90,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_pub.png",
+          "quadrant": 1,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 180,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_pub.png",
+          "quadrant": 2,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 270,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_pub.png",
+          "quadrant": 3,
+          "verdict": "pass"
+        }
+      ],
+      "source_hash_after": "f2af355b455fa6c82f6fae280bcfe59a1a4c0be31035562ed56d747713962d65",
+      "source_hash_before": "f2af355b455fa6c82f6fae280bcfe59a1a4c0be31035562ed56d747713962d65",
+      "source_model_path": "artifacts/building-concepts/meshy-production/runtime-v1/models/building_pub.glb",
+      "status": "grass_underlay",
+      "texture_bindings": [
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_pub_Baked_BaseColor.png",
+          "slot": "albedo_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_pub_Baked_MetallicRoughness.png",
+          "slot": "metallic_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_pub_Baked_MetallicRoughness.png",
+          "slot": "roughness_texture",
+          "surface": 0,
+          "width": 2048
+        }
+      ],
+      "transform_source": "res://artifacts/building-concepts/meshy-production/runtime-v1/results.json"
+    },
+    {
+      "after_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1280-close/building_restaurant.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1280-wide/building_restaurant.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1920-close/building_restaurant.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1920-wide/building_restaurant.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_restaurant.png"
+      ],
+      "approved": true,
+      "before_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/before/building_restaurant.png"
+      ],
+      "building_id": "building_restaurant",
+      "definition_path": "res://data/buildings/unique/building_restaurant.json",
+      "first_mesh": {
+        "materials": [
+          {
+            "class": "StandardMaterial3D",
+            "name": "material.001",
+            "resource_path": "res://models/city-builder/building_restaurant.glb::StandardMaterial3D_ybsun",
+            "surface": 0
+          }
+        ],
+        "readable": true,
+        "resource_name": "building_restaurant_output_unwrapped",
+        "resource_path": "res://models/city-builder/building_restaurant.glb::ArrayMesh_8ka1q",
+        "surface_count": 1,
+        "texture_bindings": [
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_restaurant_Baked_BaseColor.png",
+            "slot": "albedo_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_restaurant_Baked_MetallicRoughness.png",
+            "slot": "metallic_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_restaurant_Baked_MetallicRoughness.png",
+            "slot": "roughness_texture",
+            "surface": 0,
+            "width": 2048
+          }
+        ],
+        "vertex_count": 78784
+      },
+      "first_mesh_readable": true,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "materials": [
+        {
+          "class": "StandardMaterial3D",
+          "name": "material.001",
+          "resource_path": "res://models/city-builder/building_restaurant.glb::StandardMaterial3D_ybsun",
+          "surface": 0
+        }
+      ],
+      "model_hash_after": "9f0bd6a58859fff8d7e76390722e16c33f5cc2fda122940d61040ffc857a128b",
+      "model_hash_before": "9f0bd6a58859fff8d7e76390722e16c33f5cc2fda122940d61040ffc857a128b",
+      "model_offset": [
+        -0.0000342601342708804,
+        0.0,
+        -0.0000255274499068037
+      ],
+      "model_path": "res://models/city-builder/building_restaurant.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 0.500034499,
+      "near_ground_bounds": {
+        "band_max_y": 0.0408139371871948,
+        "extent": [
+          0.911012411117554,
+          0.0408133268356323,
+          1.0
+        ],
+        "max": [
+          0.455506175756454,
+          0.0408133268356323,
+          0.499999970197678
+        ],
+        "min": [
+          -0.455506205558777,
+          0.0,
+          -0.5
+        ],
+        "point_count": 8118
+      },
+      "overall_bounds": {
+        "extent": [
+          0.911012351512909,
+          0.510174214839935,
+          1.0
+        ],
+        "max": [
+          0.455506145954132,
+          0.510174214839935,
+          0.5
+        ],
+        "min": [
+          -0.455506205558777,
+          0.0,
+          -0.5
+        ]
+      },
+      "rationale": "The paved restaurant base is grounded but leaves a repeatable 0.911-cell edge band while the other axis is already full.",
+      "rotation_results": [
+        {
+          "degrees": 0,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_restaurant.png",
+          "quadrant": 0,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 90,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_restaurant.png",
+          "quadrant": 1,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 180,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_restaurant.png",
+          "quadrant": 2,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 270,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_restaurant.png",
+          "quadrant": 3,
+          "verdict": "pass"
+        }
+      ],
+      "source_hash_after": "59de7ac26cf00dd3f871db243d422de3eaf6225dfe352d6ccbbb1c8ee94617a2",
+      "source_hash_before": "59de7ac26cf00dd3f871db243d422de3eaf6225dfe352d6ccbbb1c8ee94617a2",
+      "source_model_path": "artifacts/building-concepts/meshy-production/runtime-v1/models/building_restaurant.glb",
+      "status": "grass_underlay",
+      "texture_bindings": [
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_restaurant_Baked_BaseColor.png",
+          "slot": "albedo_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_restaurant_Baked_MetallicRoughness.png",
+          "slot": "metallic_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_restaurant_Baked_MetallicRoughness.png",
+          "slot": "roughness_texture",
+          "surface": 0,
+          "width": 2048
+        }
+      ],
+      "transform_source": "res://artifacts/building-concepts/meshy-production/runtime-v1/results.json"
+    },
+    {
+      "after_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1280-close/building_small_a.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1280-wide/building_small_a.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1920-close/building_small_a.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1920-wide/building_small_a.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_small_a.png"
+      ],
+      "approved": true,
+      "before_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/before/building_small_a.png"
+      ],
+      "building_id": "building_small_a",
+      "definition_path": "res://data/buildings/generic/building_small_a.json",
+      "first_mesh": {
+        "materials": [
+          {
+            "class": "StandardMaterial3D",
+            "name": "material.001",
+            "resource_path": "res://models/city-builder/building_small_a.glb::StandardMaterial3D_tvtp5",
+            "surface": 0
+          }
+        ],
+        "readable": true,
+        "resource_name": "building_small_a_output_unwrapped",
+        "resource_path": "res://models/city-builder/building_small_a.glb::ArrayMesh_ts6o5",
+        "surface_count": 1,
+        "texture_bindings": [
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_small_a_Baked_BaseColor.png",
+            "slot": "albedo_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_small_a_Baked_MetallicRoughness.png",
+            "slot": "metallic_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_small_a_Baked_MetallicRoughness.png",
+            "slot": "roughness_texture",
+            "surface": 0,
+            "width": 2048
+          }
+        ],
+        "vertex_count": 49857
+      },
+      "first_mesh_readable": true,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "materials": [
+        {
+          "class": "StandardMaterial3D",
+          "name": "material.001",
+          "resource_path": "res://models/city-builder/building_small_a.glb::StandardMaterial3D_tvtp5",
+          "surface": 0
+        }
+      ],
+      "model_hash_after": "847e75c48dda2acf413ea02c1611363444af0fe334af28d675dd6b60b9cb14be",
+      "model_hash_before": "847e75c48dda2acf413ea02c1611363444af0fe334af28d675dd6b60b9cb14be",
+      "model_offset": [
+        0.00164480099920183,
+        0.0,
+        0.000309403025312349
+      ],
+      "model_path": "res://models/city-builder/building_small_a.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 0.529388743,
+      "near_ground_bounds": {
+        "band_max_y": 0.0769022572040558,
+        "extent": [
+          0.873314619064331,
+          0.0768171846866608,
+          1.0
+        ],
+        "max": [
+          0.436657309532166,
+          0.0768172144889832,
+          0.5
+        ],
+        "min": [
+          -0.436657309532166,
+          0.0000000298023223876953,
+          -0.5
+        ],
+        "point_count": 8187
+      },
+      "overall_bounds": {
+        "extent": [
+          0.873314619064331,
+          0.961277842521667,
+          1.0
+        ],
+        "max": [
+          0.436657309532166,
+          0.961277842521667,
+          0.5
+        ],
+        "min": [
+          -0.436657309532166,
+          0.0000000298023223876953,
+          -0.5
+        ]
+      },
+      "rationale": "The house and landscaped plot are correctly sized but expose a short-axis strip; the existing garden makes a grass continuation natural.",
+      "rotation_results": [
+        {
+          "degrees": 0,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_small_a.png",
+          "quadrant": 0,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 90,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_small_a.png",
+          "quadrant": 1,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 180,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_small_a.png",
+          "quadrant": 2,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 270,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_small_a.png",
+          "quadrant": 3,
+          "verdict": "pass"
+        }
+      ],
+      "source_hash_after": "2ae084266b7bf1abd6970bdd6cfbd9e98f2c62bec464818572ac27dfcd8dec9b",
+      "source_hash_before": "2ae084266b7bf1abd6970bdd6cfbd9e98f2c62bec464818572ac27dfcd8dec9b",
+      "source_model_path": "artifacts/building-concepts/meshy-production/runtime-v1/models/building_small_a.glb",
+      "status": "grass_underlay",
+      "texture_bindings": [
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_small_a_Baked_BaseColor.png",
+          "slot": "albedo_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_small_a_Baked_MetallicRoughness.png",
+          "slot": "metallic_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_small_a_Baked_MetallicRoughness.png",
+          "slot": "roughness_texture",
+          "surface": 0,
+          "width": 2048
+        }
+      ],
+      "transform_source": "res://artifacts/building-concepts/meshy-production/runtime-v1/results.json"
+    },
+    {
+      "after_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1280-close/building_small_b.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1280-wide/building_small_b.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1920-close/building_small_b.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1920-wide/building_small_b.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_small_b.png"
+      ],
+      "approved": true,
+      "before_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/before/building_small_b.png"
+      ],
+      "building_id": "building_small_b",
+      "definition_path": "res://data/buildings/generic/building_small_b.json",
+      "first_mesh": {
+        "materials": [
+          {
+            "class": "StandardMaterial3D",
+            "name": "material.001",
+            "resource_path": "res://models/city-builder/building_small_b.glb::StandardMaterial3D_vf4wt",
+            "surface": 0
+          }
+        ],
+        "readable": true,
+        "resource_name": "building_small_b_output_unwrapped",
+        "resource_path": "res://models/city-builder/building_small_b.glb::ArrayMesh_wxtg3",
+        "surface_count": 1,
+        "texture_bindings": [
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_small_b_Baked_BaseColor.png",
+            "slot": "albedo_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_small_b_Baked_MetallicRoughness.png",
+            "slot": "metallic_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_small_b_Baked_MetallicRoughness.png",
+            "slot": "roughness_texture",
+            "surface": 0,
+            "width": 2048
+          }
+        ],
+        "vertex_count": 36844
+      },
+      "first_mesh_readable": true,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "materials": [
+        {
+          "class": "StandardMaterial3D",
+          "name": "material.001",
+          "resource_path": "res://models/city-builder/building_small_b.glb::StandardMaterial3D_vf4wt",
+          "surface": 0
+        }
+      ],
+      "model_hash_after": "8375336cc81115766b8a0f4c2c8e12d2940910503ef4b346f220b8c9e7d6fe65",
+      "model_hash_before": "8375336cc81115766b8a0f4c2c8e12d2940910503ef4b346f220b8c9e7d6fe65",
+      "model_offset": [
+        -0.000103415870398749,
+        0.0,
+        -0.0000661176018184051
+      ],
+      "model_path": "res://models/city-builder/building_small_b.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 0.504442628,
+      "near_ground_bounds": {
+        "band_max_y": 0.0807054901123047,
+        "extent": [
+          0.901940405368805,
+          0.0806638598442078,
+          1.0
+        ],
+        "max": [
+          0.450970202684402,
+          0.0806638598442078,
+          0.499999970197678
+        ],
+        "min": [
+          -0.450970202684402,
+          0.0,
+          -0.5
+        ],
+        "point_count": 8337
+      },
+      "overall_bounds": {
+        "extent": [
+          0.90194034576416,
+          1.00881862640381,
+          1.0
+        ],
+        "max": [
+          0.450970143079758,
+          1.00881862640381,
+          0.5
+        ],
+        "min": [
+          -0.450970202684402,
+          0.0,
+          -0.5
+        ]
+      },
+      "rationale": "The shop and paved forecourt fill one axis but leave a visible 0.902-cell outer band; scaling would overflow.",
+      "rotation_results": [
+        {
+          "degrees": 0,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_small_b.png",
+          "quadrant": 0,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 90,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_small_b.png",
+          "quadrant": 1,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 180,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_small_b.png",
+          "quadrant": 2,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 270,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_small_b.png",
+          "quadrant": 3,
+          "verdict": "pass"
+        }
+      ],
+      "source_hash_after": "6df1f36d2f373b4910708e89136953e9e067a2cd59e1d9db518868a7d1ccf116",
+      "source_hash_before": "6df1f36d2f373b4910708e89136953e9e067a2cd59e1d9db518868a7d1ccf116",
+      "source_model_path": "artifacts/building-concepts/meshy-production/runtime-v1/models/building_small_b.glb",
+      "status": "grass_underlay",
+      "texture_bindings": [
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_small_b_Baked_BaseColor.png",
+          "slot": "albedo_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_small_b_Baked_MetallicRoughness.png",
+          "slot": "metallic_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_small_b_Baked_MetallicRoughness.png",
+          "slot": "roughness_texture",
+          "surface": 0,
+          "width": 2048
+        }
+      ],
+      "transform_source": "res://artifacts/building-concepts/meshy-production/runtime-v1/results.json"
+    },
+    {
+      "after_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1280-close/building_small_c.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1280-wide/building_small_c.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1920-close/building_small_c.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1920-wide/building_small_c.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_small_c.png"
+      ],
+      "approved": true,
+      "before_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/before/building_small_c.png"
+      ],
+      "building_id": "building_small_c",
+      "definition_path": "res://data/buildings/generic/building_small_c.json",
+      "first_mesh": {
+        "materials": [
+          {
+            "class": "StandardMaterial3D",
+            "name": "material.001",
+            "resource_path": "res://models/city-builder/building_small_c.glb::StandardMaterial3D_0gh05",
+            "surface": 0
+          }
+        ],
+        "readable": true,
+        "resource_name": "building_small_c_output_unwrapped",
+        "resource_path": "res://models/city-builder/building_small_c.glb::ArrayMesh_xeyqk",
+        "surface_count": 1,
+        "texture_bindings": [
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_small_c_Baked_BaseColor.png",
+            "slot": "albedo_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_small_c_Baked_MetallicRoughness.png",
+            "slot": "metallic_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_small_c_Baked_MetallicRoughness.png",
+            "slot": "roughness_texture",
+            "surface": 0,
+            "width": 2048
+          }
+        ],
+        "vertex_count": 86446
+      },
+      "first_mesh_readable": true,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "materials": [
+        {
+          "class": "StandardMaterial3D",
+          "name": "material.001",
+          "resource_path": "res://models/city-builder/building_small_c.glb::StandardMaterial3D_0gh05",
+          "surface": 0
+        }
+      ],
+      "model_hash_after": "fbf4819ff750cb1663a30a0ff2ff4ab1a23222816bbbb36b791c6a4a0091abef",
+      "model_hash_before": "fbf4819ff750cb1663a30a0ff2ff4ab1a23222816bbbb36b791c6a4a0091abef",
+      "model_offset": [
+        -0.000309129420202225,
+        0.0,
+        -0.0000475813030789141
+      ],
+      "model_path": "res://models/city-builder/building_small_c.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 1.00035313,
+      "near_ground_bounds": {
+        "band_max_y": 0.15,
+        "extent": [
+          2.0,
+          0.148505806922913,
+          1.75688314437866
+        ],
+        "max": [
+          1.5,
+          0.148505806922913,
+          1.37844157218933
+        ],
+        "min": [
+          -0.499999970197678,
+          0.0,
+          -0.378441601991653
+        ],
+        "point_count": 54927
+      },
+      "overall_bounds": {
+        "extent": [
+          2.0,
+          1.92566776275635,
+          1.75688314437866
+        ],
+        "max": [
+          1.5,
+          1.92566776275635,
+          1.37844157218933
+        ],
+        "min": [
+          -0.499999970197678,
+          0.0,
+          -0.378441601991653
+        ]
+      },
+      "rationale": "The 2x2 tower and podium are centred but cover only 1.757 cells in depth while already spanning the full two-cell width.",
+      "rotation_results": [
+        {
+          "degrees": 0,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_small_c.png",
+          "quadrant": 0,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 90,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_small_c.png",
+          "quadrant": 1,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 180,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_small_c.png",
+          "quadrant": 2,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 270,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_small_c.png",
+          "quadrant": 3,
+          "verdict": "pass"
+        }
+      ],
+      "source_hash_after": "20acc9902ce48d26bf51e2ca18a9b4cd148e9531c0f19b9c4dbd4958d5e3339e",
+      "source_hash_before": "20acc9902ce48d26bf51e2ca18a9b4cd148e9531c0f19b9c4dbd4958d5e3339e",
+      "source_model_path": "artifacts/building-concepts/meshy-production/runtime-v1/models/building_small_c.glb",
+      "status": "grass_underlay",
+      "texture_bindings": [
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_small_c_Baked_BaseColor.png",
+          "slot": "albedo_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_small_c_Baked_MetallicRoughness.png",
+          "slot": "metallic_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_small_c_Baked_MetallicRoughness.png",
+          "slot": "roughness_texture",
+          "surface": 0,
+          "width": 2048
+        }
+      ],
+      "transform_source": "res://artifacts/building-concepts/meshy-production/runtime-v1/results.json"
+    },
+    {
+      "after_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1280-close/building_small_d.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1280-wide/building_small_d.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1920-close/building_small_d.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1920-wide/building_small_d.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_small_d.png"
+      ],
+      "approved": true,
+      "before_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/before/building_small_d.png"
+      ],
+      "building_id": "building_small_d",
+      "definition_path": "res://data/buildings/generic/building_small_d.json",
+      "first_mesh": {
+        "materials": [
+          {
+            "class": "StandardMaterial3D",
+            "name": "material.001",
+            "resource_path": "res://models/city-builder/building_small_d.glb::StandardMaterial3D_u1ohm",
+            "surface": 0
+          }
+        ],
+        "readable": true,
+        "resource_name": "building_small_d_output_unwrapped",
+        "resource_path": "res://models/city-builder/building_small_d.glb::ArrayMesh_xo8im",
+        "surface_count": 1,
+        "texture_bindings": [
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_small_d_Baked_BaseColor.png",
+            "slot": "albedo_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_small_d_Baked_MetallicRoughness.png",
+            "slot": "metallic_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_small_d_Baked_MetallicRoughness.png",
+            "slot": "roughness_texture",
+            "surface": 0,
+            "width": 2048
+          }
+        ],
+        "vertex_count": 79726
+      },
+      "first_mesh_readable": true,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "materials": [
+        {
+          "class": "StandardMaterial3D",
+          "name": "material.001",
+          "resource_path": "res://models/city-builder/building_small_d.glb::StandardMaterial3D_u1ohm",
+          "surface": 0
+        }
+      ],
+      "model_hash_after": "9b6162ed36a9840283810f39ac5e8da48b1d980220b4738bd0494f9286460f60",
+      "model_hash_before": "9b6162ed36a9840283810f39ac5e8da48b1d980220b4738bd0494f9286460f60",
+      "model_offset": [
+        -0.0000567648748983629,
+        0.0,
+        0.0000329886206600349
+      ],
+      "model_path": "res://models/city-builder/building_small_d.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 0.500187288,
+      "near_ground_bounds": {
+        "band_max_y": 0.0570688450336456,
+        "extent": [
+          1.0,
+          0.0570663809776306,
+          0.846466958522797
+        ],
+        "max": [
+          0.499999970197678,
+          0.057066410779953,
+          0.423233479261398
+        ],
+        "min": [
+          -0.5,
+          0.0000000298023223876953,
+          -0.423233479261398
+        ],
+        "point_count": 15360
+      },
+      "overall_bounds": {
+        "extent": [
+          1.0,
+          0.713360190391541,
+          0.846467018127441
+        ],
+        "max": [
+          0.5,
+          0.713360190391541,
+          0.423233538866043
+        ],
+        "min": [
+          -0.5,
+          0.0000000298023223876953,
+          -0.423233479261398
+        ]
+      },
+      "rationale": "The walled landscaped base fills one axis but leaves a visible 0.846-cell short-axis strip across rotations.",
+      "rotation_results": [
+        {
+          "degrees": 0,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_small_d.png",
+          "quadrant": 0,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 90,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_small_d.png",
+          "quadrant": 1,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 180,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_small_d.png",
+          "quadrant": 2,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 270,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_small_d.png",
+          "quadrant": 3,
+          "verdict": "pass"
+        }
+      ],
+      "source_hash_after": "0227d7fd173242f69a295d0d8ccadcb5ab74bab8935333b9c8ae745602c9ae3f",
+      "source_hash_before": "0227d7fd173242f69a295d0d8ccadcb5ab74bab8935333b9c8ae745602c9ae3f",
+      "source_model_path": "artifacts/building-concepts/meshy-production/runtime-v1/models/building_small_d.glb",
+      "status": "grass_underlay",
+      "texture_bindings": [
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_small_d_Baked_BaseColor.png",
+          "slot": "albedo_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_small_d_Baked_MetallicRoughness.png",
+          "slot": "metallic_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_small_d_Baked_MetallicRoughness.png",
+          "slot": "roughness_texture",
+          "surface": 0,
+          "width": 2048
+        }
+      ],
+      "transform_source": "res://artifacts/building-concepts/meshy-production/runtime-v1/results.json"
+    },
+    {
+      "after_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1280-close/building_theatre.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1280-wide/building_theatre.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1920-close/building_theatre.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1920-wide/building_theatre.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_theatre.png"
+      ],
+      "approved": true,
+      "before_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/before/building_theatre.png"
+      ],
+      "building_id": "building_theatre",
+      "definition_path": "res://data/buildings/unique/building_theatre.json",
+      "first_mesh": {
+        "materials": [
+          {
+            "class": "StandardMaterial3D",
+            "name": "material.001",
+            "resource_path": "res://models/city-builder/building_theatre.glb::StandardMaterial3D_04lyf",
+            "surface": 0
+          }
+        ],
+        "readable": true,
+        "resource_name": "building_theatre_output_unwrapped",
+        "resource_path": "res://models/city-builder/building_theatre.glb::ArrayMesh_sx8lw",
+        "surface_count": 1,
+        "texture_bindings": [
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_theatre_Baked_BaseColor.png",
+            "slot": "albedo_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_theatre_Baked_MetallicRoughness.png",
+            "slot": "metallic_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_theatre_Baked_MetallicRoughness.png",
+            "slot": "roughness_texture",
+            "surface": 0,
+            "width": 2048
+          }
+        ],
+        "vertex_count": 127026
+      },
+      "first_mesh_readable": true,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "materials": [
+        {
+          "class": "StandardMaterial3D",
+          "name": "material.001",
+          "resource_path": "res://models/city-builder/building_theatre.glb::StandardMaterial3D_04lyf",
+          "surface": 0
+        }
+      ],
+      "model_hash_after": "1d8e849d7efe7482c0d89bd6af592da2aeb0677791411cf32281ee7310f64bff",
+      "model_hash_before": "1d8e849d7efe7482c0d89bd6af592da2aeb0677791411cf32281ee7310f64bff",
+      "model_offset": [
+        -0.0000505186799273361,
+        0.0,
+        -0.000153076514834538
+      ],
+      "model_path": "res://models/city-builder/building_theatre.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 0.500184589,
+      "near_ground_bounds": {
+        "band_max_y": 0.0425311756134033,
+        "extent": [
+          0.644727945327759,
+          0.0425297617912292,
+          1.0
+        ],
+        "max": [
+          0.322363972663879,
+          0.0425297617912292,
+          0.5
+        ],
+        "min": [
+          -0.322363942861557,
+          0.0,
+          -0.5
+        ],
+        "point_count": 70462
+      },
+      "overall_bounds": {
+        "extent": [
+          0.644727945327759,
+          0.531639695167542,
+          1.0
+        ],
+        "max": [
+          0.322364002466202,
+          0.531639695167542,
+          0.5
+        ],
+        "min": [
+          -0.322363942861557,
+          0.0,
+          -0.5
+        ]
+      },
+      "rationale": "The correctly sized theatre fills one axis but leaves broad exposed bands on the 0.645-cell axis; uniform scale would overflow.",
+      "rotation_results": [
+        {
+          "degrees": 0,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_theatre.png",
+          "quadrant": 0,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 90,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_theatre.png",
+          "quadrant": 1,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 180,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_theatre.png",
+          "quadrant": 2,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 270,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_theatre.png",
+          "quadrant": 3,
+          "verdict": "pass"
+        }
+      ],
+      "source_hash_after": "e7e91c5be6d6ef93d91b21e22dba3c5d5e1121d4786586f83b588975eacedf2f",
+      "source_hash_before": "e7e91c5be6d6ef93d91b21e22dba3c5d5e1121d4786586f83b588975eacedf2f",
+      "source_model_path": "artifacts/building-concepts/meshy-production/runtime-v1/models/building_theatre.glb",
+      "status": "grass_underlay",
+      "texture_bindings": [
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_theatre_Baked_BaseColor.png",
+          "slot": "albedo_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_theatre_Baked_MetallicRoughness.png",
+          "slot": "metallic_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_theatre_Baked_MetallicRoughness.png",
+          "slot": "roughness_texture",
+          "surface": 0,
+          "width": 2048
+        }
+      ],
+      "transform_source": "res://artifacts/building-concepts/meshy-production/runtime-v1/results.json"
+    },
+    {
+      "after_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/town-hall-checkpoint-close/building_town_hall.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/town-hall-checkpoint-wide/building_town_hall.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1280-close/building_town_hall.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1280-wide/building_town_hall.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1920-close/building_town_hall.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1920-wide/building_town_hall.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_town_hall.png"
+      ],
+      "approved": true,
+      "before_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/before/building_town_hall.png"
+      ],
+      "building_id": "building_town_hall",
+      "definition_path": "res://data/buildings/unique/building_town_hall.json",
+      "first_mesh": {
+        "materials": [
+          {
+            "class": "StandardMaterial3D",
+            "name": "material.001",
+            "resource_path": "res://models/city-builder/building_town_hall.glb::StandardMaterial3D_ccwn7",
+            "surface": 0
+          }
+        ],
+        "readable": true,
+        "resource_name": "building_town_hall_output_unwrapped",
+        "resource_path": "res://models/city-builder/building_town_hall.glb::ArrayMesh_j1ph1",
+        "surface_count": 1,
+        "texture_bindings": [
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_town_hall_Baked_BaseColor.png",
+            "slot": "albedo_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_town_hall_Baked_MetallicRoughness.png",
+            "slot": "metallic_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_town_hall_Baked_MetallicRoughness.png",
+            "slot": "roughness_texture",
+            "surface": 0,
+            "width": 2048
+          }
+        ],
+        "vertex_count": 95948
+      },
+      "first_mesh_readable": true,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "materials": [
+        {
+          "class": "StandardMaterial3D",
+          "name": "material.001",
+          "resource_path": "res://models/city-builder/building_town_hall.glb::StandardMaterial3D_ccwn7",
+          "surface": 0
+        }
+      ],
+      "model_hash_after": "a7302a6c366db4637e97e6e4ad902eb4e808a1f8d5b70689a86b49de9b682ac5",
+      "model_hash_before": "a7302a6c366db4637e97e6e4ad902eb4e808a1f8d5b70689a86b49de9b682ac5",
+      "model_offset": [
+        -0.000057504865253577,
+        0.0,
+        0.0000154419503815006
+      ],
+      "model_path": "res://models/city-builder/building_town_hall.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 1.00028156,
+      "near_ground_bounds": {
+        "band_max_y": 0.142913701534271,
+        "extent": [
+          2.0,
+          0.142891943454742,
+          1.10021471977234
+        ],
+        "max": [
+          1.5,
+          0.142891883850098,
+          1.05010735988617
+        ],
+        "min": [
+          -0.5,
+          -0.0000000596046447753906,
+          -0.0501073598861694
+        ],
+        "point_count": 11193
+      },
+      "overall_bounds": {
+        "extent": [
+          2.0,
+          1.78642201423645,
+          1.10021471977234
+        ],
+        "max": [
+          1.5,
+          1.78642201423645,
+          1.05010735988617
+        ],
+        "min": [
+          -0.5,
+          -0.0000000596046447753906,
+          -0.0501073598861694
+        ]
+      },
+      "rationale": "The mandatory 2x2 checkpoint spans the full width but only 1.100 cells in depth; a footprint underlay repairs all four cells without unsafe scaling.",
+      "rotation_results": [
+        {
+          "degrees": 0,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_town_hall.png",
+          "quadrant": 0,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 90,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_town_hall.png",
+          "quadrant": 1,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 180,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_town_hall.png",
+          "quadrant": 2,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 270,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_town_hall.png",
+          "quadrant": 3,
+          "verdict": "pass"
+        }
+      ],
+      "source_hash_after": "e0737a1e32d1defc96cbb236a165396082c766c97d5db536f3590721a7ffd557",
+      "source_hash_before": "e0737a1e32d1defc96cbb236a165396082c766c97d5db536f3590721a7ffd557",
+      "source_model_path": "artifacts/building-concepts/meshy-production/runtime-v1/models/building_town_hall.glb",
+      "status": "grass_underlay",
+      "texture_bindings": [
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_town_hall_Baked_BaseColor.png",
+          "slot": "albedo_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_town_hall_Baked_MetallicRoughness.png",
+          "slot": "metallic_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_town_hall_Baked_MetallicRoughness.png",
+          "slot": "roughness_texture",
+          "surface": 0,
+          "width": 2048
+        }
+      ],
+      "transform_source": "res://artifacts/building-concepts/meshy-production/runtime-v1/results.json"
+    },
+    {
+      "after_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1280-close/building_windmill.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1280-wide/building_windmill.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1920-close/building_windmill.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1920-wide/building_windmill.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_windmill.png"
+      ],
+      "approved": true,
+      "before_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/before/building_windmill.png"
+      ],
+      "building_id": "building_windmill",
+      "definition_path": "res://data/buildings/unique/building_windmill.json",
+      "first_mesh": {
+        "materials": [
+          {
+            "class": "StandardMaterial3D",
+            "name": "material.001",
+            "resource_path": "res://models/city-builder/building_windmill.glb::StandardMaterial3D_ftfiw",
+            "surface": 0
+          }
+        ],
+        "readable": true,
+        "resource_name": "building_windmill_output_unwrapped",
+        "resource_path": "res://models/city-builder/building_windmill.glb::ArrayMesh_rsuqv",
+        "surface_count": 1,
+        "texture_bindings": [
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_windmill_Baked_BaseColor.png",
+            "slot": "albedo_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_windmill_Baked_MetallicRoughness.png",
+            "slot": "metallic_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/building_windmill_Baked_MetallicRoughness.png",
+            "slot": "roughness_texture",
+            "surface": 0,
+            "width": 2048
+          }
+        ],
+        "vertex_count": 90145
+      },
+      "first_mesh_readable": true,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "materials": [
+        {
+          "class": "StandardMaterial3D",
+          "name": "material.001",
+          "resource_path": "res://models/city-builder/building_windmill.glb::StandardMaterial3D_ftfiw",
+          "surface": 0
+        }
+      ],
+      "model_hash_after": "2e370e16aaf20e9263ebcf61fc8b7a6bd85f1715b1bd3a291385085d6060528a",
+      "model_hash_before": "2e370e16aaf20e9263ebcf61fc8b7a6bd85f1715b1bd3a291385085d6060528a",
+      "model_offset": [
+        -0.0000545175571460277,
+        0.0,
+        -0.0000820296991150826
+      ],
+      "model_path": "res://models/city-builder/building_windmill.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 0.50008355,
+      "near_ground_bounds": {
+        "band_max_y": 0.0797362506389618,
+        "extent": [
+          1.0,
+          0.0797358155250549,
+          0.906787991523743
+        ],
+        "max": [
+          0.5,
+          0.0797357857227325,
+          0.467263102531433
+        ],
+        "min": [
+          -0.5,
+          -0.0000000298023223876953,
+          -0.43952488899231
+        ],
+        "point_count": 30172
+      },
+      "overall_bounds": {
+        "extent": [
+          1.0,
+          0.996703505516052,
+          0.934526205062866
+        ],
+        "max": [
+          0.5,
+          0.996703505516052,
+          0.467263102531433
+        ],
+        "min": [
+          -0.5,
+          -0.0000000298023223876953,
+          -0.467263102531433
+        ]
+      },
+      "rationale": "The walled grass plot fills one axis but exposes a persistent strip on its 0.907-cell near-ground axis; scaling would overflow.",
+      "rotation_results": [
+        {
+          "degrees": 0,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_windmill.png",
+          "quadrant": 0,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 90,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_windmill.png",
+          "quadrant": 1,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 180,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_windmill.png",
+          "quadrant": 2,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 270,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/building_windmill.png",
+          "quadrant": 3,
+          "verdict": "pass"
+        }
+      ],
+      "source_hash_after": "3415afb2a91999adfbfb668cbb12aca4b5a8430fd2d0710b77b2bcad89a06053",
+      "source_hash_before": "3415afb2a91999adfbfb668cbb12aca4b5a8430fd2d0710b77b2bcad89a06053",
+      "source_model_path": "artifacts/building-concepts/meshy-production/runtime-v1/models/building_windmill.glb",
+      "status": "grass_underlay",
+      "texture_bindings": [
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_windmill_Baked_BaseColor.png",
+          "slot": "albedo_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_windmill_Baked_MetallicRoughness.png",
+          "slot": "metallic_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/building_windmill_Baked_MetallicRoughness.png",
+          "slot": "roughness_texture",
+          "surface": 0,
+          "width": 2048
+        }
+      ],
+      "transform_source": "res://artifacts/building-concepts/meshy-production/runtime-v1/results.json"
+    },
+    {
+      "after_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after/grass.png"
+      ],
+      "approved": true,
+      "before_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/before/grass.png"
+      ],
+      "building_id": "grass",
+      "definition_path": "res://data/buildings/nature/grass.json",
+      "first_mesh": {
+        "materials": [
+          {
+            "class": "StandardMaterial3D",
+            "name": "British Grass",
+            "resource_path": "res://models/city-builder/grass.glb::StandardMaterial3D_4xwab",
+            "surface": 0
+          }
+        ],
+        "readable": true,
+        "resource_name": "grass_Grass Tile",
+        "resource_path": "res://models/city-builder/grass.glb::ArrayMesh_grf4e",
+        "surface_count": 1,
+        "texture_bindings": [
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/grass_Grass Albedo.png",
+            "slot": "albedo_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/grass_Grass Normal.png",
+            "slot": "normal_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/grass_Grass ORM.png",
+            "slot": "metallic_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/grass_Grass ORM.png",
+            "slot": "roughness_texture",
+            "surface": 0,
+            "width": 2048
+          }
+        ],
+        "vertex_count": 4
+      },
+      "first_mesh_readable": true,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "materials": [
+        {
+          "class": "StandardMaterial3D",
+          "name": "British Grass",
+          "resource_path": "res://models/city-builder/grass.glb::StandardMaterial3D_4xwab",
+          "surface": 0
+        }
+      ],
+      "model_hash_after": "f6b2b0da24ac0368b01a751614226b088a8f06413abfac686076e03616dbb4ce",
+      "model_hash_before": "f6b2b0da24ac0368b01a751614226b088a8f06413abfac686076e03616dbb4ce",
+      "model_offset": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "model_path": "res://models/city-builder/grass.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 1.0,
+      "near_ground_bounds": {
+        "band_max_y": 0.04,
+        "extent": [
+          1.0,
+          0.0,
+          1.0
+        ],
+        "max": [
+          0.5,
+          0.0,
+          0.5
+        ],
+        "min": [
+          -0.5,
+          0.0,
+          -0.5
+        ],
+        "point_count": 4
+      },
+      "overall_bounds": {
+        "extent": [
+          1.0,
+          0.00000999999974737875,
+          1.0
+        ],
+        "max": [
+          0.5,
+          0.00000999999974737875,
+          0.5
+        ],
+        "min": [
+          -0.5,
+          0.0,
+          -0.5
+        ]
+      },
+      "rationale": "The purpose-built grass plane fills the 1x1 footprint exactly.",
+      "rotation_results": [
+        {
+          "degrees": 0,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/grass.png",
+          "quadrant": 0,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 90,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/grass.png",
+          "quadrant": 1,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 180,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/grass.png",
+          "quadrant": 2,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 270,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/grass.png",
+          "quadrant": 3,
+          "verdict": "pass"
+        }
+      ],
+      "source_hash_after": "f6b2b0da24ac0368b01a751614226b088a8f06413abfac686076e03616dbb4ce",
+      "source_hash_before": "f6b2b0da24ac0368b01a751614226b088a8f06413abfac686076e03616dbb4ce",
+      "source_model_path": "res://models/city-builder/grass.glb",
+      "status": "pass",
+      "texture_bindings": [
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/grass_Grass Albedo.png",
+          "slot": "albedo_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/grass_Grass Normal.png",
+          "slot": "normal_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/grass_Grass ORM.png",
+          "slot": "metallic_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/grass_Grass ORM.png",
+          "slot": "roughness_texture",
+          "surface": 0,
+          "width": 2048
+        }
+      ],
+      "transform_source": "res://data/buildings/nature/grass.json"
+    },
+    {
+      "after_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after/grass_trees.png"
+      ],
+      "approved": true,
+      "before_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/before/grass_trees.png"
+      ],
+      "building_id": "grass_trees",
+      "definition_path": "res://data/buildings/nature/grass_trees.json",
+      "first_mesh": {
+        "materials": [
+          {
+            "class": "StandardMaterial3D",
+            "name": "material.001",
+            "resource_path": "res://models/city-builder/grass_trees.glb::StandardMaterial3D_pp13g",
+            "surface": 0
+          }
+        ],
+        "readable": true,
+        "resource_name": "grass_trees_output_unwrapped",
+        "resource_path": "res://models/city-builder/grass_trees.glb::ArrayMesh_1ofou",
+        "surface_count": 1,
+        "texture_bindings": [
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/grass_trees_Baked_BaseColor.png",
+            "slot": "albedo_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/grass_trees_Baked_MetallicRoughness.png",
+            "slot": "metallic_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/grass_trees_Baked_MetallicRoughness.png",
+            "slot": "roughness_texture",
+            "surface": 0,
+            "width": 2048
+          }
+        ],
+        "vertex_count": 79308
+      },
+      "first_mesh_readable": true,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "materials": [
+        {
+          "class": "StandardMaterial3D",
+          "name": "material.001",
+          "resource_path": "res://models/city-builder/grass_trees.glb::StandardMaterial3D_pp13g",
+          "surface": 0
+        }
+      ],
+      "model_hash_after": "f6a8d79c992c4ad6fae0ce78fbb30e038f821cbbd9c4612c495869521f2f1045",
+      "model_hash_before": "f6a8d79c992c4ad6fae0ce78fbb30e038f821cbbd9c4612c495869521f2f1045",
+      "model_offset": [
+        0.0000130627977341646,
+        0.0,
+        -0.00942328851670027
+      ],
+      "model_path": "res://models/city-builder/grass_trees.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 0.512648837,
+      "near_ground_bounds": {
+        "band_max_y": 0.0559403610229492,
+        "extent": [
+          0.998219013214111,
+          0.0559391975402832,
+          0.999999940395355
+        ],
+        "max": [
+          0.499109506607056,
+          0.0559391975402832,
+          0.499999970197678
+        ],
+        "min": [
+          -0.499109536409378,
+          0.0,
+          -0.499999970197678
+        ],
+        "point_count": 16487
+      },
+      "overall_bounds": {
+        "extent": [
+          0.998219072818756,
+          0.699254512786865,
+          1.0
+        ],
+        "max": [
+          0.499109536409378,
+          0.699254512786865,
+          0.5
+        ],
+        "min": [
+          -0.499109536409378,
+          0.0,
+          -0.499999970197678
+        ]
+      },
+      "rationale": "The integrated terrain plate is effectively full-cell and exposes no meaningful footprint strip.",
+      "rotation_results": [
+        {
+          "degrees": 0,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/grass_trees.png",
+          "quadrant": 0,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 90,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/grass_trees.png",
+          "quadrant": 1,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 180,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/grass_trees.png",
+          "quadrant": 2,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 270,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/grass_trees.png",
+          "quadrant": 3,
+          "verdict": "pass"
+        }
+      ],
+      "source_hash_after": "e34eb3d6f5df59c8c5c957ac27b3ff64f9fec27f892ae81bf431a3b8da20a934",
+      "source_hash_before": "e34eb3d6f5df59c8c5c957ac27b3ff64f9fec27f892ae81bf431a3b8da20a934",
+      "source_model_path": "artifacts/building-concepts/meshy-production/runtime-v1/models/grass_trees.glb",
+      "status": "pass",
+      "texture_bindings": [
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/grass_trees_Baked_BaseColor.png",
+          "slot": "albedo_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/grass_trees_Baked_MetallicRoughness.png",
+          "slot": "metallic_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/grass_trees_Baked_MetallicRoughness.png",
+          "slot": "roughness_texture",
+          "surface": 0,
+          "width": 2048
+        }
+      ],
+      "transform_source": "res://artifacts/building-concepts/meshy-production/runtime-v1/results.json"
+    },
+    {
+      "after_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1280-close/grass_trees_tall.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1280-wide/grass_trees_tall.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1920-close/grass_trees_tall.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after-1920-wide/grass_trees_tall.png",
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after/grass_trees_tall.png"
+      ],
+      "approved": true,
+      "before_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/before/grass_trees_tall.png"
+      ],
+      "building_id": "grass_trees_tall",
+      "definition_path": "res://data/buildings/nature/grass_trees_tall.json",
+      "first_mesh": {
+        "materials": [
+          {
+            "class": "StandardMaterial3D",
+            "name": "material.001",
+            "resource_path": "res://models/city-builder/grass_trees_tall.glb::StandardMaterial3D_xxar8",
+            "surface": 0
+          }
+        ],
+        "readable": true,
+        "resource_name": "grass_trees_tall_output_unwrapped",
+        "resource_path": "res://models/city-builder/grass_trees_tall.glb::ArrayMesh_4v1xo",
+        "surface_count": 1,
+        "texture_bindings": [
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/grass_trees_tall_Baked_BaseColor.png",
+            "slot": "albedo_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/grass_trees_tall_Baked_MetallicRoughness.png",
+            "slot": "metallic_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/grass_trees_tall_Baked_MetallicRoughness.png",
+            "slot": "roughness_texture",
+            "surface": 0,
+            "width": 2048
+          }
+        ],
+        "vertex_count": 81390
+      },
+      "first_mesh_readable": true,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "materials": [
+        {
+          "class": "StandardMaterial3D",
+          "name": "material.001",
+          "resource_path": "res://models/city-builder/grass_trees_tall.glb::StandardMaterial3D_xxar8",
+          "surface": 0
+        }
+      ],
+      "model_hash_after": "5c8fbedbda792dfd7c0e9fab987829149398ae0784f335b082d175d36b0c5c50",
+      "model_hash_before": "5c8fbedbda792dfd7c0e9fab987829149398ae0784f335b082d175d36b0c5c50",
+      "model_offset": [
+        -0.0105713363736868,
+        0.0,
+        0.00318272807635367
+      ],
+      "model_path": "res://models/city-builder/grass_trees_tall.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 0.586628969,
+      "near_ground_bounds": {
+        "band_max_y": 0.0601903390884399,
+        "extent": [
+          0.844037532806396,
+          0.0597448945045471,
+          0.791492462158203
+        ],
+        "max": [
+          0.430464595556259,
+          0.0597448945045471,
+          0.380624353885651
+        ],
+        "min": [
+          -0.413572907447815,
+          0.0,
+          -0.410868138074875
+        ],
+        "point_count": 12190
+      },
+      "overall_bounds": {
+        "extent": [
+          1.0,
+          0.752379238605499,
+          0.821736335754395
+        ],
+        "max": [
+          0.5,
+          0.752379238605499,
+          0.41086819767952
+        ],
+        "min": [
+          -0.5,
+          0.0,
+          -0.410868138074875
+        ]
+      },
+      "rationale": "The vegetation is correctly scaled but its ground plate covers only about 0.844x0.791 cells; elevated trees already reach the full overall axis.",
+      "rotation_results": [
+        {
+          "degrees": 0,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/grass_trees_tall.png",
+          "quadrant": 0,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 90,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/grass_trees_tall.png",
+          "quadrant": 1,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 180,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/grass_trees_tall.png",
+          "quadrant": 2,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 270,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/grass_trees_tall.png",
+          "quadrant": 3,
+          "verdict": "pass"
+        }
+      ],
+      "source_hash_after": "195f02027afce566ea8c3916eda6f656387c8f39f27bd7083f0e63b8ecd0b564",
+      "source_hash_before": "195f02027afce566ea8c3916eda6f656387c8f39f27bd7083f0e63b8ecd0b564",
+      "source_model_path": "artifacts/building-concepts/meshy-production/runtime-v1/models/grass_trees_tall.glb",
+      "status": "grass_underlay",
+      "texture_bindings": [
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/grass_trees_tall_Baked_BaseColor.png",
+          "slot": "albedo_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/grass_trees_tall_Baked_MetallicRoughness.png",
+          "slot": "metallic_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/grass_trees_tall_Baked_MetallicRoughness.png",
+          "slot": "roughness_texture",
+          "surface": 0,
+          "width": 2048
+        }
+      ],
+      "transform_source": "res://artifacts/building-concepts/meshy-production/runtime-v1/results.json"
+    },
+    {
+      "after_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after/pavement.png"
+      ],
+      "approved": true,
+      "before_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/before/pavement.png"
+      ],
+      "building_id": "pavement",
+      "definition_path": "res://data/buildings/road/pavement.json",
+      "first_mesh": {
+        "materials": [
+          {
+            "class": "StandardMaterial3D",
+            "name": "material.001",
+            "resource_path": "res://models/city-builder/pavement.glb::StandardMaterial3D_lqbh8",
+            "surface": 0
+          }
+        ],
+        "readable": true,
+        "resource_name": "pavement_output_unwrapped",
+        "resource_path": "res://models/city-builder/pavement.glb::ArrayMesh_yepqw",
+        "surface_count": 1,
+        "texture_bindings": [
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/pavement_Baked_BaseColor.png",
+            "slot": "albedo_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/pavement_Baked_MetallicRoughness.png",
+            "slot": "metallic_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/pavement_Baked_MetallicRoughness.png",
+            "slot": "roughness_texture",
+            "surface": 0,
+            "width": 2048
+          }
+        ],
+        "vertex_count": 7649
+      },
+      "first_mesh_readable": true,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "materials": [
+        {
+          "class": "StandardMaterial3D",
+          "name": "material.001",
+          "resource_path": "res://models/city-builder/pavement.glb::StandardMaterial3D_lqbh8",
+          "surface": 0
+        }
+      ],
+      "model_hash_after": "e770c83d94606bceb3c717f53aa9be66bc68a437522ea742ed9038f43fd0e7c5",
+      "model_hash_before": "e770c83d94606bceb3c717f53aa9be66bc68a437522ea742ed9038f43fd0e7c5",
+      "model_offset": [
+        -0.00000274217154583312,
+        0.0,
+        0.0000159910323418444
+      ],
+      "model_path": "res://models/city-builder/pavement.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 0.500065246,
+      "near_ground_bounds": {
+        "band_max_y": 0.0399999981373549,
+        "extent": [
+          0.99786376953125,
+          0.0389595776796341,
+          0.997830986976624
+        ],
+        "max": [
+          0.49925234913826,
+          0.0389595776796341,
+          0.498724907636642
+        ],
+        "min": [
+          -0.498611450195312,
+          -0.00000000186264514923096,
+          -0.499106049537659
+        ],
+        "point_count": 118
+      },
+      "overall_bounds": {
+        "extent": [
+          1.0,
+          0.0593067780137062,
+          0.999279499053955
+        ],
+        "max": [
+          0.499999940395355,
+          0.0593067780137062,
+          0.4996397793293
+        ],
+        "min": [
+          -0.500000059604645,
+          -0.00000000186264514923096,
+          -0.499639719724655
+        ]
+      },
+      "rationale": "The full paved hardstanding covers the complete footprint and must continue replacing grass.",
+      "rotation_results": [
+        {
+          "degrees": 0,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/pavement.png",
+          "quadrant": 0,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 90,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/pavement.png",
+          "quadrant": 1,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 180,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/pavement.png",
+          "quadrant": 2,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 270,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/pavement.png",
+          "quadrant": 3,
+          "verdict": "pass"
+        }
+      ],
+      "source_hash_after": "fcec272b118b7950b4a2b580abaa44d91e0aae8607103a979bd61f52de21965c",
+      "source_hash_before": "fcec272b118b7950b4a2b580abaa44d91e0aae8607103a979bd61f52de21965c",
+      "source_model_path": "artifacts/building-concepts/meshy-production/runtime-v1/models/pavement.glb",
+      "status": "pass",
+      "texture_bindings": [
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/pavement_Baked_BaseColor.png",
+          "slot": "albedo_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/pavement_Baked_MetallicRoughness.png",
+          "slot": "metallic_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/pavement_Baked_MetallicRoughness.png",
+          "slot": "roughness_texture",
+          "surface": 0,
+          "width": 2048
+        }
+      ],
+      "transform_source": "res://artifacts/building-concepts/meshy-production/runtime-v1/results.json"
+    },
+    {
+      "after_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after/pavement_fountain.png"
+      ],
+      "approved": true,
+      "before_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/before/pavement_fountain.png"
+      ],
+      "building_id": "pavement_fountain",
+      "definition_path": "res://data/buildings/road/pavement_fountain.json",
+      "first_mesh": {
+        "materials": [
+          {
+            "class": "StandardMaterial3D",
+            "name": "material.001",
+            "resource_path": "res://models/city-builder/pavement_fountain.glb::StandardMaterial3D_eurhv",
+            "surface": 0
+          }
+        ],
+        "readable": true,
+        "resource_name": "pavement_fountain_output_unwrapped",
+        "resource_path": "res://models/city-builder/pavement_fountain.glb::ArrayMesh_cjq5g",
+        "surface_count": 1,
+        "texture_bindings": [
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/pavement_fountain_Baked_BaseColor.png",
+            "slot": "albedo_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/pavement_fountain_Baked_MetallicRoughness.png",
+            "slot": "metallic_texture",
+            "surface": 0,
+            "width": 2048
+          },
+          {
+            "height": 2048,
+            "resource_path": "res://models/city-builder/pavement_fountain_Baked_MetallicRoughness.png",
+            "slot": "roughness_texture",
+            "surface": 0,
+            "width": 2048
+          }
+        ],
+        "vertex_count": 39852
+      },
+      "first_mesh_readable": true,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "materials": [
+        {
+          "class": "StandardMaterial3D",
+          "name": "material.001",
+          "resource_path": "res://models/city-builder/pavement_fountain.glb::StandardMaterial3D_eurhv",
+          "surface": 0
+        }
+      ],
+      "model_hash_after": "2cddc9826faa3f1d76401954c1e187f95b733cc43df5fa2e182fcc96d36caba1",
+      "model_hash_before": "2cddc9826faa3f1d76401954c1e187f95b733cc43df5fa2e182fcc96d36caba1",
+      "model_offset": [
+        -0.0000127557195810368,
+        0.0,
+        -0.0000510377794853412
+      ],
+      "model_path": "res://models/city-builder/pavement_fountain.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 0.500012756,
+      "near_ground_bounds": {
+        "band_max_y": 0.0525798177719116,
+        "extent": [
+          1.0,
+          0.0525778830051422,
+          0.999687552452087
+        ],
+        "max": [
+          0.5,
+          0.0525778830051422,
+          0.499843746423721
+        ],
+        "min": [
+          -0.5,
+          0.0,
+          -0.499843776226044
+        ],
+        "point_count": 11871
+      },
+      "overall_bounds": {
+        "extent": [
+          1.0,
+          0.657247722148895,
+          0.999687552452087
+        ],
+        "max": [
+          0.5,
+          0.657247722148895,
+          0.499843776226044
+        ],
+        "min": [
+          -0.5,
+          0.0,
+          -0.499843776226044
+        ]
+      },
+      "rationale": "The paved fountain surround covers the complete footprint and must continue replacing grass.",
+      "rotation_results": [
+        {
+          "degrees": 0,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/pavement_fountain.png",
+          "quadrant": 0,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 90,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/pavement_fountain.png",
+          "quadrant": 1,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 180,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/pavement_fountain.png",
+          "quadrant": 2,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 270,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/pavement_fountain.png",
+          "quadrant": 3,
+          "verdict": "pass"
+        }
+      ],
+      "source_hash_after": "2177f386cf38caf0b1b4f55ccee22f9f41fec5f6a5e51727b1d3e0f0285013b7",
+      "source_hash_before": "2177f386cf38caf0b1b4f55ccee22f9f41fec5f6a5e51727b1d3e0f0285013b7",
+      "source_model_path": "artifacts/building-concepts/meshy-production/runtime-v1/models/pavement_fountain.glb",
+      "status": "pass",
+      "texture_bindings": [
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/pavement_fountain_Baked_BaseColor.png",
+          "slot": "albedo_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/pavement_fountain_Baked_MetallicRoughness.png",
+          "slot": "metallic_texture",
+          "surface": 0,
+          "width": 2048
+        },
+        {
+          "height": 2048,
+          "resource_path": "res://models/city-builder/pavement_fountain_Baked_MetallicRoughness.png",
+          "slot": "roughness_texture",
+          "surface": 0,
+          "width": 2048
+        }
+      ],
+      "transform_source": "res://artifacts/building-concepts/meshy-production/runtime-v1/results.json"
+    },
+    {
+      "after_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after/road_corner.png"
+      ],
+      "approved": true,
+      "before_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/before/road_corner.png"
+      ],
+      "building_id": "road_corner",
+      "definition_path": "res://data/buildings/road/road_corner.json",
+      "first_mesh": {
+        "materials": [
+          {
+            "class": "StandardMaterial3D",
+            "name": "colormap",
+            "resource_path": "res://models/road-corner.glb::StandardMaterial3D_ddscn",
+            "surface": 0
+          }
+        ],
+        "readable": true,
+        "resource_name": "road-corner_road-corner",
+        "resource_path": "res://models/road-corner.glb::ArrayMesh_dru3s",
+        "surface_count": 1,
+        "texture_bindings": [
+          {
+            "height": 512,
+            "resource_path": "res://models/Textures/colormap.png",
+            "slot": "albedo_texture",
+            "surface": 0,
+            "width": 512
+          }
+        ],
+        "vertex_count": 188
+      },
+      "first_mesh_readable": true,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "materials": [
+        {
+          "class": "StandardMaterial3D",
+          "name": "colormap",
+          "resource_path": "res://models/road-corner.glb::StandardMaterial3D_ddscn",
+          "surface": 0
+        }
+      ],
+      "model_hash_after": "85aec60d66c5084bb658274a1468139a5def1e9e9575c01286ed6c2069916789",
+      "model_hash_before": "85aec60d66c5084bb658274a1468139a5def1e9e9575c01286ed6c2069916789",
+      "model_offset": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "model_path": "res://models/road-corner.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 1.0,
+      "near_ground_bounds": {
+        "band_max_y": 0.04,
+        "extent": [
+          1.0,
+          0.0249997712671757,
+          1.0
+        ],
+        "max": [
+          0.5,
+          0.0249997712671757,
+          0.5
+        ],
+        "min": [
+          -0.5,
+          0.0,
+          -0.5
+        ],
+        "point_count": 138
+      },
+      "overall_bounds": {
+        "extent": [
+          1.0,
+          0.0600000023841858,
+          1.0
+        ],
+        "max": [
+          0.5,
+          0.0600000023841858,
+          0.5
+        ],
+        "min": [
+          -0.5,
+          0.0,
+          -0.5
+        ]
+      },
+      "rationale": "The road and kerb plate covers the full 1x1 footprint.",
+      "rotation_results": [
+        {
+          "degrees": 0,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/road_corner.png",
+          "quadrant": 0,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 90,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/road_corner.png",
+          "quadrant": 1,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 180,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/road_corner.png",
+          "quadrant": 2,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 270,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/road_corner.png",
+          "quadrant": 3,
+          "verdict": "pass"
+        }
+      ],
+      "source_hash_after": "85aec60d66c5084bb658274a1468139a5def1e9e9575c01286ed6c2069916789",
+      "source_hash_before": "85aec60d66c5084bb658274a1468139a5def1e9e9575c01286ed6c2069916789",
+      "source_model_path": "res://models/road-corner.glb",
+      "status": "pass",
+      "texture_bindings": [
+        {
+          "height": 512,
+          "resource_path": "res://models/Textures/colormap.png",
+          "slot": "albedo_texture",
+          "surface": 0,
+          "width": 512
+        }
+      ],
+      "transform_source": "res://data/buildings/road/road_corner.json"
+    },
+    {
+      "after_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after/road_intersection.png"
+      ],
+      "approved": true,
+      "before_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/before/road_intersection.png"
+      ],
+      "building_id": "road_intersection",
+      "definition_path": "res://data/buildings/road/road_intersection.json",
+      "first_mesh": {
+        "materials": [
+          {
+            "class": "StandardMaterial3D",
+            "name": "colormap",
+            "resource_path": "res://models/road-intersection.glb::StandardMaterial3D_o3v57",
+            "surface": 0
+          }
+        ],
+        "readable": true,
+        "resource_name": "road-intersection_road-intersection",
+        "resource_path": "res://models/road-intersection.glb::ArrayMesh_687hl",
+        "surface_count": 1,
+        "texture_bindings": [
+          {
+            "height": 512,
+            "resource_path": "res://models/Textures/colormap.png",
+            "slot": "albedo_texture",
+            "surface": 0,
+            "width": 512
+          }
+        ],
+        "vertex_count": 228
+      },
+      "first_mesh_readable": true,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "materials": [
+        {
+          "class": "StandardMaterial3D",
+          "name": "colormap",
+          "resource_path": "res://models/road-intersection.glb::StandardMaterial3D_o3v57",
+          "surface": 0
+        }
+      ],
+      "model_hash_after": "0212ffe9945b933535503372855c54dee20d54ddfc07e1c72963e67558a14183",
+      "model_hash_before": "0212ffe9945b933535503372855c54dee20d54ddfc07e1c72963e67558a14183",
+      "model_offset": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "model_path": "res://models/road-intersection.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 1.0,
+      "near_ground_bounds": {
+        "band_max_y": 0.04,
+        "extent": [
+          1.0,
+          0.0249996185302734,
+          1.0
+        ],
+        "max": [
+          0.5,
+          0.0249996185302734,
+          0.5
+        ],
+        "min": [
+          -0.5,
+          0.0,
+          -0.5
+        ],
+        "point_count": 180
+      },
+      "overall_bounds": {
+        "extent": [
+          1.0,
+          0.0500000007450581,
+          1.0
+        ],
+        "max": [
+          0.5,
+          0.0500000007450581,
+          0.5
+        ],
+        "min": [
+          -0.5,
+          0.0,
+          -0.5
+        ]
+      },
+      "rationale": "The intersection hard surface covers the full 1x1 footprint.",
+      "rotation_results": [
+        {
+          "degrees": 0,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/road_intersection.png",
+          "quadrant": 0,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 90,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/road_intersection.png",
+          "quadrant": 1,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 180,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/road_intersection.png",
+          "quadrant": 2,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 270,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/road_intersection.png",
+          "quadrant": 3,
+          "verdict": "pass"
+        }
+      ],
+      "source_hash_after": "0212ffe9945b933535503372855c54dee20d54ddfc07e1c72963e67558a14183",
+      "source_hash_before": "0212ffe9945b933535503372855c54dee20d54ddfc07e1c72963e67558a14183",
+      "source_model_path": "res://models/road-intersection.glb",
+      "status": "pass",
+      "texture_bindings": [
+        {
+          "height": 512,
+          "resource_path": "res://models/Textures/colormap.png",
+          "slot": "albedo_texture",
+          "surface": 0,
+          "width": 512
+        }
+      ],
+      "transform_source": "res://data/buildings/road/road_intersection.json"
+    },
+    {
+      "after_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after/road_split.png"
+      ],
+      "approved": true,
+      "before_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/before/road_split.png"
+      ],
+      "building_id": "road_split",
+      "definition_path": "res://data/buildings/road/road_split.json",
+      "first_mesh": {
+        "materials": [
+          {
+            "class": "StandardMaterial3D",
+            "name": "colormap",
+            "resource_path": "res://models/road-split.glb::StandardMaterial3D_wg5hj",
+            "surface": 0
+          }
+        ],
+        "readable": true,
+        "resource_name": "road-split_road-split",
+        "resource_path": "res://models/road-split.glb::ArrayMesh_q8g25",
+        "surface_count": 1,
+        "texture_bindings": [
+          {
+            "height": 512,
+            "resource_path": "res://models/Textures/colormap.png",
+            "slot": "albedo_texture",
+            "surface": 0,
+            "width": 512
+          }
+        ],
+        "vertex_count": 154
+      },
+      "first_mesh_readable": true,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "materials": [
+        {
+          "class": "StandardMaterial3D",
+          "name": "colormap",
+          "resource_path": "res://models/road-split.glb::StandardMaterial3D_wg5hj",
+          "surface": 0
+        }
+      ],
+      "model_hash_after": "31bf582953db8315edfade4ba49d81145a78bda9757b6442dc417e14cc84b5ff",
+      "model_hash_before": "31bf582953db8315edfade4ba49d81145a78bda9757b6442dc417e14cc84b5ff",
+      "model_offset": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "model_path": "res://models/road-split.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 1.0,
+      "near_ground_bounds": {
+        "band_max_y": 0.04,
+        "extent": [
+          1.0,
+          0.0249996185302734,
+          1.0
+        ],
+        "max": [
+          0.5,
+          0.0249996185302734,
+          0.5
+        ],
+        "min": [
+          -0.5,
+          0.0,
+          -0.5
+        ],
+        "point_count": 118
+      },
+      "overall_bounds": {
+        "extent": [
+          1.0,
+          0.0500000007450581,
+          1.0
+        ],
+        "max": [
+          0.5,
+          0.0500000007450581,
+          0.5
+        ],
+        "min": [
+          -0.5,
+          0.0,
+          -0.5
+        ]
+      },
+      "rationale": "The split-road hard surface covers the full 1x1 footprint.",
+      "rotation_results": [
+        {
+          "degrees": 0,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/road_split.png",
+          "quadrant": 0,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 90,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/road_split.png",
+          "quadrant": 1,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 180,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/road_split.png",
+          "quadrant": 2,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 270,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/road_split.png",
+          "quadrant": 3,
+          "verdict": "pass"
+        }
+      ],
+      "source_hash_after": "31bf582953db8315edfade4ba49d81145a78bda9757b6442dc417e14cc84b5ff",
+      "source_hash_before": "31bf582953db8315edfade4ba49d81145a78bda9757b6442dc417e14cc84b5ff",
+      "source_model_path": "res://models/road-split.glb",
+      "status": "pass",
+      "texture_bindings": [
+        {
+          "height": 512,
+          "resource_path": "res://models/Textures/colormap.png",
+          "slot": "albedo_texture",
+          "surface": 0,
+          "width": 512
+        }
+      ],
+      "transform_source": "res://data/buildings/road/road_split.json"
+    },
+    {
+      "after_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after/road_straight.png"
+      ],
+      "approved": true,
+      "before_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/before/road_straight.png"
+      ],
+      "building_id": "road_straight",
+      "definition_path": "res://data/buildings/road/road_straight.json",
+      "first_mesh": {
+        "materials": [
+          {
+            "class": "StandardMaterial3D",
+            "name": "colormap",
+            "resource_path": "res://models/road-straight.glb::StandardMaterial3D_ef7f6",
+            "surface": 0
+          }
+        ],
+        "readable": true,
+        "resource_name": "road-straight_road-straight",
+        "resource_path": "res://models/road-straight.glb::ArrayMesh_dmfdt",
+        "surface_count": 1,
+        "texture_bindings": [
+          {
+            "height": 512,
+            "resource_path": "res://models/Textures/colormap.png",
+            "slot": "albedo_texture",
+            "surface": 0,
+            "width": 512
+          }
+        ],
+        "vertex_count": 88
+      },
+      "first_mesh_readable": true,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "materials": [
+        {
+          "class": "StandardMaterial3D",
+          "name": "colormap",
+          "resource_path": "res://models/road-straight.glb::StandardMaterial3D_ef7f6",
+          "surface": 0
+        }
+      ],
+      "model_hash_after": "008a6305de778439d1a99be78a3e0945c72a9bc9cc0bade1b51a666d5db01d0b",
+      "model_hash_before": "008a6305de778439d1a99be78a3e0945c72a9bc9cc0bade1b51a666d5db01d0b",
+      "model_offset": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "model_path": "res://models/road-straight.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 1.0,
+      "near_ground_bounds": {
+        "band_max_y": 0.04,
+        "extent": [
+          1.0,
+          0.0249996185302734,
+          1.00000023841858
+        ],
+        "max": [
+          0.5,
+          0.0249996185302734,
+          0.50000011920929
+        ],
+        "min": [
+          -0.5,
+          0.0,
+          -0.50000011920929
+        ],
+        "point_count": 64
+      },
+      "overall_bounds": {
+        "extent": [
+          1.0,
+          0.0500000007450581,
+          1.00000023841858
+        ],
+        "max": [
+          0.5,
+          0.0500000007450581,
+          0.50000011920929
+        ],
+        "min": [
+          -0.5,
+          0.0,
+          -0.50000011920929
+        ]
+      },
+      "rationale": "The straight-road hard surface covers the full 1x1 footprint.",
+      "rotation_results": [
+        {
+          "degrees": 0,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/road_straight.png",
+          "quadrant": 0,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 90,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/road_straight.png",
+          "quadrant": 1,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 180,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/road_straight.png",
+          "quadrant": 2,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 270,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/road_straight.png",
+          "quadrant": 3,
+          "verdict": "pass"
+        }
+      ],
+      "source_hash_after": "008a6305de778439d1a99be78a3e0945c72a9bc9cc0bade1b51a666d5db01d0b",
+      "source_hash_before": "008a6305de778439d1a99be78a3e0945c72a9bc9cc0bade1b51a666d5db01d0b",
+      "source_model_path": "res://models/road-straight.glb",
+      "status": "pass",
+      "texture_bindings": [
+        {
+          "height": 512,
+          "resource_path": "res://models/Textures/colormap.png",
+          "slot": "albedo_texture",
+          "surface": 0,
+          "width": 512
+        }
+      ],
+      "transform_source": "res://data/buildings/road/road_straight.json"
+    },
+    {
+      "after_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/after/road_straight_lightposts.png"
+      ],
+      "approved": true,
+      "before_evidence": [
+        "res://specs/020-building-ground-contact/validation/contact-sheets/before/road_straight_lightposts.png"
+      ],
+      "building_id": "road_straight_lightposts",
+      "definition_path": "res://data/buildings/road/road_straight_lightposts.json",
+      "first_mesh": {
+        "materials": [
+          {
+            "class": "StandardMaterial3D",
+            "name": "colormap",
+            "resource_path": "res://models/road-straight-lightposts.glb::StandardMaterial3D_f8kre",
+            "surface": 0
+          }
+        ],
+        "readable": true,
+        "resource_name": "road-straight-lightposts_road-straight-lightposts",
+        "resource_path": "res://models/road-straight-lightposts.glb::ArrayMesh_k0itw",
+        "surface_count": 1,
+        "texture_bindings": [
+          {
+            "height": 512,
+            "resource_path": "res://models/Textures/colormap.png",
+            "slot": "albedo_texture",
+            "surface": 0,
+            "width": 512
+          }
+        ],
+        "vertex_count": 316
+      },
+      "first_mesh_readable": true,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "materials": [
+        {
+          "class": "StandardMaterial3D",
+          "name": "colormap",
+          "resource_path": "res://models/road-straight-lightposts.glb::StandardMaterial3D_f8kre",
+          "surface": 0
+        }
+      ],
+      "model_hash_after": "fc5340621fefdd43ab0bbf4bdaa41de9822dc545ce787fbfd92b75ce85d51e62",
+      "model_hash_before": "fc5340621fefdd43ab0bbf4bdaa41de9822dc545ce787fbfd92b75ce85d51e62",
+      "model_offset": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "model_path": "res://models/road-straight-lightposts.glb",
+      "model_rotation_y": 0.0,
+      "model_scale": 1.0,
+      "near_ground_bounds": {
+        "band_max_y": 0.0440000009536743,
+        "extent": [
+          1.0,
+          0.0249927528202534,
+          1.00000023841858
+        ],
+        "max": [
+          0.5,
+          0.0249927528202534,
+          0.50000011920929
+        ],
+        "min": [
+          -0.5,
+          0.0,
+          -0.50000011920929
+        ],
+        "point_count": 64
+      },
+      "overall_bounds": {
+        "extent": [
+          1.0,
+          0.550000011920929,
+          1.00000023841858
+        ],
+        "max": [
+          0.5,
+          0.550000011920929,
+          0.50000011920929
+        ],
+        "min": [
+          -0.5,
+          0.0,
+          -0.50000011920929
+        ]
+      },
+      "rationale": "The straight-road hard surface remains full-footprint beneath its light posts.",
+      "rotation_results": [
+        {
+          "degrees": 0,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/road_straight_lightposts.png",
+          "quadrant": 0,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 90,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/road_straight_lightposts.png",
+          "quadrant": 1,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 180,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/road_straight_lightposts.png",
+          "quadrant": 2,
+          "verdict": "pass"
+        },
+        {
+          "degrees": 270,
+          "evidence": "res://specs/020-building-ground-contact/validation/contact-sheets/after/road_straight_lightposts.png",
+          "quadrant": 3,
+          "verdict": "pass"
+        }
+      ],
+      "source_hash_after": "fc5340621fefdd43ab0bbf4bdaa41de9822dc545ce787fbfd92b75ce85d51e62",
+      "source_hash_before": "fc5340621fefdd43ab0bbf4bdaa41de9822dc545ce787fbfd92b75ce85d51e62",
+      "source_model_path": "res://models/road-straight-lightposts.glb",
+      "status": "pass",
+      "texture_bindings": [
+        {
+          "height": 512,
+          "resource_path": "res://models/Textures/colormap.png",
+          "slot": "albedo_texture",
+          "surface": 0,
+          "width": 512
+        }
+      ],
+      "transform_source": "res://data/buildings/road/road_straight_lightposts.json"
+    }
+  ],
+  "schema_version": 1,
+  "sheet_size": {
+    "height": 2160,
+    "width": 3840
+  },
+  "shot_viewport": {
+    "height": 1080,
+    "width": 1920
+  },
+  "underlay_bias_y": -0.003,
+  "zoom_mode": "normal"
+}

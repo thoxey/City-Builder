@@ -1,6 +1,42 @@
 # Data Model: Transactional Performance Architecture
 
-All records below are runtime value objects or detached dictionaries. Only the resulting gameplay fields in GameState/DataMap are authoritative and saveable.
+All records below are runtime value objects or detached dictionaries. GameState
+owns shared placed-city state; the Community plugin owns live resident state;
+DataMap is their durable save representation. Only resulting gameplay fields
+are authoritative and saveable. See
+`contracts/community-runtime-boundaries.md` for the Community-specific boundary.
+
+## CompiledCommunityRuntime
+
+| Field | Type | Rules |
+|---|---|---|
+| source_ids | PackedInt32Array | Canonical numeric source identities; stable only for this compiled revision |
+| effect_ids | PackedInt32Array | Numeric references into validated authored effect metadata |
+| effect_data | Packed arrays | Amounts, radii, scopes, qualities, manifestations, sensitivities, stacking IDs, and flags stored without hot-path string lookup |
+| schedule_masks | PackedInt32Array | Twenty-four-bit active-hour masks |
+| global_spans | PackedInt32Array | Canonically ordered effects applicable to the whole city |
+| spatial_spans | PackedInt32Array | Cell/region-to-effect spans for local exposure queries |
+| resident_links | PackedInt32Array | Direct home/source references for resident-scoped effects |
+| participant_links | PackedInt32Array | Direct assignment/source references for participant-scoped effects |
+| dependency_revisions | Dictionary | Topology, structures, programmes, occupancy, schedules, balance, and time inputs |
+
+This is a derived, Community-owned acceleration structure. It is rebuilt or
+selectively invalidated from authoritative state, is never saved or hashed, and
+is never exposed to UI or public snapshots. Authored strings remain available
+outside the hot path for validation and explanation projection.
+
+## CommunityEvaluationResult
+
+| Field | Type | Rules |
+|---|---|---|
+| quality_totals | PackedFloat32Array | Exactly four canonical quality totals |
+| provenance_handles | PackedInt32Array | Optional bounded source/effect references required to reconstruct explanations |
+| runtime_revision | int | Identifies the compiled runtime used |
+
+This operational result contains no player-facing labels or UI dictionaries.
+The Community domain commit applies its values to resident state. Rich
+explanations are projected separately and must reproduce canonical ordering,
+rounding, and effect provenance.
 
 ## StateVersion
 

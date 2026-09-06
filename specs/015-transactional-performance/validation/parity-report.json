@@ -1,0 +1,26 @@
+{
+  "schema_version": 2,
+  "captured": "2026-09-06",
+  "passed": true,
+  "canonical_scenario": {
+    "scenario_id": "first_town/rebalance",
+    "seed": 6066,
+    "buildings": 135,
+    "residents": 140,
+    "hours": 240,
+    "hour_240_checkpoint_hash": "8b1856d363d08568c1f8824d0dc0d0ebc117365e03f37b55d74efee099aefec4",
+    "state_hash": "fa19631150065fb74ba228104e843ae0a59a02e051e913748ce38a17c0733004",
+    "ledger_hash": "adcc840bc5e503c48159d3bca947688aa0699aa56c2554090bbfc8aea0ed5163",
+    "three_compiled_runs_equal": true,
+    "canonical_evaluator_equal": true
+  },
+  "reversed_registration": {"passed": true, "test": "test/integration/simulation/test_hourly_transaction_determinism.gd"},
+  "compiled_runtime": {
+    "canonical_totals_equal": true,
+    "rebuild_incremental_equal": true,
+    "cache_excluded_from_save_and_hash": true,
+    "detached_bounded_explanations": true,
+    "test": "test/contract/community/test_community_runtime_boundaries.gd"
+  },
+  "save_load": {"passed": true, "rendered_reference_town_loaded": true, "community_persistence_suite_passed": true}
+}

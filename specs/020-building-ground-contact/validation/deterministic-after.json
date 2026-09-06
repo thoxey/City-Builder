@@ -1,0 +1,6435 @@
+{
+  "checkpoints": [
+    {
+      "absolute_hour": 60,
+      "actual_meaningful_placements": 15,
+      "cash": 2610,
+      "real_minutes": 5,
+      "required_meaningful_placements": 15,
+      "state_hash": "3bec0ccd0b56988661e323d18c97c772916b50f62912ffdbc1a20143e3999019"
+    },
+    {
+      "absolute_hour": 120,
+      "actual_meaningful_placements": 30,
+      "cash": 5542,
+      "real_minutes": 10,
+      "required_meaningful_placements": 30,
+      "state_hash": "4a44cd8886990489b13ccd9de6756f3eb04c563f39b1a68b9ad613b57c889b3c"
+    },
+    {
+      "absolute_hour": 240,
+      "actual_meaningful_placements": 60,
+      "cash": 26935,
+      "real_minutes": 20,
+      "required_meaningful_placements": 60,
+      "state_hash": "8b1856d363d08568c1f8824d0dc0d0ebc117365e03f37b55d74efee099aefec4"
+    }
+  ],
+  "criteria": {
+    "categories": {
+      "civic": 1,
+      "commercial": 7,
+      "industrial": 6,
+      "nature": 17,
+      "residential": 29,
+      "road": 75
+    },
+    "final_operating_count": 0,
+    "functional_nature": 17,
+    "has_home_penalty": true,
+    "has_shop_bonus": true,
+    "meaningful_attempts": 60,
+    "meaningful_placements": 60,
+    "peak_operating_count": 1,
+    "rooted_failures": [],
+    "success_rate": 1.0,
+    "successful_attempts": 60,
+    "useful_choice_count": 10
+  },
+  "failures": [],
+  "final_summary": {
+    "available_choice_count": 10,
+    "building_manifest": [
+      {
+        "anchor": {
+          "x": -7,
+          "z": -5
+        },
+        "building_id": "building_nature_patch",
+        "category": "nature",
+        "footprint": [
+          {
+            "x": -7,
+            "z": -5
+          }
+        ],
+        "pool_id": null,
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -7,
+          "z": -4
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": -7,
+            "z": -4
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 1,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -7,
+          "z": -3
+        },
+        "building_id": "building_small_a",
+        "category": "generic",
+        "footprint": [
+          {
+            "x": -7,
+            "z": -3
+          }
+        ],
+        "pool_id": "residential_t1",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -7,
+          "z": 0
+        },
+        "building_id": "building_small_a",
+        "category": "generic",
+        "footprint": [
+          {
+            "x": -7,
+            "z": 0
+          }
+        ],
+        "pool_id": "residential_t1",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -7,
+          "z": 1
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": -7,
+            "z": 1
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 1,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -7,
+          "z": 2
+        },
+        "building_id": "building_nature_patch",
+        "category": "nature",
+        "footprint": [
+          {
+            "x": -7,
+            "z": 2
+          }
+        ],
+        "pool_id": null,
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -7,
+          "z": 5
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": -7,
+            "z": 5
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 1,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -6,
+          "z": -5
+        },
+        "building_id": "building_small_a",
+        "category": "generic",
+        "footprint": [
+          {
+            "x": -6,
+            "z": -5
+          }
+        ],
+        "pool_id": "residential_t1",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -6,
+          "z": -4
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": -6,
+            "z": -4
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 1,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -6,
+          "z": -3
+        },
+        "building_id": "building_small_a",
+        "category": "generic",
+        "footprint": [
+          {
+            "x": -6,
+            "z": -3
+          }
+        ],
+        "pool_id": "residential_t1",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -6,
+          "z": 0
+        },
+        "building_id": "building_nature_patch",
+        "category": "nature",
+        "footprint": [
+          {
+            "x": -6,
+            "z": 0
+          }
+        ],
+        "pool_id": null,
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -6,
+          "z": 1
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": -6,
+            "z": 1
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 1,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -6,
+          "z": 2
+        },
+        "building_id": "building_small_a",
+        "category": "generic",
+        "footprint": [
+          {
+            "x": -6,
+            "z": 2
+          }
+        ],
+        "pool_id": "residential_t1",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -6,
+          "z": 5
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": -6,
+            "z": 5
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 1,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -5,
+          "z": -7
+        },
+        "building_id": "building_small_a",
+        "category": "generic",
+        "footprint": [
+          {
+            "x": -5,
+            "z": -7
+          }
+        ],
+        "pool_id": "residential_t1",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -5,
+          "z": -6
+        },
+        "building_id": "building_nature_patch",
+        "category": "nature",
+        "footprint": [
+          {
+            "x": -5,
+            "z": -6
+          }
+        ],
+        "pool_id": null,
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -5,
+          "z": -5
+        },
+        "building_id": "building_nature_patch",
+        "category": "nature",
+        "footprint": [
+          {
+            "x": -5,
+            "z": -5
+          }
+        ],
+        "pool_id": null,
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -5,
+          "z": -4
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": -5,
+            "z": -4
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 1,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -5,
+          "z": -3
+        },
+        "building_id": "building_small_b",
+        "category": "generic",
+        "footprint": [
+          {
+            "x": -5,
+            "z": -3
+          }
+        ],
+        "pool_id": "commercial_t1",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -5,
+          "z": -2
+        },
+        "building_id": "building_small_a",
+        "category": "generic",
+        "footprint": [
+          {
+            "x": -5,
+            "z": -2
+          }
+        ],
+        "pool_id": "residential_t1",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -5,
+          "z": -1
+        },
+        "building_id": "building_small_a",
+        "category": "generic",
+        "footprint": [
+          {
+            "x": -5,
+            "z": -1
+          }
+        ],
+        "pool_id": "residential_t1",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -5,
+          "z": 0
+        },
+        "building_id": "building_small_a",
+        "category": "generic",
+        "footprint": [
+          {
+            "x": -5,
+            "z": 0
+          }
+        ],
+        "pool_id": "residential_t1",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -5,
+          "z": 1
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": -5,
+            "z": 1
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 1,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -5,
+          "z": 2
+        },
+        "building_id": "building_small_a",
+        "category": "generic",
+        "footprint": [
+          {
+            "x": -5,
+            "z": 2
+          }
+        ],
+        "pool_id": "residential_t1",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -5,
+          "z": 5
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": -5,
+            "z": 5
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 1,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -4,
+          "z": -7
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": -4,
+            "z": -7
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -4,
+          "z": -6
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": -4,
+            "z": -6
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -4,
+          "z": -5
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": -4,
+            "z": -5
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -4,
+          "z": -4
+        },
+        "building_id": "road_intersection",
+        "category": "road",
+        "footprint": [
+          {
+            "x": -4,
+            "z": -4
+          }
+        ],
+        "pool_id": null,
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -4,
+          "z": -3
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": -4,
+            "z": -3
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -4,
+          "z": -2
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": -4,
+            "z": -2
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -4,
+          "z": -1
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": -4,
+            "z": -1
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -4,
+          "z": 0
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": -4,
+            "z": 0
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -4,
+          "z": 1
+        },
+        "building_id": "road_intersection",
+        "category": "road",
+        "footprint": [
+          {
+            "x": -4,
+            "z": 1
+          }
+        ],
+        "pool_id": null,
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -4,
+          "z": 2
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": -4,
+            "z": 2
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -4,
+          "z": 3
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": -4,
+            "z": 3
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -4,
+          "z": 4
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": -4,
+            "z": 4
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -4,
+          "z": 5
+        },
+        "building_id": "road_intersection",
+        "category": "road",
+        "footprint": [
+          {
+            "x": -4,
+            "z": 5
+          }
+        ],
+        "pool_id": null,
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -4,
+          "z": 6
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": -4,
+            "z": 6
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -3,
+          "z": -7
+        },
+        "building_id": "building_small_b",
+        "category": "generic",
+        "footprint": [
+          {
+            "x": -3,
+            "z": -7
+          }
+        ],
+        "pool_id": "commercial_t1",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -3,
+          "z": -6
+        },
+        "building_id": "building_small_a",
+        "category": "generic",
+        "footprint": [
+          {
+            "x": -3,
+            "z": -6
+          }
+        ],
+        "pool_id": "residential_t1",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -3,
+          "z": -5
+        },
+        "building_id": "building_small_a",
+        "category": "generic",
+        "footprint": [
+          {
+            "x": -3,
+            "z": -5
+          }
+        ],
+        "pool_id": "residential_t1",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -3,
+          "z": -4
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": -3,
+            "z": -4
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 1,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -3,
+          "z": -3
+        },
+        "building_id": "building_small_a",
+        "category": "generic",
+        "footprint": [
+          {
+            "x": -3,
+            "z": -3
+          }
+        ],
+        "pool_id": "residential_t1",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -3,
+          "z": -2
+        },
+        "building_id": "building_nature_patch",
+        "category": "nature",
+        "footprint": [
+          {
+            "x": -3,
+            "z": -2
+          }
+        ],
+        "pool_id": null,
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -3,
+          "z": -1
+        },
+        "building_id": "building_small_b",
+        "category": "generic",
+        "footprint": [
+          {
+            "x": -3,
+            "z": -1
+          }
+        ],
+        "pool_id": "commercial_t1",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -3,
+          "z": 0
+        },
+        "building_id": "building_small_a",
+        "category": "generic",
+        "footprint": [
+          {
+            "x": -3,
+            "z": 0
+          }
+        ],
+        "pool_id": "residential_t1",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -3,
+          "z": 1
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": -3,
+            "z": 1
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 1,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -3,
+          "z": 2
+        },
+        "building_id": "building_small_b",
+        "category": "generic",
+        "footprint": [
+          {
+            "x": -3,
+            "z": 2
+          }
+        ],
+        "pool_id": "commercial_t1",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -3,
+          "z": 5
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": -3,
+            "z": 5
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 1,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -2,
+          "z": -5
+        },
+        "building_id": "building_small_a",
+        "category": "generic",
+        "footprint": [
+          {
+            "x": -2,
+            "z": -5
+          }
+        ],
+        "pool_id": "residential_t1",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -2,
+          "z": -4
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": -2,
+            "z": -4
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 1,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -2,
+          "z": -3
+        },
+        "building_id": "building_nature_patch",
+        "category": "nature",
+        "footprint": [
+          {
+            "x": -2,
+            "z": -3
+          }
+        ],
+        "pool_id": null,
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -2,
+          "z": 0
+        },
+        "building_id": "building_small_b",
+        "category": "generic",
+        "footprint": [
+          {
+            "x": -2,
+            "z": 0
+          }
+        ],
+        "pool_id": "commercial_t1",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -2,
+          "z": 1
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": -2,
+            "z": 1
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 1,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -2,
+          "z": 2
+        },
+        "building_id": "building_small_a",
+        "category": "generic",
+        "footprint": [
+          {
+            "x": -2,
+            "z": 2
+          }
+        ],
+        "pool_id": "residential_t1",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -2,
+          "z": 5
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": -2,
+            "z": 5
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 1,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -1,
+          "z": -5
+        },
+        "building_id": "building_small_b",
+        "category": "generic",
+        "footprint": [
+          {
+            "x": -1,
+            "z": -5
+          }
+        ],
+        "pool_id": "commercial_t1",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -1,
+          "z": -4
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": -1,
+            "z": -4
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 1,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -1,
+          "z": -3
+        },
+        "building_id": "building_garage",
+        "category": "generic",
+        "footprint": [
+          {
+            "x": -1,
+            "z": -3
+          }
+        ],
+        "pool_id": "industrial_t1",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -1,
+          "z": -1
+        },
+        "building_id": "building_town_hall",
+        "category": "unique",
+        "footprint": [
+          {
+            "x": -1,
+            "z": -1
+          },
+          {
+            "x": -1,
+            "z": 0
+          },
+          {
+            "x": 0,
+            "z": -1
+          },
+          {
+            "x": 0,
+            "z": 0
+          }
+        ],
+        "pool_id": null,
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -1,
+          "z": 1
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": -1,
+            "z": 1
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 1,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": -1,
+          "z": 5
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": -1,
+            "z": 5
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 1,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 0,
+          "z": -7
+        },
+        "building_id": "building_small_a",
+        "category": "generic",
+        "footprint": [
+          {
+            "x": 0,
+            "z": -7
+          }
+        ],
+        "pool_id": "residential_t1",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 0,
+          "z": -6
+        },
+        "building_id": "building_small_a",
+        "category": "generic",
+        "footprint": [
+          {
+            "x": 0,
+            "z": -6
+          }
+        ],
+        "pool_id": "residential_t1",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 0,
+          "z": -5
+        },
+        "building_id": "building_small_a",
+        "category": "generic",
+        "footprint": [
+          {
+            "x": 0,
+            "z": -5
+          }
+        ],
+        "pool_id": "residential_t1",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 0,
+          "z": -4
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": 0,
+            "z": -4
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 1,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 0,
+          "z": -3
+        },
+        "building_id": "building_small_a",
+        "category": "generic",
+        "footprint": [
+          {
+            "x": 0,
+            "z": -3
+          }
+        ],
+        "pool_id": "residential_t1",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 0,
+          "z": -2
+        },
+        "building_id": "building_garage",
+        "category": "generic",
+        "footprint": [
+          {
+            "x": 0,
+            "z": -2
+          }
+        ],
+        "pool_id": "industrial_t1",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 0,
+          "z": 1
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": 0,
+            "z": 1
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 1,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 0,
+          "z": 5
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": 0,
+            "z": 5
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 1,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 1,
+          "z": -7
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": 1,
+            "z": -7
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 1,
+          "z": -6
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": 1,
+            "z": -6
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 1,
+          "z": -5
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": 1,
+            "z": -5
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 1,
+          "z": -4
+        },
+        "building_id": "road_intersection",
+        "category": "road",
+        "footprint": [
+          {
+            "x": 1,
+            "z": -4
+          }
+        ],
+        "pool_id": null,
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 1,
+          "z": -3
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": 1,
+            "z": -3
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 1,
+          "z": -2
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": 1,
+            "z": -2
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 1,
+          "z": -1
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": 1,
+            "z": -1
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 1,
+          "z": 0
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": 1,
+            "z": 0
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 1,
+          "z": 1
+        },
+        "building_id": "road_intersection",
+        "category": "road",
+        "footprint": [
+          {
+            "x": 1,
+            "z": 1
+          }
+        ],
+        "pool_id": null,
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 1,
+          "z": 2
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": 1,
+            "z": 2
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 1,
+          "z": 3
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": 1,
+            "z": 3
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 1,
+          "z": 4
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": 1,
+            "z": 4
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 1,
+          "z": 5
+        },
+        "building_id": "road_intersection",
+        "category": "road",
+        "footprint": [
+          {
+            "x": 1,
+            "z": 5
+          }
+        ],
+        "pool_id": null,
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 1,
+          "z": 6
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": 1,
+            "z": 6
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 2,
+          "z": -7
+        },
+        "building_id": "building_nature_patch",
+        "category": "nature",
+        "footprint": [
+          {
+            "x": 2,
+            "z": -7
+          }
+        ],
+        "pool_id": null,
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 2,
+          "z": -6
+        },
+        "building_id": "building_nature_patch",
+        "category": "nature",
+        "footprint": [
+          {
+            "x": 2,
+            "z": -6
+          }
+        ],
+        "pool_id": null,
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 2,
+          "z": -5
+        },
+        "building_id": "building_nature_patch",
+        "category": "nature",
+        "footprint": [
+          {
+            "x": 2,
+            "z": -5
+          }
+        ],
+        "pool_id": null,
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 2,
+          "z": -4
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": 2,
+            "z": -4
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 1,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 2,
+          "z": -3
+        },
+        "building_id": "building_nature_patch",
+        "category": "nature",
+        "footprint": [
+          {
+            "x": 2,
+            "z": -3
+          }
+        ],
+        "pool_id": null,
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 2,
+          "z": -2
+        },
+        "building_id": "building_small_a",
+        "category": "generic",
+        "footprint": [
+          {
+            "x": 2,
+            "z": -2
+          }
+        ],
+        "pool_id": "residential_t1",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 2,
+          "z": -1
+        },
+        "building_id": "building_small_a",
+        "category": "generic",
+        "footprint": [
+          {
+            "x": 2,
+            "z": -1
+          }
+        ],
+        "pool_id": "residential_t1",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 2,
+          "z": 0
+        },
+        "building_id": "building_small_a",
+        "category": "generic",
+        "footprint": [
+          {
+            "x": 2,
+            "z": 0
+          }
+        ],
+        "pool_id": "residential_t1",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 2,
+          "z": 1
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": 2,
+            "z": 1
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 1,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 2,
+          "z": 5
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": 2,
+            "z": 5
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 1,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 3,
+          "z": -5
+        },
+        "building_id": "building_garage",
+        "category": "generic",
+        "footprint": [
+          {
+            "x": 3,
+            "z": -5
+          }
+        ],
+        "pool_id": "industrial_t1",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 3,
+          "z": -4
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": 3,
+            "z": -4
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 1,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 3,
+          "z": -3
+        },
+        "building_id": "building_small_a",
+        "category": "generic",
+        "footprint": [
+          {
+            "x": 3,
+            "z": -3
+          }
+        ],
+        "pool_id": "residential_t1",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 3,
+          "z": 0
+        },
+        "building_id": "building_nature_patch",
+        "category": "nature",
+        "footprint": [
+          {
+            "x": 3,
+            "z": 0
+          }
+        ],
+        "pool_id": null,
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 3,
+          "z": 1
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": 3,
+            "z": 1
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 1,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 3,
+          "z": 5
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": 3,
+            "z": 5
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 1,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 4,
+          "z": -7
+        },
+        "building_id": "building_garage",
+        "category": "generic",
+        "footprint": [
+          {
+            "x": 4,
+            "z": -7
+          }
+        ],
+        "pool_id": "industrial_t1",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 4,
+          "z": -6
+        },
+        "building_id": "building_nature_patch",
+        "category": "nature",
+        "footprint": [
+          {
+            "x": 4,
+            "z": -6
+          }
+        ],
+        "pool_id": null,
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 4,
+          "z": -5
+        },
+        "building_id": "building_small_a",
+        "category": "generic",
+        "footprint": [
+          {
+            "x": 4,
+            "z": -5
+          }
+        ],
+        "pool_id": "residential_t1",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 4,
+          "z": -4
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": 4,
+            "z": -4
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 1,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 4,
+          "z": -3
+        },
+        "building_id": "building_small_a",
+        "category": "generic",
+        "footprint": [
+          {
+            "x": 4,
+            "z": -3
+          }
+        ],
+        "pool_id": "residential_t1",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 4,
+          "z": -2
+        },
+        "building_id": "building_nature_patch",
+        "category": "nature",
+        "footprint": [
+          {
+            "x": 4,
+            "z": -2
+          }
+        ],
+        "pool_id": null,
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 4,
+          "z": -1
+        },
+        "building_id": "building_nature_patch",
+        "category": "nature",
+        "footprint": [
+          {
+            "x": 4,
+            "z": -1
+          }
+        ],
+        "pool_id": null,
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 4,
+          "z": 0
+        },
+        "building_id": "building_garage",
+        "category": "generic",
+        "footprint": [
+          {
+            "x": 4,
+            "z": 0
+          }
+        ],
+        "pool_id": "industrial_t1",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 4,
+          "z": 1
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": 4,
+            "z": 1
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 1,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 4,
+          "z": 5
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": 4,
+            "z": 5
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 1,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 5,
+          "z": -7
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": 5,
+            "z": -7
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 5,
+          "z": -6
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": 5,
+            "z": -6
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 5,
+          "z": -5
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": 5,
+            "z": -5
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 5,
+          "z": -4
+        },
+        "building_id": "road_intersection",
+        "category": "road",
+        "footprint": [
+          {
+            "x": 5,
+            "z": -4
+          }
+        ],
+        "pool_id": null,
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 5,
+          "z": -3
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": 5,
+            "z": -3
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 5,
+          "z": -2
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": 5,
+            "z": -2
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 5,
+          "z": -1
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": 5,
+            "z": -1
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 5,
+          "z": 0
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": 5,
+            "z": 0
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 5,
+          "z": 1
+        },
+        "building_id": "road_intersection",
+        "category": "road",
+        "footprint": [
+          {
+            "x": 5,
+            "z": 1
+          }
+        ],
+        "pool_id": null,
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 5,
+          "z": 2
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": 5,
+            "z": 2
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 5,
+          "z": 3
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": 5,
+            "z": 3
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 5,
+          "z": 4
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": 5,
+            "z": 4
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 5,
+          "z": 5
+        },
+        "building_id": "road_intersection",
+        "category": "road",
+        "footprint": [
+          {
+            "x": 5,
+            "z": 5
+          }
+        ],
+        "pool_id": null,
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 5,
+          "z": 6
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": 5,
+            "z": 6
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 6,
+          "z": -7
+        },
+        "building_id": "building_small_a",
+        "category": "generic",
+        "footprint": [
+          {
+            "x": 6,
+            "z": -7
+          }
+        ],
+        "pool_id": "residential_t1",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 6,
+          "z": -6
+        },
+        "building_id": "building_nature_patch",
+        "category": "nature",
+        "footprint": [
+          {
+            "x": 6,
+            "z": -6
+          }
+        ],
+        "pool_id": null,
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 6,
+          "z": -5
+        },
+        "building_id": "building_nature_patch",
+        "category": "nature",
+        "footprint": [
+          {
+            "x": 6,
+            "z": -5
+          }
+        ],
+        "pool_id": null,
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 6,
+          "z": -4
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": 6,
+            "z": -4
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 1,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 6,
+          "z": -3
+        },
+        "building_id": "building_small_b",
+        "category": "generic",
+        "footprint": [
+          {
+            "x": 6,
+            "z": -3
+          }
+        ],
+        "pool_id": "commercial_t1",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 6,
+          "z": -2
+        },
+        "building_id": "building_small_a",
+        "category": "generic",
+        "footprint": [
+          {
+            "x": 6,
+            "z": -2
+          }
+        ],
+        "pool_id": "residential_t1",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 6,
+          "z": -1
+        },
+        "building_id": "building_garage",
+        "category": "generic",
+        "footprint": [
+          {
+            "x": 6,
+            "z": -1
+          }
+        ],
+        "pool_id": "industrial_t1",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 6,
+          "z": 0
+        },
+        "building_id": "building_small_a",
+        "category": "generic",
+        "footprint": [
+          {
+            "x": 6,
+            "z": 0
+          }
+        ],
+        "pool_id": "residential_t1",
+        "rotation": 0,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 6,
+          "z": 1
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": 6,
+            "z": 1
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 1,
+        "unique": false
+      },
+      {
+        "anchor": {
+          "x": 6,
+          "z": 5
+        },
+        "building_id": "road_straight",
+        "category": "road",
+        "footprint": [
+          {
+            "x": 6,
+            "z": 5
+          }
+        ],
+        "pool_id": "road",
+        "rotation": 1,
+        "unique": false
+      }
+    ],
+    "community": {
+      "average_qualities": {
+        "beauty": 56.539,
+        "belonging": 51.9713,
+        "liveability": 69.039,
+        "opportunity": 53.394
+      },
+      "migration": {
+        "arrivals": 140,
+        "departures": 0,
+        "last_day": 9,
+        "rejections": 60
+      }
+    },
+    "demand": {
+      "commercial": {
+        "bank": 5,
+        "fulfilled": 35.0,
+        "reference_cost": 5,
+        "total": 60.0,
+        "unserved": 25.0
+      },
+      "industrial": {
+        "bank": 3,
+        "fulfilled": 30.0,
+        "reference_cost": 5,
+        "total": 49.0,
+        "unserved": 19.0
+      },
+      "residential": {
+        "bank": 2,
+        "fulfilled": 145.0,
+        "reference_cost": 5,
+        "total": 156.982,
+        "unserved": 11.982
+      }
+    },
+    "economy": {
+      "cash": 26935,
+      "industrial_output": 0,
+      "last_hourly_income": 0,
+      "ledger": {
+        "cumulative_income": 26765,
+        "cumulative_shop_proximity_income": 465,
+        "cumulative_spend": 830,
+        "last_shop_proximity_income": 0,
+        "spend_by_category": {
+          "nature": 680,
+          "road": 150
+        }
+      }
+    },
+    "land": {
+      "allowed_count": 256,
+      "free_count": 118,
+      "occupied_count": 138
+    },
+    "operation": [
+      {
+        "activity_multiplier": 1.0,
+        "anchor": {
+          "x": -3,
+          "z": -7
+        },
+        "available_capacity": 10,
+        "building_id": "building_small_b",
+        "capacity": 10,
+        "category": "commercial",
+        "component_ids": [
+          "-7,-4"
+        ],
+        "effective_activity": 0.0,
+        "fulfilled": 0,
+        "internal_id": 77,
+        "latest_activity": 0,
+        "open_now": false,
+        "operating": false,
+        "primary_reason": "outside_active_hours",
+        "reasons": [
+          "outside_active_hours"
+        ],
+        "road_accessible": true,
+        "stops": [
+          {
+            "x": -4,
+            "z": -7
+          }
+        ],
+        "town_hall_proximity": {
+          "band": "",
+          "distance": 11,
+          "home_liveability_penalty": 0.0,
+          "reachable": true,
+          "route": {
+            "destination_internal_id": 77,
+            "distance": 11,
+            "origin_internal_id": 0,
+            "path": [
+              {
+                "x": -1,
+                "z": 1
+              },
+              {
+                "x": -2,
+                "z": 1
+              },
+              {
+                "x": -3,
+                "z": 1
+              },
+              {
+                "x": -4,
+                "z": 1
+              },
+              {
+                "x": -4,
+                "z": 0
+              },
+              {
+                "x": -4,
+                "z": -1
+              },
+              {
+                "x": -4,
+                "z": -2
+              },
+              {
+                "x": -4,
+                "z": -3
+              },
+              {
+                "x": -4,
+                "z": -4
+              },
+              {
+                "x": -4,
+                "z": -5
+              },
+              {
+                "x": -4,
+                "z": -6
+              },
+              {
+                "x": -4,
+                "z": -7
+              }
+            ],
+            "reachable": true,
+            "reason": "",
+            "shared_component_ids": [
+              "-7,-4"
+            ]
+          },
+          "shop_activity_bonus": 0.0
+        }
+      },
+      {
+        "anchor": {
+          "x": 4,
+          "z": -7
+        },
+        "available_capacity": 20,
+        "building_id": "building_garage",
+        "capacity": 20,
+        "category": "industrial",
+        "component_ids": [
+          "-7,-4"
+        ],
+        "fulfilled": 0,
+        "internal_id": 80,
+        "latest_activity": 0,
+        "latest_income": 0,
+        "latest_output": 0,
+        "open_now": false,
+        "operating": false,
+        "primary_reason": "outside_active_hours",
+        "reasons": [
+          "outside_active_hours"
+        ],
+        "road_accessible": true,
+        "stops": [
+          {
+            "x": 5,
+            "z": -7
+          }
+        ],
+        "town_hall_proximity": {
+          "band": "near",
+          "distance": 10,
+          "home_liveability_penalty": -4.0,
+          "reachable": true,
+          "route": {
+            "destination_internal_id": 80,
+            "distance": 10,
+            "origin_internal_id": 0,
+            "path": [
+              {
+                "x": 1,
+                "z": -1
+              },
+              {
+                "x": 1,
+                "z": -2
+              },
+              {
+                "x": 1,
+                "z": -3
+              },
+              {
+                "x": 1,
+                "z": -4
+              },
+              {
+                "x": 2,
+                "z": -4
+              },
+              {
+                "x": 3,
+                "z": -4
+              },
+              {
+                "x": 4,
+                "z": -4
+              },
+              {
+                "x": 5,
+                "z": -4
+              },
+              {
+                "x": 5,
+                "z": -5
+              },
+              {
+                "x": 5,
+                "z": -6
+              },
+              {
+                "x": 5,
+                "z": -7
+              }
+            ],
+            "reachable": true,
+            "reason": "",
+            "shared_component_ids": [
+              "-7,-4"
+            ]
+          },
+          "shop_activity_bonus": 0.1
+        }
+      },
+      {
+        "activity_multiplier": 1.2,
+        "anchor": {
+          "x": -1,
+          "z": -5
+        },
+        "available_capacity": 10,
+        "building_id": "building_small_b",
+        "capacity": 10,
+        "category": "commercial",
+        "component_ids": [
+          "-7,-4"
+        ],
+        "effective_activity": 0.0,
+        "fulfilled": 0,
+        "internal_id": 93,
+        "latest_activity": 0,
+        "open_now": false,
+        "operating": false,
+        "primary_reason": "outside_active_hours",
+        "reasons": [
+          "outside_active_hours"
+        ],
+        "road_accessible": true,
+        "stops": [
+          {
+            "x": -1,
+            "z": -4
+          }
+        ],
+        "town_hall_proximity": {
+          "band": "core",
+          "distance": 5,
+          "home_liveability_penalty": -8.0,
+          "reachable": true,
+          "route": {
+            "destination_internal_id": 93,
+            "distance": 5,
+            "origin_internal_id": 0,
+            "path": [
+              {
+                "x": 1,
+                "z": -1
+              },
+              {
+                "x": 1,
+                "z": -2
+              },
+              {
+                "x": 1,
+                "z": -3
+              },
+              {
+                "x": 1,
+                "z": -4
+              },
+              {
+                "x": 0,
+                "z": -4
+              },
+              {
+                "x": -1,
+                "z": -4
+              }
+            ],
+            "reachable": true,
+            "reason": "",
+            "shared_component_ids": [
+              "-7,-4"
+            ]
+          },
+          "shop_activity_bonus": 0.2
+        }
+      },
+      {
+        "anchor": {
+          "x": 3,
+          "z": -5
+        },
+        "available_capacity": 20,
+        "building_id": "building_garage",
+        "capacity": 20,
+        "category": "industrial",
+        "component_ids": [
+          "-7,-4"
+        ],
+        "fulfilled": 0,
+        "internal_id": 96,
+        "latest_activity": 0,
+        "latest_income": 0,
+        "latest_output": 0,
+        "open_now": false,
+        "operating": false,
+        "primary_reason": "outside_active_hours",
+        "reasons": [
+          "outside_active_hours"
+        ],
+        "road_accessible": true,
+        "stops": [
+          {
+            "x": 3,
+            "z": -4
+          }
+        ],
+        "town_hall_proximity": {
+          "band": "core",
+          "distance": 5,
+          "home_liveability_penalty": -8.0,
+          "reachable": true,
+          "route": {
+            "destination_internal_id": 96,
+            "distance": 5,
+            "origin_internal_id": 0,
+            "path": [
+              {
+                "x": 1,
+                "z": -1
+              },
+              {
+                "x": 1,
+                "z": -2
+              },
+              {
+                "x": 1,
+                "z": -3
+              },
+              {
+                "x": 1,
+                "z": -4
+              },
+              {
+                "x": 2,
+                "z": -4
+              },
+              {
+                "x": 3,
+                "z": -4
+              }
+            ],
+            "reachable": true,
+            "reason": "",
+            "shared_component_ids": [
+              "-7,-4"
+            ]
+          },
+          "shop_activity_bonus": 0.2
+        }
+      },
+      {
+        "activity_multiplier": 1.1,
+        "anchor": {
+          "x": -5,
+          "z": -3
+        },
+        "available_capacity": 10,
+        "building_id": "building_small_b",
+        "capacity": 10,
+        "category": "commercial",
+        "component_ids": [
+          "-7,-4"
+        ],
+        "effective_activity": 0.0,
+        "fulfilled": 0,
+        "internal_id": 101,
+        "latest_activity": 0,
+        "open_now": false,
+        "operating": false,
+        "primary_reason": "outside_active_hours",
+        "reasons": [
+          "outside_active_hours"
+        ],
+        "road_accessible": true,
+        "stops": [
+          {
+            "x": -5,
+            "z": -4
+          },
+          {
+            "x": -4,
+            "z": -3
+          }
+        ],
+        "town_hall_proximity": {
+          "band": "near",
+          "distance": 7,
+          "home_liveability_penalty": -4.0,
+          "reachable": true,
+          "route": {
+            "destination_internal_id": 101,
+            "distance": 7,
+            "origin_internal_id": 0,
+            "path": [
+              {
+                "x": -1,
+                "z": 1
+              },
+              {
+                "x": -2,
+                "z": 1
+              },
+              {
+                "x": -3,
+                "z": 1
+              },
+              {
+                "x": -4,
+                "z": 1
+              },
+              {
+                "x": -4,
+                "z": 0
+              },
+              {
+                "x": -4,
+                "z": -1
+              },
+              {
+                "x": -4,
+                "z": -2
+              },
+              {
+                "x": -4,
+                "z": -3
+              }
+            ],
+            "reachable": true,
+            "reason": "",
+            "shared_component_ids": [
+              "-7,-4"
+            ]
+          },
+          "shop_activity_bonus": 0.1
+        }
+      },
+      {
+        "anchor": {
+          "x": -1,
+          "z": -3
+        },
+        "available_capacity": 20,
+        "building_id": "building_garage",
+        "capacity": 20,
+        "category": "industrial",
+        "component_ids": [
+          "-7,-4"
+        ],
+        "fulfilled": 0,
+        "internal_id": 104,
+        "latest_activity": 0,
+        "latest_income": 0,
+        "latest_output": 0,
+        "open_now": false,
+        "operating": false,
+        "primary_reason": "outside_active_hours",
+        "reasons": [
+          "outside_active_hours"
+        ],
+        "road_accessible": true,
+        "stops": [
+          {
+            "x": -1,
+            "z": -4
+          }
+        ],
+        "town_hall_proximity": {
+          "band": "core",
+          "distance": 5,
+          "home_liveability_penalty": -8.0,
+          "reachable": true,
+          "route": {
+            "destination_internal_id": 104,
+            "distance": 5,
+            "origin_internal_id": 0,
+            "path": [
+              {
+                "x": 1,
+                "z": -1
+              },
+              {
+                "x": 1,
+                "z": -2
+              },
+              {
+                "x": 1,
+                "z": -3
+              },
+              {
+                "x": 1,
+                "z": -4
+              },
+              {
+                "x": 0,
+                "z": -4
+              },
+              {
+                "x": -1,
+                "z": -4
+              }
+            ],
+            "reachable": true,
+            "reason": "",
+            "shared_component_ids": [
+              "-7,-4"
+            ]
+          },
+          "shop_activity_bonus": 0.2
+        }
+      },
+      {
+        "activity_multiplier": 1.1,
+        "anchor": {
+          "x": 6,
+          "z": -3
+        },
+        "available_capacity": 10,
+        "building_id": "building_small_b",
+        "capacity": 10,
+        "category": "commercial",
+        "component_ids": [
+          "-7,-4"
+        ],
+        "effective_activity": 0.0,
+        "fulfilled": 0,
+        "internal_id": 109,
+        "latest_activity": 0,
+        "open_now": false,
+        "operating": false,
+        "primary_reason": "outside_active_hours",
+        "reasons": [
+          "outside_active_hours"
+        ],
+        "road_accessible": true,
+        "stops": [
+          {
+            "x": 5,
+            "z": -3
+          },
+          {
+            "x": 6,
+            "z": -4
+          }
+        ],
+        "town_hall_proximity": {
+          "band": "near",
+          "distance": 8,
+          "home_liveability_penalty": -4.0,
+          "reachable": true,
+          "route": {
+            "destination_internal_id": 109,
+            "distance": 8,
+            "origin_internal_id": 0,
+            "path": [
+              {
+                "x": 1,
+                "z": -1
+              },
+              {
+                "x": 1,
+                "z": -2
+              },
+              {
+                "x": 1,
+                "z": -3
+              },
+              {
+                "x": 1,
+                "z": -4
+              },
+              {
+                "x": 2,
+                "z": -4
+              },
+              {
+                "x": 3,
+                "z": -4
+              },
+              {
+                "x": 4,
+                "z": -4
+              },
+              {
+                "x": 5,
+                "z": -4
+              },
+              {
+                "x": 5,
+                "z": -3
+              }
+            ],
+            "reachable": true,
+            "reason": "",
+            "shared_component_ids": [
+              "-7,-4"
+            ]
+          },
+          "shop_activity_bonus": 0.1
+        }
+      },
+      {
+        "anchor": {
+          "x": 0,
+          "z": -2
+        },
+        "available_capacity": 20,
+        "building_id": "building_garage",
+        "capacity": 20,
+        "category": "industrial",
+        "component_ids": [
+          "-7,-4"
+        ],
+        "fulfilled": 0,
+        "internal_id": 112,
+        "latest_activity": 0,
+        "latest_income": 0,
+        "latest_output": 0,
+        "open_now": false,
+        "operating": false,
+        "primary_reason": "outside_active_hours",
+        "reasons": [
+          "outside_active_hours"
+        ],
+        "road_accessible": true,
+        "stops": [
+          {
+            "x": 1,
+            "z": -2
+          }
+        ],
+        "town_hall_proximity": {
+          "band": "core",
+          "distance": 1,
+          "home_liveability_penalty": -8.0,
+          "reachable": true,
+          "route": {
+            "destination_internal_id": 112,
+            "distance": 1,
+            "origin_internal_id": 0,
+            "path": [
+              {
+                "x": 1,
+                "z": -1
+              },
+              {
+                "x": 1,
+                "z": -2
+              }
+            ],
+            "reachable": true,
+            "reason": "",
+            "shared_component_ids": [
+              "-7,-4"
+            ]
+          },
+          "shop_activity_bonus": 0.2
+        }
+      },
+      {
+        "activity_multiplier": 1.2,
+        "anchor": {
+          "x": -3,
+          "z": -1
+        },
+        "available_capacity": 10,
+        "building_id": "building_small_b",
+        "capacity": 10,
+        "category": "commercial",
+        "component_ids": [
+          "-7,-4"
+        ],
+        "effective_activity": 0.0,
+        "fulfilled": 0,
+        "internal_id": 117,
+        "latest_activity": 0,
+        "open_now": false,
+        "operating": false,
+        "primary_reason": "outside_active_hours",
+        "reasons": [
+          "outside_active_hours"
+        ],
+        "road_accessible": true,
+        "stops": [
+          {
+            "x": -4,
+            "z": -1
+          }
+        ],
+        "town_hall_proximity": {
+          "band": "core",
+          "distance": 5,
+          "home_liveability_penalty": -8.0,
+          "reachable": true,
+          "route": {
+            "destination_internal_id": 117,
+            "distance": 5,
+            "origin_internal_id": 0,
+            "path": [
+              {
+                "x": -1,
+                "z": 1
+              },
+              {
+                "x": -2,
+                "z": 1
+              },
+              {
+                "x": -3,
+                "z": 1
+              },
+              {
+                "x": -4,
+                "z": 1
+              },
+              {
+                "x": -4,
+                "z": 0
+              },
+              {
+                "x": -4,
+                "z": -1
+              }
+            ],
+            "reachable": true,
+            "reason": "",
+            "shared_component_ids": [
+              "-7,-4"
+            ]
+          },
+          "shop_activity_bonus": 0.2
+        }
+      },
+      {
+        "anchor": {
+          "x": 6,
+          "z": -1
+        },
+        "available_capacity": 20,
+        "building_id": "building_garage",
+        "capacity": 20,
+        "category": "industrial",
+        "component_ids": [
+          "-7,-4"
+        ],
+        "fulfilled": 0,
+        "internal_id": 120,
+        "latest_activity": 0,
+        "latest_income": 0,
+        "latest_output": 0,
+        "open_now": false,
+        "operating": false,
+        "primary_reason": "outside_active_hours",
+        "reasons": [
+          "outside_active_hours"
+        ],
+        "road_accessible": true,
+        "stops": [
+          {
+            "x": 5,
+            "z": -1
+          }
+        ],
+        "town_hall_proximity": {
+          "band": "near",
+          "distance": 7,
+          "home_liveability_penalty": -4.0,
+          "reachable": true,
+          "route": {
+            "destination_internal_id": 120,
+            "distance": 7,
+            "origin_internal_id": 0,
+            "path": [
+              {
+                "x": 0,
+                "z": 1
+              },
+              {
+                "x": 1,
+                "z": 1
+              },
+              {
+                "x": 2,
+                "z": 1
+              },
+              {
+                "x": 3,
+                "z": 1
+              },
+              {
+                "x": 4,
+                "z": 1
+              },
+              {
+                "x": 5,
+                "z": 1
+              },
+              {
+                "x": 5,
+                "z": 0
+              },
+              {
+                "x": 5,
+                "z": -1
+              }
+            ],
+            "reachable": true,
+            "reason": "",
+            "shared_component_ids": [
+              "-7,-4"
+            ]
+          },
+          "shop_activity_bonus": 0.1
+        }
+      },
+      {
+        "activity_multiplier": 1.2,
+        "anchor": {
+          "x": -2,
+          "z": 0
+        },
+        "available_capacity": 10,
+        "building_id": "building_small_b",
+        "capacity": 10,
+        "category": "commercial",
+        "component_ids": [
+          "-7,-4"
+        ],
+        "effective_activity": 0.0,
+        "fulfilled": 0,
+        "internal_id": 125,
+        "latest_activity": 0,
+        "open_now": false,
+        "operating": false,
+        "primary_reason": "outside_active_hours",
+        "reasons": [
+          "outside_active_hours"
+        ],
+        "road_accessible": true,
+        "stops": [
+          {
+            "x": -2,
+            "z": 1
+          }
+        ],
+        "town_hall_proximity": {
+          "band": "core",
+          "distance": 1,
+          "home_liveability_penalty": -8.0,
+          "reachable": true,
+          "route": {
+            "destination_internal_id": 125,
+            "distance": 1,
+            "origin_internal_id": 0,
+            "path": [
+              {
+                "x": -1,
+                "z": 1
+              },
+              {
+                "x": -2,
+                "z": 1
+              }
+            ],
+            "reachable": true,
+            "reason": "",
+            "shared_component_ids": [
+              "-7,-4"
+            ]
+          },
+          "shop_activity_bonus": 0.2
+        }
+      },
+      {
+        "anchor": {
+          "x": 4,
+          "z": 0
+        },
+        "available_capacity": 20,
+        "building_id": "building_garage",
+        "capacity": 20,
+        "category": "industrial",
+        "component_ids": [
+          "-7,-4"
+        ],
+        "fulfilled": 0,
+        "internal_id": 128,
+        "latest_activity": 0,
+        "latest_income": 0,
+        "latest_output": 0,
+        "open_now": false,
+        "operating": false,
+        "primary_reason": "outside_active_hours",
+        "reasons": [
+          "outside_active_hours"
+        ],
+        "road_accessible": true,
+        "stops": [
+          {
+            "x": 4,
+            "z": 1
+          },
+          {
+            "x": 5,
+            "z": 0
+          }
+        ],
+        "town_hall_proximity": {
+          "band": "core",
+          "distance": 4,
+          "home_liveability_penalty": -8.0,
+          "reachable": true,
+          "route": {
+            "destination_internal_id": 128,
+            "distance": 4,
+            "origin_internal_id": 0,
+            "path": [
+              {
+                "x": 0,
+                "z": 1
+              },
+              {
+                "x": 1,
+                "z": 1
+              },
+              {
+                "x": 2,
+                "z": 1
+              },
+              {
+                "x": 3,
+                "z": 1
+              },
+              {
+                "x": 4,
+                "z": 1
+              }
+            ],
+            "reachable": true,
+            "reason": "",
+            "shared_component_ids": [
+              "-7,-4"
+            ]
+          },
+          "shop_activity_bonus": 0.2
+        }
+      },
+      {
+        "activity_multiplier": 1.2,
+        "anchor": {
+          "x": -3,
+          "z": 2
+        },
+        "available_capacity": 10,
+        "building_id": "building_small_b",
+        "capacity": 10,
+        "category": "commercial",
+        "component_ids": [
+          "-7,-4"
+        ],
+        "effective_activity": 0.0,
+        "fulfilled": 0,
+        "internal_id": 133,
+        "latest_activity": 0,
+        "open_now": false,
+        "operating": false,
+        "primary_reason": "outside_active_hours",
+        "reasons": [
+          "outside_active_hours"
+        ],
+        "road_accessible": true,
+        "stops": [
+          {
+            "x": -4,
+            "z": 2
+          },
+          {
+            "x": -3,
+            "z": 1
+          }
+        ],
+        "town_hall_proximity": {
+          "band": "core",
+          "distance": 2,
+          "home_liveability_penalty": -8.0,
+          "reachable": true,
+          "route": {
+            "destination_internal_id": 133,
+            "distance": 2,
+            "origin_internal_id": 0,
+            "path": [
+              {
+                "x": -1,
+                "z": 1
+              },
+              {
+                "x": -2,
+                "z": 1
+              },
+              {
+                "x": -3,
+                "z": 1
+              }
+            ],
+            "reachable": true,
+            "reason": "",
+            "shared_component_ids": [
+              "-7,-4"
+            ]
+          },
+          "shop_activity_bonus": 0.2
+        }
+      }
+    ],
+    "population": {
+      "current": 140,
+      "residential_capacity": 145
+    },
+    "road_cell_count": 75,
+    "simulation": {
+      "absolute_hour": 240,
+      "day": 10,
+      "hour": 6,
+      "manual": true
+    },
+    "state_hash": "fa19631150065fb74ba228104e843ae0a59a02e051e913748ce38a17c0733004"
+  },
+  "performance": {
+    "community_boundaries": {
+      "community.hour.collect": {
+        "max": 4734,
+        "median": 114,
+        "p95": 1914,
+        "sample_count": 240
+      },
+      "community.hour.commit": {
+        "max": 16970,
+        "median": 340,
+        "p95": 754,
+        "sample_count": 240
+      },
+      "community.hour.evaluate": {
+        "max": 4082,
+        "median": 1541,
+        "p95": 3605,
+        "sample_count": 240
+      },
+      "migration.candidates": {
+        "boundary": "migration.candidates",
+        "excluded_count": 0,
+        "max": 2019.0,
+        "median": 506.0,
+        "p95": 1247.0,
+        "passed": true,
+        "sample_count": 200,
+        "statistic": "p95",
+        "threshold": 1000000000000000052504760255204420248704468581108159154915854115511802457988908195786371375080447864043704443832883878176942523235360430575644792184786706982848387200926575803737830233794788090059368953234970799945081119038967640880074652742780142494579258788820056842838115669472196386865459400540160.0,
+        "value": 1247.0
+      },
+      "migration.context": {
+        "boundary": "migration.context",
+        "excluded_count": 0,
+        "max": 962.0,
+        "median": 415.0,
+        "p95": 962.0,
+        "passed": true,
+        "sample_count": 10,
+        "statistic": "p95",
+        "threshold": 1000000000000000052504760255204420248704468581108159154915854115511802457988908195786371375080447864043704443832883878176942523235360430575644792184786706982848387200926575803737830233794788090059368953234970799945081119038967640880074652742780142494579258788820056842838115669472196386865459400540160.0,
+        "value": 962.0
+      },
+      "reducers": {
+        "city_stats": {
+          "max": 14119,
+          "median": 307,
+          "p95": 4301,
+          "sample_count": 240
+        },
+        "community": {
+          "max": 24062,
+          "median": 2304,
+          "p95": 5604,
+          "sample_count": 240
+        },
+        "demand": {
+          "max": 178,
+          "median": 46,
+          "p95": 74,
+          "sample_count": 240
+        },
+        "economy": {
+          "max": 441,
+          "median": 220,
+          "p95": 329,
+          "sample_count": 240
+        },
+        "people": {
+          "max": 841,
+          "median": 6,
+          "p95": 11,
+          "sample_count": 240
+        },
+        "satisfaction": {
+          "max": 13,
+          "median": 6,
+          "p95": 9,
+          "sample_count": 240
+        }
+      },
+      "transaction.hour.collect": {
+        "max": 648,
+        "median": 266,
+        "p95": 434,
+        "sample_count": 241
+      },
+      "transaction.hour.commit": {
+        "max": 25276,
+        "median": 157,
+        "p95": 5041,
+        "sample_count": 1681
+      },
+      "transaction.hour.notify": {
+        "boundary": "hour.notify",
+        "excluded_count": 0,
+        "max": 7637.0,
+        "median": 463.0,
+        "p95": 603.0,
+        "passed": true,
+        "sample_count": 241,
+        "statistic": "p95",
+        "threshold": 1000000000000000052504760255204420248704468581108159154915854115511802457988908195786371375080447864043704443832883878176942523235360430575644792184786706982848387200926575803737830233794788090059368953234970799945081119038967640880074652742780142494579258788820056842838115669472196386865459400540160.0,
+        "value": 603.0
+      },
+      "transaction.hour.total": {
+        "boundary": "hour.total",
+        "excluded_count": 0,
+        "max": 27340.0,
+        "median": 3962.0,
+        "p95": 13599.0,
+        "passed": true,
+        "sample_count": 241,
+        "statistic": "p95",
+        "threshold": 1000000000000000052504760255204420248704468581108159154915854115511802457988908195786371375080447864043704443832883878176942523235360430575644792184786706982848387200926575803737830233794788090059368953234970799945081119038967640880074652742780142494579258788820056842838115669472196386865459400540160.0,
+        "value": 13599.0
+      },
+      "transaction.hour.validate_reduce": {
+        "max": 159,
+        "median": 43,
+        "p95": 60,
+        "sample_count": 241
+      }
+    },
+    "hour_sample_count": 240,
+    "max_hour_usec": 27417,
+    "max_migration_usec": 27417,
+    "median_hour_usec": 3987,
+    "p95_hour_usec": 13633,
+    "profiled_command_usec": 2872206,
+    "profiled_snapshot_usec": 0,
+    "route_cache": {
+      "anchor_entries": 135,
+      "entries": 206,
+      "hits": 1447,
+      "misses": 206
+    },
+    "scenario_elapsed_usec": 9636841,
+    "total_tick_usec": 1245723
+  },
+  "proximity_records": [
+    {
+      "anchor": {
+        "x": -7,
+        "z": -3
+      },
+      "building_id": "building_small_a",
+      "effects": [
+        {
+          "amount": 20.0,
+          "capacity": null,
+          "effect_id": "secure_home",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "radius": null,
+          "reason": "Had a secure home",
+          "requires_active_building": false,
+          "schedule": null,
+          "scope": "resident",
+          "sensitivity": null,
+          "stacking_group": "housing"
+        }
+      ],
+      "proximity": {
+        "band": "",
+        "distance": 11,
+        "home_liveability_penalty": 0.0,
+        "reachable": true,
+        "route": {
+          "destination_internal_id": 99,
+          "distance": 11,
+          "origin_internal_id": 0,
+          "path": [
+            {
+              "x": -1,
+              "z": 1
+            },
+            {
+              "x": -2,
+              "z": 1
+            },
+            {
+              "x": -3,
+              "z": 1
+            },
+            {
+              "x": -4,
+              "z": 1
+            },
+            {
+              "x": -4,
+              "z": 0
+            },
+            {
+              "x": -4,
+              "z": -1
+            },
+            {
+              "x": -4,
+              "z": -2
+            },
+            {
+              "x": -4,
+              "z": -3
+            },
+            {
+              "x": -4,
+              "z": -4
+            },
+            {
+              "x": -5,
+              "z": -4
+            },
+            {
+              "x": -6,
+              "z": -4
+            },
+            {
+              "x": -7,
+              "z": -4
+            }
+          ],
+          "reachable": true,
+          "reason": "",
+          "shared_component_ids": [
+            "-7,-4"
+          ]
+        },
+        "shop_activity_bonus": 0.0
+      }
+    },
+    {
+      "anchor": {
+        "x": -7,
+        "z": 0
+      },
+      "building_id": "building_small_a",
+      "effects": [
+        {
+          "amount": 20.0,
+          "capacity": null,
+          "effect_id": "secure_home",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "radius": null,
+          "reason": "Had a secure home",
+          "requires_active_building": false,
+          "schedule": null,
+          "scope": "resident",
+          "sensitivity": null,
+          "stacking_group": "housing"
+        },
+        {
+          "amount": -4.0,
+          "effect_id": "town_hall_bustle_near",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "reason": "Lived within 6 road tiles of the busy Town Hall",
+          "requires_active_building": false,
+          "scope": "resident",
+          "stacking_group": "town_hall_bustle"
+        }
+      ],
+      "proximity": {
+        "band": "near",
+        "distance": 6,
+        "home_liveability_penalty": -4.0,
+        "reachable": true,
+        "route": {
+          "destination_internal_id": 121,
+          "distance": 6,
+          "origin_internal_id": 0,
+          "path": [
+            {
+              "x": -1,
+              "z": 1
+            },
+            {
+              "x": -2,
+              "z": 1
+            },
+            {
+              "x": -3,
+              "z": 1
+            },
+            {
+              "x": -4,
+              "z": 1
+            },
+            {
+              "x": -5,
+              "z": 1
+            },
+            {
+              "x": -6,
+              "z": 1
+            },
+            {
+              "x": -7,
+              "z": 1
+            }
+          ],
+          "reachable": true,
+          "reason": "",
+          "shared_component_ids": [
+            "-7,-4"
+          ]
+        },
+        "shop_activity_bonus": 0.1
+      }
+    },
+    {
+      "anchor": {
+        "x": -6,
+        "z": -5
+      },
+      "building_id": "building_small_a",
+      "effects": [
+        {
+          "amount": 20.0,
+          "capacity": null,
+          "effect_id": "secure_home",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "radius": null,
+          "reason": "Had a secure home",
+          "requires_active_building": false,
+          "schedule": null,
+          "scope": "resident",
+          "sensitivity": null,
+          "stacking_group": "housing"
+        },
+        {
+          "amount": -4.0,
+          "effect_id": "town_hall_bustle_near",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "reason": "Lived within 10 road tiles of the busy Town Hall",
+          "requires_active_building": false,
+          "scope": "resident",
+          "stacking_group": "town_hall_bustle"
+        }
+      ],
+      "proximity": {
+        "band": "near",
+        "distance": 10,
+        "home_liveability_penalty": -4.0,
+        "reachable": true,
+        "route": {
+          "destination_internal_id": 89,
+          "distance": 10,
+          "origin_internal_id": 0,
+          "path": [
+            {
+              "x": -1,
+              "z": 1
+            },
+            {
+              "x": -2,
+              "z": 1
+            },
+            {
+              "x": -3,
+              "z": 1
+            },
+            {
+              "x": -4,
+              "z": 1
+            },
+            {
+              "x": -4,
+              "z": 0
+            },
+            {
+              "x": -4,
+              "z": -1
+            },
+            {
+              "x": -4,
+              "z": -2
+            },
+            {
+              "x": -4,
+              "z": -3
+            },
+            {
+              "x": -4,
+              "z": -4
+            },
+            {
+              "x": -5,
+              "z": -4
+            },
+            {
+              "x": -6,
+              "z": -4
+            }
+          ],
+          "reachable": true,
+          "reason": "",
+          "shared_component_ids": [
+            "-7,-4"
+          ]
+        },
+        "shop_activity_bonus": 0.1
+      }
+    },
+    {
+      "anchor": {
+        "x": -6,
+        "z": -3
+      },
+      "building_id": "building_small_a",
+      "effects": [
+        {
+          "amount": 20.0,
+          "capacity": null,
+          "effect_id": "secure_home",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "radius": null,
+          "reason": "Had a secure home",
+          "requires_active_building": false,
+          "schedule": null,
+          "scope": "resident",
+          "sensitivity": null,
+          "stacking_group": "housing"
+        },
+        {
+          "amount": -4.0,
+          "effect_id": "town_hall_bustle_near",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "reason": "Lived within 10 road tiles of the busy Town Hall",
+          "requires_active_building": false,
+          "scope": "resident",
+          "stacking_group": "town_hall_bustle"
+        }
+      ],
+      "proximity": {
+        "band": "near",
+        "distance": 10,
+        "home_liveability_penalty": -4.0,
+        "reachable": true,
+        "route": {
+          "destination_internal_id": 100,
+          "distance": 10,
+          "origin_internal_id": 0,
+          "path": [
+            {
+              "x": -1,
+              "z": 1
+            },
+            {
+              "x": -2,
+              "z": 1
+            },
+            {
+              "x": -3,
+              "z": 1
+            },
+            {
+              "x": -4,
+              "z": 1
+            },
+            {
+              "x": -4,
+              "z": 0
+            },
+            {
+              "x": -4,
+              "z": -1
+            },
+            {
+              "x": -4,
+              "z": -2
+            },
+            {
+              "x": -4,
+              "z": -3
+            },
+            {
+              "x": -4,
+              "z": -4
+            },
+            {
+              "x": -5,
+              "z": -4
+            },
+            {
+              "x": -6,
+              "z": -4
+            }
+          ],
+          "reachable": true,
+          "reason": "",
+          "shared_component_ids": [
+            "-7,-4"
+          ]
+        },
+        "shop_activity_bonus": 0.1
+      }
+    },
+    {
+      "anchor": {
+        "x": -6,
+        "z": 2
+      },
+      "building_id": "building_small_a",
+      "effects": [
+        {
+          "amount": 20.0,
+          "capacity": null,
+          "effect_id": "secure_home",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "radius": null,
+          "reason": "Had a secure home",
+          "requires_active_building": false,
+          "schedule": null,
+          "scope": "resident",
+          "sensitivity": null,
+          "stacking_group": "housing"
+        },
+        {
+          "amount": -8.0,
+          "effect_id": "town_hall_bustle_core",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "reason": "Lived within 5 road tiles of the busy Town Hall",
+          "requires_active_building": false,
+          "scope": "resident",
+          "stacking_group": "town_hall_bustle"
+        }
+      ],
+      "proximity": {
+        "band": "core",
+        "distance": 5,
+        "home_liveability_penalty": -8.0,
+        "reachable": true,
+        "route": {
+          "destination_internal_id": 131,
+          "distance": 5,
+          "origin_internal_id": 0,
+          "path": [
+            {
+              "x": -1,
+              "z": 1
+            },
+            {
+              "x": -2,
+              "z": 1
+            },
+            {
+              "x": -3,
+              "z": 1
+            },
+            {
+              "x": -4,
+              "z": 1
+            },
+            {
+              "x": -5,
+              "z": 1
+            },
+            {
+              "x": -6,
+              "z": 1
+            }
+          ],
+          "reachable": true,
+          "reason": "",
+          "shared_component_ids": [
+            "-7,-4"
+          ]
+        },
+        "shop_activity_bonus": 0.2
+      }
+    },
+    {
+      "anchor": {
+        "x": -5,
+        "z": -7
+      },
+      "building_id": "building_small_a",
+      "effects": [
+        {
+          "amount": 20.0,
+          "capacity": null,
+          "effect_id": "secure_home",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "radius": null,
+          "reason": "Had a secure home",
+          "requires_active_building": false,
+          "schedule": null,
+          "scope": "resident",
+          "sensitivity": null,
+          "stacking_group": "housing"
+        }
+      ],
+      "proximity": {
+        "band": "",
+        "distance": 11,
+        "home_liveability_penalty": 0.0,
+        "reachable": true,
+        "route": {
+          "destination_internal_id": 76,
+          "distance": 11,
+          "origin_internal_id": 0,
+          "path": [
+            {
+              "x": -1,
+              "z": 1
+            },
+            {
+              "x": -2,
+              "z": 1
+            },
+            {
+              "x": -3,
+              "z": 1
+            },
+            {
+              "x": -4,
+              "z": 1
+            },
+            {
+              "x": -4,
+              "z": 0
+            },
+            {
+              "x": -4,
+              "z": -1
+            },
+            {
+              "x": -4,
+              "z": -2
+            },
+            {
+              "x": -4,
+              "z": -3
+            },
+            {
+              "x": -4,
+              "z": -4
+            },
+            {
+              "x": -4,
+              "z": -5
+            },
+            {
+              "x": -4,
+              "z": -6
+            },
+            {
+              "x": -4,
+              "z": -7
+            }
+          ],
+          "reachable": true,
+          "reason": "",
+          "shared_component_ids": [
+            "-7,-4"
+          ]
+        },
+        "shop_activity_bonus": 0.0
+      }
+    },
+    {
+      "anchor": {
+        "x": -5,
+        "z": -3
+      },
+      "building_id": "building_small_b",
+      "effects": [
+        {
+          "amount": 5.0,
+          "capacity": 10,
+          "effect_id": "local_shopping",
+          "manifestation": "freedom",
+          "quality": "opportunity",
+          "radius": null,
+          "reason": "Reached useful local shops",
+          "requires_active_building": true,
+          "schedule": null,
+          "scope": "participant",
+          "sensitivity": null,
+          "stacking_group": "local_commerce"
+        },
+        {
+          "amount": 4.0,
+          "capacity": 10,
+          "effect_id": "high_street_encounter",
+          "manifestation": "care",
+          "quality": "belonging",
+          "radius": null,
+          "reason": "Met neighbours at local shops",
+          "requires_active_building": true,
+          "schedule": null,
+          "scope": "participant",
+          "sensitivity": null,
+          "stacking_group": "community_gathering"
+        }
+      ],
+      "proximity": {
+        "band": "near",
+        "distance": 7,
+        "home_liveability_penalty": -4.0,
+        "reachable": true,
+        "route": {
+          "destination_internal_id": 101,
+          "distance": 7,
+          "origin_internal_id": 0,
+          "path": [
+            {
+              "x": -1,
+              "z": 1
+            },
+            {
+              "x": -2,
+              "z": 1
+            },
+            {
+              "x": -3,
+              "z": 1
+            },
+            {
+              "x": -4,
+              "z": 1
+            },
+            {
+              "x": -4,
+              "z": 0
+            },
+            {
+              "x": -4,
+              "z": -1
+            },
+            {
+              "x": -4,
+              "z": -2
+            },
+            {
+              "x": -4,
+              "z": -3
+            }
+          ],
+          "reachable": true,
+          "reason": "",
+          "shared_component_ids": [
+            "-7,-4"
+          ]
+        },
+        "shop_activity_bonus": 0.1
+      }
+    },
+    {
+      "anchor": {
+        "x": -5,
+        "z": -2
+      },
+      "building_id": "building_small_a",
+      "effects": [
+        {
+          "amount": 20.0,
+          "capacity": null,
+          "effect_id": "secure_home",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "radius": null,
+          "reason": "Had a secure home",
+          "requires_active_building": false,
+          "schedule": null,
+          "scope": "resident",
+          "sensitivity": null,
+          "stacking_group": "housing"
+        },
+        {
+          "amount": -4.0,
+          "effect_id": "town_hall_bustle_near",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "reason": "Lived within 6 road tiles of the busy Town Hall",
+          "requires_active_building": false,
+          "scope": "resident",
+          "stacking_group": "town_hall_bustle"
+        }
+      ],
+      "proximity": {
+        "band": "near",
+        "distance": 6,
+        "home_liveability_penalty": -4.0,
+        "reachable": true,
+        "route": {
+          "destination_internal_id": 110,
+          "distance": 6,
+          "origin_internal_id": 0,
+          "path": [
+            {
+              "x": -1,
+              "z": 1
+            },
+            {
+              "x": -2,
+              "z": 1
+            },
+            {
+              "x": -3,
+              "z": 1
+            },
+            {
+              "x": -4,
+              "z": 1
+            },
+            {
+              "x": -4,
+              "z": 0
+            },
+            {
+              "x": -4,
+              "z": -1
+            },
+            {
+              "x": -4,
+              "z": -2
+            }
+          ],
+          "reachable": true,
+          "reason": "",
+          "shared_component_ids": [
+            "-7,-4"
+          ]
+        },
+        "shop_activity_bonus": 0.1
+      }
+    },
+    {
+      "anchor": {
+        "x": -5,
+        "z": -1
+      },
+      "building_id": "building_small_a",
+      "effects": [
+        {
+          "amount": 20.0,
+          "capacity": null,
+          "effect_id": "secure_home",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "radius": null,
+          "reason": "Had a secure home",
+          "requires_active_building": false,
+          "schedule": null,
+          "scope": "resident",
+          "sensitivity": null,
+          "stacking_group": "housing"
+        },
+        {
+          "amount": -8.0,
+          "effect_id": "town_hall_bustle_core",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "reason": "Lived within 5 road tiles of the busy Town Hall",
+          "requires_active_building": false,
+          "scope": "resident",
+          "stacking_group": "town_hall_bustle"
+        }
+      ],
+      "proximity": {
+        "band": "core",
+        "distance": 5,
+        "home_liveability_penalty": -8.0,
+        "reachable": true,
+        "route": {
+          "destination_internal_id": 116,
+          "distance": 5,
+          "origin_internal_id": 0,
+          "path": [
+            {
+              "x": -1,
+              "z": 1
+            },
+            {
+              "x": -2,
+              "z": 1
+            },
+            {
+              "x": -3,
+              "z": 1
+            },
+            {
+              "x": -4,
+              "z": 1
+            },
+            {
+              "x": -4,
+              "z": 0
+            },
+            {
+              "x": -4,
+              "z": -1
+            }
+          ],
+          "reachable": true,
+          "reason": "",
+          "shared_component_ids": [
+            "-7,-4"
+          ]
+        },
+        "shop_activity_bonus": 0.2
+      }
+    },
+    {
+      "anchor": {
+        "x": -5,
+        "z": 0
+      },
+      "building_id": "building_small_a",
+      "effects": [
+        {
+          "amount": 20.0,
+          "capacity": null,
+          "effect_id": "secure_home",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "radius": null,
+          "reason": "Had a secure home",
+          "requires_active_building": false,
+          "schedule": null,
+          "scope": "resident",
+          "sensitivity": null,
+          "stacking_group": "housing"
+        },
+        {
+          "amount": -8.0,
+          "effect_id": "town_hall_bustle_core",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "reason": "Lived within 4 road tiles of the busy Town Hall",
+          "requires_active_building": false,
+          "scope": "resident",
+          "stacking_group": "town_hall_bustle"
+        }
+      ],
+      "proximity": {
+        "band": "core",
+        "distance": 4,
+        "home_liveability_penalty": -8.0,
+        "reachable": true,
+        "route": {
+          "destination_internal_id": 123,
+          "distance": 4,
+          "origin_internal_id": 0,
+          "path": [
+            {
+              "x": -1,
+              "z": 1
+            },
+            {
+              "x": -2,
+              "z": 1
+            },
+            {
+              "x": -3,
+              "z": 1
+            },
+            {
+              "x": -4,
+              "z": 1
+            },
+            {
+              "x": -5,
+              "z": 1
+            }
+          ],
+          "reachable": true,
+          "reason": "",
+          "shared_component_ids": [
+            "-7,-4"
+          ]
+        },
+        "shop_activity_bonus": 0.2
+      }
+    },
+    {
+      "anchor": {
+        "x": -5,
+        "z": 2
+      },
+      "building_id": "building_small_a",
+      "effects": [
+        {
+          "amount": 20.0,
+          "capacity": null,
+          "effect_id": "secure_home",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "radius": null,
+          "reason": "Had a secure home",
+          "requires_active_building": false,
+          "schedule": null,
+          "scope": "resident",
+          "sensitivity": null,
+          "stacking_group": "housing"
+        },
+        {
+          "amount": -8.0,
+          "effect_id": "town_hall_bustle_core",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "reason": "Lived within 4 road tiles of the busy Town Hall",
+          "requires_active_building": false,
+          "scope": "resident",
+          "stacking_group": "town_hall_bustle"
+        }
+      ],
+      "proximity": {
+        "band": "core",
+        "distance": 4,
+        "home_liveability_penalty": -8.0,
+        "reachable": true,
+        "route": {
+          "destination_internal_id": 132,
+          "distance": 4,
+          "origin_internal_id": 0,
+          "path": [
+            {
+              "x": -1,
+              "z": 1
+            },
+            {
+              "x": -2,
+              "z": 1
+            },
+            {
+              "x": -3,
+              "z": 1
+            },
+            {
+              "x": -4,
+              "z": 1
+            },
+            {
+              "x": -5,
+              "z": 1
+            }
+          ],
+          "reachable": true,
+          "reason": "",
+          "shared_component_ids": [
+            "-7,-4"
+          ]
+        },
+        "shop_activity_bonus": 0.2
+      }
+    },
+    {
+      "anchor": {
+        "x": -3,
+        "z": -7
+      },
+      "building_id": "building_small_b",
+      "effects": [
+        {
+          "amount": 5.0,
+          "capacity": 10,
+          "effect_id": "local_shopping",
+          "manifestation": "freedom",
+          "quality": "opportunity",
+          "radius": null,
+          "reason": "Reached useful local shops",
+          "requires_active_building": true,
+          "schedule": null,
+          "scope": "participant",
+          "sensitivity": null,
+          "stacking_group": "local_commerce"
+        },
+        {
+          "amount": 4.0,
+          "capacity": 10,
+          "effect_id": "high_street_encounter",
+          "manifestation": "care",
+          "quality": "belonging",
+          "radius": null,
+          "reason": "Met neighbours at local shops",
+          "requires_active_building": true,
+          "schedule": null,
+          "scope": "participant",
+          "sensitivity": null,
+          "stacking_group": "community_gathering"
+        }
+      ],
+      "proximity": {
+        "band": "",
+        "distance": 11,
+        "home_liveability_penalty": 0.0,
+        "reachable": true,
+        "route": {
+          "destination_internal_id": 77,
+          "distance": 11,
+          "origin_internal_id": 0,
+          "path": [
+            {
+              "x": -1,
+              "z": 1
+            },
+            {
+              "x": -2,
+              "z": 1
+            },
+            {
+              "x": -3,
+              "z": 1
+            },
+            {
+              "x": -4,
+              "z": 1
+            },
+            {
+              "x": -4,
+              "z": 0
+            },
+            {
+              "x": -4,
+              "z": -1
+            },
+            {
+              "x": -4,
+              "z": -2
+            },
+            {
+              "x": -4,
+              "z": -3
+            },
+            {
+              "x": -4,
+              "z": -4
+            },
+            {
+              "x": -4,
+              "z": -5
+            },
+            {
+              "x": -4,
+              "z": -6
+            },
+            {
+              "x": -4,
+              "z": -7
+            }
+          ],
+          "reachable": true,
+          "reason": "",
+          "shared_component_ids": [
+            "-7,-4"
+          ]
+        },
+        "shop_activity_bonus": 0.0
+      }
+    },
+    {
+      "anchor": {
+        "x": -3,
+        "z": -6
+      },
+      "building_id": "building_small_a",
+      "effects": [
+        {
+          "amount": 20.0,
+          "capacity": null,
+          "effect_id": "secure_home",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "radius": null,
+          "reason": "Had a secure home",
+          "requires_active_building": false,
+          "schedule": null,
+          "scope": "resident",
+          "sensitivity": null,
+          "stacking_group": "housing"
+        },
+        {
+          "amount": -4.0,
+          "effect_id": "town_hall_bustle_near",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "reason": "Lived within 10 road tiles of the busy Town Hall",
+          "requires_active_building": false,
+          "scope": "resident",
+          "stacking_group": "town_hall_bustle"
+        }
+      ],
+      "proximity": {
+        "band": "near",
+        "distance": 10,
+        "home_liveability_penalty": -4.0,
+        "reachable": true,
+        "route": {
+          "destination_internal_id": 83,
+          "distance": 10,
+          "origin_internal_id": 0,
+          "path": [
+            {
+              "x": -1,
+              "z": 1
+            },
+            {
+              "x": -2,
+              "z": 1
+            },
+            {
+              "x": -3,
+              "z": 1
+            },
+            {
+              "x": -4,
+              "z": 1
+            },
+            {
+              "x": -4,
+              "z": 0
+            },
+            {
+              "x": -4,
+              "z": -1
+            },
+            {
+              "x": -4,
+              "z": -2
+            },
+            {
+              "x": -4,
+              "z": -3
+            },
+            {
+              "x": -4,
+              "z": -4
+            },
+            {
+              "x": -4,
+              "z": -5
+            },
+            {
+              "x": -4,
+              "z": -6
+            }
+          ],
+          "reachable": true,
+          "reason": "",
+          "shared_component_ids": [
+            "-7,-4"
+          ]
+        },
+        "shop_activity_bonus": 0.1
+      }
+    },
+    {
+      "anchor": {
+        "x": -3,
+        "z": -5
+      },
+      "building_id": "building_small_a",
+      "effects": [
+        {
+          "amount": 20.0,
+          "capacity": null,
+          "effect_id": "secure_home",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "radius": null,
+          "reason": "Had a secure home",
+          "requires_active_building": false,
+          "schedule": null,
+          "scope": "resident",
+          "sensitivity": null,
+          "stacking_group": "housing"
+        },
+        {
+          "amount": -4.0,
+          "effect_id": "town_hall_bustle_near",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "reason": "Lived within 7 road tiles of the busy Town Hall",
+          "requires_active_building": false,
+          "scope": "resident",
+          "stacking_group": "town_hall_bustle"
+        }
+      ],
+      "proximity": {
+        "band": "near",
+        "distance": 7,
+        "home_liveability_penalty": -4.0,
+        "reachable": true,
+        "route": {
+          "destination_internal_id": 91,
+          "distance": 7,
+          "origin_internal_id": 0,
+          "path": [
+            {
+              "x": 1,
+              "z": -1
+            },
+            {
+              "x": 1,
+              "z": -2
+            },
+            {
+              "x": 1,
+              "z": -3
+            },
+            {
+              "x": 1,
+              "z": -4
+            },
+            {
+              "x": 0,
+              "z": -4
+            },
+            {
+              "x": -1,
+              "z": -4
+            },
+            {
+              "x": -2,
+              "z": -4
+            },
+            {
+              "x": -3,
+              "z": -4
+            }
+          ],
+          "reachable": true,
+          "reason": "",
+          "shared_component_ids": [
+            "-7,-4"
+          ]
+        },
+        "shop_activity_bonus": 0.1
+      }
+    },
+    {
+      "anchor": {
+        "x": -3,
+        "z": -3
+      },
+      "building_id": "building_small_a",
+      "effects": [
+        {
+          "amount": 20.0,
+          "capacity": null,
+          "effect_id": "secure_home",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "radius": null,
+          "reason": "Had a secure home",
+          "requires_active_building": false,
+          "schedule": null,
+          "scope": "resident",
+          "sensitivity": null,
+          "stacking_group": "housing"
+        },
+        {
+          "amount": -4.0,
+          "effect_id": "town_hall_bustle_near",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "reason": "Lived within 7 road tiles of the busy Town Hall",
+          "requires_active_building": false,
+          "scope": "resident",
+          "stacking_group": "town_hall_bustle"
+        }
+      ],
+      "proximity": {
+        "band": "near",
+        "distance": 7,
+        "home_liveability_penalty": -4.0,
+        "reachable": true,
+        "route": {
+          "destination_internal_id": 102,
+          "distance": 7,
+          "origin_internal_id": 0,
+          "path": [
+            {
+              "x": -1,
+              "z": 1
+            },
+            {
+              "x": -2,
+              "z": 1
+            },
+            {
+              "x": -3,
+              "z": 1
+            },
+            {
+              "x": -4,
+              "z": 1
+            },
+            {
+              "x": -4,
+              "z": 0
+            },
+            {
+              "x": -4,
+              "z": -1
+            },
+            {
+              "x": -4,
+              "z": -2
+            },
+            {
+              "x": -4,
+              "z": -3
+            }
+          ],
+          "reachable": true,
+          "reason": "",
+          "shared_component_ids": [
+            "-7,-4"
+          ]
+        },
+        "shop_activity_bonus": 0.1
+      }
+    },
+    {
+      "anchor": {
+        "x": -3,
+        "z": -1
+      },
+      "building_id": "building_small_b",
+      "effects": [
+        {
+          "amount": 5.0,
+          "capacity": 10,
+          "effect_id": "local_shopping",
+          "manifestation": "freedom",
+          "quality": "opportunity",
+          "radius": null,
+          "reason": "Reached useful local shops",
+          "requires_active_building": true,
+          "schedule": null,
+          "scope": "participant",
+          "sensitivity": null,
+          "stacking_group": "local_commerce"
+        },
+        {
+          "amount": 4.0,
+          "capacity": 10,
+          "effect_id": "high_street_encounter",
+          "manifestation": "care",
+          "quality": "belonging",
+          "radius": null,
+          "reason": "Met neighbours at local shops",
+          "requires_active_building": true,
+          "schedule": null,
+          "scope": "participant",
+          "sensitivity": null,
+          "stacking_group": "community_gathering"
+        }
+      ],
+      "proximity": {
+        "band": "core",
+        "distance": 5,
+        "home_liveability_penalty": -8.0,
+        "reachable": true,
+        "route": {
+          "destination_internal_id": 117,
+          "distance": 5,
+          "origin_internal_id": 0,
+          "path": [
+            {
+              "x": -1,
+              "z": 1
+            },
+            {
+              "x": -2,
+              "z": 1
+            },
+            {
+              "x": -3,
+              "z": 1
+            },
+            {
+              "x": -4,
+              "z": 1
+            },
+            {
+              "x": -4,
+              "z": 0
+            },
+            {
+              "x": -4,
+              "z": -1
+            }
+          ],
+          "reachable": true,
+          "reason": "",
+          "shared_component_ids": [
+            "-7,-4"
+          ]
+        },
+        "shop_activity_bonus": 0.2
+      }
+    },
+    {
+      "anchor": {
+        "x": -3,
+        "z": 0
+      },
+      "building_id": "building_small_a",
+      "effects": [
+        {
+          "amount": 20.0,
+          "capacity": null,
+          "effect_id": "secure_home",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "radius": null,
+          "reason": "Had a secure home",
+          "requires_active_building": false,
+          "schedule": null,
+          "scope": "resident",
+          "sensitivity": null,
+          "stacking_group": "housing"
+        },
+        {
+          "amount": -8.0,
+          "effect_id": "town_hall_bustle_core",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "reason": "Lived within 2 road tiles of the busy Town Hall",
+          "requires_active_building": false,
+          "scope": "resident",
+          "stacking_group": "town_hall_bustle"
+        }
+      ],
+      "proximity": {
+        "band": "core",
+        "distance": 2,
+        "home_liveability_penalty": -8.0,
+        "reachable": true,
+        "route": {
+          "destination_internal_id": 124,
+          "distance": 2,
+          "origin_internal_id": 0,
+          "path": [
+            {
+              "x": -1,
+              "z": 1
+            },
+            {
+              "x": -2,
+              "z": 1
+            },
+            {
+              "x": -3,
+              "z": 1
+            }
+          ],
+          "reachable": true,
+          "reason": "",
+          "shared_component_ids": [
+            "-7,-4"
+          ]
+        },
+        "shop_activity_bonus": 0.2
+      }
+    },
+    {
+      "anchor": {
+        "x": -3,
+        "z": 2
+      },
+      "building_id": "building_small_b",
+      "effects": [
+        {
+          "amount": 5.0,
+          "capacity": 10,
+          "effect_id": "local_shopping",
+          "manifestation": "freedom",
+          "quality": "opportunity",
+          "radius": null,
+          "reason": "Reached useful local shops",
+          "requires_active_building": true,
+          "schedule": null,
+          "scope": "participant",
+          "sensitivity": null,
+          "stacking_group": "local_commerce"
+        },
+        {
+          "amount": 4.0,
+          "capacity": 10,
+          "effect_id": "high_street_encounter",
+          "manifestation": "care",
+          "quality": "belonging",
+          "radius": null,
+          "reason": "Met neighbours at local shops",
+          "requires_active_building": true,
+          "schedule": null,
+          "scope": "participant",
+          "sensitivity": null,
+          "stacking_group": "community_gathering"
+        }
+      ],
+      "proximity": {
+        "band": "core",
+        "distance": 2,
+        "home_liveability_penalty": -8.0,
+        "reachable": true,
+        "route": {
+          "destination_internal_id": 133,
+          "distance": 2,
+          "origin_internal_id": 0,
+          "path": [
+            {
+              "x": -1,
+              "z": 1
+            },
+            {
+              "x": -2,
+              "z": 1
+            },
+            {
+              "x": -3,
+              "z": 1
+            }
+          ],
+          "reachable": true,
+          "reason": "",
+          "shared_component_ids": [
+            "-7,-4"
+          ]
+        },
+        "shop_activity_bonus": 0.2
+      }
+    },
+    {
+      "anchor": {
+        "x": -2,
+        "z": -5
+      },
+      "building_id": "building_small_a",
+      "effects": [
+        {
+          "amount": 20.0,
+          "capacity": null,
+          "effect_id": "secure_home",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "radius": null,
+          "reason": "Had a secure home",
+          "requires_active_building": false,
+          "schedule": null,
+          "scope": "resident",
+          "sensitivity": null,
+          "stacking_group": "housing"
+        },
+        {
+          "amount": -4.0,
+          "effect_id": "town_hall_bustle_near",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "reason": "Lived within 6 road tiles of the busy Town Hall",
+          "requires_active_building": false,
+          "scope": "resident",
+          "stacking_group": "town_hall_bustle"
+        }
+      ],
+      "proximity": {
+        "band": "near",
+        "distance": 6,
+        "home_liveability_penalty": -4.0,
+        "reachable": true,
+        "route": {
+          "destination_internal_id": 92,
+          "distance": 6,
+          "origin_internal_id": 0,
+          "path": [
+            {
+              "x": 1,
+              "z": -1
+            },
+            {
+              "x": 1,
+              "z": -2
+            },
+            {
+              "x": 1,
+              "z": -3
+            },
+            {
+              "x": 1,
+              "z": -4
+            },
+            {
+              "x": 0,
+              "z": -4
+            },
+            {
+              "x": -1,
+              "z": -4
+            },
+            {
+              "x": -2,
+              "z": -4
+            }
+          ],
+          "reachable": true,
+          "reason": "",
+          "shared_component_ids": [
+            "-7,-4"
+          ]
+        },
+        "shop_activity_bonus": 0.1
+      }
+    },
+    {
+      "anchor": {
+        "x": -2,
+        "z": 0
+      },
+      "building_id": "building_small_b",
+      "effects": [
+        {
+          "amount": 5.0,
+          "capacity": 10,
+          "effect_id": "local_shopping",
+          "manifestation": "freedom",
+          "quality": "opportunity",
+          "radius": null,
+          "reason": "Reached useful local shops",
+          "requires_active_building": true,
+          "schedule": null,
+          "scope": "participant",
+          "sensitivity": null,
+          "stacking_group": "local_commerce"
+        },
+        {
+          "amount": 4.0,
+          "capacity": 10,
+          "effect_id": "high_street_encounter",
+          "manifestation": "care",
+          "quality": "belonging",
+          "radius": null,
+          "reason": "Met neighbours at local shops",
+          "requires_active_building": true,
+          "schedule": null,
+          "scope": "participant",
+          "sensitivity": null,
+          "stacking_group": "community_gathering"
+        }
+      ],
+      "proximity": {
+        "band": "core",
+        "distance": 1,
+        "home_liveability_penalty": -8.0,
+        "reachable": true,
+        "route": {
+          "destination_internal_id": 125,
+          "distance": 1,
+          "origin_internal_id": 0,
+          "path": [
+            {
+              "x": -1,
+              "z": 1
+            },
+            {
+              "x": -2,
+              "z": 1
+            }
+          ],
+          "reachable": true,
+          "reason": "",
+          "shared_component_ids": [
+            "-7,-4"
+          ]
+        },
+        "shop_activity_bonus": 0.2
+      }
+    },
+    {
+      "anchor": {
+        "x": -2,
+        "z": 2
+      },
+      "building_id": "building_small_a",
+      "effects": [
+        {
+          "amount": 20.0,
+          "capacity": null,
+          "effect_id": "secure_home",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "radius": null,
+          "reason": "Had a secure home",
+          "requires_active_building": false,
+          "schedule": null,
+          "scope": "resident",
+          "sensitivity": null,
+          "stacking_group": "housing"
+        },
+        {
+          "amount": -8.0,
+          "effect_id": "town_hall_bustle_core",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "reason": "Lived within 1 road tiles of the busy Town Hall",
+          "requires_active_building": false,
+          "scope": "resident",
+          "stacking_group": "town_hall_bustle"
+        }
+      ],
+      "proximity": {
+        "band": "core",
+        "distance": 1,
+        "home_liveability_penalty": -8.0,
+        "reachable": true,
+        "route": {
+          "destination_internal_id": 134,
+          "distance": 1,
+          "origin_internal_id": 0,
+          "path": [
+            {
+              "x": -1,
+              "z": 1
+            },
+            {
+              "x": -2,
+              "z": 1
+            }
+          ],
+          "reachable": true,
+          "reason": "",
+          "shared_component_ids": [
+            "-7,-4"
+          ]
+        },
+        "shop_activity_bonus": 0.2
+      }
+    },
+    {
+      "anchor": {
+        "x": -1,
+        "z": -5
+      },
+      "building_id": "building_small_b",
+      "effects": [
+        {
+          "amount": 5.0,
+          "capacity": 10,
+          "effect_id": "local_shopping",
+          "manifestation": "freedom",
+          "quality": "opportunity",
+          "radius": null,
+          "reason": "Reached useful local shops",
+          "requires_active_building": true,
+          "schedule": null,
+          "scope": "participant",
+          "sensitivity": null,
+          "stacking_group": "local_commerce"
+        },
+        {
+          "amount": 4.0,
+          "capacity": 10,
+          "effect_id": "high_street_encounter",
+          "manifestation": "care",
+          "quality": "belonging",
+          "radius": null,
+          "reason": "Met neighbours at local shops",
+          "requires_active_building": true,
+          "schedule": null,
+          "scope": "participant",
+          "sensitivity": null,
+          "stacking_group": "community_gathering"
+        }
+      ],
+      "proximity": {
+        "band": "core",
+        "distance": 5,
+        "home_liveability_penalty": -8.0,
+        "reachable": true,
+        "route": {
+          "destination_internal_id": 93,
+          "distance": 5,
+          "origin_internal_id": 0,
+          "path": [
+            {
+              "x": 1,
+              "z": -1
+            },
+            {
+              "x": 1,
+              "z": -2
+            },
+            {
+              "x": 1,
+              "z": -3
+            },
+            {
+              "x": 1,
+              "z": -4
+            },
+            {
+              "x": 0,
+              "z": -4
+            },
+            {
+              "x": -1,
+              "z": -4
+            }
+          ],
+          "reachable": true,
+          "reason": "",
+          "shared_component_ids": [
+            "-7,-4"
+          ]
+        },
+        "shop_activity_bonus": 0.2
+      }
+    },
+    {
+      "anchor": {
+        "x": 0,
+        "z": -7
+      },
+      "building_id": "building_small_a",
+      "effects": [
+        {
+          "amount": 20.0,
+          "capacity": null,
+          "effect_id": "secure_home",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "radius": null,
+          "reason": "Had a secure home",
+          "requires_active_building": false,
+          "schedule": null,
+          "scope": "resident",
+          "sensitivity": null,
+          "stacking_group": "housing"
+        },
+        {
+          "amount": -4.0,
+          "effect_id": "town_hall_bustle_near",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "reason": "Lived within 6 road tiles of the busy Town Hall",
+          "requires_active_building": false,
+          "scope": "resident",
+          "stacking_group": "town_hall_bustle"
+        }
+      ],
+      "proximity": {
+        "band": "near",
+        "distance": 6,
+        "home_liveability_penalty": -4.0,
+        "reachable": true,
+        "route": {
+          "destination_internal_id": 78,
+          "distance": 6,
+          "origin_internal_id": 0,
+          "path": [
+            {
+              "x": 1,
+              "z": -1
+            },
+            {
+              "x": 1,
+              "z": -2
+            },
+            {
+              "x": 1,
+              "z": -3
+            },
+            {
+              "x": 1,
+              "z": -4
+            },
+            {
+              "x": 1,
+              "z": -5
+            },
+            {
+              "x": 1,
+              "z": -6
+            },
+            {
+              "x": 1,
+              "z": -7
+            }
+          ],
+          "reachable": true,
+          "reason": "",
+          "shared_component_ids": [
+            "-7,-4"
+          ]
+        },
+        "shop_activity_bonus": 0.1
+      }
+    },
+    {
+      "anchor": {
+        "x": 0,
+        "z": -6
+      },
+      "building_id": "building_small_a",
+      "effects": [
+        {
+          "amount": 20.0,
+          "capacity": null,
+          "effect_id": "secure_home",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "radius": null,
+          "reason": "Had a secure home",
+          "requires_active_building": false,
+          "schedule": null,
+          "scope": "resident",
+          "sensitivity": null,
+          "stacking_group": "housing"
+        },
+        {
+          "amount": -8.0,
+          "effect_id": "town_hall_bustle_core",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "reason": "Lived within 5 road tiles of the busy Town Hall",
+          "requires_active_building": false,
+          "scope": "resident",
+          "stacking_group": "town_hall_bustle"
+        }
+      ],
+      "proximity": {
+        "band": "core",
+        "distance": 5,
+        "home_liveability_penalty": -8.0,
+        "reachable": true,
+        "route": {
+          "destination_internal_id": 84,
+          "distance": 5,
+          "origin_internal_id": 0,
+          "path": [
+            {
+              "x": 1,
+              "z": -1
+            },
+            {
+              "x": 1,
+              "z": -2
+            },
+            {
+              "x": 1,
+              "z": -3
+            },
+            {
+              "x": 1,
+              "z": -4
+            },
+            {
+              "x": 1,
+              "z": -5
+            },
+            {
+              "x": 1,
+              "z": -6
+            }
+          ],
+          "reachable": true,
+          "reason": "",
+          "shared_component_ids": [
+            "-7,-4"
+          ]
+        },
+        "shop_activity_bonus": 0.2
+      }
+    },
+    {
+      "anchor": {
+        "x": 0,
+        "z": -5
+      },
+      "building_id": "building_small_a",
+      "effects": [
+        {
+          "amount": 20.0,
+          "capacity": null,
+          "effect_id": "secure_home",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "radius": null,
+          "reason": "Had a secure home",
+          "requires_active_building": false,
+          "schedule": null,
+          "scope": "resident",
+          "sensitivity": null,
+          "stacking_group": "housing"
+        },
+        {
+          "amount": -8.0,
+          "effect_id": "town_hall_bustle_core",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "reason": "Lived within 4 road tiles of the busy Town Hall",
+          "requires_active_building": false,
+          "scope": "resident",
+          "stacking_group": "town_hall_bustle"
+        }
+      ],
+      "proximity": {
+        "band": "core",
+        "distance": 4,
+        "home_liveability_penalty": -8.0,
+        "reachable": true,
+        "route": {
+          "destination_internal_id": 94,
+          "distance": 4,
+          "origin_internal_id": 0,
+          "path": [
+            {
+              "x": 1,
+              "z": -1
+            },
+            {
+              "x": 1,
+              "z": -2
+            },
+            {
+              "x": 1,
+              "z": -3
+            },
+            {
+              "x": 1,
+              "z": -4
+            },
+            {
+              "x": 0,
+              "z": -4
+            }
+          ],
+          "reachable": true,
+          "reason": "",
+          "shared_component_ids": [
+            "-7,-4"
+          ]
+        },
+        "shop_activity_bonus": 0.2
+      }
+    },
+    {
+      "anchor": {
+        "x": 0,
+        "z": -3
+      },
+      "building_id": "building_small_a",
+      "effects": [
+        {
+          "amount": 20.0,
+          "capacity": null,
+          "effect_id": "secure_home",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "radius": null,
+          "reason": "Had a secure home",
+          "requires_active_building": false,
+          "schedule": null,
+          "scope": "resident",
+          "sensitivity": null,
+          "stacking_group": "housing"
+        },
+        {
+          "amount": -8.0,
+          "effect_id": "town_hall_bustle_core",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "reason": "Lived within 2 road tiles of the busy Town Hall",
+          "requires_active_building": false,
+          "scope": "resident",
+          "stacking_group": "town_hall_bustle"
+        }
+      ],
+      "proximity": {
+        "band": "core",
+        "distance": 2,
+        "home_liveability_penalty": -8.0,
+        "reachable": true,
+        "route": {
+          "destination_internal_id": 105,
+          "distance": 2,
+          "origin_internal_id": 0,
+          "path": [
+            {
+              "x": 1,
+              "z": -1
+            },
+            {
+              "x": 1,
+              "z": -2
+            },
+            {
+              "x": 1,
+              "z": -3
+            }
+          ],
+          "reachable": true,
+          "reason": "",
+          "shared_component_ids": [
+            "-7,-4"
+          ]
+        },
+        "shop_activity_bonus": 0.2
+      }
+    },
+    {
+      "anchor": {
+        "x": 2,
+        "z": -2
+      },
+      "building_id": "building_small_a",
+      "effects": [
+        {
+          "amount": 20.0,
+          "capacity": null,
+          "effect_id": "secure_home",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "radius": null,
+          "reason": "Had a secure home",
+          "requires_active_building": false,
+          "schedule": null,
+          "scope": "resident",
+          "sensitivity": null,
+          "stacking_group": "housing"
+        },
+        {
+          "amount": -8.0,
+          "effect_id": "town_hall_bustle_core",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "reason": "Lived within 1 road tiles of the busy Town Hall",
+          "requires_active_building": false,
+          "scope": "resident",
+          "stacking_group": "town_hall_bustle"
+        }
+      ],
+      "proximity": {
+        "band": "core",
+        "distance": 1,
+        "home_liveability_penalty": -8.0,
+        "reachable": true,
+        "route": {
+          "destination_internal_id": 113,
+          "distance": 1,
+          "origin_internal_id": 0,
+          "path": [
+            {
+              "x": 1,
+              "z": -1
+            },
+            {
+              "x": 1,
+              "z": -2
+            }
+          ],
+          "reachable": true,
+          "reason": "",
+          "shared_component_ids": [
+            "-7,-4"
+          ]
+        },
+        "shop_activity_bonus": 0.2
+      }
+    },
+    {
+      "anchor": {
+        "x": 2,
+        "z": -1
+      },
+      "building_id": "building_small_a",
+      "effects": [
+        {
+          "amount": 20.0,
+          "capacity": null,
+          "effect_id": "secure_home",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "radius": null,
+          "reason": "Had a secure home",
+          "requires_active_building": false,
+          "schedule": null,
+          "scope": "resident",
+          "sensitivity": null,
+          "stacking_group": "housing"
+        },
+        {
+          "amount": -8.0,
+          "effect_id": "town_hall_bustle_core",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "reason": "Lived within 0 road tiles of the busy Town Hall",
+          "requires_active_building": false,
+          "scope": "resident",
+          "stacking_group": "town_hall_bustle"
+        }
+      ],
+      "proximity": {
+        "band": "core",
+        "distance": 0,
+        "home_liveability_penalty": -8.0,
+        "reachable": true,
+        "route": {
+          "destination_internal_id": 118,
+          "distance": 0,
+          "origin_internal_id": 0,
+          "path": [
+            {
+              "x": 1,
+              "z": -1
+            }
+          ],
+          "reachable": true,
+          "reason": "",
+          "shared_component_ids": [
+            "-7,-4"
+          ]
+        },
+        "shop_activity_bonus": 0.2
+      }
+    },
+    {
+      "anchor": {
+        "x": 2,
+        "z": 0
+      },
+      "building_id": "building_small_a",
+      "effects": [
+        {
+          "amount": 20.0,
+          "capacity": null,
+          "effect_id": "secure_home",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "radius": null,
+          "reason": "Had a secure home",
+          "requires_active_building": false,
+          "schedule": null,
+          "scope": "resident",
+          "sensitivity": null,
+          "stacking_group": "housing"
+        },
+        {
+          "amount": -8.0,
+          "effect_id": "town_hall_bustle_core",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "reason": "Lived within 0 road tiles of the busy Town Hall",
+          "requires_active_building": false,
+          "scope": "resident",
+          "stacking_group": "town_hall_bustle"
+        }
+      ],
+      "proximity": {
+        "band": "core",
+        "distance": 0,
+        "home_liveability_penalty": -8.0,
+        "reachable": true,
+        "route": {
+          "destination_internal_id": 126,
+          "distance": 0,
+          "origin_internal_id": 0,
+          "path": [
+            {
+              "x": 1,
+              "z": 0
+            }
+          ],
+          "reachable": true,
+          "reason": "",
+          "shared_component_ids": [
+            "-7,-4"
+          ]
+        },
+        "shop_activity_bonus": 0.2
+      }
+    },
+    {
+      "anchor": {
+        "x": 3,
+        "z": -3
+      },
+      "building_id": "building_small_a",
+      "effects": [
+        {
+          "amount": 20.0,
+          "capacity": null,
+          "effect_id": "secure_home",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "radius": null,
+          "reason": "Had a secure home",
+          "requires_active_building": false,
+          "schedule": null,
+          "scope": "resident",
+          "sensitivity": null,
+          "stacking_group": "housing"
+        },
+        {
+          "amount": -8.0,
+          "effect_id": "town_hall_bustle_core",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "reason": "Lived within 5 road tiles of the busy Town Hall",
+          "requires_active_building": false,
+          "scope": "resident",
+          "stacking_group": "town_hall_bustle"
+        }
+      ],
+      "proximity": {
+        "band": "core",
+        "distance": 5,
+        "home_liveability_penalty": -8.0,
+        "reachable": true,
+        "route": {
+          "destination_internal_id": 107,
+          "distance": 5,
+          "origin_internal_id": 0,
+          "path": [
+            {
+              "x": 1,
+              "z": -1
+            },
+            {
+              "x": 1,
+              "z": -2
+            },
+            {
+              "x": 1,
+              "z": -3
+            },
+            {
+              "x": 1,
+              "z": -4
+            },
+            {
+              "x": 2,
+              "z": -4
+            },
+            {
+              "x": 3,
+              "z": -4
+            }
+          ],
+          "reachable": true,
+          "reason": "",
+          "shared_component_ids": [
+            "-7,-4"
+          ]
+        },
+        "shop_activity_bonus": 0.2
+      }
+    },
+    {
+      "anchor": {
+        "x": 4,
+        "z": -5
+      },
+      "building_id": "building_small_a",
+      "effects": [
+        {
+          "amount": 20.0,
+          "capacity": null,
+          "effect_id": "secure_home",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "radius": null,
+          "reason": "Had a secure home",
+          "requires_active_building": false,
+          "schedule": null,
+          "scope": "resident",
+          "sensitivity": null,
+          "stacking_group": "housing"
+        },
+        {
+          "amount": -4.0,
+          "effect_id": "town_hall_bustle_near",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "reason": "Lived within 6 road tiles of the busy Town Hall",
+          "requires_active_building": false,
+          "scope": "resident",
+          "stacking_group": "town_hall_bustle"
+        }
+      ],
+      "proximity": {
+        "band": "near",
+        "distance": 6,
+        "home_liveability_penalty": -4.0,
+        "reachable": true,
+        "route": {
+          "destination_internal_id": 97,
+          "distance": 6,
+          "origin_internal_id": 0,
+          "path": [
+            {
+              "x": 1,
+              "z": -1
+            },
+            {
+              "x": 1,
+              "z": -2
+            },
+            {
+              "x": 1,
+              "z": -3
+            },
+            {
+              "x": 1,
+              "z": -4
+            },
+            {
+              "x": 2,
+              "z": -4
+            },
+            {
+              "x": 3,
+              "z": -4
+            },
+            {
+              "x": 4,
+              "z": -4
+            }
+          ],
+          "reachable": true,
+          "reason": "",
+          "shared_component_ids": [
+            "-7,-4"
+          ]
+        },
+        "shop_activity_bonus": 0.1
+      }
+    },
+    {
+      "anchor": {
+        "x": 4,
+        "z": -3
+      },
+      "building_id": "building_small_a",
+      "effects": [
+        {
+          "amount": 20.0,
+          "capacity": null,
+          "effect_id": "secure_home",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "radius": null,
+          "reason": "Had a secure home",
+          "requires_active_building": false,
+          "schedule": null,
+          "scope": "resident",
+          "sensitivity": null,
+          "stacking_group": "housing"
+        },
+        {
+          "amount": -4.0,
+          "effect_id": "town_hall_bustle_near",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "reason": "Lived within 6 road tiles of the busy Town Hall",
+          "requires_active_building": false,
+          "scope": "resident",
+          "stacking_group": "town_hall_bustle"
+        }
+      ],
+      "proximity": {
+        "band": "near",
+        "distance": 6,
+        "home_liveability_penalty": -4.0,
+        "reachable": true,
+        "route": {
+          "destination_internal_id": 108,
+          "distance": 6,
+          "origin_internal_id": 0,
+          "path": [
+            {
+              "x": 1,
+              "z": -1
+            },
+            {
+              "x": 1,
+              "z": -2
+            },
+            {
+              "x": 1,
+              "z": -3
+            },
+            {
+              "x": 1,
+              "z": -4
+            },
+            {
+              "x": 2,
+              "z": -4
+            },
+            {
+              "x": 3,
+              "z": -4
+            },
+            {
+              "x": 4,
+              "z": -4
+            }
+          ],
+          "reachable": true,
+          "reason": "",
+          "shared_component_ids": [
+            "-7,-4"
+          ]
+        },
+        "shop_activity_bonus": 0.1
+      }
+    },
+    {
+      "anchor": {
+        "x": 6,
+        "z": -7
+      },
+      "building_id": "building_small_a",
+      "effects": [
+        {
+          "amount": 20.0,
+          "capacity": null,
+          "effect_id": "secure_home",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "radius": null,
+          "reason": "Had a secure home",
+          "requires_active_building": false,
+          "schedule": null,
+          "scope": "resident",
+          "sensitivity": null,
+          "stacking_group": "housing"
+        },
+        {
+          "amount": -4.0,
+          "effect_id": "town_hall_bustle_near",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "reason": "Lived within 10 road tiles of the busy Town Hall",
+          "requires_active_building": false,
+          "scope": "resident",
+          "stacking_group": "town_hall_bustle"
+        }
+      ],
+      "proximity": {
+        "band": "near",
+        "distance": 10,
+        "home_liveability_penalty": -4.0,
+        "reachable": true,
+        "route": {
+          "destination_internal_id": 81,
+          "distance": 10,
+          "origin_internal_id": 0,
+          "path": [
+            {
+              "x": 1,
+              "z": -1
+            },
+            {
+              "x": 1,
+              "z": -2
+            },
+            {
+              "x": 1,
+              "z": -3
+            },
+            {
+              "x": 1,
+              "z": -4
+            },
+            {
+              "x": 2,
+              "z": -4
+            },
+            {
+              "x": 3,
+              "z": -4
+            },
+            {
+              "x": 4,
+              "z": -4
+            },
+            {
+              "x": 5,
+              "z": -4
+            },
+            {
+              "x": 5,
+              "z": -5
+            },
+            {
+              "x": 5,
+              "z": -6
+            },
+            {
+              "x": 5,
+              "z": -7
+            }
+          ],
+          "reachable": true,
+          "reason": "",
+          "shared_component_ids": [
+            "-7,-4"
+          ]
+        },
+        "shop_activity_bonus": 0.1
+      }
+    },
+    {
+      "anchor": {
+        "x": 6,
+        "z": -3
+      },
+      "building_id": "building_small_b",
+      "effects": [
+        {
+          "amount": 5.0,
+          "capacity": 10,
+          "effect_id": "local_shopping",
+          "manifestation": "freedom",
+          "quality": "opportunity",
+          "radius": null,
+          "reason": "Reached useful local shops",
+          "requires_active_building": true,
+          "schedule": null,
+          "scope": "participant",
+          "sensitivity": null,
+          "stacking_group": "local_commerce"
+        },
+        {
+          "amount": 4.0,
+          "capacity": 10,
+          "effect_id": "high_street_encounter",
+          "manifestation": "care",
+          "quality": "belonging",
+          "radius": null,
+          "reason": "Met neighbours at local shops",
+          "requires_active_building": true,
+          "schedule": null,
+          "scope": "participant",
+          "sensitivity": null,
+          "stacking_group": "community_gathering"
+        }
+      ],
+      "proximity": {
+        "band": "near",
+        "distance": 8,
+        "home_liveability_penalty": -4.0,
+        "reachable": true,
+        "route": {
+          "destination_internal_id": 109,
+          "distance": 8,
+          "origin_internal_id": 0,
+          "path": [
+            {
+              "x": 1,
+              "z": -1
+            },
+            {
+              "x": 1,
+              "z": -2
+            },
+            {
+              "x": 1,
+              "z": -3
+            },
+            {
+              "x": 1,
+              "z": -4
+            },
+            {
+              "x": 2,
+              "z": -4
+            },
+            {
+              "x": 3,
+              "z": -4
+            },
+            {
+              "x": 4,
+              "z": -4
+            },
+            {
+              "x": 5,
+              "z": -4
+            },
+            {
+              "x": 5,
+              "z": -3
+            }
+          ],
+          "reachable": true,
+          "reason": "",
+          "shared_component_ids": [
+            "-7,-4"
+          ]
+        },
+        "shop_activity_bonus": 0.1
+      }
+    },
+    {
+      "anchor": {
+        "x": 6,
+        "z": -2
+      },
+      "building_id": "building_small_a",
+      "effects": [
+        {
+          "amount": 20.0,
+          "capacity": null,
+          "effect_id": "secure_home",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "radius": null,
+          "reason": "Had a secure home",
+          "requires_active_building": false,
+          "schedule": null,
+          "scope": "resident",
+          "sensitivity": null,
+          "stacking_group": "housing"
+        },
+        {
+          "amount": -4.0,
+          "effect_id": "town_hall_bustle_near",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "reason": "Lived within 8 road tiles of the busy Town Hall",
+          "requires_active_building": false,
+          "scope": "resident",
+          "stacking_group": "town_hall_bustle"
+        }
+      ],
+      "proximity": {
+        "band": "near",
+        "distance": 8,
+        "home_liveability_penalty": -4.0,
+        "reachable": true,
+        "route": {
+          "destination_internal_id": 115,
+          "distance": 8,
+          "origin_internal_id": 0,
+          "path": [
+            {
+              "x": 0,
+              "z": 1
+            },
+            {
+              "x": 1,
+              "z": 1
+            },
+            {
+              "x": 2,
+              "z": 1
+            },
+            {
+              "x": 3,
+              "z": 1
+            },
+            {
+              "x": 4,
+              "z": 1
+            },
+            {
+              "x": 5,
+              "z": 1
+            },
+            {
+              "x": 5,
+              "z": 0
+            },
+            {
+              "x": 5,
+              "z": -1
+            },
+            {
+              "x": 5,
+              "z": -2
+            }
+          ],
+          "reachable": true,
+          "reason": "",
+          "shared_component_ids": [
+            "-7,-4"
+          ]
+        },
+        "shop_activity_bonus": 0.1
+      }
+    },
+    {
+      "anchor": {
+        "x": 6,
+        "z": 0
+      },
+      "building_id": "building_small_a",
+      "effects": [
+        {
+          "amount": 20.0,
+          "capacity": null,
+          "effect_id": "secure_home",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "radius": null,
+          "reason": "Had a secure home",
+          "requires_active_building": false,
+          "schedule": null,
+          "scope": "resident",
+          "sensitivity": null,
+          "stacking_group": "housing"
+        },
+        {
+          "amount": -4.0,
+          "effect_id": "town_hall_bustle_near",
+          "manifestation": "neutral",
+          "quality": "liveability",
+          "reason": "Lived within 6 road tiles of the busy Town Hall",
+          "requires_active_building": false,
+          "scope": "resident",
+          "stacking_group": "town_hall_bustle"
+        }
+      ],
+      "proximity": {
+        "band": "near",
+        "distance": 6,
+        "home_liveability_penalty": -4.0,
+        "reachable": true,
+        "route": {
+          "destination_internal_id": 129,
+          "distance": 6,
+          "origin_internal_id": 0,
+          "path": [
+            {
+              "x": 0,
+              "z": 1
+            },
+            {
+              "x": 1,
+              "z": 1
+            },
+            {
+              "x": 2,
+              "z": 1
+            },
+            {
+              "x": 3,
+              "z": 1
+            },
+            {
+              "x": 4,
+              "z": 1
+            },
+            {
+              "x": 5,
+              "z": 1
+            },
+            {
+              "x": 5,
+              "z": 0
+            }
+          ],
+          "reachable": true,
+          "reason": "",
+          "shared_component_ids": [
+            "-7,-4"
+          ]
+        },
+        "shop_activity_bonus": 0.1
+      }
+    }
+  ],
+  "saved_reference_town": {
+    "path": "user://feature020-after-town.tres",
+    "result": {
+      "changed": true,
+      "details": {
+        "path": "user://feature020-after-town.tres",
+        "structures": 135
+      },
+      "reason": null,
+      "schema_version": 1,
+      "status": "applied"
+    }
+  },
+  "scenario_id": "first_town/rebalance",
+  "schema_version": 2,
+  "seed": 6066,
+  "success": true,
+  "transaction": {
+    "entry_count": 1640,
+    "ledger_hash": "adcc840bc5e503c48159d3bca947688aa0699aa56c2554090bbfc8aea0ed5163"
+  }
+}
