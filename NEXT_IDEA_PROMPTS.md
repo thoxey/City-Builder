@@ -38,10 +38,10 @@ evidence, identify any remaining risks, and tell me which workstream is next.
 | # | Workstream | Prompt | Spec | Plan | Tasks | Implement | Verify |
 |---|---|---|---|---|---|---|---|
 | 1 | First tutorial mini-quest | Ready | [x] | [x] | [x] | [x] | [x] |
-| 2 | First land quest and townspeople | Ready | [ ] | [ ] | [ ] | [ ] | [ ] |
+| 2 | First land quest and townspeople | Ready | [x] | [x] | [x] | [ ] | [ ] |
 | 3 | Automated opening balance playtest | Ready | [x] | [x] | [x] | [x] | [x] |
-| 4 | UI and feedback improvements | Ready | [ ] | [ ] | [ ] | [ ] | [ ] |
-| 5 | Live placement consequences | Ready | [ ] | [ ] | [ ] | [ ] | [ ] |
+| 4 | UI and feedback improvements | Ready | [x] | [x] | [x] | [x] | [x] |
+| 5 | Live placement consequences | Ready | [x] | [x] | [x] | [x] | [x] |
 
 When starting a workstream, link its generated spec directory beneath the
 corresponding prompt. Do not silently expand one workstream to absorb another.
@@ -113,13 +113,21 @@ playtest checklist focused on pacing, clarity, and whether the dialogue is fun.
 
 ### Tracking
 
-- [ ] Specification created
-- [ ] Plan completed
-- [ ] Tasks generated
+- [x] Specification created
+- [x] Plan completed
+- [x] Tasks generated
 - [ ] Implemented
 - [ ] Automated verification passed
 - [ ] Dialogue and character voices reviewed in game
-- Spec: _not started_
+- Spec: [`specs/016-first-land-quest-townspeople/`](specs/016-first-land-quest-townspeople/)
+- Status: **Paused at the required collaborative creative checkpoint.** The invariant
+  quest, persistence, land-authority, test, and recurring-townsperson contracts are
+  fully planned. [`dialogue-workshop.md`](specs/016-first-land-quest-townspeople/dialogue-workshop.md)
+  contains the dramatic purpose, staged beats, character motivations, expressions,
+  semantic choices/outcomes, cast/voice options, and clearly unapproved copy options.
+  Runtime implementation remains intentionally unstarted until the player/Ambrose
+  identity, Sir William place, four people/voices, land outcome, and final prose are
+  approved.
 
 ### Prompt
 
@@ -213,13 +221,13 @@ demand boost in this workstream.
 
 ### Tracking
 
-- [ ] Specification created
-- [ ] Plan completed
-- [ ] Tasks generated
-- [ ] Implemented
-- [ ] Automated verification passed
-- [ ] Visual QA completed at supported resolutions
-- Spec: _not started_
+- [x] Specification created
+- [x] Plan completed
+- [x] Tasks generated
+- [x] Implemented
+- [x] Automated verification passed
+- [x] Visual QA completed at supported resolutions
+- Spec: [`specs/017-ui-feedback-improvements/`](specs/017-ui-feedback-improvements/)
 
 ### Prompt
 
@@ -256,13 +264,13 @@ resolutions.
 
 ### Tracking
 
-- [ ] Specification created
-- [ ] Plan completed
-- [ ] Tasks generated
-- [ ] Implemented
-- [ ] Automated verification passed
-- [ ] Placement parity, performance, and visual QA completed
-- Spec: _not started_
+- [x] Specification created
+- [x] Plan completed
+- [x] Tasks generated
+- [x] Implemented
+- [x] Automated verification passed
+- [x] Placement parity, performance, and visual QA completed
+- Spec: [`specs/018-live-placement-consequences/`](specs/018-live-placement-consequences/)
 
 ### Prompt
 
