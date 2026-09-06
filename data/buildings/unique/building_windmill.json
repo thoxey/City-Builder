@@ -2,12 +2,12 @@
   "building_id": "building_windmill",
   "display_name": "Windmill",
   "description": "",
-  "model_path": "res://models/building-garage.glb",
-  "model_scale": 1.0,
+  "model_path": "res://models/city-builder/building_windmill.glb",
+  "model_scale": 0.50008355,
   "model_offset": [
+    -5.4517556e-05,
     0,
-    0,
-    0
+    -8.20296961e-05
   ],
   "model_rotation_y": 0.0,
   "footprint": [

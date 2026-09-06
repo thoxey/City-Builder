@@ -2,12 +2,12 @@
   "building_id": "building_theatre",
   "display_name": "The Theatre",
   "description": "",
-  "model_path": "res://models/Meshy_AI_Clocktower_City_Hall_0403210028/Meshy_AI_Clocktower_City_Hall_0403210028_texture.glb",
-  "model_scale": 0.95,
+  "model_path": "res://models/city-builder/building_theatre.glb",
+  "model_scale": 0.500184589,
   "model_offset": [
+    -5.05186788e-05,
     0,
-    0,
-    0
+    -0.000153076516
   ],
   "model_rotation_y": 0.0,
   "footprint": [
@@ -17,6 +17,7 @@
     ]
   ],
   "category": "unique",
+  "community_role": "participant",
   "profiles": [
     {
       "type": "BuildingMetadata"
@@ -57,6 +58,7 @@
             "amount": 3.0,
             "scope": "participant",
             "capacity": 60,
+            "schedule": {"start": 18, "end": 22},
             "stacking_group": "theatre_beauty",
             "reason": "Enjoyed recurring local plays"
           },
@@ -67,6 +69,7 @@
             "amount": 3.0,
             "scope": "participant",
             "capacity": 60,
+            "schedule": {"start": 18, "end": 22},
             "stacking_group": "theatre_belonging",
             "reason": "Shared familiar local stories"
           },
@@ -77,6 +80,7 @@
             "amount": 1.0,
             "scope": "participant",
             "capacity": 60,
+            "schedule": {"start": 18, "end": 22},
             "stacking_group": "theatre_opportunity",
             "reason": "Took part in local performance"
           }
@@ -148,6 +152,7 @@
             "amount": 4.0,
             "scope": "participant",
             "capacity": 60,
+            "schedule": {"start": 10, "end": 18},
             "stacking_group": "community_gathering",
             "reason": "Used a staffed community meeting place"
           },
@@ -158,6 +163,7 @@
             "amount": 2.0,
             "scope": "participant",
             "capacity": 60,
+            "schedule": {"start": 10, "end": 18},
             "stacking_group": "community_service",
             "reason": "Accessed shared community support"
           },
@@ -168,6 +174,7 @@
             "amount": 1.0,
             "scope": "participant",
             "capacity": 60,
+            "schedule": {"start": 10, "end": 18},
             "stacking_group": "theatre_opportunity",
             "reason": "Found a useful community role"
           }

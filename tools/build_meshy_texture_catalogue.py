@@ -41,7 +41,7 @@ def main() -> None:
             "status": record["status"],
             "task_id": record["task_id"],
             "credits": record["consumed_credits"],
-            "texture_prompt": record["request"]["text_style_prompt"],
+            "texture_prompt": record["request"].get("text_style_prompt", "[canonical image style reference]"),
             "raw_textured_glb": str((ROOT / record["raw_textured_glb"]).resolve()),
             "normalized_glb": str((ROOT / record["normalized_glb"]).resolve()),
             "preview_png": str((ROOT / record["preview_png"]).resolve()),
@@ -55,26 +55,31 @@ def main() -> None:
         writer.writeheader()
         writer.writerows(rows)
 
-    columns, card_w, card_h = 4, 420, 470
-    sheet = Image.new("RGB", (columns * card_w, ((len(rows) + columns - 1) // columns) * card_h), "#c9c7c1")
-    title_font, meta_font = font(22, True), font(16)
-    for index, row in enumerate(rows):
-        x, y = (index % columns) * card_w, (index // columns) * card_h
-        card = Image.new("RGB", (card_w - 12, card_h - 12), "#efede8")
-        preview = Image.open(row["preview_png"]).convert("RGBA")
-        backdrop = Image.new("RGBA", preview.size, "#17191b")
-        backdrop.alpha_composite(preview)
-        preview = ImageOps.contain(backdrop.convert("RGB"), (390, 390), Image.Resampling.LANCZOS)
-        card.paste(preview, ((card.width - preview.width) // 2, 10))
-        draw = ImageDraw.Draw(card)
-        draw.text((14, 407), row["friendly_label"], fill="#161616", font=title_font)
-        draw.text((14, 438), f'{row["asset_id"]}  |  4K PBR', fill="#555555", font=meta_font)
-        sheet.paste(card, (x + 6, y + 6))
+    def write_sheet(sheet_rows, sheet_path):
+        columns, card_w, card_h = 4, 420, 470
+        sheet = Image.new("RGB", (columns * card_w, ((len(sheet_rows) + columns - 1) // columns) * card_h), "#c9c7c1")
+        title_font, meta_font = font(22, True), font(16)
+        for index, row in enumerate(sheet_rows):
+            x, y = (index % columns) * card_w, (index // columns) * card_h
+            card = Image.new("RGB", (card_w - 12, card_h - 12), "#efede8")
+            preview = Image.open(row["preview_png"]).convert("RGBA")
+            backdrop = Image.new("RGBA", preview.size, "#17191b")
+            backdrop.alpha_composite(preview)
+            preview = ImageOps.contain(backdrop.convert("RGB"), (390, 390), Image.Resampling.LANCZOS)
+            card.paste(preview, ((card.width - preview.width) // 2, 10))
+            draw = ImageDraw.Draw(card)
+            draw.text((14, 407), row["friendly_label"], fill="#161616", font=title_font)
+            draw.text((14, 438), f'{row["asset_id"]}  |  4K PBR', fill="#555555", font=meta_font)
+            sheet.paste(card, (x + 6, y + 6))
+        sheet.save(sheet_path, optimize=True)
 
     sheet_path = RUN_DIR / "textured-contact-sheet.png"
-    sheet.save(sheet_path, optimize=True)
+    write_sheet(rows, sheet_path)
+    no_roads_path = RUN_DIR / "textured-contact-sheet-no-roads.png"
+    write_sheet([row for row in rows if row["group"] != "Roads"], no_roads_path)
     print(f"Wrote {index_path}")
     print(f"Wrote {sheet_path}")
+    print(f"Wrote {no_roads_path}")
 
 
 if __name__ == "__main__":

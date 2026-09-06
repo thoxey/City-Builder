@@ -2,13 +2,17 @@
   "building_id": "building_town_hall",
   "display_name": "Town Hall",
   "description": "The free civic heart of every new town. Roads and working places grow outward from here.",
-  "model_path": "res://models/Meshy_AI_Clocktower_City_Hall_0403210028/Meshy_AI_Clocktower_City_Hall_0403210028_texture.glb",
-  "model_scale": 0.95,
-  "model_offset": [0, 0, 0],
+  "model_path": "res://models/city-builder/building_town_hall.glb",
+  "model_scale": 1.00028156,
+  "model_offset": [
+    -5.75048665e-05,
+    0,
+    1.54419496e-05
+  ],
   "model_rotation_y": 0.0,
   "footprint": [[0, 0], [1, 0], [0, 1], [1, 1]],
   "category": "unique",
-  "community_role": "functional",
+  "community_role": "local_only",
   "cash_cost": 0,
   "profiles": [
     {"type": "BuildingMetadata"},

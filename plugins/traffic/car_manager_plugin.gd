@@ -73,9 +73,9 @@ func inject(deps: Dictionary) -> void:
 func _plugin_ready() -> void:
 	for car_type: int in _TYPE_DEFS:
 		_setup_pool(car_type, _TYPE_DEFS[car_type])
-	GameEvents.structure_placed.connect(func(_a, _b, _c): _cancel_all())
-	GameEvents.structure_demolished.connect(func(_a): _cancel_all())
-	GameEvents.map_loaded.connect(func(_a): _cancel_all())
+	GameEvents.structure_placed.connect(_on_structure_placed)
+	GameEvents.structure_demolished.connect(_on_structure_demolished)
+	GameEvents.map_loaded.connect(_on_map_loaded)
 
 func _setup_pool(car_type: int, def: Dictionary) -> void:
 	var pool  := TypePool.new()
@@ -140,12 +140,116 @@ func request_journey(origin_tile: Vector3i, route: Array[Vector3i],
 	_pathfind_next(slot)
 	return slot.journey_id
 
+func request_resolved_journey(resident_id: int, origin_stop: Vector3i,
+		destination_stop: Vector3i, road_path: Array[Vector3i], road_revision: int,
+		plan_key: String, car_type: int = CarSlot.CarType.CIVILIAN) -> int:
+	var pool: TypePool = _pools.get(car_type)
+	if not pool or pool.free_indices.is_empty() or road_path.is_empty():
+		return -1
+	if road_path.front() != origin_stop or road_path.back() != destination_stop:
+		return -1
+	for index in range(1, road_path.size()):
+		if Pathfinder.manhattan(road_path[index - 1], road_path[index]) != 1:
+			return -1
+	var slot := CarSlot.new()
+	slot.journey_id = _next_id; _next_id += 1
+	slot.car_type = car_type
+	slot.resident_id = resident_id
+	slot.plan_key = plan_key
+	slot.origin_stop = origin_stop
+	slot.destination_stop = destination_stop
+	slot.road_revision = road_revision
+	slot.resolved_journey = true
+	slot.route.assign(road_path.duplicate())
+	slot.speed = float(_TYPE_DEFS[car_type].get("speed", 3.0))
+	slot.slot_index = pool.free_indices.pop_back()
+	slot.current_tile = origin_stop
+	slot.position = _road_network.get_lane_position(origin_stop, Vector2i.ZERO)
+	_claim_tile(origin_stop, slot.journey_id, Vector2i.ZERO)
+	_active[slot.journey_id] = slot
+	_set_resolved_waypoints(slot)
+	return slot.journey_id
+
+func _set_resolved_waypoints(slot: CarSlot) -> void:
+	var path: Array[Vector3i] = slot.route.duplicate()
+	if not path.is_empty() and path.front() == slot.current_tile:
+		path.pop_front()
+	var positions: Array[Vector3] = []
+	var previous := slot.current_tile
+	for cell in path:
+		var direction := Vector2i(cell.x - previous.x, cell.z - previous.z)
+		positions.append(_road_network.get_lane_position(cell, direction))
+		previous = cell
+	slot._waypoints.assign(positions)
+	slot._waypoint_tiles.assign(path)
+	if path.is_empty():
+		_complete(slot)
+		return
+	var first_direction := Vector2i(path[0].x - slot.current_tile.x, path[0].z - slot.current_tile.z)
+	slot.travel_dir = first_direction
+	slot._seg_start_basis = _dir_to_basis(first_direction)
+	slot._seg_end_basis = slot._seg_start_basis
+	slot._seg_total_dist = slot.position.distance_to(slot._waypoints[0])
+
 func cancel_journey(journey_id: int) -> void:
 	var slot: CarSlot = _active.get(journey_id)
 	if not slot:
 		return
 	_release_silent(slot)
 	_active.erase(journey_id)
+
+func refresh_resolved_journey_revision(journey_id: int, plan_key: String, road_revision: int) -> bool:
+	var slot: CarSlot = _active.get(journey_id)
+	if not slot or slot.plan_key != plan_key:
+		return false
+	slot.road_revision = road_revision
+	return true
+
+func _on_structure_placed(_position: Vector3i, _structure_index: int, _orientation: int) -> void:
+	pass
+
+func _on_structure_demolished(position: Vector3i) -> void:
+	var ids: Array = _active.keys()
+	ids.sort()
+	for jid in ids:
+		var slot: CarSlot = _active.get(jid)
+		if slot and (position == slot.origin_stop or position == slot.destination_stop or position in slot.route):
+			cancel_journey(jid)
+
+func _on_map_loaded(_map: Variant) -> void:
+	_cancel_all()
+
+func get_civilian_snapshot() -> Dictionary:
+	var rows: Array = []
+	var violations: Array = []
+	var resident_journeys: Dictionary = {}
+	var waiting_count := 0
+	for slot: CarSlot in _active.values():
+		if slot.resident_id < 0: continue
+		if resident_journeys.has(slot.resident_id):
+			violations.append({"resident_id":slot.resident_id,"code":"duplicate_car_binding"})
+		resident_journeys[slot.resident_id] = slot.journey_id
+		for index in range(1, slot.route.size()):
+			if Pathfinder.manhattan(slot.route[index - 1], slot.route[index]) != 1:
+				violations.append({"resident_id":slot.resident_id,"code":"invalid_waypoint_cell"})
+				break
+		if slot.waiting: waiting_count += 1
+		rows.append({
+			"journey_id": slot.journey_id, "resident_id": slot.resident_id,
+			"plan_key": slot.plan_key, "origin_stop": _cell_record(slot.origin_stop),
+			"destination_stop": _cell_record(slot.destination_stop),
+			"road_path": slot.route.map(func(cell): return _cell_record(cell)),
+			"road_revision": slot.road_revision, "waiting": slot.waiting,
+			"current_tile": _cell_record(slot.current_tile),
+		})
+	rows.sort_custom(func(a, b):
+		return a["resident_id"] < b["resident_id"] if a["resident_id"] != b["resident_id"] else a["journey_id"] < b["journey_id"])
+	violations.sort_custom(func(a, b): return a["resident_id"] < b["resident_id"] if a["resident_id"] != b["resident_id"] else a["code"] < b["code"])
+	return {"schema_version": 1, "active_car_count": rows.size(),
+		"waiting_car_count": waiting_count, "journeys": rows.duplicate(true), "violations":violations.duplicate(true)}
+
+func _cell_record(cell: Vector3i) -> Dictionary:
+	return {"x": cell.x, "y": cell.y, "z": cell.z}
 
 # ── Process ───────────────────────────────────────────────────────────────────
 
@@ -232,6 +336,9 @@ func _advance(slot: CarSlot, delta: float) -> void:
 		slot.position += slot.position.direction_to(target) * step
 
 func _on_segment_done(slot: CarSlot) -> void:
+	if slot.resolved_journey:
+		_complete(slot)
+		return
 	slot.route_index += 1
 	if slot.route_index >= slot.route.size():
 		if slot.loop:
@@ -408,7 +515,7 @@ func _write_transform(slot: CarSlot) -> void:
 
 func _hide_slot(slot: CarSlot) -> void:
 	var pool: TypePool = _pools.get(slot.car_type)
-	if pool:
+	if pool and pool.mminstance and pool.mminstance.multimesh:
 		pool.mminstance.multimesh.set_instance_transform(slot.slot_index, _hidden_transform())
 
 func _hidden_transform() -> Transform3D:

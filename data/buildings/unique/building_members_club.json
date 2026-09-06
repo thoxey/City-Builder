@@ -2,12 +2,12 @@
   "building_id": "building_members_club",
   "display_name": "Private Members' Club",
   "description": "",
-  "model_path": "res://models/Meshy_AI_Clocktower_City_Hall_0403210028/Meshy_AI_Clocktower_City_Hall_0403210028_texture.glb",
-  "model_scale": 0.8,
+  "model_path": "res://models/city-builder/building_members_club.glb",
+  "model_scale": 0.500028522,
   "model_offset": [
+    -1.7226725e-05,
     0,
-    0,
-    0
+    -2.30087053e-05
   ],
   "model_rotation_y": 0.0,
   "footprint": [
@@ -17,6 +17,7 @@
     ]
   ],
   "category": "unique",
+  "community_role": "participant",
   "profiles": [
     {
       "type": "BuildingMetadata"
@@ -27,6 +28,20 @@
       "capacity": 25,
       "active_start": 18.0,
       "active_end": 2.0
+    },
+    {
+      "type": "CommunityEffectProfile",
+      "effects": [{
+        "effect_id": "members_club_evening",
+        "quality": "belonging",
+        "manifestation": "freedom",
+        "amount": 0.5,
+        "scope": "participant",
+        "capacity": 25,
+        "schedule": {"start": 18, "end": 2},
+        "stacking_group": "local_social_visit",
+        "reason": "Spent the evening at the private members' club"
+      }]
     },
     {
       "type": "UniqueProfile",

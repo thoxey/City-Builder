@@ -40,13 +40,14 @@ func _ready() -> void:
 	_centre_button = Button.new()
 	_centre_button.custom_minimum_size = Vector2(110, 110)
 	_centre_button.flat = true
+	_centre_button.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_centre_button.focus_mode = Control.FOCUS_NONE
 	_centre_button.icon = load("res://sprites/ui/build-menu/controls/close.png")
 	_centre_button.expand_icon = true
 	_centre_button.add_theme_constant_override("icon_max_width", 82)
 	for state in ["icon_normal_color", "icon_hover_color", "icon_pressed_color", "icon_focus_color"]:
 		_centre_button.add_theme_color_override(state, Color.WHITE)
 	_centre_button.tooltip_text = "Close build menu"
-	_centre_button.pressed.connect(back_or_close)
 	add_child(_centre_button)
 	_detail_panel = PanelContainer.new()
 	_detail_panel.theme_type_variation = "DetailCard"
@@ -135,6 +136,7 @@ func _layout_wedges() -> void:
 	_centre_button.size = Vector2(110, 110)
 	_centre_button.icon = load("res://sprites/ui/build-menu/controls/%s.png" % ("back" if _level == "items" else "close"))
 	_centre_button.tooltip_text = "Back to categories" if _level == "items" else "Close build menu"
+	_detail_panel.visible = _level == "items"
 	var card_size := _detail_panel.custom_minimum_size
 	var safe_right := size.x - SAFE_MARGIN - _safe_right_inset
 	var desired_x := _origin.x + OUTER_RADIUS + 24.0
@@ -247,7 +249,7 @@ func _update_detail() -> void:
 		return
 	var action := _actions[_focused_index]
 	if action.kind != "entry":
-		_detail_label.text = "%s\n%s" % [action.label, action.accessible_description]
+		_detail_label.text = ""
 		return
 	var entry: Dictionary = _model.get("entries_by_id", {}).get(action.target_id, {})
 	var cost_value: Variant = entry.get("cash_cost", 0)

@@ -161,6 +161,52 @@ func get_route_between_buildings(origin_id: int, destination_id: int) -> Diction
 	result["path"] = _cell_records(path)
 	return result
 
+## Detached route evidence for civilian presentation. Anchors are resolved through
+## the same building/access projection used by Community assignments.
+func resolve_civilian_route(origin_anchor: Vector2i, destination_anchor: Vector2i) -> Dictionary:
+	var origin_id := _internal_id_for_anchor(origin_anchor)
+	var destination_id := _internal_id_for_anchor(destination_anchor)
+	if origin_id < 0:
+		return {"ok":false, "road_revision":_revision, "blocked_reason":"missing_origin"}
+	if destination_id < 0:
+		return {"ok":false, "road_revision":_revision, "blocked_reason":"missing_destination"}
+	var origin_access := get_access_for_building(origin_id)
+	var destination_access := get_access_for_building(destination_id)
+	if not bool(origin_access.get("road_accessible", false)):
+		return {"ok":false, "road_revision":_revision, "blocked_reason":"origin_has_no_road_access"}
+	if not bool(destination_access.get("road_accessible", false)):
+		return {"ok":false, "road_revision":_revision, "blocked_reason":"destination_has_no_road_access"}
+	var route := get_route_between_buildings(origin_id, destination_id)
+	if not bool(route.get("reachable", false)):
+		return {"ok":false, "road_revision":_revision, "blocked_reason":"disconnected"}
+	var road_path: Array = route.get("path", []).duplicate(true)
+	if road_path.is_empty():
+		return {"ok":false, "road_revision":_revision, "blocked_reason":"disconnected"}
+	return {
+		"ok": true,
+		"origin_internal_id": origin_id,
+		"destination_internal_id": destination_id,
+		"origin_stop": _record3(road_path.front()),
+		"destination_stop": _record3(road_path.back()),
+		"road_path": road_path.map(func(record): return _record3(record)),
+		"route_distance": int(route.get("distance", maxi(0, road_path.size() - 1))),
+		"road_revision": _revision,
+		"dependency_cells": road_path.map(func(record): return _record3(record)),
+		"blocked_reason": "",
+	}
+
+func _internal_id_for_anchor(anchor: Vector2i) -> int:
+	var ids := GameState.building_registry.keys()
+	ids.sort()
+	for raw_id in ids:
+		if GameState.building_registry[raw_id].get("anchor", Vector2i.ZERO) == anchor:
+			return int(raw_id)
+	return -1
+
+static func _record3(value: Variant) -> Dictionary:
+	var cell: Variant = _record_cell(value)
+	return {"x":cell.x, "y":cell.y, "z":cell.z} if cell != null else {}
+
 func get_route_from_town_hall(destination_id: int) -> Dictionary:
 	var hall_id := get_town_hall_internal_id()
 	if hall_id < 0:

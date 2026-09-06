@@ -140,8 +140,8 @@ export interface CommunityEffectEntry {
 
 export interface CommunityEffectProfileEntry {
   type: "CommunityEffectProfile";
-  effects: CommunityEffectEntry[];
-  programmes?: Record<string, { effects: CommunityEffectEntry[] }>;
+  effects?: CommunityEffectEntry[];
+  programmes?: Record<string, CommunityEffectEntry[] | { effects: CommunityEffectEntry[] }>;
   default_programme?: string;
 }
 
@@ -166,7 +166,7 @@ export interface BuildingDoc {
   category: BuildingCategory | "";
   pool_id?: string;
   cash_cost?: number;
-  community_role?: "functional" | "cosmetic_only";
+  community_role?: "functional" | "cosmetic_only" | "participant" | "local_only" | "productive" | "cosmetic";
   profiles: Profile[];
   tags: string[];
 }

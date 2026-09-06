@@ -1,0 +1,2333 @@
+{
+  "canonical_trace": [
+    {
+      "absolute_hour": 0,
+      "checkpoint": "start",
+      "civilian_simulation": {
+        "cars": {
+          "active_car_count": 0,
+          "journeys": [],
+          "schema_version": 1,
+          "violations": [],
+          "waiting_car_count": 0
+        },
+        "people": {
+          "assignment_revision": 8,
+          "blocked_by_reason": {
+
+          },
+          "counts_by_purpose": {
+            "home": 2
+          },
+          "counts_by_state": {
+            "at_home": 2
+          },
+          "proxy_cap": 512,
+          "residents": [
+            {
+              "authoritative_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "authoritative_purpose": "home",
+              "blocked_reason": "",
+              "current_place": {
+                "x": -3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "none",
+              "plan_key": "",
+              "resident_id": 101,
+              "route_distance": 0,
+              "route_revision": 0,
+              "state": "at_home",
+              "visible_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            },
+            {
+              "authoritative_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "authoritative_purpose": "home",
+              "blocked_reason": "",
+              "current_place": {
+                "x": -3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "none",
+              "plan_key": "",
+              "resident_id": 102,
+              "route_distance": 0,
+              "route_revision": 0,
+              "state": "at_home",
+              "visible_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            }
+          ],
+          "road_revision": 8,
+          "schema_version": 1,
+          "simulated_resident_count": 2,
+          "violations": [],
+          "visible_count": 2
+        },
+        "violations": []
+      }
+    },
+    {
+      "absolute_hour": 1,
+      "checkpoint": "hour_01",
+      "civilian_simulation": {
+        "cars": {
+          "active_car_count": 0,
+          "journeys": [],
+          "schema_version": 1,
+          "violations": [],
+          "waiting_car_count": 0
+        },
+        "people": {
+          "assignment_revision": 9,
+          "blocked_by_reason": {
+
+          },
+          "counts_by_purpose": {
+            "home": 2
+          },
+          "counts_by_state": {
+            "at_home": 2
+          },
+          "proxy_cap": 512,
+          "residents": [
+            {
+              "authoritative_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "authoritative_purpose": "home",
+              "blocked_reason": "",
+              "current_place": {
+                "x": -3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "none",
+              "plan_key": "",
+              "resident_id": 101,
+              "route_distance": 0,
+              "route_revision": 0,
+              "state": "at_home",
+              "visible_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            },
+            {
+              "authoritative_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "authoritative_purpose": "home",
+              "blocked_reason": "",
+              "current_place": {
+                "x": -3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "none",
+              "plan_key": "",
+              "resident_id": 102,
+              "route_distance": 0,
+              "route_revision": 0,
+              "state": "at_home",
+              "visible_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            }
+          ],
+          "road_revision": 8,
+          "schema_version": 1,
+          "simulated_resident_count": 2,
+          "violations": [],
+          "visible_count": 2
+        },
+        "violations": []
+      }
+    },
+    {
+      "absolute_hour": 2,
+      "checkpoint": "hour_02",
+      "civilian_simulation": {
+        "cars": {
+          "active_car_count": 0,
+          "journeys": [],
+          "schema_version": 1,
+          "violations": [],
+          "waiting_car_count": 0
+        },
+        "people": {
+          "assignment_revision": 10,
+          "blocked_by_reason": {
+
+          },
+          "counts_by_purpose": {
+            "work": 2
+          },
+          "counts_by_state": {
+            "at_destination": 2
+          },
+          "proxy_cap": 512,
+          "residents": [
+            {
+              "authoritative_destination": {
+                "x": 3,
+                "z": 0
+              },
+              "authoritative_purpose": "work",
+              "blocked_reason": "",
+              "current_place": {
+                "x": 3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "walk",
+              "plan_key": "c6dfbca105b8d310c941d8d0ee7cf659ab0d7af9833739582babfa5098723844",
+              "resident_id": 101,
+              "route_distance": 4,
+              "route_revision": 8,
+              "state": "at_destination",
+              "visible_destination": {
+                "x": 3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            },
+            {
+              "authoritative_destination": {
+                "x": 3,
+                "z": 0
+              },
+              "authoritative_purpose": "work",
+              "blocked_reason": "",
+              "current_place": {
+                "x": 3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "walk",
+              "plan_key": "3e710c4bef475b5c42c53e4fe47bc8ef8b06b665ca9d28ae3c7aa4de3ce29659",
+              "resident_id": 102,
+              "route_distance": 4,
+              "route_revision": 8,
+              "state": "at_destination",
+              "visible_destination": {
+                "x": 3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            }
+          ],
+          "road_revision": 8,
+          "schema_version": 1,
+          "simulated_resident_count": 2,
+          "violations": [],
+          "visible_count": 2
+        },
+        "violations": []
+      }
+    },
+    {
+      "absolute_hour": 3,
+      "checkpoint": "hour_03",
+      "civilian_simulation": {
+        "cars": {
+          "active_car_count": 0,
+          "journeys": [],
+          "schema_version": 1,
+          "violations": [],
+          "waiting_car_count": 0
+        },
+        "people": {
+          "assignment_revision": 11,
+          "blocked_by_reason": {
+
+          },
+          "counts_by_purpose": {
+            "work": 2
+          },
+          "counts_by_state": {
+            "at_destination": 2
+          },
+          "proxy_cap": 512,
+          "residents": [
+            {
+              "authoritative_destination": {
+                "x": 3,
+                "z": 0
+              },
+              "authoritative_purpose": "work",
+              "blocked_reason": "",
+              "current_place": {
+                "x": 3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "walk",
+              "plan_key": "c6dfbca105b8d310c941d8d0ee7cf659ab0d7af9833739582babfa5098723844",
+              "resident_id": 101,
+              "route_distance": 4,
+              "route_revision": 8,
+              "state": "at_destination",
+              "visible_destination": {
+                "x": 3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            },
+            {
+              "authoritative_destination": {
+                "x": 3,
+                "z": 0
+              },
+              "authoritative_purpose": "work",
+              "blocked_reason": "",
+              "current_place": {
+                "x": 3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "walk",
+              "plan_key": "3e710c4bef475b5c42c53e4fe47bc8ef8b06b665ca9d28ae3c7aa4de3ce29659",
+              "resident_id": 102,
+              "route_distance": 4,
+              "route_revision": 8,
+              "state": "at_destination",
+              "visible_destination": {
+                "x": 3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            }
+          ],
+          "road_revision": 8,
+          "schema_version": 1,
+          "simulated_resident_count": 2,
+          "violations": [],
+          "visible_count": 2
+        },
+        "violations": []
+      }
+    },
+    {
+      "absolute_hour": 4,
+      "checkpoint": "hour_04",
+      "civilian_simulation": {
+        "cars": {
+          "active_car_count": 0,
+          "journeys": [],
+          "schema_version": 1,
+          "violations": [],
+          "waiting_car_count": 0
+        },
+        "people": {
+          "assignment_revision": 12,
+          "blocked_by_reason": {
+
+          },
+          "counts_by_purpose": {
+            "work": 2
+          },
+          "counts_by_state": {
+            "at_destination": 2
+          },
+          "proxy_cap": 512,
+          "residents": [
+            {
+              "authoritative_destination": {
+                "x": 3,
+                "z": 0
+              },
+              "authoritative_purpose": "work",
+              "blocked_reason": "",
+              "current_place": {
+                "x": 3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "walk",
+              "plan_key": "c6dfbca105b8d310c941d8d0ee7cf659ab0d7af9833739582babfa5098723844",
+              "resident_id": 101,
+              "route_distance": 4,
+              "route_revision": 8,
+              "state": "at_destination",
+              "visible_destination": {
+                "x": 3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            },
+            {
+              "authoritative_destination": {
+                "x": 3,
+                "z": 0
+              },
+              "authoritative_purpose": "work",
+              "blocked_reason": "",
+              "current_place": {
+                "x": 3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "walk",
+              "plan_key": "3e710c4bef475b5c42c53e4fe47bc8ef8b06b665ca9d28ae3c7aa4de3ce29659",
+              "resident_id": 102,
+              "route_distance": 4,
+              "route_revision": 8,
+              "state": "at_destination",
+              "visible_destination": {
+                "x": 3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            }
+          ],
+          "road_revision": 8,
+          "schema_version": 1,
+          "simulated_resident_count": 2,
+          "violations": [],
+          "visible_count": 2
+        },
+        "violations": []
+      }
+    },
+    {
+      "absolute_hour": 5,
+      "checkpoint": "hour_05",
+      "civilian_simulation": {
+        "cars": {
+          "active_car_count": 0,
+          "journeys": [],
+          "schema_version": 1,
+          "violations": [],
+          "waiting_car_count": 0
+        },
+        "people": {
+          "assignment_revision": 13,
+          "blocked_by_reason": {
+
+          },
+          "counts_by_purpose": {
+            "work": 2
+          },
+          "counts_by_state": {
+            "at_destination": 2
+          },
+          "proxy_cap": 512,
+          "residents": [
+            {
+              "authoritative_destination": {
+                "x": 3,
+                "z": 0
+              },
+              "authoritative_purpose": "work",
+              "blocked_reason": "",
+              "current_place": {
+                "x": 3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "walk",
+              "plan_key": "c6dfbca105b8d310c941d8d0ee7cf659ab0d7af9833739582babfa5098723844",
+              "resident_id": 101,
+              "route_distance": 4,
+              "route_revision": 8,
+              "state": "at_destination",
+              "visible_destination": {
+                "x": 3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            },
+            {
+              "authoritative_destination": {
+                "x": 3,
+                "z": 0
+              },
+              "authoritative_purpose": "work",
+              "blocked_reason": "",
+              "current_place": {
+                "x": 3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "walk",
+              "plan_key": "3e710c4bef475b5c42c53e4fe47bc8ef8b06b665ca9d28ae3c7aa4de3ce29659",
+              "resident_id": 102,
+              "route_distance": 4,
+              "route_revision": 8,
+              "state": "at_destination",
+              "visible_destination": {
+                "x": 3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            }
+          ],
+          "road_revision": 8,
+          "schema_version": 1,
+          "simulated_resident_count": 2,
+          "violations": [],
+          "visible_count": 2
+        },
+        "violations": []
+      }
+    },
+    {
+      "absolute_hour": 6,
+      "checkpoint": "hour_06",
+      "civilian_simulation": {
+        "cars": {
+          "active_car_count": 0,
+          "journeys": [],
+          "schema_version": 1,
+          "violations": [],
+          "waiting_car_count": 0
+        },
+        "people": {
+          "assignment_revision": 14,
+          "blocked_by_reason": {
+
+          },
+          "counts_by_purpose": {
+            "work": 2
+          },
+          "counts_by_state": {
+            "at_destination": 2
+          },
+          "proxy_cap": 512,
+          "residents": [
+            {
+              "authoritative_destination": {
+                "x": 3,
+                "z": 0
+              },
+              "authoritative_purpose": "work",
+              "blocked_reason": "",
+              "current_place": {
+                "x": 3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "walk",
+              "plan_key": "c6dfbca105b8d310c941d8d0ee7cf659ab0d7af9833739582babfa5098723844",
+              "resident_id": 101,
+              "route_distance": 4,
+              "route_revision": 8,
+              "state": "at_destination",
+              "visible_destination": {
+                "x": 3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            },
+            {
+              "authoritative_destination": {
+                "x": 3,
+                "z": 0
+              },
+              "authoritative_purpose": "work",
+              "blocked_reason": "",
+              "current_place": {
+                "x": 3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "walk",
+              "plan_key": "3e710c4bef475b5c42c53e4fe47bc8ef8b06b665ca9d28ae3c7aa4de3ce29659",
+              "resident_id": 102,
+              "route_distance": 4,
+              "route_revision": 8,
+              "state": "at_destination",
+              "visible_destination": {
+                "x": 3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            }
+          ],
+          "road_revision": 8,
+          "schema_version": 1,
+          "simulated_resident_count": 2,
+          "violations": [],
+          "visible_count": 2
+        },
+        "violations": []
+      }
+    },
+    {
+      "absolute_hour": 7,
+      "checkpoint": "hour_07",
+      "civilian_simulation": {
+        "cars": {
+          "active_car_count": 0,
+          "journeys": [],
+          "schema_version": 1,
+          "violations": [],
+          "waiting_car_count": 0
+        },
+        "people": {
+          "assignment_revision": 15,
+          "blocked_by_reason": {
+
+          },
+          "counts_by_purpose": {
+            "work": 2
+          },
+          "counts_by_state": {
+            "at_destination": 2
+          },
+          "proxy_cap": 512,
+          "residents": [
+            {
+              "authoritative_destination": {
+                "x": 3,
+                "z": 0
+              },
+              "authoritative_purpose": "work",
+              "blocked_reason": "",
+              "current_place": {
+                "x": 3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "walk",
+              "plan_key": "c6dfbca105b8d310c941d8d0ee7cf659ab0d7af9833739582babfa5098723844",
+              "resident_id": 101,
+              "route_distance": 4,
+              "route_revision": 8,
+              "state": "at_destination",
+              "visible_destination": {
+                "x": 3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            },
+            {
+              "authoritative_destination": {
+                "x": 3,
+                "z": 0
+              },
+              "authoritative_purpose": "work",
+              "blocked_reason": "",
+              "current_place": {
+                "x": 3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "walk",
+              "plan_key": "3e710c4bef475b5c42c53e4fe47bc8ef8b06b665ca9d28ae3c7aa4de3ce29659",
+              "resident_id": 102,
+              "route_distance": 4,
+              "route_revision": 8,
+              "state": "at_destination",
+              "visible_destination": {
+                "x": 3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            }
+          ],
+          "road_revision": 8,
+          "schema_version": 1,
+          "simulated_resident_count": 2,
+          "violations": [],
+          "visible_count": 2
+        },
+        "violations": []
+      }
+    },
+    {
+      "absolute_hour": 8,
+      "checkpoint": "hour_08",
+      "civilian_simulation": {
+        "cars": {
+          "active_car_count": 0,
+          "journeys": [],
+          "schema_version": 1,
+          "violations": [],
+          "waiting_car_count": 0
+        },
+        "people": {
+          "assignment_revision": 16,
+          "blocked_by_reason": {
+
+          },
+          "counts_by_purpose": {
+            "work": 2
+          },
+          "counts_by_state": {
+            "at_destination": 2
+          },
+          "proxy_cap": 512,
+          "residents": [
+            {
+              "authoritative_destination": {
+                "x": 3,
+                "z": 0
+              },
+              "authoritative_purpose": "work",
+              "blocked_reason": "",
+              "current_place": {
+                "x": 3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "walk",
+              "plan_key": "c6dfbca105b8d310c941d8d0ee7cf659ab0d7af9833739582babfa5098723844",
+              "resident_id": 101,
+              "route_distance": 4,
+              "route_revision": 8,
+              "state": "at_destination",
+              "visible_destination": {
+                "x": 3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            },
+            {
+              "authoritative_destination": {
+                "x": 3,
+                "z": 0
+              },
+              "authoritative_purpose": "work",
+              "blocked_reason": "",
+              "current_place": {
+                "x": 3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "walk",
+              "plan_key": "3e710c4bef475b5c42c53e4fe47bc8ef8b06b665ca9d28ae3c7aa4de3ce29659",
+              "resident_id": 102,
+              "route_distance": 4,
+              "route_revision": 8,
+              "state": "at_destination",
+              "visible_destination": {
+                "x": 3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            }
+          ],
+          "road_revision": 8,
+          "schema_version": 1,
+          "simulated_resident_count": 2,
+          "violations": [],
+          "visible_count": 2
+        },
+        "violations": []
+      }
+    },
+    {
+      "absolute_hour": 9,
+      "checkpoint": "hour_09",
+      "civilian_simulation": {
+        "cars": {
+          "active_car_count": 0,
+          "journeys": [],
+          "schema_version": 1,
+          "violations": [],
+          "waiting_car_count": 0
+        },
+        "people": {
+          "assignment_revision": 17,
+          "blocked_by_reason": {
+
+          },
+          "counts_by_purpose": {
+            "work": 2
+          },
+          "counts_by_state": {
+            "at_destination": 2
+          },
+          "proxy_cap": 512,
+          "residents": [
+            {
+              "authoritative_destination": {
+                "x": 3,
+                "z": 0
+              },
+              "authoritative_purpose": "work",
+              "blocked_reason": "",
+              "current_place": {
+                "x": 3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "walk",
+              "plan_key": "c6dfbca105b8d310c941d8d0ee7cf659ab0d7af9833739582babfa5098723844",
+              "resident_id": 101,
+              "route_distance": 4,
+              "route_revision": 8,
+              "state": "at_destination",
+              "visible_destination": {
+                "x": 3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            },
+            {
+              "authoritative_destination": {
+                "x": 3,
+                "z": 0
+              },
+              "authoritative_purpose": "work",
+              "blocked_reason": "",
+              "current_place": {
+                "x": 3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "walk",
+              "plan_key": "3e710c4bef475b5c42c53e4fe47bc8ef8b06b665ca9d28ae3c7aa4de3ce29659",
+              "resident_id": 102,
+              "route_distance": 4,
+              "route_revision": 8,
+              "state": "at_destination",
+              "visible_destination": {
+                "x": 3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            }
+          ],
+          "road_revision": 8,
+          "schema_version": 1,
+          "simulated_resident_count": 2,
+          "violations": [],
+          "visible_count": 2
+        },
+        "violations": []
+      }
+    },
+    {
+      "absolute_hour": 10,
+      "checkpoint": "hour_10",
+      "civilian_simulation": {
+        "cars": {
+          "active_car_count": 0,
+          "journeys": [],
+          "schema_version": 1,
+          "violations": [],
+          "waiting_car_count": 0
+        },
+        "people": {
+          "assignment_revision": 18,
+          "blocked_by_reason": {
+
+          },
+          "counts_by_purpose": {
+            "work": 2
+          },
+          "counts_by_state": {
+            "at_destination": 2
+          },
+          "proxy_cap": 512,
+          "residents": [
+            {
+              "authoritative_destination": {
+                "x": 3,
+                "z": 0
+              },
+              "authoritative_purpose": "work",
+              "blocked_reason": "",
+              "current_place": {
+                "x": 3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "walk",
+              "plan_key": "c6dfbca105b8d310c941d8d0ee7cf659ab0d7af9833739582babfa5098723844",
+              "resident_id": 101,
+              "route_distance": 4,
+              "route_revision": 8,
+              "state": "at_destination",
+              "visible_destination": {
+                "x": 3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            },
+            {
+              "authoritative_destination": {
+                "x": 3,
+                "z": 0
+              },
+              "authoritative_purpose": "work",
+              "blocked_reason": "",
+              "current_place": {
+                "x": 3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "walk",
+              "plan_key": "3e710c4bef475b5c42c53e4fe47bc8ef8b06b665ca9d28ae3c7aa4de3ce29659",
+              "resident_id": 102,
+              "route_distance": 4,
+              "route_revision": 8,
+              "state": "at_destination",
+              "visible_destination": {
+                "x": 3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            }
+          ],
+          "road_revision": 8,
+          "schema_version": 1,
+          "simulated_resident_count": 2,
+          "violations": [],
+          "visible_count": 2
+        },
+        "violations": []
+      }
+    },
+    {
+      "absolute_hour": 11,
+      "checkpoint": "hour_11",
+      "civilian_simulation": {
+        "cars": {
+          "active_car_count": 0,
+          "journeys": [],
+          "schema_version": 1,
+          "violations": [],
+          "waiting_car_count": 0
+        },
+        "people": {
+          "assignment_revision": 19,
+          "blocked_by_reason": {
+
+          },
+          "counts_by_purpose": {
+            "work": 2
+          },
+          "counts_by_state": {
+            "at_destination": 2
+          },
+          "proxy_cap": 512,
+          "residents": [
+            {
+              "authoritative_destination": {
+                "x": 3,
+                "z": 0
+              },
+              "authoritative_purpose": "work",
+              "blocked_reason": "",
+              "current_place": {
+                "x": 3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "walk",
+              "plan_key": "c6dfbca105b8d310c941d8d0ee7cf659ab0d7af9833739582babfa5098723844",
+              "resident_id": 101,
+              "route_distance": 4,
+              "route_revision": 8,
+              "state": "at_destination",
+              "visible_destination": {
+                "x": 3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            },
+            {
+              "authoritative_destination": {
+                "x": 3,
+                "z": 0
+              },
+              "authoritative_purpose": "work",
+              "blocked_reason": "",
+              "current_place": {
+                "x": 3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "walk",
+              "plan_key": "3e710c4bef475b5c42c53e4fe47bc8ef8b06b665ca9d28ae3c7aa4de3ce29659",
+              "resident_id": 102,
+              "route_distance": 4,
+              "route_revision": 8,
+              "state": "at_destination",
+              "visible_destination": {
+                "x": 3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            }
+          ],
+          "road_revision": 8,
+          "schema_version": 1,
+          "simulated_resident_count": 2,
+          "violations": [],
+          "visible_count": 2
+        },
+        "violations": []
+      }
+    },
+    {
+      "absolute_hour": 12,
+      "checkpoint": "hour_12",
+      "civilian_simulation": {
+        "cars": {
+          "active_car_count": 0,
+          "journeys": [],
+          "schema_version": 1,
+          "violations": [],
+          "waiting_car_count": 0
+        },
+        "people": {
+          "assignment_revision": 20,
+          "blocked_by_reason": {
+
+          },
+          "counts_by_purpose": {
+            "home": 2
+          },
+          "counts_by_state": {
+            "at_home": 2
+          },
+          "proxy_cap": 512,
+          "residents": [
+            {
+              "authoritative_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "authoritative_purpose": "home",
+              "blocked_reason": "",
+              "current_place": {
+                "x": -3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "walk",
+              "plan_key": "b67a6a694fc5a884bc4520b7ab6e53d8d0429f8326a58b01354892f55c8a42dc",
+              "resident_id": 101,
+              "route_distance": 4,
+              "route_revision": 8,
+              "state": "at_home",
+              "visible_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            },
+            {
+              "authoritative_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "authoritative_purpose": "home",
+              "blocked_reason": "",
+              "current_place": {
+                "x": -3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "walk",
+              "plan_key": "5f68bd93fff1c2fd9e76f5d77775bbfe254d0634711f78ffa9bf686c732c2600",
+              "resident_id": 102,
+              "route_distance": 4,
+              "route_revision": 8,
+              "state": "at_home",
+              "visible_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            }
+          ],
+          "road_revision": 8,
+          "schema_version": 1,
+          "simulated_resident_count": 2,
+          "violations": [],
+          "visible_count": 2
+        },
+        "violations": []
+      }
+    },
+    {
+      "absolute_hour": 13,
+      "checkpoint": "hour_13",
+      "civilian_simulation": {
+        "cars": {
+          "active_car_count": 0,
+          "journeys": [],
+          "schema_version": 1,
+          "violations": [],
+          "waiting_car_count": 0
+        },
+        "people": {
+          "assignment_revision": 21,
+          "blocked_by_reason": {
+
+          },
+          "counts_by_purpose": {
+            "home": 2
+          },
+          "counts_by_state": {
+            "at_home": 2
+          },
+          "proxy_cap": 512,
+          "residents": [
+            {
+              "authoritative_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "authoritative_purpose": "home",
+              "blocked_reason": "",
+              "current_place": {
+                "x": -3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "walk",
+              "plan_key": "b67a6a694fc5a884bc4520b7ab6e53d8d0429f8326a58b01354892f55c8a42dc",
+              "resident_id": 101,
+              "route_distance": 4,
+              "route_revision": 8,
+              "state": "at_home",
+              "visible_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            },
+            {
+              "authoritative_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "authoritative_purpose": "home",
+              "blocked_reason": "",
+              "current_place": {
+                "x": -3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "walk",
+              "plan_key": "5f68bd93fff1c2fd9e76f5d77775bbfe254d0634711f78ffa9bf686c732c2600",
+              "resident_id": 102,
+              "route_distance": 4,
+              "route_revision": 8,
+              "state": "at_home",
+              "visible_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            }
+          ],
+          "road_revision": 8,
+          "schema_version": 1,
+          "simulated_resident_count": 2,
+          "violations": [],
+          "visible_count": 2
+        },
+        "violations": []
+      }
+    },
+    {
+      "absolute_hour": 14,
+      "checkpoint": "hour_14",
+      "civilian_simulation": {
+        "cars": {
+          "active_car_count": 0,
+          "journeys": [],
+          "schema_version": 1,
+          "violations": [],
+          "waiting_car_count": 0
+        },
+        "people": {
+          "assignment_revision": 22,
+          "blocked_by_reason": {
+
+          },
+          "counts_by_purpose": {
+            "home": 2
+          },
+          "counts_by_state": {
+            "at_home": 2
+          },
+          "proxy_cap": 512,
+          "residents": [
+            {
+              "authoritative_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "authoritative_purpose": "home",
+              "blocked_reason": "",
+              "current_place": {
+                "x": -3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "walk",
+              "plan_key": "b67a6a694fc5a884bc4520b7ab6e53d8d0429f8326a58b01354892f55c8a42dc",
+              "resident_id": 101,
+              "route_distance": 4,
+              "route_revision": 8,
+              "state": "at_home",
+              "visible_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            },
+            {
+              "authoritative_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "authoritative_purpose": "home",
+              "blocked_reason": "",
+              "current_place": {
+                "x": -3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "walk",
+              "plan_key": "5f68bd93fff1c2fd9e76f5d77775bbfe254d0634711f78ffa9bf686c732c2600",
+              "resident_id": 102,
+              "route_distance": 4,
+              "route_revision": 8,
+              "state": "at_home",
+              "visible_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            }
+          ],
+          "road_revision": 8,
+          "schema_version": 1,
+          "simulated_resident_count": 2,
+          "violations": [],
+          "visible_count": 2
+        },
+        "violations": []
+      }
+    },
+    {
+      "absolute_hour": 15,
+      "checkpoint": "hour_15",
+      "civilian_simulation": {
+        "cars": {
+          "active_car_count": 0,
+          "journeys": [],
+          "schema_version": 1,
+          "violations": [],
+          "waiting_car_count": 0
+        },
+        "people": {
+          "assignment_revision": 23,
+          "blocked_by_reason": {
+
+          },
+          "counts_by_purpose": {
+            "home": 2
+          },
+          "counts_by_state": {
+            "at_home": 2
+          },
+          "proxy_cap": 512,
+          "residents": [
+            {
+              "authoritative_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "authoritative_purpose": "home",
+              "blocked_reason": "",
+              "current_place": {
+                "x": -3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "walk",
+              "plan_key": "b67a6a694fc5a884bc4520b7ab6e53d8d0429f8326a58b01354892f55c8a42dc",
+              "resident_id": 101,
+              "route_distance": 4,
+              "route_revision": 8,
+              "state": "at_home",
+              "visible_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            },
+            {
+              "authoritative_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "authoritative_purpose": "home",
+              "blocked_reason": "",
+              "current_place": {
+                "x": -3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "walk",
+              "plan_key": "5f68bd93fff1c2fd9e76f5d77775bbfe254d0634711f78ffa9bf686c732c2600",
+              "resident_id": 102,
+              "route_distance": 4,
+              "route_revision": 8,
+              "state": "at_home",
+              "visible_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            }
+          ],
+          "road_revision": 8,
+          "schema_version": 1,
+          "simulated_resident_count": 2,
+          "violations": [],
+          "visible_count": 2
+        },
+        "violations": []
+      }
+    },
+    {
+      "absolute_hour": 16,
+      "checkpoint": "hour_16",
+      "civilian_simulation": {
+        "cars": {
+          "active_car_count": 0,
+          "journeys": [],
+          "schema_version": 1,
+          "violations": [],
+          "waiting_car_count": 0
+        },
+        "people": {
+          "assignment_revision": 24,
+          "blocked_by_reason": {
+
+          },
+          "counts_by_purpose": {
+            "home": 2
+          },
+          "counts_by_state": {
+            "at_home": 2
+          },
+          "proxy_cap": 512,
+          "residents": [
+            {
+              "authoritative_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "authoritative_purpose": "home",
+              "blocked_reason": "",
+              "current_place": {
+                "x": -3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "walk",
+              "plan_key": "b67a6a694fc5a884bc4520b7ab6e53d8d0429f8326a58b01354892f55c8a42dc",
+              "resident_id": 101,
+              "route_distance": 4,
+              "route_revision": 8,
+              "state": "at_home",
+              "visible_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            },
+            {
+              "authoritative_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "authoritative_purpose": "home",
+              "blocked_reason": "",
+              "current_place": {
+                "x": -3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "walk",
+              "plan_key": "5f68bd93fff1c2fd9e76f5d77775bbfe254d0634711f78ffa9bf686c732c2600",
+              "resident_id": 102,
+              "route_distance": 4,
+              "route_revision": 8,
+              "state": "at_home",
+              "visible_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            }
+          ],
+          "road_revision": 8,
+          "schema_version": 1,
+          "simulated_resident_count": 2,
+          "violations": [],
+          "visible_count": 2
+        },
+        "violations": []
+      }
+    },
+    {
+      "absolute_hour": 17,
+      "checkpoint": "hour_17",
+      "civilian_simulation": {
+        "cars": {
+          "active_car_count": 0,
+          "journeys": [],
+          "schema_version": 1,
+          "violations": [],
+          "waiting_car_count": 0
+        },
+        "people": {
+          "assignment_revision": 25,
+          "blocked_by_reason": {
+
+          },
+          "counts_by_purpose": {
+            "home": 2
+          },
+          "counts_by_state": {
+            "at_home": 2
+          },
+          "proxy_cap": 512,
+          "residents": [
+            {
+              "authoritative_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "authoritative_purpose": "home",
+              "blocked_reason": "",
+              "current_place": {
+                "x": -3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "walk",
+              "plan_key": "b67a6a694fc5a884bc4520b7ab6e53d8d0429f8326a58b01354892f55c8a42dc",
+              "resident_id": 101,
+              "route_distance": 4,
+              "route_revision": 8,
+              "state": "at_home",
+              "visible_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            },
+            {
+              "authoritative_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "authoritative_purpose": "home",
+              "blocked_reason": "",
+              "current_place": {
+                "x": -3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "walk",
+              "plan_key": "5f68bd93fff1c2fd9e76f5d77775bbfe254d0634711f78ffa9bf686c732c2600",
+              "resident_id": 102,
+              "route_distance": 4,
+              "route_revision": 8,
+              "state": "at_home",
+              "visible_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            }
+          ],
+          "road_revision": 8,
+          "schema_version": 1,
+          "simulated_resident_count": 2,
+          "violations": [],
+          "visible_count": 2
+        },
+        "violations": []
+      }
+    },
+    {
+      "absolute_hour": 18,
+      "checkpoint": "hour_18",
+      "civilian_simulation": {
+        "cars": {
+          "active_car_count": 0,
+          "journeys": [],
+          "schema_version": 1,
+          "violations": [],
+          "waiting_car_count": 0
+        },
+        "people": {
+          "assignment_revision": 26,
+          "blocked_by_reason": {
+
+          },
+          "counts_by_purpose": {
+            "home": 2
+          },
+          "counts_by_state": {
+            "at_home": 2
+          },
+          "proxy_cap": 512,
+          "residents": [
+            {
+              "authoritative_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "authoritative_purpose": "home",
+              "blocked_reason": "",
+              "current_place": {
+                "x": -3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "walk",
+              "plan_key": "b67a6a694fc5a884bc4520b7ab6e53d8d0429f8326a58b01354892f55c8a42dc",
+              "resident_id": 101,
+              "route_distance": 4,
+              "route_revision": 8,
+              "state": "at_home",
+              "visible_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            },
+            {
+              "authoritative_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "authoritative_purpose": "home",
+              "blocked_reason": "",
+              "current_place": {
+                "x": -3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "walk",
+              "plan_key": "5f68bd93fff1c2fd9e76f5d77775bbfe254d0634711f78ffa9bf686c732c2600",
+              "resident_id": 102,
+              "route_distance": 4,
+              "route_revision": 8,
+              "state": "at_home",
+              "visible_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            }
+          ],
+          "road_revision": 8,
+          "schema_version": 1,
+          "simulated_resident_count": 2,
+          "violations": [],
+          "visible_count": 2
+        },
+        "violations": []
+      }
+    },
+    {
+      "absolute_hour": 19,
+      "checkpoint": "hour_19",
+      "civilian_simulation": {
+        "cars": {
+          "active_car_count": 0,
+          "journeys": [],
+          "schema_version": 1,
+          "violations": [],
+          "waiting_car_count": 0
+        },
+        "people": {
+          "assignment_revision": 27,
+          "blocked_by_reason": {
+
+          },
+          "counts_by_purpose": {
+            "home": 2
+          },
+          "counts_by_state": {
+            "at_home": 2
+          },
+          "proxy_cap": 512,
+          "residents": [
+            {
+              "authoritative_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "authoritative_purpose": "home",
+              "blocked_reason": "",
+              "current_place": {
+                "x": -3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "walk",
+              "plan_key": "b67a6a694fc5a884bc4520b7ab6e53d8d0429f8326a58b01354892f55c8a42dc",
+              "resident_id": 101,
+              "route_distance": 4,
+              "route_revision": 8,
+              "state": "at_home",
+              "visible_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            },
+            {
+              "authoritative_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "authoritative_purpose": "home",
+              "blocked_reason": "",
+              "current_place": {
+                "x": -3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "walk",
+              "plan_key": "5f68bd93fff1c2fd9e76f5d77775bbfe254d0634711f78ffa9bf686c732c2600",
+              "resident_id": 102,
+              "route_distance": 4,
+              "route_revision": 8,
+              "state": "at_home",
+              "visible_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            }
+          ],
+          "road_revision": 8,
+          "schema_version": 1,
+          "simulated_resident_count": 2,
+          "violations": [],
+          "visible_count": 2
+        },
+        "violations": []
+      }
+    },
+    {
+      "absolute_hour": 20,
+      "checkpoint": "hour_20",
+      "civilian_simulation": {
+        "cars": {
+          "active_car_count": 0,
+          "journeys": [],
+          "schema_version": 1,
+          "violations": [],
+          "waiting_car_count": 0
+        },
+        "people": {
+          "assignment_revision": 28,
+          "blocked_by_reason": {
+
+          },
+          "counts_by_purpose": {
+            "home": 2
+          },
+          "counts_by_state": {
+            "at_home": 2
+          },
+          "proxy_cap": 512,
+          "residents": [
+            {
+              "authoritative_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "authoritative_purpose": "home",
+              "blocked_reason": "",
+              "current_place": {
+                "x": -3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "walk",
+              "plan_key": "b67a6a694fc5a884bc4520b7ab6e53d8d0429f8326a58b01354892f55c8a42dc",
+              "resident_id": 101,
+              "route_distance": 4,
+              "route_revision": 8,
+              "state": "at_home",
+              "visible_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            },
+            {
+              "authoritative_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "authoritative_purpose": "home",
+              "blocked_reason": "",
+              "current_place": {
+                "x": -3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "walk",
+              "plan_key": "5f68bd93fff1c2fd9e76f5d77775bbfe254d0634711f78ffa9bf686c732c2600",
+              "resident_id": 102,
+              "route_distance": 4,
+              "route_revision": 8,
+              "state": "at_home",
+              "visible_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            }
+          ],
+          "road_revision": 8,
+          "schema_version": 1,
+          "simulated_resident_count": 2,
+          "violations": [],
+          "visible_count": 2
+        },
+        "violations": []
+      }
+    },
+    {
+      "absolute_hour": 21,
+      "checkpoint": "hour_21",
+      "civilian_simulation": {
+        "cars": {
+          "active_car_count": 0,
+          "journeys": [],
+          "schema_version": 1,
+          "violations": [],
+          "waiting_car_count": 0
+        },
+        "people": {
+          "assignment_revision": 29,
+          "blocked_by_reason": {
+
+          },
+          "counts_by_purpose": {
+            "home": 2
+          },
+          "counts_by_state": {
+            "at_home": 2
+          },
+          "proxy_cap": 512,
+          "residents": [
+            {
+              "authoritative_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "authoritative_purpose": "home",
+              "blocked_reason": "",
+              "current_place": {
+                "x": -3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "walk",
+              "plan_key": "b67a6a694fc5a884bc4520b7ab6e53d8d0429f8326a58b01354892f55c8a42dc",
+              "resident_id": 101,
+              "route_distance": 4,
+              "route_revision": 8,
+              "state": "at_home",
+              "visible_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            },
+            {
+              "authoritative_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "authoritative_purpose": "home",
+              "blocked_reason": "",
+              "current_place": {
+                "x": -3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "walk",
+              "plan_key": "5f68bd93fff1c2fd9e76f5d77775bbfe254d0634711f78ffa9bf686c732c2600",
+              "resident_id": 102,
+              "route_distance": 4,
+              "route_revision": 8,
+              "state": "at_home",
+              "visible_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            }
+          ],
+          "road_revision": 8,
+          "schema_version": 1,
+          "simulated_resident_count": 2,
+          "violations": [],
+          "visible_count": 2
+        },
+        "violations": []
+      }
+    },
+    {
+      "absolute_hour": 22,
+      "checkpoint": "hour_22",
+      "civilian_simulation": {
+        "cars": {
+          "active_car_count": 0,
+          "journeys": [],
+          "schema_version": 1,
+          "violations": [],
+          "waiting_car_count": 0
+        },
+        "people": {
+          "assignment_revision": 30,
+          "blocked_by_reason": {
+
+          },
+          "counts_by_purpose": {
+            "home": 2
+          },
+          "counts_by_state": {
+            "at_home": 2
+          },
+          "proxy_cap": 512,
+          "residents": [
+            {
+              "authoritative_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "authoritative_purpose": "home",
+              "blocked_reason": "",
+              "current_place": {
+                "x": -3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "walk",
+              "plan_key": "b67a6a694fc5a884bc4520b7ab6e53d8d0429f8326a58b01354892f55c8a42dc",
+              "resident_id": 101,
+              "route_distance": 4,
+              "route_revision": 8,
+              "state": "at_home",
+              "visible_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            },
+            {
+              "authoritative_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "authoritative_purpose": "home",
+              "blocked_reason": "",
+              "current_place": {
+                "x": -3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "walk",
+              "plan_key": "5f68bd93fff1c2fd9e76f5d77775bbfe254d0634711f78ffa9bf686c732c2600",
+              "resident_id": 102,
+              "route_distance": 4,
+              "route_revision": 8,
+              "state": "at_home",
+              "visible_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            }
+          ],
+          "road_revision": 8,
+          "schema_version": 1,
+          "simulated_resident_count": 2,
+          "violations": [],
+          "visible_count": 2
+        },
+        "violations": []
+      }
+    },
+    {
+      "absolute_hour": 23,
+      "checkpoint": "hour_23",
+      "civilian_simulation": {
+        "cars": {
+          "active_car_count": 0,
+          "journeys": [],
+          "schema_version": 1,
+          "violations": [],
+          "waiting_car_count": 0
+        },
+        "people": {
+          "assignment_revision": 31,
+          "blocked_by_reason": {
+
+          },
+          "counts_by_purpose": {
+            "home": 2
+          },
+          "counts_by_state": {
+            "at_home": 2
+          },
+          "proxy_cap": 512,
+          "residents": [
+            {
+              "authoritative_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "authoritative_purpose": "home",
+              "blocked_reason": "",
+              "current_place": {
+                "x": -3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "walk",
+              "plan_key": "b67a6a694fc5a884bc4520b7ab6e53d8d0429f8326a58b01354892f55c8a42dc",
+              "resident_id": 101,
+              "route_distance": 4,
+              "route_revision": 8,
+              "state": "at_home",
+              "visible_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            },
+            {
+              "authoritative_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "authoritative_purpose": "home",
+              "blocked_reason": "",
+              "current_place": {
+                "x": -3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "walk",
+              "plan_key": "5f68bd93fff1c2fd9e76f5d77775bbfe254d0634711f78ffa9bf686c732c2600",
+              "resident_id": 102,
+              "route_distance": 4,
+              "route_revision": 8,
+              "state": "at_home",
+              "visible_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            }
+          ],
+          "road_revision": 8,
+          "schema_version": 1,
+          "simulated_resident_count": 2,
+          "violations": [],
+          "visible_count": 2
+        },
+        "violations": []
+      }
+    },
+    {
+      "absolute_hour": 24,
+      "checkpoint": "hour_24",
+      "civilian_simulation": {
+        "cars": {
+          "active_car_count": 0,
+          "journeys": [],
+          "schema_version": 1,
+          "violations": [],
+          "waiting_car_count": 0
+        },
+        "people": {
+          "assignment_revision": 32,
+          "blocked_by_reason": {
+
+          },
+          "counts_by_purpose": {
+            "home": 2
+          },
+          "counts_by_state": {
+            "at_home": 2
+          },
+          "proxy_cap": 512,
+          "residents": [
+            {
+              "authoritative_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "authoritative_purpose": "home",
+              "blocked_reason": "",
+              "current_place": {
+                "x": -3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "walk",
+              "plan_key": "b67a6a694fc5a884bc4520b7ab6e53d8d0429f8326a58b01354892f55c8a42dc",
+              "resident_id": 101,
+              "route_distance": 4,
+              "route_revision": 8,
+              "state": "at_home",
+              "visible_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            },
+            {
+              "authoritative_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "authoritative_purpose": "home",
+              "blocked_reason": "",
+              "current_place": {
+                "x": -3,
+                "z": 0
+              },
+              "home_anchor": {
+                "x": -3,
+                "z": 0
+              },
+              "journey_id": null,
+              "mode": "walk",
+              "plan_key": "5f68bd93fff1c2fd9e76f5d77775bbfe254d0634711f78ffa9bf686c732c2600",
+              "resident_id": 102,
+              "route_distance": 4,
+              "route_revision": 8,
+              "state": "at_home",
+              "visible_destination": {
+                "x": -3,
+                "z": 0
+              },
+              "waiting": false,
+              "waypoint_cells": []
+            }
+          ],
+          "road_revision": 8,
+          "schema_version": 1,
+          "simulated_resident_count": 2,
+          "violations": [],
+          "visible_count": 2
+        },
+        "violations": []
+      }
+    }
+  ],
+  "deterministic": true,
+  "failures": [],
+  "fault_detection": {
+    "duplicate_resident_binding": true,
+    "intent_destination_mismatch": true,
+    "invalid_waypoint_cell": true,
+    "missing_car_binding": true,
+    "stale_route_revision": true,
+    "unexpected_car_cancellation": true,
+    "unexpected_proxy_reset": true,
+    "unreachable_journey_started": true
+  },
+  "repeat_count": 10,
+  "scenario_id": "civilian_simulation/connected_day",
+  "schema_version": 1,
+  "seed": 8008,
+  "success": true,
+  "trace_hashes": [
+    "95775768d2206c8c3d166ce449f4f9dcee2235cfbe63eb1f8ea0d1bd2dc76c1b",
+    "95775768d2206c8c3d166ce449f4f9dcee2235cfbe63eb1f8ea0d1bd2dc76c1b",
+    "95775768d2206c8c3d166ce449f4f9dcee2235cfbe63eb1f8ea0d1bd2dc76c1b",
+    "95775768d2206c8c3d166ce449f4f9dcee2235cfbe63eb1f8ea0d1bd2dc76c1b",
+    "95775768d2206c8c3d166ce449f4f9dcee2235cfbe63eb1f8ea0d1bd2dc76c1b",
+    "95775768d2206c8c3d166ce449f4f9dcee2235cfbe63eb1f8ea0d1bd2dc76c1b",
+    "95775768d2206c8c3d166ce449f4f9dcee2235cfbe63eb1f8ea0d1bd2dc76c1b",
+    "95775768d2206c8c3d166ce449f4f9dcee2235cfbe63eb1f8ea0d1bd2dc76c1b",
+    "95775768d2206c8c3d166ce449f4f9dcee2235cfbe63eb1f8ea0d1bd2dc76c1b",
+    "95775768d2206c8c3d166ce449f4f9dcee2235cfbe63eb1f8ea0d1bd2dc76c1b"
+  ]
+}

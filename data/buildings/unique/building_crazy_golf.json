@@ -2,12 +2,12 @@
   "building_id": "building_crazy_golf",
   "display_name": "Crazy Golf",
   "description": "",
-  "model_path": "res://models/Meshy_AI_Duck_Pond_in_the_Hedg_0403173405/Meshy_AI_Duck_Pond_in_the_Hedg_0403173405_texture.glb",
-  "model_scale": 1.0,
+  "model_path": "res://models/city-builder/building_crazy_golf.glb",
+  "model_scale": 0.500029506,
   "model_offset": [
+    2.44840526e-05,
     0,
-    0,
-    0
+    2.19954118e-05
   ],
   "model_rotation_y": 0.0,
   "footprint": [
@@ -17,9 +17,31 @@
     ]
   ],
   "category": "unique",
+  "community_role": "participant",
   "profiles": [
     {
       "type": "BuildingMetadata"
+    },
+    {
+      "type": "BuildingProfile",
+      "category": "commercial",
+      "capacity": 20,
+      "active_start": 10.0,
+      "active_end": 20.0
+    },
+    {
+      "type": "CommunityEffectProfile",
+      "effects": [{
+        "effect_id": "crazy_golf_round",
+        "quality": "beauty",
+        "manifestation": "freedom",
+        "amount": 0.5,
+        "scope": "participant",
+        "capacity": 20,
+        "schedule": {"start": 10, "end": 20},
+        "stacking_group": "local_leisure_visit",
+        "reason": "Played a round of crazy golf"
+      }]
     },
     {
       "type": "UniqueProfile",

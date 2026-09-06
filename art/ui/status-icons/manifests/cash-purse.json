@@ -1,0 +1,27 @@
+{
+  "slug": "cash-purse",
+  "role": "semantic-icon",
+  "source_path": "masters/cash-purse.png",
+  "source_dimensions": [
+    1254,
+    1254
+  ],
+  "runtime_path": "game/cash-purse.png",
+  "runtime_dimensions": [
+    128,
+    128
+  ],
+  "display_size_range": [
+    20,
+    28
+  ],
+  "format": "PNG",
+  "colour_mode": "RGBA",
+  "resampling": "Lanczos",
+  "proof_sizes": [
+    16,
+    20,
+    24,
+    28
+  ]
+}

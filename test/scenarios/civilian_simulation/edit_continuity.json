@@ -1,0 +1,35 @@
+{
+  "schema_version": 2,
+  "scenario_id": "civilian_edit_continuity",
+  "seed": 8010,
+  "description": "Two resident routes for unrelated-placement and targeted-removal continuity checks.",
+  "initial_state": {
+    "map": "empty",
+    "cash": 20000,
+    "demand": {"residential": 50, "industrial": 50, "commercial": 50},
+    "clock": {"mode": "manual", "start_hour": 7},
+    "narrative": {"mode": "presentation_disabled"}
+  },
+  "fixture": {
+    "residents": [
+      {"resident_id": 201, "seed": 8201, "cohort_id": "general", "home_anchor": {"x": 0, "z": -1}},
+      {"resident_id": 202, "seed": 8202, "cohort_id": "general", "home_anchor": {"x": 0, "z": 1}}
+    ]
+  },
+  "civilian_layout": {
+    "placements": [
+      {"building_id": "building_small_a", "x": 0, "z": -1},
+      {"building_id": "building_small_c", "x": 0, "z": 1},
+      {"building_id": "road_straight", "x": 1, "z": -1},
+      {"building_id": "road_straight", "x": 2, "z": -1},
+      {"building_id": "road_straight", "x": 3, "z": -1},
+      {"building_id": "road_straight", "x": 1, "z": 1},
+      {"building_id": "road_straight", "x": 2, "z": 1},
+      {"building_id": "road_straight", "x": 3, "z": 1},
+      {"building_id": "building_garage", "x": 4, "z": -1},
+      {"building_id": "building_lumber_mill", "x": 4, "z": 1}
+    ],
+    "unrelated_edit": {"building_id": "grass", "x": -3, "z": 3},
+    "dependent_road_removal": {"x": 2, "z": -1}
+  }
+}

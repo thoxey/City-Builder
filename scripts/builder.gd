@@ -26,9 +26,10 @@ var map: DataMap
 
 var _preview_idx: int = -1       # Structure index the cursor currently previews
 var _rotation_steps: int = 0     # 0–3, incremented by action_rotate()
-var _preview_indicators: Array[Sprite3D] = []
 var _last_preview_anchor := Vector2i(-99999, -99999)
 var _placement_overlay: MeshInstance3D
+var _suppress_replacement_anchor := Vector2i(-99999, -99999)
+var _suppress_replacement_until_move := false
 
 # Road auto-tiling: precomputed at _ready()
 var _road_straight_idx: int = -1
@@ -226,8 +227,13 @@ func begin_placement_from_palette() -> bool:
 	_placement_active = true
 	_demolition_active = false
 	_placement_block_frame = Engine.get_process_frames()
+	_last_preview_anchor = Vector2i(-99999, -99999)
+	_suppress_replacement_until_move = false
 	if selector:
 		selector.visible = true
+		var cursor_sprite := selector.get_node_or_null("Sprite") as Sprite3D
+		if cursor_sprite:
+			cursor_sprite.visible = false
 	update_structure()
 	_emit_placement_context()
 	return true
@@ -247,7 +253,11 @@ func set_demolition_active(active: bool) -> void:
 	_demolition_active = active
 	if active:
 		cancel_placement()
-		if selector: selector.visible = true
+		if selector:
+			selector.visible = true
+			var cursor_sprite := selector.get_node_or_null("Sprite") as Sprite3D
+			if cursor_sprite:
+				cursor_sprite.visible = true
 	else:
 		if selector: selector.visible = false
 	_emit_placement_context()
@@ -323,7 +333,7 @@ func _setup_ground_gridmap() -> void:
 	var ml := MeshLibrary.new()
 	# Single item: the grass tile used for every blank cell on the map.
 	ml.create_item(GRASS_ITEM_ID)
-	var grass_packed := load("res://models/grass.glb") as PackedScene
+	var grass_packed := load("res://models/city-builder/grass.glb") as PackedScene
 	var grass_mesh: Mesh = get_mesh(grass_packed) if grass_packed else null
 	if grass_mesh:
 		var gy := -grass_mesh.get_aabb().position.y
@@ -419,6 +429,7 @@ func evaluate_placement(requested_id: String, anchor: Vector2i, rotation_steps: 
 		return resolved
 	var struct_idx: int = resolved["index"]
 	var structure: Structure = structures[struct_idx]
+	var is_road := _is_road_structure(struct_idx)
 	var fp_cells := _get_footprint_cells(anchor, struct_idx, rotation_steps)
 	var details := {
 		"choice_id": resolved["choice_id"],
@@ -442,7 +453,15 @@ func evaluate_placement(requested_id: String, anchor: Vector2i, rotation_steps: 
 		var bid: int = GameState.cell_to_building.get(cell, -1)
 		if bid >= 0 and bid not in occupied_bids:
 			occupied_bids.append(bid)
+
 	details["occupied_building_ids"] = occupied_bids
+	# Painting back over an existing road is a no-op, never a replacement.
+	if is_road and not occupied_bids.is_empty():
+		var overlaps_road := occupied_bids.any(func(bid: int):
+			var sid := int(GameState.building_registry.get(bid, {}).get("structure", -1))
+			return _is_road_structure(sid))
+		if overlaps_road:
+			return _reject_evaluation(PlaytestActionResult.OCCUPIED_FOOTPRINT, details)
 	for occupied_id: int in occupied_bids:
 		var occupied_sid := int(GameState.building_registry.get(occupied_id, {}).get("structure", -1))
 		if _catalog and String(_catalog.get_id_by_index(occupied_sid)) == "building_town_hall":
@@ -458,7 +477,6 @@ func evaluate_placement(requested_id: String, anchor: Vector2i, rotation_steps: 
 
 	if _road_network and _road_network.has_method("evaluate_rooted_placement"):
 		var summary: Dictionary = _catalog.get_summary_by_id(resolved["building_id"])
-		var is_road := _is_road_structure(struct_idx)
 		var requires_access := String(summary.get("community_role", "")) != "cosmetic_only" and not is_road
 		var rooted: Dictionary = _road_network.evaluate_rooted_placement(
 			resolved["building_id"], fp_cells, is_road, requires_access)
@@ -569,6 +587,8 @@ func action_build(gridmap_position):
 	var outcome := try_place_building(building_id, anchor, _rotation_steps, not occupied_bids.is_empty())
 	_show_placement_outcome(outcome)
 	if outcome["status"] == PlaytestActionResult.STATUS_APPLIED:
+		_suppress_replacement_anchor = anchor
+		_suppress_replacement_until_move = true
 		Audio.play("sounds/placement-a.ogg, sounds/placement-b.ogg, sounds/placement-c.ogg, sounds/placement-d.ogg", -20)
 
 func _on_overbuild_confirmed() -> void:
@@ -578,6 +598,8 @@ func _on_overbuild_confirmed() -> void:
 		_orientation_to_steps(_overbuild_orient), true)
 	_show_placement_outcome(outcome)
 	if outcome["status"] == PlaytestActionResult.STATUS_APPLIED:
+		_suppress_replacement_anchor = _overbuild_anchor
+		_suppress_replacement_until_move = true
 		Audio.play("sounds/placement-a.ogg, sounds/placement-b.ogg, sounds/placement-c.ogg, sounds/placement-d.ogg", -20)
 
 func _commit_build(anchor: Vector2i, struct_idx: int, orient: int, fp_cells: Array[Vector2i]) -> void:
@@ -754,8 +776,6 @@ func update_structure():
 	for n in selector_container.get_children():
 		selector_container.remove_child(n)
 		n.queue_free()
-	_preview_indicators.clear()
-
 	if _preview_idx < 0 or _preview_idx >= structures.size():
 		return
 
@@ -782,42 +802,38 @@ func update_structure():
 
 	_model.position = struct.model_offset + Vector3(fp_cx, ground_offset + 0.25, fp_cz)
 
-	for offset: Vector2i in fp:
-		var indicator := _make_cell_indicator()
-		indicator.position = Vector3(offset.x, 0.05, offset.y)
-		selector_container.add_child(indicator)
-		_preview_indicators.append(indicator)
-
-func _make_cell_indicator() -> Sprite3D:
-	var marker := Sprite3D.new()
-	marker.texture = load("res://sprites/ui/build-menu/map-feedback/affordable-placement-marker.png")
-	marker.pixel_size = 0.007
-	marker.rotation_degrees.x = -90.0
-	marker.no_depth_test = true
-	marker.render_priority = 2
-	return marker
-
 func _update_preview_color(anchor: Vector2i) -> void:
-	if _preview_indicators.is_empty() or _preview_idx < 0:
+	if _preview_idx < 0:
 		return
 	var fp_cells := _get_footprint_cells(anchor, _preview_idx, _rotation_steps)
 	var is_valid := true
 	var replacement := false
+	var occupied_bids: Array[int] = []
 	for cell in fp_cells:
-		if GameState.cell_to_building.has(cell):
+		var bid := int(GameState.cell_to_building.get(cell, -1))
+		if bid >= 0:
 			is_valid = false
-			replacement = true
-			break
+			if bid not in occupied_bids:
+				occupied_bids.append(bid)
 		# Outside the buildable-area mask → preview turns red so the player
 		# sees they can't place there before clicking.
 		if _land and not _land.is_allowed(cell):
 			is_valid = false
-			break
-	for ind in _preview_indicators:
-		ind.texture = load("res://sprites/ui/build-menu/map-feedback/%s.png" % (
-			"affordable-placement-marker" if is_valid else ("replacement-overbuild-marker" if replacement else "blocked-footprint-marker")))
-	_set_selector_feedback("valid-placement-cursor" if is_valid else "invalid-placement-cursor")
-	_refresh_placement_overlay(anchor)
+	replacement = not occupied_bids.is_empty() and _can_offer_replacement(_preview_idx, occupied_bids)
+	if _suppress_replacement_until_move and anchor != _suppress_replacement_anchor:
+		_suppress_replacement_until_move = false
+	var show_footprint := not (_suppress_replacement_until_move and anchor == _suppress_replacement_anchor)
+	_refresh_placement_overlay(anchor, fp_cells, is_valid, replacement, show_footprint)
+
+func _can_offer_replacement(structure_idx: int, occupied_bids: Array[int]) -> bool:
+	if occupied_bids.is_empty():
+		return false
+	if _is_road_structure(structure_idx):
+		for bid in occupied_bids:
+			var occupied_idx := int(GameState.building_registry.get(bid, {}).get("structure", -1))
+			if _is_road_structure(occupied_idx):
+				return false
+	return true
 
 func _setup_placement_overlay() -> void:
 	_placement_overlay = MeshInstance3D.new()
@@ -845,8 +861,9 @@ func _preview_effect_radii() -> Array[int]:
 	radii.sort()
 	return radii
 
-func _refresh_placement_overlay(anchor: Vector2i) -> void:
-	if _placement_overlay == null or _land == null:
+func _refresh_placement_overlay(anchor: Vector2i, footprint: Array[Vector2i], is_valid: bool,
+		replacement: bool, show_footprint: bool = true) -> void:
+	if _placement_overlay == null or footprint.is_empty():
 		return
 	var mesh := ImmediateMesh.new()
 	var material := StandardMaterial3D.new()
@@ -854,39 +871,95 @@ func _refresh_placement_overlay(anchor: Vector2i) -> void:
 	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	material.vertex_color_use_as_albedo = true
 	material.no_depth_test = true
+	material.cull_mode = BaseMaterial3D.CULL_DISABLED
+
+	var footprint_colour := Color(0.83, 0.65, 0.15, 0.10)
+	if replacement:
+		footprint_colour = Color(0.79, 0.45, 0.25, 0.12)
+	elif not is_valid:
+		footprint_colour = Color(0.66, 0.28, 0.25, 0.12)
+	if show_footprint:
+		mesh.surface_begin(Mesh.PRIMITIVE_TRIANGLES, material)
+		for cell in footprint:
+			_add_overlay_quad(mesh, cell, footprint_colour, 0.105)
+		mesh.surface_end()
+
 	mesh.surface_begin(Mesh.PRIMITIVE_LINES, material)
-	var allowed_lookup: Dictionary = {}
-	for cell_v in _land.allowed_cells():
-		allowed_lookup[cell_v] = true
-	var land_colour := Color(0.25, 0.9, 0.65, 0.78)
-	for cell_v in allowed_lookup.keys():
-		var cell: Vector2i = cell_v
-		var x := float(cell.x)
-		var z := float(cell.y)
-		if not allowed_lookup.has(cell + Vector2i(0, -1)):
-			_add_overlay_line(mesh, Vector3(x - 0.5, 0.11, z - 0.5), Vector3(x + 0.5, 0.11, z - 0.5), land_colour)
-		if not allowed_lookup.has(cell + Vector2i(1, 0)):
-			_add_overlay_line(mesh, Vector3(x + 0.5, 0.11, z - 0.5), Vector3(x + 0.5, 0.11, z + 0.5), land_colour)
-		if not allowed_lookup.has(cell + Vector2i(0, 1)):
-			_add_overlay_line(mesh, Vector3(x + 0.5, 0.11, z + 0.5), Vector3(x - 0.5, 0.11, z + 0.5), land_colour)
-		if not allowed_lookup.has(cell + Vector2i(-1, 0)):
-			_add_overlay_line(mesh, Vector3(x - 0.5, 0.11, z + 0.5), Vector3(x - 0.5, 0.11, z - 0.5), land_colour)
-	var radius_colours := [Color(0.95, 0.7, 0.18, 0.9), Color(0.95, 0.4, 0.22, 0.9), Color(0.72, 0.42, 0.92, 0.9)]
+	var footprint_lookup: Dictionary = {}
+	var min_x := footprint[0].x
+	var max_x := footprint[0].x
+	var min_z := footprint[0].y
+	var max_z := footprint[0].y
+	for cell in footprint:
+		footprint_lookup[cell] = true
+		min_x = mini(min_x, cell.x)
+		max_x = maxi(max_x, cell.x)
+		min_z = mini(min_z, cell.y)
+		max_z = maxi(max_z, cell.y)
+
+	# A small, local grid gives placement context without covering the map. Each
+	# segment fades as it gets farther from the exact footprint.
+	const GRID_REACH := 3
+	for x in range(min_x - GRID_REACH, max_x + GRID_REACH + 2):
+		for z in range(min_z - GRID_REACH, max_z + GRID_REACH + 1):
+			var distance := maxi(_axis_distance(x, min_x, max_x + 1), _axis_distance(z, min_z, max_z))
+			var alpha := lerpf(0.16, 0.025, clampf(float(distance) / float(GRID_REACH + 1), 0.0, 1.0))
+			_add_overlay_line(mesh, Vector3(x - 0.5, 0.115, z + 0.5), Vector3(x - 0.5, 0.115, z + 1.5), Color(0.09, 0.09, 0.075, alpha))
+	for z in range(min_z - GRID_REACH, max_z + GRID_REACH + 2):
+		for x in range(min_x - GRID_REACH, max_x + GRID_REACH + 1):
+			var distance := maxi(_axis_distance(z, min_z, max_z + 1), _axis_distance(x, min_x, max_x))
+			var alpha := lerpf(0.16, 0.025, clampf(float(distance) / float(GRID_REACH + 1), 0.0, 1.0))
+			_add_overlay_line(mesh, Vector3(x - 0.5, 0.115, z - 0.5), Vector3(x + 0.5, 0.115, z - 0.5), Color(0.09, 0.09, 0.075, alpha))
+
+	# Only the outside contour is drawn, so a 2x2 footprint reads as one exact
+	# 2x2 placement shape rather than four separate marker icons.
+	if show_footprint:
+		var edge_colour := footprint_colour
+		edge_colour.a = 0.48
+		for cell in footprint:
+			var x := float(cell.x)
+			var z := float(cell.y)
+			if not footprint_lookup.has(cell + Vector2i(0, -1)):
+				_add_overlay_line(mesh, Vector3(x - 0.5, 0.13, z - 0.5), Vector3(x + 0.5, 0.13, z - 0.5), edge_colour)
+			if not footprint_lookup.has(cell + Vector2i(1, 0)):
+				_add_overlay_line(mesh, Vector3(x + 0.5, 0.13, z - 0.5), Vector3(x + 0.5, 0.13, z + 0.5), edge_colour)
+			if not footprint_lookup.has(cell + Vector2i(0, 1)):
+				_add_overlay_line(mesh, Vector3(x + 0.5, 0.13, z + 0.5), Vector3(x - 0.5, 0.13, z + 0.5), edge_colour)
+			if not footprint_lookup.has(cell + Vector2i(-1, 0)):
+				_add_overlay_line(mesh, Vector3(x - 0.5, 0.13, z + 0.5), Vector3(x - 0.5, 0.13, z - 0.5), edge_colour)
+
+	var radius_colours := [Color(0.83, 0.65, 0.15, 0.32), Color(0.79, 0.45, 0.25, 0.28), Color(0.18, 0.51, 0.56, 0.28)]
 	var radii := _preview_effect_radii()
 	for index in radii.size():
-		var extent := float(radii[index]) + 0.5
-		var points := [
-			Vector3(anchor.x, 0.13, anchor.y - extent),
-			Vector3(anchor.x + extent, 0.13, anchor.y),
-			Vector3(anchor.x, 0.13, anchor.y + extent),
-			Vector3(anchor.x - extent, 0.13, anchor.y),
-		]
+		var radius := int(radii[index])
+		var left := float(min_x - radius) - 0.5
+		var right := float(max_x + radius) + 0.5
+		var top := float(min_z - radius) - 0.5
+		var bottom := float(max_z + radius) + 0.5
+		var points := [Vector3(left, 0.145, top), Vector3(right, 0.145, top),
+			Vector3(right, 0.145, bottom), Vector3(left, 0.145, bottom)]
 		var colour: Color = radius_colours[index % radius_colours.size()]
 		for point_index in points.size():
 			_add_overlay_line(mesh, points[point_index], points[(point_index + 1) % points.size()], colour)
 	mesh.surface_end()
 	_placement_overlay.mesh = mesh
 	_placement_overlay.visible = _input_mode == "placement"
+
+func _axis_distance(value: int, minimum: int, maximum: int) -> int:
+	if value < minimum:
+		return minimum - value
+	if value > maximum:
+		return value - maximum
+	return 0
+
+func _add_overlay_quad(mesh: ImmediateMesh, cell: Vector2i, colour: Color, height: float) -> void:
+	var a := Vector3(cell.x - 0.5, height, cell.y - 0.5)
+	var b := Vector3(cell.x + 0.5, height, cell.y - 0.5)
+	var c := Vector3(cell.x + 0.5, height, cell.y + 0.5)
+	var d := Vector3(cell.x - 0.5, height, cell.y + 0.5)
+	for point in [a, b, c, a, c, d]:
+		mesh.surface_set_color(colour)
+		mesh.surface_add_vertex(point)
 
 func _add_overlay_line(mesh: ImmediateMesh, start_point: Vector3, end_point: Vector3, colour: Color) -> void:
 	mesh.surface_set_color(colour)
@@ -921,10 +994,10 @@ func _show_placement_effect_feedback(anchor: Vector2i, struct_idx: int) -> void:
 		var amount := float(totals[quality])
 		if is_zero_approx(amount):
 			continue
-		var x_offset := (float(index) - float(qualities.size() - 1) * 0.5) * 0.72
-		var icon := _feedback_sprite("res://sprites/community_icons/game/%s.png" % quality, Vector3(x_offset - 0.13, 0.0, 0.0), 0.005)
+		var x_offset := (float(index) - float(qualities.size() - 1) * 0.5) * 1.25
+		var icon := _feedback_sprite("res://sprites/community_icons/game/%s.png" % quality, Vector3(x_offset - 0.20, 0.0, 0.0), 0.005)
 		var direction := "increasing" if amount > 0.0 else "decreasing"
-		var arrow := _feedback_sprite("res://sprites/community_icons/game/%s.png" % direction, Vector3(x_offset + 0.22, 0.0, 0.0), 0.0035)
+		var arrow := _feedback_sprite("res://sprites/community_icons/game/%s.png" % direction, Vector3(x_offset + 0.30, 0.0, 0.0), 0.0035)
 		feedback.add_child(icon)
 		feedback.add_child(arrow)
 	var tween := create_tween()

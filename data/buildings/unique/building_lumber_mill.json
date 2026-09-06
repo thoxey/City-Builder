@@ -2,12 +2,12 @@
   "building_id": "building_lumber_mill",
   "display_name": "Lumber Mill",
   "description": "",
-  "model_path": "res://models/Meshy_AI_Acme_Business_Park__0403170610/Meshy_AI_Acme_Business_Park__0403170610_texture.glb",
-  "model_scale": 0.85,
+  "model_path": "res://models/city-builder/building_lumber_mill.glb",
+  "model_scale": 0.525803316,
   "model_offset": [
+    0.000164050904,
     0,
-    0,
-    0
+    0.000120942294
   ],
   "model_rotation_y": 0.0,
   "footprint": [

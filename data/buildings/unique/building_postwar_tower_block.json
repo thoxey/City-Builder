@@ -2,12 +2,12 @@
   "building_id": "building_postwar_tower_block",
   "display_name": "Postwar Tower Block",
   "description": "",
-  "model_path": "res://models/building-small-c.glb",
-  "model_scale": 1.0,
+  "model_path": "res://models/city-builder/building_postwar_tower_block.glb",
+  "model_scale": 0.500077289,
   "model_offset": [
+    -4.97477648e-05,
     0,
-    0,
-    0
+    -3.35327953e-05
   ],
   "model_rotation_y": 0.0,
   "footprint": [

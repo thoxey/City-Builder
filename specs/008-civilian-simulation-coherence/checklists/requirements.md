@@ -37,9 +37,9 @@ are complete, testable, asset-bounded, and consistent with the project constitut
 ## Implementation evidence gates
 
 - [ ] CHK019 Freeze the pre-change connected/disconnected civilian diagnostic traces.
-- [ ] CHK020 Demonstrate that deliberately injected civilian contradictions fail the new diagnostics.
-- [ ] CHK021 Record ten byte-identical normalised same-seed civilian traces.
-- [ ] CHK022 Record 512-proxy performance with diagnostics disabled and on-demand projection cost separately.
-- [ ] CHK023 Record before/after Community and first-town traces for venue data changes.
+- [x] CHK020 Demonstrate that deliberately injected civilian contradictions fail the new diagnostics.
+- [x] CHK021 Record ten byte-identical normalised same-seed civilian traces.
+- [x] CHK022 Record 512-proxy performance with diagnostics disabled and on-demand projection cost separately.
+- [x] CHK023 Record before/after Community and first-town traces for venue data changes.
 - [ ] CHK024 Confirm through a normal-renderer full-day observation that no mass resets, invalid crossings, or assignment mismatches remain.
-- [ ] CHK025 Confirm the implementation diff adds or changes no runtime art/audio asset for this feature.
+- [x] CHK025 Confirm the implementation diff adds or changes no runtime art/audio asset for this feature.

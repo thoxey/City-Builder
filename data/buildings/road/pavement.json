@@ -2,12 +2,12 @@
   "building_id": "pavement",
   "display_name": "Pavement",
   "description": "",
-  "model_path": "res://models/pavement.glb",
-  "model_scale": 1.0,
+  "model_path": "res://models/city-builder/pavement.glb",
+  "model_scale": 0.500065246,
   "model_offset": [
+    -2.74217144e-06,
     0,
-    0,
-    0
+    1.59910324e-05
   ],
   "model_rotation_y": 0.0,
   "footprint": [

@@ -2,12 +2,12 @@
   "building_id": "building_small_a",
   "display_name": "Small Residence A",
   "description": "",
-  "model_path": "res://models/Meshy_AI_Sunlit_Redbrick_Cotta_0403171628/Meshy_AI_Sunlit_Redbrick_Cotta_0403171628_texture.glb",
-  "model_scale": 0.5,
+  "model_path": "res://models/city-builder/building_small_a.glb",
+  "model_scale": 0.529388743,
   "model_offset": [
+    0.00164480104,
     0,
-    -0.1,
-    0
+    0.000309403021
   ],
   "model_rotation_y": 0.0,
   "footprint": [

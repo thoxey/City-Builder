@@ -2,12 +2,12 @@
   "building_id": "grass_trees",
   "display_name": "Grass with Trees",
   "description": "",
-  "model_path": "res://models/grass-trees.glb",
-  "model_scale": 1.0,
+  "model_path": "res://models/city-builder/grass_trees.glb",
+  "model_scale": 0.512648837,
   "model_offset": [
+    1.30627977e-05,
     0,
-    0,
-    0
+    -0.00942328833
   ],
   "model_rotation_y": 0.0,
   "footprint": [

@@ -12,6 +12,7 @@
   "candidate_stream_limit": 4096,
   "resident_snapshot_limit": 500,
   "effect_snapshot_limit": 12,
+  "civilian_walk_route_threshold": 6,
   "sensitivity_min": 0.75,
   "sensitivity_max": 1.25,
   "town_hall_proximity": {

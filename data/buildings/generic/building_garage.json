@@ -2,12 +2,12 @@
   "building_id": "building_garage",
   "display_name": "Business Park (Garage)",
   "description": "",
-  "model_path": "res://models/Meshy_AI_Acme_Business_Park__0403170610/Meshy_AI_Acme_Business_Park__0403170610_texture.glb",
-  "model_scale": 0.4,
+  "model_path": "res://models/city-builder/building_garage.glb",
+  "model_scale": 0.500058002,
   "model_offset": [
+    -3.99993562e-05,
     0,
-    0,
-    0
+    -0.00020102508
   ],
   "model_rotation_y": 0.0,
   "footprint": [

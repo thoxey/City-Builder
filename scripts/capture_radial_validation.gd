@@ -9,11 +9,16 @@ func _capture_story() -> void:
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(OUTPUT))
 	root.size = Vector2i(1280, 720)
 	change_scene_to_file("res://scenes/main.tscn")
-	await _frames(12)
+	# Ground generation is intentionally spread over frames; wait until the map
+	# is stable so screenshots do not capture its unfinished diagonal frontier.
+	await _frames(48)
 	var plugin_manager := root.get_node("PluginManager")
 	var ui = plugin_manager.get_plugin("PlayerUI")
 	var dashboard = plugin_manager.get_plugin("Dashboard")
 	var builder := current_scene.find_child("Builder", true, false)
+	builder.map.rooted_town_rules = false
+	builder.cancel_placement()
+	ui._dock.show_idle()
 	dashboard.set_collapsed(true)
 	await _frames(3)
 	await _shot("01-clean-idle")
@@ -29,8 +34,13 @@ func _capture_story() -> void:
 	ui._radial._rebuild_actions()
 	await _shot("04-locked-item")
 	ui._radial.close_menu()
-	ui._request_entry("building_duck_pond")
+	ui._request_entry("building_town_hall")
+	Input.warp_mouse(root.size * 0.5)
+	await _frames(3)
+	builder.selector.position = Vector3.ZERO
+	builder._update_preview_color(Vector2i.ZERO)
 	await _shot("05-active-placement")
+	ui._request_entry("building_duck_pond")
 	builder._update_preview_color(Vector2i(-2, -1))
 	ui._dock.show_placement("building_duck_pond", "Footprint is occupied")
 	await _shot("06-blocked-placement")

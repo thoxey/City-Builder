@@ -16,6 +16,7 @@ var _residents: Dictionary = {} # resident_id -> CommunityResident
 var _migration := {"arrivals": 0, "departures": 0, "rejections": 0, "last_day": -1}
 var _latest_event: String = ""
 var _assignment_cache_key := ""
+var _assignment_revision: int = 0
 var _work_counts: Dictionary = {}
 var _activity_counts: Dictionary = {}
 var _assignment_records: Array = []
@@ -114,6 +115,7 @@ func _on_structure_demolished(position: Vector3i) -> void:
 
 func _on_hour(hour: float) -> void:
 	var hour_i := int(hour) % 24
+	_invalidate_assignments()
 	var sources := _source_records(hour_i)
 	_assign_residents(sources, hour_i)
 	for resident in _sorted_residents():
@@ -351,6 +353,7 @@ func _apply_cached_participants(sources: Array) -> void:
 			source["participants"].append(int(record["resident_id"]))
 
 func _invalidate_assignments() -> void:
+	_assignment_revision += 1
 	_assignment_cache_key = ""
 	_work_counts.clear()
 	_activity_counts.clear()
@@ -372,6 +375,64 @@ func get_fulfilled_activity(anchor: Vector2i, hour: int) -> int:
 
 func get_assignment_records() -> Array:
 	return _assignment_records.duplicate(true)
+
+func get_assignment_revision() -> int:
+	return _assignment_revision
+
+func get_civilian_intent(resident_id: int) -> Dictionary:
+	var resident: CommunityResident = _residents.get(resident_id)
+	return {} if resident == null else _civilian_intent_for(resident)
+
+func get_civilian_intents(include_unhoused: bool = true) -> Array:
+	var result: Array = []
+	for resident: CommunityResident in _sorted_residents():
+		if resident.home_anchor == null and not include_unhoused:
+			continue
+		result.append(_civilian_intent_for(resident))
+	return result.duplicate(true)
+
+func _civilian_intent_for(resident: CommunityResident) -> Dictionary:
+	var absolute_hour := int(_clock.get_absolute_hour()) if _clock and _clock.has_method("get_absolute_hour") else 0
+	var assignment: Variant = resident.work_assignment
+	if assignment == null:
+		assignment = resident.activity_assignment
+	var purpose := "unhoused" if resident.home_anchor == null else "home"
+	var destination: Variant = resident.home_anchor
+	var building_id := ""
+	var source_effect_ids: Array = []
+	var active := false
+	var valid_until: Variant = null
+	var route_distance := 0
+	if assignment != null:
+		purpose = String(assignment.get("purpose", "activity"))
+		destination = CommunityConstants.coordinate(assignment.get("anchor"))
+		building_id = String(assignment.get("building_id", ""))
+		if purpose == "activity":
+			for source in _source_records(absolute_hour % 24):
+				if int(source.get("internal_id", -1)) != int(assignment.get("internal_id", -2)): continue
+				for effect in source.get("effects", []):
+					if effect.get("scope") == "participant" and CommunityEffectEvaluator.schedule_active(effect.get("schedule"), absolute_hour % 24):
+						source_effect_ids.append(String(effect.get("effect_id", "")))
+				break
+		active = true
+		valid_until = absolute_hour + 1
+		route_distance = int(assignment.get("route_distance", 0))
+	return {
+		"resident_id": resident.resident_id,
+		"resident_seed": resident.seed,
+		"home_anchor": null if resident.home_anchor == null else CommunityConstants.coordinate_record(resident.home_anchor),
+		"assignment_revision": _assignment_revision,
+		"absolute_hour": absolute_hour,
+		"purpose": purpose,
+		"destination_anchor": null if destination == null else CommunityConstants.coordinate_record(destination),
+		"destination_building_id": building_id,
+		"source_effect_ids": source_effect_ids,
+		"active": active,
+		"valid_until_hour": valid_until,
+		"reachable": destination != null,
+		"blocked_reason": "resident_unhoused" if destination == null else "",
+		"route_distance": route_distance,
+	}
 
 func _participant_benefit(resident: CommunityResident, source: Dictionary, hour: int = -1) -> float:
 	var active_hour: int = hour if hour >= 0 else int(_clock.current_hour() if _clock else 0)
@@ -565,6 +626,9 @@ func set_programme(anchor: Vector2i, programme_id: String) -> bool:
 		var profile := structure.find_metadata(CommunityEffectProfile) as CommunityEffectProfile
 		if profile and profile.programmes.has(programme_id):
 			GameState.map.community_programmes[_anchor_key(anchor)] = programme_id
+			_invalidate_assignments()
+			var current_hour := int(_clock.current_hour()) if _clock else 0
+			_assign_residents(_source_records(current_hour), current_hour, true)
 			_persist()
 			GameEvents.community_programme_changed.emit(anchor, programme_id)
 			return true

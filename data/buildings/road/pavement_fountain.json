@@ -2,12 +2,12 @@
   "building_id": "pavement_fountain",
   "display_name": "Pavement with Fountain",
   "description": "",
-  "model_path": "res://models/pavement-fountain.glb",
-  "model_scale": 1.0,
+  "model_path": "res://models/city-builder/pavement_fountain.glb",
+  "model_scale": 0.500012756,
   "model_offset": [
+    -1.27557194e-05,
     0,
-    0,
-    0
+    -5.10377791e-05
   ],
   "model_rotation_y": 0.0,
   "footprint": [

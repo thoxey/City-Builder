@@ -2,12 +2,12 @@
   "building_id": "building_pub",
   "display_name": "Pub",
   "description": "",
-  "model_path": "res://models/Meshy_AI_Pub_0403211907/Meshy_AI_Pub_0403211907_texture.glb",
-  "model_scale": 0.65,
+  "model_path": "res://models/city-builder/building_pub.glb",
+  "model_scale": 0.560094154,
   "model_offset": [
+    -0,
     0,
-    0,
-    0
+    0.000117612583
   ],
   "model_rotation_y": 0.0,
   "footprint": [
@@ -17,6 +17,7 @@
     ]
   ],
   "category": "unique",
+  "community_role": "participant",
   "profiles": [
     {
       "type": "BuildingMetadata"
@@ -27,6 +28,20 @@
       "capacity": 30,
       "active_start": 17.0,
       "active_end": 23.0
+    },
+    {
+      "type": "CommunityEffectProfile",
+      "effects": [{
+        "effect_id": "pub_social_visit",
+        "quality": "belonging",
+        "manifestation": "identity",
+        "amount": 0.5,
+        "scope": "participant",
+        "capacity": 30,
+        "schedule": {"start": 17, "end": 23},
+        "stacking_group": "local_social_visit",
+        "reason": "Met neighbours at the local pub"
+      }]
     },
     {
       "type": "UniqueProfile",

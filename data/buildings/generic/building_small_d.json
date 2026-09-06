@@ -2,12 +2,12 @@
   "building_id": "building_small_d",
   "display_name": "Cottage Residence D",
   "description": "",
-  "model_path": "res://models/Meshy_AI_Wisteria_Cottage_0403171247/Meshy_AI_Wisteria_Cottage_0403171247_texture.glb",
-  "model_scale": 0.45,
+  "model_path": "res://models/city-builder/building_small_d.glb",
+  "model_scale": 0.500187288,
   "model_offset": [
+    -5.67648767e-05,
     0,
-    0,
-    0
+    3.29886219e-05
   ],
   "model_rotation_y": 0.0,
   "footprint": [

@@ -2,12 +2,12 @@
   "building_id": "building_nature_patch",
   "display_name": "Nature Patch",
   "description": "",
-  "model_path": "res://models/Meshy_AI_nature_patch_0403203125/Meshy_AI_nature_patch_0403203125_texture.glb",
-  "model_scale": 0.57,
+  "model_path": "res://models/city-builder/building_nature_patch.glb",
+  "model_scale": 0.500214326,
   "model_offset": [
+    -0.000153830994,
     0,
-    -0.15,
-    0
+    -0.000106037393
   ],
   "model_rotation_y": 0.0,
   "footprint": [

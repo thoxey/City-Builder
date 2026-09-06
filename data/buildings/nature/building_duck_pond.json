@@ -2,12 +2,12 @@
   "building_id": "building_duck_pond",
   "display_name": "Duck Pond",
   "description": "",
-  "model_path": "res://models/Meshy_AI_Duck_Pond_in_the_Hedg_0403173405/Meshy_AI_Duck_Pond_in_the_Hedg_0403173405_texture.glb",
-  "model_scale": 0.5,
+  "model_path": "res://models/city-builder/building_duck_pond.glb",
+  "model_scale": 0.500010267,
   "model_offset": [
+    -4.73866656e-06,
     0,
-    -0.1,
-    0
+    -4.24691815e-06
   ],
   "model_rotation_y": 0.0,
   "footprint": [

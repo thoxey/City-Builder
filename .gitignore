@@ -24,6 +24,15 @@ build/
 node_modules/
 *.log
 .env*
+__pycache__/
+
+# Local performance/playtest output
+/artifacts/
+
+# Godot editor sidecars generated for documentation/validation source files
+*.csv.import
+*.likely.translation-*
+specs/**/validation/screenshots/*.import
 
 # Editors / temporary files
 .vscode/

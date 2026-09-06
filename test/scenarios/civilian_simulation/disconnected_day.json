@@ -1,0 +1,30 @@
+{
+  "schema_version": 2,
+  "scenario_id": "civilian_disconnected_day",
+  "seed": 8008,
+  "description": "Matched civilian day with a deliberate road-component break.",
+  "initial_state": {
+    "map": "empty",
+    "cash": 10000,
+    "demand": {"residential": 25, "industrial": 25, "commercial": 25},
+    "clock": {"mode": "manual", "start_hour": 6},
+    "narrative": {"mode": "presentation_disabled"}
+  },
+  "fixture": {
+    "residents": [
+      {"resident_id": 101, "seed": 8101, "cohort_id": "general", "home_anchor": {"x": 0, "z": 0}},
+      {"resident_id": 102, "seed": 8102, "cohort_id": "general", "home_anchor": {"x": 0, "z": 0}}
+    ]
+  },
+  "civilian_layout": {
+    "placements": [
+      {"building_id": "building_small_a", "x": 0, "z": 0},
+      {"building_id": "road_straight", "x": 1, "z": 0},
+      {"building_id": "road_straight", "x": 2, "z": 0},
+      {"building_id": "road_straight", "x": 5, "z": 0},
+      {"building_id": "road_straight", "x": 6, "z": 0},
+      {"building_id": "building_garage", "x": 7, "z": 0},
+      {"building_id": "building_pub", "x": 6, "z": 1}
+    ]
+  }
+}

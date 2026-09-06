@@ -3,11 +3,8 @@ extends PluginBase
 ## Population system.
 ## Spawns people per residential building equal to BuildingProfile.capacity.
 ##
-## Journey logic:
-##   • Hour  8 → rush: all idle residents head to a workplace
-##   • Hours 17–22 → trickle: ~35% of idle people head to commercial each hour
-##   • Hour 23 → last orders: idle people not at origin head home
-##   • Otherwise → random destination after idle timer
+## Community owns resident purpose and exact destination. This plugin only projects
+## that intent through the existing person/car presentation pools.
 ##
 ## Short distances (≤ WALK_THRESHOLD tiles) → walk along placed tiles.
 ## Long distances → walk 1 tile to road → CarManager civilian car → walk last mile.
@@ -15,11 +12,9 @@ extends PluginBase
 const PEOPLE_PER_BUILDING := 2      # fallback when BuildingProfile is missing
 const WALK_THRESHOLD      := 6
 const SIDEWALK_OFFSET     := 0.38   # how far from road centre people walk (left of direction)
-const DEST_WAIT_MIN       := 4.0
-const DEST_WAIT_MAX       := 10.0
 const SPAWN_STAGGER       := 1.2
+const CAR_RETRY_INTERVAL  := 0.5
 const WALK_HEIGHT         := 0.1
-const COMMERCIAL_TRICKLE  := 0.35
 
 const PERSON_MODEL_PATH := "res://models/Meshy_AI_Bluecoat_Guard_0403170555/Meshy_AI_Bluecoat_Guard_0403170555_texture.glb"
 const PERSON_SCALE      := 0.12
@@ -53,6 +48,7 @@ var _ground_y:     float      = 0.0
 # ── People state ──────────────────────────────────────────────────────────────
 
 var _people:  Array[PersonSlot] = []
+var _resident_index: Dictionary = {}
 var _home:    Dictionary = {}   # PersonSlot → Vector3i  (current base tile)
 var _origin:  Dictionary = {}   # PersonSlot → Vector3i  (fixed spawn tile)
 var _dest:    Dictionary = {}   # PersonSlot → Vector3i
@@ -63,20 +59,28 @@ var _journey_by_person: Dictionary = {}   # PersonSlot → int journey_id
 var _person_by_journey: Dictionary = {}   # int journey_id → PersonSlot
 
 var _current_hour: float = 0.0
+var _walk_route_threshold: int = WALK_THRESHOLD
+var _plan_key_by_journey: Dictionary = {}
 
 # ── Lifecycle ─────────────────────────────────────────────────────────────────
 
 func _plugin_ready() -> void:
+	_load_walk_threshold()
 	_setup_multimesh()
 	_car_manager.journey_completed.connect(_on_journey_completed)
-	GameEvents.structure_placed.connect(func(_a, _b, _c): _rebuild())
-	GameEvents.structure_demolished.connect(func(_a): _rebuild())
-	GameEvents.map_loaded.connect(func(_a): _rebuild())
-	GameEvents.community_resident_arrived.connect(func(_id, _home): _rebuild())
-	GameEvents.community_resident_departed.connect(func(_id, _reason): _rebuild())
-	GameEvents.community_resident_rehomed.connect(func(_id, _home): _rebuild())
+	GameEvents.structure_placed.connect(_on_structure_placed)
+	GameEvents.structure_demolished.connect(_on_structure_demolished)
+	GameEvents.map_loaded.connect(_on_map_loaded)
+	GameEvents.community_resident_arrived.connect(_on_resident_arrived)
+	GameEvents.community_resident_departed.connect(_on_resident_departed)
+	GameEvents.community_resident_rehomed.connect(_on_resident_rehomed)
 	_day_night.hour_changed.connect(_on_hour)
 	_rebuild()
+
+func _load_walk_threshold() -> void:
+	var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://data/community/balance.json"))
+	if parsed is Dictionary:
+		_walk_route_threshold = int(parsed.get("civilian_walk_route_threshold", WALK_THRESHOLD))
 
 func _setup_multimesh() -> void:
 	var mesh := _mesh_from_glb(PERSON_MODEL_PATH)
@@ -103,18 +107,21 @@ func _setup_multimesh() -> void:
 func _rebuild() -> void:
 	_clear_people()
 	_spawn_people()
+	var residential_count := _get_tiles_by_category("residential").size() if GameState.gridmap else 0
 	print("[People] %d people across %d residential buildings" % [
-			_people.size(), _get_tiles_by_category("residential").size()])
+		_people.size(), residential_count])
 
 func _clear_people() -> void:
 	for person: PersonSlot in _people:
-		if _state.get(person) == PersonState.IN_CAR:
+		if person.state == PersonSlot.VisualState.IN_CAR:
 			var jid: int = _journey_by_person.get(person, -1)
 			if jid >= 0:
 				_car_manager.cancel_journey(jid)
-		_mm.multimesh.set_instance_transform(person.slot_index, _hidden_transform())
+		if _mm and _mm.multimesh:
+			_mm.multimesh.set_instance_transform(person.slot_index, _hidden_transform())
 		_free_indices.append(person.slot_index)
 	_people.clear()
+	_resident_index.clear()
 	_home.clear()
 	_origin.clear()
 	_dest.clear()
@@ -124,8 +131,8 @@ func _clear_people() -> void:
 	_person_by_journey.clear()
 
 func _spawn_people() -> void:
-	if _community and _community.has_method("get_resident_records"):
-		var records: Array = _community.get_resident_records(false)
+	if _community and _community.has_method("get_civilian_intents"):
+		var records: Array = _community.get_civilian_intents()
 		var stagger := 0
 		for record: Dictionary in records:
 			if stagger >= MAX_PERSON_INSTANCES or _free_indices.is_empty():
@@ -133,7 +140,12 @@ func _spawn_people() -> void:
 			var home_value: Variant = CommunityConstants.coordinate(record.get("home_anchor"))
 			if home_value == null:
 				continue
-			_spawn_person(Vector3i(home_value.x, 0, home_value.y), stagger, int(record.get("seed", record.get("resident_id", 1))))
+			_spawn_person(Vector3i(home_value.x, 0, home_value.y), stagger,
+				int(record.get("resident_seed", record.get("seed", record.get("resident_id", 1)))),
+				int(record.get("resident_id", -1)))
+			var person: PersonSlot = _people.back()
+			person.intent = record.duplicate(true)
+			_reconcile_person(person, record)
 			stagger += 1
 		return
 	var residential := _get_tiles_by_category("residential")
@@ -151,43 +163,61 @@ func _spawn_people() -> void:
 			_spawn_person(tile, stagger, hash([tile.x, tile.z, i]))
 			stagger += 1
 
-func _spawn_person(tile: Vector3i, stagger: int, seed: int) -> void:
-	var visual_rng := RandomNumberGenerator.new()
-	visual_rng.seed = seed
+func _spawn_person(tile: Vector3i, stagger: int, seed: int, resident_id: int = -1) -> void:
+	var presentation := seeded_presentation(seed, int(_current_hour), "home")
+	var offset: Vector2 = presentation["spawn_offset"]
 	var person := PersonSlot.new()
 	person.slot_index = _free_indices.pop_back()
 	person.current_tile = tile
-	person.position = Vector3(tile.x, WALK_HEIGHT, tile.z) + Vector3(
-		visual_rng.randf_range(-0.25, 0.25), 0.0, visual_rng.randf_range(-0.25, 0.25))
+	person.position = Vector3(tile.x + offset.x, WALK_HEIGHT, tile.z + offset.y)
 	person.visible = true
+	person.resident_id = resident_id
+	person.resident_seed = seed
+	person.home_anchor = Vector2i(tile.x, tile.z)
+	person.current_place = person.home_anchor
+	person.destination_anchor = person.home_anchor
+	person.departure_offset = stagger * SPAWN_STAGGER + float(presentation["departure_offset"])
+	person.state = PersonSlot.VisualState.AT_HOME
 	_people.append(person)
+	if resident_id >= 0:
+		_resident_index[resident_id] = person
 	_home[person] = tile
 	_origin[person] = tile
 	_state[person] = PersonState.IDLE
-	_timer[person] = stagger * SPAWN_STAGGER + visual_rng.randf_range(0.0, SPAWN_STAGGER)
+	_timer[person] = person.departure_offset
+
+static func seeded_presentation(seed: int, absolute_hour: int, purpose: String) -> Dictionary:
+	var spawn_rng := RandomNumberGenerator.new()
+	spawn_rng.seed = seed
+	var context_rng := RandomNumberGenerator.new()
+	context_rng.seed = seed ^ (absolute_hour * 1103515245) ^ purpose.hash()
+	return {
+		"spawn_offset": Vector2(spawn_rng.randf_range(-0.25, 0.25), spawn_rng.randf_range(-0.25, 0.25)),
+		"departure_offset": context_rng.randf_range(0.0, SPAWN_STAGGER),
+	}
 
 # ── Process ───────────────────────────────────────────────────────────────────
 
 func _process(delta: float) -> void:
-	for person: PersonSlot in _people:
-		match _state[person]:
-			PersonState.IDLE:
-				_timer[person] -= delta
-				if _timer[person] <= 0.0:
-					_assign_journey(person)
-
-			PersonState.WALKING_TO_ROAD:
+	_revalidate_stale_plans()
+	var ordered: Array[PersonSlot] = _people.duplicate()
+	ordered.sort_custom(func(a, b): return a.resident_id < b.resident_id)
+	for person: PersonSlot in ordered:
+		match person.state:
+			PersonSlot.VisualState.WALKING_TO_STOP:
 				_advance_person(person, delta)
 				if person._waypoints.is_empty():
 					_begin_car_journey(person)
-
-			PersonState.IN_CAR:
+			PersonSlot.VisualState.WAITING_FOR_CAR:
+				person.car_retry_remaining = maxf(0.0, person.car_retry_remaining - delta)
+				if is_zero_approx(person.car_retry_remaining):
+					_begin_car_journey(person)
+			PersonSlot.VisualState.IN_CAR:
 				pass   # driven by _on_journey_completed signal
-
-			PersonState.WALKING_TO_DEST:
+			PersonSlot.VisualState.WALKING_ROUTE, PersonSlot.VisualState.WALKING_FROM_STOP:
 				_advance_person(person, delta)
 				if person._waypoints.is_empty():
-					_arrive_at_dest(person)
+					_arrive_for_intent(person)
 
 	_update_multimesh(delta)
 
@@ -195,106 +225,269 @@ func _process(delta: float) -> void:
 
 func _on_hour(hour: float) -> void:
 	_current_hour = hour
-	var h := int(hour)
+	_reconcile_all()
 
-	if h == 8:
-		var workplaces := _get_tiles_by_category("industrial")
-		if not workplaces.is_empty():
-			for person: PersonSlot in _people:
-				if _state[person] == PersonState.IDLE:
-					var dest: Vector3i = workplaces[randi() % workplaces.size()]
-					if dest != _home[person]:
-						_begin_journey(person, dest)
+func _reconcile_all() -> void:
+	if not _community or not _community.has_method("get_civilian_intents"):
+		return
+	for intent: Dictionary in _community.get_civilian_intents():
+		var person: PersonSlot = _resident_index.get(int(intent.get("resident_id", -1)))
+		if person:
+			_reconcile_person(person, intent)
 
-	elif h >= 17 and h <= 22:
-		var commercial := _get_tiles_by_category("commercial")
-		if not commercial.is_empty():
-			for person: PersonSlot in _people:
-				if _state[person] == PersonState.IDLE and randf() < COMMERCIAL_TRICKLE:
-					var dest: Vector3i = commercial[randi() % commercial.size()]
-					if dest != _home[person]:
-						_begin_journey(person, dest)
+func _reconcile_person(person: PersonSlot, intent: Dictionary) -> void:
+	var destination_value: Variant = CommunityConstants.coordinate(intent.get("destination_anchor"))
+	var revision := int(intent.get("assignment_revision", 0))
+	var purpose := String(intent.get("purpose", "home"))
+	var unchanged: bool = person.purpose == purpose and person.destination_anchor == destination_value \
+		and bool(person.intent.get("reachable", true)) == bool(intent.get("reachable", true))
+	person.intent = intent.duplicate(true)
+	person.intent_revision = revision
+	person.purpose = purpose
+	person.destination_anchor = destination_value
+	if destination_value == null:
+		_cancel_person_journey(person)
+		person.state = PersonSlot.VisualState.UNHOUSED
+		person.blocked_reason = String(intent.get("blocked_reason", "resident_unhoused"))
+		return
+	if unchanged:
+		return
+	person.departure_offset = float(seeded_presentation(person.resident_seed,
+		int(intent.get("absolute_hour", _current_hour)), purpose)["departure_offset"])
+	person.blocked_reason = ""
+	person.car_retry_remaining = 0.0
+	_cancel_person_journey(person)
+	if person.current_place == destination_value:
+		_arrive_for_intent(person)
+		return
+	_begin_journey(person, Vector3i(destination_value.x, 0, destination_value.y))
 
-	elif h == 23:
-		for person: PersonSlot in _people:
-			if _state[person] == PersonState.IDLE:
-				var origin: Vector3i = _origin[person]
-				if origin != _home[person]:
-					_begin_journey(person, origin)
+func _cancel_person_journey(person: PersonSlot) -> void:
+	if person.journey_id >= 0 and _car_manager:
+		_car_manager.cancel_journey(person.journey_id)
+		_person_by_journey.erase(person.journey_id)
+	_journey_by_person.erase(person)
+	person.journey_id = -1
+	person.visible = true
+	person._waypoints.clear()
+	person._waypoint_tiles.clear()
+
+# ── Incremental event reconciliation ─────────────────────────────────────────
+
+func _on_structure_placed(_position: Vector3i, _structure_index: int, _orientation: int) -> void:
+	# New topology cannot invalidate a route already being executed. Community's
+	# assignment revision decides whether any authoritative intent changed.
+	_reconcile_all()
+
+func _on_structure_demolished(position: Vector3i) -> void:
+	_reconcile_all()
+	_revalidate_stale_plans(position, true)
+
+func _on_map_loaded(_map: Variant) -> void:
+	_rebuild()
+
+func reconstruct_from_authority() -> void:
+	_rebuild()
+
+func _on_resident_arrived(_resident_id: int, _home_anchor: Vector2i) -> void:
+	_sync_roster()
+
+func _on_resident_departed(_resident_id: int, _reason: String) -> void:
+	_sync_roster()
+
+func _on_resident_rehomed(resident_id: int, home_anchor: Vector2i) -> void:
+	var person: PersonSlot = _resident_index.get(resident_id)
+	if person:
+		var old_home: Variant = person.home_anchor
+		person.home_anchor = home_anchor
+		if person.current_place == old_home:
+			person.current_place = home_anchor
+	_sync_roster()
+
+func _sync_roster() -> void:
+	if not _community or not _community.has_method("get_civilian_intents"):
+		return
+	var intents: Array = _community.get_civilian_intents()
+	intents.sort_custom(func(a, b): return int(a.get("resident_id", -1)) < int(b.get("resident_id", -1)))
+	var desired: Dictionary = {}
+	for intent: Dictionary in intents:
+		if desired.size() >= MAX_PERSON_INSTANCES:
+			break
+		if CommunityConstants.coordinate(intent.get("home_anchor")) != null:
+			desired[int(intent.get("resident_id", -1))] = intent
+	var existing_ids: Array = _resident_index.keys()
+	existing_ids.sort()
+	for resident_id in existing_ids:
+		if not desired.has(resident_id):
+			_remove_person(_resident_index[resident_id])
+	for resident_id in desired:
+		var intent: Dictionary = desired[resident_id]
+		var person: PersonSlot = _resident_index.get(resident_id)
+		if person:
+			_reconcile_person(person, intent)
+		elif not _free_indices.is_empty():
+			var home: Vector2i = CommunityConstants.coordinate(intent.get("home_anchor"))
+			_spawn_person(Vector3i(home.x, 0, home.y), _people.size(),
+				int(intent.get("resident_seed", resident_id)), resident_id)
+			person = _people.back()
+			person.intent = intent.duplicate(true)
+			_reconcile_person(person, intent)
+
+func _remove_person(person: PersonSlot) -> void:
+	_cancel_person_journey(person)
+	if _mm and _mm.multimesh:
+		_mm.multimesh.set_instance_transform(person.slot_index, _hidden_transform())
+	if person.slot_index >= 0 and person.slot_index not in _free_indices:
+		_free_indices.append(person.slot_index)
+	_people.erase(person)
+	_resident_index.erase(person.resident_id)
+	_home.erase(person); _origin.erase(person); _dest.erase(person); _state.erase(person); _timer.erase(person)
+
+func _plan_depends_on(person: PersonSlot, cell: Vector3i) -> bool:
+	if person.journey_plan.is_empty(): return false
+	if person.journey_plan.get("origin_stop") == cell or person.journey_plan.get("destination_stop") == cell:
+		return true
+	return cell in person.journey_plan.get("road_path_vectors", [])
+
+func _revalidate_stale_plans(changed_cell: Variant = null, force_affected := false) -> void:
+	if not _road_network or not _road_network.has_method("get_revision"):
+		return
+	var road_revision := int(_road_network.get_revision())
+	var ordered: Array[PersonSlot] = _people.duplicate()
+	ordered.sort_custom(func(a, b): return a.resident_id < b.resident_id)
+	for person in ordered:
+		if person.journey_plan.is_empty() or person.destination_anchor == null:
+			continue
+		var affected: bool = changed_cell is Vector3i and _plan_depends_on(person, changed_cell)
+		if force_affected and not affected:
+			continue
+		if not affected and person.journey_revision == road_revision:
+			continue
+		var origin: Vector2i = person.current_place if person.current_place != null else person.home_anchor
+		var resolved: Dictionary = _road_network.resolve_civilian_route(origin, person.destination_anchor)
+		if not bool(resolved.get("ok", false)):
+			_cancel_person_journey(person)
+			_block(person, String(resolved.get("blocked_reason", "route_invalidated")))
+			continue
+		var new_path: Array[Vector3i] = []
+		for record in resolved.get("road_path", []):
+			var route_cell: Variant = _record_to_cell(record)
+			if route_cell != null: new_path.append(route_cell)
+		var same_route: bool = new_path == person.journey_plan.get("road_path_vectors", []) \
+			and _record_to_cell(resolved.get("origin_stop")) == person.journey_plan.get("origin_stop") \
+			and _record_to_cell(resolved.get("destination_stop")) == person.journey_plan.get("destination_stop")
+		if same_route:
+			person.journey_revision = road_revision
+			person.journey_plan["road_revision"] = road_revision
+			if person.journey_id >= 0 and _car_manager and _car_manager.has_method("refresh_resolved_journey_revision"):
+				_car_manager.refresh_resolved_journey_revision(person.journey_id, person.plan_key, road_revision)
+		else:
+			_cancel_person_journey(person)
+			_plan_journey(person)
 
 # ── Journey logic ─────────────────────────────────────────────────────────────
 
-func _assign_journey(person: PersonSlot) -> void:
-	var home_tile: Vector3i = _home[person]
-	var h := int(_current_hour)
-
-	var preferred: Array[Vector3i]
-	if h >= 8 and h < 17:
-		preferred = _get_tiles_by_category("industrial")
-	elif h >= 17 and h <= 22:
-		preferred = _get_tiles_by_category("commercial")
-	else:
-		preferred = _get_tiles_by_category("residential")
-
-	var candidates: Array[Vector3i] = []
-	for t: Vector3i in preferred:
-		if t != home_tile:
-			candidates.append(t)
-
-	if candidates.is_empty():
-		for t: Vector3i in _road_network.get_building_tiles():
-			if t != home_tile:
-				candidates.append(t)
-
-	if candidates.is_empty():
-		_timer[person] = randf_range(DEST_WAIT_MIN, DEST_WAIT_MAX)
-		return
-
-	_begin_journey(person, candidates[randi() % candidates.size()])
-
 func _begin_journey(person: PersonSlot, dest_tile: Vector3i) -> void:
-	var home_tile: Vector3i = _home[person]
 	_dest[person] = dest_tile
+	_plan_journey(person)
 
-	var dist: int = abs(dest_tile.x - home_tile.x) + abs(dest_tile.z - home_tile.z)
-	var home_stops: Array[Vector3i] = _road_network.get_stops_for_building(home_tile)
-	var dest_stops: Array[Vector3i] = _road_network.get_stops_for_building(dest_tile)
-	var can_drive: bool = dist > WALK_THRESHOLD and not home_stops.is_empty() and not dest_stops.is_empty()
-
-	if can_drive:
-		# Walk 1 tile to the nearest road stop first, then hand off to CarManager
-		var road_tile: Vector3i = home_stops[0]
-		person._waypoints      = [Vector3(road_tile.x, WALK_HEIGHT, road_tile.z)]
-		person._waypoint_tiles = [road_tile]
-		_state[person] = PersonState.WALKING_TO_ROAD
+func _plan_journey(person: PersonSlot) -> void:
+	if _road_network == null or not _road_network.has_method("resolve_civilian_route"):
+		_block(person, "road_network_unavailable")
+		return
+	var origin: Vector2i = person.current_place if person.current_place != null else person.home_anchor
+	var destination: Vector2i = person.destination_anchor
+	var resolved: Dictionary = _road_network.resolve_civilian_route(origin, destination)
+	if not bool(resolved.get("ok", false)):
+		_block(person, String(resolved.get("blocked_reason", "disconnected")))
+		return
+	var path: Array[Vector3i] = []
+	for record in resolved.get("road_path", []):
+		var cell: Variant = _record_to_cell(record)
+		if cell != null: path.append(cell)
+	var origin_stop: Vector3i = _record_to_cell(resolved.get("origin_stop"))
+	var destination_stop: Vector3i = _record_to_cell(resolved.get("destination_stop"))
+	var mode := "walk" if int(resolved.get("route_distance", 0)) <= _walk_route_threshold else "car"
+	var key_payload := {
+		"resident_id":person.resident_id, "intent_revision":person.intent_revision,
+		"origin":{"x":origin.x,"z":origin.y}, "destination":{"x":destination.x,"z":destination.y},
+		"mode":mode, "road_revision":int(resolved.get("road_revision", 0)), "path":resolved.get("road_path", []),
+	}
+	person.plan_key = JSON.stringify(key_payload).sha256_text()
+	person.journey_revision = int(resolved.get("road_revision", 0))
+	person.mode = mode
+	person.journey_plan = resolved.duplicate(true)
+	person.journey_plan["plan_key"] = person.plan_key
+	person.journey_plan["mode"] = mode
+	person.journey_plan["origin_stop"] = origin_stop
+	person.journey_plan["destination_stop"] = destination_stop
+	person.journey_plan["road_path_vectors"] = path.duplicate()
+	person.blocked_reason = ""
+	if mode == "walk":
+		_set_walk_waypoints(person, path, destination)
+		person.state = PersonSlot.VisualState.WALKING_ROUTE
 	else:
-		_start_walk(person, home_tile, dest_tile)
+		_set_walk_waypoints(person, [origin_stop], Vector2i(origin_stop.x, origin_stop.z))
+		person.state = PersonSlot.VisualState.WALKING_TO_STOP
+
+func _block(person: PersonSlot, reason: String) -> void:
+	person.state = PersonSlot.VisualState.BLOCKED
+	person.blocked_reason = reason
+	person._waypoints.clear()
+	person._waypoint_tiles.clear()
+
+func _set_walk_waypoints(person: PersonSlot, path: Array[Vector3i], destination: Vector2i) -> void:
+	var cells: Array[Vector3i] = path.duplicate()
+	var destination_cell := Vector3i(destination.x, 0, destination.y)
+	if cells.is_empty() or cells.back() != destination_cell:
+		cells.append(destination_cell)
+	var positions: Array[Vector3] = []
+	for cell in cells:
+		positions.append(Vector3(cell.x, WALK_HEIGHT, cell.z))
+	person._waypoints.assign(positions)
+	person._waypoint_tiles.assign(cells)
 
 func _begin_car_journey(person: PersonSlot) -> void:
-	var home_tile: Vector3i = _home[person]
-	var dest_tile: Vector3i = _dest[person]
-	var route: Array[Vector3i] = [dest_tile]
-	var jid: int = _car_manager.request_journey(home_tile, route, CarSlot.CarType.CIVILIAN)
+	if person.journey_plan.is_empty():
+		_block(person, "route_invalidated")
+		return
+	var jid: int = _car_manager.request_resolved_journey(person.resident_id,
+		person.journey_plan["origin_stop"], person.journey_plan["destination_stop"],
+		person.journey_plan["road_path_vectors"], person.journey_revision,
+		person.plan_key, CarSlot.CarType.CIVILIAN)
 	if jid < 0:
-		# Pool full — walk instead
-		_start_walk(person, person.current_tile, dest_tile)
+		person.state = PersonSlot.VisualState.WAITING_FOR_CAR
+		person.blocked_reason = "car_pool_full"
+		person.car_retry_remaining = CAR_RETRY_INTERVAL
 		return
 	_journey_by_person[person] = jid
 	_person_by_journey[jid]    = person
+	_plan_key_by_journey[jid] = person.plan_key
 	person.visible = false
-	_state[person] = PersonState.IN_CAR
+	person.state = PersonSlot.VisualState.IN_CAR
+	person.journey_id = jid
+	person.car_retry_remaining = 0.0
 
 func _on_journey_completed(jid: int, arrived_road_tile: Vector3i, exit_pos: Vector3) -> void:
 	var person: PersonSlot = _person_by_journey.get(jid)
 	if not person:
 		return
+	var completed_key := String(_plan_key_by_journey.get(jid, ""))
+	_plan_key_by_journey.erase(jid)
 	_person_by_journey.erase(jid)
 	_journey_by_person.erase(person)
+	person.journey_id = -1
+	if completed_key != person.plan_key:
+		person.visible = true
+		_block(person, "route_invalidated")
+		return
 
 	person.current_tile = arrived_road_tile
 	person.position     = Vector3(exit_pos.x, WALK_HEIGHT, exit_pos.z)
 	person.visible      = true
-	_start_walk(person, arrived_road_tile, _dest[person])
+	var destination: Vector2i = person.destination_anchor
+	_set_walk_waypoints(person, [], destination)
+	person.state = PersonSlot.VisualState.WALKING_FROM_STOP
 
 func _start_walk(person: PersonSlot, from_tile: Vector3i, to_tile: Vector3i) -> void:
 	var path := _walk_path(from_tile, to_tile)
@@ -313,24 +506,29 @@ func _start_walk(person: PersonSlot, from_tile: Vector3i, to_tile: Vector3i) -> 
 		positions.append(pos)
 	person._waypoints.assign(positions)
 	person._waypoint_tiles.assign(path)
-	_state[person] = PersonState.WALKING_TO_DEST
+	person.state = PersonSlot.VisualState.WALKING_ROUTE
+	person.mode = "walk"
 
 func _is_road_tile(tile: Vector3i) -> bool:
 	var sid: int = GameState.gridmap.get_cell_item(tile)
 	return _road_network.road_meta_for(sid) != null
 
+func _arrive_for_intent(person: PersonSlot) -> void:
+	if person.destination_anchor == null: return
+	person.current_place = person.destination_anchor
+	person.current_tile = Vector3i(person.destination_anchor.x, 0, person.destination_anchor.y)
+	person.state = PersonSlot.VisualState.AT_HOME if person.purpose == "home" else PersonSlot.VisualState.AT_DESTINATION
+	person.blocked_reason = ""
+	person.visible = true
+
 func _arrive_at_dest(person: PersonSlot) -> void:
-	var old_home: Vector3i = _home[person]
-	_home[person] = _dest[person]
-	_dest[person] = old_home
-	_state[person] = PersonState.IDLE
-	_timer[person] = randf_range(DEST_WAIT_MIN, DEST_WAIT_MAX)
+	_arrive_for_intent(person)
 
 func _abort_to_idle(person: PersonSlot) -> void:
 	person.visible = true
 	_journey_by_person.erase(person)
-	_state[person] = PersonState.IDLE
-	_timer[person] = randf_range(DEST_WAIT_MIN, DEST_WAIT_MAX)
+	person.state = PersonSlot.VisualState.BLOCKED
+	person.blocked_reason = "route_invalidated"
 
 # ── Person movement ───────────────────────────────────────────────────────────
 
@@ -355,6 +553,8 @@ func _advance_person(person: PersonSlot, delta: float) -> void:
 		person.position += person.position.direction_to(target) * step
 
 func _update_multimesh(delta: float) -> void:
+	if _mm == null or _mm.multimesh == null:
+		return
 	for person: PersonSlot in _people:
 		if not person.visible:
 			_mm.multimesh.set_instance_transform(person.slot_index, _hidden_transform())
@@ -382,7 +582,13 @@ func _walk_path(from: Vector3i, to: Vector3i) -> Array[Vector3i]:
 	if path.size() > 1:
 		path.remove_at(0)
 		return path
-	return [to]   # no connected path — direct fallback
+	return []
+
+func _record_to_cell(value: Variant) -> Variant:
+	if value is Vector3i: return value
+	if value is Dictionary and value.has("x") and value.has("z"):
+		return Vector3i(int(value["x"]), int(value.get("y", 0)), int(value["z"]))
+	return null
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -417,3 +623,107 @@ func _fallback_mesh() -> Mesh:
 
 func _hidden_transform() -> Transform3D:
 	return Transform3D(Basis.IDENTITY, Vector3(0.0, -9999.0, 0.0))
+
+func get_civilian_snapshot() -> Dictionary:
+	var rows: Array = []
+	var violations: Array = []
+	var seen: Dictionary = {}
+	var counts_by_state: Dictionary = {}
+	var counts_by_purpose: Dictionary = {}
+	var blocked_by_reason: Dictionary = {}
+	var intents_by_id: Dictionary = {}
+	var cars_by_journey: Dictionary = {}
+	var car_snapshot: Dictionary = _car_manager.get_civilian_snapshot() if _car_manager and _car_manager.has_method("get_civilian_snapshot") else {}
+	for car: Dictionary in car_snapshot.get("journeys", []):
+		cars_by_journey[int(car.get("journey_id", -1))] = car
+	var intents: Array = _community.get_civilian_intents() if _community and _community.has_method("get_civilian_intents") else []
+	for intent: Dictionary in intents:
+		intents_by_id[int(intent.get("resident_id", -1))] = intent
+	for person: PersonSlot in _people:
+		var resident_id := person.resident_id
+		if seen.has(resident_id):
+			violations.append({"resident_id": resident_id, "code": "duplicate_resident_binding"})
+		seen[resident_id] = true
+		var intent: Dictionary = person.intent if not person.intent.is_empty() else intents_by_id.get(resident_id, {})
+		if resident_id < 0 or (not intents_by_id.is_empty() and not intents_by_id.has(resident_id)):
+			violations.append({"resident_id": resident_id, "code": "orphan_proxy"})
+		var state_name := String(PersonSlot.STATE_NAMES.get(person.state, "blocked"))
+		counts_by_state[state_name] = int(counts_by_state.get(state_name, 0)) + 1
+		counts_by_purpose[person.purpose] = int(counts_by_purpose.get(person.purpose, 0)) + 1
+		if not person.blocked_reason.is_empty():
+			blocked_by_reason[person.blocked_reason] = int(blocked_by_reason.get(person.blocked_reason, 0)) + 1
+		var authoritative_destination: Variant = intent.get("destination_anchor")
+		var visible_destination: Variant = _anchor_record(person.destination_anchor)
+		if not intent.is_empty() and String(intent.get("purpose", "")) != person.purpose:
+			violations.append({"resident_id": resident_id, "code": "intent_purpose_mismatch"})
+		if not intent.is_empty() and authoritative_destination != visible_destination:
+			violations.append({"resident_id": resident_id, "code": "intent_destination_mismatch"})
+		if not bool(intent.get("reachable", true)) and person.state in [PersonSlot.VisualState.WALKING_TO_STOP, PersonSlot.VisualState.WALKING_ROUTE, PersonSlot.VisualState.IN_CAR, PersonSlot.VisualState.WALKING_FROM_STOP]:
+			violations.append({"resident_id": resident_id, "code": "unreachable_journey_started"})
+		var travelling := person.state in [PersonSlot.VisualState.WALKING_TO_STOP, PersonSlot.VisualState.WAITING_FOR_CAR, PersonSlot.VisualState.IN_CAR, PersonSlot.VisualState.WALKING_FROM_STOP, PersonSlot.VisualState.WALKING_ROUTE]
+		var allowed_waypoints: Array = person.journey_plan.get("road_path_vectors", []).duplicate()
+		if person.destination_anchor != null: allowed_waypoints.append(Vector3i(person.destination_anchor.x, 0, person.destination_anchor.y))
+		for waypoint in person._waypoint_tiles:
+			if waypoint not in allowed_waypoints:
+				violations.append({"resident_id":resident_id,"code":"invalid_waypoint_cell"})
+				break
+		var current_road_revision := int(_road_network.get_revision()) if _road_network and _road_network.has_method("get_revision") else person.journey_revision
+		if travelling and person.journey_revision != current_road_revision:
+			violations.append({"resident_id":resident_id,"code":"stale_route_revision"})
+		if person.state == PersonSlot.VisualState.IN_CAR:
+			var car: Dictionary = cars_by_journey.get(person.journey_id, {})
+			if car.is_empty() or int(car.get("resident_id", -1)) != resident_id or String(car.get("plan_key", "")) != person.plan_key:
+				violations.append({"resident_id":resident_id,"code":"missing_car_binding"})
+				violations.append({"resident_id":resident_id,"code":"unexpected_car_cancellation"})
+		if travelling and person.journey_plan.is_empty():
+			violations.append({"resident_id":resident_id,"code":"unexpected_proxy_reset"})
+		for code in person.diagnostic_faults:
+			violations.append({"resident_id":resident_id,"code":code})
+		rows.append({
+			"resident_id": resident_id,
+			"home_anchor": _anchor_record(person.home_anchor),
+			"current_place": _anchor_record(person.current_place),
+			"authoritative_purpose": String(intent.get("purpose", person.purpose)),
+			"authoritative_destination": authoritative_destination,
+			"visible_destination": visible_destination,
+			"state": state_name,
+			"mode": person.mode,
+			"route_distance": int(person.journey_plan.get("route_distance", 0)),
+			"route_revision": person.journey_revision,
+			"journey_id": null if person.journey_id < 0 else person.journey_id,
+			"waiting": person.state == PersonSlot.VisualState.WAITING_FOR_CAR,
+			"blocked_reason": person.blocked_reason,
+			"plan_key": person.plan_key,
+			"waypoint_cells": person._waypoint_tiles.map(func(cell): return _cell_record(cell)),
+		})
+	var expected_ids: Array = intents_by_id.keys(); expected_ids.sort()
+	for index in mini(expected_ids.size(), MAX_PERSON_INSTANCES):
+		var expected_id: int = expected_ids[index]
+		if not seen.has(expected_id) and intents_by_id[expected_id].get("home_anchor") != null:
+			violations.append({"resident_id":expected_id,"code":"missing_visible_proxy_within_cap"})
+	rows.sort_custom(func(a, b): return a["resident_id"] < b["resident_id"])
+	violations.sort_custom(func(a, b):
+		return a["resident_id"] < b["resident_id"] if a["resident_id"] != b["resident_id"] else a["code"] < b["code"])
+	return {
+		"schema_version": 1,
+		"simulated_resident_count": intents.size(),
+		"visible_count": rows.size(),
+		"proxy_cap": MAX_PERSON_INSTANCES,
+		"assignment_revision": int(_community.get_assignment_revision()) if _community and _community.has_method("get_assignment_revision") else 0,
+		"road_revision": int(_road_network.get_revision()) if _road_network and _road_network.has_method("get_revision") else 0,
+		"counts_by_state": counts_by_state,
+		"counts_by_purpose": counts_by_purpose,
+		"blocked_by_reason": blocked_by_reason,
+		"residents": rows.duplicate(true),
+		"violations": violations.duplicate(true),
+	}
+
+func _anchor_record(value: Variant) -> Variant:
+	if value == null: return null
+	if value is Vector2i: return {"x": value.x, "z": value.y}
+	if value is Vector3i: return {"x": value.x, "z": value.z}
+	if value is Dictionary: return value.duplicate(true)
+	return null
+
+func _cell_record(cell: Vector3i) -> Dictionary:
+	return {"x": cell.x, "y": cell.y, "z": cell.z}

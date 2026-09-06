@@ -2,12 +2,12 @@
   "building_id": "building_postwar_terrace",
   "display_name": "Postwar Terrace",
   "description": "",
-  "model_path": "res://models/building-small-a.glb",
-  "model_scale": 1.0,
+  "model_path": "res://models/city-builder/building_postwar_terrace.glb",
+  "model_scale": 0.500025512,
   "model_offset": [
+    -1.94917133e-05,
     0,
-    0,
-    0
+    -4.53018414e-06
   ],
   "model_rotation_y": 0.0,
   "footprint": [

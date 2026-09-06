@@ -67,3 +67,9 @@ func test_fresh_map_reset_clears_records_and_rng_state() -> void:
 	assert_eq(plugin.get_population(), 0)
 	assert_eq(plugin._rng.seed, 77)
 	plugin._residential.free(); plugin.free()
+
+func test_save_resource_excludes_transient_civilian_projection_fields() -> void:
+	var map := DataMap.new()
+	var properties := map.get_property_list().map(func(property): return String(property["name"]))
+	for transient_name in ["resident_binding","civilian_intent","journey_plan","proxy_position","journey_id","lane_reservations","civilian_simulation","violations"]:
+		assert_does_not_have(properties, transient_name)

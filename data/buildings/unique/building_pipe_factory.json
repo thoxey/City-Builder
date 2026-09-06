@@ -2,12 +2,12 @@
   "building_id": "building_pipe_factory",
   "display_name": "Pipe Factory",
   "description": "",
-  "model_path": "res://models/Meshy_AI_Acme_Business_Park__0403170610/Meshy_AI_Acme_Business_Park__0403170610_texture.glb",
-  "model_scale": 0.85,
+  "model_path": "res://models/city-builder/building_pipe_factory.glb",
+  "model_scale": 0.500028776,
   "model_offset": [
+    -3.12495334e-05,
     0,
-    0,
-    0
+    -1.57514338e-05
   ],
   "model_rotation_y": 0.0,
   "footprint": [

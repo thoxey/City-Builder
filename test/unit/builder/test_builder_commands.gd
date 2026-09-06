@@ -31,6 +31,7 @@ func before_each() -> void:
 	catalog.add_structure("park", Structure.new())
 	catalog.add_structure("house_a", _structure("residential", 5), "houses")
 	catalog.add_structure("house_b", _structure("residential", 5), "houses")
+	catalog.add_structure("road", _road_structure())
 	GameState.structures = catalog.items
 
 	economy = StubEconomy.new()
@@ -44,6 +45,7 @@ func before_each() -> void:
 	builder._demand = demand
 	builder._land = land
 	builder._uniques = uniques
+	builder._road_straight_idx = catalog.get_item_index("road")
 	builder.gridmap = GridMap.new()
 	builder.ground_gridmap = GridMap.new()
 
@@ -83,6 +85,15 @@ func test_replace_applies_after_full_validation() -> void:
 	builder.try_place_building("house", Vector2i.ZERO)
 	var outcome: Dictionary = builder.try_place_building("park", Vector2i.ZERO, 0, true)
 	assert_eq(outcome["status"], "applied")
+	assert_eq(GameState.building_registry.size(), 1)
+
+func test_road_cannot_offer_or_apply_replacement_over_an_existing_road() -> void:
+	assert_eq(builder.try_place_building("road", Vector2i.ZERO).status, "applied")
+	var road_bid := int(GameState.cell_to_building[Vector2i.ZERO])
+	var occupied: Array[int] = [road_bid]
+	assert_false(builder._can_offer_replacement(catalog.get_item_index("road"), occupied))
+	var outcome: Dictionary = builder.try_place_building("road", Vector2i.ZERO, 0, true)
+	assert_eq(outcome.reason, PlaytestActionResult.OCCUPIED_FOOTPRINT)
 	assert_eq(GameState.building_registry.size(), 1)
 
 func test_cash_demand_and_threshold_reasons() -> void:
@@ -168,6 +179,12 @@ func _structure(category: String, capacity: int, footprint: Array[Vector2i] = [V
 	profile.category = category
 	profile.capacity = capacity
 	structure.metadata = [profile]
+	return structure
+
+func _road_structure() -> Structure:
+	var structure := Structure.new()
+	structure.footprint = [Vector2i.ZERO]
+	structure.metadata = [RoadMetadata.new()]
 	return structure
 
 class StubCatalog extends PluginBase:

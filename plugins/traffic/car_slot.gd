@@ -13,6 +13,12 @@ var route_index: int   = 0
 var loop:        bool  = false
 var speed:       float = 3.0
 var slot_index:  int   = -1             # index into this type's MultiMesh
+var resident_id: int = -1
+var plan_key: String = ""
+var origin_stop: Vector3i = Vector3i.ZERO
+var destination_stop: Vector3i = Vector3i.ZERO
+var road_revision: int = 0
+var resolved_journey: bool = false
 
 # ── World state ───────────────────────────────────────────────────────────────
 

@@ -2,12 +2,12 @@
   "building_id": "building_small_b",
   "display_name": "Small Commercial B",
   "description": "",
-  "model_path": "res://models/Meshy_AI_Sunnyvale_News_Conf_0403170655/Meshy_AI_Sunnyvale_News_Conf_0403170655_texture.glb",
-  "model_scale": 0.45,
+  "model_path": "res://models/city-builder/building_small_b.glb",
+  "model_scale": 0.504442628,
   "model_offset": [
+    -0.000103415872,
     0,
-    0,
-    0
+    -6.61176049e-05
   ],
   "model_rotation_y": 0.0,
   "footprint": [

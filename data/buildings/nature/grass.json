@@ -2,8 +2,8 @@
   "building_id": "grass",
   "display_name": "Grass",
   "description": "",
-  "model_path": "res://models/grass.glb",
-  "model_scale": 1.0,
+  "model_path": "res://models/city-builder/grass.glb",
+  "model_scale": 1,
   "model_offset": [
     0,
     0,

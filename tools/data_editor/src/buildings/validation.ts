@@ -55,6 +55,16 @@ export function validateBuilding(
   if (doc.community_role === "cosmetic_only" && communityProfiles.length > 0)
     errors.push("cosmetic_only content cannot declare Community effects");
 
+	const allCommunityEffects = communityProfiles.flatMap((profile) => [
+		profile.effects ?? [],
+		...Object.values(profile.programmes ?? {}).map((programme) => Array.isArray(programme) ? programme : programme.effects),
+	]).flat();
+	const participantEffects = allCommunityEffects.filter((effect) => effect.scope === "participant");
+	if (doc.community_role === "participant" && participantEffects.length === 0)
+		errors.push("participant community_role requires a participant Community effect");
+	if (["local_only", "productive", "cosmetic"].includes(doc.community_role ?? "") && participantEffects.length > 0)
+		errors.push(`${doc.community_role} community_role cannot declare participant effects`);
+
   for (const p of doc.profiles) {
     validateProfile(p, manifest, doc, errors, warnings);
   }
@@ -123,7 +133,7 @@ function validateProfile(
       const buildingCapacity = doc.profiles
         .filter((profile) => profile.type === "BuildingProfile")
         .reduce((maximum, profile) => Math.max(maximum, profile.capacity), 0);
-      const groups = [p.effects, ...Object.values(p.programmes ?? {}).map((programme) => programme.effects)];
+      const groups = [p.effects ?? [], ...Object.values(p.programmes ?? {}).map((programme) => Array.isArray(programme) ? programme : programme.effects)];
       for (const effect of groups.flat()) {
         if (!effect.effect_id) errors.push("Community effect requires effect_id");
         if (!["opportunity", "liveability", "beauty", "belonging"].includes(effect.quality))
@@ -139,6 +149,14 @@ function validateProfile(
           errors.push(`Local Community effect "${effect.effect_id}" requires non-negative radius`);
         if (effect.scope === "participant" && (effect.capacity ?? buildingCapacity) <= 0)
           errors.push(`Participant Community effect "${effect.effect_id}" requires capacity`);
+		if (effect.scope === "participant" && (!Number.isFinite(effect.capacity) || (effect.capacity ?? 0) <= 0))
+		  errors.push(`Participant Community effect "${effect.effect_id}" requires explicit positive capacity`);
+		if (effect.scope === "participant" && !effect.schedule)
+		  errors.push(`Participant Community effect "${effect.effect_id}" requires schedule`);
+		if (effect.schedule && (!Number.isFinite(effect.schedule.start) || !Number.isFinite(effect.schedule.end) || effect.schedule.start < 0 || effect.schedule.start > 24 || effect.schedule.end < 0 || effect.schedule.end > 24 || effect.schedule.start === effect.schedule.end))
+		  errors.push(`Community effect "${effect.effect_id}" has invalid schedule`);
+		if (effect.effect_id && !ID_PATTERN.test(effect.effect_id))
+		  errors.push(`Community effect "${effect.effect_id}" must use a stable snake_case ID`);
       }
       return;
     }

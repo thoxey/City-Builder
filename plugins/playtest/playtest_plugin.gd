@@ -23,6 +23,8 @@ var _characters: PluginBase
 var _patrons: PluginBase
 var _event_system: PluginBase
 var _road_network: PluginBase
+var _people: PluginBase
+var _car_manager: PluginBase
 
 var _session_id := ""
 var _scenario_id := ""
@@ -45,7 +47,7 @@ func get_dependencies() -> Array[String]:
 	return ["BuildingCatalog", "DayNight", "Demand", "Economy", "CityStats",
 		"Satisfaction", "Residential", "Workplace", "Attractiveness",
 		"BuildableArea", "UniqueRegistry", "Palette", "Dialogue", "Inbox", "Community",
-		"CharacterSystem", "PatronSystem", "EventSystem", "RoadNetwork"]
+		"CharacterSystem", "PatronSystem", "EventSystem", "RoadNetwork", "People", "CarManager"]
 
 func inject(deps: Dictionary) -> void:
 	_catalog = deps.get("BuildingCatalog")
@@ -67,6 +69,8 @@ func inject(deps: Dictionary) -> void:
 	_patrons = deps.get("PatronSystem")
 	_event_system = deps.get("EventSystem")
 	_road_network = deps.get("RoadNetwork")
+	_people = deps.get("People")
+	_car_manager = deps.get("CarManager")
 
 func _plugin_ready() -> void:
 	_builder = _find_builder()
@@ -136,6 +140,8 @@ func start_session(params: Dictionary = {}) -> Dictionary:
 	_builder.reset_to_fresh_map(fresh)
 	if _community and _community.has_method("apply_scenario_fixture"):
 		_community.apply_scenario_fixture(scenario.get("fixture", {}), _seed)
+	if _people and _people.has_method("reconstruct_from_authority"):
+		_people.reconstruct_from_authority()
 	for runtime_plugin in [_economy, _city_stats, _satisfaction]:
 		if runtime_plugin and runtime_plugin.has_method("reset_runtime_state"):
 			runtime_plugin.reset_runtime_state()
@@ -167,6 +173,11 @@ static func _scenario_path(scenario_id: String) -> String:
 		var leaf := scenario_id.trim_prefix(FIRST_TOWN_PREFIX)
 		if leaf.is_valid_filename() and not leaf.contains("/") and not leaf.contains("\\"):
 			return SCENARIO_ROOT + FIRST_TOWN_PREFIX + leaf + ".json"
+	const CIVILIAN_PREFIX := "civilian_simulation/"
+	if scenario_id.begins_with(CIVILIAN_PREFIX):
+		var civilian_leaf := scenario_id.trim_prefix(CIVILIAN_PREFIX)
+		if civilian_leaf.is_valid_filename() and not civilian_leaf.contains("/") and not civilian_leaf.contains("\\"):
+			return SCENARIO_ROOT + CIVILIAN_PREFIX + civilian_leaf + ".json"
 	return ""
 
 func _session_record() -> Dictionary:
@@ -443,6 +454,13 @@ func get_snapshot(compact: bool = false) -> Dictionary:
 	# excluded from the deterministic simulation hash.
 	if _community and not compact and _community.has_method("get_ui_model"):
 		snapshot["community_ui"] = _community.get_ui_model()
+	if not compact:
+		var people_snapshot: Dictionary = _people.get_civilian_snapshot() if _people and _people.has_method("get_civilian_snapshot") else {}
+		var car_snapshot: Dictionary = _car_manager.get_civilian_snapshot() if _car_manager and _car_manager.has_method("get_civilian_snapshot") else {}
+		var civilian_violations: Array = people_snapshot.get("violations", []).duplicate(true)
+		civilian_violations.append_array(car_snapshot.get("violations", []).duplicate(true))
+		civilian_violations.sort_custom(func(a, b): return int(a.get("resident_id", -1)) < int(b.get("resident_id", -1)) if int(a.get("resident_id", -1)) != int(b.get("resident_id", -1)) else String(a.get("code", "")) < String(b.get("code", "")))
+		snapshot["civilian_simulation"] = {"people":people_snapshot,"cars":car_snapshot,"violations":civilian_violations}
 	return snapshot
 
 func _operation_records() -> Array:

@@ -29,16 +29,21 @@ IMAGE_STYLE_IDS = {
     "road_corner",
     "road_split",
     "road_intersection",
-    "building_duck_pond",
+    "building_restaurant",
+    "building_windmill",
     "building_crazy_golf",
+}
+TEXTURE_REFERENCE_OVERRIDES = {
+    "building_restaurant": CATALOGUE / "images" / "commerce_restaurant_texture_reference_v2.png",
+    "building_crazy_golf": CATALOGUE / "images" / "civic_crazy_golf_texture_reference_v2.png",
 }
 
 COMMON = (
-    "Restrained British city-builder stylized realism. Natural low-saturation albedo, "
-    "believable matte PBR materials, gentle age and subtle local variation, clean readable "
-    "material separation. Overcast-neutral colour balance with no baked shadows or highlights. "
-    "Avoid vivid primary colours, neon, candy colours, toy-plastic gloss, excessive contrast, "
-    "photoreal grime, text, logos and invented branding. "
+    "British city-builder animated-feature stylized realism. Balanced natural daylight colour, "
+    "believable matte PBR materials, gentle age, fine surface variation and clean readable material "
+    "separation. Vegetation must use healthy rich natural greens, never a grey or khaki wash. "
+    "No baked shadows or highlights. Avoid fluorescent colour, toy-plastic gloss, excessive contrast, "
+    "photoreal grime, gibberish text, logos and invented branding. "
 )
 
 MATERIALS = {
@@ -47,32 +52,32 @@ MATERIALS = {
     "road_split": "Dark weathered asphalt, pale grey kerbs, off-white UK give-way double dashed markings and muted ochre-yellow edge lines.",
     "road_intersection": "Dark weathered asphalt, pale grey kerbs, restrained off-white UK crossroads markings and muted ochre-yellow edge lines.",
     "road_straight_lightposts": "Dark weathered asphalt and pale grey kerbs; galvanised charcoal-grey lampposts on footways; restrained off-white markings and muted ochre-yellow edge lines.",
-    "pavement": "British town-centre paving: weathered mid-grey concrete flags with restrained red-brown brick edging, matte and subtly varied.",
-    "pavement_fountain": "Weathered pale limestone fountain, mid-grey concrete flags with restrained red-brown brick details, dull blue-grey water without tropical turquoise.",
-    "building_small_a": "Muted warm red-brown brick house, charcoal-grey slate roof, soft off-white painted timber, dark brown door, subdued dusty-green British garden planting.",
+    "pavement": "The entire walkable top surface is traditional British red and brown clay brick paving in a clear small-scale bond, with natural brick-to-brick variation; absolutely no grey concrete paving.",
+    "pavement_fountain": "Traditional British red and brown clay brick paving covers the square around a weathered pale limestone fountain; water is clear blue-green; absolutely no grey concrete paving.",
+    "building_small_a": "Warm red-brown brick house, charcoal-grey slate roof, soft off-white painted timber and dark brown door. Garden grass, hedges and shrubs must be healthy rich emerald, leaf and moss greens with lively flowers, not muted khaki.",
     "building_small_d": "Warm grey-beige local stone cottage, weathered charcoal slate, muted cream frames, faded sage door, restrained native British garden greens.",
-    "building_small_c": "Warm grey concrete tower, brown-red brick infill panels, aged off-white frames, charcoal metalwork and restrained communal landscaping.",
+    "building_small_c": "Post-war British tower dominated by weathered warm-grey board-marked concrete and pale aggregate panels, with charcoal metalwork, aged off-white frames and rich green communal planting. No red-brick facade.",
     "building_postwar_terrace": "Post-war British buff and muted red-brown brick, warm grey concrete lintels, aged off-white frames, charcoal roofing and subdued garden greens.",
     "building_postwar_midblock": "Post-war British brown-buff brick, weathered cream render panels, warm grey concrete, aged off-white frames and charcoal shopfront details.",
     "building_postwar_tower_block": "Weathered warm-grey concrete, muted brown brick infill, aged cream panels, charcoal metalwork and restrained dark glazing.",
     "building_small_b": "Muted red-brown brick high-street shop, warm cream trim, bottle-green canvas awning, dark timber shopfront and blank aged signboard.",
-    "building_pub": "Deep weathered red-brown brick, warm cream stone trim, charcoal slate, dark timber, muted burgundy and bottle-green accents; blank pub signboards.",
-    "building_restaurant": "Contemporary warm off-white mineral render, charcoal zinc and aluminium, natural weathered oak, dark neutral glazing and restrained sage planting.",
+    "building_pub": "Deep weathered red-brown brick, warm cream stone trim, charcoal slate, dark timber, burgundy and bottle-green accents; blank pub signboards. Garden grass, shrubs and climbing plants must be healthy rich emerald and leaf greens with colourful flowers, not muted khaki.",
+    "building_restaurant": "Clearly commercial modern restaurant frontage: warm off-white mineral render, charcoal aluminium, large dark glazing, natural oak, a deep bottle-green fascia and awning, warm interior window glow, menu boards and simple legible RESTAURANT signage. Rich green planters; not a private house.",
     "building_members_club": "Warm pale limestone and muted cream render, charcoal slate, black iron railings, dark green door and subdued formal grounds.",
     "building_garage": "Weathered galvanised corrugated steel in mid-grey, muted concrete block, dark asphalt, faded industrial blue-grey doors and small rust-brown details.",
-    "building_windmill": "British rural windmill with warm off-white limewash over stone, weathered dark timber cap and sails, charcoal ironwork and muted meadow greens.",
+    "building_windmill": "British rural windmill with warm off-white limewash over stone, weathered dark timber cap and sails and charcoal ironwork. Meadow grass and hedges must be rich natural leaf, emerald and moss greens with small wildflowers, not muted khaki.",
     "building_lumber_mill": "Modern British industrial shed: weathered mid-grey corrugated steel, muted red-brown brick, aged concrete, natural sawn timber and dark asphalt.",
     "building_pipe_factory": "Post-war factory in muted brown-red brick, warm-grey concrete, weathered galvanised corrugated steel, charcoal doors and restrained rust staining.",
-    "grass": "The entire top surface must be deep muted British lawn in olive, moss and sage green, with subtle darker natural variation and brown soil sides; matte, never lime, yellow, fluorescent or artificial turf.",
+    "grass": "The entire top surface must read unmistakably as finely textured healthy British grass: dense small grass blades and mottled clumps in rich leaf, emerald, moss and olive greens, subtle darker patches and brown soil sides. Not a flat plain colour, not lime-yellow and not artificial turf.",
     "grass_trees": "Native British deciduous trees and groundcover: restrained oak, birch and field-maple greens, brown-grey bark, muted grass and soil.",
-    "grass_trees_tall": "Tall native British deciduous trees: restrained oak, birch and field-maple greens, brown-grey bark, muted grass, moss and soil.",
-    "building_nature_patch": "Native British scrub and wild planting in muted olive, sage and moss greens, brown-grey branches, dull stone and dark natural soil.",
-    "building_duck_pond": "Dull blue-green British pond water, muddy brown banks, muted reeds and native grass, weathered grey stone and timber; no tropical colour.",
+    "grass_trees_tall": "Tall native British deciduous oak, birch and field maple with full rich leaf-green canopies, believable brown-grey bark and healthy emerald, moss and olive grass below. Natural and lively, not muted khaki or grey.",
+    "building_nature_patch": "Lively native British scrub and wildflower patch: rich varied leaf, emerald, olive and moss greens with visible small buttercup yellow, oxeye-daisy white, foxglove pink and cornflower blue accents, brown-grey branches, stone and dark soil.",
+    "building_duck_pond": "Clearly visible rich blue-green pond water, healthy deep green British grass, reeds and pond plants, warm brown timber duck house, muddy banks and weathered grey stone. Lively natural colour without neon or tropical saturation.",
     "building_town_hall": "Warm honey-grey limestone civic building, charcoal slate, aged bronze and black ironwork, dark neutral glazing and restrained stone weathering.",
-    "building_crazy_golf": "Restrained British seaside crazy golf: weathered cream concrete, faded sage, dusty blue and muted terracotta accents, dark artificial turf and dull stone.",
+    "building_crazy_golf": "Cheerful colourful British seaside crazy golf: saturated but believable emerald putting turf, red-brick paths, warm cream and grey stone obstacles, strong dusty blue, sunny yellow and terracotta-red painted accents, with rich green hedges. Fun and colourful, not grey or muted.",
     "building_nightclub": "Post-war urban nightclub in deep brown-red brick and warm-grey concrete, charcoal metalwork, smoked glazing, restrained burgundy and desaturated teal accents; no neon wash.",
-    "building_pirate_radio": "Weathered warm-grey concrete and muted red-brown brick, charcoal steel, galvanised aerial structures, aged cream panels and restrained rust.",
-    "building_theatre": "Warm pale limestone and muted red-brown brick, charcoal slate, aged bronze, dark timber doors and restrained burgundy accents; blank signage panels.",
+    "building_pirate_radio": "Tall post-war broadcast building dominated by weathered warm-grey concrete, pale aggregate panels and charcoal steel, with aged cream window bands, galvanised aerial structures and restrained rust. No red-brick facade.",
+    "building_theatre": "Warm pale limestone and muted red-brown brick, charcoal slate, aged bronze, dark timber doors and restrained burgundy accents. All planters must have healthy rich emerald and leaf-green foliage with small colourful flowers; blank signage panels.",
 }
 
 
@@ -95,7 +100,9 @@ def load_assets() -> list[dict]:
         row["source"] = source_records[row["asset_id"]]
         row["target_width"], row["target_depth"] = parse_footprint(row["footprint_suggestion"])
         row["texture_prompt"] = prompt_for(row["asset_id"])
-        row["image_path"] = CATALOGUE / "images" / row["canonical_filename"]
+        row["image_path"] = TEXTURE_REFERENCE_OVERRIDES.get(
+            row["asset_id"], CATALOGUE / "images" / row["canonical_filename"]
+        )
     return rows
 
 

@@ -2,12 +2,12 @@
   "building_id": "building_restaurant",
   "display_name": "Restaurant",
   "description": "",
-  "model_path": "res://models/Meshy_AI_Pub_0403211907/Meshy_AI_Pub_0403211907_texture.glb",
-  "model_scale": 0.65,
+  "model_path": "res://models/city-builder/building_restaurant.glb",
+  "model_scale": 0.500034499,
   "model_offset": [
+    -3.42601333e-05,
     0,
-    0,
-    0
+    -2.55274503e-05
   ],
   "model_rotation_y": 0.0,
   "footprint": [
@@ -17,6 +17,7 @@
     ]
   ],
   "category": "unique",
+  "community_role": "participant",
   "profiles": [
     {
       "type": "BuildingMetadata"
@@ -27,6 +28,20 @@
       "capacity": 40,
       "active_start": 12.0,
       "active_end": 23.0
+    },
+    {
+      "type": "CommunityEffectProfile",
+      "effects": [{
+        "effect_id": "restaurant_shared_meal",
+        "quality": "liveability",
+        "manifestation": "care",
+        "amount": 0.5,
+        "scope": "participant",
+        "capacity": 40,
+        "schedule": {"start": 12, "end": 23},
+        "stacking_group": "local_food_visit",
+        "reason": "Shared a meal at the local restaurant"
+      }]
     },
     {
       "type": "UniqueProfile",

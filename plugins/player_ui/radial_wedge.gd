@@ -15,25 +15,28 @@ var end_angle := 0.0
 var focused := false
 var hovered := false
 var icon_rect: TextureRect
-var label: Label
+var _arc_label: Label
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	icon_rect = TextureRect.new()
-	icon_rect.custom_minimum_size = Vector2(68, 68)
+	icon_rect.custom_minimum_size = Vector2(76, 76)
 	icon_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	icon_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	icon_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(icon_rect)
-	label = Label.new()
-	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	label.add_theme_font_override("font", load("res://fonts/lilita_one_regular.ttf"))
-	label.add_theme_font_size_override("font_size", 15)
-	label.add_theme_color_override("font_color", INK)
-	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(label)
+	_arc_label = Label.new()
+	_arc_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_arc_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	_arc_label.add_theme_font_override("font", load("res://fonts/lilita_one_regular.ttf"))
+	_arc_label.add_theme_font_size_override("font_size", 16)
+	_arc_label.add_theme_color_override("font_color", INK)
+	_arc_label.add_theme_color_override("font_outline_color", Color(PARCHMENT, 0.9))
+	_arc_label.add_theme_constant_override("outline_size", 2)
+	_arc_label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	_arc_label.clip_text = true
+	_arc_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(_arc_label)
 
 func configure(value: Dictionary, wheel_centre: Vector2, start: float, finish: float,
 		inner: float, outer: float) -> void:
@@ -46,9 +49,7 @@ func configure(value: Dictionary, wheel_centre: Vector2, start: float, finish: f
 	visible = not action.is_empty()
 	if not visible:
 		return
-	label.text = String(action.get("label", ""))
-	label.tooltip_text = String(action.get("accessible_description", label.text))
-	icon_rect.tooltip_text = label.tooltip_text
+	icon_rect.tooltip_text = String(action.get("accessible_description", action.get("label", "")))
 	var path := String(action.get("icon_path", ""))
 	icon_rect.texture = load(path) if not path.is_empty() and ResourceLoader.exists(path) else load("res://sprites/ui/build-menu/controls/missing-artwork.png")
 	_layout_content()
@@ -62,10 +63,28 @@ func set_states(is_focused: bool, is_hovered: bool) -> void:
 func _layout_content() -> void:
 	var middle := (start_angle + end_angle) * 0.5
 	var position_on_ring := centre + Vector2.from_angle(middle) * ((inner_radius + outer_radius) * 0.5)
-	icon_rect.position = position_on_ring - Vector2(34, 48)
-	icon_rect.size = Vector2(68, 68)
-	label.position = position_on_ring + Vector2(-74, 22)
-	label.size = Vector2(148, 40)
+	var icon_size := 82.0 if String(action.get("kind", "")) == "group" else 76.0
+	icon_rect.position = position_on_ring - Vector2(icon_size * 0.5, icon_size * 0.5)
+	icon_rect.size = Vector2.ONE * icon_size
+	_layout_curved_label()
+
+func _layout_curved_label() -> void:
+	_arc_label.visible = String(action.get("kind", "")) != "group"
+	if String(action.get("kind", "")) == "group":
+		return
+	var text := String(action.get("label", "")).strip_edges()
+	_arc_label.text = text
+	var middle := (start_angle + end_angle) * 0.5
+	var top_half := sin(middle) < 0.0
+	var radius := outer_radius - 21.0
+	var chord_width := 2.0 * radius * sin((end_angle - start_angle) * 0.5) * 0.84
+	_arc_label.size = Vector2(clampf(chord_width, 82.0, 154.0), 28.0)
+	_arc_label.pivot_offset = _arc_label.size * 0.5
+	var point := centre + Vector2.from_angle(middle) * radius
+	_arc_label.position = point - _arc_label.pivot_offset
+	# The word follows the wedge tangent. Top-half letters point outward at the
+	# top; bottom-half letters are flipped so their bottoms point outward.
+	_arc_label.rotation = middle + PI * 0.5 if top_half else middle - PI * 0.5
 
 func _draw() -> void:
 	if action.is_empty():

@@ -2,12 +2,12 @@
   "building_id": "building_postwar_midblock",
   "display_name": "Postwar Mid-Block",
   "description": "",
-  "model_path": "res://models/building-small-d.glb",
-  "model_scale": 1.0,
+  "model_path": "res://models/city-builder/building_postwar_midblock.glb",
+  "model_scale": 0.500047763,
   "model_offset": [
+    -9.00116112e-06,
     0,
-    0,
-    0
+    -4.27853205e-05
   ],
   "model_rotation_y": 0.0,
   "footprint": [
