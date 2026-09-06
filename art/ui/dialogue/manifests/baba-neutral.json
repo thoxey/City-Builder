@@ -1,0 +1,26 @@
+{
+  "slug": "baba-neutral",
+  "role": "dialogue-portrait",
+  "source_path": "masters/baba-neutral.png",
+  "source_dimensions": [
+    512,
+    512
+  ],
+  "runtime_path": "game/baba-neutral.png",
+  "runtime_dimensions": [
+    512,
+    512
+  ],
+  "display_size_range": [
+    180,
+    260
+  ],
+  "format": "PNG",
+  "colour_mode": "RGBA",
+  "resampling": "Lanczos",
+  "proof_sizes": [
+    180,
+    260,
+    512
+  ]
+}

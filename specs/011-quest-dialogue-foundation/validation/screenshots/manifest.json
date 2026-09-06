@@ -1,0 +1,175 @@
+{
+  "captures": [
+    {
+      "file": "1280x720-player-active.png",
+      "state": "player-active",
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "1280x720-npc-active.png",
+      "state": "npc-active",
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "1280x720-narration.png",
+      "state": "narration",
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "1280x720-choices.png",
+      "state": "choices",
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "1280x720-three-way-swap.png",
+      "state": "three-way-swap",
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "1280x720-long-text-scrollback.png",
+      "state": "long-text-scrollback",
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "1280x720-missing-art-fallback.png",
+      "state": "missing-art-fallback",
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "1920x1080-player-active.png",
+      "state": "player-active",
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "file": "1920x1080-npc-active.png",
+      "state": "npc-active",
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "file": "1920x1080-narration.png",
+      "state": "narration",
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "file": "1920x1080-choices.png",
+      "state": "choices",
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "file": "1920x1080-three-way-swap.png",
+      "state": "three-way-swap",
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "file": "1920x1080-long-text-scrollback.png",
+      "state": "long-text-scrollback",
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "file": "1920x1080-missing-art-fallback.png",
+      "state": "missing-art-fallback",
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "file": "3840x2160-player-active.png",
+      "state": "player-active",
+      "viewport": [
+        3840,
+        2160
+      ]
+    },
+    {
+      "file": "3840x2160-npc-active.png",
+      "state": "npc-active",
+      "viewport": [
+        3840,
+        2160
+      ]
+    },
+    {
+      "file": "3840x2160-narration.png",
+      "state": "narration",
+      "viewport": [
+        3840,
+        2160
+      ]
+    },
+    {
+      "file": "3840x2160-choices.png",
+      "state": "choices",
+      "viewport": [
+        3840,
+        2160
+      ]
+    },
+    {
+      "file": "3840x2160-three-way-swap.png",
+      "state": "three-way-swap",
+      "viewport": [
+        3840,
+        2160
+      ]
+    },
+    {
+      "file": "3840x2160-long-text-scrollback.png",
+      "state": "long-text-scrollback",
+      "viewport": [
+        3840,
+        2160
+      ]
+    },
+    {
+      "file": "3840x2160-missing-art-fallback.png",
+      "state": "missing-art-fallback",
+      "viewport": [
+        3840,
+        2160
+      ]
+    }
+  ],
+  "feature": "011-quest-dialogue-foundation",
+  "instant_text": true,
+  "renderer": "normal"
+}

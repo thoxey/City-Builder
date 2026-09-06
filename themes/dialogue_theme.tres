@@ -1,0 +1,141 @@
+[gd_resource type="Theme" load_steps=18 format=3]
+
+[ext_resource type="FontFile" path="res://fonts/lilita_one_regular.ttf" id="1_font"]
+[ext_resource type="Texture2D" path="res://sprites/ui/build-menu/components/modal-confirmation-frame.png" id="2_frame"]
+[ext_resource type="Texture2D" path="res://sprites/ui/build-menu/components/button-normal.png" id="3_button_normal"]
+[ext_resource type="Texture2D" path="res://sprites/ui/build-menu/components/button-hover.png" id="4_button_hover"]
+[ext_resource type="Texture2D" path="res://sprites/ui/build-menu/components/button-pressed.png" id="5_button_pressed"]
+[ext_resource type="Texture2D" path="res://sprites/ui/build-menu/components/button-disabled.png" id="6_button_disabled"]
+[ext_resource type="Texture2D" path="res://sprites/ui/build-menu/components/divider-horizontal.png" id="7_divider"]
+[ext_resource type="Texture2D" path="res://sprites/ui/build-menu/components/scroll-track.png" id="8_scroll_track"]
+[ext_resource type="Texture2D" path="res://sprites/ui/build-menu/components/scroll-handle-normal.png" id="9_scroll_normal"]
+[ext_resource type="Texture2D" path="res://sprites/ui/build-menu/components/scroll-handle-hover.png" id="10_scroll_hover"]
+[ext_resource type="Texture2D" path="res://sprites/ui/build-menu/components/scroll-handle-pressed.png" id="11_scroll_pressed"]
+[ext_resource type="Texture2D" path="res://sprites/ui/build-menu/components/scroll-handle-focused.png" id="12_scroll_focused"]
+[ext_resource type="Texture2D" path="res://sprites/ui/dialogue/portrait-frame.png" id="13_portrait_frame"]
+[ext_resource type="Texture2D" path="res://sprites/ui/dialogue/active-emphasis.png" id="14_emphasis"]
+
+[sub_resource type="StyleBoxTexture" id="StyleDialogueFrame"]
+texture = ExtResource("2_frame")
+texture_margin_left = 82.0
+texture_margin_top = 76.0
+texture_margin_right = 82.0
+texture_margin_bottom = 76.0
+
+[sub_resource type="StyleBoxTexture" id="StyleButtonNormal"]
+texture = ExtResource("3_button_normal")
+texture_margin_left = 64.0
+texture_margin_top = 44.0
+texture_margin_right = 64.0
+texture_margin_bottom = 36.0
+content_margin_left = 14.0
+content_margin_top = 8.0
+content_margin_right = 14.0
+content_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxTexture" id="StyleButtonHover"]
+texture = ExtResource("4_button_hover")
+texture_margin_left = 64.0
+texture_margin_top = 44.0
+texture_margin_right = 64.0
+texture_margin_bottom = 36.0
+
+[sub_resource type="StyleBoxTexture" id="StyleButtonPressed"]
+texture = ExtResource("5_button_pressed")
+texture_margin_left = 64.0
+texture_margin_top = 44.0
+texture_margin_right = 64.0
+texture_margin_bottom = 36.0
+
+[sub_resource type="StyleBoxTexture" id="StyleButtonDisabled"]
+texture = ExtResource("6_button_disabled")
+texture_margin_left = 64.0
+texture_margin_top = 44.0
+texture_margin_right = 64.0
+texture_margin_bottom = 36.0
+
+[sub_resource type="StyleBoxTexture" id="StyleDivider"]
+texture = ExtResource("7_divider")
+texture_margin_left = 32.0
+texture_margin_top = 6.0
+texture_margin_right = 32.0
+texture_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id="StyleScrollTrack"]
+texture = ExtResource("8_scroll_track")
+texture_margin_left = 18.0
+texture_margin_top = 44.0
+texture_margin_right = 18.0
+texture_margin_bottom = 44.0
+
+[sub_resource type="StyleBoxTexture" id="StyleScrollNormal"]
+texture = ExtResource("9_scroll_normal")
+texture_margin_left = 18.0
+texture_margin_top = 38.0
+texture_margin_right = 18.0
+texture_margin_bottom = 38.0
+
+[sub_resource type="StyleBoxTexture" id="StyleScrollHover"]
+texture = ExtResource("10_scroll_hover")
+texture_margin_left = 18.0
+texture_margin_top = 38.0
+texture_margin_right = 18.0
+texture_margin_bottom = 38.0
+
+[sub_resource type="StyleBoxTexture" id="StyleScrollPressed"]
+texture = ExtResource("11_scroll_pressed")
+texture_margin_left = 18.0
+texture_margin_top = 38.0
+texture_margin_right = 18.0
+texture_margin_bottom = 38.0
+
+[sub_resource type="StyleBoxTexture" id="StyleScrollFocused"]
+texture = ExtResource("12_scroll_focused")
+texture_margin_left = 18.0
+texture_margin_top = 38.0
+texture_margin_right = 18.0
+texture_margin_bottom = 38.0
+
+[sub_resource type="StyleBoxTexture" id="StylePortraitFrame"]
+texture = ExtResource("13_portrait_frame")
+texture_margin_left = 46.0
+texture_margin_top = 46.0
+texture_margin_right = 46.0
+texture_margin_bottom = 46.0
+content_margin_left = 18.0
+content_margin_top = 18.0
+content_margin_right = 18.0
+content_margin_bottom = 18.0
+
+[sub_resource type="StyleBoxTexture" id="StyleEmphasis"]
+texture = ExtResource("14_emphasis")
+texture_margin_left = 72.0
+texture_margin_top = 72.0
+texture_margin_right = 72.0
+texture_margin_bottom = 72.0
+
+[resource]
+default_font = ExtResource("1_font")
+default_font_size = 18
+Button/colors/font_color = Color(0.09, 0.09, 0.075, 1)
+Button/colors/font_hover_color = Color(0.09, 0.09, 0.075, 1)
+Button/colors/font_pressed_color = Color(0.09, 0.09, 0.075, 1)
+Button/colors/font_focus_color = Color(0.09, 0.09, 0.075, 1)
+Button/styles/normal = SubResource("StyleButtonNormal")
+Button/styles/hover = SubResource("StyleButtonHover")
+Button/styles/pressed = SubResource("StyleButtonPressed")
+Button/styles/focus = SubResource("StyleButtonHover")
+Button/styles/disabled = SubResource("StyleButtonDisabled")
+HSeparator/styles/separator = SubResource("StyleDivider")
+VScrollBar/styles/scroll = SubResource("StyleScrollTrack")
+VScrollBar/styles/scroll_focus = SubResource("StyleScrollTrack")
+VScrollBar/styles/grabber = SubResource("StyleScrollNormal")
+VScrollBar/styles/grabber_highlight = SubResource("StyleScrollHover")
+VScrollBar/styles/grabber_pressed = SubResource("StyleScrollPressed")
+VScrollBar/styles/focus = SubResource("StyleScrollFocused")
+DialogueFrame/base_type = &"PanelContainer"
+DialogueFrame/styles/panel = SubResource("StyleDialogueFrame")
+DialoguePortraitFrame/base_type = &"PanelContainer"
+DialoguePortraitFrame/styles/panel = SubResource("StylePortraitFrame")
+DialogueActiveEmphasis/base_type = &"Panel"
+DialogueActiveEmphasis/styles/panel = SubResource("StyleEmphasis")

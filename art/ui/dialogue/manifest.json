@@ -1,0 +1,45 @@
+{
+  "feature": "011-quest-dialogue-foundation",
+  "classification": "illustrative dialogue UI",
+  "display_size_range": [180, 260],
+  "runtime_size": [512, 512],
+  "format": "PNG",
+  "colour_mode": "RGBA",
+  "resampling": "Lanczos",
+  "text_policy": "All dialogue copy, names, hints, and choices are engine text.",
+  "talking_videos_modified": false,
+  "assets": [
+    {"slug":"ambrose-neutral","role":"player portrait / neutral","source":"canonical portrait","runtime":"res://data/characters/ambrose/expressions/neutral.png"},
+    {"slug":"ambrose-concerned","role":"player portrait / concerned","source":"generated from canonical portrait and talking_1 frame; identity-preserving vintage British comic portrait, concerned expression, no text or frame","runtime":"res://data/characters/ambrose/expressions/concerned.png"},
+    {"slug":"ambrose-thoughtful","role":"player portrait / thoughtful","source":"talking_2 frame at 2.5 seconds; provisional 512 px source","runtime":"res://data/characters/ambrose/expressions/thoughtful.png"},
+    {"slug":"baba-neutral","role":"Baba portrait / neutral","source":"canonical portrait","runtime":"res://data/characters/aristocrat_residential/expressions/neutral.png"},
+    {"slug":"baba-concerned","role":"Baba portrait / concerned","source":"talking_2 frame at 2.5 seconds; provisional 512 px source","runtime":"res://data/characters/aristocrat_residential/expressions/concerned.png"},
+    {"slug":"baba-surprised","role":"Baba portrait / surprised","source":"generated from canonical portrait and talking_4 frame; identity-preserving vintage British comic portrait, surprised expression, no text or frame","runtime":"res://data/characters/aristocrat_residential/expressions/surprised.png"},
+    {"slug":"baba-pleased","role":"Baba portrait / pleased","source":"talking_3 frame at 2.5 seconds; provisional 512 px source","runtime":"res://data/characters/aristocrat_residential/expressions/pleased.png"},
+    {"slug":"flick-neutral","role":"Flick portrait / neutral","source":"canonical portrait","runtime":"res://data/characters/aristocrat_commercial/expressions/neutral.png"},
+    {"slug":"flick-concerned","role":"Flick portrait / concerned","source":"generated from canonical portrait and talking_1 frame; identity-preserving vintage British comic portrait, concerned expression, no text or frame","runtime":"res://data/characters/aristocrat_commercial/expressions/concerned.png"},
+    {"slug":"flick-surprised","role":"Flick portrait / surprised","source":"talking_4 frame at 2.5 seconds; provisional 512 px source","runtime":"res://data/characters/aristocrat_commercial/expressions/surprised.png"},
+    {"slug":"portrait-frame","role":"fixed square portrait frame","source":"approved build-menu scroll-arrow-button-base component","runtime":"res://sprites/ui/dialogue/portrait-frame.png"},
+    {"slug":"active-emphasis","role":"fixed square active-speaker emphasis overlay","source":"approved build-menu focus-overlay component","runtime":"res://sprites/ui/dialogue/active-emphasis.png"},
+    {"slug":"missing-portrait","role":"missing-art fallback portrait","source":"approved build-menu missing-artwork component","runtime":"res://sprites/ui/dialogue/missing-portrait.png"}
+  ],
+  "reused_theme_assets": [
+    "res://sprites/ui/build-menu/components/modal-confirmation-frame.png",
+    "res://sprites/ui/build-menu/components/button-normal.png",
+    "res://sprites/ui/build-menu/components/button-hover.png",
+    "res://sprites/ui/build-menu/components/button-pressed.png",
+    "res://sprites/ui/build-menu/components/button-disabled.png",
+    "res://sprites/ui/build-menu/components/divider-horizontal.png",
+    "res://sprites/ui/build-menu/components/scroll-track.png",
+    "res://sprites/ui/build-menu/components/scroll-handle-normal.png",
+    "res://sprites/ui/build-menu/components/scroll-handle-hover.png",
+    "res://sprites/ui/build-menu/components/scroll-handle-pressed.png",
+    "res://sprites/ui/build-menu/components/scroll-handle-focused.png"
+  ],
+  "proofs": [
+    "proofs/actual-size-180px.png",
+    "proofs/actual-size-260px.png",
+    "proofs/grayscale-180px.png",
+    "proofs/portraits-on-noisy-gameplay.png"
+  ]
+}

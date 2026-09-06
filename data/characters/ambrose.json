@@ -9,6 +9,16 @@
   "arrival_requires_tier": 1,
   "want_building_id": "",
   "portrait": "res://data/characters/ambrose/portrait.png",
+  "default_expression": "neutral",
+  "expressions": {
+    "neutral": "res://data/characters/ambrose/expressions/line_art/neutral.png",
+    "pleased": "res://data/characters/ambrose/expressions/line_art/pleased.png",
+    "disapproving": "res://data/characters/ambrose/expressions/line_art/disapproving.png",
+    "angry": "res://data/characters/ambrose/expressions/line_art/angry.png",
+    "surprised": "res://data/characters/ambrose/expressions/line_art/surprised.png",
+    "concerned": "res://data/characters/ambrose/expressions/line_art/concerned.png",
+    "thoughtful": "res://data/characters/ambrose/expressions/line_art/thoughtful.png"
+  },
   "talking_videos": [
     "res://data/characters/ambrose/talking_1.ogv",
     "res://data/characters/ambrose/talking_2.ogv",

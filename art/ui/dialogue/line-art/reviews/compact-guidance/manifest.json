@@ -1,0 +1,30 @@
+{
+  "captures": [
+    {
+      "file": "1280x720-baba-request.png",
+      "speaker": "aristocrat_residential",
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "1920x1080-ambrose-growth.png",
+      "speaker": "ambrose",
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "file": "3840x2160-william-landmark.png",
+      "speaker": "aristocrat_patron",
+      "viewport": [
+        3840,
+        2160
+      ]
+    }
+  ],
+  "input_policy": "surface click and close button dismiss the current direction and consume the pointer event",
+  "role": "actual-size compact in-game dialogue proofs"
+}

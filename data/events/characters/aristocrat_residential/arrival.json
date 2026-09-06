@@ -8,38 +8,92 @@
   "enabled_if": "",
   "payload": {
     "tree_id": "aristocrat_residential_arrival_tree",
+    "participants": [
+      "player",
+      "aristocrat_residential"
+    ],
     "entry_node_id": "n_start",
     "nodes": [
       {
         "node_id": "n_start",
-        "speaker": "",
-        "body": "[PLACEHOLDER] aristocrat_residential_arrival \u2014 n_start body.",
-        "on_enter": [],
-        "options": [
+        "beats": [
           {
-            "label": "Continue",
-            "next": "n_end",
-            "effects": []
+            "type": "speech",
+            "speaker": "player",
+            "expression": "concerned",
+            "text": "Mr Soyink? That radio mast was not on the plans yesterday."
+          },
+          {
+            "type": "speech",
+            "speaker": "aristocrat_residential",
+            "expression": "surprised",
+            "text": "Plans? My dear fellow, it arrived under its own steam."
+          },
+          {
+            "type": "narration",
+            "text": "A valve warms with a soft orange glow. Somewhere in the set, a dance band fades into weather reports."
+          },
+          {
+            "type": "speech",
+            "speaker": "aristocrat_residential",
+            "expression": "concerned",
+            "text": "The town has plenty to say. What it lacks is a frequency on which to say it."
           }
-        ]
-      },
-      {
-        "node_id": "n_end",
-        "speaker": "",
-        "body": "[PLACEHOLDER] aristocrat_residential_arrival \u2014 n_end body.",
-        "on_enter": [],
+        ],
+        "on_enter": [
+          {
+            "kind": "set_flag",
+            "target": "met_aristocrat_residential"
+          }
+        ],
         "options": [
           {
-            "label": "Close",
-            "next": "",
+            "label": "We'll give the town a proper station.",
+            "next": "n_public",
             "effects": [
               {
                 "kind": "set_flag",
-                "target": "met_aristocrat_residential"
+                "target": "baba_frequency_public"
+              }
+            ]
+          },
+          {
+            "label": "Keep it small, local, and difficult to trace.",
+            "next": "n_local",
+            "effects": [
+              {
+                "kind": "set_flag",
+                "target": "baba_frequency_local"
               }
             ]
           }
         ]
+      },
+      {
+        "node_id": "n_public",
+        "beats": [
+          {
+            "type": "speech",
+            "speaker": "aristocrat_residential",
+            "expression": "pleased",
+            "text": "Splendid. A proper station, with improper music. Now you are talking my language."
+          }
+        ],
+        "on_enter": [],
+        "options": []
+      },
+      {
+        "node_id": "n_local",
+        "beats": [
+          {
+            "type": "speech",
+            "speaker": "aristocrat_residential",
+            "expression": "pleased",
+            "text": "Discreet, neighbourly, and just beyond the regulator's reach. I knew I had come to the right town."
+          }
+        ],
+        "on_enter": [],
+        "options": []
       }
     ]
   }

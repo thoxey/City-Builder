@@ -14,8 +14,10 @@ extends PluginBase
 ##
 ## Collapse state is saved per DataMap so the player's preferred layout sticks.
 
+const CompactGuidanceViewCls := preload("res://plugins/dashboard/compact_guidance_view.gd")
+
 func get_plugin_name() -> String: return "Dashboard"
-func get_dependencies() -> Array[String]: return ["CharacterSystem", "PatronSystem", "Demand", "Community", "BuildingCatalog"]
+func get_dependencies() -> Array[String]: return ["CharacterSystem", "PatronSystem", "Demand", "Community", "BuildingCatalog", "RoadNetwork"]
 
 const PANEL_WIDTH := 380
 const TAB_WIDTH := 28
@@ -40,6 +42,7 @@ var _patrons:    PluginBase
 var _demand:     PluginBase
 var _catalog:    PluginBase
 var _community:  PluginBase
+var _road_network: PluginBase
 
 # UI refs
 var _canvas: CanvasLayer
@@ -55,6 +58,8 @@ var _patrons_root: VBoxContainer
 var _community_root: Control
 var _top_tabs: Dictionary = {}
 var _selected_top_tab := "community"
+var _guidance_view: Control
+var _player_input_mode := "world"
 
 func inject(deps: Dictionary) -> void:
 	_characters = deps.get("CharacterSystem")
@@ -62,6 +67,7 @@ func inject(deps: Dictionary) -> void:
 	_demand     = deps.get("Demand")
 	_community  = deps.get("Community")
 	_catalog    = deps.get("BuildingCatalog")
+	_road_network = deps.get("RoadNetwork")
 
 func _plugin_ready() -> void:
 	_build_ui()
@@ -156,6 +162,9 @@ func _build_ui() -> void:
 	_community_overlay = CommunityMapOverlay.new()
 	_canvas.add_child(_community_overlay)
 	_canvas.move_child(_community_overlay, 0)
+	_guidance_view = CompactGuidanceViewCls.new()
+	_canvas.add_child(_guidance_view)
+	_guidance_view.build()
 	_selected_top_tab = String(GameState.map.community_selected_tab) if GameState.map else "community"
 	select_top_tab(_selected_top_tab)
 
@@ -181,6 +190,8 @@ func _wire_signals() -> void:
 	GameEvents.community_qualities_changed.connect(func(_q): _refresh("community_qualities", ""))
 	GameEvents.community_ui_requested.connect(open_community)
 	GameEvents.community_ui_refresh_requested.connect(func(_r): _refresh_overlay())
+	GameEvents.player_input_mode_changed.connect(_on_player_input_mode_changed)
+	GameEvents.structure_placed.connect(func(_position, _index, _orientation): _refresh("structure_placed", ""))
 
 func _on_character_state_changed(cid: String, new_state: int) -> void:
 	print("[Dashboard] refresh: trigger=character_state_changed id=%s new_state=%s"
@@ -199,8 +210,11 @@ func _refresh(_trigger: String, _subject: String) -> void:
 		_community_label.text = CommunityInspector.summary_text(_community.get_snapshot(true))
 	for pid in _patron_cards.keys():
 		(_patron_cards[pid] as _PatronCard).update()
-	var hint := compute_hint(snapshot())
+	var snap := snapshot()
+	var hint := compute_hint(snap)
 	_hint_label.text = hint
+	if _guidance_view:
+		_guidance_view.set_guidance(build_compact_guidance_model(snap))
 	_refresh_overlay()
 	print("[Dashboard] hint: \"%s\"" % hint)
 
@@ -279,23 +293,118 @@ func compute_hint(snap: Snapshot) -> String:
 		"complete": return "First patron complete"
 	return "Grow your town"
 
+
+## Presentation-only projection for the dismissible world HUD bubble. It owns no
+## progression or placement behavior and never mutates the canonical next step.
+func build_compact_guidance_model(snap: Snapshot) -> Dictionary:
+	var step: Dictionary = (snap.next_step if not snap.next_step.is_empty() else _next_step_for_snapshot(snap)).duplicate(true)
+	if _town_hall_direction_required():
+		step = {
+			"kind":"place_foundation", "subject_id":"building_town_hall",
+			"subject_label":"Town Hall",
+		}
+	var kind := String(step.get("kind", "grow"))
+	var candidate_id := "ambrose"
+	var expression := "thoughtful"
+	match kind:
+		"resolve_arrival":
+			candidate_id = String(step.get("owner_character_id", ""))
+			expression = "concerned"
+		"place_request":
+			candidate_id = String(step.get("owner_character_id", ""))
+			expression = "concerned"
+		"place_landmark": candidate_id = "%s_patron" % String(step.get("owner_patron_id", ""))
+		"complete": expression = "pleased"
+	if candidate_id.is_empty() or not _has_approved_line_art(candidate_id, expression):
+		candidate_id = "ambrose"
+		expression = "pleased" if kind == "complete" else "thoughtful"
+
+	var definition: Dictionary = _characters.get_def(candidate_id) if _characters else {}
+	var speaker_name := String(definition.get("display_name", candidate_id))
+	var subject_label := String(step.get("subject_label", ""))
+	var owner_label := String(step.get("owner_character_label", ""))
+	var text := ""
+	match kind:
+		"resolve_arrival":
+			text = "Open the Inbox when you're ready to talk." if candidate_id != "ambrose" else "%s is waiting in your Inbox." % subject_label
+		"place_request":
+			text = "Place %s next." % subject_label if candidate_id != "ambrose" else "%s needs a %s. Place one next." % [owner_label, subject_label]
+		"place_landmark": text = "Place %s next." % subject_label
+		"place_foundation": text = "Place the Town Hall first to found your town."
+		"fulfilled_demand": text = "Place %s until %d demand is fulfilled. You're at %d." % [String(step.get("bucket_label", "town")), int(step.get("required", 0)), int(step.get("current", 0))]
+		"placed_tier": text = "Place a tier %d %s building next. The town is at tier %d." % [int(step.get("required", 0)), String(step.get("bucket_label", "town")), int(step.get("current", 0))]
+		"complete": text = "The first patron is complete. Nicely done."
+		_: text = "Keep growing the town. I'll let you know what we need next."
+
+	var portrait := _resolve_guidance_portrait(candidate_id, expression)
+	return {
+		"kind":kind,
+		"speaker_id":candidate_id,
+		"speaker_name":speaker_name,
+		"expression":portrait.get("expression", expression),
+		"text":text,
+		"portrait_path":portrait.get("path", ""),
+		"portrait_source":portrait.get("source", "missing"),
+		"target_id":step.get("subject_id", ""),
+		"target_label":subject_label,
+	}
+
+
+func _town_hall_direction_required() -> bool:
+	return bool(GameState.map and GameState.map.rooted_town_rules and _road_network
+		and _road_network.has_method("get_town_hall_internal_id")
+		and int(_road_network.get_town_hall_internal_id()) < 0)
+
+
+func _has_approved_line_art(character_id: String, expression: String) -> bool:
+	if _characters == null:
+		return false
+	var definition: Dictionary = _characters.get_def(character_id)
+	var expressions: Dictionary = definition.get("expressions", {}) if definition.get("expressions", {}) is Dictionary else {}
+	var path := String(expressions.get(expression, ""))
+	return path.contains("/line_art/") and ResourceLoader.exists(path)
+
+
+func _resolve_guidance_portrait(character_id: String, expression: String) -> Dictionary:
+	var definition: Dictionary = _characters.get_def(character_id) if _characters else {}
+	var expressions: Dictionary = definition.get("expressions", {}) if definition.get("expressions", {}) is Dictionary else {}
+	var path := String(expressions.get(expression, ""))
+	if not path.is_empty() and ResourceLoader.exists(path):
+		return {"path":path, "expression":expression, "source":"semantic_expression"}
+	var fallback_expression := String(definition.get("default_expression", ""))
+	path = String(expressions.get(fallback_expression, ""))
+	if not path.is_empty() and ResourceLoader.exists(path):
+		return {"path":path, "expression":fallback_expression, "source":"default_expression"}
+	path = String(definition.get("portrait", ""))
+	return {"path":path, "expression":"", "source":"legacy_portrait"} if not path.is_empty() and ResourceLoader.exists(path) else {}
+
+
+func _on_player_input_mode_changed(mode: String) -> void:
+	_player_input_mode = mode
+	if _guidance_view:
+		_guidance_view.set_suppressed(mode in ["modal", "radial", "inspection"])
+
 func _next_step_for_snapshot(snap: Snapshot) -> Dictionary:
 	if not snap.first_arrived.is_empty():
 		var arrived: Dictionary = snap.character_projections.get(snap.first_arrived, {})
 		return {"kind":"resolve_arrival", "subject_id":snap.first_arrived,
-			"subject_label":arrived.get("display_name", _display_name_for(snap.character_defs.get(snap.first_arrived, {}), snap.first_arrived))}
+			"subject_label":arrived.get("display_name", _display_name_for(snap.character_defs.get(snap.first_arrived, {}), snap.first_arrived)),
+			"owner_character_id":snap.first_arrived}
 	if not snap.first_want_revealed.is_empty():
 		var cid := snap.first_want_revealed
 		var request: Dictionary = snap.character_projections.get(cid, {})
 		var want_id := String(request.get("want_building_id", snap.character_defs.get(cid, {}).get("want_building_id", "")))
 		return {"kind":"place_request", "subject_id":want_id,
-			"subject_label":request.get("want_display_name", _building_display_name(want_id))}
+			"subject_label":request.get("want_display_name", _building_display_name(want_id)),
+			"owner_character_id":cid,
+			"owner_character_label":request.get("display_name", _display_name_for(snap.character_defs.get(cid, {}), cid))}
 	if not snap.first_landmark_available.is_empty():
 		var pid := snap.first_landmark_available
 		var patron: Dictionary = snap.patron_projections.get(pid, {})
 		var landmark_id := String(patron.get("landmark_building_id", _patrons.get_def(pid).get("landmark_building_id", "")))
 		return {"kind":"place_landmark", "subject_id":landmark_id,
-			"subject_label":patron.get("landmark_display_name", _building_display_name(landmark_id))}
+			"subject_label":patron.get("landmark_display_name", _building_display_name(landmark_id)),
+			"owner_patron_id":pid}
 	var character_ids: Array = snap.character_projections.keys()
 	character_ids.sort()
 	for cid in character_ids:

@@ -1,0 +1,26 @@
+{
+  "slug": "portrait-frame",
+  "role": "portrait-frame",
+  "source_path": "masters/portrait-frame.png",
+  "source_dimensions": [
+    1254,
+    1254
+  ],
+  "runtime_path": "game/portrait-frame.png",
+  "runtime_dimensions": [
+    512,
+    512
+  ],
+  "display_size_range": [
+    180,
+    260
+  ],
+  "format": "PNG",
+  "colour_mode": "RGBA",
+  "resampling": "Lanczos",
+  "proof_sizes": [
+    180,
+    260,
+    512
+  ]
+}

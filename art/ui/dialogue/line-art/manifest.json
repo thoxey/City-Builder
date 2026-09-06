@@ -1,0 +1,126 @@
+{
+  "version": 1,
+  "status": "ready_for_integration",
+  "classification": "illustrative dialogue portraits",
+  "state_order": [
+    {
+      "id": "neutral",
+      "label": "Neutral / listening",
+      "source_region": [0, 0, 627, 627]
+    },
+    {
+      "id": "pleased",
+      "label": "Pleased / approving",
+      "aliases": ["happy", "approving"],
+      "source_region": [627, 0, 627, 627]
+    },
+    {
+      "id": "disapproving",
+      "label": "Disapproving / sceptical",
+      "source_region": [1254, 0, 627, 627]
+    },
+    {
+      "id": "angry",
+      "label": "Angry / frustrated",
+      "aliases": ["frustrated"],
+      "source_region": [1881, 0, 627, 627]
+    },
+    {
+      "id": "surprised",
+      "label": "Surprised / alarmed",
+      "source_region": [0, 627, 627, 627]
+    },
+    {
+      "id": "concerned",
+      "label": "Concerned / worried",
+      "source_region": [627, 627, 627, 627]
+    },
+    {
+      "id": "thoughtful",
+      "label": "Thoughtful / quizzical",
+      "aliases": ["quizzical", "thinking"],
+      "source_region": [1254, 627, 627, 627]
+    }
+  ],
+  "coordinate_system": {
+    "origin": "top-left",
+    "units": "source pixels"
+  },
+  "format": {
+    "master_dimensions": [627, 627],
+    "runtime_dimensions": [512, 512],
+    "display_size_range": [180, 260],
+    "file_type": "PNG",
+    "colour_mode": "RGBA",
+    "colour_space": "sRGB",
+    "visible_rgb": "#000000",
+    "alpha": "straight",
+    "background_rule": "fully transparent; antialiasing stored only in alpha",
+    "resampling": "Lanczos",
+    "source_to_alpha": "inverted source luminance remapped from 5% to 90%; pale paper haze discarded"
+  },
+  "proofs": [
+    "res://art/ui/dialogue/line-art/review/contact-sheet-parchment-180px.png",
+    "res://art/ui/dialogue/line-art/review/contact-sheet-alpha-checker-128px.png"
+  ],
+  "characters": [
+    {
+      "character_id": "ambrose",
+      "display_name": "Ambrose",
+      "source_sheet": "res://art/characters/ambrose/masters/ambrose-expression-sheet-seven-v1.png",
+      "definition_path": "res://data/characters/ambrose.json",
+      "master_directory": "res://art/ui/dialogue/line-art/masters/ambrose",
+      "runtime_directory": "res://data/characters/ambrose/expressions/line_art",
+      "expressions": {
+        "neutral": "res://data/characters/ambrose/expressions/line_art/neutral.png",
+        "pleased": "res://data/characters/ambrose/expressions/line_art/pleased.png",
+        "disapproving": "res://data/characters/ambrose/expressions/line_art/disapproving.png",
+        "angry": "res://data/characters/ambrose/expressions/line_art/angry.png",
+        "surprised": "res://data/characters/ambrose/expressions/line_art/surprised.png",
+        "concerned": "res://data/characters/ambrose/expressions/line_art/concerned.png",
+        "thoughtful": "res://data/characters/ambrose/expressions/line_art/thoughtful.png"
+      }
+    },
+    {
+      "character_id": "aristocrat_residential",
+      "display_name": "Baba Soyink",
+      "source_sheet": "res://art/characters/baba-soyink/masters/baba-soyink-expression-sheet-seven-v1.png",
+      "definition_path": "res://data/characters/aristocrat_residential.json",
+      "master_directory": "res://art/ui/dialogue/line-art/masters/baba-soyink",
+      "runtime_directory": "res://data/characters/aristocrat_residential/expressions/line_art",
+      "expressions": {
+        "neutral": "res://data/characters/aristocrat_residential/expressions/line_art/neutral.png",
+        "pleased": "res://data/characters/aristocrat_residential/expressions/line_art/pleased.png",
+        "disapproving": "res://data/characters/aristocrat_residential/expressions/line_art/disapproving.png",
+        "angry": "res://data/characters/aristocrat_residential/expressions/line_art/angry.png",
+        "surprised": "res://data/characters/aristocrat_residential/expressions/line_art/surprised.png",
+        "concerned": "res://data/characters/aristocrat_residential/expressions/line_art/concerned.png",
+        "thoughtful": "res://data/characters/aristocrat_residential/expressions/line_art/thoughtful.png"
+      }
+    },
+    {
+      "character_id": "aristocrat_patron",
+      "display_name": "Sir William",
+      "source_sheet": "res://art/characters/sir-william/masters/sir-william-expression-sheet-seven-v1.png",
+      "definition_path": "res://data/characters/aristocrat_patron.json",
+      "master_directory": "res://art/ui/dialogue/line-art/masters/sir-william",
+      "runtime_directory": "res://data/characters/william/expressions/line_art",
+      "expressions": {
+        "neutral": "res://data/characters/william/expressions/line_art/neutral.png",
+        "pleased": "res://data/characters/william/expressions/line_art/pleased.png",
+        "disapproving": "res://data/characters/william/expressions/line_art/disapproving.png",
+        "angry": "res://data/characters/william/expressions/line_art/angry.png",
+        "surprised": "res://data/characters/william/expressions/line_art/surprised.png",
+        "concerned": "res://data/characters/william/expressions/line_art/concerned.png",
+        "thoughtful": "res://data/characters/william/expressions/line_art/thoughtful.png"
+      }
+    }
+  ],
+  "integration": {
+    "character_json_updated": true,
+    "compact_guidance_surface": true,
+    "talking_videos_modified": false,
+    "legacy_portraits_modified": false,
+    "notes": "All three seven-state maps are integrated semantically. Full dialogue and compact in-game guidance compose the unchanged transparent black line art over a light parchment medallion; Flick remains intentionally excluded."
+  }
+}

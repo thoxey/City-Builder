@@ -8,6 +8,7 @@ extends GutTest
 ## fighting the button tree.
 
 const DialogueCls := preload("res://plugins/dialogue/dialogue_plugin.gd")
+const Fixtures := preload("res://test/unit/dialogue/dialogue_fixtures.gd")
 
 var _plugin: Node
 var _stub_events: Object
@@ -80,9 +81,11 @@ func test_tree_traversal_follows_next_until_close() -> void:
 	_plugin.open_event_for_test(rec)
 	assert_eq(_plugin.current_node_id(), "n_start")
 
+	_reach_choices()
 	_plugin._on_option_pressed({"label": "go", "next": "n_middle", "effects": []})
 	assert_eq(_plugin.current_node_id(), "n_middle")
 
+	_reach_choices()
 	_plugin._on_option_pressed({"label": "end", "next": "", "effects": []})
 	assert_false(_plugin.is_modal_open())
 
@@ -99,6 +102,7 @@ func test_option_effects_forwarded_to_event_system() -> void:
 		]
 	}
 	_plugin.open_event_for_test(rec)
+	_reach_choices()
 	_plugin._on_option_pressed({"label": "do", "next": "", "effects": [{"kind": "set_flag", "target": "f1"}]})
 	assert_eq(_stub_events.applied_effects.size(), 1)
 	assert_eq(_stub_events.applied_effects[0].get("kind"), "set_flag")
@@ -139,6 +143,124 @@ func test_headless_resolution_rejects_unknown_and_non_pending_events() -> void:
 	_stub_events.records["known"] = record
 	assert_eq(_plugin.resolve_pending_event("known")["reason"], PlaytestActionResult.DIALOGUE_NOT_PENDING)
 
+func test_visible_entry_rejects_invalid_normalized_record_without_effects_or_acknowledgement() -> void:
+	var record := _invalid_new_record("invalid_visible")
+	_plugin.open_event_for_test(record)
+	assert_false(_plugin.is_modal_open())
+	assert_eq(_stub_events.applied_effects, [])
+	assert_eq(_stub_events.acknowledged_ids, [])
+	assert_eq(_plugin.last_diagnostic_codes(), ["unknown_dialogue_beat_type"])
+
+func test_headless_entry_rejects_invalid_normalized_record_without_effects_or_acknowledgement() -> void:
+	var record := _invalid_new_record("invalid_headless")
+	_stub_events.records["invalid_headless"] = record
+	_stub_events.pending["invalid_headless"] = true
+	var outcome: Dictionary = _plugin.resolve_pending_event("invalid_headless")
+	assert_eq(outcome["status"], PlaytestActionResult.STATUS_REJECTED)
+	assert_eq(outcome["reason"], "invalid_dialogue_event")
+	assert_eq(outcome["details"]["diagnostics"][0]["code"], "unknown_dialogue_beat_type")
+	assert_eq(_stub_events.applied_effects, [])
+	assert_eq(_stub_events.acknowledged_ids, [])
+
+func test_legacy_body_only_visible_and_headless_paths_preserve_semantics_after_normalization() -> void:
+	var record := Fixtures.legacy_event("legacy_compat")
+	_plugin.open_event_for_test(record)
+	assert_eq(_plugin.current_node_id(), "n_start")
+	assert_eq(_plugin._body.text, "A legacy body-only node.")
+	_reach_choices()
+	_plugin._on_option_pressed(record["payload"]["nodes"][0]["options"][0])
+	assert_eq(_plugin.current_node_id(), "n_end")
+	assert_eq(_plugin._body.text, "The legacy conversation ends.")
+	_plugin.advance_dialogue()
+	_plugin.advance_dialogue()
+	assert_eq(_stub_events.applied_effects.map(func(effect): return effect["target"]), [
+		"legacy_node", "legacy_choice", "legacy_terminal",
+	])
+	assert_eq(_stub_events.acknowledged_ids, ["legacy_compat"])
+	assert_eq(_stub_chars.revealed_ids, [Fixtures.BABA])
+
+	_stub_events.applied_effects.clear()
+	_stub_events.acknowledged_ids.clear()
+	_stub_chars.revealed_ids.clear()
+	_stub_events.records["legacy_compat"] = record
+	_stub_events.pending["legacy_compat"] = true
+	var outcome: Dictionary = _plugin.resolve_pending_event("legacy_compat")
+	assert_eq(outcome["status"], PlaytestActionResult.STATUS_APPLIED)
+	assert_eq(outcome["details"]["nodes_visited"], 2)
+	assert_eq(_stub_events.applied_effects.map(func(effect): return effect["target"]), [
+		"legacy_node", "legacy_choice", "legacy_terminal",
+	])
+	assert_eq(_stub_events.acknowledged_ids, ["legacy_compat"])
+	assert_eq(_stub_chars.revealed_ids, [Fixtures.BABA])
+
+func test_choice_is_gated_and_commits_node_then_option_effects_only_when_selected() -> void:
+	var record := Fixtures.branching_event("choice_commit")
+	_stub_events.pending["choice_commit"] = true
+	_plugin.set_instant_text_for_test(true)
+	_plugin.open_event_for_test(record)
+	assert_eq(_stub_events.applied_effects, [], "opening and reading do not commit")
+	assert_eq(_plugin.advance_dialogue()["transition"], "choices_shown")
+	assert_eq(_plugin.advance_dialogue()["transition"], "ignored", "surface advance is blocked while choosing")
+	_plugin._on_option_pressed(record["payload"]["nodes"][0]["options"][1])
+	assert_eq(_stub_events.applied_effects.map(func(effect): return effect["target"]), [
+		"branch_node", "branch_bold",
+	])
+	assert_eq(_plugin.current_node_id(), "n_bold")
+
+func test_selected_reply_appends_as_player_left_before_destination_navigation() -> void:
+	var record := Fixtures.branching_event("reply_row")
+	_plugin.set_instant_text_for_test(true)
+	_plugin.open_event_for_test(record)
+	_plugin.advance_dialogue()
+	_plugin._on_option_pressed(record["payload"]["nodes"][0]["options"][0])
+	var rows: Array = _plugin.transcript_projection()
+	assert_eq(rows[1]["kind"], "speech")
+	assert_eq(rows[1]["speaker"], "player")
+	assert_eq(rows[1]["side"], "left")
+	assert_eq(rows[1]["full_text"], "Use the careful plan.")
+
+func test_duplicate_choice_and_duplicate_terminal_completion_are_rejected() -> void:
+	var record := Fixtures.branching_event("exactly_once")
+	_stub_events.pending["exactly_once"] = true
+	_plugin.set_instant_text_for_test(true)
+	_plugin.open_event_for_test(record)
+	_plugin.advance_dialogue()
+	var option: Dictionary = record["payload"]["nodes"][0]["options"][0]
+	_plugin._on_option_pressed(option)
+	_plugin._on_option_pressed(option)
+	assert_eq(_stub_events.applied_effects.map(func(effect): return effect["target"]), [
+		"branch_node", "branch_careful",
+	])
+	var completed: Dictionary = _plugin.advance_dialogue()
+	var duplicate: Dictionary = _plugin.advance_dialogue()
+	assert_eq(completed["transition"], "conversation_completed")
+	assert_eq(duplicate["transition"], "ignored")
+	assert_eq(_stub_events.applied_effects.map(func(effect): return effect["target"]), [
+		"branch_node", "branch_careful", "careful_terminal",
+	])
+	assert_eq(_stub_events.acknowledged_ids, ["exactly_once"])
+
+func test_terminal_ready_surface_commit_is_late_and_uses_shared_ordering() -> void:
+	var record := Fixtures.valid_event("terminal_commit")
+	record["payload"]["nodes"] = [{
+		"node_id": "n_start",
+		"beats": [{"type":"narration", "text":"A terminal line."}],
+		"on_enter": [
+			{"kind":"set_flag", "target":"terminal_first"},
+			{"kind":"set_flag", "target":"terminal_second"},
+		],
+		"options": [],
+	}]
+	_stub_events.pending["terminal_commit"] = true
+	_plugin.set_instant_text_for_test(true)
+	_plugin.open_event_for_test(record)
+	assert_eq(_stub_events.applied_effects, [])
+	assert_eq(_plugin.advance_dialogue()["transition"], "conversation_completed")
+	assert_eq(_stub_events.applied_effects.map(func(effect): return effect["target"]), [
+		"terminal_first", "terminal_second",
+	])
+	assert_eq(_stub_events.acknowledged_ids, ["terminal_commit"])
+
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
 static func _make_record(eid: String, sig: String, cid: String) -> Dictionary:
@@ -155,6 +277,29 @@ static func _make_record(eid: String, sig: String, cid: String) -> Dictionary:
 			]
 		}
 	}
+
+static func _invalid_new_record(eid: String) -> Dictionary:
+	return {
+		"event_id": eid,
+		"event_type": "dialogue",
+		"trigger": {"event": "character_arrived", "character_id": "cid_alice"},
+		"payload": {
+			"participants": ["player", "cid_alice"],
+			"entry_node_id": "n_start",
+			"nodes": [{
+				"node_id": "n_start",
+				"beats": [{"type": "aside", "text": "Invalid."}],
+				"on_enter": [{"kind": "set_flag", "target": "must_not_apply"}],
+				"options": [],
+			}],
+		},
+	}
+
+func _reach_choices() -> void:
+	if _plugin.dialogue_mode() == "REVEALING":
+		_plugin.advance_dialogue()
+	if _plugin.dialogue_mode() == "READY":
+		_plugin.advance_dialogue()
 
 class _StubEvents:
 	extends PluginBase

@@ -9,6 +9,12 @@
   "arrival_requires_tier": 1,
   "want_building_id": "building_members_club",
   "portrait": "res://data/characters/aristocrat_commercial/portrait.png",
+  "default_expression": "neutral",
+  "expressions": {
+    "neutral": "res://data/characters/aristocrat_commercial/expressions/neutral.png",
+    "concerned": "res://data/characters/aristocrat_commercial/expressions/concerned.png",
+    "surprised": "res://data/characters/aristocrat_commercial/expressions/surprised.png"
+  },
   "talking_videos": [
     "res://data/characters/aristocrat_commercial/talking_1.ogv",
     "res://data/characters/aristocrat_commercial/talking_2.ogv",

@@ -1,0 +1,30 @@
+{
+  "event_id": "scenario_three_way_conversation",
+  "event_type": "dialogue",
+  "trigger": {
+    "event": "manual",
+    "character_id": "aristocrat_residential"
+  },
+  "enabled_if": "",
+  "payload": {
+    "participants": [
+      "player",
+      "aristocrat_residential",
+      "aristocrat_commercial"
+    ],
+    "entry_node_id": "n_start",
+    "nodes": [
+      {
+        "node_id": "n_start",
+        "beats": [
+          {"type":"speech", "speaker":"aristocrat_residential", "expression":"neutral", "text":"The transmitter is mine."},
+          {"type":"speech", "speaker":"aristocrat_commercial", "expression":"concerned", "text":"The frequency is not."},
+          {"type":"speech", "speaker":"player", "expression":"thoughtful", "text":"Then we shall settle both questions."},
+          {"type":"speech", "speaker":"aristocrat_residential", "expression":"pleased", "text":"A practical administration at last."}
+        ],
+        "on_enter": [],
+        "options": []
+      }
+    ]
+  }
+}

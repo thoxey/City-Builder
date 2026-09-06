@@ -72,6 +72,26 @@ func test_cold_round_trip_matrix_preserves_each_progression_boundary() -> void:
 	for boundary in boundaries:
 		_round_trip_boundary(boundary)
 
+func test_interrupted_dialogue_boundary_preserves_one_pending_id_and_no_uncommitted_flag() -> void:
+	var map := DataMap.new()
+	map.character_states = {"aristocrat_residential": 1}
+	map.pending_dialogue_event_ids = ["aristocrat_residential_arrival"]
+	map.event_counts = {"aristocrat_residential_arrival": 1}
+	map.flags = {}
+	GameState.map = map
+	var builder := BuilderCls.new()
+	builder.map = map
+	builder.gridmap = GridMap.new()
+	builder.ground_gridmap = GridMap.new()
+	builder.add_child(builder.gridmap)
+	builder.add_child(builder.ground_gridmap)
+	assert_eq(builder.save_map_to_path(SAVE_PATH).get("status"), PlaytestActionResult.STATUS_APPLIED)
+	GameState.map = DataMap.new()
+	assert_eq(builder.load_map_from_path(SAVE_PATH).get("status"), PlaytestActionResult.STATUS_APPLIED)
+	assert_eq(GameState.map.pending_dialogue_event_ids, ["aristocrat_residential_arrival"])
+	assert_false(GameState.map.flags.get("met_aristocrat_residential", false))
+	builder.free()
+
 func _round_trip_boundary(boundary: Dictionary) -> void:
 	var ids: Array[String] = [
 		"building_postwar_terrace", "building_pirate_radio", "building_crazy_golf",

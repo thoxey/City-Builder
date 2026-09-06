@@ -136,6 +136,11 @@ func test_resolve_dialogue_is_idempotent_semantic_action() -> void:
 	assert_eq(first["status"], PlaytestActionResult.STATUS_APPLIED)
 	assert_eq(duplicate["status"], PlaytestActionResult.STATUS_DUPLICATE)
 	assert_eq(playtest._dialogue.resolved_ids, ["arrival"])
+	assert_eq(first["details"]["visited_node_ids"], ["n_start", "n_end"])
+	assert_eq(first["details"]["ordered_effects"], [
+		{"kind":"set_flag", "target":"met_arrival"},
+	])
+	assert_true(first["details"]["acknowledged"])
 
 func test_progression_snapshot_has_complete_contract_shape() -> void:
 	var progression: Dictionary = playtest.start_session({"scenario_id":"fresh_city", "seed":1})["snapshot"]["progression"]
@@ -202,4 +207,9 @@ class StubDialogue extends PluginBase:
 	func set_presentation_enabled(_enabled: bool) -> void: pass
 	func resolve_pending_event(event_id: String) -> Dictionary:
 		resolved_ids.append(event_id)
-		return PlaytestActionResult.applied({"event_id":event_id})
+		return PlaytestActionResult.applied({
+			"event_id":event_id,
+			"visited_node_ids":["n_start", "n_end"],
+			"ordered_effects":[{"kind":"set_flag", "target":"met_arrival"}],
+			"acknowledged":true,
+		})

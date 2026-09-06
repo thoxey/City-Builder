@@ -15,6 +15,7 @@
 			"body": {
 				"building_id": "building_crazy_golf",
 				"category": "unique",
+				"community_role": "participant",
 				"description": "",
 				"display_name": "Crazy Golf",
 				"footprint": [
@@ -24,16 +25,42 @@
 					]
 				],
 				"model_offset": [
+					0.0000244840526,
 					0.0,
-					0.0,
-					0.0
+					0.0000219954118
 				],
-				"model_path": "res://models/Meshy_AI_Duck_Pond_in_the_Hedg_0403173405/Meshy_AI_Duck_Pond_in_the_Hedg_0403173405_texture.glb",
+				"model_path": "res://models/city-builder/building_crazy_golf.glb",
 				"model_rotation_y": 0.0,
-				"model_scale": 1.0,
+				"model_scale": 0.500029506,
 				"profiles": [
 					{
 						"type": "BuildingMetadata"
+					},
+					{
+						"active_end": 20.0,
+						"active_start": 10.0,
+						"capacity": 20.0,
+						"category": "commercial",
+						"type": "BuildingProfile"
+					},
+					{
+						"effects": [
+							{
+								"amount": 0.5,
+								"capacity": 20.0,
+								"effect_id": "crazy_golf_round",
+								"manifestation": "freedom",
+								"quality": "beauty",
+								"reason": "Played a round of crazy golf",
+								"schedule": {
+									"end": 20.0,
+									"start": 10.0
+								},
+								"scope": "participant",
+								"stacking_group": "local_leisure_visit"
+							}
+						],
+						"type": "CommunityEffectProfile"
 					},
 					{
 						"bucket": "industrial",
@@ -58,7 +85,10 @@
 						"type": "AttractivenessProfile"
 					}
 				],
-				"tags": []
+				"tags": [],
+				"ui_group": "civic",
+				"ui_icon": "crazy-golf",
+				"ui_order": 10.0
 			},
 			"bucket": "industrial",
 			"building_id": "building_crazy_golf",
@@ -66,7 +96,7 @@
 			"chain_role": "want",
 			"character_id": "aristocrat_industrial",
 			"display_name": "Crazy Golf",
-			"model_path": "res://models/Meshy_AI_Duck_Pond_in_the_Hedg_0403173405/Meshy_AI_Duck_Pond_in_the_Hedg_0403173405_texture.glb",
+			"model_path": "res://models/city-builder/building_crazy_golf.glb",
 			"patron_id": "aristocrat",
 			"pool_id": "",
 			"tier": 0
@@ -77,6 +107,7 @@
 				"building_id": "building_duck_pond",
 				"cash_cost": 50.0,
 				"category": "nature",
+				"community_role": "functional",
 				"description": "",
 				"display_name": "Duck Pond",
 				"footprint": [
@@ -86,14 +117,17 @@
 					]
 				],
 				"model_offset": [
+					-0.00000473866656,
 					0.0,
-					-0.1,
-					0.0
+					-0.00000424691815
 				],
-				"model_path": "res://models/Meshy_AI_Duck_Pond_in_the_Hedg_0403173405/Meshy_AI_Duck_Pond_in_the_Hedg_0403173405_texture.glb",
+				"model_path": "res://models/city-builder/building_duck_pond.glb",
 				"model_rotation_y": 0.0,
-				"model_scale": 0.5,
+				"model_scale": 0.500010267,
 				"profiles": [
+					{
+						"type": "BuildingMetadata"
+					},
 					{
 						"base": 40.0,
 						"commercial": 20.0,
@@ -102,9 +136,57 @@
 						"radius": 1.0,
 						"residential": 30.0,
 						"type": "AttractivenessProfile"
+					},
+					{
+						"effects": [
+							{
+								"amount": 6.0,
+								"effect_id": "accessible_recreation",
+								"manifestation": "care",
+								"quality": "liveability",
+								"radius": 2.0,
+								"reason": "Accessible outdoor recreation",
+								"scope": "local",
+								"stacking_group": "local_recreation"
+							},
+							{
+								"amount": 7.0,
+								"effect_id": "shared_greenery",
+								"manifestation": "care",
+								"quality": "beauty",
+								"radius": 2.0,
+								"reason": "Maintained shared greenery",
+								"scope": "local",
+								"stacking_group": "shared_greenery"
+							},
+							{
+								"amount": 5.0,
+								"effect_id": "local_landscape",
+								"manifestation": "identity",
+								"quality": "beauty",
+								"radius": 2.0,
+								"reason": "Preserved local landscape",
+								"scope": "local",
+								"stacking_group": "local_landscape"
+							},
+							{
+								"amount": 4.0,
+								"capacity": 20.0,
+								"effect_id": "pond_meeting_place",
+								"manifestation": "care",
+								"quality": "belonging",
+								"reason": "Met neighbours outdoors",
+								"scope": "participant",
+								"stacking_group": "community_gathering"
+							}
+						],
+						"type": "CommunityEffectProfile"
 					}
 				],
-				"tags": []
+				"tags": [],
+				"ui_group": "nature",
+				"ui_icon": "duck-pond",
+				"ui_order": 30.0
 			},
 			"bucket": "",
 			"building_id": "building_duck_pond",
@@ -112,7 +194,7 @@
 			"chain_role": "",
 			"character_id": "",
 			"display_name": "Duck Pond",
-			"model_path": "res://models/Meshy_AI_Duck_Pond_in_the_Hedg_0403173405/Meshy_AI_Duck_Pond_in_the_Hedg_0403173405_texture.glb",
+			"model_path": "res://models/city-builder/building_duck_pond.glb",
 			"patron_id": "",
 			"pool_id": "",
 			"tier": 0
@@ -122,6 +204,7 @@
 			"body": {
 				"building_id": "building_garage",
 				"category": "generic",
+				"community_role": "functional",
 				"description": "",
 				"display_name": "Business Park (Garage)",
 				"footprint": [
@@ -131,13 +214,13 @@
 					]
 				],
 				"model_offset": [
+					-0.0000399993562,
 					0.0,
-					0.0,
-					0.0
+					-0.00020102508
 				],
-				"model_path": "res://models/Meshy_AI_Acme_Business_Park__0403170610/Meshy_AI_Acme_Business_Park__0403170610_texture.glb",
+				"model_path": "res://models/city-builder/building_garage.glb",
 				"model_rotation_y": 0.0,
-				"model_scale": 0.4,
+				"model_scale": 0.500058002,
 				"pool_id": "industrial_t1",
 				"profiles": [
 					{
@@ -158,9 +241,57 @@
 						"radius": 1.0,
 						"residential": -30.0,
 						"type": "AttractivenessProfile"
+					},
+					{
+						"effects": [
+							{
+								"amount": 15.0,
+								"capacity": 20.0,
+								"effect_id": "garage_employment",
+								"manifestation": "neutral",
+								"quality": "opportunity",
+								"reason": "Held suitable skilled work",
+								"schedule": {
+									"end": 18.0,
+									"start": 8.0
+								},
+								"scope": "participant",
+								"stacking_group": "employment"
+							},
+							{
+								"amount": -7.0,
+								"effect_id": "garage_noise",
+								"manifestation": "neutral",
+								"quality": "liveability",
+								"radius": 1.0,
+								"reason": "Workshop noise reached home",
+								"schedule": {
+									"end": 18.0,
+									"start": 8.0
+								},
+								"scope": "local",
+								"sensitivity": "noise",
+								"stacking_group": "industrial_noise"
+							},
+							{
+								"amount": -4.0,
+								"effect_id": "garage_visual",
+								"manifestation": "neutral",
+								"quality": "beauty",
+								"radius": 1.0,
+								"reason": "Industrial clutter dominated the view",
+								"requires_active_building": false,
+								"scope": "local",
+								"stacking_group": "industrial_visual"
+							}
+						],
+						"type": "CommunityEffectProfile"
 					}
 				],
-				"tags": []
+				"tags": [],
+				"ui_group": "industry",
+				"ui_icon": "workshop",
+				"ui_order": 10.0
 			},
 			"bucket": "",
 			"building_id": "building_garage",
@@ -168,7 +299,7 @@
 			"chain_role": "",
 			"character_id": "",
 			"display_name": "Business Park (Garage)",
-			"model_path": "res://models/Meshy_AI_Acme_Business_Park__0403170610/Meshy_AI_Acme_Business_Park__0403170610_texture.glb",
+			"model_path": "res://models/city-builder/building_garage.glb",
 			"patron_id": "",
 			"pool_id": "industrial_t1",
 			"tier": 0
@@ -187,13 +318,13 @@
 					]
 				],
 				"model_offset": [
+					0.000164050904,
 					0.0,
-					0.0,
-					0.0
+					0.000120942294
 				],
-				"model_path": "res://models/Meshy_AI_Acme_Business_Park__0403170610/Meshy_AI_Acme_Business_Park__0403170610_texture.glb",
+				"model_path": "res://models/city-builder/building_lumber_mill.glb",
 				"model_rotation_y": 0.0,
-				"model_scale": 0.85,
+				"model_scale": 0.525803316,
 				"profiles": [
 					{
 						"type": "BuildingMetadata"
@@ -228,7 +359,10 @@
 						"type": "AttractivenessProfile"
 					}
 				],
-				"tags": []
+				"tags": [],
+				"ui_group": "industry",
+				"ui_icon": "lumber-mill",
+				"ui_order": 40.0
 			},
 			"bucket": "industrial",
 			"building_id": "building_lumber_mill",
@@ -236,7 +370,7 @@
 			"chain_role": "chain",
 			"character_id": "aristocrat_industrial",
 			"display_name": "Lumber Mill",
-			"model_path": "res://models/Meshy_AI_Acme_Business_Park__0403170610/Meshy_AI_Acme_Business_Park__0403170610_texture.glb",
+			"model_path": "res://models/city-builder/building_lumber_mill.glb",
 			"patron_id": "aristocrat",
 			"pool_id": "",
 			"tier": 2
@@ -246,6 +380,7 @@
 			"body": {
 				"building_id": "building_members_club",
 				"category": "unique",
+				"community_role": "participant",
 				"description": "",
 				"display_name": "Private Members' Club",
 				"footprint": [
@@ -255,13 +390,13 @@
 					]
 				],
 				"model_offset": [
+					-0.000017226725,
 					0.0,
-					0.0,
-					0.0
+					-0.0000230087053
 				],
-				"model_path": "res://models/Meshy_AI_Clocktower_City_Hall_0403210028/Meshy_AI_Clocktower_City_Hall_0403210028_texture.glb",
+				"model_path": "res://models/city-builder/building_members_club.glb",
 				"model_rotation_y": 0.0,
-				"model_scale": 0.8,
+				"model_scale": 0.500028522,
 				"profiles": [
 					{
 						"type": "BuildingMetadata"
@@ -272,6 +407,25 @@
 						"capacity": 25.0,
 						"category": "commercial",
 						"type": "BuildingProfile"
+					},
+					{
+						"effects": [
+							{
+								"amount": 0.5,
+								"capacity": 25.0,
+								"effect_id": "members_club_evening",
+								"manifestation": "freedom",
+								"quality": "belonging",
+								"reason": "Spent the evening at the private members' club",
+								"schedule": {
+									"end": 2.0,
+									"start": 18.0
+								},
+								"scope": "participant",
+								"stacking_group": "local_social_visit"
+							}
+						],
+						"type": "CommunityEffectProfile"
 					},
 					{
 						"bucket": "commercial",
@@ -288,7 +442,7 @@
 					},
 					{
 						"base": 30.0,
-						"commercial": 20.0,
+						"commercial": -25.0,
 						"industrial": 10.0,
 						"nature": 10.0,
 						"radius": 1.0,
@@ -296,7 +450,10 @@
 						"type": "AttractivenessProfile"
 					}
 				],
-				"tags": []
+				"tags": [],
+				"ui_group": "commerce",
+				"ui_icon": "private-members-club",
+				"ui_order": 50.0
 			},
 			"bucket": "commercial",
 			"building_id": "building_members_club",
@@ -304,7 +461,7 @@
 			"chain_role": "want",
 			"character_id": "aristocrat_commercial",
 			"display_name": "Private Members' Club",
-			"model_path": "res://models/Meshy_AI_Clocktower_City_Hall_0403210028/Meshy_AI_Clocktower_City_Hall_0403210028_texture.glb",
+			"model_path": "res://models/city-builder/building_members_club.glb",
 			"patron_id": "aristocrat",
 			"pool_id": "",
 			"tier": 0
@@ -315,6 +472,7 @@
 				"building_id": "building_nature_patch",
 				"cash_cost": 40.0,
 				"category": "nature",
+				"community_role": "functional",
 				"description": "",
 				"display_name": "Nature Patch",
 				"footprint": [
@@ -324,14 +482,17 @@
 					]
 				],
 				"model_offset": [
+					-0.000153830994,
 					0.0,
-					-0.15,
-					0.0
+					-0.000106037393
 				],
-				"model_path": "res://models/Meshy_AI_nature_patch_0403203125/Meshy_AI_nature_patch_0403203125_texture.glb",
+				"model_path": "res://models/city-builder/building_nature_patch.glb",
 				"model_rotation_y": 0.0,
-				"model_scale": 0.57,
+				"model_scale": 0.500214326,
 				"profiles": [
+					{
+						"type": "BuildingMetadata"
+					},
 					{
 						"base": 40.0,
 						"commercial": 20.0,
@@ -340,9 +501,37 @@
 						"radius": 1.0,
 						"residential": 30.0,
 						"type": "AttractivenessProfile"
+					},
+					{
+						"effects": [
+							{
+								"amount": 4.0,
+								"effect_id": "nearby_nature",
+								"manifestation": "care",
+								"quality": "liveability",
+								"radius": 2.0,
+								"reason": "Nearby everyday nature",
+								"scope": "local",
+								"stacking_group": "nearby_nature"
+							},
+							{
+								"amount": 6.0,
+								"effect_id": "wild_greenery",
+								"manifestation": "identity",
+								"quality": "beauty",
+								"radius": 2.0,
+								"reason": "A familiar patch of wild landscape",
+								"scope": "local",
+								"stacking_group": "wild_greenery"
+							}
+						],
+						"type": "CommunityEffectProfile"
 					}
 				],
-				"tags": []
+				"tags": [],
+				"ui_group": "nature",
+				"ui_icon": "nature-patch",
+				"ui_order": 20.0
 			},
 			"bucket": "",
 			"building_id": "building_nature_patch",
@@ -350,7 +539,7 @@
 			"chain_role": "",
 			"character_id": "",
 			"display_name": "Nature Patch",
-			"model_path": "res://models/Meshy_AI_nature_patch_0403203125/Meshy_AI_nature_patch_0403203125_texture.glb",
+			"model_path": "res://models/city-builder/building_nature_patch.glb",
 			"patron_id": "",
 			"pool_id": "",
 			"tier": 0
@@ -369,13 +558,13 @@
 					]
 				],
 				"model_offset": [
+					-0.0000519955579,
 					0.0,
-					0.0,
-					0.0
+					-0.0000320408282
 				],
-				"model_path": "res://models/Meshy_AI_Streeter_s_Supermarke_0404154643/Meshy_AI_Streeter_s_Supermarke_0404154643_texture.glb",
+				"model_path": "res://models/city-builder/building_nightclub.glb",
 				"model_rotation_y": 0.0,
-				"model_scale": 0.65,
+				"model_scale": 0.500051996,
 				"profiles": [
 					{
 						"type": "BuildingMetadata"
@@ -402,15 +591,80 @@
 					},
 					{
 						"base": -10.0,
-						"commercial": 0.0,
+						"commercial": -30.0,
 						"industrial": 0.0,
 						"nature": -10.0,
 						"radius": 1.0,
 						"residential": -30.0,
 						"type": "AttractivenessProfile"
+					},
+					{
+						"effects": [
+							{
+								"amount": 8.0,
+								"capacity": 60.0,
+								"effect_id": "night_entertainment",
+								"manifestation": "freedom",
+								"quality": "opportunity",
+								"reason": "Evening entertainment and roles",
+								"schedule": {
+									"end": 4.0,
+									"start": 21.0
+								},
+								"scope": "participant",
+								"stacking_group": "entertainment"
+							},
+							{
+								"amount": 8.0,
+								"capacity": 60.0,
+								"effect_id": "compatible_crowd",
+								"manifestation": "freedom",
+								"quality": "belonging",
+								"reason": "Found people with similar interests",
+								"schedule": {
+									"end": 4.0,
+									"start": 21.0
+								},
+								"scope": "participant",
+								"stacking_group": "social_scene"
+							},
+							{
+								"amount": 4.0,
+								"capacity": 60.0,
+								"effect_id": "night_vibrancy",
+								"manifestation": "freedom",
+								"quality": "beauty",
+								"reason": "Enjoyed the town's night-time energy",
+								"schedule": {
+									"end": 4.0,
+									"start": 21.0
+								},
+								"scope": "participant",
+								"stacking_group": "vibrancy"
+							},
+							{
+								"amount": -12.0,
+								"effect_id": "late_music_noise",
+								"manifestation": "neutral",
+								"quality": "liveability",
+								"radius": 2.0,
+								"reason": "Late music disturbed sleep",
+								"schedule": {
+									"end": 4.0,
+									"start": 21.0
+								},
+								"scope": "local",
+								"sensitivity": "noise",
+								"stacking_group": "night_noise"
+							}
+						],
+						"type": "CommunityEffectProfile"
 					}
 				],
-				"tags": []
+				"tags": [],
+				"ui_group": "civic",
+				"ui_icon": "nightclub",
+				"ui_order": 20.0
 			},
 			"bucket": "commercial",
 			"building_id": "building_nightclub",
@@ -418,7 +672,7 @@
 			"chain_role": "chain",
 			"character_id": "aristocrat_commercial",
 			"display_name": "Nightclub",
-			"model_path": "res://models/Meshy_AI_Streeter_s_Supermarke_0404154643/Meshy_AI_Streeter_s_Supermarke_0404154643_texture.glb",
+			"model_path": "res://models/city-builder/building_nightclub.glb",
 			"patron_id": "aristocrat",
 			"pool_id": "",
 			"tier": 3
@@ -437,13 +691,13 @@
 					]
 				],
 				"model_offset": [
+					-0.0000312495334,
 					0.0,
-					0.0,
-					0.0
+					-0.0000157514338
 				],
-				"model_path": "res://models/Meshy_AI_Acme_Business_Park__0403170610/Meshy_AI_Acme_Business_Park__0403170610_texture.glb",
+				"model_path": "res://models/city-builder/building_pipe_factory.glb",
 				"model_rotation_y": 0.0,
-				"model_scale": 0.85,
+				"model_scale": 0.500028776,
 				"profiles": [
 					{
 						"type": "BuildingMetadata"
@@ -476,9 +730,52 @@
 						"radius": 1.0,
 						"residential": -40.0,
 						"type": "AttractivenessProfile"
+					},
+					{
+						"effects": [
+							{
+								"amount": 16.0,
+								"capacity": 35.0,
+								"effect_id": "factory_employment",
+								"manifestation": "neutral",
+								"quality": "opportunity",
+								"reason": "Held reliable industrial work",
+								"schedule": {
+									"end": 18.0,
+									"start": 8.0
+								},
+								"scope": "participant",
+								"stacking_group": "employment"
+							},
+							{
+								"amount": -12.0,
+								"effect_id": "factory_pollution",
+								"manifestation": "neutral",
+								"quality": "liveability",
+								"radius": 2.0,
+								"reason": "Factory pollution affected the neighbourhood",
+								"scope": "local",
+								"sensitivity": "pollution",
+								"stacking_group": "industrial_pollution"
+							},
+							{
+								"amount": -8.0,
+								"effect_id": "factory_visual",
+								"manifestation": "neutral",
+								"quality": "beauty",
+								"radius": 2.0,
+								"reason": "Heavy industry dominated the view",
+								"scope": "local",
+								"stacking_group": "industrial_visual"
+							}
+						],
+						"type": "CommunityEffectProfile"
 					}
 				],
-				"tags": []
+				"tags": [],
+				"ui_group": "industry",
+				"ui_icon": "pipe-factory",
+				"ui_order": 50.0
 			},
 			"bucket": "industrial",
 			"building_id": "building_pipe_factory",
@@ -486,7 +783,7 @@
 			"chain_role": "chain",
 			"character_id": "aristocrat_industrial",
 			"display_name": "Pipe Factory",
-			"model_path": "res://models/Meshy_AI_Acme_Business_Park__0403170610/Meshy_AI_Acme_Business_Park__0403170610_texture.glb",
+			"model_path": "res://models/city-builder/building_pipe_factory.glb",
 			"patron_id": "aristocrat",
 			"pool_id": "",
 			"tier": 3
@@ -496,6 +793,7 @@
 			"body": {
 				"building_id": "building_pirate_radio",
 				"category": "unique",
+				"community_role": "productive",
 				"description": "",
 				"display_name": "Pirate Radio Station",
 				"footprint": [
@@ -505,13 +803,13 @@
 					]
 				],
 				"model_offset": [
+					-0.000159676236,
 					0.0,
-					0.0,
-					0.0
+					0.0000350432702
 				],
-				"model_path": "res://models/Meshy_AI_The_Tower_of_Tomorrow_0403170625/Meshy_AI_The_Tower_of_Tomorrow_0403170625_texture.glb",
+				"model_path": "res://models/city-builder/building_pirate_radio.glb",
 				"model_rotation_y": 0.0,
-				"model_scale": 0.85,
+				"model_scale": 0.523533849,
 				"profiles": [
 					{
 						"type": "BuildingMetadata"
@@ -539,7 +837,10 @@
 						"type": "AttractivenessProfile"
 					}
 				],
-				"tags": []
+				"tags": [],
+				"ui_group": "landmarks",
+				"ui_icon": "pirate-radio-station",
+				"ui_order": 10.0
 			},
 			"bucket": "residential",
 			"building_id": "building_pirate_radio",
@@ -547,7 +848,7 @@
 			"chain_role": "want",
 			"character_id": "aristocrat_residential",
 			"display_name": "Pirate Radio Station",
-			"model_path": "res://models/Meshy_AI_The_Tower_of_Tomorrow_0403170625/Meshy_AI_The_Tower_of_Tomorrow_0403170625_texture.glb",
+			"model_path": "res://models/city-builder/building_pirate_radio.glb",
 			"patron_id": "aristocrat",
 			"pool_id": "",
 			"tier": 0
@@ -566,13 +867,13 @@
 					]
 				],
 				"model_offset": [
+					-0.00000900116112,
 					0.0,
-					0.0,
-					0.0
+					-0.0000427853205
 				],
-				"model_path": "res://models/building-small-d.glb",
+				"model_path": "res://models/city-builder/building_postwar_midblock.glb",
 				"model_rotation_y": 0.0,
-				"model_scale": 1.0,
+				"model_scale": 0.500047763,
 				"profiles": [
 					{
 						"type": "BuildingMetadata"
@@ -607,7 +908,10 @@
 						"type": "AttractivenessProfile"
 					}
 				],
-				"tags": []
+				"tags": [],
+				"ui_group": "homes",
+				"ui_icon": "postwar-mid-block",
+				"ui_order": 40.0
 			},
 			"bucket": "residential",
 			"building_id": "building_postwar_midblock",
@@ -615,7 +919,7 @@
 			"chain_role": "chain",
 			"character_id": "aristocrat_residential",
 			"display_name": "Postwar Mid-Block",
-			"model_path": "res://models/building-small-d.glb",
+			"model_path": "res://models/city-builder/building_postwar_midblock.glb",
 			"patron_id": "aristocrat",
 			"pool_id": "",
 			"tier": 2
@@ -634,13 +938,13 @@
 					]
 				],
 				"model_offset": [
+					-0.0000194917133,
 					0.0,
-					0.0,
-					0.0
+					-0.00000453018414
 				],
-				"model_path": "res://models/building-small-a.glb",
+				"model_path": "res://models/city-builder/building_postwar_terrace.glb",
 				"model_rotation_y": 0.0,
-				"model_scale": 1.0,
+				"model_scale": 0.500025512,
 				"profiles": [
 					{
 						"type": "BuildingMetadata"
@@ -673,7 +977,10 @@
 						"type": "AttractivenessProfile"
 					}
 				],
-				"tags": []
+				"tags": [],
+				"ui_group": "homes",
+				"ui_icon": "postwar-terrace",
+				"ui_order": 30.0
 			},
 			"bucket": "residential",
 			"building_id": "building_postwar_terrace",
@@ -681,7 +988,7 @@
 			"chain_role": "chain",
 			"character_id": "aristocrat_residential",
 			"display_name": "Postwar Terrace",
-			"model_path": "res://models/building-small-a.glb",
+			"model_path": "res://models/city-builder/building_postwar_terrace.glb",
 			"patron_id": "aristocrat",
 			"pool_id": "",
 			"tier": 1
@@ -700,13 +1007,13 @@
 					]
 				],
 				"model_offset": [
+					-0.0000497477648,
 					0.0,
-					0.0,
-					0.0
+					-0.0000335327953
 				],
-				"model_path": "res://models/building-small-c.glb",
+				"model_path": "res://models/city-builder/building_postwar_tower_block.glb",
 				"model_rotation_y": 0.0,
-				"model_scale": 1.0,
+				"model_scale": 0.500077289,
 				"profiles": [
 					{
 						"type": "BuildingMetadata"
@@ -741,7 +1048,10 @@
 						"type": "AttractivenessProfile"
 					}
 				],
-				"tags": []
+				"tags": [],
+				"ui_group": "homes",
+				"ui_icon": "postwar-tower-block",
+				"ui_order": 50.0
 			},
 			"bucket": "residential",
 			"building_id": "building_postwar_tower_block",
@@ -749,7 +1059,7 @@
 			"chain_role": "chain",
 			"character_id": "aristocrat_residential",
 			"display_name": "Postwar Tower Block",
-			"model_path": "res://models/building-small-c.glb",
+			"model_path": "res://models/city-builder/building_postwar_tower_block.glb",
 			"patron_id": "aristocrat",
 			"pool_id": "",
 			"tier": 3
@@ -759,6 +1069,7 @@
 			"body": {
 				"building_id": "building_pub",
 				"category": "unique",
+				"community_role": "participant",
 				"description": "",
 				"display_name": "Pub",
 				"footprint": [
@@ -770,11 +1081,11 @@
 				"model_offset": [
 					0.0,
 					0.0,
-					0.0
+					0.000117612583
 				],
-				"model_path": "res://models/Meshy_AI_Pub_0403211907/Meshy_AI_Pub_0403211907_texture.glb",
+				"model_path": "res://models/city-builder/building_pub.glb",
 				"model_rotation_y": 0.0,
-				"model_scale": 0.65,
+				"model_scale": 0.560094154,
 				"profiles": [
 					{
 						"type": "BuildingMetadata"
@@ -785,6 +1096,25 @@
 						"capacity": 30.0,
 						"category": "commercial",
 						"type": "BuildingProfile"
+					},
+					{
+						"effects": [
+							{
+								"amount": 0.5,
+								"capacity": 30.0,
+								"effect_id": "pub_social_visit",
+								"manifestation": "identity",
+								"quality": "belonging",
+								"reason": "Met neighbours at the local pub",
+								"schedule": {
+									"end": 23.0,
+									"start": 17.0
+								},
+								"scope": "participant",
+								"stacking_group": "local_social_visit"
+							}
+						],
+						"type": "CommunityEffectProfile"
 					},
 					{
 						"bucket": "commercial",
@@ -799,7 +1129,7 @@
 					},
 					{
 						"base": 0.0,
-						"commercial": 10.0,
+						"commercial": -25.0,
 						"industrial": 0.0,
 						"nature": 0.0,
 						"radius": 1.0,
@@ -807,7 +1137,10 @@
 						"type": "AttractivenessProfile"
 					}
 				],
-				"tags": []
+				"tags": [],
+				"ui_group": "commerce",
+				"ui_icon": "pub",
+				"ui_order": 30.0
 			},
 			"bucket": "commercial",
 			"building_id": "building_pub",
@@ -815,7 +1148,7 @@
 			"chain_role": "chain",
 			"character_id": "aristocrat_commercial",
 			"display_name": "Pub",
-			"model_path": "res://models/Meshy_AI_Pub_0403211907/Meshy_AI_Pub_0403211907_texture.glb",
+			"model_path": "res://models/city-builder/building_pub.glb",
 			"patron_id": "aristocrat",
 			"pool_id": "",
 			"tier": 1
@@ -825,6 +1158,7 @@
 			"body": {
 				"building_id": "building_restaurant",
 				"category": "unique",
+				"community_role": "participant",
 				"description": "",
 				"display_name": "Restaurant",
 				"footprint": [
@@ -834,13 +1168,13 @@
 					]
 				],
 				"model_offset": [
+					-0.0000342601333,
 					0.0,
-					0.0,
-					0.0
+					-0.0000255274503
 				],
-				"model_path": "res://models/Meshy_AI_Pub_0403211907/Meshy_AI_Pub_0403211907_texture.glb",
+				"model_path": "res://models/city-builder/building_restaurant.glb",
 				"model_rotation_y": 0.0,
-				"model_scale": 0.65,
+				"model_scale": 0.500034499,
 				"profiles": [
 					{
 						"type": "BuildingMetadata"
@@ -851,6 +1185,25 @@
 						"capacity": 40.0,
 						"category": "commercial",
 						"type": "BuildingProfile"
+					},
+					{
+						"effects": [
+							{
+								"amount": 0.5,
+								"capacity": 40.0,
+								"effect_id": "restaurant_shared_meal",
+								"manifestation": "care",
+								"quality": "liveability",
+								"reason": "Shared a meal at the local restaurant",
+								"schedule": {
+									"end": 23.0,
+									"start": 12.0
+								},
+								"scope": "participant",
+								"stacking_group": "local_food_visit"
+							}
+						],
+						"type": "CommunityEffectProfile"
 					},
 					{
 						"bucket": "commercial",
@@ -867,7 +1220,7 @@
 					},
 					{
 						"base": 10.0,
-						"commercial": 20.0,
+						"commercial": -25.0,
 						"industrial": 0.0,
 						"nature": 0.0,
 						"radius": 1.0,
@@ -875,7 +1228,10 @@
 						"type": "AttractivenessProfile"
 					}
 				],
-				"tags": []
+				"tags": [],
+				"ui_group": "commerce",
+				"ui_icon": "restaurant",
+				"ui_order": 40.0
 			},
 			"bucket": "commercial",
 			"building_id": "building_restaurant",
@@ -883,7 +1239,7 @@
 			"chain_role": "chain",
 			"character_id": "aristocrat_commercial",
 			"display_name": "Restaurant",
-			"model_path": "res://models/Meshy_AI_Pub_0403211907/Meshy_AI_Pub_0403211907_texture.glb",
+			"model_path": "res://models/city-builder/building_restaurant.glb",
 			"patron_id": "aristocrat",
 			"pool_id": "",
 			"tier": 2
@@ -893,6 +1249,7 @@
 			"body": {
 				"building_id": "building_small_a",
 				"category": "generic",
+				"community_role": "functional",
 				"description": "",
 				"display_name": "Small Residence A",
 				"footprint": [
@@ -902,13 +1259,13 @@
 					]
 				],
 				"model_offset": [
+					0.00164480104,
 					0.0,
-					-0.1,
-					0.0
+					0.000309403021
 				],
-				"model_path": "res://models/Meshy_AI_Sunlit_Redbrick_Cotta_0403171628/Meshy_AI_Sunlit_Redbrick_Cotta_0403171628_texture.glb",
+				"model_path": "res://models/city-builder/building_small_a.glb",
 				"model_rotation_y": 0.0,
-				"model_scale": 0.5,
+				"model_scale": 0.529388743,
 				"pool_id": "residential_t1",
 				"profiles": [
 					{
@@ -929,9 +1286,27 @@
 						"radius": 1.0,
 						"residential": -10.0,
 						"type": "AttractivenessProfile"
+					},
+					{
+						"effects": [
+							{
+								"amount": 20.0,
+								"effect_id": "secure_home",
+								"manifestation": "neutral",
+								"quality": "liveability",
+								"reason": "Had a secure home",
+								"requires_active_building": false,
+								"scope": "resident",
+								"stacking_group": "housing"
+							}
+						],
+						"type": "CommunityEffectProfile"
 					}
 				],
-				"tags": []
+				"tags": [],
+				"ui_group": "homes",
+				"ui_icon": "house",
+				"ui_order": 10.0
 			},
 			"bucket": "",
 			"building_id": "building_small_a",
@@ -939,7 +1314,7 @@
 			"chain_role": "",
 			"character_id": "",
 			"display_name": "Small Residence A",
-			"model_path": "res://models/Meshy_AI_Sunlit_Redbrick_Cotta_0403171628/Meshy_AI_Sunlit_Redbrick_Cotta_0403171628_texture.glb",
+			"model_path": "res://models/city-builder/building_small_a.glb",
 			"patron_id": "",
 			"pool_id": "residential_t1",
 			"tier": 0
@@ -949,6 +1324,7 @@
 			"body": {
 				"building_id": "building_small_b",
 				"category": "generic",
+				"community_role": "functional",
 				"description": "",
 				"display_name": "Small Commercial B",
 				"footprint": [
@@ -958,20 +1334,20 @@
 					]
 				],
 				"model_offset": [
+					-0.000103415872,
 					0.0,
-					0.0,
-					0.0
+					-0.0000661176049
 				],
-				"model_path": "res://models/Meshy_AI_Sunnyvale_News_Conf_0403170655/Meshy_AI_Sunnyvale_News_Conf_0403170655_texture.glb",
+				"model_path": "res://models/city-builder/building_small_b.glb",
 				"model_rotation_y": 0.0,
-				"model_scale": 0.45,
+				"model_scale": 0.504442628,
 				"pool_id": "commercial_t1",
 				"profiles": [
 					{
 						"type": "BuildingMetadata"
 					},
 					{
-						"active_end": 18.0,
+						"active_end": 22.0,
 						"active_start": 8.0,
 						"capacity": 10.0,
 						"category": "commercial",
@@ -979,15 +1355,43 @@
 					},
 					{
 						"base": -10.0,
-						"commercial": 10.0,
+						"commercial": -30.0,
 						"industrial": 0.0,
 						"nature": 0.0,
 						"radius": 1.0,
 						"residential": -10.0,
 						"type": "AttractivenessProfile"
+					},
+					{
+						"effects": [
+							{
+								"amount": 5.0,
+								"capacity": 10.0,
+								"effect_id": "local_shopping",
+								"manifestation": "freedom",
+								"quality": "opportunity",
+								"reason": "Reached useful local shops",
+								"scope": "participant",
+								"stacking_group": "local_commerce"
+							},
+							{
+								"amount": 3.0,
+								"capacity": 10.0,
+								"effect_id": "high_street_encounter",
+								"manifestation": "care",
+								"quality": "belonging",
+								"reason": "Met neighbours at local shops",
+								"scope": "participant",
+								"stacking_group": "community_gathering"
+							}
+						],
+						"type": "CommunityEffectProfile"
 					}
 				],
-				"tags": []
+				"tags": [],
+				"ui_group": "commerce",
+				"ui_icon": "shop",
+				"ui_order": 10.0
 			},
 			"bucket": "",
 			"building_id": "building_small_b",
@@ -995,7 +1399,7 @@
 			"chain_role": "",
 			"character_id": "",
 			"display_name": "Small Commercial B",
-			"model_path": "res://models/Meshy_AI_Sunnyvale_News_Conf_0403170655/Meshy_AI_Sunnyvale_News_Conf_0403170655_texture.glb",
+			"model_path": "res://models/city-builder/building_small_b.glb",
 			"patron_id": "",
 			"pool_id": "commercial_t1",
 			"tier": 0
@@ -1005,6 +1409,7 @@
 			"body": {
 				"building_id": "building_small_c",
 				"category": "generic",
+				"community_role": "functional",
 				"description": "",
 				"display_name": "Tower Residence C",
 				"footprint": [
@@ -1026,13 +1431,13 @@
 					]
 				],
 				"model_offset": [
-					0.5,
+					-0.000309129406,
 					0.0,
-					0.5
+					-0.0000475813031
 				],
-				"model_path": "res://models/Meshy_AI_The_Tower_of_Tomorrow_0403170625/Meshy_AI_The_Tower_of_Tomorrow_0403170625_texture.glb",
+				"model_path": "res://models/city-builder/building_small_c.glb",
 				"model_rotation_y": 0.0,
-				"model_scale": 2.04,
+				"model_scale": 1.00035313,
 				"pool_id": "residential_t2",
 				"profiles": [
 					{
@@ -1053,9 +1458,27 @@
 						"radius": 1.0,
 						"residential": -10.0,
 						"type": "AttractivenessProfile"
+					},
+					{
+						"effects": [
+							{
+								"amount": 20.0,
+								"effect_id": "secure_home",
+								"manifestation": "neutral",
+								"quality": "liveability",
+								"reason": "Had a secure home",
+								"requires_active_building": false,
+								"scope": "resident",
+								"stacking_group": "housing"
+							}
+						],
+						"type": "CommunityEffectProfile"
 					}
 				],
-				"tags": []
+				"tags": [],
+				"ui_group": "homes",
+				"ui_icon": "tower-block",
+				"ui_order": 20.0
 			},
 			"bucket": "",
 			"building_id": "building_small_c",
@@ -1063,7 +1486,7 @@
 			"chain_role": "",
 			"character_id": "",
 			"display_name": "Tower Residence C",
-			"model_path": "res://models/Meshy_AI_The_Tower_of_Tomorrow_0403170625/Meshy_AI_The_Tower_of_Tomorrow_0403170625_texture.glb",
+			"model_path": "res://models/city-builder/building_small_c.glb",
 			"patron_id": "",
 			"pool_id": "residential_t2",
 			"tier": 0
@@ -1073,6 +1496,7 @@
 			"body": {
 				"building_id": "building_small_d",
 				"category": "generic",
+				"community_role": "functional",
 				"description": "",
 				"display_name": "Cottage Residence D",
 				"footprint": [
@@ -1082,13 +1506,13 @@
 					]
 				],
 				"model_offset": [
+					-0.0000567648767,
 					0.0,
-					0.0,
-					0.0
+					0.0000329886219
 				],
-				"model_path": "res://models/Meshy_AI_Wisteria_Cottage_0403171247/Meshy_AI_Wisteria_Cottage_0403171247_texture.glb",
+				"model_path": "res://models/city-builder/building_small_d.glb",
 				"model_rotation_y": 0.0,
-				"model_scale": 0.45,
+				"model_scale": 0.500187288,
 				"pool_id": "residential_t1",
 				"profiles": [
 					{
@@ -1109,9 +1533,27 @@
 						"radius": 1.0,
 						"residential": -10.0,
 						"type": "AttractivenessProfile"
+					},
+					{
+						"effects": [
+							{
+								"amount": 20.0,
+								"effect_id": "secure_home",
+								"manifestation": "neutral",
+								"quality": "liveability",
+								"reason": "Had a secure home",
+								"requires_active_building": false,
+								"scope": "resident",
+								"stacking_group": "housing"
+							}
+						],
+						"type": "CommunityEffectProfile"
 					}
 				],
-				"tags": []
+				"tags": [],
+				"ui_group": "homes",
+				"ui_icon": "house",
+				"ui_order": 10.0
 			},
 			"bucket": "",
 			"building_id": "building_small_d",
@@ -1119,7 +1561,7 @@
 			"chain_role": "",
 			"character_id": "",
 			"display_name": "Cottage Residence D",
-			"model_path": "res://models/Meshy_AI_Wisteria_Cottage_0403171247/Meshy_AI_Wisteria_Cottage_0403171247_texture.glb",
+			"model_path": "res://models/city-builder/building_small_d.glb",
 			"patron_id": "",
 			"pool_id": "residential_t1",
 			"tier": 0
@@ -1129,6 +1571,7 @@
 			"body": {
 				"building_id": "building_theatre",
 				"category": "unique",
+				"community_role": "participant",
 				"description": "",
 				"display_name": "The Theatre",
 				"footprint": [
@@ -1138,13 +1581,13 @@
 					]
 				],
 				"model_offset": [
+					-0.0000505186788,
 					0.0,
-					0.0,
-					0.0
+					-0.000153076516
 				],
-				"model_path": "res://models/Meshy_AI_Clocktower_City_Hall_0403210028/Meshy_AI_Clocktower_City_Hall_0403210028_texture.glb",
+				"model_path": "res://models/city-builder/building_theatre.glb",
 				"model_rotation_y": 0.0,
-				"model_scale": 0.95,
+				"model_scale": 0.500184589,
 				"profiles": [
 					{
 						"type": "BuildingMetadata"
@@ -1172,9 +1615,165 @@
 						"radius": 3.0,
 						"residential": 10.0,
 						"type": "AttractivenessProfile"
+					},
+					{
+						"default_programme": "plays",
+						"programmes": {
+							"community_use": [
+								{
+									"amount": 4.0,
+									"capacity": 60.0,
+									"effect_id": "community_belonging",
+									"manifestation": "care",
+									"quality": "belonging",
+									"reason": "Used a staffed community meeting place",
+									"schedule": {
+										"end": 18.0,
+										"start": 10.0
+									},
+									"scope": "participant",
+									"stacking_group": "community_gathering"
+								},
+								{
+									"amount": 2.0,
+									"capacity": 60.0,
+									"effect_id": "community_liveability",
+									"manifestation": "care",
+									"quality": "liveability",
+									"reason": "Accessed shared community support",
+									"schedule": {
+										"end": 18.0,
+										"start": 10.0
+									},
+									"scope": "participant",
+									"stacking_group": "community_service"
+								},
+								{
+									"amount": 1.0,
+									"capacity": 60.0,
+									"effect_id": "community_opportunity",
+									"manifestation": "care",
+									"quality": "opportunity",
+									"reason": "Found a useful community role",
+									"schedule": {
+										"end": 18.0,
+										"start": 10.0
+									},
+									"scope": "participant",
+									"stacking_group": "theatre_opportunity"
+								}
+							],
+							"plays": [
+								{
+									"amount": 3.0,
+									"capacity": 60.0,
+									"effect_id": "plays_beauty",
+									"manifestation": "identity",
+									"quality": "beauty",
+									"reason": "Enjoyed recurring local plays",
+									"schedule": {
+										"end": 22.0,
+										"start": 18.0
+									},
+									"scope": "participant",
+									"stacking_group": "theatre_beauty"
+								},
+								{
+									"amount": 3.0,
+									"capacity": 60.0,
+									"effect_id": "plays_belonging",
+									"manifestation": "identity",
+									"quality": "belonging",
+									"reason": "Shared familiar local stories",
+									"schedule": {
+										"end": 22.0,
+										"start": 18.0
+									},
+									"scope": "participant",
+									"stacking_group": "theatre_belonging"
+								},
+								{
+									"amount": 1.0,
+									"capacity": 60.0,
+									"effect_id": "plays_opportunity",
+									"manifestation": "identity",
+									"quality": "opportunity",
+									"reason": "Took part in local performance",
+									"schedule": {
+										"end": 22.0,
+										"start": 18.0
+									},
+									"scope": "participant",
+									"stacking_group": "theatre_opportunity"
+								}
+							],
+							"rock_nights": [
+								{
+									"amount": 3.0,
+									"capacity": 60.0,
+									"effect_id": "rock_opportunity",
+									"manifestation": "freedom",
+									"quality": "opportunity",
+									"reason": "Discovered a new music night",
+									"schedule": {
+										"end": 2.0,
+										"start": 20.0
+									},
+									"scope": "participant",
+									"stacking_group": "theatre_opportunity"
+								},
+								{
+									"amount": 3.0,
+									"capacity": 60.0,
+									"effect_id": "rock_belonging",
+									"manifestation": "freedom",
+									"quality": "belonging",
+									"reason": "Found a compatible music scene",
+									"schedule": {
+										"end": 2.0,
+										"start": 20.0
+									},
+									"scope": "participant",
+									"stacking_group": "theatre_belonging"
+								},
+								{
+									"amount": 2.0,
+									"capacity": 60.0,
+									"effect_id": "rock_beauty",
+									"manifestation": "freedom",
+									"quality": "beauty",
+									"reason": "Loved the programme's novelty",
+									"schedule": {
+										"end": 2.0,
+										"start": 20.0
+									},
+									"scope": "participant",
+									"stacking_group": "theatre_beauty"
+								},
+								{
+									"amount": -8.0,
+									"effect_id": "rock_noise",
+									"manifestation": "neutral",
+									"quality": "liveability",
+									"radius": 2.0,
+									"reason": "Amplified music carried into the neighbourhood",
+									"schedule": {
+										"end": 2.0,
+										"start": 20.0
+									},
+									"scope": "local",
+									"sensitivity": "noise",
+									"stacking_group": "night_noise"
+								}
+							]
+						},
+						"type": "CommunityEffectProfile"
 					}
 				],
-				"tags": []
+				"tags": [],
+				"ui_group": "landmarks",
+				"ui_icon": "theatre",
+				"ui_order": 20.0
 			},
 			"bucket": "residential",
 			"building_id": "building_theatre",
@@ -1182,8 +1781,83 @@
 			"chain_role": "landmark",
 			"character_id": "",
 			"display_name": "The Theatre",
-			"model_path": "res://models/Meshy_AI_Clocktower_City_Hall_0403210028/Meshy_AI_Clocktower_City_Hall_0403210028_texture.glb",
+			"model_path": "res://models/city-builder/building_theatre.glb",
 			"patron_id": "aristocrat",
+			"pool_id": "",
+			"tier": 0
+		},
+		{
+			"_path": "res://data/buildings/unique/building_town_hall.json",
+			"body": {
+				"building_id": "building_town_hall",
+				"cash_cost": 0.0,
+				"category": "unique",
+				"community_role": "local_only",
+				"description": "The free civic heart of every new town. Roads and working places grow outward from here.",
+				"display_name": "Town Hall",
+				"footprint": [
+					[
+						0.0,
+						0.0
+					],
+					[
+						1.0,
+						0.0
+					],
+					[
+						0.0,
+						1.0
+					],
+					[
+						1.0,
+						1.0
+					]
+				],
+				"model_offset": [
+					-0.0000575048665,
+					0.0,
+					0.0000154419496
+				],
+				"model_path": "res://models/city-builder/building_town_hall.glb",
+				"model_rotation_y": 0.0,
+				"model_scale": 1.00028156,
+				"profiles": [
+					{
+						"type": "BuildingMetadata"
+					},
+					{
+						"effects": [
+							{
+								"amount": 2.0,
+								"effect_id": "civic_heart",
+								"manifestation": "identity",
+								"quality": "belonging",
+								"radius": 3.0,
+								"reason": "Lived near the town's civic heart",
+								"requires_active_building": false,
+								"scope": "local",
+								"stacking_group": "civic_heart"
+							}
+						],
+						"type": "CommunityEffectProfile"
+					}
+				],
+				"tags": [
+					"civic",
+					"town_root"
+				],
+				"ui_group": "civic",
+				"ui_icon": "city-hall",
+				"ui_order": 0.0
+			},
+			"bucket": "",
+			"building_id": "building_town_hall",
+			"category": "unique",
+			"chain_role": "",
+			"character_id": "",
+			"display_name": "Town Hall",
+			"model_path": "res://models/city-builder/building_town_hall.glb",
+			"patron_id": "",
 			"pool_id": "",
 			"tier": 0
 		},
@@ -1201,13 +1875,13 @@
 					]
 				],
 				"model_offset": [
+					-0.000054517556,
 					0.0,
-					0.0,
-					0.0
+					-0.0000820296961
 				],
-				"model_path": "res://models/building-garage.glb",
+				"model_path": "res://models/city-builder/building_windmill.glb",
 				"model_rotation_y": 0.0,
-				"model_scale": 1.0,
+				"model_scale": 0.50008355,
 				"profiles": [
 					{
 						"type": "BuildingMetadata"
@@ -1240,7 +1914,10 @@
 						"type": "AttractivenessProfile"
 					}
 				],
-				"tags": []
+				"tags": [],
+				"ui_group": "industry",
+				"ui_icon": "windmill",
+				"ui_order": 30.0
 			},
 			"bucket": "industrial",
 			"building_id": "building_windmill",
@@ -1248,7 +1925,7 @@
 			"chain_role": "chain",
 			"character_id": "aristocrat_industrial",
 			"display_name": "Windmill",
-			"model_path": "res://models/building-garage.glb",
+			"model_path": "res://models/city-builder/building_windmill.glb",
 			"patron_id": "aristocrat",
 			"pool_id": "",
 			"tier": 1
@@ -1259,6 +1936,7 @@
 				"building_id": "grass",
 				"cash_cost": 10.0,
 				"category": "nature",
+				"community_role": "cosmetic_only",
 				"description": "",
 				"display_name": "Grass",
 				"footprint": [
@@ -1272,7 +1950,7 @@
 					0.0,
 					0.0
 				],
-				"model_path": "res://models/grass.glb",
+				"model_path": "res://models/city-builder/grass.glb",
 				"model_rotation_y": 0.0,
 				"model_scale": 1.0,
 				"pool_id": "grass",
@@ -1287,7 +1965,10 @@
 						"type": "AttractivenessProfile"
 					}
 				],
-				"tags": []
+				"tags": [],
+				"ui_group": "nature",
+				"ui_icon": "grass",
+				"ui_order": 10.0
 			},
 			"bucket": "",
 			"building_id": "grass",
@@ -1295,7 +1976,7 @@
 			"chain_role": "",
 			"character_id": "",
 			"display_name": "Grass",
-			"model_path": "res://models/grass.glb",
+			"model_path": "res://models/city-builder/grass.glb",
 			"patron_id": "",
 			"pool_id": "grass",
 			"tier": 0
@@ -1306,6 +1987,7 @@
 				"building_id": "grass_trees",
 				"cash_cost": 15.0,
 				"category": "nature",
+				"community_role": "cosmetic_only",
 				"description": "",
 				"display_name": "Grass with Trees",
 				"footprint": [
@@ -1315,13 +1997,13 @@
 					]
 				],
 				"model_offset": [
+					0.0000130627977,
 					0.0,
-					0.0,
-					0.0
+					-0.00942328833
 				],
-				"model_path": "res://models/grass-trees.glb",
+				"model_path": "res://models/city-builder/grass_trees.glb",
 				"model_rotation_y": 0.0,
-				"model_scale": 1.0,
+				"model_scale": 0.512648837,
 				"pool_id": "grass",
 				"profiles": [
 					{
@@ -1334,7 +2016,10 @@
 						"type": "AttractivenessProfile"
 					}
 				],
-				"tags": []
+				"tags": [],
+				"ui_group": "nature",
+				"ui_icon": "grass",
+				"ui_order": 10.0
 			},
 			"bucket": "",
 			"building_id": "grass_trees",
@@ -1342,7 +2027,7 @@
 			"chain_role": "",
 			"character_id": "",
 			"display_name": "Grass with Trees",
-			"model_path": "res://models/grass-trees.glb",
+			"model_path": "res://models/city-builder/grass_trees.glb",
 			"patron_id": "",
 			"pool_id": "grass",
 			"tier": 0
@@ -1353,6 +2038,7 @@
 				"building_id": "grass_trees_tall",
 				"cash_cost": 20.0,
 				"category": "nature",
+				"community_role": "cosmetic_only",
 				"description": "",
 				"display_name": "Grass with Tall Trees",
 				"footprint": [
@@ -1362,13 +2048,13 @@
 					]
 				],
 				"model_offset": [
+					-0.0105713361,
 					0.0,
-					0.0,
-					0.0
+					0.00318272801
 				],
-				"model_path": "res://models/grass-trees-tall.glb",
+				"model_path": "res://models/city-builder/grass_trees_tall.glb",
 				"model_rotation_y": 0.0,
-				"model_scale": 1.0,
+				"model_scale": 0.586628969,
 				"pool_id": "grass",
 				"profiles": [
 					{
@@ -1381,7 +2067,10 @@
 						"type": "AttractivenessProfile"
 					}
 				],
-				"tags": []
+				"tags": [],
+				"ui_group": "nature",
+				"ui_icon": "grass",
+				"ui_order": 10.0
 			},
 			"bucket": "",
 			"building_id": "grass_trees_tall",
@@ -1389,7 +2078,7 @@
 			"chain_role": "",
 			"character_id": "",
 			"display_name": "Grass with Tall Trees",
-			"model_path": "res://models/grass-trees-tall.glb",
+			"model_path": "res://models/city-builder/grass_trees_tall.glb",
 			"patron_id": "",
 			"pool_id": "grass",
 			"tier": 0
@@ -1408,13 +2097,13 @@
 					]
 				],
 				"model_offset": [
+					-0.00000274217144,
 					0.0,
-					0.0,
-					0.0
+					0.0000159910324
 				],
-				"model_path": "res://models/pavement.glb",
+				"model_path": "res://models/city-builder/pavement.glb",
 				"model_rotation_y": 0.0,
-				"model_scale": 1.0,
+				"model_scale": 0.500065246,
 				"pool_id": "pavement",
 				"profiles": [
 					{
@@ -1427,7 +2116,10 @@
 						"type": "AttractivenessProfile"
 					}
 				],
-				"tags": []
+				"tags": [],
+				"ui_group": "roads",
+				"ui_icon": "pavement",
+				"ui_order": 20.0
 			},
 			"bucket": "",
 			"building_id": "pavement",
@@ -1435,7 +2127,7 @@
 			"chain_role": "",
 			"character_id": "",
 			"display_name": "Pavement",
-			"model_path": "res://models/pavement.glb",
+			"model_path": "res://models/city-builder/pavement.glb",
 			"patron_id": "",
 			"pool_id": "pavement",
 			"tier": 0
@@ -1454,13 +2146,13 @@
 					]
 				],
 				"model_offset": [
+					-0.0000127557194,
 					0.0,
-					0.0,
-					0.0
+					-0.0000510377791
 				],
-				"model_path": "res://models/pavement-fountain.glb",
+				"model_path": "res://models/city-builder/pavement_fountain.glb",
 				"model_rotation_y": 0.0,
-				"model_scale": 1.0,
+				"model_scale": 0.500012756,
 				"pool_id": "pavement",
 				"profiles": [
 					{
@@ -1473,7 +2165,10 @@
 						"type": "AttractivenessProfile"
 					}
 				],
-				"tags": []
+				"tags": [],
+				"ui_group": "roads",
+				"ui_icon": "pavement",
+				"ui_order": 20.0
 			},
 			"bucket": "",
 			"building_id": "pavement_fountain",
@@ -1481,7 +2176,7 @@
 			"chain_role": "",
 			"character_id": "",
 			"display_name": "Pavement with Fountain",
-			"model_path": "res://models/pavement-fountain.glb",
+			"model_path": "res://models/city-builder/pavement_fountain.glb",
 			"patron_id": "",
 			"pool_id": "pavement",
 			"tier": 0
@@ -1532,7 +2227,10 @@
 						"type": "AttractivenessProfile"
 					}
 				],
-				"tags": []
+				"tags": [],
+				"ui_group": "roads",
+				"ui_icon": "road",
+				"ui_order": 10.0
 			},
 			"bucket": "",
 			"building_id": "road_corner",
@@ -1599,7 +2297,10 @@
 						"type": "AttractivenessProfile"
 					}
 				],
-				"tags": []
+				"tags": [],
+				"ui_group": "roads",
+				"ui_icon": "road",
+				"ui_order": 10.0
 			},
 			"bucket": "",
 			"building_id": "road_intersection",
@@ -1662,7 +2363,10 @@
 						"type": "AttractivenessProfile"
 					}
 				],
-				"tags": []
+				"tags": [],
+				"ui_group": "roads",
+				"ui_icon": "road",
+				"ui_order": 10.0
 			},
 			"bucket": "",
 			"building_id": "road_split",
@@ -1679,6 +2383,7 @@
 			"_path": "res://data/buildings/road/road_straight.json",
 			"body": {
 				"building_id": "road_straight",
+				"cash_cost": 2.0,
 				"category": "road",
 				"description": "",
 				"display_name": "Road (Straight)",
@@ -1722,7 +2427,10 @@
 						"type": "AttractivenessProfile"
 					}
 				],
-				"tags": []
+				"tags": [],
+				"ui_group": "roads",
+				"ui_icon": "road",
+				"ui_order": 10.0
 			},
 			"bucket": "",
 			"building_id": "road_straight",
@@ -1781,7 +2489,10 @@
 						"type": "AttractivenessProfile"
 					}
 				],
-				"tags": []
+				"tags": [],
+				"ui_group": "roads",
+				"ui_icon": "road",
+				"ui_order": 10.0
 			},
 			"bucket": "",
 			"building_id": "road_straight_lightposts",
@@ -1817,7 +2528,17 @@
 			"bio": "Town factotum. Knows where every cable runs and which official to bribe with a sandwich.",
 			"character_id": "ambrose",
 			"character_type": "guide",
+			"default_expression": "neutral",
 			"display_name": "Ambrose",
+			"expressions": {
+				"angry": "res://data/characters/ambrose/expressions/line_art/angry.png",
+				"concerned": "res://data/characters/ambrose/expressions/line_art/concerned.png",
+				"disapproving": "res://data/characters/ambrose/expressions/line_art/disapproving.png",
+				"neutral": "res://data/characters/ambrose/expressions/line_art/neutral.png",
+				"pleased": "res://data/characters/ambrose/expressions/line_art/pleased.png",
+				"surprised": "res://data/characters/ambrose/expressions/line_art/surprised.png",
+				"thoughtful": "res://data/characters/ambrose/expressions/line_art/thoughtful.png"
+			},
 			"patron_id": "",
 			"portrait": "res://data/characters/ambrose/portrait.png",
 			"talking_videos": [
@@ -1836,7 +2557,13 @@
 			"bio": "",
 			"character_id": "aristocrat_commercial",
 			"character_type": "character",
+			"default_expression": "neutral",
 			"display_name": "Flick",
+			"expressions": {
+				"concerned": "res://data/characters/aristocrat_commercial/expressions/concerned.png",
+				"neutral": "res://data/characters/aristocrat_commercial/expressions/neutral.png",
+				"surprised": "res://data/characters/aristocrat_commercial/expressions/surprised.png"
+			},
 			"patron_id": "aristocrat",
 			"portrait": "res://data/characters/aristocrat_commercial/portrait.png",
 			"talking_videos": [
@@ -1855,7 +2582,11 @@
 			"bio": "Third-generation industrialist. Loves a working chimney.",
 			"character_id": "aristocrat_industrial",
 			"character_type": "character",
+			"default_expression": "",
 			"display_name": "Sir Reginald Cogsworth",
+			"expressions": {
+
+			},
 			"patron_id": "aristocrat",
 			"portrait": "res://data/characters/aristocrat_industrial/portrait.png",
 			"talking_videos": [],
@@ -1869,7 +2600,17 @@
 			"bio": "The aristocrat himself. Ostensibly retired, demonstrably not.",
 			"character_id": "aristocrat_patron",
 			"character_type": "patron",
+			"default_expression": "neutral",
 			"display_name": "Sir William",
+			"expressions": {
+				"angry": "res://data/characters/william/expressions/line_art/angry.png",
+				"concerned": "res://data/characters/william/expressions/line_art/concerned.png",
+				"disapproving": "res://data/characters/william/expressions/line_art/disapproving.png",
+				"neutral": "res://data/characters/william/expressions/line_art/neutral.png",
+				"pleased": "res://data/characters/william/expressions/line_art/pleased.png",
+				"surprised": "res://data/characters/william/expressions/line_art/surprised.png",
+				"thoughtful": "res://data/characters/william/expressions/line_art/thoughtful.png"
+			},
 			"patron_id": "aristocrat",
 			"portrait": "res://data/characters/william/portrait.png",
 			"talking_videos": [
@@ -1888,7 +2629,17 @@
 			"bio": "",
 			"character_id": "aristocrat_residential",
 			"character_type": "character",
+			"default_expression": "neutral",
 			"display_name": "Baba Soyink",
+			"expressions": {
+				"angry": "res://data/characters/aristocrat_residential/expressions/line_art/angry.png",
+				"concerned": "res://data/characters/aristocrat_residential/expressions/line_art/concerned.png",
+				"disapproving": "res://data/characters/aristocrat_residential/expressions/line_art/disapproving.png",
+				"neutral": "res://data/characters/aristocrat_residential/expressions/line_art/neutral.png",
+				"pleased": "res://data/characters/aristocrat_residential/expressions/line_art/pleased.png",
+				"surprised": "res://data/characters/aristocrat_residential/expressions/line_art/surprised.png",
+				"thoughtful": "res://data/characters/aristocrat_residential/expressions/line_art/thoughtful.png"
+			},
 			"patron_id": "aristocrat",
 			"portrait": "res://data/characters/aristocrat_residential/portrait.png",
 			"talking_videos": [
@@ -1955,9 +2706,44 @@
 				}
 			},
 			"category": "characters",
+			"dialogue_nodes": [
+				{
+					"body": "[PLACEHOLDER] aristocrat_commercial_arrival — n_start body.",
+					"node_id": "n_start",
+					"on_enter": [],
+					"options": [
+						{
+							"effects": [],
+							"label": "Continue",
+							"next": "n_end"
+						}
+					],
+					"speaker": ""
+				},
+				{
+					"body": "[PLACEHOLDER] aristocrat_commercial_arrival — n_end body.",
+					"node_id": "n_end",
+					"on_enter": [],
+					"options": [
+						{
+							"effects": [
+								{
+									"kind": "set_flag",
+									"target": "met_aristocrat_commercial"
+								}
+							],
+							"label": "Close",
+							"next": ""
+						}
+					],
+					"speaker": ""
+				}
+			],
 			"enabled_if": "",
+			"entry_node_id": "n_start",
 			"event_id": "aristocrat_commercial_arrival",
 			"event_type": "dialogue",
+			"participants": [],
 			"trigger_building_id": "",
 			"trigger_character_id": "aristocrat_commercial",
 			"trigger_event": "character_arrived",
@@ -2012,9 +2798,44 @@
 				}
 			},
 			"category": "characters",
+			"dialogue_nodes": [
+				{
+					"body": "[PLACEHOLDER] aristocrat_industrial_arrival — n_start body.",
+					"node_id": "n_start",
+					"on_enter": [],
+					"options": [
+						{
+							"effects": [],
+							"label": "Continue",
+							"next": "n_end"
+						}
+					],
+					"speaker": ""
+				},
+				{
+					"body": "[PLACEHOLDER] aristocrat_industrial_arrival — n_end body.",
+					"node_id": "n_end",
+					"on_enter": [],
+					"options": [
+						{
+							"effects": [
+								{
+									"kind": "set_flag",
+									"target": "met_aristocrat_industrial"
+								}
+							],
+							"label": "Close",
+							"next": ""
+						}
+					],
+					"speaker": ""
+				}
+			],
 			"enabled_if": "",
+			"entry_node_id": "n_start",
 			"event_id": "aristocrat_industrial_arrival",
 			"event_type": "dialogue",
+			"participants": [],
 			"trigger_building_id": "",
 			"trigger_character_id": "aristocrat_industrial",
 			"trigger_event": "character_arrived",
@@ -2060,9 +2881,35 @@
 				}
 			},
 			"category": "patrons",
+			"dialogue_nodes": [
+				{
+					"body": "[PLACEHOLDER] aristocrat_landmark_completed — n_start body.",
+					"node_id": "n_start",
+					"on_enter": [],
+					"options": [
+						{
+							"effects": [
+								{
+									"kind": "set_flag",
+									"target": "aristocrat_landmark_completed"
+								},
+								{
+									"kind": "fire_event",
+									"target": "aristocrat_landmark_news"
+								}
+							],
+							"label": "Close",
+							"next": ""
+						}
+					],
+					"speaker": ""
+				}
+			],
 			"enabled_if": "",
+			"entry_node_id": "n_start",
 			"event_id": "aristocrat_landmark_completed",
 			"event_type": "dialogue",
+			"participants": [],
 			"trigger_building_id": "",
 			"trigger_character_id": "",
 			"trigger_event": "patron_landmark_completed",
@@ -2086,9 +2933,12 @@
 				}
 			},
 			"category": "newspaper",
+			"dialogue_nodes": [],
 			"enabled_if": "",
+			"entry_node_id": "",
 			"event_id": "aristocrat_landmark_news",
 			"event_type": "newspaper",
+			"participants": [],
 			"trigger_building_id": "",
 			"trigger_character_id": "",
 			"trigger_event": "manual",
@@ -2130,9 +2980,31 @@
 				}
 			},
 			"category": "patrons",
+			"dialogue_nodes": [
+				{
+					"body": "[PLACEHOLDER] aristocrat_landmark_ready — n_start body.",
+					"node_id": "n_start",
+					"on_enter": [],
+					"options": [
+						{
+							"effects": [
+								{
+									"kind": "set_flag",
+									"target": "aristocrat_landmark_promised"
+								}
+							],
+							"label": "Close",
+							"next": ""
+						}
+					],
+					"speaker": ""
+				}
+			],
 			"enabled_if": "",
+			"entry_node_id": "n_start",
 			"event_id": "aristocrat_landmark_ready",
 			"event_type": "dialogue",
+			"participants": [],
 			"trigger_building_id": "",
 			"trigger_character_id": "",
 			"trigger_event": "patron_landmark_ready",
@@ -2148,36 +3020,90 @@
 					"entry_node_id": "n_start",
 					"nodes": [
 						{
-							"body": "[PLACEHOLDER] aristocrat_residential_arrival — n_start body.",
-							"node_id": "n_start",
-							"on_enter": [],
-							"options": [
+							"beats": [
 								{
-									"effects": [],
-									"label": "Continue",
-									"next": "n_end"
+									"expression": "concerned",
+									"speaker": "player",
+									"text": "Mr Soyink? That radio mast was not on the plans yesterday.",
+									"type": "speech"
+								},
+								{
+									"expression": "surprised",
+									"speaker": "aristocrat_residential",
+									"text": "Plans? My dear fellow, it arrived under its own steam.",
+									"type": "speech"
+								},
+								{
+									"text": "A valve warms with a soft orange glow. Somewhere in the set, a dance band fades into weather reports.",
+									"type": "narration"
+								},
+								{
+									"expression": "concerned",
+									"speaker": "aristocrat_residential",
+									"text": "The town has plenty to say. What it lacks is a frequency on which to say it.",
+									"type": "speech"
 								}
 							],
-							"speaker": ""
-						},
-						{
-							"body": "[PLACEHOLDER] aristocrat_residential_arrival — n_end body.",
-							"node_id": "n_end",
-							"on_enter": [],
+							"node_id": "n_start",
+							"on_enter": [
+								{
+									"kind": "set_flag",
+									"target": "met_aristocrat_residential"
+								}
+							],
 							"options": [
 								{
 									"effects": [
 										{
 											"kind": "set_flag",
-											"target": "met_aristocrat_residential"
+											"target": "baba_frequency_public"
 										}
 									],
-									"label": "Close",
-									"next": ""
+									"label": "We'll give the town a proper station.",
+									"next": "n_public"
+								},
+								{
+									"effects": [
+										{
+											"kind": "set_flag",
+											"target": "baba_frequency_local"
+										}
+									],
+									"label": "Keep it small, local, and difficult to trace.",
+									"next": "n_local"
+								}
+							]
+						},
+						{
+							"beats": [
+								{
+									"expression": "pleased",
+									"speaker": "aristocrat_residential",
+									"text": "Splendid. A proper station, with improper music. Now you are talking my language.",
+									"type": "speech"
 								}
 							],
-							"speaker": ""
+							"node_id": "n_public",
+							"on_enter": [],
+							"options": []
+						},
+						{
+							"beats": [
+								{
+									"expression": "pleased",
+									"speaker": "aristocrat_residential",
+									"text": "Discreet, neighbourly, and just beyond the regulator's reach. I knew I had come to the right town.",
+									"type": "speech"
+								}
+							],
+							"node_id": "n_local",
+							"on_enter": [],
+							"options": []
 						}
+					],
+					"participants": [
+						"player",
+						"aristocrat_residential"
 					],
 					"tree_id": "aristocrat_residential_arrival_tree"
 				},
@@ -2187,19 +3113,109 @@
 				}
 			},
 			"category": "characters",
+			"dialogue_nodes": [
+				{
+					"beats": [
+						{
+							"expression": "concerned",
+							"speaker": "player",
+							"text": "Mr Soyink? That radio mast was not on the plans yesterday.",
+							"type": "speech"
+						},
+						{
+							"expression": "surprised",
+							"speaker": "aristocrat_residential",
+							"text": "Plans? My dear fellow, it arrived under its own steam.",
+							"type": "speech"
+						},
+						{
+							"text": "A valve warms with a soft orange glow. Somewhere in the set, a dance band fades into weather reports.",
+							"type": "narration"
+						},
+						{
+							"expression": "concerned",
+							"speaker": "aristocrat_residential",
+							"text": "The town has plenty to say. What it lacks is a frequency on which to say it.",
+							"type": "speech"
+						}
+					],
+					"node_id": "n_start",
+					"on_enter": [
+						{
+							"kind": "set_flag",
+							"target": "met_aristocrat_residential"
+						}
+					],
+					"options": [
+						{
+							"effects": [
+								{
+									"kind": "set_flag",
+									"target": "baba_frequency_public"
+								}
+							],
+							"label": "We'll give the town a proper station.",
+							"next": "n_public"
+						},
+						{
+							"effects": [
+								{
+									"kind": "set_flag",
+									"target": "baba_frequency_local"
+								}
+							],
+							"label": "Keep it small, local, and difficult to trace.",
+							"next": "n_local"
+						}
+					]
+				},
+				{
+					"beats": [
+						{
+							"expression": "pleased",
+							"speaker": "aristocrat_residential",
+							"text": "Splendid. A proper station, with improper music. Now you are talking my language.",
+							"type": "speech"
+						}
+					],
+					"node_id": "n_public",
+					"on_enter": [],
+					"options": []
+				},
+				{
+					"beats": [
+						{
+							"expression": "pleased",
+							"speaker": "aristocrat_residential",
+							"text": "Discreet, neighbourly, and just beyond the regulator's reach. I knew I had come to the right town.",
+							"type": "speech"
+						}
+					],
+					"node_id": "n_local",
+					"on_enter": [],
+					"options": []
+				}
+			],
 			"enabled_if": "",
+			"entry_node_id": "n_start",
 			"event_id": "aristocrat_residential_arrival",
 			"event_type": "dialogue",
+			"participants": [
+				"player",
+				"aristocrat_residential"
+			],
 			"trigger_building_id": "",
 			"trigger_character_id": "aristocrat_residential",
 			"trigger_event": "character_arrived",
 			"trigger_patron_id": ""
 		}
 	],
-	"exported_at": "2026-05-24T13:48:18",
+	"exported_at": "2026-09-06T12:36:05",
 	"flags": [
 		"aristocrat_landmark_completed",
 		"aristocrat_landmark_promised",
+		"baba_frequency_local",
+		"baba_frequency_public",
 		"met_aristocrat_commercial",
 		"met_aristocrat_industrial",
 		"met_aristocrat_residential"

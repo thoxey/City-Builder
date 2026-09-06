@@ -213,6 +213,19 @@ func test_pending_dialogue_redispatch_does_not_increment_event_count() -> void:
 	assert_eq(sink.records.size(), 1)
 	assert_eq(int(GameState.map.event_counts["arrival"]), 1)
 
+func test_acknowledged_dialogue_is_not_redispatched_after_map_load_recovery() -> void:
+	_plugin.set_events_for_test({"arrival": {
+		"event_id":"arrival", "event_type":"dialogue",
+		"trigger":{"event":"character_arrived"}, "payload":{},
+	}})
+	_plugin._dispatch("character_arrived", {})
+	assert_true(_plugin.acknowledge_dialogue("arrival"))
+	var sink := _Sink.new()
+	_plugin.event_resolved.connect(sink.on_resolved)
+	_plugin._redispatch_pending_dialogues()
+	assert_eq(sink.records, [])
+	assert_eq(GameState.map.pending_dialogue_event_ids, [])
+
 # ── DSL coverage ──────────────────────────────────────────────────────────────
 
 func test_dsl_empty_expr_is_true() -> void:

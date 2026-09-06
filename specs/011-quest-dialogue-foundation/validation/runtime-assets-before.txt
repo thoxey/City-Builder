@@ -1,0 +1,32 @@
+Quest Dialogue Foundation runtime asset inventory before implementation
+Captured: 2026-09-06
+
+Current DialoguePlugin direct runtime assets
+4ec62834e2f429652bb0ffd57c2a5df652889aa14fb3593a70c2a7f93273d9f7  data/characters/ambrose/portrait.png  PNG 512x512 RGB
+715702c3f610a5d84fa263e71f93621bca6294c06719f3a869557be29bc301a7  data/characters/aristocrat_residential/portrait.png  PNG 512x512 RGB
+67a3c672be09915f0140373969f7842532f427147c9385f0fea1d8651ef534f0  data/characters/aristocrat_commercial/portrait.png  PNG 512x512 RGB
+4444c23631884f411aa7f2fee35061b1756a9927940c62d2a5572acf470b3ffa  fonts/lilita_one_regular.ttf  TrueType font
+
+Approved existing high-resolution UI candidates
+97ba9ee5b75638e51286cc75fdce2fd760828f4239e9d5f180548fe754646826  art/ui/build-menu/masters/components/modal-confirmation-frame.png  PNG 1536x1024 RGBA
+a97be8dbb190fb640bde5ded6bbb04c42509000077a2379f34eba5fdacae617e  art/ui/build-menu/masters/components/button-normal.png  PNG 1983x793 RGBA
+03875e68d94c1e50266b65e5f10dbdddd77fc18cd29c53fbfa3ae5f822db7bc3  art/ui/build-menu/masters/components/button-hover.png  PNG 1983x793 RGBA
+cca9f0d7a03a7f9325b4fa0ac852cc06460c318d2abceca82c2e31231c05d1cd  art/ui/build-menu/masters/components/button-pressed.png  PNG 1983x793 RGBA
+c7d8cf3ce8805d69a4e101161d15d2a5f40a86423bdc7d84f7207080b01f6230  art/ui/build-menu/masters/components/scroll-track.png  PNG 1024x1536 RGBA
+7214f5aa7a7cc7f517a03810fb2ceec68a8ca8d051f20d2660d94d5bcb243800  art/ui/build-menu/masters/components/scroll-handle-normal.png  PNG 290x910 RGBA
+b311cd80ec098235b465b733de13465432452aead99d06e2861c08605dddad03  art/ui/build-menu/masters/components/divider-ornamental-short.png  PNG 2048x768 RGBA
+b2f243dc85965d8b14471ae3e0c167695b3d16161c715251f848dd0462c8e300  art/ui/build-menu/masters/controls/missing-artwork.png  PNG 1254x1254 RGBA
+
+Approved existing Godot-ready UI candidates
+344f8dc22669c3b0198342d7fe225508b7145ad29df7a903cdcb12809e14902a  sprites/ui/build-menu/components/modal-confirmation-frame.png  PNG 512x384 RGBA
+c791113b464b49ecbd2b0d227df7f9ddfe3eadf3352238bf1c3262be16925432  sprites/ui/build-menu/components/button-normal.png  PNG 384x96 RGBA
+dca0e6086c67e79a298e93665ed444147790094e89961c064ef1498a53fd10a2  sprites/ui/build-menu/components/button-hover.png  PNG 384x96 RGBA
+dfdda98f76fc64e4eab433d6a0d70eb7d3b7f6fac0bfb668f8f8fd967dc0a812  sprites/ui/build-menu/components/button-pressed.png  PNG 384x96 RGBA
+73a32a35746865d10c17feda16cb1ec663ac05d9ce9ae9662f485ecd8adb5d6d  sprites/ui/build-menu/components/scroll-track.png  PNG 64x512 RGBA
+6c74d8ea553a978fc0fd3c73615af530c4d8f5ba66216a9a1fc4a17441b3de5f  sprites/ui/build-menu/components/scroll-handle-normal.png  PNG 64x160 RGBA
+b4aab5251f2138dda3e86cac9c444fb50a0a544a8065976122392ab52438b0cf  sprites/ui/build-menu/components/divider-ornamental-short.png  PNG 192x48 RGBA
+9049969917aa03cf6d3fa4fff4fa22def10f7c8456bd72620c4e45c157a6ab68  sprites/ui/build-menu/controls/missing-artwork.png  PNG 128x128 RGBA
+
+No art/ui/dialogue/, sprites/ui/dialogue/, character expressions/ directories, or
+themes/dialogue_theme.tres existed at baseline. Existing talking_videos are outside
+the static-expression contract and are intentionally not duplicated in this digest.

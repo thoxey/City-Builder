@@ -73,6 +73,13 @@ func test_open_item_removes_from_pending_and_calls_dialogue() -> void:
 	assert_eq(_plugin.pending_event_ids(), ["b"])
 	assert_eq(_stub_dialogue.opened_ids, ["a"])
 
+func test_open_item_only_removes_inbox_projection_not_event_system_pending_truth() -> void:
+	_stub_events.pending["a"] = true
+	_plugin.push_for_test(_make_record("a", "dialogue", "cid_a"))
+	_plugin.open_for_test(0)
+	assert_eq(_plugin.pending_event_ids(), [])
+	assert_true(_stub_events.is_dialogue_pending("a"))
+
 func test_open_item_out_of_range_is_no_op() -> void:
 	_plugin.push_for_test(_make_record("a", "dialogue", "cid_a"))
 	_plugin.open_for_test(5)
@@ -138,7 +145,9 @@ static func _make_record(eid: String, etype: String, cid: String) -> Dictionary:
 class _StubEvents:
 	extends PluginBase
 	signal event_resolved(record: Dictionary)
+	var pending: Dictionary = {}
 	func get_plugin_name() -> String: return "_StubEvents"
+	func is_dialogue_pending(event_id: String) -> bool: return pending.get(event_id, false)
 
 class _StubDialogue:
 	extends PluginBase

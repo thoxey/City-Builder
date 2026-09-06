@@ -81,6 +81,7 @@ func _scan_characters() -> Array:
 	for path in _list_json(CHARACTERS_DIR, false):
 		var d := _read_json(path)
 		if d.is_empty(): continue
+		var expressions: Dictionary = d.get("expressions", {}) if d.get("expressions", {}) is Dictionary else {}
 		out.append({
 			"character_id":         String(d.get("character_id", "")),
 			"character_type":       String(d.get("character_type", "character")),
@@ -92,6 +93,8 @@ func _scan_characters() -> Array:
 			"arrival_requires_tier": int(d.get("arrival_requires_tier", 1)),
 			"want_building_id":     String(d.get("want_building_id", "")),
 			"portrait":             String(d.get("portrait", "")),
+			"default_expression":   String(d.get("default_expression", "")),
+			"expressions":          expressions.duplicate(true),
 			"talking_videos":       _to_string_array(d.get("talking_videos", [])),
 			"_path":                path,
 		})
@@ -160,6 +163,7 @@ func _scan_events() -> Array:
 		var d := _read_json(path)
 		if d.is_empty(): continue
 		var trigger: Dictionary = d.get("trigger", {})
+		var payload: Dictionary = d.get("payload", {}) if d.get("payload", {}) is Dictionary else {}
 		out.append({
 			"event_id":             String(d.get("event_id", "")),
 			"event_type":           String(d.get("event_type", "")),
@@ -168,6 +172,9 @@ func _scan_events() -> Array:
 			"trigger_patron_id":    String(trigger.get("patron_id", "")),
 			"trigger_building_id":  String(trigger.get("building_id", "")),
 			"enabled_if":           String(d.get("enabled_if", "")),
+			"participants":         _to_string_array(payload.get("participants", [])),
+			"entry_node_id":        String(payload.get("entry_node_id", "")),
+			"dialogue_nodes":       (payload.get("nodes", []) as Array).duplicate(true) if payload.get("nodes", []) is Array else [],
 			"category":             _category_from_path(path),
 			"_path":                path,
 			# Full event body so the SPA can open any event without a second

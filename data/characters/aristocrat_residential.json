@@ -9,6 +9,16 @@
   "arrival_requires_tier": 1,
   "want_building_id": "building_pirate_radio",
   "portrait": "res://data/characters/aristocrat_residential/portrait.png",
+  "default_expression": "neutral",
+  "expressions": {
+    "neutral": "res://data/characters/aristocrat_residential/expressions/line_art/neutral.png",
+    "pleased": "res://data/characters/aristocrat_residential/expressions/line_art/pleased.png",
+    "disapproving": "res://data/characters/aristocrat_residential/expressions/line_art/disapproving.png",
+    "angry": "res://data/characters/aristocrat_residential/expressions/line_art/angry.png",
+    "surprised": "res://data/characters/aristocrat_residential/expressions/line_art/surprised.png",
+    "concerned": "res://data/characters/aristocrat_residential/expressions/line_art/concerned.png",
+    "thoughtful": "res://data/characters/aristocrat_residential/expressions/line_art/thoughtful.png"
+  },
   "talking_videos": [
     "res://data/characters/aristocrat_residential/talking_1.ogv",
     "res://data/characters/aristocrat_residential/talking_2.ogv",
