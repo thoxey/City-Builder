@@ -7,12 +7,21 @@ The normative contracts are:
 
 - [Dialogue authoring contract](../specs/011-quest-dialogue-foundation/contracts/dialogue-authoring.md)
 - [Dialogue commit and completion contract](../specs/011-quest-dialogue-foundation/contracts/dialogue-completion.md)
-- [Dialogue interaction contract](../specs/011-quest-dialogue-foundation/contracts/dialogue-interaction.md)
+- [Dialogue input contract](../specs/011-quest-dialogue-foundation/contracts/dialogue-input.md)
 
 ## Event shape
 
 Declare two or three semantic participants. `player` is the player-facing semantic ID
-and is presented as Ambrose; quest files should never use `ambrose` as a speaker.
+and the current presentation resolves that role through Ambrose. Existing authored
+content may also use `ambrose` explicitly as a participant and speaker, so it is not
+a forbidden ID. Keep a new event's participant and speaker IDs internally consistent,
+and do not cast `player` and `ambrose` as the same identity in one conversation
+unless that story has an approved identity policy.
+
+The permanent player/Ambrose relationship for the first land quest is deliberately
+unresolved at the [Spec 016 creative checkpoint](../specs/016-first-land-quest-townspeople/dialogue-workshop.md).
+Do not turn the current presentation fallback into a new narrative rule before that
+decision is approved.
 
 ```json
 {

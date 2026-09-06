@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "status": "ready_for_integration",
+  "status": "integrated",
   "classification": "illustrative dialogue portraits",
   "state_order": [
     {
@@ -60,6 +60,7 @@
     "source_to_alpha": "inverted source luminance remapped from 5% to 90%; pale paper haze discarded"
   },
   "proofs": [
+    "res://art/ui/dialogue/line-art/review/contact-sheet-annotated.png",
     "res://art/ui/dialogue/line-art/review/contact-sheet-parchment-180px.png",
     "res://art/ui/dialogue/line-art/review/contact-sheet-alpha-checker-128px.png"
   ],

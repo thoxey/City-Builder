@@ -15,6 +15,8 @@ yet been approved.
   crop used by the current dialogue view, composited over the UI parchment.
 - `review/contact-sheet-alpha-checker-128px.png`: a transparency and edge-fringe
   proof at 128 px per portrait.
+- `review/contact-sheet-annotated.png`: presentation-ready overview of all 21
+  portraits, labelled with character IDs and the exact runtime expression keys.
 - `manifest.json`: character IDs, source sheets, crop regions, semantic state
   names, runtime paths, dimensions, and alpha policy.
 - `HANDOFF_PROMPT.md`: copy-ready prompt for the dialogue-system integration
@@ -58,3 +60,8 @@ The source sheet order is recorded in `manifest.json`. White removal was done by
 turning inverted source luminance into alpha, remapping the mask to discard pale
 generation haze, and replacing all visible RGB with black. This prevents a white
 matte fringe when composited in Godot.
+
+The three full contact sheets named by `source_sheet` in `manifest.json` are
+local generation inputs under ignored `art/characters/*/masters/` directories
+and are not distributed. The tracked per-expression masters here and runtime
+derivatives are sufficient to build and run the game.

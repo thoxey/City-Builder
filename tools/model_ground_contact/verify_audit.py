@@ -217,6 +217,15 @@ def _valid_godot_filename(value: Any) -> bool:
     )
 
 
+def _is_optional_generation_provenance(value: Any) -> bool:
+    """Return true for the ignored Meshy workspace that is not shipped in Git."""
+    if not isinstance(value, str) or not value:
+        return False
+    relative = value.removeprefix("res://").lstrip("/")
+    optional_root = "artifacts/building-concepts/meshy-production/runtime-v1"
+    return relative == optional_root or relative.startswith(optional_root + "/")
+
+
 def _catalogue_int(value: Any, default: int) -> Any:
     """Apply the catalogue's numeric coercion without hiding malformed values."""
     if isinstance(value, (int, float)):
@@ -569,7 +578,13 @@ def verify(root: Path) -> tuple[list[str], Counter[str], int]:
         )
         transform_source = verifier.resolve_repo_path(row.get("transform_source"), f"{building_id}.transform_source")
         if transform_source is not None:
-            verifier.require(transform_source.is_file(), f"{building_id}: transform source is missing")
+            # The final audit records ignored generation provenance as well as
+            # tracked runtime inputs. Validate local provenance when present,
+            # but keep this verifier usable from a clean Git checkout.
+            verifier.require(
+                transform_source.is_file() or _is_optional_generation_provenance(row.get("transform_source")),
+                f"{building_id}: transform source is missing",
+            )
 
         model_path = verifier.resolve_repo_path(row.get("model_path"), f"{building_id}.model_path")
         model_hash_before = verifier.require_hash(row.get("model_hash_before"), f"{building_id}.model_hash_before")
@@ -603,7 +618,10 @@ def verify(root: Path) -> tuple[list[str], Counter[str], int]:
                 f"{building_id}: upstream source changed despite an underlay/pass-only audit",
             )
         if source_path is not None:
-            verifier.require(source_path.is_file(), f"{building_id}: recorded upstream source is missing")
+            verifier.require(
+                source_path.is_file() or _is_optional_generation_provenance(row.get("source_model_path")),
+                f"{building_id}: recorded upstream source is missing",
+            )
             if source_path.is_file() and source_hash_after:
                 verifier.require(
                     verifier.sha256(source_path, f"{building_id}.source_model_path") == source_hash_after,

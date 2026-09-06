@@ -2,19 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bjtu455wrfvd8"
-valid=false
-generator_parameters={
-"md5": "9d00a9547bcad9600d040c42eb579a34"
+uid="uid://lao8snngxv1c"
+path="res://.godot/imported/Meshy_AI_Pub_0403211907_texture_Baked_BaseColor.png-9415852b803296c8c94be0ad88614afc.ctex"
+metadata={
+"vram_texture": false
 }
 
 [deps]
 
-source_file="res://models/Meshy_AI_Pub_0403211907_texture_Baked_BaseColor.png"
+source_file="res://models/Meshy_AI_Pub_0403211907/Meshy_AI_Pub_0403211907_texture_Baked_BaseColor.png"
+dest_files=["res://.godot/imported/Meshy_AI_Pub_0403211907_texture_Baked_BaseColor.png-9415852b803296c8c94be0ad88614afc.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
@@ -22,7 +23,7 @@ compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=true
+mipmaps/generate=false
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
@@ -36,4 +37,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=0
+detect_3d/compress_to=1

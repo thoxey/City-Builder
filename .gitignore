@@ -29,6 +29,10 @@ __pycache__/
 # Local performance/playtest output
 /artifacts/
 
+# Local worktrees and source archives (runtime derivatives are tracked)
+/.worktrees/
+*.rar
+
 # Replaceable AI character explorations (runtime derivatives remain tracked)
 /art/characters/*/masters/
 /art/characters/*/review/
@@ -41,7 +45,7 @@ art/**/reviews/**/*.import
 # Godot editor sidecars generated for documentation/validation source files
 *.csv.import
 *.likely.translation-*
-specs/**/validation/screenshots/*.import
+specs/**/validation/**/*.import
 
 # Editors / temporary files
 .vscode/

@@ -1,8 +1,9 @@
 # Quest Dialogue UI Asset Set
 
-This directory preserves the provisional source, runtime, and review artifacts for
-SpecKit feature 011. Dialogue text, speaker names, and choice labels remain engine
-text; none is baked into these images.
+This directory preserves both the original provisional portrait pass and the
+approved line-art portrait integration for SpecKit feature 011. Dialogue text,
+speaker names, and choice labels remain engine text; none is baked into these
+images.
 
 - `masters/`: highest-resolution source retained for each asset.
 - `game/`: 512 px Godot-ready RGBA derivatives.
@@ -10,15 +11,23 @@ text; none is baked into these images.
 - `proofs/`: contact sheets, grayscale review, and noisy-gameplay context.
 - `manifests/`: formatter output for each source/derivative pair.
 - `manifest.json`: semantic role, provenance, display range, and integration notes.
+- `line-art/`: approved seven-expression masters, runtime paths, and review
+  proofs for Ambrose, Baba Soyink, and Sir William.
 
 Portraits are illustrative fixed-size UI art intended to display between 180 px and
 260 px. The portrait frame and emphasis overlay are square fixed-size overlays. The
 main dialogue frame, choice buttons, divider, and scrollbar reuse the established
 build-menu component library through `themes/dialogue_theme.tres`.
 
-Ambrose concerned, Baba surprised, and Flick concerned were generated from the
-canonical character portraits and a talking-video reference frame. Other expression
-crops use a canonical portrait or a frame extracted at 2.5 seconds from the existing
-talking video. Those 512 px video-derived sources are deliberately provisional; the
-runtime contract addresses semantic expressions so higher-resolution replacements do
-not require quest-data or renderer changes. Existing `talking_videos` were not edited.
+The approved runtime path for Ambrose, Baba Soyink, and Sir William is the
+transparent black seven-state line-art set documented in
+`line-art/README.md` and `line-art/manifest.json`. Their character JSON maps
+those semantic expressions into full dialogue and compact guidance.
+
+The older 512 px expression crops described by `manifest.json` remain
+provisional reference and fallback material. Ambrose concerned, Baba surprised,
+and Flick concerned in that earlier pass were generated from canonical
+portraits and talking-video reference frames; other crops use a canonical
+portrait or a frame extracted at 2.5 seconds. Flick remains on that provisional
+set and is intentionally excluded from the approved line-art integration.
+Existing `talking_videos` were not edited.
