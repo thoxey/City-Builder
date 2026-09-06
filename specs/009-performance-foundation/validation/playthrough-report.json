@@ -1,0 +1,111 @@
+{
+  "all_passed": true,
+  "failures": [],
+  "gates": {
+    "expected_hash": "4440de04356f95a80c7219dba3718825de1cc1b258adae28a61b7cf735fb2942",
+    "max_hour_usec": 500000,
+    "max_scenario_usec": 45000000
+  },
+  "run_count": 3,
+  "runs": [
+    {
+      "categories": {
+        "civic": 1.0,
+        "commercial": 6.0,
+        "industrial": 6.0,
+        "nature": 17.0,
+        "residential": 30.0,
+        "road": 75.0
+      },
+      "failures": [],
+      "max_hour_usec": 469062.0,
+      "max_migration_usec": 469062.0,
+      "meaningful_attempts": 60.0,
+      "meaningful_placements": 60.0,
+      "outer_elapsed_usec": 42487290,
+      "profiled_snapshot_usec": 0.0,
+      "residents": 145.0,
+      "road_cells": 75.0,
+      "route_cache": {
+        "anchor_entries": 135.0,
+        "entries": 211.0,
+        "hits": 1881.0,
+        "misses": 211.0
+      },
+      "run": 1,
+      "scenario_elapsed_usec": 41778278.0,
+      "seed": 6066.0,
+      "state_hash": "4440de04356f95a80c7219dba3718825de1cc1b258adae28a61b7cf735fb2942",
+      "success": true,
+      "total_buildings": 135,
+      "total_tick_usec": 30052330.0
+    },
+    {
+      "categories": {
+        "civic": 1.0,
+        "commercial": 6.0,
+        "industrial": 6.0,
+        "nature": 17.0,
+        "residential": 30.0,
+        "road": 75.0
+      },
+      "failures": [],
+      "max_hour_usec": 462343.0,
+      "max_migration_usec": 462343.0,
+      "meaningful_attempts": 60.0,
+      "meaningful_placements": 60.0,
+      "outer_elapsed_usec": 42460887,
+      "profiled_snapshot_usec": 0.0,
+      "residents": 145.0,
+      "road_cells": 75.0,
+      "route_cache": {
+        "anchor_entries": 135.0,
+        "entries": 211.0,
+        "hits": 1881.0,
+        "misses": 211.0
+      },
+      "run": 2,
+      "scenario_elapsed_usec": 41800556.0,
+      "seed": 6066.0,
+      "state_hash": "4440de04356f95a80c7219dba3718825de1cc1b258adae28a61b7cf735fb2942",
+      "success": true,
+      "total_buildings": 135,
+      "total_tick_usec": 30032947.0
+    },
+    {
+      "categories": {
+        "civic": 1.0,
+        "commercial": 6.0,
+        "industrial": 6.0,
+        "nature": 17.0,
+        "residential": 30.0,
+        "road": 75.0
+      },
+      "failures": [],
+      "max_hour_usec": 463831.0,
+      "max_migration_usec": 463831.0,
+      "meaningful_attempts": 60.0,
+      "meaningful_placements": 60.0,
+      "outer_elapsed_usec": 42547771,
+      "profiled_snapshot_usec": 0.0,
+      "residents": 145.0,
+      "road_cells": 75.0,
+      "route_cache": {
+        "anchor_entries": 135.0,
+        "entries": 211.0,
+        "hits": 1881.0,
+        "misses": 211.0
+      },
+      "run": 3,
+      "scenario_elapsed_usec": 41822851.0,
+      "seed": 6066.0,
+      "state_hash": "4440de04356f95a80c7219dba3718825de1cc1b258adae28a61b7cf735fb2942",
+      "success": true,
+      "total_buildings": 135,
+      "total_tick_usec": 30046626.0
+    }
+  ],
+  "scenario_id": "first_town/rebalance",
+  "schema_version": 1,
+  "total_elapsed_usec": 127503965
+}

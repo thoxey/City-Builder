@@ -42,3 +42,30 @@ func test_place_demolish_replace_load_and_clear_advance_revision() -> void:
 	assert_eq(_network.get_revision(), initial + 5)
 	GameEvents.map_loaded.emit(DataMap.new())
 	assert_eq(_network.get_revision(), initial + 6)
+
+func test_every_topology_event_clears_route_and_anchor_query_caches() -> void:
+	_prime_query_caches()
+	GameEvents.structure_placed.emit(Vector3i.ZERO, 0, 0)
+	_assert_query_caches_cleared()
+	_prime_query_caches()
+	GameEvents.structure_demolished.emit(Vector3i.ZERO)
+	_assert_query_caches_cleared()
+	# Replacement is a demolition followed by placement; both halves rebuild.
+	_prime_query_caches()
+	GameEvents.structure_demolished.emit(Vector3i.ZERO)
+	_assert_query_caches_cleared()
+	_prime_query_caches()
+	GameEvents.structure_placed.emit(Vector3i.ZERO, 0, 0)
+	_assert_query_caches_cleared()
+	_prime_query_caches()
+	GameEvents.map_loaded.emit(DataMap.new())
+	_assert_query_caches_cleared()
+
+func _prime_query_caches() -> void:
+	_network._route_cache["fixture"] = {"reachable":true}
+	_network._internal_id_by_anchor[Vector2i.ZERO] = 1
+	_network._route_cache_hits = 2
+	_network._route_cache_misses = 3
+
+func _assert_query_caches_cleared() -> void:
+	assert_eq(_network.get_route_cache_stats(), {"hits":0,"misses":0,"entries":0,"anchor_entries":0})

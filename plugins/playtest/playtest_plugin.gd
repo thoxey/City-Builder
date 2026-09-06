@@ -207,6 +207,18 @@ func _run_action(kind: String, params: Dictionary) -> Dictionary:
 		duplicate_outcome["status"] = PlaytestActionResult.STATUS_DUPLICATE
 		duplicate_outcome["changed"] = false
 		return duplicate_outcome
+	var snapshot_mode := String(params.get("snapshot_mode", "full"))
+	var profile := bool(params.get("profile", false))
+	if snapshot_mode not in ["full", "compact", "none"]:
+		var invalid_mode := PlaytestActionResult.rejected("invalid_snapshot_mode", {
+			"snapshot_mode": snapshot_mode, "supported_modes": ["full", "compact", "none"],
+		})
+		invalid_mode["request_id"] = request_id
+		invalid_mode["session_id"] = _session_id
+		invalid_mode["sequence"] = _sequence
+		_cache_outcome(request_id, invalid_mode)
+		_append_trace(kind, params, invalid_mode)
+		return invalid_mode
 	if params.has("expected_sequence") and int(params["expected_sequence"]) != _sequence:
 		var conflict := PlaytestActionResult.rejected(PlaytestActionResult.SEQUENCE_CONFLICT, {
 			"expected_sequence": int(params["expected_sequence"]), "actual_sequence": _sequence,
@@ -214,10 +226,12 @@ func _run_action(kind: String, params: Dictionary) -> Dictionary:
 		conflict["request_id"] = request_id
 		conflict["session_id"] = _session_id
 		conflict["sequence"] = _sequence
-		conflict["snapshot"] = get_snapshot()
+		_attach_requested_snapshot(conflict, snapshot_mode)
 		_cache_outcome(request_id, conflict)
 		_append_trace(kind, params, conflict)
 		return conflict
+	var action_started := Time.get_ticks_usec()
+	var command_started := action_started
 	var outcome: Dictionary
 	match kind:
 		"place":
@@ -233,23 +247,38 @@ func _run_action(kind: String, params: Dictionary) -> Dictionary:
 			var cell: Variant = _coordinate(params.get("cell", {}))
 			outcome = PlaytestActionResult.rejected(PlaytestActionResult.INVALID_COORDINATE) if cell == null else _builder.try_demolish_cell(cell)
 		"advance":
-			outcome = _clock.advance_hours(int(params.get("hours", -1)))
+			outcome = _clock.advance_hours(int(params.get("hours", -1)), true) if profile else _clock.advance_hours(int(params.get("hours", -1)))
 		"resolve_dialogue":
 			outcome = _dialogue.resolve_pending_event(String(params.get("event_id", ""))) if _dialogue else PlaytestActionResult.rejected(PlaytestActionResult.UNKNOWN_DIALOGUE_EVENT)
 		_:
 			outcome = PlaytestActionResult.rejected("internal_error")
 	_sequence += 1
 	_observe_progression_milestones()
+	var command_usec := Time.get_ticks_usec() - command_started
 	outcome["request_id"] = request_id
 	outcome["session_id"] = _session_id
 	outcome["sequence"] = _sequence
-	outcome["snapshot"] = get_snapshot()
+	var snapshot_usec := _attach_requested_snapshot(outcome, snapshot_mode)
+	if profile:
+		outcome["performance"] = {
+			"command_usec": command_usec,
+			"snapshot_usec": snapshot_usec,
+			"total_usec": Time.get_ticks_usec() - action_started,
+			"snapshot_mode": snapshot_mode,
+		}
 	var safe: Dictionary = _json_safe(outcome)
 	_cache_outcome(request_id, safe)
 	_append_trace(kind, params, safe)
 	if safe.get("status") == PlaytestActionResult.STATUS_REJECTED:
 		print("[Playtest] action_rejected kind=%s request=%s reason=%s sequence=%d" % [kind, request_id, safe.get("reason", "unknown"), _sequence])
 	return safe
+
+func _attach_requested_snapshot(outcome: Dictionary, snapshot_mode: String) -> int:
+	if snapshot_mode == "none":
+		return 0
+	var started := Time.get_ticks_usec()
+	outcome["snapshot"] = get_snapshot(snapshot_mode == "compact")
+	return Time.get_ticks_usec() - started
 
 func _cache_outcome(request_id: String, outcome: Dictionary) -> void:
 	_request_cache[request_id] = outcome.duplicate(true)

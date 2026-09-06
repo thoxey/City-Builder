@@ -19,7 +19,7 @@ var _plugin: BuildingCatalogPlugin
 
 func before_each() -> void:
 	_wipe_fixture_dir()
-	DirAccess.make_dir_recursive_absolute(FIXTURE_ROOT)
+	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(FIXTURE_ROOT))
 	_plugin = BuildingCatalogPlugin.new()
 
 func after_each() -> void:
@@ -214,7 +214,7 @@ func test_pool_config_loads_from_sidecar_dir() -> void:
 
 	# Sidecar directory prefixed with _ — catalog walks it separately.
 	var pools_dir := FIXTURE_ROOT.path_join("_pools")
-	DirAccess.make_dir_recursive_absolute(pools_dir)
+	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(pools_dir))
 	var pool_data := {
 		"pool_id": "residential_t1",
 		"bucket": "residential",
@@ -279,7 +279,7 @@ func test_bucket_tier_snapshot_uses_placed_pool_and_chain_evidence_stably() -> v
 	_write_json("b.json", chain)
 	_write_json("c.json", want)
 	var pools_dir := FIXTURE_ROOT.path_join("_pools")
-	DirAccess.make_dir_recursive_absolute(pools_dir)
+	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(pools_dir))
 	var file := FileAccess.open(pools_dir.path_join("residential_t2.json"), FileAccess.WRITE)
 	file.store_string(JSON.stringify({"pool_id":"residential_t2", "bucket":"residential", "tier":2}))
 	file.close()
@@ -316,6 +316,8 @@ func _write_json(filename: String, data: Dictionary) -> void:
 	var path := FIXTURE_ROOT.path_join(filename)
 	var f := FileAccess.open(path, FileAccess.WRITE)
 	assert_not_null(f, "failed to open fixture file for write: %s" % path)
+	if f == null:
+		return
 	f.store_string(JSON.stringify(data))
 	f.close()
 

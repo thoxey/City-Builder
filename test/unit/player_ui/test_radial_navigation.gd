@@ -73,6 +73,28 @@ func test_restore_context_returns_to_last_group_and_item() -> void:
 	assert_eq(menu._actions[menu._focused_index]["target_id"], "pond")
 	menu.free()
 
+func test_unavailable_entry_stays_visible_and_cannot_emit_selection() -> void:
+	var menu := Radial.new()
+	add_child(menu)
+	menu.set_model({"groups":[
+		{"id":"homes", "label":"Homes", "icon_key":"homes", "total_count":2, "entry_ids":["cottage", "terrace"]},
+	], "entries_by_id":{
+		"cottage":{"id":"cottage", "short_label":"Cottage", "display_name":"Cottage", "icon_key":"missing-artwork", "can_select":true, "availability_label":"Available", "cash_cost":100},
+		"terrace":{"id":"terrace", "short_label":"Terrace", "display_name":"Terrace", "icon_key":"missing-artwork", "can_select":false, "availability_label":"Requires Town Hall", "cash_cost":200},
+	}})
+	menu.open_menu(Vector2(400, 300))
+	menu.confirm_focused()
+	menu._set_focus(1)
+	watch_signals(menu)
+	menu.confirm_focused()
+	assert_true(menu.visible)
+	assert_eq(menu._level, "items")
+	assert_eq(menu._focused_index, 1)
+	assert_false(menu._actions[1]["enabled"])
+	assert_string_contains(menu._detail_label.text, "Requires Town Hall")
+	assert_signal_not_emitted(menu, "entry_requested")
+	menu.free()
+
 func test_build_back_and_rotate_actions_do_not_share_right_click() -> void:
 	var build_events := InputMap.action_get_events("build_menu")
 	assert_true(build_events.any(func(event): return event is InputEventKey and event.physical_keycode == KEY_B))

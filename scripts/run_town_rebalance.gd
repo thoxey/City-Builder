@@ -3,6 +3,7 @@ extends SceneTree
 const SCENARIO_ID := "first_town/rebalance"
 const EVIDENCE_PATH := "res://specs/006-connected-first-town-loop/validation/rebalance-last-run.json"
 const CHECKPOINTS := {60: 15, 120: 30, 240: 60}
+const SCENARIO_SEED := 6066
 
 var _failures: Array[String] = []
 var _checkpoints: Array = []
@@ -13,11 +14,16 @@ var _request_number := 0
 var _peak_operating := 0
 var _candidate_cells: Array[Vector2i] = []
 var _next_candidate := 0
+var _hour_timings: Array = []
+var _profiled_action_usec := 0
+var _profiled_snapshot_usec := 0
+var _scenario_started_usec := 0
 
 func _initialize() -> void:
 	call_deferred("_run")
 
 func _run() -> void:
+	_scenario_started_usec = Time.get_ticks_usec()
 	change_scene_to_file("res://scenes/main.tscn")
 	for _frame in 12: await process_frame
 	var manager = root.get_node("PluginManager")
@@ -26,7 +32,7 @@ func _run() -> void:
 	var road_network = manager.get_plugin("RoadNetwork")
 	var community = manager.get_plugin("Community")
 	var catalog = manager.get_plugin("BuildingCatalog")
-	var started: Dictionary = playtest.start_session({"scenario_id": SCENARIO_ID, "seed": 6066})
+	var started: Dictionary = playtest.start_session({"scenario_id": SCENARIO_ID, "seed": SCENARIO_SEED})
 	if started.has("error"):
 		_failures.append("session_start_failed")
 		_finish(playtest, road_network, community, catalog)
@@ -52,6 +58,7 @@ func _run() -> void:
 		_fill_to_target(playtest, builder, target)
 		if CHECKPOINTS.has(absolute_hour):
 			var snapshot: Dictionary = playtest.get_snapshot(true)
+			_peak_operating = maxi(_peak_operating, snapshot.get("operation", []).filter(func(row): return bool(row.get("operating", false))).size())
 			var required := int(CHECKPOINTS[absolute_hour])
 			_checkpoints.append({
 				"absolute_hour": absolute_hour,
@@ -125,10 +132,15 @@ func _place(playtest, building_id: String, cell: Vector2i, meaningful: bool) -> 
 func _apply(playtest, operation: String, params: Dictionary, meaningful: bool) -> Dictionary:
 	_request_number += 1
 	params["request_id"] = "rebalance-%04d" % _request_number
+	params["snapshot_mode"] = "none"
+	params["profile"] = true
 	if meaningful: _meaningful_attempts += 1
 	var outcome: Dictionary = playtest.handle_command(operation, params)
-	var operation_rows: Array = outcome.get("snapshot", {}).get("operation", [])
-	_peak_operating = maxi(_peak_operating, operation_rows.filter(func(row): return bool(row.get("operating", false))).size())
+	var action_performance: Dictionary = outcome.get("performance", {})
+	_profiled_action_usec += int(action_performance.get("command_usec", 0))
+	_profiled_snapshot_usec += int(action_performance.get("snapshot_usec", 0))
+	if operation == "advance":
+		_hour_timings.append_array(outcome.get("details", {}).get("performance", {}).get("hour_timings", []))
 	if meaningful and String(outcome.get("status", "")) == PlaytestActionResult.STATUS_APPLIED:
 		_successful_attempts += 1
 	if String(outcome.get("status", "")) != PlaytestActionResult.STATUS_APPLIED:
@@ -137,6 +149,7 @@ func _apply(playtest, operation: String, params: Dictionary, meaningful: bool) -
 
 func _finish(playtest, road_network, community, catalog) -> void:
 	var snapshot: Dictionary = playtest.get_snapshot() if playtest else {}
+	_peak_operating = maxi(_peak_operating, snapshot.get("operation", []).filter(func(row): return bool(row.get("operating", false))).size())
 	var game_state = root.get_node("GameState")
 	var categories := {}
 	var functional_nature := 0
@@ -145,6 +158,9 @@ func _finish(playtest, road_network, community, catalog) -> void:
 		var building_id := String(building.get("building_id", ""))
 		var summary: Dictionary = catalog.get_summary_by_id(building_id) if catalog else {}
 		if building_id == "building_town_hall": categories["civic"] = int(categories.get("civic", 0)) + 1
+		var catalog_category := String(summary.get("category", ""))
+		if catalog_category in ["road", "nature"]:
+			categories[catalog_category] = int(categories.get(catalog_category, 0)) + 1
 		var sid := int(catalog.get_item_index(building_id)) if catalog else -1
 		var profile := game_state.structures[sid].find_metadata(BuildingProfile) as BuildingProfile if sid >= 0 else null
 		if profile: categories[profile.category] = int(categories.get(profile.category, 0)) + 1
@@ -187,8 +203,17 @@ func _finish(playtest, road_network, community, catalog) -> void:
 		"operation":snapshot.get("operation", []), "available_choice_count":snapshot.get("available_choice_count", 0),
 		"building_manifest":snapshot.get("buildings", []),
 	}
+	var max_hour_usec := 0
+	var max_migration_usec := 0
+	var total_tick_usec := 0
+	for timing in _hour_timings:
+		var elapsed_usec := int(timing.get("elapsed_usec", 0))
+		total_tick_usec += elapsed_usec
+		max_hour_usec = maxi(max_hour_usec, elapsed_usec)
+		if bool(timing.get("migration_boundary", false)):
+			max_migration_usec = maxi(max_migration_usec, elapsed_usec)
 	var evidence := {
-		"schema_version": 1, "scenario_id": SCENARIO_ID, "seed": 6066,
+		"schema_version": 2, "scenario_id": SCENARIO_ID, "seed": SCENARIO_SEED,
 		"success": _failures.is_empty(), "failures": _failures,
 		"criteria": {"meaningful_placements":_meaningful_placements, "meaningful_attempts":_meaningful_attempts,
 			"successful_attempts":_successful_attempts, "success_rate":success_rate,
@@ -197,11 +222,21 @@ func _finish(playtest, road_network, community, catalog) -> void:
 			"final_operating_count":operating_count, "peak_operating_count":_peak_operating,
 			"useful_choice_count":snapshot.get("available_choice_count", 0)},
 		"checkpoints": _checkpoints, "proximity_records": proximity_records,
+		"performance": {
+			"scenario_elapsed_usec": Time.get_ticks_usec() - _scenario_started_usec,
+			"profiled_command_usec": _profiled_action_usec,
+			"profiled_snapshot_usec": _profiled_snapshot_usec,
+			"total_tick_usec": total_tick_usec,
+			"max_hour_usec": max_hour_usec,
+			"max_migration_usec": max_migration_usec,
+			"hour_sample_count": _hour_timings.size(),
+			"route_cache": road_network.get_route_cache_stats() if road_network and road_network.has_method("get_route_cache_stats") else {},
+		},
 		"final_summary": final_summary,
 	}
 	var file := FileAccess.open(EVIDENCE_PATH, FileAccess.WRITE)
 	if file: file.store_string(JSON.stringify(evidence, "  ", true) + "\n")
-	print("TOWN_REBALANCE success=%s meaningful=%d attempts=%d checkpoints=%s failures=%d" % [_failures.is_empty(), _meaningful_placements, _meaningful_attempts, _checkpoints, _failures.size()])
+	print("TOWN_REBALANCE success=%s meaningful=%d attempts=%d max_hour_ms=%.3f max_06_ms=%.3f failures=%d" % [_failures.is_empty(), _meaningful_placements, _meaningful_attempts, float(max_hour_usec) / 1000.0, float(max_migration_usec) / 1000.0, _failures.size()])
 	for failure in _failures: push_error(failure)
 	quit(0 if _failures.is_empty() else 1)
 

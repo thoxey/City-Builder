@@ -115,7 +115,6 @@ func _on_structure_demolished(position: Vector3i) -> void:
 
 func _on_hour(hour: float) -> void:
 	var hour_i := int(hour) % 24
-	_invalidate_assignments()
 	var sources := _source_records(hour_i)
 	_assign_residents(sources, hour_i)
 	for resident in _sorted_residents():
@@ -198,6 +197,24 @@ func _source_records(hour: int) -> Array:
 		})
 	return result
 
+## Builds one immutable authored source catalogue, then projects the 24 active
+## windows with shallow records. Nested effects and route evidence are read-only
+## during quotes, so they do not need to be rediscovered or deep-copied.
+func _source_records_for_day() -> Array:
+	var base_sources := _source_records(0)
+	var sources_by_hour: Array = []
+	for evaluation_hour in 24:
+		var hourly_sources: Array = []
+		for base_source in base_sources:
+			var source: Dictionary = base_source.duplicate()
+			var schedule: Variant = source.get("building_schedule")
+			source["active"] = _in_window(evaluation_hour, int(schedule.get("start", 0)), int(schedule.get("end", 0))) if schedule is Dictionary else true
+			source["evaluation_hour"] = evaluation_hour
+			source["participants"] = []
+			hourly_sources.append(source)
+		sources_by_hour.append(hourly_sources)
+	return sources_by_hour
+
 func get_town_hall_proximity(internal_id: int) -> Dictionary:
 	var route: Dictionary = _road_network.get_route_from_town_hall(internal_id) if _road_network and _road_network.has_method("get_route_from_town_hall") else {}
 	var distance := int(route.get("distance", -1))
@@ -220,11 +237,11 @@ func _assign_activities(sources: Array) -> void:
 ## Canonical deterministic allocation. The optional force flag keeps older unit
 ## tests that mutate authored sources within one hour able to request a refresh.
 func _assign_residents(sources: Array, hour: int, force: bool = false) -> void:
-	var revision := int(_road_network.get_revision()) if _road_network and _road_network.has_method("get_revision") else 0
-	var cache_key := "%d|%d|%d|%d" % [hour, revision, _residents.size(), GameState.building_registry.size()]
+	var cache_key := _assignment_key(hour)
 	if not force and cache_key == _assignment_cache_key:
 		_apply_cached_participants(sources)
 		return
+	_assignment_revision += 1
 	_assignment_cache_key = cache_key
 	_work_counts.clear()
 	_activity_counts.clear()
@@ -314,9 +331,13 @@ func _route_to_source(resident: CommunityResident, destination_id: int) -> Dicti
 	var home_id := _building_id_at_anchor(CommunityConstants.coordinate(resident.home_anchor))
 	if home_id < 0:
 		return {"reachable": false, "distance": -1, "reason": "no_road_access"}
+	if _road_network.has_method("get_route_summary_between_buildings"):
+		return _road_network.get_route_summary_between_buildings(home_id, destination_id)
 	return _road_network.get_route_between_buildings(home_id, destination_id)
 
 func _building_id_at_anchor(anchor: Vector2i) -> int:
+	if _road_network and _road_network.has_method("get_internal_id_for_anchor"):
+		return int(_road_network.get_internal_id_for_anchor(anchor))
 	var ids := GameState.building_registry.keys()
 	ids.sort()
 	for internal_id in ids:
@@ -360,8 +381,15 @@ func _invalidate_assignments() -> void:
 	_assignment_records.clear()
 
 func _ensure_assignments(hour: int) -> void:
+	if _assignment_key(hour) == _assignment_cache_key:
+		return
 	var sources := _source_records(hour)
 	_assign_residents(sources, hour)
+
+func _assignment_key(hour: int) -> String:
+	var revision := int(_road_network.get_revision()) if _road_network and _road_network.has_method("get_revision") else 0
+	var absolute_hour := int(_clock.get_absolute_hour()) if _clock and _clock.has_method("get_absolute_hour") else hour
+	return "%d|%d|%d|%d|%d" % [hour, absolute_hour, revision, _residents.size(), GameState.building_registry.size()]
 
 func get_fulfilled_workplace(anchor: Vector2i, hour: int) -> int:
 	_ensure_assignments(hour)
@@ -447,10 +475,13 @@ func _participant_benefit(resident: CommunityResident, source: Dictionary, hour:
 
 func _run_daily_migration() -> void:
 	var batch := int(_balance.get("candidate_batch_size", 4))
+	# Every candidate in one dawn batch observes the same authored day and road
+	# topology. Construct it once rather than repeating 24 source scans per quote.
+	var quote_context := _migration_quote_context()
 	for _index in batch:
 		var next_id := GameState.map.community_next_resident_id if GameState.map else _next_id()
 		var candidate := _new_resident(next_id)
-		var quote := quote_migration(candidate)
+		var quote := quote_migration(candidate, quote_context)
 		if quote.get("ok", false):
 			candidate.home_anchor = CommunityConstants.coordinate(quote["home_anchor"])
 			candidate.target_qualities = quote["target_qualities"].duplicate(true)
@@ -468,7 +499,39 @@ func _run_daily_migration() -> void:
 			_latest_event = "Arrival rejected: no free housing" if reason == "no_capacity" else "Arrival rejected: town fit below threshold"
 			GameEvents.community_notification.emit("capacity" if reason == "no_capacity" else "rejection", 0, _latest_event)
 
-func quote_migration(candidate: CommunityResident) -> Dictionary:
+func _migration_quote_context() -> Dictionary:
+	var initial_homes := _free_housing_slots()
+	if initial_homes.is_empty():
+		return {}
+	var sources_by_hour := _source_records_for_day()
+	var effects_by_hour: Array = []
+	for sources in sources_by_hour:
+		effects_by_hour.append(CommunityEffectEvaluator.prepare_effects(sources))
+	var reachable_source_ids_by_home := {}
+	var represented_anchors := {}
+	for home in initial_homes:
+		var home_key := _anchor_key(home.get("anchor"))
+		if represented_anchors.has(home_key):
+			continue
+		represented_anchors[home_key] = true
+		var probe := CommunityResident.new()
+		probe.home_anchor = CommunityConstants.coordinate(home.get("anchor"))
+		var reachable := {}
+		for source in sources_by_hour[0]:
+			var source_id := int(source.get("internal_id", -1))
+			if bool(_route_to_source(probe, source_id).get("reachable", false)):
+				reachable[source_id] = true
+		reachable_source_ids_by_home[home_key] = reachable
+	return {
+		"sources_by_hour": sources_by_hour,
+		"effects_by_hour": effects_by_hour,
+		"reachable_source_ids_by_home": reachable_source_ids_by_home,
+		# The migration mutation consumes only the score and target qualities.
+		# Direct quote callers still receive the authored effect explanation.
+		"include_effects": false,
+	}
+
+func quote_migration(candidate: CommunityResident, shared_context: Dictionary = {}) -> Dictionary:
 	var homes := _free_housing_slots()
 	if homes.is_empty():
 		return {"ok": false, "reason": "no_capacity"}
@@ -483,11 +546,24 @@ func quote_migration(candidate: CommunityResident) -> Dictionary:
 			continue
 		represented_anchors[key] = true
 		representative_homes.append(home)
-	# Source discovery is independent of a candidate's proposed home. Cache one
-	# pristine authored day and deep-copy each hour before assigning participants.
-	var sources_by_hour: Array = []
+	# Source discovery is independent of a candidate's proposed home. Reuse one
+	# authored day and restore the temporary participant marker after each hour.
+	var sources_by_hour: Array = shared_context.get("sources_by_hour", [])
+	var effects_by_hour: Array = shared_context.get("effects_by_hour", [])
+	var include_effects := bool(shared_context.get("include_effects", true))
+	if sources_by_hour.is_empty():
+		sources_by_hour = _source_records_for_day()
+	if not include_effects and effects_by_hour.is_empty():
+		for sources in sources_by_hour:
+			effects_by_hour.append(CommunityEffectEvaluator.prepare_effects(sources))
+	# Participant preference does not depend on the proposed home. Compute each
+	# candidate/source/hour benefit once, then apply each home's reachability mask.
+	var participant_benefits_by_hour: Array = []
 	for evaluation_hour in 24:
-		sources_by_hour.append(_source_records(evaluation_hour))
+		var benefits := {}
+		for source in sources_by_hour[evaluation_hour]:
+			benefits[int(source.get("internal_id", -1))] = _participant_benefit(candidate, source, evaluation_hour)
+		participant_benefits_by_hour.append(benefits)
 	var results: Array = []
 	for home in representative_homes:
 		var previous_home: Variant = candidate.home_anchor
@@ -495,41 +571,48 @@ func quote_migration(candidate: CommunityResident) -> Dictionary:
 		var daily_totals := {}
 		for quality in CommunityConstants.QUALITIES: daily_totals[quality] = 0.0
 		var predicted_effects: Array = []
+		var reachable_source_ids: Variant = shared_context.get("reachable_source_ids_by_home", {}).get(_anchor_key(home.get("anchor")))
 		# A migration quote considers one representative authored day so scheduled
 		# work/night opportunities and their nuisances remain visible at dawn.
 		for evaluation_hour in 24:
-			# Evaluators only read source records. Copy the array and the one selected
-			# participant source instead of deep-copying every nested effect record for
-			# every candidate/home/hour combination.
-			var sources: Array = sources_by_hour[evaluation_hour].duplicate()
+			# Evaluators only read source records. Temporarily mark the selected shared
+			# source and restore it immediately, avoiding per-candidate array/dictionary
+			# allocations across the full 24-hour quote.
+			var sources: Array = sources_by_hour[evaluation_hour]
 			var best_source_index := -1
 			var best_benefit := 0.0
 			for source_index in sources.size():
 				var source: Dictionary = sources[source_index]
-				if not bool(_route_to_source(candidate, int(source.get("internal_id", -1))).get("reachable", false)):
+				var source_id := int(source.get("internal_id", -1))
+				var reachable := bool(reachable_source_ids.has(source_id)) if reachable_source_ids is Dictionary else bool(_route_to_source(candidate, source_id).get("reachable", false))
+				if not reachable:
 					continue
-				var benefit := _participant_benefit(candidate, source, evaluation_hour)
+				var benefit := float(participant_benefits_by_hour[evaluation_hour].get(source_id, 0.0))
 				if benefit > best_benefit:
 					best_benefit = benefit
 					best_source_index = source_index
 			if best_source_index >= 0:
-				var selected_source: Dictionary = sources[best_source_index].duplicate()
+				var selected_source: Dictionary = sources[best_source_index]
 				selected_source["participants"] = [candidate.resident_id]
-				sources[best_source_index] = selected_source
-			var evaluation := CommunityEffectEvaluator.evaluate(candidate, sources, {"hour": evaluation_hour})
+			var evaluation := CommunityEffectEvaluator.evaluate(candidate, sources, {"hour": evaluation_hour}) if include_effects else {}
+			var evaluation_totals: Dictionary = evaluation.get("totals", {}) if include_effects else CommunityEffectEvaluator.evaluate_prepared_totals(candidate, effects_by_hour[evaluation_hour], {"hour": evaluation_hour})
+			if best_source_index >= 0:
+				sources[best_source_index]["participants"] = []
 			for quality in CommunityConstants.QUALITIES:
-				daily_totals[quality] += float(evaluation["totals"].get(quality, 0.0)) / 24.0
-			for effect in evaluation["effects"]:
-				var timed_effect: Dictionary = effect.duplicate(true)
-				timed_effect["active_hour"] = evaluation_hour
-				predicted_effects.append(timed_effect)
+				daily_totals[quality] += float(evaluation_totals.get(quality, 0.0)) / 24.0
+			if include_effects:
+				for effect in evaluation["effects"]:
+					var timed_effect: Dictionary = effect.duplicate(true)
+					timed_effect["active_hour"] = evaluation_hour
+					predicted_effects.append(timed_effect)
 		var targets := {}
 		var composite := 0.0
 		for quality in CommunityConstants.QUALITIES:
 			var target := clampf(float(_balance.get("quality_baseline", 50.0)) + float(daily_totals.get(quality, 0.0)), 0.0, 100.0)
 			targets[quality] = target
 			composite += target * float(candidate.quality_importance[quality])
-		predicted_effects.sort_custom(func(a: Dictionary, b: Dictionary): return absf(float(a.get("applied_amount", 0.0))) > absf(float(b.get("applied_amount", 0.0))))
+		if include_effects:
+			predicted_effects.sort_custom(func(a: Dictionary, b: Dictionary): return absf(float(a.get("applied_amount", 0.0))) > absf(float(b.get("applied_amount", 0.0))))
 		results.append({"home_anchor": home["anchor"], "slot": home.get("slot", 0), "predicted_happiness": composite, "target_qualities": targets, "effects": predicted_effects.slice(0, int(_balance.get("effect_snapshot_limit", 12)))})
 		candidate.home_anchor = previous_home
 	results.sort_custom(func(a, b):
@@ -694,17 +777,10 @@ func get_resident_records(include_effects: bool = true) -> Array:
 	return records
 
 func get_snapshot(compact: bool = false) -> Dictionary:
-	var averages := {}
-	for quality in CommunityConstants.QUALITIES: averages[quality] = 0.0
-	for resident in _residents.values():
-		for quality in CommunityConstants.QUALITIES:
-			averages[quality] += float(resident.current_qualities[quality])
-	if not _residents.is_empty():
-		for quality in CommunityConstants.QUALITIES: averages[quality] /= float(_residents.size())
 	var snapshot := {
 		"population": get_population(),
 		"capacity": get_capacity(),
-		"average_qualities": CommunityConstants.rounded_map(averages),
+		"average_qualities": _average_qualities(),
 		"average_composite_happiness": CommunityConstants.rounded(get_average_composite()),
 		"personality_distribution": _personality_distribution(),
 		"migration": _migration.duplicate(true),
@@ -962,8 +1038,20 @@ func _persist() -> void:
 
 func _emit_summary() -> void:
 	GameEvents.community_population_changed.emit(get_population(), get_capacity())
-	GameEvents.community_qualities_changed.emit(get_snapshot(true)["average_qualities"])
+	GameEvents.community_qualities_changed.emit(_average_qualities())
 	GameEvents.community_ui_refresh_requested.emit("community_state")
+
+func _average_qualities() -> Dictionary:
+	var averages := {}
+	for quality in CommunityConstants.QUALITIES:
+		averages[quality] = 0.0
+	for resident in _residents.values():
+		for quality in CommunityConstants.QUALITIES:
+			averages[quality] += float(resident.current_qualities[quality])
+	if not _residents.is_empty():
+		for quality in CommunityConstants.QUALITIES:
+			averages[quality] /= float(_residents.size())
+	return CommunityConstants.rounded_map(averages)
 
 func _sorted_residents() -> Array:
 	var result: Array = _residents.values()

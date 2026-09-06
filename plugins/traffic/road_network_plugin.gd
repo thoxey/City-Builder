@@ -15,6 +15,10 @@ var _component_by_cell: Dictionary = {}            # road tile -> stable compone
 var _components: Dictionary = {}                   # component id -> sorted road tiles
 var _access_by_building: Dictionary = {}           # internal building id -> access evidence
 var _revision: int = 0
+var _route_cache: Dictionary = {}                   # origin>destination -> detached route result
+var _internal_id_by_anchor: Dictionary = {}         # Vector2i anchor -> stable internal id
+var _route_cache_hits: int = 0
+var _route_cache_misses: int = 0
 
 const TOWN_HALL_BUILDING_ID := "building_town_hall"
 
@@ -41,6 +45,27 @@ func get_stops_for_building(tile: Vector3i) -> Array[Vector3i]:
 
 func get_revision() -> int:
 	return _revision
+
+func get_route_cache_stats() -> Dictionary:
+	return {
+		"hits": _route_cache_hits,
+		"misses": _route_cache_misses,
+		"entries": _route_cache.size(),
+		"anchor_entries": _internal_id_by_anchor.size(),
+	}
+
+func get_internal_id_for_anchor(anchor: Vector2i) -> int:
+	if _internal_id_by_anchor.has(anchor):
+		return int(_internal_id_by_anchor[anchor])
+	# Unit fixtures and startup ordering can query before the first projection;
+	# pay the stable scan once, then keep the same O(1) runtime path.
+	var ids := GameState.building_registry.keys()
+	ids.sort()
+	for raw_id in ids:
+		if GameState.building_registry[raw_id].get("anchor", Vector2i.ZERO) == anchor:
+			_internal_id_by_anchor[anchor] = int(raw_id)
+			return int(raw_id)
+	return -1
 
 func get_town_hall_internal_id() -> int:
 	var catalog := PluginManager.get_plugin("BuildingCatalog")
@@ -115,6 +140,11 @@ func get_access_for_building(internal_id: int) -> Dictionary:
 
 ## Stable shortest road route between two placed buildings.
 func get_route_between_buildings(origin_id: int, destination_id: int) -> Dictionary:
+	var cache_key := "%d>%d" % [origin_id, destination_id]
+	if _route_cache.has(cache_key):
+		_route_cache_hits += 1
+		return (_route_cache[cache_key] as Dictionary).duplicate(true)
+	_route_cache_misses += 1
 	var origin := get_access_for_building(origin_id)
 	var destination := get_access_for_building(destination_id)
 	var result := {
@@ -128,7 +158,7 @@ func get_route_between_buildings(origin_id: int, destination_id: int) -> Diction
 	}
 	if not bool(origin.get("road_accessible", false)) or not bool(destination.get("road_accessible", false)):
 		result["reason"] = "no_road_access"
-		return result
+		return _store_route(cache_key, result)
 	var destination_components: Dictionary = {}
 	for component_id in destination.get("component_ids", []):
 		destination_components[String(component_id)] = true
@@ -140,7 +170,7 @@ func get_route_between_buildings(origin_id: int, destination_id: int) -> Diction
 	result["shared_component_ids"] = shared
 	if shared.is_empty():
 		result["reason"] = "isolated_road_component"
-		return result
+		return _store_route(cache_key, result)
 	var target_cells: Dictionary = {}
 	for stop_record in destination.get("stops", []):
 		var stop: Variant = _record_cell(stop_record)
@@ -155,11 +185,40 @@ func get_route_between_buildings(origin_id: int, destination_id: int) -> Diction
 	var path := _shortest_path(starts, target_cells)
 	if path.is_empty():
 		result["reason"] = "isolated_road_component"
-		return result
+		return _store_route(cache_key, result)
 	result["reachable"] = true
 	result["distance"] = maxi(0, path.size() - 1)
 	result["path"] = _cell_records(path)
-	return result
+	return _store_route(cache_key, result)
+
+## Lightweight view for high-frequency simulation consumers that need route
+## truth but not the full path. Warm-cache calls avoid duplicating every cell.
+func get_route_summary_between_buildings(origin_id: int, destination_id: int) -> Dictionary:
+	var cache_key := "%d>%d" % [origin_id, destination_id]
+	var route: Dictionary
+	if _route_cache.has(cache_key):
+		_route_cache_hits += 1
+		route = _route_cache[cache_key]
+	else:
+		route = get_route_between_buildings(origin_id, destination_id)
+	return {
+		"origin_internal_id": origin_id,
+		"destination_internal_id": destination_id,
+		"reachable": bool(route.get("reachable", false)),
+		"distance": int(route.get("distance", -1)),
+		"shared_component_ids": route.get("shared_component_ids", []).duplicate(),
+		"reason": String(route.get("reason", "")),
+	}
+
+func _store_route(cache_key: String, result: Dictionary) -> Dictionary:
+	_route_cache[cache_key] = result.duplicate(true)
+	return result.duplicate(true)
+
+func _clear_query_caches() -> void:
+	_route_cache.clear()
+	_internal_id_by_anchor.clear()
+	_route_cache_hits = 0
+	_route_cache_misses = 0
 
 ## Detached route evidence for civilian presentation. Anchors are resolved through
 ## the same building/access projection used by Community assignments.
@@ -196,12 +255,7 @@ func resolve_civilian_route(origin_anchor: Vector2i, destination_anchor: Vector2
 	}
 
 func _internal_id_for_anchor(anchor: Vector2i) -> int:
-	var ids := GameState.building_registry.keys()
-	ids.sort()
-	for raw_id in ids:
-		if GameState.building_registry[raw_id].get("anchor", Vector2i.ZERO) == anchor:
-			return int(raw_id)
-	return -1
+	return get_internal_id_for_anchor(anchor)
 
 static func _record3(value: Variant) -> Dictionary:
 	var cell: Variant = _record_cell(value)
@@ -264,6 +318,7 @@ func _plugin_ready() -> void:
 # ── Build ─────────────────────────────────────────────────────────────────────
 
 func _rebuild() -> void:
+	_clear_query_caches()
 	if GameState.gridmap == null:
 		return
 	_build_graph()
@@ -372,12 +427,16 @@ func _build_components() -> void:
 
 func _build_access_projection() -> void:
 	_access_by_building.clear()
+	_internal_id_by_anchor.clear()
 	var ids := GameState.building_registry.keys()
 	ids.sort()
 	var catalog := PluginManager.get_plugin("BuildingCatalog")
 	for internal_id_raw in ids:
 		var internal_id := int(internal_id_raw)
 		var entry: Dictionary = GameState.building_registry[internal_id_raw]
+		var stable_anchor: Variant = entry.get("anchor", Vector2i.ZERO)
+		if stable_anchor is Vector2i:
+			_internal_id_by_anchor[stable_anchor] = internal_id
 		var sid := int(entry.get("structure", -1))
 		if sid < 0 or sid >= GameState.structures.size():
 			continue

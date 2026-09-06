@@ -30,7 +30,9 @@
       "civic": 1,
       "commercial": 6,
       "industrial": 6,
-      "residential": 30
+      "nature": 17,
+      "residential": 30,
+      "road": 75
     },
     "final_operating_count": 0,
     "functional_nature": 17,
@@ -38,7 +40,7 @@
     "has_shop_bonus": true,
     "meaningful_attempts": 60,
     "meaningful_placements": 60,
-    "peak_operating_count": 8,
+    "peak_operating_count": 1,
     "rooted_failures": [],
     "success_rate": 1.0,
     "successful_attempts": 60,
@@ -3356,6 +3358,21 @@
     },
     "state_hash": "4440de04356f95a80c7219dba3718825de1cc1b258adae28a61b7cf735fb2942"
   },
+  "performance": {
+    "hour_sample_count": 240,
+    "max_hour_usec": 463831,
+    "max_migration_usec": 463831,
+    "profiled_command_usec": 35593246,
+    "profiled_snapshot_usec": 0,
+    "route_cache": {
+      "anchor_entries": 135,
+      "entries": 211,
+      "hits": 1881,
+      "misses": 211
+    },
+    "scenario_elapsed_usec": 41822851,
+    "total_tick_usec": 30046626
+  },
   "proximity_records": [
     {
       "anchor": {
@@ -6191,7 +6208,7 @@
     }
   ],
   "scenario_id": "first_town/rebalance",
-  "schema_version": 1,
+  "schema_version": 2,
   "seed": 6066,
   "success": true
 }

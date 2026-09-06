@@ -58,6 +58,49 @@ static func evaluate(resident: CommunityResident, sources: Array, context: Dicti
 		totals[effect["quality"]] += float(record["applied_amount"])
 	return {"totals": totals, "effects": applied}
 
+## Score-only projection for hot paths such as migration. It deliberately follows
+## the same filtering, ordering, stacking and rounding rules as evaluate(), while
+## avoiding the diagnostic exposure record allocated for every applied effect.
+static func evaluate_totals(resident: CommunityResident, sources: Array, context: Dictionary = {}) -> Dictionary:
+	return evaluate_prepared_totals(resident, prepare_effects(sources), context)
+
+## The canonical effect order depends only on authored source/effect fields. Hot
+## callers can prepare it once and filter that order for many residents/homes.
+static func prepare_effects(sources: Array) -> Array:
+	var prepared: Array = []
+	for source_raw in sources:
+		var source: Dictionary = source_raw
+		for effect_raw in source.get("effects", []):
+			var effect: Dictionary = effect_raw
+			prepared.append({"source": source, "effect": effect})
+	prepared.sort_custom(_effect_before)
+	return prepared
+
+static func evaluate_prepared_totals(resident: CommunityResident, prepared: Array, context: Dictionary = {}) -> Dictionary:
+	var group_counts := {}
+	var totals := {}
+	for quality in CommunityConstants.QUALITIES:
+		totals[quality] = 0.0
+	for item in prepared:
+		if not applies(item["effect"], resident, item["source"], context):
+			continue
+		var effect: Dictionary = item["effect"]
+		var amount := float(effect.get("amount", 0.0))
+		var sign_key := "positive" if amount >= 0.0 else "negative"
+		var group_key := "%s|%s|%s" % [effect.get("quality", ""), effect.get("stacking_group", ""), sign_key]
+		var ordinal := int(group_counts.get(group_key, 0))
+		var stacking := 1.0 if ordinal == 0 else (0.5 if ordinal == 1 else (0.25 if ordinal == 2 else 0.0))
+		group_counts[group_key] = ordinal + 1
+		var quality := String(effect.get("quality", ""))
+		var manifestation := String(effect.get("manifestation", "neutral"))
+		var preference := preference_multiplier(resident, quality, manifestation)
+		var sensitivity := 1.0
+		var sensitivity_id: Variant = effect.get("sensitivity")
+		if sensitivity_id != null and not String(sensitivity_id).is_empty():
+			sensitivity = float(resident.sensitivities.get(String(sensitivity_id), 1.0))
+		totals[quality] += CommunityConstants.rounded(amount * preference * sensitivity * stacking)
+	return totals
+
 static func apply_effect(resident: CommunityResident, source: Dictionary, effect: Dictionary, stacking_multiplier: float = 1.0, stacking_ordinal: int = 0) -> Dictionary:
 	var quality := String(effect.get("quality", ""))
 	var manifestation := String(effect.get("manifestation", "neutral"))

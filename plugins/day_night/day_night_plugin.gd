@@ -66,20 +66,34 @@ func reset_manual_clock(start_hour: int = 6) -> void:
 
 ## Advances an exact number of simulation hours through the same chronological
 ## boundary used by real-time play. Zero hours is an accepted no-op.
-func advance_hours(hours: int) -> Dictionary:
+func advance_hours(hours: int, profile: bool = false) -> Dictionary:
 	if hours < 0 or hours > 1000:
 		return PlaytestActionResult.rejected(PlaytestActionResult.INVALID_HOURS, {
 			"requested_hours": hours, "minimum": 0, "maximum": 1000,
 		})
 	set_manual_mode(true)
 	var from_absolute := _absolute_hour
+	var advance_started := Time.get_ticks_usec()
+	var hour_timings: Array = []
+	var max_hour_usec := 0
 	if _last_hour < 0:
 		_last_hour = current_hour()
 	for _i in hours:
 		_last_hour = (_last_hour + 1) % 24
 		_absolute_hour += 1
 		_time = float(_last_hour) / 24.0
+		var hour_started := Time.get_ticks_usec()
 		_emit_hour_transition(_last_hour)
+		if profile:
+			var elapsed_usec := Time.get_ticks_usec() - hour_started
+			max_hour_usec = maxi(max_hour_usec, elapsed_usec)
+			hour_timings.append({
+				"absolute_hour": _absolute_hour,
+				"day": int(_absolute_hour / 24),
+				"hour": _last_hour,
+				"elapsed_usec": elapsed_usec,
+				"migration_boundary": _last_hour == 6,
+			})
 	_apply(_time)
 	_sync_ui()
 	var result := PlaytestActionResult.applied({
@@ -91,6 +105,12 @@ func advance_hours(hours: int) -> Dictionary:
 		"hour": current_hour(),
 	})
 	result["changed"] = hours > 0
+	if profile:
+		result["details"]["performance"] = {
+			"total_usec": Time.get_ticks_usec() - advance_started,
+			"max_hour_usec": max_hour_usec,
+			"hour_timings": hour_timings,
+		}
 	return result
 
 var _sun: DirectionalLight3D

@@ -82,6 +82,22 @@ func test_fourth_and_later_positive_same_group_effects_are_zero() -> void:
 	var evaluated := CommunityEffectEvaluator.evaluate(resident, sources)
 	assert_eq(evaluated["effects"].map(func(effect): return effect["stacking_multiplier"]), [1.0, 0.5, 0.25, 0.0, 0.0])
 
+func test_score_only_totals_match_full_diagnostic_evaluation_exactly() -> void:
+	var resident := _resident(0.8, 0.1, 0.1)
+	resident.sensitivities["noise"] = 1.25
+	var nuisance := _effect("noise", -7.3, "neutral", "local")
+	nuisance["sensitivity"] = "noise"
+	var participant := _effect("plays", 8.2, "identity", "participant")
+	participant["schedule"] = {"start": 18, "end": 23}
+	var sources := [
+		{"building_id":"club", "anchor":Vector2i(1, 0), "active":true, "participants":[], "effects":[nuisance]},
+		{"building_id":"theatre", "anchor":Vector2i.ZERO, "active":true, "participants":[1], "effects":[participant]},
+	]
+	var full: Dictionary = CommunityEffectEvaluator.evaluate(resident, sources, {"hour":20})
+	assert_eq(CommunityEffectEvaluator.evaluate_totals(resident, sources, {"hour":20}), full["totals"])
+	var prepared: Array = CommunityEffectEvaluator.prepare_effects(sources)
+	assert_eq(CommunityEffectEvaluator.evaluate_prepared_totals(resident, prepared, {"hour":20}), full["totals"])
+
 func test_smoothing_clamping_and_composite() -> void:
 	var resident := _resident(0.3, 0.4, 0.3)
 	resident.quality_importance = {"opportunity": 1.0, "liveability": 0.0, "beauty": 0.0, "belonging": 0.0}

@@ -44,6 +44,7 @@ func test_route_distinguishes_missing_access_from_isolated_component() -> void:
 	}
 	assert_eq(_network.get_route_between_buildings(1, 2)["reason"], "no_road_access")
 	_network._access_by_building[1] = {"internal_id": 1, "road_accessible": true, "stops": [{"x": 0, "z": 0}], "component_ids": ["0,0"], "reasons": [], "primary_reason": ""}
+	_network._clear_query_caches()
 	assert_eq(_network.get_route_between_buildings(1, 2)["reason"], "isolated_road_component")
 
 func test_snapshot_is_detached_from_internal_state() -> void:
