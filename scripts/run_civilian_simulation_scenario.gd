@@ -27,10 +27,8 @@ func _run() -> void:
 	var traces: Array = []
 	var hashes: Array[String] = []
 	for repeat_index in REPEAT_COUNT:
-		# Each replay models a fresh process. Revisions are diagnostic epochs, so the
-		# runner resets their counters before invoking the public scenario surface.
-		community._assignment_revision = 0; roads._revision = 0
-		var trace := _run_day(playtest, people, cars, scenario, repeat_index)
+		var trace := _run_day(playtest, community, roads, people, cars, scenario,
+			repeat_index)
 		traces.append(trace); hashes.append(JSON.stringify(trace).sha256_text())
 	var deterministic := hashes.all(func(value): return value == hashes[0])
 	if not deterministic: _failures.append("ten_run_trace_mismatch")
@@ -46,10 +44,16 @@ func _run() -> void:
 		person.diagnostic_faults.clear()
 	_finish(hashes,{"deterministic":deterministic,"canonical_trace":traces[0] if not traces.is_empty() else [],"fault_detection":fault_results})
 
-func _run_day(playtest, people, cars, scenario: Dictionary, repeat_index: int) -> Array:
+func _run_day(playtest, community, roads, people, cars, scenario: Dictionary,
+		repeat_index: int) -> Array:
 	var started: Dictionary = playtest.handle_command("start", {"scenario_id":SCENARIO_ID,"seed":int(scenario.get("seed",8008))})
 	if started.has("error"):
 		_failures.append("start_failed:%d" % repeat_index); return []
+	# A replay models a fresh process. Startup can legitimately perform a different
+	# number of pre-scenario rebuilds on the first live scene, so reset diagnostic
+	# epochs after start and before any observed placement or intent is created.
+	community._assignment_revision = 0
+	roads._revision = 0
 	var item_index := 0
 	for item: Dictionary in scenario.get("civilian_layout", {}).get("placements", []):
 		item_index += 1

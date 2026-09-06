@@ -1,0 +1,15 @@
+{
+  "scenario_id": "traffic_flow_coherence",
+  "seed": 1010,
+  "fixed_delta": 0.03333333333333333,
+  "road_path": [
+    {"x": 0, "y": 0, "z": 0},
+    {"x": 1, "y": 0, "z": 0},
+    {"x": 2, "y": 0, "z": 0},
+    {"x": 3, "y": 0, "z": 0},
+    {"x": 4, "y": 0, "z": 0}
+  ],
+  "resident_ids": [1, 2, 3, 4],
+  "blocked_steps": 600,
+  "replay_count": 10
+}
