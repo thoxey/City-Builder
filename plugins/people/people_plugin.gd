@@ -15,6 +15,8 @@ const SIDEWALK_OFFSET     := 0.38   # how far from road centre people walk (left
 const SPAWN_STAGGER       := 1.2
 const CAR_RETRY_INTERVAL  := 0.5
 const WALK_HEIGHT         := 0.1
+const PEDESTRIAN_FOLLOW_GAP := 0.16
+const PEDESTRIAN_LATERAL_SPREAD := 0.06
 
 const PERSON_MODEL_PATH := "res://models/Meshy_AI_Bluecoat_Guard_0403170555/Meshy_AI_Bluecoat_Guard_0403170555_texture.glb"
 const PERSON_SCALE      := 0.12
@@ -61,12 +63,14 @@ var _person_by_journey: Dictionary = {}   # int journey_id → PersonSlot
 var _current_hour: float = 0.0
 var _walk_route_threshold: int = WALK_THRESHOLD
 var _plan_key_by_journey: Dictionary = {}
+var _pedestrian_spacing: Array = []
 
 # ── Lifecycle ─────────────────────────────────────────────────────────────────
 
 func _plugin_ready() -> void:
 	_load_walk_threshold()
 	_setup_multimesh()
+	_car_manager.journey_started.connect(_on_journey_started)
 	_car_manager.journey_completed.connect(_on_journey_completed)
 	GameEvents.structure_placed.connect(_on_structure_placed)
 	GameEvents.structure_demolished.connect(_on_structure_demolished)
@@ -112,8 +116,9 @@ func _rebuild() -> void:
 		_people.size(), residential_count])
 
 func _clear_people() -> void:
+	_pedestrian_spacing.clear()
 	for person: PersonSlot in _people:
-		if person.state == PersonSlot.VisualState.IN_CAR:
+		if person.state in [PersonSlot.VisualState.WAITING_FOR_CAR, PersonSlot.VisualState.IN_CAR]:
 			var jid: int = _journey_by_person.get(person, -1)
 			if jid >= 0:
 				_car_manager.cancel_journey(jid)
@@ -129,6 +134,7 @@ func _clear_people() -> void:
 	_timer.clear()
 	_journey_by_person.clear()
 	_person_by_journey.clear()
+	_plan_key_by_journey.clear()
 
 func _spawn_people() -> void:
 	if _community and _community.has_method("get_civilian_intents"):
@@ -170,6 +176,7 @@ func _spawn_person(tile: Vector3i, stagger: int, seed: int, resident_id: int = -
 	person.slot_index = _free_indices.pop_back()
 	person.current_tile = tile
 	person.position = Vector3(tile.x + offset.x, WALK_HEIGHT, tile.z + offset.y)
+	person.display_position = person.position
 	person.visible = true
 	person.resident_id = resident_id
 	person.resident_seed = seed
@@ -209,9 +216,7 @@ func _process(delta: float) -> void:
 				if person._waypoints.is_empty():
 					_begin_car_journey(person)
 			PersonSlot.VisualState.WAITING_FOR_CAR:
-				person.car_retry_remaining = maxf(0.0, person.car_retry_remaining - delta)
-				if is_zero_approx(person.car_retry_remaining):
-					_begin_car_journey(person)
+				pass   # admission is owned and driven by CarManager
 			PersonSlot.VisualState.IN_CAR:
 				pass   # driven by _on_journey_completed signal
 			PersonSlot.VisualState.WALKING_ROUTE, PersonSlot.VisualState.WALKING_FROM_STOP:
@@ -219,6 +224,7 @@ func _process(delta: float) -> void:
 				if person._waypoints.is_empty():
 					_arrive_for_intent(person)
 
+	_apply_pedestrian_spacing()
 	_update_multimesh(delta)
 
 # ── Hour events ───────────────────────────────────────────────────────────────
@@ -266,6 +272,7 @@ func _cancel_person_journey(person: PersonSlot) -> void:
 	if person.journey_id >= 0 and _car_manager:
 		_car_manager.cancel_journey(person.journey_id)
 		_person_by_journey.erase(person.journey_id)
+		_plan_key_by_journey.erase(person.journey_id)
 	_journey_by_person.erase(person)
 	person.journey_id = -1
 	person.visible = true
@@ -463,10 +470,33 @@ func _begin_car_journey(person: PersonSlot) -> void:
 	_journey_by_person[person] = jid
 	_person_by_journey[jid]    = person
 	_plan_key_by_journey[jid] = person.plan_key
-	person.visible = false
-	person.state = PersonSlot.VisualState.IN_CAR
+	person.visible = true
+	person.state = PersonSlot.VisualState.WAITING_FOR_CAR
+	person.blocked_reason = "awaiting_traffic_admission"
 	person.journey_id = jid
 	person.car_retry_remaining = 0.0
+
+func _on_journey_started(jid: int, origin_stop: Vector3i, position: Vector3) -> void:
+	var person: PersonSlot = _person_by_journey.get(jid)
+	if not person:
+		_car_manager.cancel_journey(jid)
+		return
+	var submitted_key := String(_plan_key_by_journey.get(jid, ""))
+	if submitted_key.is_empty() or submitted_key != person.plan_key \
+			or person.journey_id != jid or person.state != PersonSlot.VisualState.WAITING_FOR_CAR:
+		_car_manager.cancel_journey(jid)
+		_person_by_journey.erase(jid)
+		_plan_key_by_journey.erase(jid)
+		_journey_by_person.erase(person)
+		person.journey_id = -1
+		person.visible = true
+		_block(person, "route_invalidated")
+		return
+	person.current_tile = origin_stop
+	person.position = Vector3(position.x, WALK_HEIGHT, position.z)
+	person.visible = false
+	person.state = PersonSlot.VisualState.IN_CAR
+	person.blocked_reason = ""
 
 func _on_journey_completed(jid: int, arrived_road_tile: Vector3i, exit_pos: Vector3) -> void:
 	var person: PersonSlot = _person_by_journey.get(jid)
@@ -552,6 +582,81 @@ func _advance_person(person: PersonSlot, delta: float) -> void:
 	else:
 		person.position += person.position.direction_to(target) * step
 
+func _apply_pedestrian_spacing() -> void:
+	_pedestrian_spacing.clear()
+	var groups: Dictionary = {}
+	var ordered: Array[PersonSlot] = _people.duplicate()
+	ordered.sort_custom(func(a: PersonSlot, b: PersonSlot): return a.resident_id < b.resident_id)
+	for person in ordered:
+		person.display_position = person.position
+		person.spacing_active = false
+		person.spacing_order = -1
+		person.spacing_lateral_slot = 0.0
+		person.spacing_limited_progress = 0.0
+		if not person.visible or person._waypoint_tiles.is_empty() \
+				or person.state not in [PersonSlot.VisualState.WALKING_TO_STOP,
+					PersonSlot.VisualState.WALKING_FROM_STOP, PersonSlot.VisualState.WALKING_ROUTE]:
+			continue
+		var from_tile := person.current_tile
+		var to_tile: Vector3i = person._waypoint_tiles[0]
+		if from_tile == to_tile or Pathfinder.manhattan(from_tile, to_tile) != 1:
+			continue
+		var direction := Vector3(float(to_tile.x - from_tile.x), 0.0,
+			float(to_tile.z - from_tile.z))
+		var start := Vector3(from_tile.x, WALK_HEIGHT, from_tile.z)
+		var length := maxf(0.001, direction.length())
+		var progress := clampf((person.position - start).dot(direction.normalized()) / length,
+			0.0, 1.0)
+		var key := "%d,%d>%d,%d" % [from_tile.x, from_tile.z, to_tile.x, to_tile.z]
+		if not groups.has(key):
+			groups[key] = []
+		groups[key].append({"person":person, "from":from_tile, "to":to_tile,
+			"direction":direction.normalized(), "progress":progress})
+
+	var keys: Array = groups.keys()
+	keys.sort()
+	for key in keys:
+		var group: Array = groups[key]
+		group.sort_custom(func(a: Dictionary, b: Dictionary):
+			return float(a["progress"]) > float(b["progress"]) \
+				if not is_equal_approx(float(a["progress"]), float(b["progress"])) \
+				else a["person"].resident_id < b["person"].resident_id)
+		var previous_progress := 2.0
+		for index in group.size():
+			var item: Dictionary = group[index]
+			var person: PersonSlot = item["person"]
+			var limited := float(item["progress"])
+			if index > 0:
+				limited = minf(limited, previous_progress - PEDESTRIAN_FOLLOW_GAP)
+			limited = clampf(limited, 0.0, 1.0)
+			previous_progress = limited
+			var lateral_slot := 0.0
+			if group.size() > 1:
+				lateral_slot = lerpf(-PEDESTRIAN_LATERAL_SPREAD,
+					PEDESTRIAN_LATERAL_SPREAD, float(index) / float(group.size() - 1))
+			var direction: Vector3 = item["direction"]
+			var pavement_normal := Vector3(-direction.z, 0.0, direction.x)
+			var start := Vector3(item["from"].x, WALK_HEIGHT, item["from"].z)
+			var end := Vector3(item["to"].x, WALK_HEIGHT, item["to"].z)
+			person.display_position = start.lerp(end, limited) \
+				+ pavement_normal * (SIDEWALK_OFFSET + lateral_slot)
+			person.spacing_active = true
+			person.spacing_order = index
+			person.spacing_lateral_slot = lateral_slot
+			person.spacing_limited_progress = limited
+			_pedestrian_spacing.append({
+				"resident_id": person.resident_id,
+				"from_tile": _cell_record(item["from"]),
+				"to_tile": _cell_record(item["to"]),
+				"order": index,
+				"lateral_slot": snappedf(lateral_slot, 0.0001),
+				"limited_progress": snappedf(limited, 0.0001),
+				"display_position": _position_record(person.display_position),
+			})
+
+func get_pedestrian_spacing_snapshot() -> Array:
+	return _pedestrian_spacing.duplicate(true)
+
 func _update_multimesh(delta: float) -> void:
 	if _mm == null or _mm.multimesh == null:
 		return
@@ -565,7 +670,7 @@ func _update_multimesh(delta: float) -> void:
 		else:
 			person._bob_time = 0.0
 		var bob_y: float = sin(person._bob_time) * PersonSlot.BOB_HEIGHT if walking else 0.0
-		var world_pos := person.position + Vector3(0.0, bob_y + _ground_y, 0.0)
+		var world_pos := person.display_position + Vector3(0.0, bob_y + _ground_y, 0.0)
 		var rot    := Basis(Vector3.UP, deg_to_rad(PERSON_MODEL_ROT_Y))
 		var scaled := person._facing * rot * Basis().scaled(Vector3.ONE * PERSON_SCALE)
 		_mm.multimesh.set_instance_transform(person.slot_index, Transform3D(scaled, world_pos))
@@ -701,6 +806,7 @@ func get_civilian_snapshot() -> Dictionary:
 		var expected_id: int = expected_ids[index]
 		if not seen.has(expected_id) and intents_by_id[expected_id].get("home_anchor") != null:
 			violations.append({"resident_id":expected_id,"code":"missing_visible_proxy_within_cap"})
+	violations.append_array(_pedestrian_spacing_violations())
 	rows.sort_custom(func(a, b): return a["resident_id"] < b["resident_id"])
 	violations.sort_custom(func(a, b):
 		return a["resident_id"] < b["resident_id"] if a["resident_id"] != b["resident_id"] else a["code"] < b["code"])
@@ -714,9 +820,26 @@ func get_civilian_snapshot() -> Dictionary:
 		"counts_by_state": counts_by_state,
 		"counts_by_purpose": counts_by_purpose,
 		"blocked_by_reason": blocked_by_reason,
+		"pedestrian_spacing": get_pedestrian_spacing_snapshot(),
 		"residents": rows.duplicate(true),
 		"violations": violations.duplicate(true),
 	}
+
+func _pedestrian_spacing_violations() -> Array:
+	var violations: Array = []
+	var positions: Dictionary = {}
+	for row: Dictionary in _pedestrian_spacing:
+		var position: Dictionary = row.get("display_position", {})
+		if position.is_empty():
+			continue
+		var key := "%.4f,%.4f,%.4f" % [float(position.get("x", 0.0)),
+			float(position.get("y", 0.0)), float(position.get("z", 0.0))]
+		if positions.has(key):
+			violations.append({"resident_id":int(row.get("resident_id", -1)),
+				"code":"persistent_pedestrian_overlap"})
+		else:
+			positions[key] = int(row.get("resident_id", -1))
+	return violations
 
 func _anchor_record(value: Variant) -> Variant:
 	if value == null: return null
@@ -727,3 +850,7 @@ func _anchor_record(value: Variant) -> Variant:
 
 func _cell_record(cell: Vector3i) -> Dictionary:
 	return {"x": cell.x, "y": cell.y, "z": cell.z}
+
+func _position_record(position: Vector3) -> Dictionary:
+	return {"x": snappedf(position.x, 0.0001), "y": snappedf(position.y, 0.0001),
+		"z": snappedf(position.z, 0.0001)}

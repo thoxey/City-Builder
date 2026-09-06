@@ -19,12 +19,19 @@ var origin_stop: Vector3i = Vector3i.ZERO
 var destination_stop: Vector3i = Vector3i.ZERO
 var road_revision: int = 0
 var resolved_journey: bool = false
+var canonical_route: Array[Vector3i] = []
+var admitted: bool = false
+var request_epoch: int = 0
+var request_sequence: int = 0
 
 # ── World state ───────────────────────────────────────────────────────────────
 
 var position:     Vector3  = Vector3.ZERO
 var current_tile: Vector3i = Vector3i.ZERO
+var next_tile: Variant = null
 var travel_dir:   Vector2i = Vector2i.ZERO   # direction toward the next waypoint
+var current_claim_slot: int = -1
+var next_claim_slot: int = -1
 
 var _waypoints:      Array[Vector3]  = []
 var _waypoint_tiles: Array[Vector3i] = []
@@ -37,6 +44,8 @@ var _seg_start_basis: Basis = Basis.IDENTITY
 var _seg_end_basis:   Basis = Basis.IDENTITY
 var _seg_progress:    float = 0.0
 var _seg_total_dist:  float = 1.0
+var _cross_start:     Vector3 = Vector3.ZERO
+var _cross_end:       Vector3 = Vector3.ZERO
 
 # ── Traffic state ─────────────────────────────────────────────────────────────
 

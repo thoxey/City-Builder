@@ -486,10 +486,25 @@ func get_snapshot(compact: bool = false) -> Dictionary:
 	if not compact:
 		var people_snapshot: Dictionary = _people.get_civilian_snapshot() if _people and _people.has_method("get_civilian_snapshot") else {}
 		var car_snapshot: Dictionary = _car_manager.get_civilian_snapshot() if _car_manager and _car_manager.has_method("get_civilian_snapshot") else {}
+		var pedestrian_spacing: Array = people_snapshot.get("pedestrian_spacing", []).duplicate(true)
+		var traffic_flow: Dictionary = _car_manager.get_traffic_flow_snapshot(pedestrian_spacing) \
+			if _car_manager and _car_manager.has_method("get_traffic_flow_snapshot") else {
+				"schema_version":1, "pending_departure_count":0, "active_car_count":0,
+				"waiting_car_count":0, "pending_departures":[], "active_journeys":[],
+				"tile_occupancy":[], "pedestrian_spacing":pedestrian_spacing, "violations":[],
+			}
+		for violation: Dictionary in people_snapshot.get("violations", []):
+			if String(violation.get("code", "")) == "persistent_pedestrian_overlap":
+				traffic_flow["violations"].append(violation.duplicate(true))
+		traffic_flow["violations"].sort_custom(func(a, b):
+			return String(a.get("code", "")) < String(b.get("code", "")) \
+				if String(a.get("code", "")) != String(b.get("code", "")) \
+				else int(a.get("resident_id", -1)) < int(b.get("resident_id", -1)))
 		var civilian_violations: Array = people_snapshot.get("violations", []).duplicate(true)
 		civilian_violations.append_array(car_snapshot.get("violations", []).duplicate(true))
 		civilian_violations.sort_custom(func(a, b): return int(a.get("resident_id", -1)) < int(b.get("resident_id", -1)) if int(a.get("resident_id", -1)) != int(b.get("resident_id", -1)) else String(a.get("code", "")) < String(b.get("code", "")))
-		snapshot["civilian_simulation"] = {"people":people_snapshot,"cars":car_snapshot,"violations":civilian_violations}
+		snapshot["civilian_simulation"] = {"people":people_snapshot,"cars":car_snapshot,
+			"traffic_flow":traffic_flow.duplicate(true), "violations":civilian_violations}
 	return snapshot
 
 func _operation_records() -> Array:
