@@ -29,9 +29,6 @@ GameEvents="*res://scripts/game_events.gd"
 GameState="*res://scripts/game_state.gd"
 GameClock="*res://scripts/game_clock.gd"
 PluginManager="*res://scripts/plugin_manager.gd"
-MCPScreenshot="*res://addons/godot_mcp/mcp_screenshot_service.gd"
-MCPInputService="*res://addons/godot_mcp/mcp_input_service.gd"
-MCPGameInspector="*res://addons/godot_mcp/mcp_game_inspector_service.gd"
 
 [debug]
 
@@ -46,13 +43,9 @@ window/size/window_height_override=1080
 window/stretch/mode="canvas_items"
 window/dpi/allow_hidpi=false
 
-[editor]
-
-movie_writer/movie_file="D:/Godot/recording.avi"
-
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/data_editor_tools/plugin.cfg", "res://addons/godot_mcp/plugin.cfg", "res://addons/gut/plugin.cfg")
+enabled=PackedStringArray("res://addons/data_editor_tools/plugin.cfg", "res://addons/gut/plugin.cfg")
 
 [input]
 
@@ -153,7 +146,7 @@ save_slot1={
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":49,"key_label":0,"unicode":49,"location":0,"echo":false,"script":null)
 ]
 }
-load_temp={
+load_slot1={
 "deadzone": 0.5,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":50,"key_label":0,"unicode":50,"location":0,"echo":false,"script":null)
 ]

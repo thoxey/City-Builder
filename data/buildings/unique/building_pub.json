@@ -16,6 +16,7 @@
       0
     ]
   ],
+  "ground_treatment": "grass_underlay",
   "category": "unique",
   "community_role": "participant",
   "profiles": [
@@ -50,7 +51,7 @@
       "patron_id": "aristocrat",
       "character_id": "aristocrat_commercial",
       "chain_role": "chain",
-      "prerequisite_threshold": 10,
+      "prerequisite_threshold": 15,
       "prerequisite_ids": [],
       "desirability_boost": 0.0
     },

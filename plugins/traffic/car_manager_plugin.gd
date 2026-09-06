@@ -2,7 +2,8 @@ extends PluginBase
 
 ## CarManager — owns all active car journeys across all vehicle types.
 ##
-## Uses one MultiMeshInstance3D per car type for GPU-instanced rendering.
+## Uses one fixed logical pool per car type, partitioned across GPU-instanced
+## visual variants without changing the total capacity.
 ## Callers pass building tiles; road-stop resolution happens internally.
 ##
 ## Resolved civilian requests begin as non-physical pending departures. Admission,
@@ -18,10 +19,44 @@ const QUEUE_OFFSET        := 0.18  # bounded front/rear displacement within one 
 
 # ── Car type definitions ───────────────────────────────────────────────────────
 
+const _CIVILIAN_MODEL_PATHS: Array[String] = [
+	"res://models/city-vehicles/Veh_Coupe_01_Blue.fbx",
+	"res://models/city-vehicles/Veh_Coupe_02_Red.fbx",
+	"res://models/city-vehicles/Veh_Coupe_03_Yellow.fbx",
+	"res://models/city-vehicles/Veh_Minivan_Green.fbx",
+	"res://models/city-vehicles/Veh_Muscle_Car_01_Red.fbx",
+	"res://models/city-vehicles/Veh_Muscle_Car_02_Blue.fbx",
+	"res://models/city-vehicles/Veh_Muscle_Car_03_White.fbx",
+	"res://models/city-vehicles/Veh_Pickup_01_White.fbx",
+	"res://models/city-vehicles/Veh_Pickup_02_Green.fbx",
+	"res://models/city-vehicles/Veh_Pickup_03_Red.fbx",
+	"res://models/city-vehicles/Veh_Retro_Car_01_Yellow.fbx",
+	"res://models/city-vehicles/Veh_Retro_Car_02_Blue.fbx",
+	"res://models/city-vehicles/Veh_Retro_Car_03_Green.fbx",
+	"res://models/city-vehicles/Veh_Sedan_01_Blue.fbx",
+	"res://models/city-vehicles/Veh_Sedan_02_White.fbx",
+	"res://models/city-vehicles/Veh_Sedan_03_Red.fbx",
+	"res://models/city-vehicles/Veh_Sports_Car_01_Red.fbx",
+	"res://models/city-vehicles/Veh_Sports_Car_02_Yellow.fbx",
+	"res://models/city-vehicles/Veh_Sports_Car_03_Blue.fbx",
+	"res://models/city-vehicles/Veh_SUV_01_Green.fbx",
+	"res://models/city-vehicles/Veh_SUV_02_Blue.fbx",
+	"res://models/city-vehicles/Veh_SUV_03_White.fbx",
+	"res://models/city-vehicles/Veh_Truck_01_Yellow.fbx",
+	"res://models/city-vehicles/Veh_Truck_02_Red.fbx",
+	"res://models/city-vehicles/Veh_Truck_02_Flat_Blue.fbx",
+	"res://models/city-vehicles/Veh_Truck_03_White.fbx",
+	"res://models/city-vehicles/Veh_Truck_03_Flat_Green.fbx",
+	"res://models/city-vehicles/Veh_Truck_03_Tank_Blue.fbx",
+	"res://models/city-vehicles/Veh_Van_01_Blue.fbx",
+	"res://models/city-vehicles/Veh_Van_02_Red.fbx",
+	"res://models/city-vehicles/Veh_Van_03_Yellow.fbx",
+]
+
 const _TYPE_DEFS: Dictionary = {
 	CarSlot.CarType.CIVILIAN: {
-		"mesh_path": "res://models/Meshy_AI_Car_0403170715/Meshy_AI_Car_0403170715_texture.glb",
-		"scale": 0.15, "rot_y": 270.0, "speed": 3.0, "max": 256
+		"mesh_paths": _CIVILIAN_MODEL_PATHS,
+		"scale": 0.13, "rot_y": 180.0, "speed": 3.0, "max": 256
 	},
 }
 
@@ -31,6 +66,11 @@ class TypePool:
 	var mminstance:   MultiMeshInstance3D
 	var ground_y:     float      = 0.0
 	var free_indices: Array[int] = []
+	var variants: Array[MultiMeshInstance3D] = []
+	var variant_ground_y: Array[float] = []
+	var variant_paths: Array[String] = []
+	var slot_variant_indices: Array[int] = []
+	var slot_local_indices: Array[int] = []
 
 var _pools: Dictionary = {}
 
@@ -39,6 +79,9 @@ var _pools: Dictionary = {}
 var _active:       Dictionary = {}   # journey_id → CarSlot
 var _pending:      Dictionary = {}   # journey_id → detached request record
 var _pending_order: Array[int] = []
+var _pending_by_origin: Dictionary = {} # origin_stop → FIFO journey ids
+var _origin_order: Array[Vector3i] = []
+var _origin_cursor: int = 0
 var _next_id:      int        = 0
 var _pending_done: Dictionary = {}   # journey_id → {"tile": Vector3i, "pos": Vector3}
 var _request_epoch: int = 0
@@ -56,12 +99,14 @@ signal journey_started(journey_id: int, origin_stop: Vector3i, position: Vector3
 # ── DI ────────────────────────────────────────────────────────────────────────
 
 func get_plugin_name() -> String: return "CarManager"
-func get_dependencies() -> Array[String]: return ["RoadNetwork"]
+func get_dependencies() -> Array[String]: return ["RoadNetwork", "PerformanceMonitor"]
 
 var _road_network: PluginBase
+var _performance_monitor: PluginBase
 
 func inject(deps: Dictionary) -> void:
 	_road_network = deps.get("RoadNetwork")
+	_performance_monitor = deps.get("PerformanceMonitor")
 
 # ── Lifecycle ─────────────────────────────────────────────────────────────────
 
@@ -73,31 +118,80 @@ func _plugin_ready() -> void:
 	GameEvents.map_loaded.connect(_on_map_loaded)
 
 func _setup_pool(car_type: int, def: Dictionary) -> void:
-	var pool  := TypePool.new()
-	var max_n: int   = def.get("max", 64)
+	var pool := TypePool.new()
+	var max_n: int = maxi(1, int(def.get("max", 64)))
 	var scale: float = def.get("scale", 1.0)
-	var mesh := _mesh_from_glb(def.mesh_path)
-	pool.ground_y = (-mesh.get_aabb().position.y * scale) if mesh else 0.0
-	var mm := MultiMesh.new()
-	mm.transform_format = MultiMesh.TRANSFORM_3D
-	mm.instance_count   = max_n
-	mm.mesh             = mesh if mesh else _fallback_mesh()
-	for i in max_n:
-		mm.set_instance_transform(i, _hidden_transform())
-	var mmi := MultiMeshInstance3D.new()
-	mmi.multimesh = mm
-	add_child(mmi)
-	pool.mminstance = mmi
-	for i in max_n:
-		pool.free_indices.append(i)
+	var configured_paths: Array = def.get("mesh_paths", [])
+	if configured_paths.is_empty() and def.has("mesh_path"):
+		configured_paths.append(String(def["mesh_path"]))
+	var meshes: Array[Mesh] = []
+	var loaded_paths: Array[String] = []
+	for configured_path: Variant in configured_paths:
+		var model_path := String(configured_path)
+		var mesh := _mesh_from_scene(model_path)
+		if not mesh:
+			push_warning("[CarManager] could not load vehicle model %s" % model_path)
+			continue
+		meshes.append(mesh)
+		loaded_paths.append(model_path)
+	if meshes.is_empty():
+		meshes.append(_fallback_mesh())
+		loaded_paths.append("<fallback>")
+	if meshes.size() > max_n:
+		meshes.resize(max_n)
+		loaded_paths.resize(max_n)
+
+	var variant_count := meshes.size()
+	var slots_per_variant := max_n / variant_count
+	var remainder := max_n % variant_count
+	for variant_index in variant_count:
+		var variant_capacity := slots_per_variant + (1 if variant_index < remainder else 0)
+		var mm := MultiMesh.new()
+		mm.transform_format = MultiMesh.TRANSFORM_3D
+		mm.instance_count = variant_capacity
+		mm.mesh = meshes[variant_index]
+		for local_index in variant_capacity:
+			mm.set_instance_transform(local_index, _hidden_transform())
+		var mmi := MultiMeshInstance3D.new()
+		mmi.name = "VehicleVariant_%02d" % variant_index
+		mmi.multimesh = mm
+		add_child(mmi)
+		pool.variants.append(mmi)
+		pool.variant_ground_y.append(-meshes[variant_index].get_aabb().position.y * scale)
+		pool.variant_paths.append(loaded_paths[variant_index])
+		for local_index in variant_capacity:
+			pool.slot_variant_indices.append(variant_index)
+			pool.slot_local_indices.append(local_index)
+			pool.free_indices.append(pool.free_indices.size())
+
+	# Keep the original fields populated for fixture/backwards compatibility.
+	pool.mminstance = pool.variants[0]
+	pool.ground_y = pool.variant_ground_y[0]
 	_pools[car_type] = pool
 
 func _cancel_all() -> void:
 	for jid: int in _active.keys():
 		_release_silent(_active[jid])
+	# Releases append slots in journey-history order. Rebuild each allocator so a
+	# map reset also restores the deterministic visual sequence from a fresh map.
+	for pool_value: Variant in _pools.values():
+		var pool := pool_value as TypePool
+		if not pool:
+			continue
+		var capacity := pool.slot_variant_indices.size()
+		if capacity <= 0 and pool.mminstance and pool.mminstance.multimesh:
+			capacity = pool.mminstance.multimesh.instance_count
+		if capacity <= 0:
+			capacity = pool.free_indices.size()
+		pool.free_indices.clear()
+		for slot_index in capacity:
+			pool.free_indices.append(slot_index)
 	_active.clear()
 	_pending.clear()
 	_pending_order.clear()
+	_pending_by_origin.clear()
+	_origin_order.clear()
+	_origin_cursor = 0
 	_reserved.clear()
 	_pending_done.clear()
 	_next_id = 0
@@ -132,7 +226,9 @@ func request_journey(origin_tile: Vector3i, route: Array[Vector3i],
 	slot.route        = route.duplicate()
 	slot.loop         = loop
 	slot.speed        = def.get("speed", 3.0)
-	slot.slot_index   = pool.free_indices.pop_back()
+	slot.slot_index   = _take_pool_slot(pool, slot.journey_id)
+	if slot.slot_index < 0:
+		return -1
 	slot.current_tile = origin_stops[0]
 	slot.position     = _road_network.get_lane_position(origin_stops[0], Vector2i.ZERO)
 	var claim_slot := _claim_tile(slot.current_tile, slot.journey_id, Vector2i.ZERO)
@@ -187,35 +283,48 @@ func request_resolved_journey(resident_id: int, origin_stop: Vector3i,
 	}
 	_request_sequence += 1
 	_pending_order.append(journey_id)
+	var origin_queue: Array = _pending_by_origin.get(origin_stop, [])
+	origin_queue.append(journey_id)
+	_pending_by_origin[origin_stop] = origin_queue
+	if origin_stop not in _origin_order:
+		_origin_order.append(origin_stop)
+		_origin_order.sort_custom(_origin_less)
 	return journey_id
 
 func _admit_pending() -> void:
-	var origins: Array[Vector3i] = []
-	for journey_id in _pending_order:
-		if not _pending.has(journey_id):
-			continue
-		var origin: Vector3i = _pending[journey_id]["origin_stop"]
-		if origin not in origins:
-			origins.append(origin)
-	origins.sort_custom(func(a: Vector3i, b: Vector3i):
-		return a.x < b.x if a.x != b.x else (a.z < b.z if a.z != b.z else a.y < b.y))
-	for origin in origins:
-		for journey_id in _pending_order.duplicate():
+	if _origin_order.is_empty():
+		_origin_cursor = 0
+		return
+	var origin_count := _origin_order.size()
+	var start := posmod(_origin_cursor, origin_count)
+	for offset in origin_count:
+		var origin: Vector3i = _origin_order[(start + offset) % origin_count]
+		var queue: Array = _pending_by_origin.get(origin, [])
+		# Each origin owns its own FIFO. Capacity-blocked heads remain ahead of
+		# later requests, while the rotating origin cursor prevents starvation.
+		for journey_id in queue.duplicate():
 			if not _pending.has(journey_id):
+				queue.erase(journey_id)
 				continue
 			var pending: Dictionary = _pending[journey_id]
-			if pending["origin_stop"] != origin:
-				continue
 			if not _tile_is_clear(origin, journey_id, pending["first_direction"]):
 				pending["waiting_reason"] = "origin_capacity"
-				continue
+				break
 			var pool: TypePool = _pools.get(int(pending["car_type"]))
 			if not pool or pool.free_indices.is_empty():
 				pending["waiting_reason"] = "car_pool_capacity"
-				continue
-			_activate_pending(journey_id, pending, pool)
+				break
+			pending["waiting_reason"] = ""
+			if not _activate_pending(journey_id, pending, pool):
+				if String(pending.get("waiting_reason", "")).is_empty():
+					pending["waiting_reason"] = "car_pool_capacity"
+				break
+			queue.erase(journey_id)
+		_pending_by_origin[origin] = queue
+	_origin_cursor = (start + 1) % origin_count
+	_prune_empty_origins()
 
-func _activate_pending(journey_id: int, pending: Dictionary, pool: TypePool) -> void:
+func _activate_pending(journey_id: int, pending: Dictionary, pool: TypePool) -> bool:
 	var slot := CarSlot.new()
 	slot.journey_id = journey_id
 	slot.car_type = int(pending["car_type"])
@@ -231,11 +340,17 @@ func _activate_pending(journey_id: int, pending: Dictionary, pool: TypePool) -> 
 	slot.route.assign(pending["road_path"].duplicate())
 	slot.canonical_route.assign(pending["road_path"].duplicate())
 	slot.speed = float(_TYPE_DEFS[slot.car_type].get("speed", 3.0))
-	slot.slot_index = pool.free_indices.pop_back()
+	slot.slot_index = _take_pool_slot(pool, journey_id)
+	if slot.slot_index < 0:
+		return false
 	slot.current_tile = slot.origin_stop
 	slot.travel_dir = pending["first_direction"]
 	slot.current_claim_slot = _claim_tile(slot.current_tile, journey_id,
 		slot.travel_dir, "current")
+	if slot.current_claim_slot < 0:
+		pool.free_indices.append(slot.slot_index)
+		pending["waiting_reason"] = "origin_capacity"
+		return false
 	slot.lane_slot = slot.current_claim_slot
 	slot.position = _display_anchor(slot.current_tile, slot.travel_dir,
 		slot.current_claim_slot)
@@ -245,6 +360,7 @@ func _activate_pending(journey_id: int, pending: Dictionary, pool: TypePool) -> 
 	_set_resolved_waypoints(slot)
 	_write_transform(slot)
 	journey_started.emit(journey_id, slot.origin_stop, slot.position)
+	return true
 
 func _set_resolved_waypoints(slot: CarSlot) -> void:
 	var path: Array[Vector3i] = slot.route.duplicate()
@@ -270,8 +386,10 @@ func _set_resolved_waypoints(slot: CarSlot) -> void:
 
 func cancel_journey(journey_id: int) -> void:
 	if _pending.has(journey_id):
+		var origin: Vector3i = _pending[journey_id]["origin_stop"]
 		_pending.erase(journey_id)
 		_pending_order.erase(journey_id)
+		_remove_from_origin_queue(origin, journey_id)
 		return
 	var slot: CarSlot = _active.get(journey_id)
 	if not slot:
@@ -445,6 +563,28 @@ func _pending_less(a: int, b: int) -> bool:
 			return av < bv
 	return a < b
 
+func _origin_less(a: Vector3i, b: Vector3i) -> bool:
+	return a.x < b.x if a.x != b.x else (a.z < b.z if a.z != b.z else a.y < b.y)
+
+func _remove_from_origin_queue(origin: Vector3i, journey_id: int) -> void:
+	var queue: Array = _pending_by_origin.get(origin, [])
+	queue.erase(journey_id)
+	if queue.is_empty():
+		_pending_by_origin.erase(origin)
+		_origin_order.erase(origin)
+		if _origin_order.is_empty(): _origin_cursor = 0
+		else: _origin_cursor %= _origin_order.size()
+	else:
+		_pending_by_origin[origin] = queue
+
+func _prune_empty_origins() -> void:
+	for origin in _origin_order.duplicate():
+		if _pending_by_origin.get(origin, []).is_empty():
+			_pending_by_origin.erase(origin)
+			_origin_order.erase(origin)
+	if _origin_order.is_empty(): _origin_cursor = 0
+	else: _origin_cursor %= _origin_order.size()
+
 func _slot_violation(code: String, slot: CarSlot, tile: Variant = null) -> Dictionary:
 	var result := {"code":code, "resident_id":slot.resident_id,
 		"journey_id":slot.journey_id}
@@ -545,14 +685,22 @@ func _cell_record(cell: Vector3i) -> Dictionary:
 
 func _process(delta: float) -> void:
 	_request_epoch += 1
+	var admission_started := Time.get_ticks_usec()
 	_admit_pending()
+	if _performance_monitor:
+		_performance_monitor.record(&"traffic.admission", Time.get_ticks_usec() - admission_started,
+			{"origins":_origin_order.size(), "pending":_pending.size(), "active":_active.size()})
+	var process_started := Time.get_ticks_usec()
+	var render_usec := 0
 	for jid in _sorted_active_ids():
 		if jid in _pending_done:
 			continue
 		var slot: CarSlot = _active[jid]
 		_advance(slot, delta)
 		if not jid in _pending_done:
+			var render_started := Time.get_ticks_usec()
 			_write_transform(slot)
+			render_usec += Time.get_ticks_usec() - render_started
 
 	var completed_ids: Array = _pending_done.keys()
 	completed_ids.sort()
@@ -561,6 +709,11 @@ func _process(delta: float) -> void:
 		_active.erase(jid)
 		journey_completed.emit(jid, data["tile"], data["pos"])
 	_pending_done.clear()
+	if _performance_monitor:
+		_performance_monitor.record(&"traffic.process", Time.get_ticks_usec() - process_started,
+			{"active":_active.size(), "pending":_pending.size(), "claims":_reserved.size()})
+		_performance_monitor.record(&"render.submit", render_usec,
+			{"owner":"traffic", "instances":_active.size()})
 
 # ── Movement ──────────────────────────────────────────────────────────────────
 
@@ -806,37 +959,107 @@ func _current_display_anchor(slot: CarSlot) -> Vector3:
 	return _display_anchor(slot.current_tile, _current_claim_direction(slot),
 		slot.current_claim_slot)
 
+func _take_pool_slot(pool: TypePool, visual_key: int) -> int:
+	if not pool or pool.free_indices.is_empty():
+		return -1
+	# A stable hash gives each spawn a varied visual without consuming gameplay RNG.
+	var pick := posmod(hash("civilian-vehicle-%d" % visual_key), pool.free_indices.size())
+	var slot_index := pool.free_indices[pick]
+	var last_index := int(pool.free_indices.pop_back())
+	if pick < pool.free_indices.size():
+		pool.free_indices[pick] = last_index
+	return slot_index
+
 func _write_transform(slot: CarSlot) -> void:
 	var def:   Dictionary = _TYPE_DEFS[slot.car_type]
 	var pool:  TypePool   = _pools[slot.car_type]
+	var mmi := pool.mminstance
+	var local_index := slot.slot_index
+	var ground_y := pool.ground_y
+	if slot.slot_index >= 0 and slot.slot_index < pool.slot_variant_indices.size():
+		var variant_index := pool.slot_variant_indices[slot.slot_index]
+		if variant_index >= 0 and variant_index < pool.variants.size():
+			mmi = pool.variants[variant_index]
+			local_index = pool.slot_local_indices[slot.slot_index]
+			ground_y = pool.variant_ground_y[variant_index]
+	if not mmi or not mmi.multimesh:
+		return
 	var display_basis := slot._seg_start_basis.slerp(slot._seg_end_basis,
 			minf(slot._seg_progress * 2.0, 1.0))
 	var rot    := Basis(Vector3.UP, deg_to_rad(def.get("rot_y", 0.0)))
 	var scale: float = def.get("scale", 1.0)
 	var final_basis := display_basis * rot * Basis().scaled(Vector3.ONE * scale)
-	var world_pos   := slot.position + Vector3(0.0, pool.ground_y, 0.0)
-	pool.mminstance.multimesh.set_instance_transform(
-		slot.slot_index, Transform3D(final_basis, world_pos))
+	var world_pos := slot.position + Vector3(0.0, ground_y, 0.0)
+	mmi.multimesh.set_instance_transform(local_index, Transform3D(final_basis, world_pos))
 
 func _hide_slot(slot: CarSlot) -> void:
 	var pool: TypePool = _pools.get(slot.car_type)
-	if pool and pool.mminstance and pool.mminstance.multimesh:
-		pool.mminstance.multimesh.set_instance_transform(slot.slot_index, _hidden_transform())
+	if not pool:
+		return
+	var mmi := pool.mminstance
+	var local_index := slot.slot_index
+	if slot.slot_index >= 0 and slot.slot_index < pool.slot_variant_indices.size():
+		var variant_index := pool.slot_variant_indices[slot.slot_index]
+		if variant_index >= 0 and variant_index < pool.variants.size():
+			mmi = pool.variants[variant_index]
+			local_index = pool.slot_local_indices[slot.slot_index]
+	if mmi and mmi.multimesh and local_index >= 0 \
+			and local_index < mmi.multimesh.instance_count:
+		mmi.multimesh.set_instance_transform(local_index, _hidden_transform())
 
 func _hidden_transform() -> Transform3D:
 	return Transform3D(Basis.IDENTITY, Vector3(0.0, -9999.0, 0.0))
 
-func _mesh_from_glb(path: String) -> Mesh:
-	var packed := load(path) as PackedScene
+func _mesh_from_scene(path: String) -> Mesh:
+	var packed := ResourceLoader.load(path, "PackedScene",
+		ResourceLoader.CACHE_MODE_IGNORE) as PackedScene
 	if not packed:
 		return null
-	var state := packed.get_state()
-	for i in state.get_node_count():
-		if state.get_node_type(i) == "MeshInstance3D":
-			for j in state.get_node_property_count(i):
-				if state.get_node_property_name(i, j) == "mesh":
-					return state.get_node_property_value(i, j) as Mesh
-	return null
+	var root := packed.instantiate()
+	var parts: Array[Dictionary] = []
+	_collect_mesh_parts(root, Transform3D.IDENTITY, parts)
+	if parts.is_empty():
+		root.free()
+		return null
+
+	# The pack authors body and wheels as child meshes. Merge equal-material parts
+	# once at pool setup so every variant still costs one instanced draw surface.
+	var tools_by_material: Dictionary = {}
+	var materials_by_key: Dictionary = {}
+	var material_order: Array[int] = []
+	for part: Dictionary in parts:
+		var mesh: Mesh = part["mesh"]
+		var part_transform: Transform3D = part["transform"]
+		var mesh_node: MeshInstance3D = part["node"]
+		for surface_index in mesh.get_surface_count():
+			var material := mesh_node.get_surface_override_material(surface_index)
+			if not material:
+				material = mesh.surface_get_material(surface_index)
+			var material_key := material.get_instance_id() if material else 0
+			if not tools_by_material.has(material_key):
+				tools_by_material[material_key] = SurfaceTool.new()
+				materials_by_key[material_key] = material
+				material_order.append(material_key)
+			var surface_tool: SurfaceTool = tools_by_material[material_key]
+			surface_tool.append_from(mesh, surface_index, part_transform)
+
+	var combined := ArrayMesh.new()
+	for material_key in material_order:
+		var surface_tool: SurfaceTool = tools_by_material[material_key]
+		surface_tool.set_material(materials_by_key[material_key])
+		surface_tool.commit(combined)
+	root.free()
+	return combined if combined.get_surface_count() > 0 else null
+
+func _collect_mesh_parts(node: Node, parent_transform: Transform3D,
+		parts: Array[Dictionary]) -> void:
+	var node_transform := parent_transform
+	if node is Node3D:
+		node_transform = parent_transform * node.transform
+	if node is MeshInstance3D and node.mesh:
+		parts.append({"mesh": node.mesh, "node": node, "transform": node_transform})
+	for child: Node in node.get_children():
+		_collect_mesh_parts(child, node_transform, parts)
 
 func _fallback_mesh() -> Mesh:
 	var sphere := SphereMesh.new()

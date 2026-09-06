@@ -9,8 +9,11 @@ var _providers: Dictionary = {}
 var _labels: Dictionary = {}
 var _titles: Dictionary = {}
 var _icons: Dictionary = {}
+var _metrics: Dictionary = {}
+var _demand_hover_projections: Dictionary = {}
 var _elapsed := 0.0
 var _compact := false
+var _ui_scale := 1.0
 var _insights_button: Button
 var _inbox_button: Button
 
@@ -112,6 +115,7 @@ func _metric(key: String, title_text: String, compact_title: String, icon_path: 
 	_titles[key] = title
 	_icons[key] = icon
 	_labels[key] = value
+	_metrics[key] = metric
 	return metric
 
 func _process(delta: float) -> void:
@@ -136,6 +140,9 @@ func refresh() -> void:
 		var snap: Dictionary = demand.get_bucket_snapshot(bucket_id) if demand else {}
 		var available := int(floor(float(snap.get("unserved", 0))))
 		_labels[bucket_id].text = "%d" % available
+		var hover := _demand_hover_projection(bucket_id, snap)
+		_demand_hover_projections[bucket_id] = hover
+		(_metrics[bucket_id] as Control).tooltip_text = String(hover["text"])
 	var pop: int = community.get_population() if community else 0
 	var cap: int = community.get_capacity() if community else 0
 	_labels.population.text = "%d/%d" % [pop, cap]
@@ -147,6 +154,23 @@ func refresh() -> void:
 func apply_compact_layout(viewport_width: float) -> void:
 	var compact := viewport_width < 1440.0
 	_compact = compact
+	_ui_scale = ui_scale_for_width(viewport_width)
+	scale = Vector2(_ui_scale, _ui_scale)
+	pivot_offset = Vector2.ZERO
+	if _ui_scale > 1.0:
+		anchor_left = 0.0
+		anchor_right = 0.0
+		offset_left = viewport_width * 0.02
+		offset_right = offset_left + viewport_width * 0.96 / _ui_scale
+		offset_top = 10.0 * _ui_scale
+		offset_bottom = offset_top + 108.0
+	else:
+		anchor_left = 0.02
+		anchor_right = 0.98
+		offset_left = 0.0
+		offset_right = 0.0
+		offset_top = 10.0
+		offset_bottom = 118.0
 	for key in _labels:
 		(_labels[key] as Label).add_theme_font_size_override("font_size", 28 if compact else 32)
 		var title := _titles[key] as Label
@@ -160,3 +184,79 @@ func apply_compact_layout(viewport_width: float) -> void:
 		_inbox_button.text = ""
 		_inbox_button.custom_minimum_size = Vector2(62, 62) if compact else Vector2(68, 68)
 		_inbox_button.add_theme_constant_override("icon_max_width", 44 if compact else 48)
+
+
+static func ui_scale_for_width(viewport_width: float) -> float:
+	return clampf(viewport_width / 1920.0, 1.0, 2.0)
+
+
+func _demand_hover_projection(bucket_id: String, snapshot: Dictionary) -> Dictionary:
+	var display_name: String = {
+		"residential": "Homes",
+		"industrial": "Work",
+		"commercial": "Shops",
+	}.get(bucket_id, bucket_id.capitalize())
+	var current_available := int(floor(float(snapshot.get("unserved", 0.0))))
+	var lifetime_earned := int(floor(float(snapshot.get("total", 0.0))))
+	var targets := _lifetime_targets(bucket_id, lifetime_earned)
+	var lines: Array[String] = [
+		"%s demand" % display_name,
+		"Current available: %d" % current_available,
+		"Lifetime earned: %d" % lifetime_earned,
+	]
+	if not targets.is_empty():
+		lines.append("Lifetime unlock targets:")
+		for target in targets:
+			lines.append("%d — %s%s" % [
+				int(target["threshold"]), String(target["display_name"]),
+				" (reached)" if bool(target["reached"]) else "",
+			])
+	return {
+		"bucket_id": bucket_id,
+		"display_name": display_name,
+		"current_available": current_available,
+		"lifetime_earned": lifetime_earned,
+		"lifetime_targets": targets,
+		"text": "\n".join(lines),
+	}
+
+
+func _lifetime_targets(bucket_id: String, lifetime_earned: int) -> Array:
+	var result: Array = []
+	var uniques: Variant = _providers.get("UniqueRegistry")
+	if uniques == null or not uniques.has_method("get_all_profiles"):
+		return result
+	var catalog: Variant = _providers.get("BuildingCatalog")
+	var profiles: Dictionary = uniques.get_all_profiles()
+	for building_id_variant in profiles:
+		var building_id := String(building_id_variant)
+		var profile: Variant = profiles[building_id_variant]
+		var profile_bucket := String(_profile_field(profile, "bucket", ""))
+		var threshold := int(_profile_field(profile, "prerequisite_threshold", 0))
+		if profile_bucket != bucket_id or threshold <= 0:
+			continue
+		var display_name := building_id.replace("building_", "").replace("_", " ").capitalize()
+		if catalog != null and catalog.has_method("get_summary_by_id"):
+			var summary: Dictionary = catalog.get_summary_by_id(building_id)
+			display_name = String(summary.get("display_name", display_name))
+		result.append({
+			"building_id": building_id,
+			"display_name": display_name,
+			"threshold": threshold,
+			"reached": lifetime_earned >= threshold,
+		})
+	result.sort_custom(func(a: Dictionary, b: Dictionary):
+		if int(a["threshold"]) != int(b["threshold"]):
+			return int(a["threshold"]) < int(b["threshold"])
+		return String(a["display_name"]) < String(b["display_name"])
+	)
+	return result
+
+
+static func _profile_field(profile: Variant, field: String, fallback: Variant) -> Variant:
+	if profile is Dictionary:
+		return profile.get(field, fallback)
+	if profile is Object:
+		var value: Variant = profile.get(field)
+		return fallback if value == null else value
+	return fallback

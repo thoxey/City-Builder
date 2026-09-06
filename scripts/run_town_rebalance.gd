@@ -3,6 +3,7 @@ extends SceneTree
 const SCENARIO_ID := "first_town/rebalance"
 const EVIDENCE_PATH := "res://specs/006-connected-first-town-loop/validation/rebalance-last-run.json"
 const EVIDENCE_PATH_ENV := "CITY_BUILDER_REBALANCE_EVIDENCE_PATH"
+const SAVE_PATH_ENV := "CITY_BUILDER_REBALANCE_SAVE_PATH"
 const CHECKPOINTS := {60: 15, 120: 30, 240: 60}
 const SCENARIO_SEED := 6066
 
@@ -213,6 +214,19 @@ func _finish(playtest, road_network, community, catalog) -> void:
 		max_hour_usec = maxi(max_hour_usec, elapsed_usec)
 		if bool(timing.get("migration_boundary", false)):
 			max_migration_usec = maxi(max_migration_usec, elapsed_usec)
+	var ordered_hours: Array = _hour_timings.map(func(row): return int(row.get("elapsed_usec", 0)))
+	ordered_hours.sort()
+	var median_hour_usec := _nearest_rank(ordered_hours, 0.5)
+	var p95_hour_usec := _nearest_rank(ordered_hours, 0.95)
+	var manager = root.get_node_or_null("PluginManager")
+	var transaction = manager.get_plugin("SimulationTransaction") if manager else null
+	var save_path := OS.get_environment(SAVE_PATH_ENV)
+	var save_result := {}
+	if not save_path.is_empty():
+		var builder = current_scene.get_node_or_null("Builder") if current_scene else null
+		save_result = builder.save_map_to_path(save_path) if builder else {"status":"rejected", "reason":"builder_missing"}
+		_assert(String(save_result.get("status", "")) == PlaytestActionResult.STATUS_APPLIED,
+			"Reference town save must succeed")
 	var evidence := {
 		"schema_version": 2, "scenario_id": SCENARIO_ID, "seed": SCENARIO_SEED,
 		"success": _failures.is_empty(), "failures": _failures,
@@ -229,10 +243,15 @@ func _finish(playtest, road_network, community, catalog) -> void:
 			"profiled_snapshot_usec": _profiled_snapshot_usec,
 			"total_tick_usec": total_tick_usec,
 			"max_hour_usec": max_hour_usec,
+			"median_hour_usec": median_hour_usec,
+			"p95_hour_usec": p95_hour_usec,
 			"max_migration_usec": max_migration_usec,
 			"hour_sample_count": _hour_timings.size(),
 			"route_cache": road_network.get_route_cache_stats() if road_network and road_network.has_method("get_route_cache_stats") else {},
+			"community_boundaries": _community_performance(),
 		},
+		"transaction": {"ledger_hash":transaction.ledger_hash(), "entry_count":transaction.get_ledger().size()} if transaction else {},
+		"saved_reference_town": {"path":save_path, "result":save_result} if not save_path.is_empty() else {},
 		"final_summary": final_summary,
 	}
 	var evidence_path := OS.get_environment(EVIDENCE_PATH_ENV)
@@ -243,6 +262,51 @@ func _finish(playtest, road_network, community, catalog) -> void:
 	print("TOWN_REBALANCE success=%s meaningful=%d attempts=%d max_hour_ms=%.3f max_06_ms=%.3f failures=%d" % [_failures.is_empty(), _meaningful_placements, _meaningful_attempts, float(max_hour_usec) / 1000.0, float(max_migration_usec) / 1000.0, _failures.size()])
 	for failure in _failures: push_error(failure)
 	quit(0 if _failures.is_empty() else 1)
+
+func _nearest_rank(ordered: Array, percentile: float) -> int:
+	if ordered.is_empty(): return 0
+	var rank := clampi(int(ceil(percentile * ordered.size())), 1, ordered.size())
+	return int(ordered[rank - 1])
+
+func _community_performance() -> Dictionary:
+	var monitor = root.get_node_or_null("PerformanceMonitor")
+	if monitor == null:
+		var manager = root.get_node_or_null("PluginManager")
+		monitor = manager.get_plugin("PerformanceMonitor") if manager and manager.has_method("get_plugin") else null
+	if monitor == null: return {}
+	return {
+		"community.hour.collect": _owner_aggregate(monitor, &"hour.collect", "community"),
+		"community.hour.evaluate": _owner_aggregate(monitor, &"hour.validate_reduce", "community"),
+		"community.hour.commit": _owner_aggregate(monitor, &"hour.commit", "community"),
+		"transaction.hour.collect": _owner_aggregate(monitor, &"hour.collect", ""),
+		"transaction.hour.validate_reduce": _owner_aggregate(monitor, &"hour.validate_reduce", ""),
+		"transaction.hour.commit": _owner_aggregate(monitor, &"hour.commit", ""),
+		"transaction.hour.notify": monitor.aggregate(&"hour.notify"),
+		"transaction.hour.total": monitor.aggregate(&"hour.total"),
+		"reducers": {
+			"city_stats":_workload_aggregate(monitor, &"hour.commit", "reducer", "resources"),
+			"satisfaction":_workload_aggregate(monitor, &"hour.commit", "reducer", "progression"),
+			"community":_workload_aggregate(monitor, &"hour.commit", "reducer", "community"),
+			"demand":_workload_aggregate(monitor, &"hour.commit", "reducer", "demand"),
+			"economy":_workload_aggregate(monitor, &"hour.commit", "reducer", "economy"),
+			"people":_workload_aggregate(monitor, &"hour.commit", "reducer", "traffic"),
+		},
+		"migration.context": monitor.aggregate(&"migration.context"),
+		"migration.candidates": monitor.aggregate(&"migration.candidates"),
+	}
+
+func _owner_aggregate(monitor: Variant, boundary: StringName, owner: String) -> Dictionary:
+	return _workload_aggregate(monitor, boundary, "owner", owner)
+
+func _workload_aggregate(monitor: Variant, boundary: StringName, key: String, expected: String) -> Dictionary:
+	var values: Array = []
+	for sample in monitor.get_samples():
+		if sample.boundary != boundary or not sample.excluded_reason.is_empty(): continue
+		if String(sample.get_workload_counts().get(key, "")) != expected: continue
+		values.append(sample.elapsed_usec)
+	values.sort()
+	return {"sample_count":values.size(), "median":_nearest_rank(values, 0.5),
+		"p95":_nearest_rank(values, 0.95), "max":int(values[-1]) if not values.is_empty() else 0}
 
 func _assert(condition: bool, message: String) -> void:
 	if not condition: _failures.append(message)

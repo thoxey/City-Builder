@@ -8,6 +8,7 @@ signal projection_changed(projection: Dictionary)
 const TUTORIAL_ID := "opening_tutorial"
 const SCHEMA_VERSION := 1
 const TOWN_HALL_ID := "building_town_hall"
+const REQUIRED_ROOTED_ROAD_COUNT := 10
 const STEPS: Array[String] = [
 	"place_town_hall", "connect_rooted_roads", "establish_nature",
 	"place_first_home", "observe_adjacent_home", "improve_home",
@@ -33,13 +34,13 @@ const FULL_EVENTS := {
 }
 const COPY := {
 	"B01": "AMBROSE PLACEHOLDER: tell the player to place the Town Hall",
-	"B02": "AMBROSE PLACEHOLDER: tell the player to build four connected road pieces from the Town Hall",
+	"B02": "AMBROSE PLACEHOLDER: tell the player to build ten connected road pieces from the Town Hall",
 	"B03": "AMBROSE PLACEHOLDER: tell the player to place two different kinds of nature",
 	"B04": "AMBROSE PLACEHOLDER: tell the player to add or improve nature until Beauty is positive",
 	"B05": "AMBROSE PLACEHOLDER: explain that positive Beauty creates Homes demand",
 	"B06": "AMBROSE PLACEHOLDER: explain that Homes demand is still accruing",
 	"B07": "AMBROSE PLACEHOLDER: tell the player to place an early home",
-	"B08": "AMBROSE PLACEHOLDER: ask the player to place a second home directly beside the first",
+	"B08": "AMBROSE PLACEHOLDER: ask the player to place a home directly beside another home",
 	"B09": "AMBROSE PLACEHOLDER: explain the home adjacency result that was actually observed",
 	"B10": "AMBROSE PLACEHOLDER: ask the player to improve the affected home with nature or decoration",
 	"B11": "AMBROSE PLACEHOLDER: acknowledge that decoration improved the affected home",
@@ -66,6 +67,9 @@ var _reconcile_queued := false
 var _placement_observations: Array = []
 var _suppress_handoff_emit := false
 var _normalization_diagnostics: Array = []
+var _rebound_home_baselines: Dictionary = {}
+var _rebound_anchor_internal_id := -1
+var _using_rebound_home_ids := false
 
 func get_plugin_name() -> String: return "OpeningTutorial"
 
@@ -123,6 +127,11 @@ func _run_queued_reconcile() -> void:
 func reconcile(reason: String = "explicit") -> Dictionary:
 	_normalize_state()
 	_evidence = _build_evidence_snapshot()
+	# Builder intentionally recreates runtime internal IDs when it cold-loads a
+	# DataMap. Rebind the persisted experiment records at those boundaries before
+	# any new observation tries to use their baselines.
+	if reason in ["boot", "map_loaded"]:
+		_rebind_persisted_home_evidence()
 	_recover_experiment()
 	_replay_placement_observations()
 	var added: Array[String] = []
@@ -165,7 +174,7 @@ func _default_state() -> Dictionary:
 		"presentation_receipts": {},
 		"experiment": {"anchor_home": null, "baseline": null, "adjacent_home": null,
 			"adjacency_result": "pending", "after_adjacency": null,
-			"repair_source": null, "after_repair": null},
+			"repair_source": null, "after_repair": null, "home_baselines": []},
 		"completion_handoff": {"receipt_id": "tutorial_opening_completed", "applied": false},
 	}
 
@@ -195,7 +204,14 @@ func _normalize_state() -> void:
 	normalized["presentation_receipts"] = presentations
 	var valid_results := ["pending", "penalty_observed", "no_penalty", "baseline_unavailable"]
 	for key in defaults["experiment"]:
-		if not normalized["experiment"].has(key): normalized["experiment"][key] = defaults["experiment"][key]
+		if not normalized["experiment"].has(key):
+			normalized["experiment"][key] = defaults["experiment"][key].duplicate(true) if defaults["experiment"][key] is Array else defaults["experiment"][key]
+	for key in ["anchor_home", "baseline", "adjacent_home", "after_adjacency", "repair_source", "after_repair"]:
+		var nullable_record: Variant = normalized["experiment"].get(key)
+		if nullable_record != null and not nullable_record is Dictionary:
+			normalized["experiment"][key] = null
+	if not normalized["experiment"].get("home_baselines") is Array:
+		normalized["experiment"]["home_baselines"] = []
 	if String(normalized["experiment"].get("adjacency_result", "")) not in valid_results:
 		normalized["experiment"]["adjacency_result"] = "pending"
 	for key in defaults["completion_handoff"]:
@@ -382,12 +398,15 @@ func _catalog_id_for(structure: Structure) -> String:
 func _evaluate_gate(step: String) -> Dictionary:
 	match step:
 		"place_town_hall": return _gate(_evidence.town_hall != null, "building", _evidence.town_hall if _evidence.town_hall != null else {})
-		"connect_rooted_roads": return _gate(int(_evidence.rooted_road_count) >= 4, "rooted_road_cells", {"count": _evidence.rooted_road_count, "cells": _evidence.rooted_road_cells})
+		"connect_rooted_roads": return _gate(int(_evidence.rooted_road_count) >= REQUIRED_ROOTED_ROAD_COUNT, "rooted_road_cells", {"count": _evidence.rooted_road_count, "required": REQUIRED_ROOTED_ROAD_COUNT, "cells": _evidence.rooted_road_cells})
 		"establish_nature": return _gate(_evidence.nature_building_ids.size() >= 2 and int(_evidence.city_attractiveness) > 0, "nature_and_city_score", {"building_ids": _evidence.nature_building_ids, "city_score": _evidence.city_attractiveness})
 		"place_first_home":
 			var home: Variant = _evidence.early_homes.front() if not _evidence.early_homes.is_empty() else null
 			if home != null and _state.experiment.anchor_home == null:
 				_state.experiment.anchor_home = home.duplicate(true); _state.experiment.baseline = _score_evidence(home, null)
+				_remember_home_baseline(_state.experiment, home, _state.experiment.baseline)
+				for baseline_home in _evidence.early_homes:
+					_remember_home_baseline(_state.experiment, baseline_home, _score_evidence(baseline_home, null))
 				for other in _evidence.early_homes:
 					if int(other.internal_id) != int(home.internal_id) and _footprint_distance(home.footprint, other.footprint) <= 1:
 						_state.experiment.adjacency_result = "baseline_unavailable"
@@ -418,26 +437,184 @@ func _replay_placement_observations() -> void:
 		var building: Dictionary = observation.get("building", {})
 		if building.is_empty(): continue
 		if experiment.anchor_home == null and building.category == "residential" and int(building.tier) == 1:
-			experiment.anchor_home = building.duplicate(true); experiment.baseline = observation.score.duplicate(true)
-		elif experiment.anchor_home != null and experiment.after_adjacency == null and building.category == "residential" and int(building.tier) == 1 and int(building.internal_id) != int(experiment.anchor_home.internal_id):
-			if _footprint_distance(experiment.anchor_home.footprint, building.footprint) <= 1:
+			experiment.anchor_home = building.duplicate(true)
+			experiment.baseline = observation.score.duplicate(true)
+			_remember_home_baseline(experiment, building, observation.score)
+		elif experiment.after_adjacency == null and building.category == "residential" and int(building.tier) == 1:
+			var candidates: Array = []
+			for other in _evidence.get("early_homes", []):
+				if int(other.internal_id) != int(building.internal_id) and _footprint_distance(other.footprint, building.footprint) <= 1:
+					candidates.append(other)
+			candidates.sort_custom(_home_evidence_less)
+			var selected: Variant = null
+			var selected_baseline: Variant = null
+			for candidate in candidates:
+				var candidate_baseline: Variant = _baseline_for_home(experiment, candidate)
+				if candidate_baseline != null:
+					selected = candidate
+					selected_baseline = candidate_baseline
+					break
+			if selected != null:
+				var selected_was_observation_anchor := _is_observation_anchor(experiment, selected)
+				experiment.anchor_home = selected.duplicate(true)
+				if _using_rebound_home_ids:
+					_rebound_anchor_internal_id = int(selected.get("internal_id", -1))
+				experiment.baseline = selected_baseline.duplicate(true)
 				experiment.adjacent_home = building.duplicate(true)
-				var after: Dictionary = observation.score.duplicate(true)
-				var baseline: Variant = experiment.baseline
-				if baseline == null:
-					experiment.adjacency_result = "baseline_unavailable"
-				else:
-					after.home_delta = int(after.home_tile_score) - int(baseline.home_tile_score)
-					after.city_delta = int(after.city_score) - int(baseline.city_score)
-					experiment.adjacency_result = "penalty_observed" if int(after.home_delta) < 0 or int(after.city_delta) < 0 else "no_penalty"
+				var after: Dictionary = observation.score.duplicate(true) if selected_was_observation_anchor else _score_evidence(selected, building)
+				after.home_delta = int(after.home_tile_score) - int(selected_baseline.home_tile_score)
+				after.city_delta = int(after.city_score) - int(selected_baseline.city_score)
+				experiment.adjacency_result = "penalty_observed" if int(after.home_delta) < 0 or int(after.city_delta) < 0 else "no_penalty"
 				experiment.after_adjacency = after
+			elif not candidates.is_empty():
+				experiment.adjacency_result = "baseline_unavailable"
+				_add_diagnostic("tutorial_home_baseline_unavailable", {"new_home": building, "candidate_homes": candidates})
+			_remember_home_baseline(experiment, building, _score_evidence(building, null))
 		elif experiment.after_adjacency != null and experiment.after_repair == null and building.category == "nature":
-			var repaired: Dictionary = observation.score.duplicate(true)
+			# Structure placement is emitted before every downstream scoring listener has
+			# necessarily refreshed. Re-read the affected home's authoritative score
+			# during reconciliation so the repair proof cannot retain a pre-placement
+			# sample while still preserving the exact nature source as evidence.
+			var repaired: Dictionary = _score_evidence(experiment.anchor_home, building)
 			if int(repaired.home_tile_score) > int(experiment.after_adjacency.home_tile_score):
 				repaired.home_delta = int(repaired.home_tile_score) - int(experiment.after_adjacency.home_tile_score)
 				repaired.city_delta = int(repaired.city_score) - int(experiment.after_adjacency.city_score)
 				experiment.repair_source = building.duplicate(true); experiment.after_repair = repaired
 	_state.experiment = experiment
+
+static func _home_evidence_less(a: Dictionary, b: Dictionary) -> bool:
+	if int(a.get("internal_id", -1)) != int(b.get("internal_id", -1)):
+		return int(a.get("internal_id", -1)) < int(b.get("internal_id", -1))
+	var aa: Dictionary = a.get("anchor", {})
+	var bb: Dictionary = b.get("anchor", {})
+	if int(aa.get("x", 0)) != int(bb.get("x", 0)):
+		return int(aa.get("x", 0)) < int(bb.get("x", 0))
+	return int(aa.get("z", 0)) < int(bb.get("z", 0))
+
+func _remember_home_baseline(experiment: Dictionary, home: Dictionary, score: Dictionary) -> void:
+	var rows: Array = experiment.get("home_baselines", [])
+	var internal_id := int(home.get("internal_id", -1))
+	if _using_rebound_home_ids:
+		# At a load boundary an old persisted ID can now belong to a different
+		# building. Existing rebound baselines stay immutable; newly observed homes
+		# append their own record instead of overwriting by the colliding old ID.
+		if _rebound_home_baselines.has(internal_id):
+			return
+		rows.append({"internal_id": internal_id, "identity": _stable_home_identity(home),
+			"home": home.duplicate(true), "score": score.duplicate(true)})
+		rows.sort_custom(func(a: Dictionary, b: Dictionary): return _home_evidence_less(a.home, b.home))
+		experiment["home_baselines"] = rows
+		_rebound_home_baselines[internal_id] = score.duplicate(true)
+		return
+	for index in rows.size():
+		if int(rows[index].get("internal_id", -2)) == internal_id:
+			rows[index] = {"internal_id": internal_id, "identity": _stable_home_identity(home),
+				"home": home.duplicate(true), "score": score.duplicate(true)}
+			experiment["home_baselines"] = rows
+			return
+	rows.append({"internal_id": internal_id, "identity": _stable_home_identity(home),
+		"home": home.duplicate(true), "score": score.duplicate(true)})
+	rows.sort_custom(func(a: Dictionary, b: Dictionary): return _home_evidence_less(a.home, b.home))
+	experiment["home_baselines"] = rows
+
+func _baseline_for_home(experiment: Dictionary, home: Dictionary) -> Variant:
+	var internal_id := int(home.get("internal_id", -1))
+	if _using_rebound_home_ids:
+		if _rebound_home_baselines.has(internal_id):
+			return _rebound_home_baselines[internal_id].duplicate(true)
+		if internal_id == _rebound_anchor_internal_id and experiment.get("baseline") is Dictionary:
+			return experiment.baseline.duplicate(true)
+		return null
+	for row in experiment.get("home_baselines", []):
+		if int(row.get("internal_id", -1)) == internal_id:
+			return row.get("score", {}).duplicate(true)
+	if experiment.get("anchor_home") is Dictionary and int(experiment.anchor_home.get("internal_id", -1)) == internal_id and experiment.get("baseline") is Dictionary:
+		return experiment.baseline.duplicate(true)
+	return null
+
+func _rebind_persisted_home_evidence() -> void:
+	var experiment: Dictionary = _state.get("experiment", {})
+	var homes: Array = _evidence.get("early_homes", [])
+	_rebound_home_baselines.clear()
+	_rebound_anchor_internal_id = -1
+	_using_rebound_home_ids = true
+	var anchor: Variant = experiment.get("anchor_home")
+	if anchor is Dictionary:
+		var rebound_anchor: Variant = _current_home_for_stable_identity(anchor, homes)
+		if rebound_anchor != null:
+			_rebound_anchor_internal_id = int(rebound_anchor.get("internal_id", -1))
+			# Legacy tutorial state persisted only the selected anchor baseline. Make
+			# that score participate in the rebound map before filling any gaps so a
+			# current score can never replace already-observed evidence.
+			var anchor_baseline: Variant = experiment.get("baseline")
+			if anchor_baseline is Dictionary:
+				_rebound_home_baselines[_rebound_anchor_internal_id] = anchor_baseline.duplicate(true)
+
+	for raw_row in experiment.get("home_baselines", []):
+		if not raw_row is Dictionary:
+			continue
+		var row: Dictionary = raw_row
+		var stored_home: Variant = row.get("home")
+		var identity: Dictionary = {}
+		if stored_home is Dictionary:
+			identity = _stable_home_identity(stored_home)
+		var stored_identity: Variant = row.get("identity")
+		if identity.is_empty() and stored_identity is Dictionary:
+			identity = _stable_home_identity(stored_identity)
+		if not identity.is_empty():
+			var current: Variant = _current_home_for_identity(identity, homes)
+			if current != null:
+				var score: Variant = row.get("score")
+				if score is Dictionary:
+					_rebound_home_baselines[int(current.get("internal_id", -1))] = score.duplicate(true)
+
+	# Before feature 019, only the selected anchor had a saved baseline. A loaded
+	# incomplete tutorial can nevertheless contain several other eligible homes.
+	# Observe those missing homes now, at the load boundary and before the player's
+	# next placement, so that a later adjacency with any of them has honest before /
+	# after evidence. Persisted rows and the legacy anchor baseline always win.
+	if experiment.get("after_adjacency") == null \
+			and _state.get("completed_receipts", {}).has(RECEIPTS.place_first_home):
+		var ordered_homes := homes.duplicate(true)
+		ordered_homes.sort_custom(_home_evidence_less)
+		for home in ordered_homes:
+			if not home is Dictionary:
+				continue
+			var current_id := int(home.get("internal_id", -1))
+			if current_id < 0 or _rebound_home_baselines.has(current_id):
+				continue
+			_remember_home_baseline(experiment, home, _score_evidence(home, null))
+	_state.experiment = experiment
+
+static func _current_home_for_stable_identity(stored: Dictionary, homes: Array) -> Variant:
+	var identity := _stable_home_identity(stored)
+	return _current_home_for_identity(identity, homes) if not identity.is_empty() else null
+
+static func _current_home_for_identity(identity: Dictionary, homes: Array) -> Variant:
+	for home in homes:
+		if home is Dictionary and _stable_home_identity(home) == identity:
+			return home
+	return null
+
+static func _stable_home_identity(home: Dictionary) -> Dictionary:
+	var building_id := String(home.get("building_id", ""))
+	var anchor: Variant = home.get("anchor")
+	if building_id.is_empty() or not anchor is Dictionary:
+		return {}
+	var footprint: Array = []
+	for cell in home.get("footprint", []):
+		footprint.append(_coordinate(cell))
+	footprint.sort_custom(func(a: Dictionary, b: Dictionary):
+		return int(a.get("x", 0)) < int(b.get("x", 0)) if int(a.get("x", 0)) != int(b.get("x", 0)) else int(a.get("z", 0)) < int(b.get("z", 0)))
+	return {"building_id": building_id, "anchor": _coordinate(anchor), "footprint": footprint}
+
+func _is_observation_anchor(experiment: Dictionary, candidate: Dictionary) -> bool:
+	if not experiment.get("anchor_home") is Dictionary:
+		return false
+	var candidate_id := int(candidate.get("internal_id", -1))
+	if _using_rebound_home_ids:
+		return candidate_id >= 0 and candidate_id == _rebound_anchor_internal_id
+	return candidate_id >= 0 and candidate_id == int(experiment.anchor_home.get("internal_id", -2))
 
 func _recover_experiment() -> void:
 	if not _state.completed_receipts.has(RECEIPTS.place_first_home): return
@@ -509,7 +686,7 @@ func _make_projection() -> Dictionary:
 	var blocker: Variant = null
 	match step:
 		"place_town_hall": beat = "B01"
-		"connect_rooted_roads": beat = "B02"; progress = {"current": _evidence.rooted_road_count, "required": 4, "unit": "road_cells"}
+		"connect_rooted_roads": beat = "B02"; progress = {"current": _evidence.rooted_road_count, "required": REQUIRED_ROOTED_ROAD_COUNT, "unit": "road_cells"}
 		"establish_nature":
 			if _evidence.nature_building_ids.size() < 2: beat = "B03"; progress = {"current": _evidence.nature_building_ids.size(), "required": 2, "unit": "distinct_building_ids"}
 			else: beat = "B04"; variant = "beauty_not_positive"; blocker = {"code": "beauty_not_positive", "evidence": {"city_score": _evidence.city_attractiveness}}

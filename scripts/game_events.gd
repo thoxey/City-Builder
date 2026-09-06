@@ -7,6 +7,8 @@ extends Node
 signal structure_placed(position: Vector3i, structure_index: int, orientation: int)
 signal structure_demolished(position: Vector3i)
 signal map_loaded(map: DataMap)
+## Canonical post-commit invalidation boundary for hourly, building and map mutations.
+signal authoritative_change_committed(change_set: Variant)
 signal satisfaction_changed(score: float)
 ## Bucket signals — alphabetised so file-walk order matches editor display.
 ## fulfilled = current placed capacity; total = ever-asked-for; unserved = total - fulfilled.

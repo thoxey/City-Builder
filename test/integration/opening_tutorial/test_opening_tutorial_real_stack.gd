@@ -36,6 +36,8 @@ func test_real_stack_scenario_isolated_process_completes_and_recovers() -> void:
 	assert_true(bool(result.get("verification", {}).get("duplicate_reconcile_idempotent", false)))
 	assert_true(bool(result.get("verification", {}).get("demolition_non_regression", false)))
 	assert_true(bool(result.get("verification", {}).get("cold_load_parity", false)))
+	assert_true(bool(result.get("verification", {}).get("legacy_grass_identity", false)))
+	assert_true(bool(result.get("verification", {}).get("legacy_grass_inspection_demolition", false)))
 	for event_id in [
 		"tutorial_opening_beauty_homes",
 		"tutorial_opening_home_adjacency",

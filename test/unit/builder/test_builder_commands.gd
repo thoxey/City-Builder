@@ -31,6 +31,10 @@ func before_each() -> void:
 	catalog.add_structure("park", Structure.new())
 	catalog.add_structure("house_a", _structure("residential", 5), "houses")
 	catalog.add_structure("house_b", _structure("residential", 5), "houses")
+	# Compatibility catalogue record intentionally collides with its Palette pool.
+	catalog.add_structure("grass", Structure.new(), "grass", true)
+	catalog.add_structure("grass_trees", Structure.new(), "grass")
+	catalog.add_structure("grass_flowers", Structure.new(), "grass")
 	catalog.add_structure("road", _road_structure())
 	GameState.structures = catalog.items
 
@@ -129,6 +133,32 @@ func test_seeded_pool_and_multi_cell_rotation() -> void:
 	var rotated: Dictionary = builder.evaluate_placement("factory", Vector2i(3, 3), 1)
 	assert_eq(rotated["details"]["footprint"], [Vector2i(3, 3), Vector2i(3, 2)])
 
+func test_seeded_player_choice_collision_never_commits_excluded_grass() -> void:
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 19019
+	var observed: Dictionary = {}
+	for index in 24:
+		var outcome: Dictionary = builder.try_place_choice("grass", Vector2i(index, 4),
+			0, false, "", rng)
+		assert_eq(outcome.status, PlaytestActionResult.STATUS_APPLIED)
+		assert_ne(outcome.details.building_id, "grass")
+		observed[String(outcome.details.building_id)] = true
+	assert_true(observed.has("grass_trees"), "seeded choice reaches the tree variant")
+	assert_true(observed.has("grass_flowers"), "seeded choice reaches the flower variant")
+
+func test_player_choice_honours_explicit_variant_but_exact_building_path_remains_available() -> void:
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 19019
+	var choice: Dictionary = builder.try_place_choice("grass", Vector2i(0, 5),
+		0, false, "grass_flowers", rng)
+	assert_eq(choice.status, PlaytestActionResult.STATUS_APPLIED)
+	assert_eq(choice.details.building_id, "grass_flowers")
+
+	var exact: Dictionary = builder.try_place_building("grass", Vector2i(1, 5))
+	assert_eq(exact.status, PlaytestActionResult.STATUS_APPLIED)
+	assert_eq(exact.details.building_id, "grass",
+		"legacy catalogue identity remains addressable only as building_id")
+
 func test_demolition_resolves_satellite_cell() -> void:
 	builder.try_place_building("factory", Vector2i.ZERO)
 	var outcome: Dictionary = builder.try_demolish_cell(Vector2i(1, 0))
@@ -190,17 +220,29 @@ func _road_structure() -> Structure:
 class StubCatalog extends PluginBase:
 	var items: Array[Structure] = []
 	var ids: Array[String] = []
+	var summaries: Array[Dictionary] = []
 	func get_plugin_name() -> String: return "StubCatalog"
-	func add_structure(id: String, structure: Structure, pool: String = "") -> void:
+	func add_structure(id: String, structure: Structure, pool: String = "",
+			palette_excluded: bool = false) -> void:
 		structure.pool_id = pool
 		ids.append(id)
 		items.append(structure)
+		summaries.append({"building_id":id, "pool_id":pool,
+			"palette_excluded":palette_excluded})
 	func get_item_index(id: String) -> int: return ids.find(id)
 	func get_id_by_index(index: int) -> String: return ids[index] if index >= 0 and index < ids.size() else ""
+	func get_summary_by_index(index: int) -> Dictionary:
+		return summaries[index] if index >= 0 and index < summaries.size() else {}
 	func get_pool_indices(pool: String) -> Array[int]:
 		var result: Array[int] = []
 		for i in items.size():
 			if items[i].pool_id == pool: result.append(i)
+		return result
+	func get_player_pool_indices(pool: String) -> Array[int]:
+		var result: Array[int] = []
+		for i in items.size():
+			if items[i].pool_id == pool and not bool(summaries[i].palette_excluded):
+				result.append(i)
 		return result
 
 class StubEconomy extends PluginBase:

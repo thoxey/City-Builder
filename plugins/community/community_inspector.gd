@@ -86,7 +86,9 @@ static func _resident(raw: Dictionary, context: Dictionary, config: Dictionary, 
 	var id := int(raw.get("resident_id", 0))
 	var cohort_id := String(raw.get("cohort_id", "general"))
 	var outlook := String(context.get("cohort_names", {}).get(cohort_id, cohort_id.replace("_heavy", "").replace("_", " ").capitalize()))
-	var lens_totals := {"identity": 0.0, "freedom": 0.0, "care": 0.0}
+	var identity_total := 0.0
+	var freedom_total := 0.0
+	var care_total := 0.0
 	var lens_by_quality := {}
 	var manifestation_weights: Dictionary = raw.get("manifestation_weights", {})
 	for quality in CommunityConstants.QUALITIES:
@@ -95,8 +97,16 @@ static func _resident(raw: Dictionary, context: Dictionary, config: Dictionary, 
 		# detached projection contract without paying for recursive duplication.
 		var weights: Dictionary = {} if source_weights.is_empty() else source_weights.duplicate()
 		lens_by_quality[quality] = weights
-		for lens in CommunityConstants.LENSES: lens_totals[lens] += float(weights.get(lens, 0.0))
-	var dominant := _dominant(lens_totals)
+		identity_total += float(weights.get("identity", 0.0))
+		freedom_total += float(weights.get("freedom", 0.0))
+		care_total += float(weights.get("care", 0.0))
+	var dominant := "identity"
+	var dominant_total := identity_total
+	if freedom_total > dominant_total:
+		dominant = "freedom"
+		dominant_total = freedom_total
+	if care_total > dominant_total:
+		dominant = "care"
 	var home: Variant = CommunityConstants.coordinate_record(raw.get("home_anchor"))
 	var is_homeless := home == null
 	var below := int(raw.get("below_departure_hours", 0))
@@ -117,7 +127,9 @@ static func _resident(raw: Dictionary, context: Dictionary, config: Dictionary, 
 	var quality_rows: Array = []
 	var current_qualities: Dictionary = raw.get("current_qualities", {})
 	var target_qualities: Dictionary = raw.get("target_qualities", {})
-	for quality in CommunityConstants.QUALITIES: quality_rows.append(_quality(quality, float(current_qualities.get(quality, 50.0)), float(target_qualities.get(quality, 50.0)), null))
+	for quality in CommunityConstants.QUALITIES:
+		var current := float(current_qualities.get(quality, 50.0))
+		quality_rows.append({"quality_id": quality, "label": QUALITY_META[quality]["label"], "icon_key": QUALITY_META[quality]["icon_key"], "current": current, "target": float(target_qualities.get(quality, 50.0)), "delta": 0.0, "direction": "unknown", "status": "good" if current >= 65.0 else ("watch" if current >= 40.0 else "poor")})
 	var sensitivities: Array = []
 	var raw_sensitivities: Dictionary = raw.get("sensitivities", {})
 	for key in ["noise", "pollution", "crowding", "travel"]: sensitivities.append({"sensitivity_id": key, "label": key.capitalize(), "value": float(raw_sensitivities.get(key, 1.0)), "icon_key": key + "-sensitivity"})

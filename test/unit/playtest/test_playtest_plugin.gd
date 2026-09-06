@@ -95,6 +95,24 @@ func test_place_demolish_and_advance_delegate_to_gameplay_commands() -> void:
 	assert_eq(clock.absolute_hour, 1)
 	assert_eq(advanced["sequence"], 3)
 
+func test_place_preserves_unambiguous_choice_and_building_paths() -> void:
+	playtest.start_session({"scenario_id": "fresh_city", "seed": 1})
+	var choice: Dictionary = playtest.handle_command("place", {
+		"request_id":"choice", "choice_id":"grass", "variant_id":"grass_trees",
+		"anchor":{"x":0, "z":0},
+	})
+	assert_eq(choice.status, PlaytestActionResult.STATUS_APPLIED)
+	assert_eq(builder.last_place.kind, "choice")
+	assert_eq(builder.last_place.id, "grass")
+	assert_eq(builder.last_place.variant, "grass_trees")
+
+	var exact: Dictionary = playtest.handle_command("place", {
+		"request_id":"building", "building_id":"grass", "anchor":{"x":1, "z":0},
+	})
+	assert_eq(exact.status, PlaytestActionResult.STATUS_APPLIED)
+	assert_eq(builder.last_place.kind, "building")
+	assert_eq(builder.last_place.id, "grass")
+
 func test_invalid_coordinates_are_normal_gameplay_rejections() -> void:
 	playtest.start_session({"scenario_id": "fresh_city", "seed": 1})
 	var outcome: Dictionary = playtest.handle_command("place", {"request_id": "bad", "building_id": "house", "anchor": {"x": "no", "z": 0}})
@@ -158,7 +176,11 @@ class StubBuilder extends Node:
 		return PlaytestActionResult.applied()
 	func try_place_building(id: String, anchor: Vector2i, rotation: int, replace: bool, variant: String, _rng: RandomNumberGenerator) -> Dictionary:
 		place_calls += 1
-		last_place = {"id": id, "anchor": anchor, "rotation": rotation, "replace": replace, "variant": variant}
+		last_place = {"kind":"building", "id": id, "anchor": anchor, "rotation": rotation, "replace": replace, "variant": variant}
+		return PlaytestActionResult.applied(last_place)
+	func try_place_choice(id: String, anchor: Vector2i, rotation: int, replace: bool, variant: String, _rng: RandomNumberGenerator) -> Dictionary:
+		place_calls += 1
+		last_place = {"kind":"choice", "id": id, "anchor": anchor, "rotation": rotation, "replace": replace, "variant": variant}
 		return PlaytestActionResult.applied(last_place)
 	func try_demolish_cell(cell: Vector2i) -> Dictionary:
 		last_demolish = cell

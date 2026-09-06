@@ -28,6 +28,7 @@
       1
     ]
   ],
+  "ground_treatment": "grass_underlay",
   "category": "generic",
   "community_role": "functional",
   "pool_id": "residential_t2",

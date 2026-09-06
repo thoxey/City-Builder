@@ -89,6 +89,21 @@ func test_threshold_uses_total_ever_demand_not_unserved_balance() -> void:
 		"spending the live balance must not erase total-ever progression")
 	assert_eq(_reg.evaluate_unlock("building_pub")["current"], 25.0)
 
+func test_opening_uniques_unlock_at_exact_lifetime_boundaries() -> void:
+	_stub_catalog.register_unique(0, "building_postwar_terrace", "residential", 1, "aristocrat", "aristocrat_residential", "chain", 40, [])
+	_stub_catalog.register_unique(1, "building_pub", "commercial", 1, "aristocrat", "aristocrat_commercial", "chain", 15, [])
+	_reg._index_uniques()
+	_stub_demand.set_total("residential", 39.0)
+	_stub_demand.set_total("commercial", 14.0)
+	_reg._refresh_unlocks()
+	assert_false(_reg.is_unlocked("building_postwar_terrace"))
+	assert_false(_reg.is_unlocked("building_pub"))
+	_stub_demand.set_total("residential", 40.0)
+	_stub_demand.set_total("commercial", 15.0)
+	_reg._refresh_unlocks()
+	assert_true(_reg.is_unlocked("building_postwar_terrace"))
+	assert_true(_reg.is_unlocked("building_pub"))
+
 # ── Prerequisite chain ────────────────────────────────────────────────────────
 
 func test_tier2_locked_until_tier1_placed() -> void:

@@ -144,14 +144,35 @@ static func apply_effect(resident: CommunityResident, source: Dictionary, effect
 
 static func update_qualities(resident: CommunityResident, evaluation: Dictionary, baseline: float = 50.0, response_rate: float = 0.1) -> void:
 	resident.applied_effects = evaluation.get("effects", []).duplicate(true)
+	update_quality_totals(resident, evaluation.get("totals", {}), baseline, response_rate)
+
+## Authoritative hot-path update from compact numeric/domain totals. Explanatory
+## AppliedEffect records are projected explicitly and are not resident state.
+static func update_quality_totals(resident: CommunityResident, totals: Dictionary,
+		baseline: float = 50.0, response_rate: float = 0.1) -> void:
+	resident.applied_effects.clear()
 	for quality in CommunityConstants.QUALITIES:
-		var target := clampf(baseline + float(evaluation.get("totals", {}).get(quality, 0.0)), 0.0, 100.0)
+		var target := clampf(baseline + float(totals.get(quality, 0.0)), 0.0, 100.0)
 		resident.target_qualities[quality] = target
 		var current := float(resident.current_qualities.get(quality, baseline))
 		resident.current_qualities[quality] = clampf(current + (target - current) * response_rate, 0.0, 100.0)
 	var composite := 0.0
 	for quality in CommunityConstants.QUALITIES:
 		composite += float(resident.current_qualities[quality]) * float(resident.quality_importance.get(quality, 0.0))
+	resident.composite_happiness = clampf(composite, 0.0, 100.0)
+
+static func update_quality_numeric(resident: CommunityResident, totals: PackedFloat32Array,
+		baseline: float = 50.0, response_rate: float = 0.1) -> void:
+	resident.applied_effects.clear()
+	var composite := 0.0
+	for index in CommunityConstants.QUALITIES.size():
+		var quality: String = CommunityConstants.QUALITIES[index]
+		var target := clampf(baseline + float(totals[index]), 0.0, 100.0)
+		resident.target_qualities[quality] = target
+		var current := float(resident.current_qualities.get(quality, baseline))
+		var updated := clampf(current + (target - current) * response_rate, 0.0, 100.0)
+		resident.current_qualities[quality] = updated
+		composite += updated * float(resident.quality_importance.get(quality, 0.0))
 	resident.composite_happiness = clampf(composite, 0.0, 100.0)
 
 static func _effect_before(a: Dictionary, b: Dictionary) -> bool:

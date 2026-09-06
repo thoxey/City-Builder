@@ -209,6 +209,25 @@ func test_get_pool_returns_matching_buildings() -> void:
 	var t1_idx := _plugin.get_pool_indices("residential_t1")
 	assert_eq(t1_idx.size(), 2, "pool_indices matches pool membership")
 
+func test_palette_exclusion_is_summarized_without_removing_catalogue_or_raw_pool_identity() -> void:
+	var plain := _minimal_building("grass", GOOD_MODEL_B)
+	plain["pool_id"] = "grass"
+	plain["palette_excluded"] = true
+	var trees := _minimal_building("grass_trees", GOOD_MODEL_A)
+	trees["pool_id"] = "grass"
+	_write_json("grass.json", plain)
+	_write_json("trees.json", trees)
+	_plugin.ensure_loaded(FIXTURE_ROOT)
+	assert_not_null(_plugin.get_by_id("grass"), "legacy ID remains loadable")
+	assert_true(_plugin.get_summary_by_id("grass")["palette_excluded"])
+	assert_eq(_plugin.get_pool_indices("grass").size(), 2, "raw catalogue pool is save compatible")
+	assert_eq(_plugin.get_player_pool_indices("grass"), [_plugin.get_item_index("grass_trees")])
+
+func test_palette_exclusion_defaults_false() -> void:
+	_write_json("visible.json", _minimal_building("visible", GOOD_MODEL_A))
+	_plugin.ensure_loaded(FIXTURE_ROOT)
+	assert_false(_plugin.get_summary_by_id("visible")["palette_excluded"])
+
 func test_pool_config_loads_from_sidecar_dir() -> void:
 	_write_json("house.json", _minimal_building("house", GOOD_MODEL_A))
 

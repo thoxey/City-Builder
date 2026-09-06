@@ -25,7 +25,7 @@ class CountingMigrationCommunity extends "res://plugins/community/community_plug
 		resident.resident_id = resident_id
 		return resident
 	func quote_migration(_candidate: CommunityResident, context: Dictionary = {}) -> Dictionary:
-		quoted_source_counts.append(context.get("sources_by_hour", []).size())
+		quoted_source_counts.append(context.get("base_sources", []).size())
 		return {"ok": false, "reason": "below_threshold"}
 
 class SummaryCommunity extends "res://plugins/community/community_plugin.gd":
@@ -84,7 +84,7 @@ func test_daily_batch_builds_one_shared_authored_day() -> void:
 		plugin.free_slots.append({"anchor": Vector2i(slot_index / 16, 0), "slot": slot_index % 16})
 	plugin._run_daily_migration()
 	assert_eq(plugin.source_calls, 1)
-	assert_eq(plugin.quoted_source_counts, [24, 24, 24, 24])
+	assert_eq(plugin.quoted_source_counts, [0, 0, 0, 0], "the one mocked catalogue is shared without 24 hourly copies")
 	plugin.free()
 	GameState.map = saved_map
 

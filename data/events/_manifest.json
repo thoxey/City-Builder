@@ -97,6 +97,7 @@
 			"character_id": "aristocrat_industrial",
 			"display_name": "Crazy Golf",
 			"model_path": "res://models/city-builder/building_crazy_golf.glb",
+			"palette_excluded": false,
 			"patron_id": "aristocrat",
 			"pool_id": "",
 			"tier": 0
@@ -195,6 +196,7 @@
 			"character_id": "",
 			"display_name": "Duck Pond",
 			"model_path": "res://models/city-builder/building_duck_pond.glb",
+			"palette_excluded": false,
 			"patron_id": "",
 			"pool_id": "",
 			"tier": 0
@@ -213,6 +215,7 @@
 						0.0
 					]
 				],
+				"ground_treatment": "grass_underlay",
 				"model_offset": [
 					-0.0000399993562,
 					0.0,
@@ -300,6 +303,7 @@
 			"character_id": "",
 			"display_name": "Business Park (Garage)",
 			"model_path": "res://models/city-builder/building_garage.glb",
+			"palette_excluded": false,
 			"patron_id": "",
 			"pool_id": "industrial_t1",
 			"tier": 0
@@ -317,6 +321,7 @@
 						0.0
 					]
 				],
+				"ground_treatment": "grass_underlay",
 				"model_offset": [
 					0.000164050904,
 					0.0,
@@ -371,6 +376,7 @@
 			"character_id": "aristocrat_industrial",
 			"display_name": "Lumber Mill",
 			"model_path": "res://models/city-builder/building_lumber_mill.glb",
+			"palette_excluded": false,
 			"patron_id": "aristocrat",
 			"pool_id": "",
 			"tier": 2
@@ -462,6 +468,7 @@
 			"character_id": "aristocrat_commercial",
 			"display_name": "Private Members' Club",
 			"model_path": "res://models/city-builder/building_members_club.glb",
+			"palette_excluded": false,
 			"patron_id": "aristocrat",
 			"pool_id": "",
 			"tier": 0
@@ -540,6 +547,7 @@
 			"character_id": "",
 			"display_name": "Nature Patch",
 			"model_path": "res://models/city-builder/building_nature_patch.glb",
+			"palette_excluded": false,
 			"patron_id": "",
 			"pool_id": "",
 			"tier": 0
@@ -557,6 +565,7 @@
 						0.0
 					]
 				],
+				"ground_treatment": "grass_underlay",
 				"model_offset": [
 					-0.0000519955579,
 					0.0,
@@ -673,6 +682,7 @@
 			"character_id": "aristocrat_commercial",
 			"display_name": "Nightclub",
 			"model_path": "res://models/city-builder/building_nightclub.glb",
+			"palette_excluded": false,
 			"patron_id": "aristocrat",
 			"pool_id": "",
 			"tier": 3
@@ -784,6 +794,7 @@
 			"character_id": "aristocrat_industrial",
 			"display_name": "Pipe Factory",
 			"model_path": "res://models/city-builder/building_pipe_factory.glb",
+			"palette_excluded": false,
 			"patron_id": "aristocrat",
 			"pool_id": "",
 			"tier": 3
@@ -802,6 +813,7 @@
 						0.0
 					]
 				],
+				"ground_treatment": "grass_underlay",
 				"model_offset": [
 					-0.000159676236,
 					0.0,
@@ -849,6 +861,7 @@
 			"character_id": "aristocrat_residential",
 			"display_name": "Pirate Radio Station",
 			"model_path": "res://models/city-builder/building_pirate_radio.glb",
+			"palette_excluded": false,
 			"patron_id": "aristocrat",
 			"pool_id": "",
 			"tier": 0
@@ -866,6 +879,7 @@
 						0.0
 					]
 				],
+				"ground_treatment": "grass_underlay",
 				"model_offset": [
 					-0.00000900116112,
 					0.0,
@@ -920,6 +934,7 @@
 			"character_id": "aristocrat_residential",
 			"display_name": "Postwar Mid-Block",
 			"model_path": "res://models/city-builder/building_postwar_midblock.glb",
+			"palette_excluded": false,
 			"patron_id": "aristocrat",
 			"pool_id": "",
 			"tier": 2
@@ -963,7 +978,7 @@
 						"desirability_boost": 0.0,
 						"patron_id": "aristocrat",
 						"prerequisite_ids": [],
-						"prerequisite_threshold": 25.0,
+						"prerequisite_threshold": 40.0,
 						"tier": 1.0,
 						"type": "UniqueProfile"
 					},
@@ -989,6 +1004,7 @@
 			"character_id": "aristocrat_residential",
 			"display_name": "Postwar Terrace",
 			"model_path": "res://models/city-builder/building_postwar_terrace.glb",
+			"palette_excluded": false,
 			"patron_id": "aristocrat",
 			"pool_id": "",
 			"tier": 1
@@ -1006,6 +1022,7 @@
 						0.0
 					]
 				],
+				"ground_treatment": "grass_underlay",
 				"model_offset": [
 					-0.0000497477648,
 					0.0,
@@ -1060,6 +1077,7 @@
 			"character_id": "aristocrat_residential",
 			"display_name": "Postwar Tower Block",
 			"model_path": "res://models/city-builder/building_postwar_tower_block.glb",
+			"palette_excluded": false,
 			"patron_id": "aristocrat",
 			"pool_id": "",
 			"tier": 3
@@ -1078,6 +1096,7 @@
 						0.0
 					]
 				],
+				"ground_treatment": "grass_underlay",
 				"model_offset": [
 					0.0,
 					0.0,
@@ -1123,7 +1142,7 @@
 						"desirability_boost": 0.0,
 						"patron_id": "aristocrat",
 						"prerequisite_ids": [],
-						"prerequisite_threshold": 10.0,
+						"prerequisite_threshold": 15.0,
 						"tier": 1.0,
 						"type": "UniqueProfile"
 					},
@@ -1149,6 +1168,7 @@
 			"character_id": "aristocrat_commercial",
 			"display_name": "Pub",
 			"model_path": "res://models/city-builder/building_pub.glb",
+			"palette_excluded": false,
 			"patron_id": "aristocrat",
 			"pool_id": "",
 			"tier": 1
@@ -1167,6 +1187,7 @@
 						0.0
 					]
 				],
+				"ground_treatment": "grass_underlay",
 				"model_offset": [
 					-0.0000342601333,
 					0.0,
@@ -1240,6 +1261,7 @@
 			"character_id": "aristocrat_commercial",
 			"display_name": "Restaurant",
 			"model_path": "res://models/city-builder/building_restaurant.glb",
+			"palette_excluded": false,
 			"patron_id": "aristocrat",
 			"pool_id": "",
 			"tier": 2
@@ -1258,6 +1280,7 @@
 						0.0
 					]
 				],
+				"ground_treatment": "grass_underlay",
 				"model_offset": [
 					0.00164480104,
 					0.0,
@@ -1315,6 +1338,7 @@
 			"character_id": "",
 			"display_name": "Small Residence A",
 			"model_path": "res://models/city-builder/building_small_a.glb",
+			"palette_excluded": false,
 			"patron_id": "",
 			"pool_id": "residential_t1",
 			"tier": 0
@@ -1333,6 +1357,7 @@
 						0.0
 					]
 				],
+				"ground_treatment": "grass_underlay",
 				"model_offset": [
 					-0.000103415872,
 					0.0,
@@ -1400,6 +1425,7 @@
 			"character_id": "",
 			"display_name": "Small Commercial B",
 			"model_path": "res://models/city-builder/building_small_b.glb",
+			"palette_excluded": false,
 			"patron_id": "",
 			"pool_id": "commercial_t1",
 			"tier": 0
@@ -1430,6 +1456,7 @@
 						1.0
 					]
 				],
+				"ground_treatment": "grass_underlay",
 				"model_offset": [
 					-0.000309129406,
 					0.0,
@@ -1487,6 +1514,7 @@
 			"character_id": "",
 			"display_name": "Tower Residence C",
 			"model_path": "res://models/city-builder/building_small_c.glb",
+			"palette_excluded": false,
 			"patron_id": "",
 			"pool_id": "residential_t2",
 			"tier": 0
@@ -1505,6 +1533,7 @@
 						0.0
 					]
 				],
+				"ground_treatment": "grass_underlay",
 				"model_offset": [
 					-0.0000567648767,
 					0.0,
@@ -1562,6 +1591,7 @@
 			"character_id": "",
 			"display_name": "Cottage Residence D",
 			"model_path": "res://models/city-builder/building_small_d.glb",
+			"palette_excluded": false,
 			"patron_id": "",
 			"pool_id": "residential_t1",
 			"tier": 0
@@ -1580,6 +1610,7 @@
 						0.0
 					]
 				],
+				"ground_treatment": "grass_underlay",
 				"model_offset": [
 					-0.0000505186788,
 					0.0,
@@ -1782,6 +1813,7 @@
 			"character_id": "",
 			"display_name": "The Theatre",
 			"model_path": "res://models/city-builder/building_theatre.glb",
+			"palette_excluded": false,
 			"patron_id": "aristocrat",
 			"pool_id": "",
 			"tier": 0
@@ -1813,6 +1845,7 @@
 						1.0
 					]
 				],
+				"ground_treatment": "grass_underlay",
 				"model_offset": [
 					-0.0000575048665,
 					0.0,
@@ -1857,6 +1890,7 @@
 			"character_id": "",
 			"display_name": "Town Hall",
 			"model_path": "res://models/city-builder/building_town_hall.glb",
+			"palette_excluded": false,
 			"patron_id": "",
 			"pool_id": "",
 			"tier": 0
@@ -1874,6 +1908,7 @@
 						0.0
 					]
 				],
+				"ground_treatment": "grass_underlay",
 				"model_offset": [
 					-0.000054517556,
 					0.0,
@@ -1926,6 +1961,7 @@
 			"character_id": "aristocrat_industrial",
 			"display_name": "Windmill",
 			"model_path": "res://models/city-builder/building_windmill.glb",
+			"palette_excluded": false,
 			"patron_id": "aristocrat",
 			"pool_id": "",
 			"tier": 1
@@ -1953,6 +1989,7 @@
 				"model_path": "res://models/city-builder/grass.glb",
 				"model_rotation_y": 0.0,
 				"model_scale": 1.0,
+				"palette_excluded": true,
 				"pool_id": "grass",
 				"profiles": [
 					{
@@ -1977,6 +2014,7 @@
 			"character_id": "",
 			"display_name": "Grass",
 			"model_path": "res://models/city-builder/grass.glb",
+			"palette_excluded": true,
 			"patron_id": "",
 			"pool_id": "grass",
 			"tier": 0
@@ -2028,6 +2066,7 @@
 			"character_id": "",
 			"display_name": "Grass with Trees",
 			"model_path": "res://models/city-builder/grass_trees.glb",
+			"palette_excluded": false,
 			"patron_id": "",
 			"pool_id": "grass",
 			"tier": 0
@@ -2047,6 +2086,7 @@
 						0.0
 					]
 				],
+				"ground_treatment": "grass_underlay",
 				"model_offset": [
 					-0.0105713361,
 					0.0,
@@ -2079,6 +2119,7 @@
 			"character_id": "",
 			"display_name": "Grass with Tall Trees",
 			"model_path": "res://models/city-builder/grass_trees_tall.glb",
+			"palette_excluded": false,
 			"patron_id": "",
 			"pool_id": "grass",
 			"tier": 0
@@ -2128,6 +2169,7 @@
 			"character_id": "",
 			"display_name": "Pavement",
 			"model_path": "res://models/city-builder/pavement.glb",
+			"palette_excluded": false,
 			"patron_id": "",
 			"pool_id": "pavement",
 			"tier": 0
@@ -2177,6 +2219,7 @@
 			"character_id": "",
 			"display_name": "Pavement with Fountain",
 			"model_path": "res://models/city-builder/pavement_fountain.glb",
+			"palette_excluded": false,
 			"patron_id": "",
 			"pool_id": "pavement",
 			"tier": 0
@@ -2239,6 +2282,7 @@
 			"character_id": "",
 			"display_name": "Road (Corner)",
 			"model_path": "res://models/road-corner.glb",
+			"palette_excluded": false,
 			"patron_id": "",
 			"pool_id": "",
 			"tier": 0
@@ -2309,6 +2353,7 @@
 			"character_id": "",
 			"display_name": "Road (Intersection)",
 			"model_path": "res://models/road-intersection.glb",
+			"palette_excluded": false,
 			"patron_id": "",
 			"pool_id": "",
 			"tier": 0
@@ -2375,6 +2420,7 @@
 			"character_id": "",
 			"display_name": "Road (T-Split)",
 			"model_path": "res://models/road-split.glb",
+			"palette_excluded": false,
 			"patron_id": "",
 			"pool_id": "",
 			"tier": 0
@@ -2439,6 +2485,7 @@
 			"character_id": "",
 			"display_name": "Road (Straight)",
 			"model_path": "res://models/road-straight.glb",
+			"palette_excluded": false,
 			"patron_id": "",
 			"pool_id": "road",
 			"tier": 0
@@ -2501,6 +2548,7 @@
 			"character_id": "",
 			"display_name": "Road (Lightposts)",
 			"model_path": "res://models/road-straight-lightposts.glb",
+			"palette_excluded": false,
 			"patron_id": "",
 			"pool_id": "",
 			"tier": 0
@@ -2588,7 +2636,7 @@
 
 			},
 			"patron_id": "aristocrat",
-			"portrait": "res://data/characters/aristocrat_industrial/portrait.png",
+			"portrait": "res://sprites/ui/dialogue/missing-portrait.png",
 			"talking_videos": [],
 			"want_building_id": "building_crazy_golf"
 		},
@@ -3458,7 +3506,7 @@
 			"trigger_patron_id": ""
 		}
 	],
-	"exported_at": "2026-09-06T14:39:11",
+	"exported_at": "2026-09-06T20:20:50",
 	"flags": [
 		"aristocrat_landmark_completed",
 		"aristocrat_landmark_promised",

@@ -90,6 +90,26 @@ func test_rapid_complete_then_advance_requires_distinct_calls() -> void:
 	assert_eq(_plugin.dialogue_mode(), "REVEALING")
 
 
+func test_ambrose_presented_player_and_direct_ambrose_speech_receive_icons() -> void:
+	_plugin.set_instant_text_for_test(true)
+	_plugin.open_event_for_test(_linear_event([_speech("player", "Beauty and Belonging.")]))
+	var row: Dictionary = _plugin.current_row_projection()
+	assert_eq(row["community_keyword_occurrences"].size(), 2)
+	assert_eq(row["label_text"], "Beauty and Belonging.")
+	_plugin.discard_session_for_test()
+	var direct_event := _linear_event([_speech("ambrose", "Opportunity and Livability.")])
+	direct_event["payload"]["participants"] = ["player", "ambrose"]
+	_plugin.open_event_for_test(direct_event)
+	row = _plugin.current_row_projection()
+	assert_eq(row["community_keyword_occurrences"].size(), 2)
+
+
+func test_other_speakers_keep_plain_text_even_when_they_name_a_quality() -> void:
+	_plugin.set_instant_text_for_test(true)
+	_plugin.open_event_for_test(_linear_event([_speech("aristocrat_residential", "Beauty matters.")]))
+	assert_true(_plugin.current_row_projection()["community_keyword_occurrences"].is_empty())
+
+
 static func _linear_event(beats: Array) -> Dictionary:
 	var event := Fixtures.valid_event("reveal_test")
 	event["payload"]["nodes"] = [{

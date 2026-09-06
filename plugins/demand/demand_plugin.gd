@@ -1,5 +1,9 @@
 extends PluginBase
 
+const SimulationIntentType := preload("res://scripts/simulation/simulation_intent.gd")
+
+var _performance_debug_logs := OS.get_environment("CITY_BUILDER_PERFORMANCE_DEBUG_LOGS") == "1"
+
 ## Demand system — four buckets ticked once per in-game hour.
 ##
 ##   desirability  → 0..1 rate, non-monotonic; tracks live satisfaction + amenities
@@ -23,11 +27,12 @@ extends PluginBase
 ## `fulfilled` so the slot frees up for re-placement.
 
 func get_plugin_name() -> String: return "Demand"
-func get_dependencies() -> Array[String]: return ["DayNight", "CityStats", "BuildingCatalog"]
+func get_dependencies() -> Array[String]: return ["DayNight", "CityStats", "BuildingCatalog", "SimulationTransaction"]
 
 var _day_night: PluginBase
 var _city_stats: PluginBase
 var _catalog: PluginBase
+var _simulation_transaction: PluginBase
 ## Resolved at runtime — Attractiveness loads after Demand in topo order
 ## (Attractiveness deps include BuildableArea), so we look it up lazily.
 var _attractiveness: PluginBase
@@ -36,6 +41,7 @@ func inject(deps: Dictionary) -> void:
 	_day_night   = deps.get("DayNight")
 	_city_stats  = deps.get("CityStats")
 	_catalog     = deps.get("BuildingCatalog")
+	_simulation_transaction = deps.get("SimulationTransaction")
 
 # ── Tuning levers — adjust to rebalance the loop ──────────────────────────────
 
@@ -73,6 +79,7 @@ func inject(deps: Dictionary) -> void:
 var buckets: Dictionary = {}                # type_id -> DemandBucket
 var _bucket_order: Array[DemandBucket] = [] # preserves dependency order
 var _sources: Array[CityStatSource] = []    # registered sources (for teardown)
+var _pending_hourly_publications: Array = []
 
 # ── Lifecycle ─────────────────────────────────────────────────────────────────
 
@@ -81,12 +88,36 @@ func _plugin_ready() -> void:
 	_build_buckets()
 	_restore_totals_from_map()
 	_register_sources()
-	if _day_night:
+	if _simulation_transaction:
+		_simulation_transaction.register_reducer(&"demand", [&"demand_tick"], _reduce_hour, _commit_hour, 3)
+		_simulation_transaction.register_contributor(&"demand", [&"demand"], _collect_hour)
+		_simulation_transaction.transaction_committed.connect(_publish_committed_hour)
+	elif _day_night:
 		_day_night.hour_changed.connect(_on_hour)
 	GameEvents.structure_demolished.connect(_on_demolished)
 	GameEvents.map_loaded.connect(_on_map_loaded)
 	# A registry might already be populated by Builder before our connect — sync now.
 	_resync_fulfilled_from_registry()
+
+func _collect_hour(context: Variant, sink: Variant) -> void:
+	sink.submit(SimulationIntentType.create("demand:%d" % context.absolute_hour, &"demand", "city",
+		&"demand", &"demand_tick", {"hour":context.clock_hour}, 0, &"set", 3))
+
+func _reduce_hour(intents: Array, _context: Variant) -> Dictionary:
+	return {"ok":intents.size() == 1, "reason_code":"invalid_payload",
+		"plan":{"hour":float(intents[0].get_payload().hour)} if intents.size() == 1 else {}, "domains":[&"demand"]}
+
+func _commit_hour(plan: Dictionary, _context: Variant) -> Dictionary:
+	_pending_hourly_publications.clear()
+	_on_hour(float(plan.hour), false)
+	return {"ok":true}
+
+func _publish_committed_hour(_change_set: Variant, _ledger: Dictionary) -> void:
+	for row in _pending_hourly_publications:
+		if bool(row.get("total_changed", false)):
+			GameEvents.demand_total_changed.emit(String(row.type_id), float(row.total))
+		GameEvents.demand_unserved_changed.emit(String(row.type_id), float(row.unserved))
+	_pending_hourly_publications.clear()
 
 func _build_buckets() -> void:
 	var housing := HousingDemandBucket.new()
@@ -120,7 +151,7 @@ func _register_sources() -> void:
 
 # ── Tick ──────────────────────────────────────────────────────────────────────
 
-func _on_hour(hour: float) -> void:
+func _on_hour(hour: float, publish: bool = true) -> void:
 	var rooted := GameState.map != null and bool(GameState.map.rooted_town_rules)
 	(buckets.get("residential") as HousingDemandBucket).growth_rate = rooted_growth_rate_housing if rooted else growth_rate_housing
 	(buckets.get("industrial") as IndustrialDemandBucket).ratio = rooted_industrial_ratio if rooted else industrial_ratio
@@ -142,11 +173,19 @@ func _on_hour(hour: float) -> void:
 	}
 
 	for b in _bucket_order:
-		b.tick(hour, context)
+		var previous_total := b.total_demand
+		b.tick(hour, context, publish)
+		if not publish:
+			_pending_hourly_publications.append({
+				"type_id": b.type_id,
+				"total": b.total_demand,
+				"total_changed": b.total_demand != previous_total,
+				"unserved": b.get_unserved(),
+			})
 		context[b.type_id] = b.total_demand
 	_sync_totals_to_map()
 
-	print("[Demand] tick: attr=%d residential=t%.1f/f%.1f/u%.1f industrial=t%.1f/f%.1f/u%.1f commercial=t%.1f/f%.1f/u%.1f output=%d" % [
+	if _performance_debug_logs: print("[Demand] tick: attr=%d residential=t%.1f/f%.1f/u%.1f industrial=t%.1f/f%.1f/u%.1f commercial=t%.1f/f%.1f/u%.1f output=%d" % [
 		attr,
 		buckets["residential"].total_demand, buckets["residential"].fulfilled, buckets["residential"].get_unserved(),
 		buckets["industrial"].total_demand,  buckets["industrial"].fulfilled,  buckets["industrial"].get_unserved(),

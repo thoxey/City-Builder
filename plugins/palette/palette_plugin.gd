@@ -19,13 +19,14 @@ extends PluginBase
 ##   select_next() / select_previous() — Q/E cycling among affordable entries
 
 func get_plugin_name() -> String: return "Palette"
-func get_dependencies() -> Array[String]: return ["BuildingCatalog", "Demand", "Economy", "UniqueRegistry", "RoadNetwork"]
+func get_dependencies() -> Array[String]: return ["BuildingCatalog", "Demand", "Economy", "UniqueRegistry", "RoadNetwork", "PresentationScheduler"]
 
 var _catalog: PluginBase
 var _demand:  PluginBase
 var _economy: PluginBase
 var _uniques: PluginBase
 var _road_network: PluginBase
+var _presentation_scheduler: PluginBase
 
 func inject(deps: Dictionary) -> void:
 	_catalog = deps.get("BuildingCatalog")
@@ -33,6 +34,7 @@ func inject(deps: Dictionary) -> void:
 	_economy = deps.get("Economy")
 	_uniques = deps.get("UniqueRegistry")
 	_road_network = deps.get("RoadNetwork")
+	_presentation_scheduler = deps.get("PresentationScheduler")
 
 # ── State ─────────────────────────────────────────────────────────────────────
 
@@ -68,12 +70,15 @@ const CATEGORY_ORDER := {
 func _plugin_ready() -> void:
 	_build_entries()
 	_refresh()
-
-	GameEvents.cash_changed.connect(func(_a, _d): _refresh())
-	GameEvents.demand_unserved_changed.connect(func(_bid, _v): _refresh())
-	GameEvents.structure_placed.connect(func(_p, _i, _o): _refresh())
-	GameEvents.structure_demolished.connect(func(_p): _refresh())
-	GameEvents.map_loaded.connect(func(_m): _refresh())
+	if _presentation_scheduler:
+		_presentation_scheduler.register_presenter(&"palette.model", [&"structures", &"topology", &"economy", &"demand", &"progression"],
+			func(): return true, func(_version, _domains): _refresh())
+	else:
+		GameEvents.cash_changed.connect(func(_a, _d): _refresh())
+		GameEvents.demand_unserved_changed.connect(func(_bid, _v): _refresh())
+		GameEvents.structure_placed.connect(func(_p, _i, _o): _refresh())
+		GameEvents.structure_demolished.connect(func(_p): _refresh())
+		GameEvents.map_loaded.connect(func(_m): _refresh())
 	GameEvents.unique_unlocked.connect(func(_bid): _refresh())
 	GameEvents.unique_placed.connect(func(_bid): _refresh())
 	GameEvents.unique_removed.connect(func(_bid): _refresh())
@@ -89,6 +94,8 @@ func _build_entries() -> void:
 	for i in structures.size():
 		var s: Structure = structures[i]
 		var summary: Dictionary = summaries[i]
+		if bool(summary.get("palette_excluded", false)):
+			continue
 		var pool_id: String = s.pool_id
 		var category: String = summary.get("category", "")
 
@@ -370,6 +377,8 @@ func _projection_payload(include_revision: bool) -> Dictionary:
 func _entry_projection(entry: PaletteEntry) -> Dictionary:
 	var costs: Array[int] = []
 	var demand_info: Dictionary = {}
+	var representative_cash_cost := 0
+	var representative_demand_cost: Dictionary = {}
 	var members: Array[String] = []
 	var community_roles: Array[String] = []
 	var community_effects: Array = []
@@ -379,9 +388,13 @@ func _entry_projection(entry: PaletteEntry) -> Dictionary:
 		members.append(String(summary.get("building_id", "")))
 		var cost := int(summary.get("cash_cost", 0))
 		if _economy and _economy.has_method("get_cash_cost"): cost = _economy.get_cash_cost(_catalog.get_all()[idx])
+		if idx == entry.structure_indices[0]:
+			representative_cash_cost = cost
 		if cost not in costs: costs.append(cost)
 		if demand_info.is_empty() and _demand and _demand.has_method("quote_placement"):
 			demand_info = _demand.quote_placement(_catalog.get_all()[idx]).duplicate(true)
+			if idx == entry.structure_indices[0]:
+				representative_demand_cost = demand_info.duplicate(true)
 		var role := String(summary.get("community_role", ""))
 		if not role.is_empty() and role not in community_roles: community_roles.append(role)
 		var profile := _catalog.get_all()[idx].find_metadata(CommunityEffectProfile) as CommunityEffectProfile
@@ -398,16 +411,54 @@ func _entry_projection(entry: PaletteEntry) -> Dictionary:
 	costs.sort()
 	community_roles.sort()
 	community_effects.sort_custom(func(a: Dictionary, b: Dictionary): return String(a["effect_id"]) < String(b["effect_id"]))
-	var decision := _decision_for_structure(entry.structure_indices[0])
+	var representative_index: int = entry.structure_indices[0]
+	var authored_effects := _authored_effects_for_structure(_catalog.get_all()[representative_index])
+	var decision := _decision_for_structure(representative_index)
 	return {"id":entry.id, "display_name":entry.display_name, "short_label":entry.display_name,
 		"group_id":entry.ui_group, "ui_order":entry.ui_order, "icon_key":entry.ui_icon,
 		"is_pool":entry.structure_indices.size() > 1 or (_catalog.get_all()[entry.structure_indices[0]].pool_id != ""),
-		"member_building_ids":members, "representative_structure_index":entry.structure_indices[0],
+		"member_building_ids":members, "representative_structure_index":representative_index,
 		"cash_cost":costs[0] if costs.size() == 1 else {"min":costs[0], "max":costs[-1]},
-		"demand_cost":demand_info, "availability":entry.availability,
+		"demand_cost":demand_info, "representative_cash_cost":representative_cash_cost,
+		"representative_demand_cost":representative_demand_cost,
+		"authored_effects":authored_effects, "availability":entry.availability,
 		"community_roles": community_roles, "community_effects": community_effects,
 		"availability_label":entry.availability_label, "can_select":entry.can_select,
 		"decision":decision.duplicate(true), "reasons":decision.get("reasons", []).duplicate()}
+
+
+static func _authored_effects_for_structure(structure: Structure) -> Array:
+	var result: Array = []
+	if structure == null:
+		return result
+	var attractiveness := structure.find_metadata(AttractivenessProfile) as AttractivenessProfile
+	if attractiveness != null and attractiveness.base != 0:
+		result.append({
+			"quality": "beauty", "amount": float(attractiveness.base),
+			"scope": "city", "reason": "Base Beauty", "source": "attractiveness_base",
+		})
+	var community := structure.find_metadata(CommunityEffectProfile) as CommunityEffectProfile
+	if community != null:
+		for effect_variant in community.effects:
+			var effect: Dictionary = effect_variant
+			var quality := String(effect.get("quality", ""))
+			var amount := float(effect.get("amount", 0.0))
+			if quality not in CommunityConstants.QUALITIES or is_zero_approx(amount):
+				continue
+			result.append({
+				"quality": quality, "amount": amount,
+				"scope": String(effect.get("scope", "")),
+				"reason": String(effect.get("reason", "")),
+				"source": "community_effect",
+			})
+	result.sort_custom(func(a: Dictionary, b: Dictionary):
+		if String(a["quality"]) != String(b["quality"]):
+			return String(a["quality"]) < String(b["quality"])
+		if String(a["source"]) != String(b["source"]):
+			return String(a["source"]) < String(b["source"])
+		return float(a["amount"]) < float(b["amount"])
+	)
+	return result
 
 func request_select_entry(entry_id: String) -> Dictionary:
 	var entry := _entry_by_id(entry_id)

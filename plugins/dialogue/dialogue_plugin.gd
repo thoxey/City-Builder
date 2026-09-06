@@ -198,7 +198,10 @@ func _start_next_beat() -> bool:
 			_view.set_counterpart_portrait(
 				speaker, display_name, resolved.get("texture"), String(resolved.get("expression", "")), true
 			)
-		_view.append_speech_row(speaker, display_name, side, full_text, _instant_text)
+		_view.append_speech_row(
+			speaker, display_name, side, full_text, _instant_text,
+			_speaker_uses_community_icons(speaker)
+		)
 	else:
 		_view.deactivate_portraits()
 		_view.append_narration_row(full_text, _instant_text)
@@ -209,6 +212,12 @@ func _start_next_beat() -> bool:
 	else:
 		_mode = MODE_REVEALING
 	return true
+
+
+static func _speaker_uses_community_icons(speaker: String) -> bool:
+	# The established `player` semantic slot is presently represented by
+	# Ambrose; newer authored events may address Ambrose directly.
+	return speaker == PLAYER_ID or speaker == PLAYER_PRESENTATION_CHARACTER_ID
 
 
 func _process(delta: float) -> void:

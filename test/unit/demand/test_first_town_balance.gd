@@ -27,7 +27,7 @@ func test_empty_town_has_no_residential_demand_signal() -> void:
 
 func test_rebalanced_residential_progression_thresholds() -> void:
 	var expected := {
-		"building_postwar_terrace": 25,
+		"building_postwar_terrace": 40,
 		"building_postwar_midblock": 75,
 		"building_postwar_tower_block": 225,
 	}
@@ -38,6 +38,18 @@ func test_rebalanced_residential_progression_thresholds() -> void:
 	var tower_pool := _json("res://data/buildings/generic/_pools/residential_t2.json")
 	assert_eq(int(tower_pool.get("demand_threshold", -1)), 25)
 	assert_eq(int(tower_pool.get("demand_per_unit", -1)), 15)
+
+func test_opening_unique_lifetime_thresholds_are_exact() -> void:
+	var cases := {
+		"building_postwar_terrace": {"bucket":"residential", "below":39, "at":40},
+		"building_pub": {"bucket":"commercial", "below":14, "at":15},
+	}
+	for building_id in cases:
+		var building := _json("res://data/buildings/unique/%s.json" % building_id)
+		var threshold := _unique_threshold(building)
+		assert_eq(threshold, cases[building_id].at, building_id)
+		assert_lt(cases[building_id].below, threshold)
+		assert_gte(cases[building_id].at, threshold)
 
 func test_commercial_demand_generation_is_rebalanced_upward() -> void:
 	var demand := DemandPlugin.new()

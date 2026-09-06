@@ -19,11 +19,16 @@ var _route_cache: Dictionary = {}                   # origin>destination -> deta
 var _internal_id_by_anchor: Dictionary = {}         # Vector2i anchor -> stable internal id
 var _route_cache_hits: int = 0
 var _route_cache_misses: int = 0
+var _compat_events_to_ignore: int = 0
+var _performance_monitor: PluginBase
 
 const TOWN_HALL_BUILDING_ID := "building_town_hall"
 
 func get_plugin_name() -> String: return "RoadNetwork"
-func get_dependencies() -> Array[String]: return []
+func get_dependencies() -> Array[String]: return ["PerformanceMonitor"]
+
+func inject(deps: Dictionary) -> void:
+	_performance_monitor = deps.get("PerformanceMonitor")
 
 # ── Public API ────────────────────────────────────────────────────────────────
 
@@ -310,14 +315,33 @@ func get_lane_position(tile: Vector3i, dir: Vector2i) -> Vector3:
 # ── Lifecycle ─────────────────────────────────────────────────────────────────
 
 func _plugin_ready() -> void:
-	GameEvents.structure_placed.connect(func(_a, _b, _c): _rebuild())
-	GameEvents.structure_demolished.connect(func(_a): _rebuild())
-	GameEvents.map_loaded.connect(func(_a): _rebuild())
+	GameEvents.authoritative_change_committed.connect(_on_authoritative_change)
+	GameEvents.structure_placed.connect(func(_a, _b, _c): _on_legacy_topology_event())
+	GameEvents.structure_demolished.connect(func(_a): _on_legacy_topology_event())
+	GameEvents.map_loaded.connect(func(_a): _on_legacy_topology_event())
 	_rebuild()
+
+func _on_legacy_topology_event() -> void:
+	if _compat_events_to_ignore > 0:
+		_compat_events_to_ignore -= 1
+		return
+	_rebuild()
+
+func _on_authoritative_change(change_set: Variant) -> void:
+	if not (&"topology" in change_set.get_domains()):
+		return
+	match change_set.source_kind:
+		&"map_load", &"map_clear":
+			_compat_events_to_ignore = 1
+			_rebuild()
+		&"building_mutation":
+			_compat_events_to_ignore = 2 if change_set.source_id == "replace" else 1
+			_update_topology(change_set.get_entity_keys().get("topology", []))
 
 # ── Build ─────────────────────────────────────────────────────────────────────
 
 func _rebuild() -> void:
+	var started := Time.get_ticks_usec()
 	_clear_query_caches()
 	if GameState.gridmap == null:
 		return
@@ -327,8 +351,61 @@ func _rebuild() -> void:
 	_build_components()
 	_build_access_projection()
 	_revision += 1
+	_record_index_timing(started, GameState.gridmap.get_used_cells().size())
 	print("[RoadNetwork] road tiles: %d | walk tiles: %d | building stops: %d" % [
 			_graph.size(), _walk_graph.size(), _building_stops.size()])
+
+func _update_topology(cell_keys: Array) -> void:
+	if GameState.gridmap == null:
+		return
+	var started := Time.get_ticks_usec()
+	_clear_query_caches()
+	var affected: Dictionary = {}
+	for key_raw in cell_keys:
+		var parts := String(key_raw).split(",")
+		if parts.size() != 2: continue
+		var cell := Vector3i(int(parts[0]), 0, int(parts[1]))
+		affected[cell] = true
+		for offset: Vector3i in [Vector3i(1,0,0), Vector3i(-1,0,0), Vector3i(0,0,1), Vector3i(0,0,-1)]:
+			affected[cell + offset] = true
+	for cell: Vector3i in affected:
+		_refresh_graph_cell(cell)
+		_refresh_walk_cell(cell)
+	_find_building_stops()
+	_build_components()
+	_build_access_projection()
+	_revision += 1
+	_record_index_timing(started, affected.size())
+
+func _refresh_graph_cell(cell: Vector3i) -> void:
+	var road_meta := _road_meta_for(GameState.gridmap.get_cell_item(cell))
+	if road_meta == null:
+		_graph.erase(cell)
+		return
+	var orientation := GameState.gridmap.get_cell_item_orientation(cell)
+	var neighbors: Array[Vector3i] = []
+	for connection in road_meta.get_world_connections(orientation, GameState.gridmap):
+		var neighbor := Vector3i(cell.x + connection.x, 0, cell.z + connection.y)
+		if _connects_back(neighbor, Vector2i(-connection.x, -connection.y)):
+			neighbors.append(neighbor)
+	_graph[cell] = neighbors
+
+func _refresh_walk_cell(cell: Vector3i) -> void:
+	if GameState.gridmap.get_cell_item(cell) < 0:
+		_walk_graph.erase(cell)
+		return
+	var neighbors: Array[Vector3i] = []
+	for offset: Vector3i in [Vector3i(1,0,0), Vector3i(-1,0,0), Vector3i(0,0,1), Vector3i(0,0,-1)]:
+		var neighbor := cell + offset
+		if GameState.gridmap.get_cell_item(neighbor) >= 0:
+			neighbors.append(neighbor)
+	_walk_graph[cell] = neighbors
+
+func _record_index_timing(started: int, affected_cells: int) -> void:
+	if _performance_monitor:
+		_performance_monitor.record(&"building.index_update", Time.get_ticks_usec() - started,
+			{"index":"road_network", "affected_cells":affected_cells,
+			"roads":_graph.size(), "buildings":GameState.building_registry.size()})
 
 func _build_graph() -> void:
 	_graph.clear()

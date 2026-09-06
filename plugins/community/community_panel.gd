@@ -34,6 +34,10 @@ func setup(community: PluginBase) -> void:
 	add_theme_constant_override("separation", 6)
 	_build_shell()
 	_wire_events()
+	var scheduler = PluginManager.get_plugin("PresentationScheduler")
+	if scheduler:
+		scheduler.register_presenter(&"community.panel", [&"community", &"occupancy", &"structures", &"topology", &"presentation_config"],
+			func(): return is_visible_in_tree(), func(_version, _domains): _perform_refresh())
 	if GameState.map:
 		_section = String(GameState.map.community_section)
 		if _section not in SECTIONS: _section = "overview"
@@ -67,9 +71,11 @@ func _build_shell() -> void:
 	_scroll.add_child(_content)
 
 func _wire_events() -> void:
-	GameEvents.community_ui_refresh_requested.connect(func(reason): queue_refresh(reason))
-	GameEvents.structure_placed.connect(func(_p, _s, _o): queue_refresh("placed"))
-	GameEvents.structure_demolished.connect(_on_structure_demolished)
+	var scheduler = PluginManager.get_plugin("PresentationScheduler")
+	if scheduler == null:
+		GameEvents.community_ui_refresh_requested.connect(func(reason): queue_refresh(reason))
+		GameEvents.structure_placed.connect(func(_p, _s, _o): queue_refresh("placed"))
+		GameEvents.structure_demolished.connect(_on_structure_demolished)
 	GameEvents.community_programme_changed.connect(func(_a, _p): queue_refresh("programme"))
 	GameEvents.map_loaded.connect(func(_m): _load_preferences(); queue_refresh("map"))
 	GameEvents.community_place_selected.connect(_on_place_selected)

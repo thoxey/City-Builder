@@ -14,6 +14,12 @@ const VALID_UI_GROUPS := [
 ]
 const UI_GROUP_FALLBACK := "landmarks"
 const UI_ICON_FALLBACK := "missing-artwork"
+const GROUND_TREATMENT_REPLACE := "replace"
+const GROUND_TREATMENT_GRASS_UNDERLAY := "grass_underlay"
+const VALID_GROUND_TREATMENTS := [
+	GROUND_TREATMENT_REPLACE,
+	GROUND_TREATMENT_GRASS_UNDERLAY,
+]
 
 var _loaded: bool = false
 var _structures: Array[Structure] = []
@@ -98,6 +104,15 @@ func get_pool_indices(pool_id: String) -> Array[int]:
 	for i in _structures.size():
 		if _structures[i].pool_id == pool_id:
 			out.append(i)
+	return out
+
+## Player-facing pool members. Catalogue identity and raw pool membership stay
+## intact so old saves containing excluded structures remain resolvable.
+func get_player_pool_indices(pool_id: String) -> Array[int]:
+	var out: Array[int] = []
+	for idx in get_pool_indices(pool_id):
+		if not bool(_summaries[idx].get("palette_excluded", false)):
+			out.append(idx)
 	return out
 
 ## Pool tuning (bucket / tier / demand_threshold / demand_per_unit).
@@ -355,6 +370,8 @@ func _load_one(path: String) -> Dictionary:
 		"cash_cost": int(data.get("cash_cost", 0)),
 		"community_role": String(data.get("community_role", "")),
 		"pool_id": structure.pool_id,
+		"palette_excluded": bool(data.get("palette_excluded", false)),
+		"ground_treatment": _validated_ground_treatment(data, path),
 		"tags": data.get("tags", []),
 		"model_path": model_path,
 	}
@@ -376,6 +393,17 @@ func _validated_ui_metadata(data: Dictionary, path: String) -> Dictionary:
 		push_warning("[BuildingCatalog] invalid_ui_icon: path=%s value=%s; using %s" % [path, icon, UI_ICON_FALLBACK])
 		icon = UI_ICON_FALLBACK
 	return {"ui_group": group, "ui_order": order, "ui_icon": icon}
+
+## Presentation-only policy consumed by Builder's derived GroundMap layer.
+## Invalid authored values remain loadable for runtime safety, but are surfaced as
+## content errors so release validation cannot silently accept them.
+func _validated_ground_treatment(data: Dictionary, path: String) -> String:
+	var treatment := String(data.get("ground_treatment", GROUND_TREATMENT_REPLACE))
+	if treatment not in VALID_GROUND_TREATMENTS:
+		push_error("[BuildingCatalog] invalid_ground_treatment: path=%s value=%s; using %s" % [
+			path, treatment, GROUND_TREATMENT_REPLACE])
+		return GROUND_TREATMENT_REPLACE
+	return treatment
 
 ## Instantiate a StructureMetadata subclass from a profile dict.
 ## Unknown types log a warning and return null.

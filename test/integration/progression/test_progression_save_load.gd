@@ -27,6 +27,15 @@ func after_each() -> void:
 	var absolute := ProjectSettings.globalize_path(SAVE_PATH)
 	if FileAccess.file_exists(SAVE_PATH): DirAccess.remove_absolute(absolute)
 
+func test_slot_one_load_path_matches_save_and_preserves_legacy_fallback() -> void:
+	assert_true(InputMap.has_action("save_slot1"))
+	assert_true(InputMap.has_action("load_slot1"))
+	assert_false(InputMap.has_action("load_temp"))
+	assert_eq(BuilderCls.resolve_slot1_load_path(true, true), "user://map_slot1.res")
+	assert_eq(BuilderCls.resolve_slot1_load_path(true, false), "user://map_slot1.res")
+	assert_eq(BuilderCls.resolve_slot1_load_path(false, true), "user://map.res")
+	assert_eq(BuilderCls.resolve_slot1_load_path(false, false), "user://map_slot1.res")
+
 func test_builder_cold_round_trip_preserves_every_progression_boundary_field() -> void:
 	var map := DataMap.new()
 	map.rooted_town_rules = false

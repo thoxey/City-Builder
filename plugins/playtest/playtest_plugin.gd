@@ -242,10 +242,15 @@ func _run_action(kind: String, params: Dictionary) -> Dictionary:
 			if anchor == null:
 				outcome = PlaytestActionResult.rejected(PlaytestActionResult.INVALID_COORDINATE)
 			else:
-				var requested_id: String = params.get("building_id", params.get("choice_id", ""))
-				outcome = _builder.try_place_building(requested_id, anchor,
-					int(params.get("rotation", 0)), bool(params.get("replace", false)),
-					String(params.get("variant_id", "")), _rng)
+				var rotation := int(params.get("rotation", 0))
+				var replace := bool(params.get("replace", false))
+				var variant_id := String(params.get("variant_id", ""))
+				if params.has("choice_id") and _builder.has_method("try_place_choice"):
+					outcome = _builder.try_place_choice(String(params.get("choice_id", "")),
+						anchor, rotation, replace, variant_id, _rng)
+				else:
+					outcome = _builder.try_place_building(String(params.get("building_id", "")),
+						anchor, rotation, replace, variant_id, _rng)
 		"demolish":
 			var cell: Variant = _coordinate(params.get("cell", {}))
 			outcome = PlaytestActionResult.rejected(PlaytestActionResult.INVALID_COORDINATE) if cell == null else _builder.try_demolish_cell(cell)
@@ -481,6 +486,13 @@ func get_snapshot(compact: bool = false) -> Dictionary:
 	var hash_payload := snapshot.duplicate(true)
 	hash_payload.erase("session_id")
 	hash_payload.erase("sequence")
+	# Rich Community explanations and spatial exposure rows are diagnostic
+	# projections. They are deliberately excluded from canonical gameplay hashes
+	# just like civilian/render state below.
+	var hash_community: Dictionary = hash_payload.get("community", {})
+	for diagnostic_key in ["effect_summary", "spatial", "residents"]:
+		hash_community.erase(diagnostic_key)
+	hash_payload["community"] = hash_community
 	snapshot["state_hash"] = JSON.stringify(hash_payload).sha256_text()
 	# Presentation parity is exposed to live acceptance tooling but deliberately
 	# excluded from the deterministic simulation hash.

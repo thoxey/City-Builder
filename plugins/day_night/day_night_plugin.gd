@@ -36,6 +36,7 @@ var _time: float = START_TIME
 var _manual: bool = false
 var _last_hour: int = -1
 var _absolute_hour: int = 0
+var _simulation_transaction: PluginBase
 
 ## Returns the current normalised time (0.0 = midnight, 0.5 = noon).
 func get_time() -> float:
@@ -78,12 +79,14 @@ func advance_hours(hours: int, profile: bool = false) -> Dictionary:
 	var max_hour_usec := 0
 	if _last_hour < 0:
 		_last_hour = current_hour()
+	var committed_hours := 0
 	for _i in hours:
-		_last_hour = (_last_hour + 1) % 24
-		_absolute_hour += 1
-		_time = float(_last_hour) / 24.0
+		var next_hour := (_last_hour + 1) % 24
+		var next_absolute := _absolute_hour + 1
 		var hour_started := Time.get_ticks_usec()
-		_emit_hour_transition(_last_hour)
+		if not _commit_hour_transition(next_hour, next_absolute):
+			break
+		committed_hours += 1
 		if profile:
 			var elapsed_usec := Time.get_ticks_usec() - hour_started
 			max_hour_usec = maxi(max_hour_usec, elapsed_usec)
@@ -98,13 +101,16 @@ func advance_hours(hours: int, profile: bool = false) -> Dictionary:
 	_sync_ui()
 	var result := PlaytestActionResult.applied({
 		"requested_hours": hours,
-		"emitted_hours": hours,
+		"emitted_hours": committed_hours,
 		"from_absolute_hour": from_absolute,
 		"to_absolute_hour": _absolute_hour,
 		"day": _absolute_hour / 24,
 		"hour": current_hour(),
 	})
-	result["changed"] = hours > 0
+	result["changed"] = committed_hours > 0
+	if committed_hours != hours:
+		result["status"] = PlaytestActionResult.STATUS_REJECTED
+		result["reason"] = "hour_transaction_rejected"
 	if profile:
 		result["details"]["performance"] = {
 			"total_usec": Time.get_ticks_usec() - advance_started,
@@ -125,7 +131,10 @@ var _auto_btn: Button
 var _updating_slider: bool = false  # prevents slider signal re-entrancy
 
 func get_plugin_name() -> String: return "DayNight"
-func get_dependencies() -> Array[String]: return []
+func get_dependencies() -> Array[String]: return ["SimulationTransaction"]
+
+func inject(deps: Dictionary) -> void:
+	_simulation_transaction = deps.get("SimulationTransaction")
 
 # ── Setup ─────────────────────────────────────────────────────────────────────
 
@@ -213,18 +222,25 @@ func _process(delta: float) -> void:
 	# Fire each crossed hour in order, even after a long frame.
 	var target_hour := current_hour()
 	if _last_hour < 0:
-		_last_hour = target_hour
-		_emit_hour_transition(target_hour)
+		_commit_hour_transition(target_hour, _absolute_hour)
 	else:
 		while target_hour != _last_hour:
-			_last_hour = (_last_hour + 1) % 24
-			_absolute_hour += 1
-			_emit_hour_transition(_last_hour)
+			var next_hour := (_last_hour + 1) % 24
+			if not _commit_hour_transition(next_hour, _absolute_hour + 1):
+				break
 
 	_sync_ui()
 
-func _emit_hour_transition(hour: int) -> void:
+func _commit_hour_transition(hour: int, absolute_hour: int) -> bool:
+	if _simulation_transaction and _simulation_transaction.has_method("run_hour"):
+		var outcome: Dictionary = _simulation_transaction.run_hour(absolute_hour, hour)
+		if not bool(outcome.get("ok", false)):
+			return false
+	_last_hour = hour
+	_absolute_hour = absolute_hour
+	_time = float(hour) / 24.0
 	hour_changed.emit(float(hour))
+	return true
 
 func _sync_ui() -> void:
 	# Headless tests intentionally have no UI tree.

@@ -8,6 +8,6 @@
   "arrival_threshold": 100,
   "arrival_requires_tier": 1,
   "want_building_id": "building_crazy_golf",
-  "portrait": "res://data/characters/aristocrat_industrial/portrait.png",
+  "portrait": "res://sprites/ui/dialogue/missing-portrait.png",
   "talking_videos": []
 }

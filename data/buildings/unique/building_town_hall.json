@@ -11,6 +11,7 @@
   ],
   "model_rotation_y": 0.0,
   "footprint": [[0, 0], [1, 0], [0, 1], [1, 1]],
+  "ground_treatment": "grass_underlay",
   "category": "unique",
   "community_role": "local_only",
   "cash_cost": 0,

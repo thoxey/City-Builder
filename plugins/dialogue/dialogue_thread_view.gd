@@ -17,6 +17,15 @@ const PORTRAIT_SQUARE_BOTTOM := 0.923729
 const FRAME_MIN_SIZE := Vector2(760.0, 500.0)
 const FRAME_REFERENCE_SIZE := Vector2(1120.0, 680.0)
 const FRAME_VIEWPORT_MARGIN := Vector2(120.0, 72.0)
+const COMMUNITY_ICON_SIZE := 20
+const COMMUNITY_KEYWORD_PATTERN := "(?i)\\b(opportunity|livability|liveability|beauty|belonging)\\b"
+const COMMUNITY_KEYWORD_ICONS := {
+	"opportunity": "opportunity",
+	"livability": "liveability",
+	"liveability": "liveability",
+	"beauty": "beauty",
+	"belonging": "belonging",
+}
 
 var _built := false
 var _dim: ColorRect
@@ -191,7 +200,8 @@ func append_speech_row(
 	display_name: String,
 	side: String,
 	full_text: String,
-	show_full_text: bool = false
+	show_full_text: bool = false,
+	decorate_community_keywords: bool = false
 ) -> Control:
 	var row := MarginContainer.new()
 	row.name = "SpeechRow_%d" % _rows.size()
@@ -226,10 +236,28 @@ func append_speech_row(
 	name_label.name = "SpeakerName"
 	name_label.modulate = Color(0.94, 0.76, 0.38, 1.0)
 	text_column.add_child(name_label)
-	var text_label := _make_label(full_text, 18)
+	var decoration := community_keyword_decoration(full_text) if decorate_community_keywords else {
+		"markup": "", "occurrences": [],
+	}
+	var text_label: Control
+	if decorate_community_keywords and not decoration["occurrences"].is_empty():
+		var rich_text := RichTextLabel.new()
+		rich_text.bbcode_enabled = true
+		rich_text.fit_content = true
+		rich_text.scroll_active = false
+		rich_text.text = String(decoration["markup"])
+		rich_text.add_theme_font_override("normal_font", load(FONT_PATH))
+		rich_text.add_theme_font_size_override("normal_font_size", 18)
+		rich_text.add_theme_color_override("default_color", Color(0.96, 0.93, 0.84, 1.0))
+		rich_text.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		rich_text.tooltip_text = full_text
+		text_label = rich_text
+	else:
+		text_label = _make_label(full_text, 18)
 	text_label.name = "BeatText"
-	text_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	text_label.add_theme_color_override("font_color", Color(0.96, 0.93, 0.84, 1.0))
+	if text_label is Label:
+		(text_label as Label).autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		(text_label as Label).add_theme_color_override("font_color", Color(0.96, 0.93, 0.84, 1.0))
 	text_label.visible_characters = -1 if show_full_text else 0
 	text_label.set_meta("full_text", full_text)
 	text_column.add_child(text_label)
@@ -255,6 +283,7 @@ func append_speech_row(
 		"full_text": full_text,
 		"visible_characters": full_text.length() if show_full_text else 0,
 		"text_label": text_label,
+		"community_keyword_occurrences": decoration["occurrences"].duplicate(true),
 	})
 	return row
 
@@ -299,9 +328,14 @@ func set_current_row_visible_characters(count: int) -> void:
 	var full_text := String(model.get("full_text", ""))
 	var visible := clampi(count, 0, full_text.length())
 	model["visible_characters"] = visible
-	var label: Label = model.get("text_label")
+	var label: Control = model.get("text_label")
 	if label:
-		label.visible_characters = -1 if visible >= full_text.length() else visible
+		var rendered_visible := visible
+		if label is RichTextLabel:
+			for occurrence in model.get("community_keyword_occurrences", []):
+				if int(occurrence.get("start", 0)) + int(occurrence.get("length", 0)) <= visible:
+					rendered_visible += 1 # RichTextLabel counts each inline image as one glyph.
+		label.visible_characters = -1 if visible >= full_text.length() else rendered_visible
 	_row_models[index] = model
 
 
@@ -416,12 +450,13 @@ func layout_for_viewport_for_test(viewport_size: Vector2) -> void:
 
 
 func geometry_projection() -> Dictionary:
-	var frame_rect := Rect2(_frame.position, _frame.size)
-	var player_rect := Rect2(_player_portrait_host.position, _player_portrait_host.size)
-	var counterpart_rect := Rect2(_counterpart_portrait_host.position, _counterpart_portrait_host.size)
+	var ui_scale := _frame.scale.x
+	var frame_rect := Rect2(_frame.position, _frame.size * ui_scale)
+	var player_rect := Rect2(_player_portrait_host.position, _player_portrait_host.size * ui_scale)
+	var counterpart_rect := Rect2(_counterpart_portrait_host.position, _counterpart_portrait_host.size * ui_scale)
 	var transcript_rect := Rect2(
-		frame_rect.position + Vector2(96.0, 82.0),
-		Vector2(maxf(0.0, frame_rect.size.x - 192.0), maxf(0.0, frame_rect.size.y - 164.0))
+		frame_rect.position + Vector2(96.0, 82.0) * ui_scale,
+		Vector2(maxf(0.0, _frame.size.x - 192.0), maxf(0.0, _frame.size.y - 164.0)) * ui_scale
 	)
 	var player_overlap := maxf(0.0, player_rect.end.x - frame_rect.position.x)
 	var counterpart_overlap := maxf(0.0, frame_rect.end.x - counterpart_rect.position.x)
@@ -430,6 +465,7 @@ func geometry_projection() -> Dictionary:
 		"player_rect": player_rect,
 		"counterpart_rect": counterpart_rect,
 		"transcript_rect": transcript_rect,
+		"ui_scale": ui_scale,
 		"player_overlap_ratio": player_overlap / maxf(1.0, player_rect.size.x),
 		"counterpart_overlap_ratio": counterpart_overlap / maxf(1.0, counterpart_rect.size.x),
 	}
@@ -447,16 +483,55 @@ func row_projection(index: int) -> Dictionary:
 	if index < 0 or index >= _row_models.size():
 		return {}
 	var model: Dictionary = _row_models[index]
+	var text_control: Control = model.get("text_label")
 	return {
 		"kind": model.get("kind", ""),
 		"speaker": model.get("speaker", ""),
 		"display_name": model.get("display_name", ""),
 		"side": model.get("side", ""),
 		"full_text": model.get("full_text", ""),
-		"label_text": String((model.get("text_label") as Label).text),
+		# `label_text` deliberately remains the authored string even when the
+		# presentation control contains generated BBCode and inline images.
+		"label_text": String(model.get("full_text", "")),
 		"visible_characters": model.get("visible_characters", 0),
 		"minimum_height": _rows[index].custom_minimum_size.y,
+		"rich_text": text_control is RichTextLabel,
+		"community_keyword_occurrences": model.get("community_keyword_occurrences", []).duplicate(true),
 	}
+
+
+static func community_keyword_decoration(full_text: String, icon_root: String = CommunityUIFactory.ICON_ROOT) -> Dictionary:
+	var regex := RegEx.new()
+	if regex.compile(COMMUNITY_KEYWORD_PATTERN) != OK:
+		return {"markup": _escape_bbcode(full_text), "occurrences": []}
+	var occurrences: Array = []
+	var markup := ""
+	var cursor := 0
+	for match_result in regex.search_all(full_text):
+		var exact_word := match_result.get_string(0)
+		var normalized := exact_word.to_lower()
+		var quality := String(COMMUNITY_KEYWORD_ICONS.get(normalized, ""))
+		var icon_path := icon_root.path_join(quality + ".png") if not quality.is_empty() else ""
+		markup += _escape_bbcode(full_text.substr(cursor, match_result.get_start() - cursor))
+		markup += _escape_bbcode(exact_word)
+		if not icon_path.is_empty() and ResourceLoader.exists(icon_path):
+			# No whitespace between the word and image: Godot keeps them adjacent
+			# when wrapping, while parsed/authored text remains untouched.
+			markup += "[img=%dx%d]%s[/img]" % [COMMUNITY_ICON_SIZE, COMMUNITY_ICON_SIZE, icon_path]
+			occurrences.append({
+				"keyword": exact_word,
+				"quality": quality,
+				"icon_path": icon_path,
+				"start": match_result.get_start(),
+				"length": match_result.get_end() - match_result.get_start(),
+			})
+		cursor = match_result.get_end()
+	markup += _escape_bbcode(full_text.substr(cursor))
+	return {"markup": markup, "occurrences": occurrences}
+
+
+static func _escape_bbcode(value: String) -> String:
+	return value.replace("[", "[lb]")
 
 
 func transcript_projection() -> Array:
@@ -733,25 +808,33 @@ func _layout_for_viewport() -> void:
 
 
 func _layout_with_size(viewport_size: Vector2) -> void:
+	var ui_scale := clampf(minf(viewport_size.x / 1920.0, viewport_size.y / 1080.0), 1.0, 2.0)
+	var logical_viewport := viewport_size / ui_scale
 	var target := Vector2(
-		clampf(viewport_size.x - FRAME_VIEWPORT_MARGIN.x * 2.0, FRAME_MIN_SIZE.x, FRAME_REFERENCE_SIZE.x),
-		clampf(viewport_size.y - FRAME_VIEWPORT_MARGIN.y * 2.0, FRAME_MIN_SIZE.y, FRAME_REFERENCE_SIZE.y)
+		clampf(logical_viewport.x - FRAME_VIEWPORT_MARGIN.x * 2.0, FRAME_MIN_SIZE.x, FRAME_REFERENCE_SIZE.x),
+		clampf(logical_viewport.y - FRAME_VIEWPORT_MARGIN.y * 2.0, FRAME_MIN_SIZE.y, FRAME_REFERENCE_SIZE.y)
 	)
-	_frame.position = (viewport_size - target) * 0.5
+	_frame.scale = Vector2(ui_scale, ui_scale)
+	_frame.pivot_offset = Vector2.ZERO
+	_frame.position = (viewport_size - target * ui_scale) * 0.5
 	_frame.size = target
 	_frame.custom_minimum_size = Vector2.ZERO
 	var portrait_width := clampf(target.y * 0.38, 180.0, 260.0)
 	var portrait_size := Vector2(portrait_width, portrait_width * 1.18)
-	var frame_rect := Rect2(_frame.position, target)
+	var frame_rect := Rect2(_frame.position, target * ui_scale)
+	_player_portrait_host.scale = Vector2(ui_scale, ui_scale)
+	_player_portrait_host.pivot_offset = Vector2.ZERO
 	_player_portrait_host.size = portrait_size
 	_player_portrait_host.position = Vector2(
-		frame_rect.position.x - portrait_width * 0.95,
-		frame_rect.end.y - portrait_size.y * 0.86
+		frame_rect.position.x - portrait_width * 0.95 * ui_scale,
+		frame_rect.end.y - portrait_size.y * 0.86 * ui_scale
 	)
+	_counterpart_portrait_host.scale = Vector2(ui_scale, ui_scale)
+	_counterpart_portrait_host.pivot_offset = Vector2.ZERO
 	_counterpart_portrait_host.size = portrait_size
 	_counterpart_portrait_host.position = Vector2(
-		frame_rect.end.x - portrait_width * 0.05,
-		frame_rect.end.y - portrait_size.y * 0.86
+		frame_rect.end.x - portrait_width * 0.05 * ui_scale,
+		frame_rect.end.y - portrait_size.y * 0.86 * ui_scale
 	)
 
 

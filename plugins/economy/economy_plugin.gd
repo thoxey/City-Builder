@@ -1,5 +1,7 @@
 extends PluginBase
 
+const SimulationIntentType := preload("res://scripts/simulation/simulation_intent.gd")
+
 ## Economy — running cash surplus.
 ##
 ## Each in-game hour:
@@ -12,18 +14,22 @@ extends PluginBase
 ## supply snapshot — the same signal Workplace publishes for the demand chain.
 
 func get_plugin_name() -> String: return "Economy"
-func get_dependencies() -> Array[String]: return ["DayNight", "CityStats", "BuildingCatalog", "Commercial"]
+func get_dependencies() -> Array[String]: return ["DayNight", "CityStats", "BuildingCatalog", "Commercial", "SimulationTransaction"]
 
 var _day_night:  PluginBase
 var _city_stats: PluginBase
 var _catalog:    PluginBase
 var _commercial: PluginBase
+var _simulation_transaction: PluginBase
+var _pending_cash_publication: Dictionary = {}
+var _performance_debug_logs := OS.get_environment("CITY_BUILDER_PERFORMANCE_DEBUG_LOGS") == "1"
 
 func inject(deps: Dictionary) -> void:
 	_day_night  = deps.get("DayNight")
 	_city_stats = deps.get("CityStats")
 	_catalog    = deps.get("BuildingCatalog")
 	_commercial = deps.get("Commercial")
+	_simulation_transaction = deps.get("SimulationTransaction")
 
 # ── Tuning levers ─────────────────────────────────────────────────────────────
 
@@ -74,12 +80,34 @@ func _plugin_ready() -> void:
 	# Economy after CityStats, so this connect happens later in the same signal
 	# emission and Godot fires handlers in connect order — but to be explicit
 	# about ordering we use a deferred slot tied to hour_changed.
-	_day_night.hour_changed.connect(_on_hour)
+	if _simulation_transaction:
+		_simulation_transaction.register_reducer(&"economy", [&"income_tick"], _reduce_hour, _commit_hour, 4)
+		_simulation_transaction.register_contributor(&"economy", [&"economy"], _collect_hour)
+		_simulation_transaction.transaction_committed.connect(_publish_committed_hour)
+	else:
+		_day_night.hour_changed.connect(_on_hour)
 
 	# Surface starting cash to listeners (HUD wires up after this fires the
 	# first time, so we also push on map_loaded below).
 	GameEvents.cash_changed.emit(GameState.map.cash, 0)
 	GameEvents.map_loaded.connect(_on_map_loaded)
+
+func _collect_hour(context: Variant, sink: Variant) -> void:
+	sink.submit(SimulationIntentType.create("economy:%d" % context.absolute_hour, &"economy", "city",
+		&"economy", &"income_tick", {"hour":context.clock_hour}, 0, &"add", 4))
+
+func _reduce_hour(intents: Array, _context: Variant) -> Dictionary:
+	return {"ok":intents.size() == 1, "reason_code":"invalid_payload", "plan":{}, "domains":[&"economy"]}
+
+func _commit_hour(_plan: Dictionary, _context: Variant) -> Dictionary:
+	_last_supply = _city_stats.get_supply_snapshot()
+	_on_hour(0.0, false)
+	return {"ok":true}
+
+func _publish_committed_hour(_change_set: Variant, _ledger: Dictionary) -> void:
+	if _pending_cash_publication.is_empty(): return
+	GameEvents.cash_changed.emit(_pending_cash_publication.amount, _pending_cash_publication.delta)
+	_pending_cash_publication.clear()
 
 func _on_stats_ticked(supply: Dictionary, _demand: Dictionary, _sat: Dictionary) -> void:
 	_last_supply = supply
@@ -91,7 +119,7 @@ func _on_map_loaded(_map) -> void:
 
 # ── Tick ──────────────────────────────────────────────────────────────────────
 
-func _on_hour(_hour: float) -> void:
+func _on_hour(_hour: float, publish: bool = true) -> void:
 	# CityStats already ran (topo order) so _last_supply is fresh for this hour.
 	var output: int = int(_last_supply.get("industrial_output", 0))
 	var shop_bonus_income := int(_commercial.get_town_hall_bonus_income()) if _commercial and _commercial.has_method("get_town_hall_bonus_income") else 0
@@ -101,11 +129,10 @@ func _on_hour(_hour: float) -> void:
 	_last_hourly_income = income
 	_cumulative_income += income
 
-	_apply_delta(income)
+	_apply_delta(income, publish)
 
-	print("[Economy] tick: income=%d cash=%d" % [
-		income, GameState.map.cash
-	])
+	if _performance_debug_logs:
+		print("[Economy] tick: income=%d cash=%d" % [income, GameState.map.cash])
 
 # ── Spending ──────────────────────────────────────────────────────────────────
 
@@ -172,7 +199,7 @@ func _cash_category(structure: Structure) -> String:
 
 # ── Cash mutator (single chokepoint, signal + clamp) ──────────────────────────
 
-func _apply_delta(delta: int) -> void:
+func _apply_delta(delta: int, publish: bool = true) -> void:
 	if delta == 0:
 		return
 	var prev: int = GameState.map.cash
@@ -180,4 +207,8 @@ func _apply_delta(delta: int) -> void:
 	if next == prev:
 		return
 	GameState.map.cash = next
-	GameEvents.cash_changed.emit(next, next - prev)
+	if publish:
+		GameEvents.cash_changed.emit(next, next - prev)
+	else:
+		_pending_cash_publication = {"amount":next,
+			"delta":int(_pending_cash_publication.get("delta", 0)) + next - prev}

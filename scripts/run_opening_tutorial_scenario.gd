@@ -30,6 +30,8 @@ var _verification_flags := {
 	"duplicate_reconcile_idempotent": false,
 	"demolition_non_regression": false,
 	"cold_load_parity": false,
+	"legacy_grass_identity": false,
+	"legacy_grass_inspection_demolition": false,
 }
 
 func _initialize() -> void:
@@ -46,7 +48,10 @@ func _run() -> void:
 	var playtest = manager.get_plugin("Playtest") if manager else null
 	var tutorial = manager.get_plugin("OpeningTutorial") if manager else null
 	var community = manager.get_plugin("Community") if manager else null
-	if manager == null or builder == null or playtest == null or tutorial == null or community == null:
+	var catalog = manager.get_plugin("BuildingCatalog") if manager else null
+	var palette = manager.get_plugin("Palette") if manager else null
+	var dashboard = manager.get_plugin("Dashboard") if manager else null
+	if manager == null or builder == null or playtest == null or tutorial == null or community == null or catalog == null or palette == null or dashboard == null:
 		_fail("real_stack_unavailable")
 		_finish(tutorial)
 		return
@@ -57,7 +62,9 @@ func _run() -> void:
 
 	await _place(builder, "building_town_hall", Vector2i(-1, -1))
 	for x in range(-1, 7): await _place(builder, "road", Vector2i(x, 1))
-	_check(int(tutorial.get_evidence_snapshot().get("rooted_road_count", 0)) >= 4, "rooted_road_gate_failed")
+	await _place(builder, "road", Vector2i(7, 1))
+	await _place(builder, "road", Vector2i(7, 2))
+	_check(int(tutorial.get_evidence_snapshot().get("rooted_road_count", 0)) >= 10, "rooted_road_gate_failed")
 	# A rooted shop is deliberately committed before nature, homes, work, and
 	# participation. Ordered reconciliation must remember the world fact but
 	# cannot skip the earlier semantic gates.
@@ -79,7 +86,9 @@ func _run() -> void:
 
 	await _place(builder, "grass_trees", Vector2i(2, -1))
 	var repaired_state: Dictionary = tutorial.get_state()
-	var repair_delta := int(repaired_state.get("experiment", {}).get("after_repair", {}).get("home_delta", 0))
+	var after_repair: Variant = repaired_state.get("experiment", {}).get("after_repair")
+	_check(after_repair is Dictionary, "repair_measurement_missing")
+	var repair_delta := int(after_repair.get("home_delta", 0)) if after_repair is Dictionary else 0
 	_check(repair_delta > 0, "repair_delta_not_positive")
 	await _place(builder, "building_garage", Vector2i(6, 0))
 	_check(repaired_state.get("completed_receipts", {}).has("opening.home_improved"), "repair_receipt_missing")
@@ -127,6 +136,17 @@ func _run() -> void:
 	_verification_flags.demolition_non_regression = tutorial.is_complete() and completed_state.get("completed_receipts", {}).has("opening.first_shop_placed") and _handoffs.size() == handoffs_before_duplicate
 	_check(bool(_verification_flags.demolition_non_regression), "demolition_regressed_completion")
 
+	# Plain grass is deliberately placed by its historical exact ID, not through
+	# the curated pool, to prove old saves retain their catalogue identity.
+	await _place(builder, "grass", Vector2i(7, -7))
+	var grass_pool_record: Dictionary = {}
+	for entry in palette.get_entry_records():
+		if str(entry.get("id", "")) == "grass": grass_pool_record = entry
+	var grass_pool_ids: Array[String] = []
+	for structure_index in grass_pool_record.get("structure_indices", []):
+		grass_pool_ids.append(catalog.get_id_by_index(int(structure_index)))
+	_check(grass_pool_ids == ["grass_trees", "grass_trees_tall"], "grass_pool_not_curated")
+
 	var save_result: Dictionary = builder.save_map_to_path(SAVE_PATH)
 	_check(str(save_result.get("status", "")) == PlaytestActionResult.STATUS_APPLIED, "save_failed")
 	var before_load_hash := _state_hash(completed_state)
@@ -138,6 +158,33 @@ func _run() -> void:
 	_check(_handoffs.size() == 1, "cold_load_reemitted_handoff")
 	_check(_state_hash(loaded_state) == before_load_hash, "cold_load_hash_mismatch")
 	_verification_flags.cold_load_parity = loaded_state == completed_state and _handoffs.size() == 1 and _state_hash(loaded_state) == before_load_hash
+	var grass_instance_id := int(_game_state.cell_to_building.get(Vector2i(7, -7), -1))
+	var grass_record: Dictionary = _game_state.building_registry.get(grass_instance_id, {})
+	_verification_flags.legacy_grass_identity = grass_instance_id >= 0 and catalog.get_id_by_index(int(grass_record.get("structure", -1))) == "grass"
+	_check(bool(_verification_flags.legacy_grass_identity), "legacy_grass_identity_lost")
+	var community_panel: Variant = dashboard.get("_community_panel")
+	dashboard.open_community()
+	if community_panel:
+		community_panel.show_section("places")
+	var notifications_before := int(community_panel.get("_notifications").size()) if community_panel else -1
+	_game_events.community_place_selected.emit(Vector2i(7, -7))
+	await _settle()
+	# Plain grass is cosmetic-only and therefore has no Community-effect detail
+	# card. Its normal inspection result is the explicit no-data notice, not a
+	# fabricated effect record. Assert that the inspector actually consumed the
+	# selection before proving demolition compatibility.
+	var inspection_ok: bool = false
+	if community_panel:
+		var notifications: Array = community_panel.get("_notifications")
+		inspection_ok = (str(community_panel.get("_section")) == "places"
+			and notifications.size() == notifications_before + 1
+			and str(notifications.back()) == "No Community effect data for that place")
+	_check(inspection_ok, "legacy_grass_inspection_failed")
+	var grass_demolition: Dictionary = builder.try_demolish_cell(Vector2i(7, -7))
+	_verification_flags.legacy_grass_inspection_demolition = (inspection_ok
+		and str(grass_demolition.get("status", "")) == PlaytestActionResult.STATUS_APPLIED
+		and not _game_state.cell_to_building.has(Vector2i(7, -7)))
+	_check(bool(_verification_flags.legacy_grass_inspection_demolition), "legacy_grass_inspection_or_demolition_failed")
 	for event_id in EVENT_IDS:
 		_check(int(_game_state.map.event_counts.get(event_id, 0)) == 1, "cold_load_event_count_%s" % event_id)
 	if _game_events.tutorial_opening_completed.is_connected(_on_handoff): _game_events.tutorial_opening_completed.disconnect(_on_handoff)
@@ -177,6 +224,7 @@ func _finish(tutorial, receipts: Array = [], event_counts: Dictionary = {}, adja
 		"event_counts": event_counts,
 		"adjacency_home_delta": adjacency_delta,
 		"repair_home_delta": repair_delta,
+		"experiment": state.get("experiment", {}).duplicate(true),
 		"verification": _verification_flags,
 		"state_hash": _state_hash(state),
 		"failures": _failures,

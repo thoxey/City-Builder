@@ -16,8 +16,10 @@ extends PluginBase
 
 const CompactGuidanceViewCls := preload("res://plugins/dashboard/compact_guidance_view.gd")
 
+var _performance_debug_logs := OS.get_environment("CITY_BUILDER_PERFORMANCE_DEBUG_LOGS") == "1"
+
 func get_plugin_name() -> String: return "Dashboard"
-func get_dependencies() -> Array[String]: return ["CharacterSystem", "PatronSystem", "Demand", "Community", "BuildingCatalog", "RoadNetwork", "OpeningTutorial"]
+func get_dependencies() -> Array[String]: return ["CharacterSystem", "PatronSystem", "Demand", "Community", "BuildingCatalog", "RoadNetwork", "OpeningTutorial", "PresentationScheduler", "ProjectionRegistry"]
 
 const PANEL_WIDTH := 380
 const TAB_WIDTH := 28
@@ -44,6 +46,9 @@ var _catalog:    PluginBase
 var _community:  PluginBase
 var _road_network: PluginBase
 var _opening_tutorial: PluginBase
+var _presentation_scheduler: PluginBase
+var _projection_registry: PluginBase
+var _first_land_quest: Variant
 
 # UI refs
 var _canvas: CanvasLayer
@@ -70,11 +75,23 @@ func inject(deps: Dictionary) -> void:
 	_catalog    = deps.get("BuildingCatalog")
 	_road_network = deps.get("RoadNetwork")
 	_opening_tutorial = deps.get("OpeningTutorial")
+	_presentation_scheduler = deps.get("PresentationScheduler")
+	_projection_registry = deps.get("ProjectionRegistry")
 
 func _plugin_ready() -> void:
+	# FirstLandQuest is an optional seam: resolve it when that feature plugin is
+	# present without making older projects fail dependency injection.
+	var manager := get_parent()
+	if manager and manager.has_method("get_plugin"):
+		_first_land_quest = manager.get_plugin("FirstLandQuest")
 	_build_ui()
 	_apply_collapsed_from_map()
 	_wire_signals()
+	if _presentation_scheduler:
+		_presentation_scheduler.register_presenter(&"dashboard", [&"structures", &"topology", &"occupancy",
+			&"resources", &"economy", &"demand", &"community", &"progression", &"presentation_config"],
+			func(): return _panel != null and _panel.visible,
+			func(_version, _domains): _refresh("committed", ""))
 	call_deferred("_refresh", "boot", "")
 	print("[Dashboard] ready: patrons=%d" % (_patrons.all_patron_ids().size() if _patrons else 0))
 
@@ -186,16 +203,30 @@ func _wire_signals() -> void:
 	GameEvents.patron_landmark_ready.connect(func(pid): _refresh("patron_landmark_ready", pid))
 	GameEvents.patron_landmark_completed.connect(func(pid): _refresh("patron_landmark_completed", pid))
 	GameEvents.patron_state_changed.connect(func(pid, _s): _refresh("patron_state_changed", pid))
-	GameEvents.demand_unserved_changed.connect(func(_b, _v): _refresh("demand_unserved_changed", ""))
+	if not _presentation_scheduler:
+		GameEvents.demand_unserved_changed.connect(func(_b, _v): _refresh("demand_unserved_changed", ""))
 	GameEvents.map_loaded.connect(_on_map_loaded)
-	GameEvents.community_population_changed.connect(func(_p, _c): _refresh("community_population", ""))
-	GameEvents.community_qualities_changed.connect(func(_q): _refresh("community_qualities", ""))
+	if not _presentation_scheduler:
+		GameEvents.community_population_changed.connect(func(_p, _c): _refresh("community_population", ""))
+		GameEvents.community_qualities_changed.connect(func(_q): _refresh("community_qualities", ""))
 	GameEvents.community_ui_requested.connect(open_community)
-	GameEvents.community_ui_refresh_requested.connect(func(_r): _refresh_overlay())
+	if not _presentation_scheduler:
+		GameEvents.community_ui_refresh_requested.connect(func(_r): _refresh_overlay())
 	GameEvents.player_input_mode_changed.connect(_on_player_input_mode_changed)
-	GameEvents.structure_placed.connect(func(_position, _index, _orientation): _refresh("structure_placed", ""))
+	if not _presentation_scheduler:
+		GameEvents.structure_placed.connect(func(_position, _index, _orientation): _refresh("structure_placed", ""))
 	if _opening_tutorial and _opening_tutorial.has_signal("projection_changed"):
 		_opening_tutorial.connect("projection_changed", func(_projection): _refresh("opening_tutorial", ""))
+	_wire_optional_first_quest()
+
+func _wire_optional_first_quest() -> void:
+	if _first_land_quest and _first_land_quest.has_signal("projection_changed"):
+		var callback := Callable(self, "_on_first_land_quest_projection_changed")
+		if not _first_land_quest.is_connected("projection_changed", callback):
+			_first_land_quest.connect("projection_changed", callback)
+
+func _on_first_land_quest_projection_changed(_projection: Dictionary) -> void:
+	_refresh("first_land_quest", "")
 
 func _on_character_state_changed(cid: String, new_state: int) -> void:
 	print("[Dashboard] refresh: trigger=character_state_changed id=%s new_state=%s"
@@ -211,7 +242,8 @@ func _on_map_loaded(_m: DataMap) -> void:
 
 func _refresh(_trigger: String, _subject: String) -> void:
 	if _community_label and _community:
-		_community_label.text = CommunityInspector.summary_text(_community.get_snapshot(true))
+		var community_summary: Dictionary = _projection_registry.get_projection(&"community.operational") if _projection_registry else _community.get_operational_snapshot()
+		_community_label.text = CommunityInspector.summary_text(community_summary)
 	for pid in _patron_cards.keys():
 		(_patron_cards[pid] as _PatronCard).update()
 	var snap := snapshot()
@@ -220,7 +252,7 @@ func _refresh(_trigger: String, _subject: String) -> void:
 	if _guidance_view:
 		_guidance_view.set_guidance(build_compact_guidance_model(snap))
 	_refresh_overlay()
-	print("[Dashboard] hint: \"%s\"" % hint)
+	if _performance_debug_logs: print("[Dashboard] hint: \"%s\"" % hint)
 
 func select_top_tab(tab_name: String) -> void:
 	_selected_top_tab = tab_name if tab_name in ["community", "patrons"] else "community"
@@ -249,10 +281,21 @@ class Snapshot:
 	var first_arrived: String = ""
 	var first_want_revealed: String = ""
 	var first_landmark_available: String = ""
+	var opening_projection: Dictionary = {}
+	var first_quest_projection: Dictionary = {}
+	var tutorial_handoff: Dictionary = {}
 	var next_step: Dictionary = {}
 
 func snapshot() -> Snapshot:
 	var snap := Snapshot.new()
+	if _opening_tutorial:
+		if _opening_tutorial.has_method("get_projection"):
+			snap.opening_projection = _opening_tutorial.get_projection().duplicate(true)
+		if _opening_tutorial.has_method("get_state"):
+			var tutorial_state: Dictionary = _opening_tutorial.get_state()
+			snap.tutorial_handoff = tutorial_state.get("completion_handoff", {}).duplicate(true)
+	if _first_land_quest and _first_land_quest.has_method("get_projection"):
+		snap.first_quest_projection = _first_land_quest.get_projection().duplicate(true)
 	for pid in _patrons.all_patron_ids():
 		var pdef: Dictionary = _patrons.get_def(pid)
 		var pstate: int = _patrons.get_state(pid)
@@ -282,11 +325,12 @@ func snapshot() -> Snapshot:
 	snap.next_step = _next_step_for_snapshot(snap)
 	return snap
 
-## Priority: talk > build > landmark > generic.
+## Priority: opening tutorial > first quest > talk > build > landmark > generic.
 ## Public + static-friendly so tests can drive it with a hand-built snapshot.
 func compute_hint(snap: Snapshot) -> String:
 	var step := snap.next_step if not snap.next_step.is_empty() else _next_step_for_snapshot(snap)
 	match String(step.get("kind", "grow")):
+		"opening_tutorial", "first_quest": return String(step.get("text", "Continue your opening."))
 		"resolve_arrival": return "Talk to %s" % String(step.get("subject_label", "the new arrival"))
 		"place_request": return "Build a %s" % String(step.get("subject_label", "requested building"))
 		"place_landmark":
@@ -316,6 +360,7 @@ func build_compact_guidance_model(snap: Snapshot) -> Dictionary:
 			expression = "concerned"
 		"place_landmark": candidate_id = "%s_patron" % String(step.get("owner_patron_id", ""))
 		"complete": expression = "pleased"
+		"first_quest": expression = "pleased"
 	if candidate_id.is_empty() or not _has_approved_line_art(candidate_id, expression):
 		candidate_id = "ambrose"
 		expression = "pleased" if kind == "complete" else "thoughtful"
@@ -326,6 +371,7 @@ func build_compact_guidance_model(snap: Snapshot) -> Dictionary:
 	var owner_label := String(step.get("owner_character_label", ""))
 	var text := ""
 	match kind:
+		"opening_tutorial", "first_quest": text = String(step.get("text", ""))
 		"resolve_arrival":
 			text = "Open the Inbox when you're ready to talk." if candidate_id != "ambrose" else "%s is waiting in your Inbox." % subject_label
 		"place_request":
@@ -407,6 +453,25 @@ func _on_player_input_mode_changed(mode: String) -> void:
 		_guidance_view.set_suppressed(mode in ["modal", "radial", "inspection"])
 
 func _next_step_for_snapshot(snap: Snapshot) -> Dictionary:
+	if not snap.opening_projection.is_empty() and String(snap.opening_projection.get("status", "active")) != "complete":
+		return {
+			"kind":"opening_tutorial", "subject_id":snap.opening_projection.get("projection_key", "opening_tutorial"),
+			"subject_label":snap.opening_projection.get("target", {}).get("label", "") if snap.opening_projection.get("target", {}) is Dictionary else "",
+			"text":snap.opening_projection.get("text", ""), "source":"opening_tutorial",
+		}
+	if not snap.first_quest_projection.is_empty() and String(snap.first_quest_projection.get("status", snap.first_quest_projection.get("phase", ""))).to_lower() in ["pending", "available", "active", "agreed"]:
+		return {
+			"kind":"first_quest", "subject_id":snap.first_quest_projection.get("quest_id", "first_land_quest"),
+			"subject_label":snap.first_quest_projection.get("label", "First land quest"),
+			"text":snap.first_quest_projection.get("direction", snap.first_quest_projection.get("text", "Continue to your first land quest.")),
+			"source":"first_quest",
+		}
+	# The durable handoff is the fallback only until an owning quest plugin has
+	# supplied an authoritative projection. In particular, a completed quest must
+	# fall through to normal character/patron direction instead of being revived.
+	if snap.first_quest_projection.is_empty() and bool(snap.tutorial_handoff.get("applied", false)):
+		return {"kind":"first_quest", "subject_id":"first_land_quest", "subject_label":"First land quest",
+			"text":"Continue to your first land quest.", "source":"first_quest"}
 	if not snap.first_arrived.is_empty():
 		var arrived: Dictionary = snap.character_projections.get(snap.first_arrived, {})
 		return {"kind":"resolve_arrival", "subject_id":snap.first_arrived,

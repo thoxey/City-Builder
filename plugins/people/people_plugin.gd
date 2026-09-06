@@ -1,5 +1,7 @@
 extends PluginBase
 
+const SimulationIntentType := preload("res://scripts/simulation/simulation_intent.gd")
+
 ## Population system.
 ## Spawns people per residential building equal to BuildingProfile.capacity.
 ##
@@ -31,15 +33,19 @@ var _road_network: PluginBase
 var _car_manager:  PluginBase
 var _day_night:    PluginBase
 var _community:    PluginBase
+var _simulation_transaction: PluginBase
+var _performance_monitor: PluginBase
 
 func get_plugin_name() -> String: return "People"
-func get_dependencies() -> Array[String]: return ["RoadNetwork", "CarManager", "DayNight", "Community"]
+func get_dependencies() -> Array[String]: return ["RoadNetwork", "CarManager", "DayNight", "Community", "SimulationTransaction", "PerformanceMonitor"]
 
 func inject(deps: Dictionary) -> void:
 	_road_network = deps.get("RoadNetwork")
 	_car_manager  = deps.get("CarManager")
 	_day_night    = deps.get("DayNight")
 	_community    = deps.get("Community")
+	_simulation_transaction = deps.get("SimulationTransaction")
+	_performance_monitor = deps.get("PerformanceMonitor")
 
 # ── MultiMesh pool ────────────────────────────────────────────────────────────
 
@@ -50,6 +56,9 @@ var _ground_y:     float      = 0.0
 # ── People state ──────────────────────────────────────────────────────────────
 
 var _people:  Array[PersonSlot] = []
+var _processing_order: Array[PersonSlot] = []
+var _movement_order: Array[PersonSlot] = []
+var _movement_order_dirty := true
 var _resident_index: Dictionary = {}
 var _home:    Dictionary = {}   # PersonSlot → Vector3i  (current base tile)
 var _origin:  Dictionary = {}   # PersonSlot → Vector3i  (fixed spawn tile)
@@ -61,6 +70,7 @@ var _journey_by_person: Dictionary = {}   # PersonSlot → int journey_id
 var _person_by_journey: Dictionary = {}   # int journey_id → PersonSlot
 
 var _current_hour: float = 0.0
+var _last_assignment_revision := -1
 var _walk_route_threshold: int = WALK_THRESHOLD
 var _plan_key_by_journey: Dictionary = {}
 var _pedestrian_spacing: Array = []
@@ -78,8 +88,24 @@ func _plugin_ready() -> void:
 	GameEvents.community_resident_arrived.connect(_on_resident_arrived)
 	GameEvents.community_resident_departed.connect(_on_resident_departed)
 	GameEvents.community_resident_rehomed.connect(_on_resident_rehomed)
-	_day_night.hour_changed.connect(_on_hour)
+	if _simulation_transaction:
+		_simulation_transaction.register_reducer(&"traffic", [&"people_schedule"], _reduce_hour, _commit_hour, 5)
+		_simulation_transaction.register_contributor(&"people", [&"traffic"], _collect_hour)
+	else:
+		_day_night.hour_changed.connect(_on_hour)
 	_rebuild()
+
+func _collect_hour(context: Variant, sink: Variant) -> void:
+	sink.submit(SimulationIntentType.create("people:%d" % context.absolute_hour, &"people", "civilians",
+		&"traffic", &"people_schedule", {"hour":context.clock_hour}, 0, &"set", 5))
+
+func _reduce_hour(intents: Array, _context: Variant) -> Dictionary:
+	return {"ok":intents.size() == 1, "reason_code":"invalid_payload",
+		"plan":{"hour":float(intents[0].get_payload().hour)} if intents.size() == 1 else {}, "domains":[&"traffic"]}
+
+func _commit_hour(plan: Dictionary, _context: Variant) -> Dictionary:
+	_on_hour(float(plan.hour))
+	return {"ok":true}
 
 func _load_walk_threshold() -> void:
 	var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://data/community/balance.json"))
@@ -126,6 +152,9 @@ func _clear_people() -> void:
 			_mm.multimesh.set_instance_transform(person.slot_index, _hidden_transform())
 		_free_indices.append(person.slot_index)
 	_people.clear()
+	_processing_order.clear()
+	_movement_order.clear()
+	_movement_order_dirty = true
 	_resident_index.clear()
 	_home.clear()
 	_origin.clear()
@@ -186,6 +215,7 @@ func _spawn_person(tile: Vector3i, stagger: int, seed: int, resident_id: int = -
 	person.departure_offset = stagger * SPAWN_STAGGER + float(presentation["departure_offset"])
 	person.state = PersonSlot.VisualState.AT_HOME
 	_people.append(person)
+	_insert_processing_order(person)
 	if resident_id >= 0:
 		_resident_index[resident_id] = person
 	_home[person] = tile
@@ -206,10 +236,11 @@ static func seeded_presentation(seed: int, absolute_hour: int, purpose: String) 
 # ── Process ───────────────────────────────────────────────────────────────────
 
 func _process(delta: float) -> void:
+	var process_started := Time.get_ticks_usec()
 	_revalidate_stale_plans()
-	var ordered: Array[PersonSlot] = _people.duplicate()
-	ordered.sort_custom(func(a, b): return a.resident_id < b.resident_id)
-	for person: PersonSlot in ordered:
+	_ensure_processing_order()
+	_ensure_movement_order()
+	for person: PersonSlot in _movement_order:
 		match person.state:
 			PersonSlot.VisualState.WALKING_TO_STOP:
 				_advance_person(person, delta)
@@ -225,7 +256,18 @@ func _process(delta: float) -> void:
 					_arrive_for_intent(person)
 
 	_apply_pedestrian_spacing()
+	var render_started := Time.get_ticks_usec()
 	_update_multimesh(delta)
+	if _performance_monitor:
+		var walkers := 0
+		for person in _processing_order:
+			if person.state in [PersonSlot.VisualState.WALKING_TO_STOP, PersonSlot.VisualState.WALKING_ROUTE, PersonSlot.VisualState.WALKING_FROM_STOP]:
+				walkers += 1
+		_performance_monitor.record(&"people.process", Time.get_ticks_usec() - process_started,
+			{"residents":_people.size(), "active":_movement_order.size(),
+			"walkers":walkers})
+		_performance_monitor.record(&"render.submit", Time.get_ticks_usec() - render_started,
+			{"owner":"people", "instances":_people.size()})
 
 # ── Hour events ───────────────────────────────────────────────────────────────
 
@@ -233,8 +275,14 @@ func _on_hour(hour: float) -> void:
 	_current_hour = hour
 	_reconcile_all()
 
-func _reconcile_all() -> void:
+func _reconcile_all(force: bool = false) -> void:
 	if not _community or not _community.has_method("get_civilian_intents"):
+		return
+	var revision := int(_community.get_assignment_revision()) if _community.has_method("get_assignment_revision") else -1
+	if not force and revision == _last_assignment_revision: return
+	_last_assignment_revision = revision
+	if not force and _community.has_method("get_changed_civilian_ids"):
+		for resident_id in _community.get_changed_civilian_ids(): _sync_resident(int(resident_id))
 		return
 	for intent: Dictionary in _community.get_civilian_intents():
 		var person: PersonSlot = _resident_index.get(int(intent.get("resident_id", -1)))
@@ -253,7 +301,7 @@ func _reconcile_person(person: PersonSlot, intent: Dictionary) -> void:
 	person.destination_anchor = destination_value
 	if destination_value == null:
 		_cancel_person_journey(person)
-		person.state = PersonSlot.VisualState.UNHOUSED
+		_set_person_state(person, PersonSlot.VisualState.UNHOUSED)
 		person.blocked_reason = String(intent.get("blocked_reason", "resident_unhoused"))
 		return
 	if unchanged:
@@ -284,10 +332,10 @@ func _cancel_person_journey(person: PersonSlot) -> void:
 func _on_structure_placed(_position: Vector3i, _structure_index: int, _orientation: int) -> void:
 	# New topology cannot invalidate a route already being executed. Community's
 	# assignment revision decides whether any authoritative intent changed.
-	_reconcile_all()
+	_reconcile_all(true)
 
 func _on_structure_demolished(position: Vector3i) -> void:
-	_reconcile_all()
+	_reconcile_all(true)
 	_revalidate_stale_plans(position, true)
 
 func _on_map_loaded(_map: Variant) -> void:
@@ -296,11 +344,12 @@ func _on_map_loaded(_map: Variant) -> void:
 func reconstruct_from_authority() -> void:
 	_rebuild()
 
-func _on_resident_arrived(_resident_id: int, _home_anchor: Vector2i) -> void:
-	_sync_roster()
+func _on_resident_arrived(resident_id: int, _home_anchor: Vector2i) -> void:
+	_sync_resident(resident_id)
 
-func _on_resident_departed(_resident_id: int, _reason: String) -> void:
-	_sync_roster()
+func _on_resident_departed(resident_id: int, _reason: String) -> void:
+	var person: PersonSlot = _resident_index.get(resident_id)
+	if person: _remove_person(person)
 
 func _on_resident_rehomed(resident_id: int, home_anchor: Vector2i) -> void:
 	var person: PersonSlot = _resident_index.get(resident_id)
@@ -309,7 +358,26 @@ func _on_resident_rehomed(resident_id: int, home_anchor: Vector2i) -> void:
 		person.home_anchor = home_anchor
 		if person.current_place == old_home:
 			person.current_place = home_anchor
-	_sync_roster()
+	_sync_resident(resident_id)
+
+func _sync_resident(resident_id: int) -> void:
+	if not _community or not _community.has_method("get_civilian_intent"): return
+	var intent: Dictionary = _community.get_civilian_intent(resident_id)
+	var home_value: Variant = CommunityConstants.coordinate(intent.get("home_anchor"))
+	var person: PersonSlot = _resident_index.get(resident_id)
+	if intent.is_empty() or home_value == null:
+		if person: _remove_person(person)
+		return
+	if person:
+		_reconcile_person(person, intent)
+		return
+	if _people.size() >= MAX_PERSON_INSTANCES or _free_indices.is_empty(): return
+	_spawn_person(Vector3i(home_value.x, 0, home_value.y), _people.size(),
+		int(intent.get("resident_seed", resident_id)), resident_id)
+	person = _resident_index.get(resident_id)
+	if person:
+		person.intent = intent.duplicate(true)
+		_reconcile_person(person, intent)
 
 func _sync_roster() -> void:
 	if not _community or not _community.has_method("get_civilian_intents"):
@@ -347,6 +415,8 @@ func _remove_person(person: PersonSlot) -> void:
 	if person.slot_index >= 0 and person.slot_index not in _free_indices:
 		_free_indices.append(person.slot_index)
 	_people.erase(person)
+	_processing_order.erase(person)
+	_movement_order_dirty = true
 	_resident_index.erase(person.resident_id)
 	_home.erase(person); _origin.erase(person); _dest.erase(person); _state.erase(person); _timer.erase(person)
 
@@ -360,9 +430,8 @@ func _revalidate_stale_plans(changed_cell: Variant = null, force_affected := fal
 	if not _road_network or not _road_network.has_method("get_revision"):
 		return
 	var road_revision := int(_road_network.get_revision())
-	var ordered: Array[PersonSlot] = _people.duplicate()
-	ordered.sort_custom(func(a, b): return a.resident_id < b.resident_id)
-	for person in ordered:
+	_ensure_processing_order()
+	for person in _processing_order:
 		if person.journey_plan.is_empty() or person.destination_anchor == null:
 			continue
 		var affected: bool = changed_cell is Vector3i and _plan_depends_on(person, changed_cell)
@@ -391,6 +460,38 @@ func _revalidate_stale_plans(changed_cell: Variant = null, force_affected := fal
 		else:
 			_cancel_person_journey(person)
 			_plan_journey(person)
+
+func _insert_processing_order(person: PersonSlot) -> void:
+	var index := 0
+	while index < _processing_order.size() and _processing_order[index].resident_id < person.resident_id:
+		index += 1
+	_processing_order.insert(index, person)
+	_movement_order_dirty = true
+
+func _ensure_processing_order() -> void:
+	if _processing_order.size() == _people.size():
+		return
+	_processing_order.assign(_people)
+	_processing_order.sort_custom(func(a, b): return a.resident_id < b.resident_id)
+	_movement_order_dirty = true
+
+func _ensure_movement_order() -> void:
+	if not _movement_order_dirty:
+		return
+	_movement_order.clear()
+	for person: PersonSlot in _processing_order:
+		if person.state in [PersonSlot.VisualState.WALKING_TO_STOP,
+				PersonSlot.VisualState.WALKING_ROUTE, PersonSlot.VisualState.WALKING_FROM_STOP]:
+			_movement_order.append(person)
+	_movement_order_dirty = false
+
+func _set_person_state(person: PersonSlot, next_state: int) -> void:
+	if person.state == next_state:
+		return
+	person.state = next_state
+	# Moving residents update every frame. Waiting, in-car, at-place, blocked and
+	# unhoused residents are event/hour driven and leave the per-frame tier.
+	_movement_order_dirty = true
 
 # ── Journey logic ─────────────────────────────────────────────────────────────
 
@@ -432,13 +533,13 @@ func _plan_journey(person: PersonSlot) -> void:
 	person.blocked_reason = ""
 	if mode == "walk":
 		_set_walk_waypoints(person, path, destination)
-		person.state = PersonSlot.VisualState.WALKING_ROUTE
+		_set_person_state(person, PersonSlot.VisualState.WALKING_ROUTE)
 	else:
 		_set_walk_waypoints(person, [origin_stop], Vector2i(origin_stop.x, origin_stop.z))
-		person.state = PersonSlot.VisualState.WALKING_TO_STOP
+		_set_person_state(person, PersonSlot.VisualState.WALKING_TO_STOP)
 
 func _block(person: PersonSlot, reason: String) -> void:
-	person.state = PersonSlot.VisualState.BLOCKED
+	_set_person_state(person, PersonSlot.VisualState.BLOCKED)
 	person.blocked_reason = reason
 	person._waypoints.clear()
 	person._waypoint_tiles.clear()
@@ -463,7 +564,7 @@ func _begin_car_journey(person: PersonSlot) -> void:
 		person.journey_plan["road_path_vectors"], person.journey_revision,
 		person.plan_key, CarSlot.CarType.CIVILIAN)
 	if jid < 0:
-		person.state = PersonSlot.VisualState.WAITING_FOR_CAR
+		_set_person_state(person, PersonSlot.VisualState.WAITING_FOR_CAR)
 		person.blocked_reason = "car_pool_full"
 		person.car_retry_remaining = CAR_RETRY_INTERVAL
 		return
@@ -471,7 +572,7 @@ func _begin_car_journey(person: PersonSlot) -> void:
 	_person_by_journey[jid]    = person
 	_plan_key_by_journey[jid] = person.plan_key
 	person.visible = true
-	person.state = PersonSlot.VisualState.WAITING_FOR_CAR
+	_set_person_state(person, PersonSlot.VisualState.WAITING_FOR_CAR)
 	person.blocked_reason = "awaiting_traffic_admission"
 	person.journey_id = jid
 	person.car_retry_remaining = 0.0
@@ -495,7 +596,7 @@ func _on_journey_started(jid: int, origin_stop: Vector3i, position: Vector3) -> 
 	person.current_tile = origin_stop
 	person.position = Vector3(position.x, WALK_HEIGHT, position.z)
 	person.visible = false
-	person.state = PersonSlot.VisualState.IN_CAR
+	_set_person_state(person, PersonSlot.VisualState.IN_CAR)
 	person.blocked_reason = ""
 
 func _on_journey_completed(jid: int, arrived_road_tile: Vector3i, exit_pos: Vector3) -> void:
@@ -517,7 +618,7 @@ func _on_journey_completed(jid: int, arrived_road_tile: Vector3i, exit_pos: Vect
 	person.visible      = true
 	var destination: Vector2i = person.destination_anchor
 	_set_walk_waypoints(person, [], destination)
-	person.state = PersonSlot.VisualState.WALKING_FROM_STOP
+	_set_person_state(person, PersonSlot.VisualState.WALKING_FROM_STOP)
 
 func _start_walk(person: PersonSlot, from_tile: Vector3i, to_tile: Vector3i) -> void:
 	var path := _walk_path(from_tile, to_tile)
@@ -536,7 +637,7 @@ func _start_walk(person: PersonSlot, from_tile: Vector3i, to_tile: Vector3i) -> 
 		positions.append(pos)
 	person._waypoints.assign(positions)
 	person._waypoint_tiles.assign(path)
-	person.state = PersonSlot.VisualState.WALKING_ROUTE
+	_set_person_state(person, PersonSlot.VisualState.WALKING_ROUTE)
 	person.mode = "walk"
 
 func _is_road_tile(tile: Vector3i) -> bool:
@@ -547,7 +648,7 @@ func _arrive_for_intent(person: PersonSlot) -> void:
 	if person.destination_anchor == null: return
 	person.current_place = person.destination_anchor
 	person.current_tile = Vector3i(person.destination_anchor.x, 0, person.destination_anchor.y)
-	person.state = PersonSlot.VisualState.AT_HOME if person.purpose == "home" else PersonSlot.VisualState.AT_DESTINATION
+	_set_person_state(person, PersonSlot.VisualState.AT_HOME if person.purpose == "home" else PersonSlot.VisualState.AT_DESTINATION)
 	person.blocked_reason = ""
 	person.visible = true
 
@@ -557,7 +658,7 @@ func _arrive_at_dest(person: PersonSlot) -> void:
 func _abort_to_idle(person: PersonSlot) -> void:
 	person.visible = true
 	_journey_by_person.erase(person)
-	person.state = PersonSlot.VisualState.BLOCKED
+	_set_person_state(person, PersonSlot.VisualState.BLOCKED)
 	person.blocked_reason = "route_invalidated"
 
 # ── Person movement ───────────────────────────────────────────────────────────

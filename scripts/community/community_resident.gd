@@ -74,6 +74,38 @@ func to_dict(include_effects: bool = true, effect_limit: int = 12) -> Dictionary
 			result["applied_effects"].append(_json_safe(effect))
 	return result
 
+## Updates the durable DataMap projection without replacing its nested
+## dictionaries every hour. The live resident remains the sole authority.
+func write_persistence_dict(target: Dictionary = {}) -> Dictionary:
+	target["resident_id"] = resident_id
+	target["seed"] = seed
+	target["cohort_id"] = cohort_id
+	target["home_anchor"] = CommunityConstants.coordinate_record(home_anchor)
+	target["quality_importance"] = _write_rounded_map(target.get("quality_importance", {}), quality_importance)
+	target["manifestation_weights"] = _write_rounded_map(target.get("manifestation_weights", {}), manifestation_weights)
+	target["sensitivities"] = _write_rounded_map(target.get("sensitivities", {}), sensitivities)
+	target["current_qualities"] = _write_rounded_map(target.get("current_qualities", {}), current_qualities)
+	target["target_qualities"] = _write_rounded_map(target.get("target_qualities", {}), target_qualities)
+	target["composite_happiness"] = CommunityConstants.rounded(composite_happiness)
+	target["below_departure_hours"] = below_departure_hours
+	target["homeless_hours"] = homeless_hours
+	target["work_assignment"] = _json_safe(work_assignment)
+	target["activity_assignment"] = _json_safe(activity_assignment)
+	target.erase("applied_effects")
+	return target
+
+static func _write_rounded_map(target: Dictionary, values: Dictionary) -> Dictionary:
+	var keys := values.keys(); keys.sort()
+	for key in keys:
+		var value: Variant = values[key]
+		if value is Dictionary:
+			target[str(key)] = _write_rounded_map(target.get(str(key), {}), value)
+		elif value is float:
+			target[str(key)] = CommunityConstants.rounded(value)
+		else:
+			target[str(key)] = value
+	return target
+
 static func _json_safe(value: Variant) -> Variant:
 	if value is Vector2i or value is Vector3i:
 		return CommunityConstants.coordinate_record(value)

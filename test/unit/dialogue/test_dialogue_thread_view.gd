@@ -100,6 +100,7 @@ func test_portraits_overlap_frame_by_approximately_five_percent_at_supported_vie
 		assert_false(geometry["counterpart_rect"].intersects(geometry["transcript_rect"]), str(viewport_size))
 		assert_true(geometry["frame_rect"].end.x <= viewport_size.x, str(viewport_size))
 		assert_true(geometry["frame_rect"].end.y <= viewport_size.y, str(viewport_size))
+	assert_eq(_view.geometry_projection()["ui_scale"], 2.0, "4K uses the established 2x authored-canvas scale")
 
 
 func test_bottom_follow_tracks_new_rows_when_already_at_latest() -> void:
@@ -139,3 +140,33 @@ func test_long_transcript_appends_without_losing_scroll_state() -> void:
 	var scroll: Dictionary = _view.scroll_projection()
 	assert_true(scroll["follow_latest"])
 	assert_eq(scroll["value"], scroll["maximum"])
+
+
+func test_ambrose_community_keywords_map_every_whole_word_without_changing_text() -> void:
+	var authored := "OPPORTUNITY, Beauty and beauty bring Liveability; livability builds Belonging. Beautystone does not."
+	_view.append_speech_row("ambrose", "Ambrose", "right", authored, true, true)
+	var row: Dictionary = _view.row_projection(0)
+	assert_eq(row["full_text"], authored)
+	assert_eq(row["label_text"], authored)
+	assert_true(row["rich_text"])
+	var occurrences: Array = row["community_keyword_occurrences"]
+	assert_eq(occurrences.size(), 6)
+	assert_eq(occurrences.map(func(item): return item["quality"]), [
+		"opportunity", "beauty", "beauty", "liveability", "liveability", "belonging",
+	])
+	assert_eq(occurrences[0]["keyword"], "OPPORTUNITY")
+	assert_false(occurrences.any(func(item): return item["keyword"] == "Beautystone"))
+
+
+func test_non_ambrose_speech_does_not_receive_keyword_decoration() -> void:
+	_view.append_speech_row("william", "Sir William", "right", "Beauty and Opportunity.", true, false)
+	var row: Dictionary = _view.row_projection(0)
+	assert_false(row["rich_text"])
+	assert_true(row["community_keyword_occurrences"].is_empty())
+
+
+func test_missing_community_icon_falls_back_to_exact_text_without_broken_occurrence() -> void:
+	var authored := "Beauty belongs in the sentence [exactly]."
+	var result: Dictionary = DialogueThreadView.community_keyword_decoration(authored, "res://missing/community-icons")
+	assert_eq(result["occurrences"], [])
+	assert_eq(result["markup"], "Beauty belongs in the sentence [lb]exactly].")

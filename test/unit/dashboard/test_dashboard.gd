@@ -15,6 +15,7 @@ var _stub_chars: Object
 var _stub_patrons: Object
 var _stub_demand: Object
 var _stub_catalog: Object
+var _stub_opening: Object
 
 
 func before_each() -> void:
@@ -22,12 +23,14 @@ func before_each() -> void:
 	_stub_patrons = _StubPatrons.new()
 	_stub_demand  = _StubDemand.new()
 	_stub_catalog = _StubCatalog.new()
+	_stub_opening = _StubOpening.new()
 
 	_plugin = DashboardCls.new()
 	_plugin._characters = _stub_chars
 	_plugin._patrons    = _stub_patrons
 	_plugin._demand     = _stub_demand
 	_plugin._catalog    = _stub_catalog
+	_plugin._opening_tutorial = _stub_opening
 	add_child(_plugin)
 
 
@@ -90,6 +93,56 @@ func test_hint_fallback_when_all_idle() -> void:
 	var hint: String = _plugin.compute_hint(_plugin.snapshot())
 	assert_string_starts_with(hint, "Grow commercial:")
 	assert_true(hint.contains("0/10"))
+
+func test_active_opening_tutorial_direction_outranks_unarrived_demand() -> void:
+	_stub_chars.gates["aristocrat_commercial"] = {
+		"character_id":"aristocrat_commercial", "display_name":"Lord Ashworth", "state":0,
+		"bucket":"commercial", "bucket_label":"commerce", "fulfilled":0.0,
+		"required_fulfilled":100.0, "demand_met":false, "attained_tier":0, "required_tier":1, "tier_met":false,
+	}
+	_stub_opening.projection = {"status":"active","projection_key":"opening|roads","text":"Build ten rooted roads.","target":{}}
+	assert_eq(_plugin.compute_hint(_plugin.snapshot()), "Build ten rooted roads.")
+
+func test_pending_first_quest_handoff_outranks_unarrived_demand() -> void:
+	_stub_opening.projection = {"status":"complete","text":"done"}
+	_stub_opening.state.completion_handoff.applied = true
+	var snap = _plugin.snapshot()
+	assert_eq(snap.next_step.source, "first_quest")
+	assert_eq(_plugin.compute_hint(snap), "Continue to your first land quest.")
+
+func test_explicit_first_quest_projection_outranks_handoff_and_character_fallback() -> void:
+	_stub_opening.projection = {"status":"complete"}
+	_stub_opening.state.completion_handoff.applied = true
+	var first_quest := _StubFirstQuest.new()
+	_plugin.add_child(first_quest)
+	_plugin._first_land_quest = first_quest
+	assert_eq(_plugin.compute_hint(_plugin.snapshot()), "Open the first-land negotiation.")
+
+func test_completed_authoritative_first_quest_falls_through_to_character_direction() -> void:
+	_stub_opening.projection = {"status":"complete"}
+	_stub_opening.state.completion_handoff.applied = true
+	_stub_chars.set_state("aristocrat_commercial", 1)
+	var first_quest := _StubFirstQuest.new()
+	first_quest.projection = {"quest_id":"first_land_quest", "phase":"COMPLETED"}
+	_plugin.add_child(first_quest)
+	_plugin._first_land_quest = first_quest
+	var snap = _plugin.snapshot()
+	assert_eq(String(snap.next_step.kind), "resolve_arrival")
+	assert_string_starts_with(_plugin.compute_hint(snap), "Talk to")
+
+func test_first_quest_projection_change_refreshes_dashboard_direction() -> void:
+	_stub_opening.projection = {"status":"complete"}
+	_stub_opening.state.completion_handoff.applied = true
+	var first_quest := _StubFirstQuest.new()
+	_plugin.add_child(first_quest)
+	_plugin._first_land_quest = first_quest
+	_plugin._hint_label = Label.new()
+	_plugin.add_child(_plugin._hint_label)
+	_plugin._wire_optional_first_quest()
+	first_quest.publish({"quest_id":"first_land_quest", "phase":"PENDING", "direction":"Open the first-land negotiation."})
+	assert_eq(_plugin._hint_label.text, "Open the first-land negotiation.")
+	first_quest.publish({"quest_id":"first_land_quest", "phase":"COMPLETED"})
+	assert_string_starts_with(_plugin._hint_label.text, "Grow commercial:")
 
 func test_hint_reports_completion_when_every_patron_is_complete() -> void:
 	for cid in _stub_chars.defs:
@@ -238,3 +291,23 @@ class _StubCatalog:
 		if names.has(bid):
 			return {"display_name": names[bid]}
 		return {}
+
+class _StubOpening:
+	extends PluginBase
+	var projection := {"status":"complete"}
+	var state := {"completion_handoff":{"receipt_id":"tutorial_opening_completed","applied":false}}
+	func get_plugin_name() -> String: return "OpeningTutorial"
+	func get_projection() -> Dictionary: return projection.duplicate(true)
+	func get_state() -> Dictionary: return state.duplicate(true)
+	func is_complete() -> bool: return String(projection.get("status", "")) == "complete"
+
+class _StubFirstQuest:
+	extends PluginBase
+	signal projection_changed(projection: Dictionary)
+	var projection := {"quest_id":"first_land_quest","status":"pending","direction":"Open the first-land negotiation."}
+	func get_plugin_name() -> String: return "FirstLandQuest"
+	func get_projection() -> Dictionary:
+		return projection.duplicate(true)
+	func publish(next_projection: Dictionary) -> void:
+		projection = next_projection.duplicate(true)
+		projection_changed.emit(get_projection())

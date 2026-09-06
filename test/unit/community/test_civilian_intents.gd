@@ -49,3 +49,19 @@ func test_invalidation_is_monotonic_even_within_same_hour() -> void:
 	assert_gt(after_first, before)
 	assert_gt(plugin.get_assignment_revision(), after_first)
 	plugin.free()
+
+func test_cached_hour_consumes_changed_assignment_ids_once() -> void:
+	var plugin := CommunityPlugin.new()
+	plugin._clock = FakeClock.new()
+	plugin.compiled_evaluator_enabled = false
+	plugin._balance = {"migration_hour": 6, "quality_baseline": 50.0, "hourly_response_rate": 0.1}
+	plugin._migration = {"last_day": 0}
+	plugin._changed_assignment_resident_ids.assign([7, 9])
+	var cache_key := plugin._assignment_fast_key(8)
+	plugin._assignment_prepared_hour_key = cache_key
+	plugin._hour_source_cache_key = cache_key
+	plugin._hour_source_cache = []
+	plugin._on_hour(8.0)
+	assert_eq(plugin.get_changed_civilian_ids(), [], "a cached hour must not replay the previous assignment delta")
+	plugin._clock.free()
+	plugin.free()

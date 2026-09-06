@@ -35,7 +35,7 @@
       "patron_id": "aristocrat",
       "character_id": "aristocrat_residential",
       "chain_role": "chain",
-      "prerequisite_threshold": 25,
+      "prerequisite_threshold": 40,
       "prerequisite_ids": [],
       "desirability_boost": 0.0
     },

@@ -53,18 +53,19 @@ func get_bank_count() -> int:
 
 ## Called once per in-game hour. Context carries upstream inputs
 ## (population, satisfaction score, other bucket values, amenity counts…).
-func tick(_hour: float, context: Dictionary) -> void:
+func tick(_hour: float, context: Dictionary, publish: bool = true) -> void:
 	var new_total := _compute(context)
 	var prev_total := total_demand
 	if monotonic:
 		total_demand = max(total_demand, new_total)
 	else:
 		total_demand = new_total
-	if total_demand != prev_total:
+	if publish and total_demand != prev_total:
 		GameEvents.demand_total_changed.emit(type_id, total_demand)
 	# Always emit unserved on tick — downstream (HUD, condition ctx) treats this
 	# as the "heartbeat" event for the bucket.
-	GameEvents.demand_unserved_changed.emit(type_id, get_unserved())
+	if publish:
+		GameEvents.demand_unserved_changed.emit(type_id, get_unserved())
 
 ## Override in each subclass.
 func _compute(_context: Dictionary) -> float:

@@ -7,11 +7,15 @@ extends Node
 ## To disable a plugin: comment out its line here (no project.godot changes needed).
 
 const PLUGINS: Array[GDScript] = [
+	preload("res://plugins/performance/performance_monitor_plugin.gd"),
+	preload("res://plugins/presentation/projection_registry.gd"),
 	preload("res://plugins/building_catalog/building_catalog_plugin.gd"),
 	preload("res://plugins/road_debug/road_debug_plugin.gd"),
 	preload("res://plugins/traffic/road_network_plugin.gd"),
 	preload("res://plugins/traffic/car_manager_plugin.gd"),
 	preload("res://plugins/people/people_plugin.gd"),
+	preload("res://plugins/simulation/simulation_transaction_plugin.gd"),
+	preload("res://plugins/presentation/presentation_scheduler_plugin.gd"),
 	preload("res://plugins/day_night/day_night_plugin.gd"),
 	preload("res://plugins/city_stats/city_stats_plugin.gd"),
 	preload("res://plugins/satisfaction/satisfaction_plugin.gd"),

@@ -24,7 +24,7 @@ class StubCatalog:
 		return {}
 	func get_pool_config(_pid: String) -> Dictionary: return {}
 	func add_structure(bid: String, category: String, pool_id: String,
-			has_road_meta: bool = false, profile_category: String = "") -> int:
+			has_road_meta: bool = false, profile_category: String = "", palette_excluded: bool = false) -> int:
 		var s := Structure.new()
 		s.pool_id = pool_id
 		var md: Array[StructureMetadata] = []
@@ -42,6 +42,7 @@ class StubCatalog:
 			"display_name": bid.capitalize(),
 			"category": category,
 			"pool_id": pool_id,
+			"palette_excluded": palette_excluded,
 		})
 		return structures.size() - 1
 
@@ -152,6 +153,34 @@ func test_pool_members_collapse_to_one_entry() -> void:
 		by_id[e.id] = e
 	assert_eq(by_id["residential_t1"].structure_indices.size(), 2, "t1 pool collapses two houses")
 	assert_eq(by_id["residential_t2"].structure_indices.size(), 1, "tower stands alone in its pool")
+
+func test_palette_exclusion_removes_members_and_omits_an_empty_pool() -> void:
+	var plain := _catalog.add_structure("grass", "nature", "grass", false, "", true)
+	var trees := _catalog.add_structure("grass_trees", "nature", "grass")
+	var tall := _catalog.add_structure("grass_trees_tall", "nature", "grass")
+	_catalog.add_structure("hidden_only", "nature", "hidden_pool", false, "", true)
+	_rebuild()
+	var grass = _plugin._entry_by_id("grass")
+	assert_not_null(grass)
+	assert_eq(grass.structure_indices, [trees, tall])
+	assert_false(plain in grass.structure_indices)
+	assert_null(_plugin._entry_by_id("hidden_pool"))
+
+func test_declared_seed_reaches_both_planted_grass_variants_and_never_plain_grass() -> void:
+	var plain := _catalog.add_structure("grass", "nature", "grass", false, "", true)
+	var trees := _catalog.add_structure("grass_trees", "nature", "grass")
+	var tall := _catalog.add_structure("grass_trees_tall", "nature", "grass")
+	_rebuild()
+	_plugin._selected_id = "grass"
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 19019
+	var seen := {}
+	for index in 100:
+		var picked: int = _plugin.pick_structure_index_for_build(rng)
+		assert_ne(picked, plain, "plain grass cannot be selected")
+		assert_true(picked in [trees, tall])
+		seen[picked] = true
+	assert_eq(seen.keys().size(), 2)
 
 func test_standalone_buildings_are_distinct_entries() -> void:
 	_catalog.add_structure("pub",     "unique", "")
@@ -317,6 +346,30 @@ func test_menu_projection_exposes_authored_community_scope_and_radius() -> void:
 	assert_eq(entry["community_effects"][0]["quality"], "beauty")
 	assert_eq(entry["community_effects"][0]["scope"], "local")
 	assert_eq(entry["community_effects"][0]["radius"], 2)
+
+
+func test_menu_projection_exposes_only_representative_authored_base_effects() -> void:
+	var first := _catalog.add_structure("house_a", "generic", "houses", false, "residential")
+	var second := _catalog.add_structure("house_b", "generic", "houses", false, "residential")
+	var attractiveness := AttractivenessProfile.new()
+	attractiveness.base = 4
+	_catalog.structures[first].metadata.append(attractiveness)
+	_catalog.structures[first].metadata.append(CommunityEffectProfile.from_dict({"effects":[{
+		"effect_id":"welcome", "quality":"belonging", "manifestation":"neutral",
+		"amount":-2, "scope":"local", "radius":2, "stacking_group":"welcome", "reason":"Crowded entrance",
+	}]}))
+	var alternate := AttractivenessProfile.new()
+	alternate.base = 99
+	_catalog.structures[second].metadata.append(alternate)
+	_rebuild()
+	var entry: Dictionary = _plugin.get_build_menu_model()["entries_by_id"]["houses"]
+	assert_eq(entry["representative_structure_index"], first)
+	assert_eq(entry["authored_effects"].size(), 2)
+	assert_eq(entry["authored_effects"].map(func(effect): return [effect["quality"], effect["amount"], effect["source"]]), [
+		["beauty", 4.0, "attractiveness_base"],
+		["belonging", -2.0, "community_effect"],
+	])
+	assert_false(entry["authored_effects"].any(func(effect): return effect["amount"] == 99.0), "pool alternates do not invent a combined preview")
 
 func test_request_selection_revalidates_and_retains_selection_on_rejection() -> void:
 	_catalog.add_structure("park", "nature", "")

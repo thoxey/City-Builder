@@ -1,5 +1,7 @@
 extends PluginBase
 
+var _performance_debug_logs := OS.get_environment("CITY_BUILDER_PERFORMANCE_DEBUG_LOGS") == "1"
+
 ## EventSystem — generalised narrative event bus (Phase 8).
 ##
 ## Responsibilities:
@@ -272,7 +274,7 @@ func _on_city_attractiveness_changed(value: int) -> void:
 # ── Dispatch ──────────────────────────────────────────────────────────────────
 
 func _dispatch(trigger: String, payload_ctx: Dictionary) -> void:
-	print("[EventSystem] trigger: event=%s %s" % [trigger, _kv_string(payload_ctx)])
+	if _performance_debug_logs: print("[EventSystem] trigger: event=%s %s" % [trigger, _kv_string(payload_ctx)])
 	var ids: Array = _by_trigger.get(trigger, [])
 	for eid in ids:
 		var rec: Dictionary = _events.get(eid, {})

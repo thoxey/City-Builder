@@ -1,5 +1,8 @@
 extends Node3D
 
+const AuthoritativeChangeSetType := preload("res://scripts/simulation/authoritative_change_set.gd")
+const InvalidationDomainType := preload("res://scripts/presentation/invalidation_domains.gd")
+
 ## Populated from BuildingCatalog at _ready(). Was @export before M0; now sourced
 ## from res://data/buildings/**/*.json via the plugin so new buildings are added
 ## by dropping a JSON file, no scene edits required.
@@ -12,6 +15,7 @@ var _land:     PluginBase  # BuildableArea — gates placement to allowed cells
 var _dialogue: PluginBase  # Dialogue plugin — suppresses input while a modal is open
 var _uniques:  PluginBase  # UniqueRegistry — authoritative one-of-a-kind rules
 var _community: PluginBase  # Community — placement coverage preview
+var _attractiveness: PluginBase # Attractiveness — canonical tile consequence quote
 var _road_network: PluginBase # RoadNetwork — Town Hall-rooted placement authority
 var _community_inspect_mode: bool = false
 var _radial_input_active: bool = false
@@ -21,6 +25,8 @@ var _placement_block_frame: int = -1
 var _input_mode: String = "world"
 
 const INPUT_MODES := ["world", "radial", "placement", "demolition", "inspection", "modal"]
+const PLACEMENT_FEEDBACK_DURATION := 3.2
+const PLACEMENT_FEEDBACK_FADE_POWER := 1.35
 
 var map: DataMap
 
@@ -30,6 +36,8 @@ var _last_preview_anchor := Vector2i(-99999, -99999)
 var _placement_overlay: MeshInstance3D
 var _suppress_replacement_anchor := Vector2i(-99999, -99999)
 var _suppress_replacement_until_move := false
+var _placement_quote_revision: int = 0
+var _placement_refresh_queued: bool = false
 
 # Road auto-tiling: precomputed at _ready()
 var _road_straight_idx: int = -1
@@ -53,11 +61,15 @@ var plane: Plane # Used for raycasting mouse
 
 const SAVE_SLOT_1 := "user://map_slot1.res"
 const SAVE_SLOT_2 := "user://map_slot2.res"
-const SAVE_TEMP   := "user://map.res"
+const LEGACY_SAVE := "user://map.res"
 
 # ── Ground layer ──────────────────────────────────────────────────────────────
-const GRASS_ITEM_ID   := 0
-const GRASS_GRID_HALF := 256   # fills a 512×512 area (-256..255 on each axis)
+const GRASS_ITEM_ID            := 0
+const GRASS_UNDERLAY_ITEM_ID   := 1
+const GRASS_UNDERLAY_BIAS_Y    := -0.003
+const GROUND_TREATMENT_REPLACE := "replace"
+const GROUND_TREATMENT_UNDERLAY := "grass_underlay"
+const GRASS_GRID_HALF          := 256   # fills a 512×512 area (-256..255 on each axis)
 
 # ── Overbuild confirmation ─────────────────────────────────────────────────────
 var _overbuild_dialog:   ConfirmationDialog
@@ -69,6 +81,7 @@ var _overbuild_fp_cells: Array[Vector2i]  = []
 
 func _ready():
 	map = DataMap.new()
+	GameState.reset_state_version()
 	plane = Plane(Vector3.UP, Vector3.ZERO)
 	_setup_placement_overlay()
 
@@ -88,6 +101,7 @@ func _ready():
 	_dialogue = PluginManager.get_plugin("Dialogue")
 	_uniques  = PluginManager.get_plugin("UniqueRegistry")
 	_community = PluginManager.get_plugin("Community")
+	_attractiveness = PluginManager.get_plugin("Attractiveness")
 	_road_network = PluginManager.get_plugin("RoadNetwork")
 
 	var mesh_library = MeshLibrary.new()
@@ -128,6 +142,14 @@ func _ready():
 
 	GameEvents.palette_changed.connect(_on_palette_changed)
 	GameEvents.community_inspect_mode_changed.connect(func(active): _community_inspect_mode = active)
+	GameEvents.structure_placed.connect(func(_position, _index, _orientation): _queue_placement_context_refresh())
+	GameEvents.structure_demolished.connect(func(_position): _queue_placement_context_refresh())
+	GameEvents.map_loaded.connect(func(_loaded): _queue_placement_context_refresh())
+	GameEvents.cash_changed.connect(func(_amount, _delta): _queue_placement_context_refresh())
+	GameEvents.demand_total_changed.connect(func(_bucket, _value): _queue_placement_context_refresh())
+	GameEvents.demand_fulfilled_changed.connect(func(_bucket, _value): _queue_placement_context_refresh())
+	GameEvents.community_qualities_changed.connect(func(_averages): _queue_placement_context_refresh())
+	GameEvents.city_attractiveness_changed.connect(func(_value): _queue_placement_context_refresh())
 
 	# Set up overbuild confirmation dialog
 	_overbuild_dialog = ConfirmationDialog.new()
@@ -163,7 +185,7 @@ func _process(delta):
 		action_structure_toggle()
 
 	action_save_slot1()
-	action_load_temp()
+	action_load_slot1()
 	action_save_slot2()
 	action_load_slot2()
 	action_clear()
@@ -285,14 +307,30 @@ func _emit_placement_context(reason: String = "", anchor: Variant = null) -> voi
 		"rotation": _rotation_steps,
 		"reason": reason,
 	}
+	if anchor == null and _placement_active and _last_preview_anchor.x > -90000:
+		anchor = _last_preview_anchor
 	if anchor != null:
 		context["anchor"] = CommunityConstants.coordinate_record(anchor)
-		var preview: Dictionary = {}
-		if _community and _community.has_method("get_placement_preview"):
-			preview = _community.get_placement_preview(_preview_idx, anchor, _rotation_steps)
-		preview["same_type_neighbours"] = _same_type_neighbours(anchor, _preview_idx)
-		context["community_preview"] = preview
+		var consequences := evaluate_placement_consequences(_preview_idx, anchor, _rotation_steps)
+		context["location_consequences"] = consequences
+		# Compatibility for older presentation/tests while consumers migrate to
+		# the explicit nested location projection.
+		context["community_preview"] = consequences.get("community", {}).duplicate(true)
+		if reason.is_empty() and consequences.get("status", "") == "invalid":
+			context["reason"] = String(consequences.get("reason", ""))
 	GameEvents.placement_context_changed.emit(context)
+
+func _queue_placement_context_refresh() -> void:
+	_placement_quote_revision += 1
+	if _placement_refresh_queued:
+		return
+	_placement_refresh_queued = true
+	call_deferred("_flush_placement_context_refresh")
+
+func _flush_placement_context_refresh() -> void:
+	_placement_refresh_queued = false
+	if _placement_active and _last_preview_anchor.x > -90000:
+		_emit_placement_context("", _last_preview_anchor)
 
 func _same_type_neighbours(anchor: Vector2i, structure_index: int) -> int:
 	if structure_index < 0 or structure_index >= structures.size():
@@ -331,8 +369,13 @@ func get_mesh(packed_scene):
 
 func _setup_ground_gridmap() -> void:
 	var ml := MeshLibrary.new()
-	# Single item: the grass tile used for every blank cell on the map.
+	# Both items reuse the exact same mesh/material. The underlay's small fixed
+	# negative bias keeps it beneath authored slabs while remaining continuous
+	# with the surrounding grass at normal gameplay zooms.
 	ml.create_item(GRASS_ITEM_ID)
+	ml.set_item_name(GRASS_ITEM_ID, "normal_grass")
+	ml.create_item(GRASS_UNDERLAY_ITEM_ID)
+	ml.set_item_name(GRASS_UNDERLAY_ITEM_ID, "grass_underlay")
 	var grass_packed := load("res://models/city-builder/grass.glb") as PackedScene
 	var grass_mesh: Mesh = get_mesh(grass_packed) if grass_packed else null
 	if grass_mesh:
@@ -340,6 +383,9 @@ func _setup_ground_gridmap() -> void:
 		ml.set_item_mesh(GRASS_ITEM_ID, grass_mesh)
 		ml.set_item_mesh_transform(GRASS_ITEM_ID,
 				Transform3D(Basis.IDENTITY, Vector3(0.0, gy, 0.0)))
+		ml.set_item_mesh(GRASS_UNDERLAY_ITEM_ID, grass_mesh)
+		ml.set_item_mesh_transform(GRASS_UNDERLAY_ITEM_ID,
+				Transform3D(Basis.IDENTITY, Vector3(0.0, gy + GRASS_UNDERLAY_BIAS_Y, 0.0)))
 	else:
 		var quad := PlaneMesh.new()
 		quad.size = Vector2(0.98, 0.98)
@@ -348,18 +394,50 @@ func _setup_ground_gridmap() -> void:
 		mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 		quad.material = mat
 		ml.set_item_mesh(GRASS_ITEM_ID, quad)
+		ml.set_item_mesh(GRASS_UNDERLAY_ITEM_ID, quad)
+		ml.set_item_mesh_transform(GRASS_UNDERLAY_ITEM_ID,
+				Transform3D(Basis.IDENTITY, Vector3(0.0, GRASS_UNDERLAY_BIAS_Y, 0.0)))
 	ground_gridmap.mesh_library = ml
 
-## Fills the 512×512 background with grass, spread over multiple frames.
-## Skips cells already occupied by a building so that a startup map-load
-## doesn't get its tiles covered over by the coroutine finishing later.
-func _fill_grass_background() -> void:
-	for x in range(-GRASS_GRID_HALF, GRASS_GRID_HALF):
-		for z in range(-GRASS_GRID_HALF, GRASS_GRID_HALF):
-			if gridmap.get_cell_item(Vector3i(x, 0, z)) == GridMap.INVALID_CELL_ITEM:
+## Resolve one cell from its final logical occupant. Ground treatment remains
+## derived presentation state: this helper never mutates occupancy or save data.
+func _desired_ground_item_for_cell(cell: Vector2i) -> int:
+	var building_instance_id := int(GameState.cell_to_building.get(cell, -1))
+	if building_instance_id < 0:
+		return GRASS_ITEM_ID
+	var entry: Dictionary = GameState.building_registry.get(building_instance_id, {})
+	var structure_index := int(entry.get("structure", -1))
+	if structure_index < 0 or _catalog == null or not _catalog.has_method("get_summary_by_index"):
+		return GridMap.INVALID_CELL_ITEM
+	var summary: Dictionary = _catalog.get_summary_by_index(structure_index)
+	var treatment := String(summary.get("ground_treatment", GROUND_TREATMENT_REPLACE))
+	if treatment == GROUND_TREATMENT_UNDERLAY:
+		return GRASS_UNDERLAY_ITEM_ID
+	return GridMap.INVALID_CELL_ITEM
+
+func _sync_ground_cell(cell: Vector2i) -> void:
+	ground_gridmap.set_cell_item(
+		Vector3i(cell.x, 0, cell.y), _desired_ground_item_for_cell(cell), 0)
+
+func _sync_ground_cells(cells: Array) -> void:
+	for cell_any in cells:
+		var cell: Vector2i = cell_any
+		_sync_ground_cell(cell)
+
+## Fills the background over multiple frames. Resolve occupied cells through the
+## same canonical policy as every other lifecycle path: a building can be placed
+## or loaded while this coroutine is between columns, and multi-cell satellites
+## do not have their own StructureMap item to detect visually.
+func _fill_grass_background(half_extent: int = GRASS_GRID_HALF) -> void:
+	for x in range(-half_extent, half_extent):
+		for z in range(-half_extent, half_extent):
+			var cell := Vector2i(x, z)
+			if GameState.cell_to_building.has(cell):
+				_sync_ground_cell(cell)
+			else:
 				ground_gridmap.set_cell_item(Vector3i(x, 0, z), GRASS_ITEM_ID, 0)
 		if x % 16 == 0:
-			await get_tree().process_frame
+			await Engine.get_main_loop().process_frame
 
 # ── Footprint helpers ──────────────────────────────────────────────────────────
 
@@ -398,7 +476,7 @@ func _resolve_structure(requested_id: String, variant_id: String = "", rng: Rand
 	var exact_idx: int = _catalog.get_item_index(requested_id)
 	if exact_idx >= 0:
 		return {"ok": true, "index": exact_idx, "building_id": requested_id, "choice_id": requested_id}
-	var pool_indices: Array[int] = _catalog.get_pool_indices(requested_id)
+	var pool_indices: Array[int] = _catalog.get_player_pool_indices(requested_id) if _catalog.has_method("get_player_pool_indices") else _catalog.get_pool_indices(requested_id)
 	if pool_indices.is_empty():
 		return _reject_evaluation(PlaytestActionResult.UNKNOWN_BUILDING, {"requested_id": requested_id})
 	var chosen_idx: int = -1
@@ -418,13 +496,60 @@ func _resolve_structure(requested_id: String, variant_id: String = "", rng: Rand
 		"choice_id": requested_id,
 	}
 
+## Resolves a player-facing Palette choice. Pool identity deliberately wins over
+## exact catalogue identity here: a legacy catalogue building may share its ID
+## with a Palette pool (plain `grass` is the compatibility case). Direct
+## `building_id` placement continues to use `_resolve_structure`, so saves and
+## explicit tooling can still address the catalogue item unambiguously.
+func _resolve_player_choice(choice_id: String, variant_id: String = "",
+		rng: RandomNumberGenerator = null) -> Dictionary:
+	if _catalog == null:
+		return _reject_evaluation(PlaytestActionResult.UNKNOWN_BUILDING, {"requested_id": choice_id})
+	var pool_indices: Array[int] = _catalog.get_player_pool_indices(choice_id) \
+		if _catalog.has_method("get_player_pool_indices") else _catalog.get_pool_indices(choice_id)
+	if not pool_indices.is_empty():
+		var chosen_idx: int = -1
+		if not variant_id.is_empty():
+			chosen_idx = _catalog.get_item_index(variant_id)
+			if chosen_idx not in pool_indices:
+				return _reject_evaluation(PlaytestActionResult.UNKNOWN_BUILDING, {
+					"requested_id": choice_id, "variant_id": variant_id,
+				})
+		else:
+			var pick := rng.randi_range(0, pool_indices.size() - 1) if rng else randi_range(0, pool_indices.size() - 1)
+			chosen_idx = pool_indices[pick]
+		return {
+			"ok": true,
+			"index": chosen_idx,
+			"building_id": _catalog.get_id_by_index(chosen_idx),
+			"choice_id": choice_id,
+		}
+
+	# Standalone Palette entries use their concrete building ID as choice ID.
+	# A variant is only meaningful for a pool and excluded catalogue records are
+	# never legal through this player-facing path.
+	if not variant_id.is_empty():
+		return _reject_evaluation(PlaytestActionResult.UNKNOWN_BUILDING, {
+			"requested_id": choice_id, "variant_id": variant_id,
+		})
+	var exact_idx: int = _catalog.get_item_index(choice_id)
+	if exact_idx < 0:
+		return _reject_evaluation(PlaytestActionResult.UNKNOWN_BUILDING, {"requested_id": choice_id})
+	var summary: Dictionary = _catalog.get_summary_by_index(exact_idx) \
+		if _catalog.has_method("get_summary_by_index") else {}
+	if bool(summary.get("palette_excluded", false)):
+		return _reject_evaluation(PlaytestActionResult.UNKNOWN_BUILDING, {"requested_id": choice_id})
+	return {"ok": true, "index": exact_idx, "building_id": choice_id, "choice_id": choice_id}
+
 ## Evaluates every placement gate without changing cash, demand, registries, or
 ## GridMaps. Pool selection uses the supplied session RNG when present.
 func evaluate_placement(requested_id: String, anchor: Vector2i, rotation_steps: int = 0,
-		replace: bool = false, variant_id: String = "", rng: RandomNumberGenerator = null) -> Dictionary:
+		replace: bool = false, variant_id: String = "", rng: RandomNumberGenerator = null,
+		player_choice: bool = false) -> Dictionary:
 	if rotation_steps < 0 or rotation_steps > 3:
 		return _reject_evaluation(PlaytestActionResult.INVALID_ROTATION, {"rotation": rotation_steps})
-	var resolved := _resolve_structure(requested_id, variant_id, rng)
+	var resolved := _resolve_player_choice(requested_id, variant_id, rng) \
+		if player_choice else _resolve_structure(requested_id, variant_id, rng)
 	if not resolved["ok"]:
 		return resolved
 	var struct_idx: int = resolved["index"]
@@ -511,15 +636,112 @@ func evaluate_placement(requested_id: String, anchor: Vector2i, rotation_steps: 
 		return _reject_evaluation(demand_reason, details)
 	return {"ok": true, "reason": "", "details": details}
 
+## Composes one detached, tile-dependent quote. Intrinsic/authored effects remain
+## in Palette's build-menu projection and are intentionally absent here.
+func evaluate_placement_consequences(structure_index: int, anchor: Vector2i,
+		rotation_steps: int = 0) -> Dictionary:
+	var base := {
+		"status": "invalid", "certainty": "exact", "reason": "unknown_building",
+		"anchor": CommunityConstants.coordinate_record(anchor), "rotation": rotation_steps,
+		"footprint": [], "requires_confirmation": false, "costs": {}, "access": {},
+		"replacement": {"removed_buildings": []}, "community": {}, "attractiveness": {},
+		"same_type_neighbours": 0, "uncertainties": [], "state_revision": _placement_quote_revision,
+	}
+	if structure_index < 0 or structure_index >= structures.size() or _catalog == null:
+		return base
+	var building_id := String(_catalog.get_id_by_index(structure_index))
+	var evaluation := evaluate_placement(building_id, anchor, rotation_steps)
+	var details: Dictionary = evaluation.get("details", {})
+	var occupied: Array[int] = []
+	for raw_id in details.get("occupied_building_ids", []):
+		occupied.append(int(raw_id))
+	var replacement := false
+	if not bool(evaluation.get("ok", false)) and String(evaluation.get("reason", "")) in [
+		PlaytestActionResult.REPLACEMENT_REQUIRED, PlaytestActionResult.OCCUPIED_FOOTPRINT,
+	] and _can_offer_replacement(structure_index, occupied):
+		var replacement_evaluation := evaluate_placement(building_id, anchor, rotation_steps, true)
+		if bool(replacement_evaluation.get("ok", false)):
+			evaluation = replacement_evaluation
+			details = evaluation["details"]
+			replacement = true
+	if not bool(evaluation.get("ok", false)):
+		base["reason"] = String(evaluation.get("reason", ""))
+		base["footprint"] = details.get("footprint", []).map(func(cell): return CommunityConstants.coordinate_record(cell))
+		base["access"] = details.get("rooted_town", {}).duplicate(true)
+		base["costs"] = {"cash": details.get("cash", {}).duplicate(true), "demand": details.get("demand", {}).duplicate(true)}
+		return base
+
+	var removed_rows: Array = []
+	for internal_id in details.get("occupied_building_ids", []):
+		var entry: Dictionary = GameState.building_registry.get(int(internal_id), {})
+		var removed_index := int(entry.get("structure", -1))
+		removed_rows.append({
+			"internal_id": int(internal_id),
+			"building_id": String(_catalog.get_id_by_index(removed_index)) if removed_index >= 0 else "",
+			"anchor": CommunityConstants.coordinate_record(entry.get("anchor")),
+		})
+	removed_rows.sort_custom(func(a: Dictionary, b: Dictionary): return int(a["internal_id"]) < int(b["internal_id"]))
+	var community_quote := {}
+	var attractiveness_quote := {}
+	var uncertainties: Array[String] = []
+	if _community and _community.has_method("quote_placement_consequences"):
+		community_quote = _community.quote_placement_consequences(
+			structure_index, anchor, details.get("occupied_building_ids", []), rotation_steps)
+		for item in community_quote.get("uncertainties", []):
+			if String(item) not in uncertainties: uncertainties.append(String(item))
+	else:
+		uncertainties.append("community_quote_unavailable")
+	if _attractiveness and _attractiveness.has_method("quote_placement_consequences"):
+		attractiveness_quote = _attractiveness.quote_placement_consequences(
+			structure_index, anchor, details.get("footprint", []), details.get("occupied_building_ids", []))
+		for item in attractiveness_quote.get("uncertainties", []):
+			if String(item) not in uncertainties: uncertainties.append(String(item))
+	else:
+		uncertainties.append("attractiveness_quote_unavailable")
+	if _is_road_structure(structure_index):
+		uncertainties.append("network_reconnections_after_commit")
+	return {
+		"status": "replacement" if replacement else "valid",
+		"certainty": "exact" if uncertainties.is_empty() else "mixed",
+		"reason": "", "anchor": CommunityConstants.coordinate_record(anchor),
+		"rotation": rotation_steps,
+		"footprint": details.get("footprint", []).map(func(cell): return CommunityConstants.coordinate_record(cell)),
+		"requires_confirmation": replacement,
+		"costs": {"cash": details.get("cash", {}).duplicate(true), "demand": details.get("demand", {}).duplicate(true)},
+		"access": details.get("rooted_town", {}).duplicate(true),
+		"replacement": {"removed_buildings": removed_rows},
+		"community": community_quote,
+		"attractiveness": attractiveness_quote,
+		"same_type_neighbours": _same_type_neighbours(anchor, structure_index),
+		"uncertainties": uncertainties,
+		"state_revision": _placement_quote_revision,
+	}
+
 ## Authoritative atomic placement command shared by UI and playtest automation.
 func try_place_building(requested_id: String, anchor: Vector2i, rotation_steps: int = 0,
 		replace: bool = false, variant_id: String = "", rng: RandomNumberGenerator = null) -> Dictionary:
-	var evaluation := evaluate_placement(requested_id, anchor, rotation_steps, replace, variant_id, rng)
+	return _try_place_resolved(requested_id, anchor, rotation_steps, replace, variant_id, rng, false)
+
+## Authoritative player-choice placement command used by the Palette-compatible
+## Playtest API. Kept separate from exact building placement so ID collisions
+## cannot make a hidden compatibility record player-selectable.
+func try_place_choice(choice_id: String, anchor: Vector2i, rotation_steps: int = 0,
+		replace: bool = false, variant_id: String = "", rng: RandomNumberGenerator = null) -> Dictionary:
+	return _try_place_resolved(choice_id, anchor, rotation_steps, replace, variant_id, rng, true)
+
+func _try_place_resolved(requested_id: String, anchor: Vector2i, rotation_steps: int,
+		replace: bool, variant_id: String, rng: RandomNumberGenerator,
+		player_choice: bool) -> Dictionary:
+	var command_started := Time.get_ticks_usec()
+	var evaluation := evaluate_placement(requested_id, anchor, rotation_steps, replace,
+		variant_id, rng, player_choice)
 	if not evaluation["ok"]:
 		return PlaytestActionResult.rejected(evaluation["reason"], evaluation["details"])
 	var details: Dictionary = evaluation["details"]
+	var pre_version := GameState.get_state_version()
+	var removed: Array = []
 	for bid: int in details["occupied_building_ids"]:
-		_demolish_by_bid(bid)
+		removed.append(_demolish_by_bid(bid, false))
 	var struct_idx: int = details["structure_index"]
 	# Both quotes were validated synchronously above; no mutation occurs before
 	# this commit section, so neither spend can reject here.
@@ -527,7 +749,19 @@ func try_place_building(requested_id: String, anchor: Vector2i, rotation_steps: 
 		_economy.try_spend_cash(structures[struct_idx])
 	if _demand:
 		_demand.try_spend(structures[struct_idx])
-	_commit_build(anchor, struct_idx, details["orientation"], details["footprint"])
+	var placed_building_id := _commit_build(anchor, struct_idx, details["orientation"], details["footprint"], false)
+	var post_version := GameState.commit_state_version(pre_version)
+	var affected_cells: Array = details["footprint"].duplicate()
+	for record in removed:
+		for cell in record.get("footprint", []):
+			if cell not in affected_cells: affected_cells.append(cell)
+	_publish_building_change("replace" if not removed.is_empty() else "place", pre_version,
+		post_version, affected_cells, details["occupied_building_ids"] + [placed_building_id])
+	for record in removed:
+		var removed_anchor: Vector2i = record.get("anchor", Vector2i.ZERO)
+		GameEvents.structure_demolished.emit(Vector3i(removed_anchor.x, 0, removed_anchor.y))
+	GameEvents.structure_placed.emit(Vector3i(anchor.x, 0, anchor.y), struct_idx, details["orientation"])
+	_record_building_timing(command_started, affected_cells.size())
 	return PlaytestActionResult.applied(details)
 
 # ── Build (place) a structure ──────────────────────────────────────────────────
@@ -602,7 +836,7 @@ func _on_overbuild_confirmed() -> void:
 		_suppress_replacement_until_move = true
 		Audio.play("sounds/placement-a.ogg, sounds/placement-b.ogg, sounds/placement-c.ogg, sounds/placement-d.ogg", -20)
 
-func _commit_build(anchor: Vector2i, struct_idx: int, orient: int, fp_cells: Array[Vector2i]) -> void:
+func _commit_build(anchor: Vector2i, struct_idx: int, orient: int, fp_cells: Array[Vector2i], publish: bool = true) -> int:
 	var bid := GameState._next_building_id
 	GameState._next_building_id += 1
 
@@ -610,7 +844,6 @@ func _commit_build(anchor: Vector2i, struct_idx: int, orient: int, fp_cells: Arr
 
 	for cell: Vector2i in fp_cells:
 		GameState.cell_to_building[cell] = bid
-		ground_gridmap.set_cell_item(Vector3i(cell.x, 0, cell.y), -1, 0)
 
 	GameState.building_registry[bid] = {
 		"anchor": anchor,
@@ -618,6 +851,7 @@ func _commit_build(anchor: Vector2i, struct_idx: int, orient: int, fp_cells: Arr
 		"orientation": orient,
 		"cells": fp_cells
 	}
+	_sync_ground_cells(fp_cells)
 
 	if _is_road_structure(struct_idx):
 		_retile_road_at(anchor)
@@ -630,8 +864,9 @@ func _commit_build(anchor: Vector2i, struct_idx: int, orient: int, fp_cells: Arr
 					_retile_road_at(nb)
 
 	var placed_pos := Vector3i(anchor.x, 0, anchor.y)
-	GameEvents.structure_placed.emit(placed_pos, struct_idx, orient)
+	if publish: GameEvents.structure_placed.emit(placed_pos, struct_idx, orient)
 	_show_placement_effect_feedback(anchor, struct_idx)
+	return bid
 
 func _show_placement_outcome(outcome: Dictionary) -> void:
 	if outcome.get("status", "") != PlaytestActionResult.STATUS_REJECTED:
@@ -691,6 +926,7 @@ func action_demolish(gridmap_position):
 		show_toast("Outside buildable area")
 
 func try_demolish_cell(cell: Vector2i) -> Dictionary:
+	var command_started := Time.get_ticks_usec()
 	if not GameState.cell_to_building.has(cell):
 		return PlaytestActionResult.rejected(PlaytestActionResult.NOTHING_TO_DEMOLISH, {"cell": cell})
 	if _land and not _land.is_allowed(cell):
@@ -700,9 +936,16 @@ func try_demolish_cell(cell: Vector2i) -> Dictionary:
 	if _catalog and String(_catalog.get_id_by_index(sid)) == "building_town_hall":
 		return PlaytestActionResult.rejected(PlaytestActionResult.DEMOLITION_NOT_ALLOWED,
 			{"cell": cell, "building_id": "building_town_hall", "protected": true})
-	return PlaytestActionResult.applied(_demolish_by_bid(bid))
+	var pre_version := GameState.get_state_version()
+	var removed := _demolish_by_bid(bid, false)
+	var post_version := GameState.commit_state_version(pre_version)
+	_publish_building_change("demolish", pre_version, post_version, removed.get("footprint", []), [bid])
+	var removed_anchor: Vector2i = removed.get("anchor", Vector2i.ZERO)
+	GameEvents.structure_demolished.emit(Vector3i(removed_anchor.x, 0, removed_anchor.y))
+	_record_building_timing(command_started, removed.get("footprint", []).size())
+	return PlaytestActionResult.applied(removed)
 
-func _demolish_by_bid(bid: int) -> Dictionary:
+func _demolish_by_bid(bid: int, publish: bool = true) -> Dictionary:
 	var entry: Dictionary = GameState.building_registry.get(bid, {})
 	if entry.is_empty():
 		return {}
@@ -717,11 +960,9 @@ func _demolish_by_bid(bid: int) -> Dictionary:
 	gridmap.set_cell_item(Vector3i(anchor.x, 0, anchor.y), -1)
 	GameState.building_registry.erase(bid)
 
-	# Restore grass under the demolished footprint
-	for cell in cells:
-		ground_gridmap.set_cell_item(Vector3i(cell.x, 0, cell.y), GRASS_ITEM_ID, 0)
+	_sync_ground_cells(cells)
 
-	GameEvents.structure_demolished.emit(Vector3i(anchor.x, 0, anchor.y))
+	if publish: GameEvents.structure_demolished.emit(Vector3i(anchor.x, 0, anchor.y))
 
 	# Retile neighbouring roads
 	for dir in [Vector2i(0,-1), Vector2i(1,0), Vector2i(0,1), Vector2i(-1,0)]:
@@ -732,6 +973,38 @@ func _demolish_by_bid(bid: int) -> Dictionary:
 			if nb_sid >= 0 and _is_road_structure(nb_sid):
 				_retile_road_at(nb)
 	return {"building_id": building_id, "anchor": anchor, "footprint": cells}
+
+func _publish_building_change(operation: String, pre_version: int, post_version: int,
+		affected_cells: Array, building_ids: Array) -> void:
+	if post_version < 0: return
+	var cell_keys: Array = []
+	for cell in affected_cells: cell_keys.append("%d,%d" % [cell.x, cell.y])
+	cell_keys.sort()
+	var ids := building_ids.duplicate(); ids.sort()
+	var change_set = AuthoritativeChangeSetType.create(
+		"building:%s:v%d" % [operation, post_version], &"building_mutation", operation,
+		pre_version, post_version,
+		[&"structures", &"topology", &"occupancy", &"resources", &"economy", &"demand", &"community", &"traffic", &"progression"],
+		{"structures":ids, "topology":cell_keys, "occupancy":cell_keys,
+			"community":cell_keys, "traffic":cell_keys}, {"operation":operation},
+		{"structures":GameState.building_registry.size()})
+	GameEvents.authoritative_change_committed.emit(change_set)
+
+func _publish_map_change(source_kind: StringName, source_id: String) -> void:
+	var post_version := GameState.commit_state_version(0)
+	if post_version < 0: return
+	var change_set = AuthoritativeChangeSetType.create("%s:v%d" % [String(source_kind), post_version],
+		source_kind, source_id, 0, post_version,
+		InvalidationDomainType.for_source(source_kind), {},
+		{"structures":GameState.building_registry.size()},
+		{"structures":GameState.building_registry.size()})
+	GameEvents.authoritative_change_committed.emit(change_set)
+
+func _record_building_timing(started_usec: int, affected_cell_count: int) -> void:
+	var monitor = PluginManager.get_plugin("PerformanceMonitor")
+	if monitor:
+		monitor.record(&"building.command", Time.get_ticks_usec() - started_usec,
+			{"affected_cells":affected_cell_count, "buildings":GameState.building_registry.size()})
 
 # ── Rotate the 'cursor' ───────────────────────────────────────────────────────
 
@@ -800,7 +1073,16 @@ func update_structure():
 	fp_cx /= fp.size()
 	fp_cz /= fp.size()
 
-	_model.position = struct.model_offset + Vector3(fp_cx, ground_offset + 0.25, fp_cz)
+	# Underlay repairs rely on the preview's existing grass being the exact visual
+	# stand-in for the committed underlay, so their model must meet that plane at
+	# the same height as the committed MeshLibrary item. Preserve the legacy hover
+	# affordance for every default/replace asset outside this repair set.
+	var preview_lift := 0.25
+	if _catalog and _catalog.has_method("get_summary_by_index"):
+		var summary: Dictionary = _catalog.get_summary_by_index(_preview_idx)
+		if String(summary.get("ground_treatment", GROUND_TREATMENT_REPLACE)) == GROUND_TREATMENT_UNDERLAY:
+			preview_lift = 0.0
+	_model.position = struct.model_offset + Vector3(fp_cx, ground_offset + preview_lift, fp_cz)
 
 func _update_preview_color(anchor: Vector2i) -> void:
 	if _preview_idx < 0:
@@ -1002,11 +1284,24 @@ func _show_placement_effect_feedback(anchor: Vector2i, struct_idx: int) -> void:
 		feedback.add_child(arrow)
 	var tween := create_tween()
 	tween.set_parallel(true)
-	tween.tween_property(feedback, "position:y", feedback.position.y + 1.6, 1.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	for child in feedback.get_children():
-		tween.tween_property(child, "modulate:a", 0.0, 1.1).set_delay(0.4)
+	tween.tween_property(feedback, "position:y", feedback.position.y + 2.0, PLACEMENT_FEEDBACK_DURATION).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	var sprites := feedback.get_children()
+	tween.tween_method(_apply_placement_feedback_alpha.bind(sprites),
+		0.0, PLACEMENT_FEEDBACK_DURATION, PLACEMENT_FEEDBACK_DURATION)
 	tween.set_parallel(false)
 	tween.tween_callback(feedback.queue_free)
+
+
+func _apply_placement_feedback_alpha(elapsed_seconds: float, sprites: Array) -> void:
+	var alpha := placement_feedback_alpha(elapsed_seconds)
+	for child in sprites:
+		if is_instance_valid(child):
+			child.modulate.a = alpha
+
+
+static func placement_feedback_alpha(elapsed_seconds: float) -> float:
+	var progress := clampf(elapsed_seconds / PLACEMENT_FEEDBACK_DURATION, 0.0, 1.0)
+	return pow(1.0 - progress, PLACEMENT_FEEDBACK_FADE_POWER)
 
 func _feedback_sprite(path: String, offset: Vector3, pixel_size: float) -> Sprite3D:
 	var sprite := Sprite3D.new()
@@ -1121,6 +1416,8 @@ func show_toast(message: String) -> void:
 ## public lets progression boundary tests exercise the same save representation
 ## as the player-facing slots without reaching into Builder internals.
 func serialize_map_state() -> DataMap:
+	if _community and _community.has_method("prepare_persistence_projection"):
+		_community.prepare_persistence_projection()
 	map.structures.clear()
 	for bid in GameState.building_registry:
 		var entry: Dictionary = GameState.building_registry[bid]
@@ -1153,6 +1450,7 @@ func load_map_from_path(path: String) -> Dictionary:
 		return PlaytestActionResult.rejected("save_not_found", {"path": path})
 	_apply_map(loaded)
 	GameState.map = map
+	_publish_map_change(&"map_load", path)
 	GameEvents.map_loaded.emit(map)
 	return PlaytestActionResult.applied({"path": path, "structures": map.structures.size()})
 
@@ -1175,8 +1473,18 @@ func _load_from(path: String, label: String) -> void:
 func action_save_slot1():
 	if Input.is_action_just_pressed("save_slot1"): _save_to(SAVE_SLOT_1, "Saved — Slot 1")
 
-func action_load_temp():
-	if Input.is_action_just_pressed("load_temp"):  _load_from(SAVE_TEMP, "Loaded — Temp")
+static func resolve_slot1_load_path(slot_exists: bool, legacy_exists: bool) -> String:
+	if not slot_exists and legacy_exists:
+		return LEGACY_SAVE
+	return SAVE_SLOT_1
+
+func action_load_slot1():
+	if not Input.is_action_just_pressed("load_slot1"):
+		return
+	var path := resolve_slot1_load_path(
+		ResourceLoader.exists(SAVE_SLOT_1), ResourceLoader.exists(LEGACY_SAVE))
+	var label := "Loaded — Legacy Save" if path == LEGACY_SAVE else "Loaded — Slot 1"
+	_load_from(path, label)
 
 func action_save_slot2():
 	if Input.is_action_just_pressed("save_slot2"): _save_to(SAVE_SLOT_2, "Saved — Slot 2")
@@ -1195,6 +1503,7 @@ func reset_to_fresh_map(fresh_map: DataMap = null) -> Dictionary:
 	var next_map := fresh_map if fresh_map else DataMap.new()
 	_apply_map(next_map)
 	GameState.map = map
+	_publish_map_change(&"map_clear", "fresh_map")
 	GameEvents.map_loaded.emit(map)
 	return PlaytestActionResult.applied({
 		"cash": map.cash,
@@ -1206,19 +1515,22 @@ func reset_to_fresh_map(fresh_map: DataMap = null) -> Dictionary:
 ## Restores grass under old buildings and removes it under new ones.
 func _apply_map(loaded_map: DataMap) -> void:
 	_overbuild_pending = false
+	GameState.reset_state_version()
 	map = loaded_map
 	GameState.map = map
 
-	# Restore grass under all currently-placed buildings before wiping the registry
+	var previous_cells: Array[Vector2i] = []
 	for bid in GameState.building_registry:
 		for cell in GameState.building_registry[bid]["cells"]:
-			ground_gridmap.set_cell_item(Vector3i(cell.x, 0, cell.y), GRASS_ITEM_ID, 0)
+			if cell not in previous_cells:
+				previous_cells.append(cell)
 
 	# Clear visual tiles and occupancy tracking
 	gridmap.clear()
 	GameState.cell_to_building.clear()
 	GameState.building_registry.clear()
 	GameState._next_building_id = 0
+	_sync_ground_cells(previous_cells)
 
 	print("[DataMap] load: structures=%d" % loaded_map.structures.size())
 
@@ -1244,7 +1556,6 @@ func _apply_map(loaded_map: DataMap) -> void:
 
 		for cell in cells:
 			GameState.cell_to_building[cell] = bid
-			ground_gridmap.set_cell_item(Vector3i(cell.x, 0, cell.y), -1, 0)
 
 		GameState.building_registry[bid] = {
 			"anchor":      ds.position,
@@ -1252,3 +1563,4 @@ func _apply_map(loaded_map: DataMap) -> void:
 			"orientation": ds.orientation,
 			"cells":       cells
 		}
+		_sync_ground_cells(cells)

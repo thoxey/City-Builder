@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "workload_id": "transactional_reference_town_135x240",
+  "scenario_id": "first_town/rebalance",
+  "source_runner": "res://scripts/run_town_rebalance.gd",
+  "seed": 6066,
+  "hours": 240,
+  "expected": {
+    "buildings": 135,
+    "road_cells": 75,
+    "residents": 140,
+    "meaningful_placements": 60,
+    "state_hash": "fa19631150065fb74ba228104e843ae0a59a02e051e913748ce38a17c0733004"
+  },
+  "category_counts": {
+    "civic": 1,
+    "commercial": 7,
+    "industrial": 6,
+    "nature": 17,
+    "residential": 29,
+    "road": 75
+  }
+}
