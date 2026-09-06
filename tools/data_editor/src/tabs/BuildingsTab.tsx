@@ -15,7 +15,7 @@ const ModelPreview = lazy(() =>
 );
 
 export function BuildingsTab() {
-  const { manifest, writeJson, reloadManifest } = useApp();
+  const { manifest, writeJson, patchBuilding } = useApp();
   if (!manifest) return null;
 
   const [selectedId, setSelectedId] = useState<string | null>(
@@ -88,7 +88,10 @@ export function BuildingsTab() {
         ? pathFromRes(originalPath)
         : ["data", "buildings", toSave.category || "unique", `${toSave.building_id}.json`];
       await writeJson(path, toSave);
-      await reloadManifest();
+      // Patch the freshly-written body and its derived summary fields into the
+      // in-memory manifest before persisting it. Re-reading the old exporter
+      // cache here would restore stale values such as palette_excluded.
+      await patchBuilding(toSave, path);
       setIsNew(false);
       setSelectedId(toSave.building_id);
     } catch (e) {
@@ -178,6 +181,16 @@ export function BuildingsTab() {
             }}
             placeholder="0 = no cash cost"
           />
+
+          <label>palette_excluded</label>
+          <label className="checkbox-label">
+            <input
+              type="checkbox"
+              checked={doc.palette_excluded ?? false}
+              onChange={(e) => update("palette_excluded", e.target.checked)}
+            />
+            Hide from player-facing build choices while preserving catalogue/save identity
+          </label>
 
           <label>model_path</label>
           <div>

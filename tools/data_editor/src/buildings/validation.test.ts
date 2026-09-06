@@ -60,6 +60,16 @@ describe("validateBuilding — top level", () => {
     const r = validateBuilding(doc, makeManifest(), { isNew: true });
     expect(r.errors.some((e) => e.includes("model_scale"))).toBe(true);
   });
+
+  it("preserves a boolean palette exclusion and rejects malformed values", () => {
+    const doc = newUnique();
+    doc.palette_excluded = true;
+    expect(validateBuilding(doc, makeManifest(), { isNew: true }).errors).toEqual([]);
+    (doc as unknown as Record<string, unknown>).palette_excluded = "true";
+    expect(validateBuilding(doc, makeManifest(), { isNew: true }).errors).toContain(
+      "palette_excluded must be a boolean"
+    );
+  });
 });
 
 describe("validateBuilding — profiles", () => {
@@ -170,6 +180,10 @@ describe("blanks", () => {
     b.building_id = "y";
     expect(a.building_id).toBe("x");
     expect(b.building_id).toBe("y");
+  });
+
+  it("new buildings default to player-facing palette membership", () => {
+    expect(blankBuilding().palette_excluded).toBe(false);
   });
 
   it("blankProfile returns the right shape per type", () => {

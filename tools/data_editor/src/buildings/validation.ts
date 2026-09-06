@@ -46,6 +46,8 @@ export function validateBuilding(
   }
 
   if (doc.model_scale <= 0) errors.push("model_scale must be > 0");
+  if (doc.palette_excluded !== undefined && typeof doc.palette_excluded !== "boolean")
+    errors.push("palette_excluded must be a boolean");
 
   const communityProfiles = doc.profiles.filter((p) => p.type === "CommunityEffectProfile");
   if (doc.category === "nature" && !["functional", "cosmetic_only"].includes(doc.community_role ?? ""))

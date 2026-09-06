@@ -1,0 +1,44 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://tools/building_capture/building_capture.gd" id="1_capture"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial_ground"]
+albedo_color = Color(0.72, 0.75, 0.69, 1)
+roughness = 0.9
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ground"]
+size = Vector2(40, 40)
+
+[sub_resource type="Environment" id="Environment_capture"]
+background_mode = 1
+background_color = Color(0.86, 0.89, 0.92, 1)
+ambient_light_source = 3
+ambient_light_color = Color(0.82, 0.86, 0.92, 1)
+ambient_light_energy = 0.65
+
+[node name="root" type="Node3D" unique_id=416113995]
+script = ExtResource("1_capture")
+
+[node name="Subject" type="Node3D" parent="." unique_id=1101008272]
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=256896074]
+projection = 1
+current = true
+size = 5.0
+
+[node name="KeyLight" type="DirectionalLight3D" parent="." unique_id=276770531]
+transform = Transform3D(0.81915206, 0.43938506, -0.36868784, 0, 0.64278764, 0.76604444, 0.57357645, -0.62750685, 0.5265408, 0, 0, 0)
+light_energy = 1.2
+shadow_enabled = true
+
+[node name="FillLight" type="DirectionalLight3D" parent="." unique_id=490024201]
+transform = Transform3D(-0.81915206, -0.24240388, 0.5198368, 0, 0.90630776, 0.42261827, -0.57357645, 0.34618863, -0.74240386, 0, 0, 0)
+light_energy = 0.55
+
+[node name="Ground" type="MeshInstance3D" parent="." unique_id=560644277]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.01, 0)
+material_override = SubResource("StandardMaterial_ground")
+mesh = SubResource("PlaneMesh_ground")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1750984357]
+environment = SubResource("Environment_capture")

@@ -90,6 +90,7 @@ export function makeManifest(overrides: Partial<Manifest> = {}): Manifest {
         character_id: "aristocrat_commercial",
         bucket: "commercial",
         tier: 0,
+        palette_excluded: false,
         _path: "res://data/buildings/unique/building_members_club.json",
         body: {
           building_id: "building_members_club",
@@ -116,6 +117,7 @@ export function makeManifest(overrides: Partial<Manifest> = {}): Manifest {
         character_id: "aristocrat_industrial",
         bucket: "industrial",
         tier: 0,
+        palette_excluded: false,
         _path: "res://data/buildings/unique/building_brewery.json",
         body: {
           building_id: "building_brewery",
@@ -142,6 +144,7 @@ export function makeManifest(overrides: Partial<Manifest> = {}): Manifest {
         character_id: "aristocrat_residential",
         bucket: "residential",
         tier: 0,
+        palette_excluded: false,
         _path: "res://data/buildings/unique/building_mansion.json",
         body: {
           building_id: "building_mansion",
@@ -168,6 +171,7 @@ export function makeManifest(overrides: Partial<Manifest> = {}): Manifest {
         character_id: "",
         bucket: "residential",
         tier: 0,
+        palette_excluded: false,
         _path: "res://data/buildings/unique/building_theatre.json",
         body: {
           building_id: "building_theatre",

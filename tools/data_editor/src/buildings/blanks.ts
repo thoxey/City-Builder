@@ -11,6 +11,7 @@ export function blankBuilding(): BuildingDoc {
     model_rotation_y: 0,
     footprint: [[0, 0]],
     category: "",
+    palette_excluded: false,
     profiles: [],
     tags: [],
   };

@@ -138,6 +138,7 @@ func _scan_buildings() -> Array:
 			"character_id": "",
 			"bucket":       "",
 			"tier":         0,
+			"palette_excluded": bool(d.get("palette_excluded", false)),
 			# Full building body so the SPA can round-trip edits without a
 			# second read — mirrors the events[].body embedding.
 			"body":         d,

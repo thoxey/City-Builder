@@ -61,6 +61,7 @@ export interface ManifestBuilding {
   character_id: string;
   bucket: Bucket | "";
   tier: number;
+  palette_excluded: boolean;
   _path: string;
   body: BuildingDoc;
 }
@@ -166,6 +167,7 @@ export interface BuildingDoc {
   category: BuildingCategory | "";
   pool_id?: string;
   cash_cost?: number;
+  palette_excluded?: boolean;
   community_role?: "functional" | "cosmetic_only" | "participant" | "local_only" | "productive" | "cosmetic";
   profiles: Profile[];
   tags: string[];

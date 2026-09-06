@@ -1,5 +1,14 @@
 import { create } from "zustand";
-import type { CharacterDoc, Manifest, ManifestCharacter, ManifestPatron, PatronDoc } from "./types";
+import type {
+  BuildingDoc,
+  CharacterDoc,
+  Manifest,
+  ManifestBuilding,
+  ManifestCharacter,
+  ManifestPatron,
+  PatronDoc,
+  UniqueProfile,
+} from "./types";
 import type { Repo } from "./fs/repo";
 import { pickRepoRoot, restoreRepoRoot } from "./fs/fsaRepo";
 import { loadManifestFromFile } from "./fs/downloadRepo";
@@ -27,6 +36,7 @@ interface AppState {
   // longer goes stale relative to the per-entity JSONs.
   patchCharacter: (doc: CharacterDoc) => Promise<void>;
   patchPatron: (doc: PatronDoc) => Promise<void>;
+  patchBuilding: (doc: BuildingDoc, relPath: string[]) => Promise<void>;
 }
 
 const MANIFEST_RELPATH = ["data", "events", "_manifest.json"];
@@ -108,6 +118,14 @@ export const useApp = create<AppState>((set, get) => ({
               // see above
             }
           }),
+          ...manifest.buildings.map(async (b, i) => {
+            try {
+              const fresh = (await repo.readJson!(pathFromRes(b._path))) as BuildingDoc;
+              manifest.buildings[i] = buildingManifestEntry(fresh, b._path);
+            } catch {
+              // see above
+            }
+          }),
         ]);
       }
       set({ manifest });
@@ -151,7 +169,43 @@ export const useApp = create<AppState>((set, get) => ({
     set({ manifest: next });
     await persistManifest(get().repo, next);
   },
+
+  patchBuilding: async (doc, relPath) => {
+    const m = get().manifest;
+    if (!m) return;
+    const existing = m.buildings.find((b) => b.building_id === doc.building_id);
+    const sourcePath = existing?._path ?? `res://${relPath.join("/")}`;
+    const entry = buildingManifestEntry(doc, sourcePath);
+    const others = m.buildings.filter((b) => b.building_id !== doc.building_id);
+    const buildings = [...others, entry].sort((a, b) =>
+      a.building_id.localeCompare(b.building_id)
+    );
+    const next: Manifest = { ...m, buildings };
+    set({ manifest: next });
+    await persistManifest(get().repo, next);
+  },
 }));
+
+export function buildingManifestEntry(doc: BuildingDoc, sourcePath: string): ManifestBuilding {
+  const unique = doc.profiles.find(
+    (profile): profile is UniqueProfile => profile.type === "UniqueProfile"
+  );
+  return {
+    building_id: doc.building_id,
+    display_name: doc.display_name,
+    category: doc.category,
+    pool_id: doc.pool_id ?? "",
+    model_path: doc.model_path,
+    chain_role: unique?.chain_role ?? "",
+    patron_id: unique?.patron_id ?? "",
+    character_id: unique?.character_id ?? "",
+    bucket: unique?.bucket ?? "",
+    tier: unique?.tier ?? 0,
+    palette_excluded: doc.palette_excluded ?? false,
+    _path: sourcePath,
+    body: structuredClone(doc),
+  };
+}
 
 async function persistManifest(repo: Repo | null, manifest: Manifest): Promise<void> {
   if (!repo) return;
