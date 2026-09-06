@@ -52,6 +52,10 @@ class_name DataMap
 ## player's preferred layout sticks. Default visible.
 @export var dashboard_collapsed: bool = false
 
+## Durable, monotonic progress for the first-town opening tutorial.  The
+## OpeningTutorial plugin owns validation and migration of this JSON-safe map.
+@export var opening_tutorial_state: Dictionary = {}
+
 ## Presentation-only Community UI preferences. These values never participate
 ## in simulation snapshots, migration, or deterministic hashes. Defaults keep
 ## pre-Community-UI saves backward compatible.

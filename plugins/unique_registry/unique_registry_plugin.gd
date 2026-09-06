@@ -156,16 +156,17 @@ func _refresh_unlocks() -> void:
 func _is_unlocked_internal(bid: String) -> bool:
 	return bool(evaluate_unlock(bid).get("unlocked", false))
 
-## UniqueProfile.bucket is a category ("residential" / "industrial" /
-## "commercial"). Demand addresses buckets by type_id ("residential" /
-## "industrial" / "commercial"), so translate before lookup.
-func _bucket_value(category: String) -> float:
+## Unique progression is earned from the monotonic, total-ever demand value.
+## Spending demand on ordinary or unique buildings must not move an unlock
+## target further away. Placement affordability continues to use unserved
+## demand through DemandPlugin.get_value().
+func _bucket_total(category: String) -> float:
 	if _demand == null:
 		return 0.0
 	var type_id: String = _demand.bucket_for_category(category)
 	if type_id.is_empty():
 		return 0.0
-	return _demand.get_value(type_id)
+	return _demand.get_total(type_id)
 
 # ── Public API ────────────────────────────────────────────────────────────────
 
@@ -232,7 +233,7 @@ func evaluate_unlock(building_id: String, excluded_building_ids: Array = []) -> 
 		if profile.chain_role == "landmark" and patron_state < 1:
 			reasons.append(PlaytestActionResult.PATRON_NOT_READY)
 	if not missing.is_empty(): reasons.append(PlaytestActionResult.UNMET_PREREQUISITE)
-	var current := _bucket_value(profile.bucket)
+	var current := _bucket_total(profile.bucket)
 	if current < profile.prerequisite_threshold:
 		reasons.append(PlaytestActionResult.BELOW_DEMAND_THRESHOLD)
 	var bucket_id: String = String(_demand.bucket_for_category(profile.bucket)) if _demand and _demand.has_method("bucket_for_category") else profile.bucket

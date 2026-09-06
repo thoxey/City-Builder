@@ -894,7 +894,7 @@
 						"prerequisite_ids": [
 							"building_postwar_terrace"
 						],
-						"prerequisite_threshold": 30.0,
+						"prerequisite_threshold": 75.0,
 						"tier": 2.0,
 						"type": "UniqueProfile"
 					},
@@ -963,7 +963,7 @@
 						"desirability_boost": 0.0,
 						"patron_id": "aristocrat",
 						"prerequisite_ids": [],
-						"prerequisite_threshold": 10.0,
+						"prerequisite_threshold": 25.0,
 						"tier": 1.0,
 						"type": "UniqueProfile"
 					},
@@ -1034,7 +1034,7 @@
 						"prerequisite_ids": [
 							"building_postwar_midblock"
 						],
-						"prerequisite_threshold": 60.0,
+						"prerequisite_threshold": 225.0,
 						"tier": 3.0,
 						"type": "UniqueProfile"
 					},
@@ -1375,7 +1375,7 @@
 								"stacking_group": "local_commerce"
 							},
 							{
-								"amount": 3.0,
+								"amount": 4.0,
 								"capacity": 10.0,
 								"effect_id": "high_street_encounter",
 								"manifestation": "care",
@@ -1828,11 +1828,11 @@
 					{
 						"effects": [
 							{
-								"amount": 2.0,
+								"amount": 4.0,
 								"effect_id": "civic_heart",
 								"manifestation": "identity",
 								"quality": "belonging",
-								"radius": 3.0,
+								"radius": 5.0,
 								"reason": "Lived near the town's civic heart",
 								"requires_active_building": false,
 								"scope": "local",
@@ -3208,9 +3208,257 @@
 			"trigger_character_id": "aristocrat_residential",
 			"trigger_event": "character_arrived",
 			"trigger_patron_id": ""
+		},
+		{
+			"_path": "res://data/events/tutorial/beauty_homes.json",
+			"body": {
+				"enabled_if": "",
+				"event_id": "tutorial_opening_beauty_homes",
+				"event_type": "dialogue",
+				"payload": {
+					"entry_node_id": "n_start",
+					"nodes": [
+						{
+							"beats": [
+								{
+									"expression": "pleased",
+									"speaker": "ambrose",
+									"text": "AMBROSE PLACEHOLDER: explain that positive Beauty creates Homes demand",
+									"type": "speech"
+								}
+							],
+							"node_id": "n_start",
+							"on_enter": [],
+							"options": []
+						}
+					],
+					"participants": [
+						"player",
+						"ambrose"
+					],
+					"tree_id": "tutorial_opening_beauty_homes_tree"
+				},
+				"trigger": {
+					"event": "manual"
+				}
+			},
+			"category": "tutorial",
+			"dialogue_nodes": [
+				{
+					"beats": [
+						{
+							"expression": "pleased",
+							"speaker": "ambrose",
+							"text": "AMBROSE PLACEHOLDER: explain that positive Beauty creates Homes demand",
+							"type": "speech"
+						}
+					],
+					"node_id": "n_start",
+					"on_enter": [],
+					"options": []
+				}
+			],
+			"enabled_if": "",
+			"entry_node_id": "n_start",
+			"event_id": "tutorial_opening_beauty_homes",
+			"event_type": "dialogue",
+			"participants": [
+				"player",
+				"ambrose"
+			],
+			"trigger_building_id": "",
+			"trigger_character_id": "",
+			"trigger_event": "manual",
+			"trigger_patron_id": ""
+		},
+		{
+			"_path": "res://data/events/tutorial/opening_complete.json",
+			"body": {
+				"enabled_if": "",
+				"event_id": "tutorial_opening_complete",
+				"event_type": "dialogue",
+				"payload": {
+					"entry_node_id": "n_start",
+					"nodes": [
+						{
+							"beats": [
+								{
+									"expression": "pleased",
+									"speaker": "ambrose",
+									"text": "AMBROSE PLACEHOLDER: acknowledge the first shop and hand off toward Sir William and more land",
+									"type": "speech"
+								}
+							],
+							"node_id": "n_start",
+							"on_enter": [],
+							"options": []
+						}
+					],
+					"participants": [
+						"player",
+						"ambrose"
+					],
+					"tree_id": "tutorial_opening_complete_tree"
+				},
+				"trigger": {
+					"event": "manual"
+				}
+			},
+			"category": "tutorial",
+			"dialogue_nodes": [
+				{
+					"beats": [
+						{
+							"expression": "pleased",
+							"speaker": "ambrose",
+							"text": "AMBROSE PLACEHOLDER: acknowledge the first shop and hand off toward Sir William and more land",
+							"type": "speech"
+						}
+					],
+					"node_id": "n_start",
+					"on_enter": [],
+					"options": []
+				}
+			],
+			"enabled_if": "",
+			"entry_node_id": "n_start",
+			"event_id": "tutorial_opening_complete",
+			"event_type": "dialogue",
+			"participants": [
+				"player",
+				"ambrose"
+			],
+			"trigger_building_id": "",
+			"trigger_character_id": "",
+			"trigger_event": "manual",
+			"trigger_patron_id": ""
+		},
+		{
+			"_path": "res://data/events/tutorial/home_adjacency.json",
+			"body": {
+				"enabled_if": "",
+				"event_id": "tutorial_opening_home_adjacency",
+				"event_type": "dialogue",
+				"payload": {
+					"entry_node_id": "n_start",
+					"nodes": [
+						{
+							"beats": [
+								{
+									"expression": "concerned",
+									"speaker": "ambrose",
+									"text": "AMBROSE PLACEHOLDER: explain the home adjacency result that was actually observed",
+									"type": "speech"
+								}
+							],
+							"node_id": "n_start",
+							"on_enter": [],
+							"options": []
+						}
+					],
+					"participants": [
+						"player",
+						"ambrose"
+					],
+					"tree_id": "tutorial_opening_home_adjacency_tree"
+				},
+				"trigger": {
+					"event": "manual"
+				}
+			},
+			"category": "tutorial",
+			"dialogue_nodes": [
+				{
+					"beats": [
+						{
+							"expression": "concerned",
+							"speaker": "ambrose",
+							"text": "AMBROSE PLACEHOLDER: explain the home adjacency result that was actually observed",
+							"type": "speech"
+						}
+					],
+					"node_id": "n_start",
+					"on_enter": [],
+					"options": []
+				}
+			],
+			"enabled_if": "",
+			"entry_node_id": "n_start",
+			"event_id": "tutorial_opening_home_adjacency",
+			"event_type": "dialogue",
+			"participants": [
+				"player",
+				"ambrose"
+			],
+			"trigger_building_id": "",
+			"trigger_character_id": "",
+			"trigger_event": "manual",
+			"trigger_patron_id": ""
+		},
+		{
+			"_path": "res://data/events/tutorial/work_participation.json",
+			"body": {
+				"enabled_if": "",
+				"event_id": "tutorial_opening_work_participation",
+				"event_type": "dialogue",
+				"payload": {
+					"entry_node_id": "n_start",
+					"nodes": [
+						{
+							"beats": [
+								{
+									"expression": "pleased",
+									"speaker": "ambrose",
+									"text": "AMBROSE PLACEHOLDER: explain that residents now work and earn money",
+									"type": "speech"
+								}
+							],
+							"node_id": "n_start",
+							"on_enter": [],
+							"options": []
+						}
+					],
+					"participants": [
+						"player",
+						"ambrose"
+					],
+					"tree_id": "tutorial_opening_work_participation_tree"
+				},
+				"trigger": {
+					"event": "manual"
+				}
+			},
+			"category": "tutorial",
+			"dialogue_nodes": [
+				{
+					"beats": [
+						{
+							"expression": "pleased",
+							"speaker": "ambrose",
+							"text": "AMBROSE PLACEHOLDER: explain that residents now work and earn money",
+							"type": "speech"
+						}
+					],
+					"node_id": "n_start",
+					"on_enter": [],
+					"options": []
+				}
+			],
+			"enabled_if": "",
+			"entry_node_id": "n_start",
+			"event_id": "tutorial_opening_work_participation",
+			"event_type": "dialogue",
+			"participants": [
+				"player",
+				"ambrose"
+			],
+			"trigger_building_id": "",
+			"trigger_character_id": "",
+			"trigger_event": "manual",
+			"trigger_patron_id": ""
 		}
 	],
-	"exported_at": "2026-09-06T12:36:05",
+	"exported_at": "2026-09-06T14:39:11",
 	"flags": [
 		"aristocrat_landmark_completed",
 		"aristocrat_landmark_promised",

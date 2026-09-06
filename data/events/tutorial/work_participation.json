@@ -1,0 +1,22 @@
+{
+  "event_id": "tutorial_opening_work_participation",
+  "event_type": "dialogue",
+  "trigger": {"event": "manual"},
+  "enabled_if": "",
+  "payload": {
+    "tree_id": "tutorial_opening_work_participation_tree",
+    "participants": ["player", "ambrose"],
+    "entry_node_id": "n_start",
+    "nodes": [{
+      "node_id": "n_start",
+      "beats": [{
+        "type": "speech",
+        "speaker": "ambrose",
+        "expression": "pleased",
+        "text": "AMBROSE PLACEHOLDER: explain that residents now work and earn money"
+      }],
+      "on_enter": [],
+      "options": []
+    }]
+  }
+}

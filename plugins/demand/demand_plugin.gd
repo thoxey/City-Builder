@@ -52,8 +52,8 @@ func inject(deps: Dictionary) -> void:
 @export var rooted_industrial_ratio: float = 0.35
 
 @export_group("Commercial")
-@export var commercial_ratio: float = 0.75
-@export var rooted_commercial_ratio: float = 0.25
+@export var commercial_ratio: float = 1.0
+@export var rooted_commercial_ratio: float = 0.5
 
 @export_group("Reference costs (bank render + tier placeholder)")
 ## floor(unserved / reference_cost) = "N banked" shown in HUD.

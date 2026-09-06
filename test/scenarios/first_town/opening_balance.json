@@ -1,0 +1,58 @@
+{
+  "scenario_id": "first_town/opening_balance",
+  "description": "State-directed sparse opening baseline through the 75 lifetime Homes-demand mid-block unlock.",
+  "seed": 14014,
+  "seeds": [14014, 14015, 14016],
+  "rooted_town_rules": true,
+  "story_enabled": false,
+  "narrative_mode": "presentation_disabled",
+  "initial_state": {
+    "cash": 1000,
+    "demand": {"residential": 25, "industrial": 5, "commercial": 5},
+    "clock": {"start_hour": 6}
+  },
+  "strategy": {
+    "beauty_floor": 200,
+    "beauty_reserve": 10,
+    "max_hours": 240,
+    "max_actions": 1000,
+    "endpoint_building_id": "building_postwar_midblock",
+    "endpoint_total_homes": 75,
+    "town_hall": {"x": -1, "z": -1},
+    "road_cells": [
+      {"x": 0, "z": 1}, {"x": 1, "z": 1}, {"x": 2, "z": 1},
+      {"x": 3, "z": 1}, {"x": 4, "z": 1}, {"x": 5, "z": 1},
+      {"x": 6, "z": 1}, {"x": -1, "z": 1}, {"x": -2, "z": 1},
+      {"x": -3, "z": 1}, {"x": -4, "z": 1}, {"x": -5, "z": 1},
+      {"x": -6, "z": 1}, {"x": -7, "z": 1},
+      {"x": -4, "z": 0}, {"x": -4, "z": -1}, {"x": -4, "z": -2},
+      {"x": -4, "z": -3}, {"x": -4, "z": -4}, {"x": -4, "z": -5},
+      {"x": 1, "z": 0}, {"x": 1, "z": -1}, {"x": 1, "z": -2},
+      {"x": 1, "z": -3}, {"x": 1, "z": -4}, {"x": 1, "z": -5},
+      {"x": 5, "z": 0}, {"x": 5, "z": -1}, {"x": 5, "z": -2},
+      {"x": 5, "z": -3}, {"x": 5, "z": -4}, {"x": 5, "z": -5}
+    ],
+    "candidate_cells": [
+      {"x": -7, "z": 0}, {"x": -6, "z": 0}, {"x": -5, "z": 0},
+      {"x": -3, "z": 0}, {"x": 2, "z": 0}, {"x": 3, "z": 0},
+      {"x": 4, "z": 0}, {"x": 6, "z": 0},
+      {"x": -7, "z": 2}, {"x": -6, "z": 2}, {"x": -5, "z": 2},
+      {"x": -3, "z": 2}, {"x": -2, "z": 2},
+      {"x": -1, "z": 2}, {"x": 0, "z": 2}, {"x": 1, "z": 2},
+      {"x": 2, "z": 2}, {"x": 3, "z": 2}, {"x": 4, "z": 2},
+      {"x": 5, "z": 2}, {"x": 6, "z": 2},
+      {"x": -3, "z": -1}, {"x": -3, "z": -2}, {"x": -3, "z": -3},
+      {"x": -3, "z": -4}, {"x": -3, "z": -5},
+      {"x": 2, "z": -1}, {"x": 2, "z": -2}, {"x": 2, "z": -3},
+      {"x": 2, "z": -4}, {"x": 2, "z": -5},
+      {"x": 4, "z": -1}, {"x": 4, "z": -2}, {"x": 4, "z": -3},
+      {"x": 4, "z": -4}, {"x": 4, "z": -5},
+      {"x": 6, "z": -1}, {"x": 6, "z": -2}, {"x": 6, "z": -3},
+      {"x": 6, "z": -4}, {"x": 6, "z": -5}
+    ]
+  },
+  "success_conditions": [],
+  "soft_failure_conditions": [],
+  "hard_failure_conditions": [],
+  "milestones": []
+}

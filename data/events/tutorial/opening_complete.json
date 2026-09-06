@@ -1,0 +1,22 @@
+{
+  "event_id": "tutorial_opening_complete",
+  "event_type": "dialogue",
+  "trigger": {"event": "manual"},
+  "enabled_if": "",
+  "payload": {
+    "tree_id": "tutorial_opening_complete_tree",
+    "participants": ["player", "ambrose"],
+    "entry_node_id": "n_start",
+    "nodes": [{
+      "node_id": "n_start",
+      "beats": [{
+        "type": "speech",
+        "speaker": "ambrose",
+        "expression": "pleased",
+        "text": "AMBROSE PLACEHOLDER: acknowledge the first shop and hand off toward Sir William and more land"
+      }],
+      "on_enter": [],
+      "options": []
+    }]
+  }
+}

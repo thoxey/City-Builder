@@ -27,6 +27,10 @@ signal build_menu_model_changed(revision: int)
 signal player_input_mode_changed(mode: String)
 signal placement_context_changed(context: Dictionary)
 
+## One-shot gameplay handoff emitted after the opening tutorial's durable
+## completion receipt has been written.  Narrative acknowledgement is separate.
+signal tutorial_opening_completed(payload: Dictionary)
+
 ## A unique building has just been placed on the map.
 signal unique_placed(building_id: String)
 ## A unique building has just been demolished; its slot is open again.

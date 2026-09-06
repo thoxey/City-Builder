@@ -29,6 +29,7 @@ const PLUGINS: Array[GDScript] = [
 	preload("res://plugins/palette/palette_plugin.gd"),
 	preload("res://plugins/nameplate/nameplate_plugin.gd"),
 	preload("res://plugins/event_system/event_system_plugin.gd"),
+	preload("res://plugins/opening_tutorial/opening_tutorial_plugin.gd"),
 	preload("res://plugins/dialogue/dialogue_plugin.gd"),
 	preload("res://plugins/inbox/inbox_plugin.gd"),
 	preload("res://plugins/newspaper/newspaper_plugin.gd"),

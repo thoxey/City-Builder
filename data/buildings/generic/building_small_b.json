@@ -56,7 +56,7 @@
           "effect_id": "high_street_encounter",
           "quality": "belonging",
           "manifestation": "care",
-          "amount": 3.0,
+          "amount": 4.0,
           "scope": "participant",
           "capacity": 10,
           "stacking_group": "community_gathering",

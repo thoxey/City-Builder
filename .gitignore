@@ -29,6 +29,15 @@ __pycache__/
 # Local performance/playtest output
 /artifacts/
 
+# Replaceable AI character explorations (runtime derivatives remain tracked)
+/art/characters/*/masters/
+/art/characters/*/review/
+/art/characters/review/
+
+# Godot sidecars for review-only captures
+art/**/review/**/*.import
+art/**/reviews/**/*.import
+
 # Godot editor sidecars generated for documentation/validation source files
 *.csv.import
 *.likely.translation-*

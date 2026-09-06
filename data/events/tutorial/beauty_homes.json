@@ -1,0 +1,22 @@
+{
+  "event_id": "tutorial_opening_beauty_homes",
+  "event_type": "dialogue",
+  "trigger": {"event": "manual"},
+  "enabled_if": "",
+  "payload": {
+    "tree_id": "tutorial_opening_beauty_homes_tree",
+    "participants": ["player", "ambrose"],
+    "entry_node_id": "n_start",
+    "nodes": [{
+      "node_id": "n_start",
+      "beats": [{
+        "type": "speech",
+        "speaker": "ambrose",
+        "expression": "pleased",
+        "text": "AMBROSE PLACEHOLDER: explain that positive Beauty creates Homes demand"
+      }],
+      "on_enter": [],
+      "options": []
+    }]
+  }
+}

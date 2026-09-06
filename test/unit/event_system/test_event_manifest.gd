@@ -29,6 +29,28 @@ func test_legacy_body_dialogue_remains_available_verbatim_in_manifest() -> void:
 	assert_eq(event["dialogue_nodes"][0]["body"], event["body"]["payload"]["nodes"][0]["body"])
 
 
+func test_opening_tutorial_events_use_only_approved_labelled_placeholders() -> void:
+	var manifest: Dictionary = ExporterCls.new().build_manifest()
+	var expected := {
+		"tutorial_opening_beauty_homes": "AMBROSE PLACEHOLDER: explain that positive Beauty creates Homes demand",
+		"tutorial_opening_home_adjacency": "AMBROSE PLACEHOLDER: explain the home adjacency result that was actually observed",
+		"tutorial_opening_work_participation": "AMBROSE PLACEHOLDER: explain that residents now work and earn money",
+		"tutorial_opening_complete": "AMBROSE PLACEHOLDER: acknowledge the first shop and hand off toward Sir William and more land",
+	}
+	for event_id in expected:
+		var event: Dictionary = _find_by_id(manifest["events"], "event_id", event_id)
+		assert_false(event.is_empty(), "%s exported" % event_id)
+		if event.is_empty():
+			continue
+		var nodes: Array = event.get("dialogue_nodes", [])
+		assert_eq(nodes.size(), 1, "%s has one placeholder node" % event_id)
+		var beats: Array = nodes[0].get("beats", []) if not nodes.is_empty() else []
+		assert_eq(beats.size(), 1, "%s has one placeholder beat" % event_id)
+		if not beats.is_empty():
+			assert_eq(beats[0].get("text", ""), expected[event_id])
+			assert_true(String(beats[0].get("text", "")).begins_with("AMBROSE PLACEHOLDER:"))
+
+
 func test_exported_manifest_contains_all_integrated_line_art_expressions() -> void:
 	var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://data/events/_manifest.json"))
 	assert_true(parsed is Dictionary, "headless-exported manifest parses")

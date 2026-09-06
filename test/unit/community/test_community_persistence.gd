@@ -28,6 +28,9 @@ func test_persist_and_load_preserve_resident_identity_and_counters() -> void:
 	resident.seed = 44
 	resident.home_anchor = Vector2i(2, 3)
 	resident.below_departure_hours = 7
+	resident.current_qualities = {"opportunity": 52.0, "liveability": 63.25, "beauty": 56.5, "belonging": 54.75}
+	resident.target_qualities = {"opportunity": 54.0, "liveability": 66.0, "beauty": 58.0, "belonging": 57.0}
+	resident.composite_happiness = 56.625
 	first._residents[12] = resident
 	first._migration = {"arrivals": 2, "departures": 1, "rejections": 3, "last_day": 4}
 	first._persist()
@@ -36,6 +39,9 @@ func test_persist_and_load_preserve_resident_identity_and_counters() -> void:
 	assert_eq(second.get_population(), 1)
 	assert_eq(second._residents[12].home_anchor, Vector2i(2, 3))
 	assert_eq(second._residents[12].below_departure_hours, 7)
+	assert_eq(second._residents[12].current_qualities, resident.current_qualities)
+	assert_eq(second._residents[12].target_qualities, resident.target_qualities)
+	assert_eq(second._residents[12].composite_happiness, resident.composite_happiness)
 	assert_eq(second._migration["arrivals"], 2)
 	first._residential.free(); second._residential.free()
 	first.free(); second.free()

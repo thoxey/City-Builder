@@ -72,6 +72,7 @@ class RefreshCatalog extends PluginBase:
 class RefreshDemand extends PluginBase:
 	func bucket_for_category(category: String) -> String: return category
 	func bucket_display_name(bucket: String) -> String: return bucket
+	func get_total(_bucket: String) -> float: return 1000.0
 	func get_value(_bucket: String) -> float: return 1000.0
 
 class RefreshCharacters extends PluginBase:

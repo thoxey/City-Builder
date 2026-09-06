@@ -1,0 +1,22 @@
+{
+  "event_id": "tutorial_opening_home_adjacency",
+  "event_type": "dialogue",
+  "trigger": {"event": "manual"},
+  "enabled_if": "",
+  "payload": {
+    "tree_id": "tutorial_opening_home_adjacency_tree",
+    "participants": ["player", "ambrose"],
+    "entry_node_id": "n_start",
+    "nodes": [{
+      "node_id": "n_start",
+      "beats": [{
+        "type": "speech",
+        "speaker": "ambrose",
+        "expression": "concerned",
+        "text": "AMBROSE PLACEHOLDER: explain the home adjacency result that was actually observed"
+      }],
+      "on_enter": [],
+      "options": []
+    }]
+  }
+}

@@ -2,6 +2,7 @@ extends SceneTree
 
 const SCENARIO_ID := "first_town/rebalance"
 const EVIDENCE_PATH := "res://specs/006-connected-first-town-loop/validation/rebalance-last-run.json"
+const EVIDENCE_PATH_ENV := "CITY_BUILDER_REBALANCE_EVIDENCE_PATH"
 const CHECKPOINTS := {60: 15, 120: 30, 240: 60}
 const SCENARIO_SEED := 6066
 
@@ -234,7 +235,10 @@ func _finish(playtest, road_network, community, catalog) -> void:
 		},
 		"final_summary": final_summary,
 	}
-	var file := FileAccess.open(EVIDENCE_PATH, FileAccess.WRITE)
+	var evidence_path := OS.get_environment(EVIDENCE_PATH_ENV)
+	if evidence_path.is_empty():
+		evidence_path = EVIDENCE_PATH
+	var file := FileAccess.open(evidence_path, FileAccess.WRITE)
 	if file: file.store_string(JSON.stringify(evidence, "  ", true) + "\n")
 	print("TOWN_REBALANCE success=%s meaningful=%d attempts=%d max_hour_ms=%.3f max_06_ms=%.3f failures=%d" % [_failures.is_empty(), _meaningful_placements, _meaningful_attempts, float(max_hour_usec) / 1000.0, float(max_migration_usec) / 1000.0, _failures.size()])
 	for failure in _failures: push_error(failure)

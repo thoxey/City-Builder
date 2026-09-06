@@ -194,6 +194,7 @@ class ParityCatalog extends PluginBase:
 class ParityDemand extends PluginBase:
 	func bucket_for_category(category: String) -> String: return category if category in ["residential", "industrial", "commercial"] else ""
 	func bucket_display_name(bucket: String) -> String: return "housing" if bucket == "residential" else bucket
+	func get_total(_bucket: String) -> float: return 1000.0
 	func get_value(_bucket: String) -> float: return 1000.0
 	func get_fulfilled(_bucket: String) -> float: return 1000.0
 	func can_afford(_structure: Structure) -> bool: return true

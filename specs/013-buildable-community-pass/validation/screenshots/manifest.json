@@ -1,0 +1,60 @@
+{
+  "camera": {
+    "position": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "zoom": 60.0
+  },
+  "files": [
+    "boundary-normal.png",
+    "boundary-placement.png"
+  ],
+  "normal": {
+    "buildable_clear_cell_count": 256,
+    "emphasized": false,
+    "non_buildable_cell_count": 261888,
+    "overlay_alpha": 0.0125,
+    "overlay_rgb": {
+      "b": 1.0,
+      "g": 1.0,
+      "r": 1.0
+    },
+    "perceptual_opacity": 0.05,
+    "presentation_rect": [
+      -256,
+      -256,
+      512,
+      512
+    ],
+    "revision": 3,
+    "visible": true
+  },
+  "placement": {
+    "buildable_clear_cell_count": 256,
+    "emphasized": true,
+    "non_buildable_cell_count": 261888,
+    "overlay_alpha": 0.02,
+    "overlay_rgb": {
+      "b": 1.0,
+      "g": 1.0,
+      "r": 1.0
+    },
+    "perceptual_opacity": 0.08,
+    "presentation_rect": [
+      -256,
+      -256,
+      512,
+      512
+    ],
+    "revision": 4,
+    "visible": true
+  },
+  "renderer": "forward_plus",
+  "schema_version": 1,
+  "viewport": {
+    "height": 720,
+    "width": 1280
+  }
+}

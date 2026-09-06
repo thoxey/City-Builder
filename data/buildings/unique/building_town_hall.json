@@ -22,9 +22,9 @@
         "effect_id": "civic_heart",
         "quality": "belonging",
         "manifestation": "identity",
-        "amount": 2.0,
+        "amount": 4.0,
         "scope": "local",
-        "radius": 3,
+        "radius": 5,
         "stacking_group": "civic_heart",
         "requires_active_building": false,
         "reason": "Lived near the town's civic heart"

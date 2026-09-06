@@ -17,7 +17,7 @@ extends PluginBase
 const CompactGuidanceViewCls := preload("res://plugins/dashboard/compact_guidance_view.gd")
 
 func get_plugin_name() -> String: return "Dashboard"
-func get_dependencies() -> Array[String]: return ["CharacterSystem", "PatronSystem", "Demand", "Community", "BuildingCatalog", "RoadNetwork"]
+func get_dependencies() -> Array[String]: return ["CharacterSystem", "PatronSystem", "Demand", "Community", "BuildingCatalog", "RoadNetwork", "OpeningTutorial"]
 
 const PANEL_WIDTH := 380
 const TAB_WIDTH := 28
@@ -43,6 +43,7 @@ var _demand:     PluginBase
 var _catalog:    PluginBase
 var _community:  PluginBase
 var _road_network: PluginBase
+var _opening_tutorial: PluginBase
 
 # UI refs
 var _canvas: CanvasLayer
@@ -68,6 +69,7 @@ func inject(deps: Dictionary) -> void:
 	_community  = deps.get("Community")
 	_catalog    = deps.get("BuildingCatalog")
 	_road_network = deps.get("RoadNetwork")
+	_opening_tutorial = deps.get("OpeningTutorial")
 
 func _plugin_ready() -> void:
 	_build_ui()
@@ -192,6 +194,8 @@ func _wire_signals() -> void:
 	GameEvents.community_ui_refresh_requested.connect(func(_r): _refresh_overlay())
 	GameEvents.player_input_mode_changed.connect(_on_player_input_mode_changed)
 	GameEvents.structure_placed.connect(func(_position, _index, _orientation): _refresh("structure_placed", ""))
+	if _opening_tutorial and _opening_tutorial.has_signal("projection_changed"):
+		_opening_tutorial.connect("projection_changed", func(_projection): _refresh("opening_tutorial", ""))
 
 func _on_character_state_changed(cid: String, new_state: int) -> void:
 	print("[Dashboard] refresh: trigger=character_state_changed id=%s new_state=%s"
@@ -297,12 +301,9 @@ func compute_hint(snap: Snapshot) -> String:
 ## Presentation-only projection for the dismissible world HUD bubble. It owns no
 ## progression or placement behavior and never mutates the canonical next step.
 func build_compact_guidance_model(snap: Snapshot) -> Dictionary:
+	if _opening_tutorial and _opening_tutorial.has_method("is_complete") and not _opening_tutorial.is_complete():
+		return _build_opening_tutorial_guidance(_opening_tutorial.get_projection())
 	var step: Dictionary = (snap.next_step if not snap.next_step.is_empty() else _next_step_for_snapshot(snap)).duplicate(true)
-	if _town_hall_direction_required():
-		step = {
-			"kind":"place_foundation", "subject_id":"building_town_hall",
-			"subject_label":"Town Hall",
-		}
 	var kind := String(step.get("kind", "grow"))
 	var candidate_id := "ambrose"
 	var expression := "thoughtful"
@@ -350,10 +351,31 @@ func build_compact_guidance_model(snap: Snapshot) -> Dictionary:
 	}
 
 
-func _town_hall_direction_required() -> bool:
-	return bool(GameState.map and GameState.map.rooted_town_rules and _road_network
-		and _road_network.has_method("get_town_hall_internal_id")
-		and int(_road_network.get_town_hall_internal_id()) < 0)
+func _build_opening_tutorial_guidance(projection: Dictionary) -> Dictionary:
+	if projection.is_empty() or String(projection.get("status", "")) == "complete":
+		return {}
+	var expression := String(projection.get("expression", "thoughtful"))
+	var definition: Dictionary = _characters.get_def("ambrose") if _characters else {}
+	var portrait := _resolve_guidance_portrait("ambrose", expression)
+	var target: Dictionary = projection.get("target", {}) if projection.get("target", {}) is Dictionary else {}
+	return {
+		"kind":"opening_tutorial",
+		"speaker_id":"ambrose",
+		"speaker_name":String(definition.get("display_name", "Ambrose")),
+		"expression":portrait.get("expression", expression),
+		"text":String(projection.get("text", "")),
+		"portrait_path":portrait.get("path", ""),
+		"portrait_source":portrait.get("source", "missing"),
+		# CompactGuidanceView's dismissal key must change only for a semantic beat
+		# or blocker variant, not for a numeric progress refresh.
+		"target_id":String(projection.get("projection_key", projection.get("step_id", ""))),
+		"target_label":String(target.get("label", "")),
+		"tutorial_step_id":String(projection.get("step_id", "")),
+		"beat_id":String(projection.get("beat_id", "")),
+		"status":String(projection.get("status", "active")),
+		"progress":projection.get("progress", {}).duplicate(true),
+		"blocker":projection.get("blocker", null),
+	}
 
 
 func _has_approved_line_art(character_id: String, expression: String) -> bool:

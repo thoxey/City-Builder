@@ -1,0 +1,33 @@
+{
+  "captures": [
+    {
+      "beat": "town-hall",
+      "file": "1280x720-town-hall.png",
+      "text": "AMBROSE PLACEHOLDER: tell the player to place the Town Hall",
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "beat": "home-adjacency",
+      "file": "1920x1080-home-adjacency.png",
+      "text": "AMBROSE PLACEHOLDER: ask the player to place a second home directly beside the first",
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "beat": "first-shop",
+      "file": "3840x2160-first-shop.png",
+      "text": "AMBROSE PLACEHOLDER: tell the player to place an accessible shop and consider nearby homes",
+      "viewport": [
+        3840,
+        2160
+      ]
+    }
+  ],
+  "copy_policy": "literal user-approved AMBROSE PLACEHOLDER labels",
+  "role": "opening tutorial compact-guidance visual proofs"
+}

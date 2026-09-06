@@ -25,7 +25,8 @@ func after_each() -> void:
 	if _plugin and is_instance_valid(_plugin):
 		if GameEvents.map_loaded.is_connected(_plugin._on_map_loaded):
 			GameEvents.map_loaded.disconnect(_plugin._on_map_loaded)
-		_plugin.queue_free()
+		remove_child(_plugin)
+		_plugin.free()
 	_plugin = null
 	GameState.map = _saved_map
 
@@ -44,6 +45,60 @@ func test_starter_plot_excludes_outside() -> void:
 	assert_false(_plugin.is_allowed(Vector2i(4, 0)), "one past the right edge")
 	assert_false(_plugin.is_allowed(Vector2i(-5, 0)), "one past the left edge")
 	assert_false(_plugin.is_allowed(Vector2i(100, 100)))
+
+func test_rooted_starter_plot_is_16_by_16_centred_on_origin() -> void:
+	GameState.map = DataMap.new()
+	GameState.map.rooted_town_rules = true
+	_plugin._load_or_seed()
+
+	assert_eq(_plugin.allowed_count(), 256)
+	assert_true(_plugin.is_allowed(Vector2i(-8, -8)))
+	assert_true(_plugin.is_allowed(Vector2i(7, 7)))
+	assert_false(_plugin.is_allowed(Vector2i(-9, 0)))
+	assert_false(_plugin.is_allowed(Vector2i(8, 0)))
+
+func test_rooted_starter_presentation_clears_buildable_cells_and_veils_the_rest() -> void:
+	GameState.map = DataMap.new()
+	GameState.map.rooted_town_rules = true
+	_plugin._load_or_seed()
+	_plugin._setup_presentation()
+
+	var snapshot: Dictionary = _plugin.get_presentation_snapshot()
+	assert_eq(snapshot["buildable_clear_cell_count"], 256)
+	assert_eq(snapshot["non_buildable_cell_count"], (512 * 512) - 256)
+	assert_almost_eq(float(snapshot["perceptual_opacity"]), 0.05, 0.0001)
+	assert_almost_eq(float(snapshot["overlay_alpha"]), 0.0125, 0.0001)
+	assert_eq(snapshot["overlay_rgb"], {"r": 1.0, "g": 1.0, "b": 1.0})
+	assert_false(snapshot["emphasized"])
+	assert_true(snapshot["visible"])
+
+func test_build_modes_emphasize_the_same_authoritative_boundary() -> void:
+	_plugin._setup_presentation()
+	var normal: Dictionary = _plugin.get_presentation_snapshot()
+	_plugin._on_player_input_mode_changed("radial")
+	var radial: Dictionary = _plugin.get_presentation_snapshot()
+	_plugin._on_player_input_mode_changed("placement")
+	var placement: Dictionary = _plugin.get_presentation_snapshot()
+
+	assert_true(radial["emphasized"])
+	assert_true(placement["emphasized"])
+	assert_gt(float(radial["overlay_alpha"]), float(normal["overlay_alpha"]))
+	assert_eq(radial["buildable_clear_cell_count"], normal["buildable_clear_cell_count"])
+	assert_eq(radial["non_buildable_cell_count"], normal["non_buildable_cell_count"])
+
+func test_presentation_rebuilds_from_loaded_and_expanded_authority() -> void:
+	_plugin._setup_presentation()
+	GameState.map.allowed_cells = [Vector2i.ZERO, Vector2i(1, 0)]
+	_plugin._on_map_loaded(GameState.map)
+	var loaded: Dictionary = _plugin.get_presentation_snapshot()
+	assert_eq(loaded["buildable_clear_cell_count"], 2)
+	assert_eq(loaded["non_buildable_cell_count"], (512 * 512) - 2)
+
+	_plugin.expand_rect(Rect2i(0, 1, 2, 1), "presentation-test")
+	var expanded: Dictionary = _plugin.get_presentation_snapshot()
+	assert_eq(expanded["buildable_clear_cell_count"], 4)
+	assert_eq(expanded["non_buildable_cell_count"], (512 * 512) - 4)
+	assert_gt(int(expanded["revision"]), int(loaded["revision"]))
 
 # ── Expansion via patron landmark ─────────────────────────────────────────────
 
@@ -66,6 +121,20 @@ func test_expansion_overlapping_starter_dedupes() -> void:
 	# 64 starter cells already; new rect is 8×8 = 64 cells; overlap = 16 cells
 	# so added = 48 new cells.
 	assert_eq(_plugin.allowed_count(), 64 + 48)
+
+func test_rooted_patron_donation_adds_192_unique_cells_once() -> void:
+	GameState.map = DataMap.new()
+	GameState.map.rooted_town_rules = true
+	_plugin._load_or_seed()
+	var area := {"shape": "rect", "rect": [8, -8, 12, 16]}
+
+	var first: Dictionary = _plugin.apply_donation("aristocrat", area)
+	var second: Dictionary = _plugin.apply_donation("aristocrat", area)
+
+	assert_eq(first["added_cells"].size(), 192)
+	assert_eq(_plugin.allowed_count(), 448)
+	assert_true(second["already_applied"])
+	assert_eq(second["added_cells"].size(), 0)
 
 func test_expansion_with_missing_donation_area_is_noop() -> void:
 	var outcome: Dictionary = _plugin.apply_donation("aristocrat", {})

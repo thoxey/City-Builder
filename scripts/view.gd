@@ -3,7 +3,7 @@ extends Node3D
 var camera_position:Vector3
 var camera_rotation:Vector3
 
-var zoom:float = 30.0 # 30 = Standard zoom level, in meters
+var zoom:float = 60.0 # Frames the complete rooted starter boundary below the HUD.
 
 @onready var camera = $Camera
 

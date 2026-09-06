@@ -78,6 +78,17 @@ func test_threshold_passes_when_demand_at_or_above() -> void:
 
 	assert_true(_reg.is_unlocked("building_pub"))
 
+func test_threshold_uses_total_ever_demand_not_unserved_balance() -> void:
+	_stub_catalog.register_unique(0, "building_pub", "commercial", 1, "aristocrat", "aristocrat_commercial", "chain", 25, [])
+	_reg._index_uniques()
+	_stub_demand.set_total("commercial", 25.0)
+	_stub_demand.set_unserved("commercial", 0.0)
+	_reg._refresh_unlocks()
+
+	assert_true(_reg.is_unlocked("building_pub"),
+		"spending the live balance must not erase total-ever progression")
+	assert_eq(_reg.evaluate_unlock("building_pub")["current"], 25.0)
+
 # ── Prerequisite chain ────────────────────────────────────────────────────────
 
 func test_tier2_locked_until_tier1_placed() -> void:
@@ -278,11 +289,18 @@ class _StubCatalog extends PluginBase:
 
 
 class _StubDemand extends PluginBase:
-	var _values: Dictionary = {}  # type_id -> float
+	var _totals: Dictionary = {}  # type_id -> float
+	var _unserved: Dictionary = {}  # type_id -> float
 	func get_plugin_name() -> String: return "_StubDemand"
-	func set_value(type_id: String, v: float) -> void: _values[type_id] = v
+	func set_value(type_id: String, v: float) -> void:
+		_totals[type_id] = v
+		_unserved[type_id] = v
+	func set_total(type_id: String, v: float) -> void: _totals[type_id] = v
+	func set_unserved(type_id: String, v: float) -> void: _unserved[type_id] = v
+	func get_total(type_id: String) -> float:
+		return _totals.get(type_id, 0.0)
 	func get_value(type_id: String) -> float:
-		return _values.get(type_id, 0.0)
+		return _unserved.get(type_id, 0.0)
 	# Mirror the real static mapping.
 	func bucket_for_category(category: String) -> String:
 		match category:

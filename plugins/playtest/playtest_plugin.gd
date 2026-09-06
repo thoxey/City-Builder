@@ -25,6 +25,7 @@ var _event_system: PluginBase
 var _road_network: PluginBase
 var _people: PluginBase
 var _car_manager: PluginBase
+var _opening_tutorial: PluginBase
 
 var _session_id := ""
 var _scenario_id := ""
@@ -47,7 +48,8 @@ func get_dependencies() -> Array[String]:
 	return ["BuildingCatalog", "DayNight", "Demand", "Economy", "CityStats",
 		"Satisfaction", "Residential", "Workplace", "Attractiveness",
 		"BuildableArea", "UniqueRegistry", "Palette", "Dialogue", "Inbox", "Community",
-		"CharacterSystem", "PatronSystem", "EventSystem", "RoadNetwork", "People", "CarManager"]
+		"CharacterSystem", "PatronSystem", "EventSystem", "RoadNetwork", "People", "CarManager",
+		"OpeningTutorial"]
 
 func inject(deps: Dictionary) -> void:
 	_catalog = deps.get("BuildingCatalog")
@@ -71,6 +73,7 @@ func inject(deps: Dictionary) -> void:
 	_road_network = deps.get("RoadNetwork")
 	_people = deps.get("People")
 	_car_manager = deps.get("CarManager")
+	_opening_tutorial = deps.get("OpeningTutorial")
 
 func _plugin_ready() -> void:
 	_builder = _find_builder()
@@ -574,6 +577,7 @@ func _progression_snapshot() -> Dictionary:
 		"flags": GameState.map.flags.duplicate(true) if GameState.map else {},
 		"event_counts": GameState.map.event_counts.duplicate(true) if GameState.map else {},
 		"pending_dialogue_event_ids": _event_system.pending_dialogue_event_ids() if _event_system else [],
+		"opening_tutorial": _opening_tutorial.get_state() if _opening_tutorial and _opening_tutorial.has_method("get_state") else {},
 		"milestones": get_progression_milestones(),
 	}
 	for bucket_id in ["residential", "industrial", "commercial"]:
@@ -684,7 +688,7 @@ func _observe_progression_milestones() -> void:
 			"patrons": progression.get("patrons", {}).duplicate(true),
 			"placed_building_ids": progression.get("placed", []).duplicate(),
 			"allowed_count": _land.allowed_count() if _land else 0,
-			"new_cells": maxi(0, (_land.allowed_count() if _land else 0) - (196 if GameState.map and GameState.map.rooted_town_rules else 64)),
+			"new_cells": maxi(0, (_land.allowed_count() if _land else 0) - (256 if GameState.map and GameState.map.rooted_town_rules else 64)),
 		}
 		evidence["state_hash"] = JSON.stringify(evidence).sha256_text()
 		_milestones.append(evidence)

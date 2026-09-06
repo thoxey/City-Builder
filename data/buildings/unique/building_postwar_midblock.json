@@ -35,7 +35,7 @@
       "patron_id": "aristocrat",
       "character_id": "aristocrat_residential",
       "chain_role": "chain",
-      "prerequisite_threshold": 30,
+      "prerequisite_threshold": 75,
       "prerequisite_ids": [
         "building_postwar_terrace"
       ],

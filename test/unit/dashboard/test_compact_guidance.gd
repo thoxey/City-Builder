@@ -135,20 +135,36 @@ func test_surface_click_and_close_button_dismiss_only_the_current_direction() ->
 	assert_false(view.visible, "the close button uses the same dismissal path")
 
 
-func test_forced_town_hall_direction_uses_authoritative_rooted_town_state() -> void:
-	var saved_map := GameState.map
-	var rooted := DataMap.new()
-	rooted.rooted_town_rules = true
-	GameState.map = rooted
-	_dashboard._road_network = _GuidanceRoadNetwork.new()
+func test_opening_tutorial_projection_has_priority_over_patron_guidance() -> void:
+	_dashboard._opening_tutorial = _GuidanceTutorial.new()
+	var snap := DashboardCls.Snapshot.new()
+	snap.next_step = {"kind":"place_request", "subject_id":"later_patron_request"}
+	var model: Dictionary = _dashboard.build_compact_guidance_model(snap)
+	assert_eq(model.get("kind"), "opening_tutorial")
+	assert_eq(model.get("speaker_id"), "ambrose")
+	assert_eq(model.get("target_id"), "opening_tutorial|place_town_hall|B01|default")
+	assert_eq(model.get("tutorial_step_id"), "place_town_hall")
+	assert_true(String(model.get("text", "")).begins_with("AMBROSE PLACEHOLDER:"))
+
+
+func test_progress_only_tutorial_refresh_keeps_semantic_dismissal_key_stable() -> void:
+	var tutorial := _GuidanceTutorial.new()
+	_dashboard._opening_tutorial = tutorial
+	var snap := DashboardCls.Snapshot.new()
+	var first: Dictionary = _dashboard.build_compact_guidance_model(snap)
+	tutorial.projection.progress = {"current":1, "required":4, "unit":"road_cells"}
+	var refreshed: Dictionary = _dashboard.build_compact_guidance_model(snap)
+	assert_eq(first.get("target_id"), refreshed.get("target_id"))
+	assert_ne(first.get("progress"), refreshed.get("progress"))
+
+
+func test_completed_tutorial_returns_to_existing_patron_projection() -> void:
+	var tutorial := _GuidanceTutorial.new()
+	tutorial.complete = true
+	_dashboard._opening_tutorial = tutorial
 	var snap := DashboardCls.Snapshot.new()
 	snap.next_step = {"kind":"grow"}
-	var model: Dictionary = _dashboard.build_compact_guidance_model(snap)
-	assert_eq(model.get("kind"), "place_foundation")
-	assert_eq(model.get("speaker_id"), "ambrose")
-	assert_eq(model.get("target_id"), "building_town_hall")
-	assert_eq(model.get("text"), "Place the Town Hall first to found your town.")
-	GameState.map = saved_map
+	assert_eq(_dashboard.build_compact_guidance_model(snap).get("kind"), "grow")
 
 
 class _GuidanceCharacters:
@@ -182,3 +198,19 @@ class _GuidanceCharacters:
 class _GuidanceRoadNetwork:
 	extends PluginBase
 	func get_town_hall_internal_id() -> int: return -1
+
+
+class _GuidanceTutorial:
+	extends PluginBase
+	var complete := false
+	var projection := {
+		"status":"active", "step_id":"place_town_hall", "beat_id":"B01",
+		"projection_key":"opening_tutorial|place_town_hall|B01|default",
+		"expression":"thoughtful",
+		"text":"AMBROSE PLACEHOLDER: tell the player to place the Town Hall",
+		"target":{"kind":"building", "id":"building_town_hall", "label":"Town Hall"},
+		"progress":{"current":0, "required":1, "unit":"building"},
+		"blocker":null,
+	}
+	func is_complete() -> bool: return complete
+	func get_projection() -> Dictionary: return projection.duplicate(true)

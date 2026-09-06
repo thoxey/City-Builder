@@ -2,7 +2,7 @@
   "pool_id": "residential_t2",
   "bucket": "residential",
   "tier": 2,
-  "demand_threshold": 30,
+  "demand_threshold": 25,
   "demand_per_unit": 15,
   "ui_group": "homes",
   "ui_order": 20,
